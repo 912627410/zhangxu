@@ -244,6 +244,7 @@
         x: 'left',
         data:[languages.findKey('rentalMachineCost'),languages.findKey('rentalSaleCost'),languages.findKey('rentalManagementCost'),languages.findKey('rentalFinanceCost')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(255,130,133)','rgb(143,159,255)'],
       series: [
         {
           name:'成本',
