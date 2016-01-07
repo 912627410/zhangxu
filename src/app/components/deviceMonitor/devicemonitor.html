@@ -1,0 +1,142 @@
+<section class="content-header">
+  <h1>
+    设备监控
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">设备监控</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+
+  <!-- 高德地图 -->
+  <div class = "row">
+    <div class="col-xs-12 connectedSortable">
+      <div class="box box-danger">
+        <div class="box-header">
+          <!-- tools box -->
+          <div class="pull-right box-tools">
+            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="monitorCtrl.refreshMainMap()" title="刷新"><i class="fa fa-refresh"></i></button>
+          </div><!-- /. tools -->
+          <i class="fa fa-cloud"></i>
+          <h3 class="box-title">机器分布</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body" style="min-height: 400px" id="monitorMap">
+        </div>
+      </div>
+    </div><!-- /.col -->
+  </div>
+
+  <div class="row">
+        <div class="col-md-2">
+          <label class="control-label">车牌号/机号/终端号:</label>
+        </div>
+        <div class="col-md-3">
+          <input type="text" name="deviceNum" class="form-control " ng-model="deviceNum" placeholder="支持模糊查询"/>
+        </div>
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,DeviceNumber)">确定</button>
+        </div>
+  </div>
+
+  <div class="row " style="padding-top: 30px">
+    <div class="col-md-3" ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
+      <div class="box box-success">
+        <div class="box-header">
+          <h5 class="box-title" ng-if="deviceinfo.userDefinedName">{{deviceinfo.userDefinedName}}</h5>
+          <h5 class="box-title text-gray" ng-if="deviceinfo.userDefinedName==null">未定义</h5>
+          <div class="box-tools pull-right">
+            <div class="text-gray" ng-if="deviceinfo.status == 0"> <i class="fa fa-exclamation-triangle"></i> </div>
+            <div class="text-green" ng-if="deviceinfo.status == 1"> <i class="fa fa-check-square"></i> </div>
+            <div class="text-yellow" ng-if="deviceinfo.status == 2"> <i class="fa fa-anchor"></i> </div>
+            <div class="text-red" ng-if="deviceinfo.status == 9"> <i class="fa fa-info"></i> </div>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              车辆类型:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.device_type}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              车牌号／机号:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.storeLocation}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              GPS终端号:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.deviceNum}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              定位状态:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              <span ng-class="deviceinfo.locateStatus == 'A'? 'text-green':'text-red'" >
+                <div ng-if="deviceinfo.locateStatus=='A'">已定位</div>
+                <div ng-if="deviceinfo.locateStatus=='V'">未定位</div>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              终端类型:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.gsmPhoneNo}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              最后更新时间:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+              当前位置:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
+              {{deviceinfo.address}}
+              <!--<span ng-value="monitorCtrl.getAddressFromXY(deviceinfo.longitudeNum,deviceinfo.latitudeNum)" ></span>-->
+            </div>
+          </div>
+
+        </div>
+        <div class="box-footer">
+          <code>
+            <div class="pull-right">
+              <button type="button" class="btn btn-default btn-xs" ng-click="deviceDetail(deviceinfo,'lg')">最新状态</button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="deviceHistory(deviceinfo,'lg')">历史状态</button>
+              <button type="button" class="btn btn-primary btn-xs" ng-if="userInfo.role == 'ROLE_SYSADMIN' ||userInfo.role == 'ROLE_ADMIN'" ng-click="updateDeviceInfo(deviceinfo,'lg')">修改</button>
+            </div>
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="page.totalElements" ng-change="loadPage(deviceData_pagenumber-1,40,sort,deviceNum)" max-size="5" ng-model="deviceData_pagenumber" items-per-page="page.size" class="pagination-sm" boundary-links="true" rotate="false" ></uib-pagination>
+  </div>
+  <!-- Main row -->
+</section><!-- /.content -->

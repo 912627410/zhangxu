@@ -1,0 +1,43 @@
+<header class="main-header" style="height:50px">
+  <a ui-sref="home" class="logo navbar-fixed-top">
+    <!-- Add the class icon to your logo image or logo icon to add the margining -->
+    GPSCloud
+  </a>
+
+  <!-- Header Navbar: style can be found in header.less -->
+  <nav class="navbar navbar-fixed-top" role="navigation">
+    <!-- Sidebar toggle button-->
+
+    <a ui-sref="home" class="sidebar-toggle" role="button">
+      <i class="fa fa-home"></i>
+    </a>
+
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <!-- Messages: style can be found in dropdown.less-->
+        <li class="user user-menu" ng-if="userInfo == null">
+          <a ui-sref="home.login">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>登录</span>
+          </a>
+        </li>
+        <li ui-sref="home.profile" class="user user-menu" ng-if="userInfo">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-user" >
+            <span>{{userInfo.userdto.ssn}}
+              <small ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">系统管理员</small>
+              <small ng-if="userInfo.userdto.role == 'ROLE_ADMIN'">管理员</small>
+              <small ng-if="userInfo.userdto.role == 'ROLE_USER'">普通用户</small>
+            </i></span>
+          </a>
+        </li>
+        <li ui-sref="#" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">退出</a></li>
+      </ul>
+    </div>
+
+  </nav>
+  <!--<div  class="">-->
+  <!--全局提示框-->
+  <alert-bar class="alert_bar alert-msg-box" message="tipService.message" type="tipService.type"></alert-bar>
+  <!--</div>-->
+</header>

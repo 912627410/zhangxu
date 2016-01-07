@@ -1,0 +1,112 @@
+<aside class="main-sidebar left-side fixed">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="assets/images/avatar.png" class="img-circle" alt="User Image" />
+      </div>
+      <div class="pull-left info" ng-if="userInfo">
+        <p>{{userInfo.userdto.ssn}}</p>
+        <a><i class="fa fa-circle text-success"></i> 已登录</a>
+      </div>
+
+      <div class="pull-left info" ng-if="userInfo == null">
+        <a ui-sref="home.login"> 请登录 {{rand}}</a>
+      </div>
+    </div>
+    <!-- search form -->
+    <!--<form action="#" method="get" class="sidebar-form">-->
+    <!--<div class="input-group">-->
+    <!--<input type="text" name="q" class="form-control" placeholder="Search..."/>-->
+    <!--<span class="input-group-btn">-->
+    <!--<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--</form>-->
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu ">
+      <li class="treeview">
+        <a ui-sref="home">
+          <i class="fa fa-dashboard"></i> <span>仪表盘</span>
+        </a>
+        <ul class="treeview-menu" style="display: block">
+          <li>
+            <a ui-sref="home.totaldevices">
+              <i class="fa fa-th-list"></i> <span>设备详情</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.revenue">
+              <i class="fa fa-cny"></i> <span>设备管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.warningdevices">
+              <i class="fa fa-warning"></i> <span>报警设备</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.exceptionaldevices">
+              <i class="fa fa-fire"></i> <span>异常设备</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a ui-sref="home.devicelist">
+          <i class="fa fa-th"></i> <span>设备列表</span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-bar-chart-o"></i>
+          <span>统计图表</span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <li class="treeview">
+        <a ui-sref="home.devicemng">
+          <i class="fa fa-laptop"></i>
+          <span>设备管理</span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <li class="treeview" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
+        <a ui-sref="home.deviceparameter">
+          <i class="fa  fa-gear"></i> <span>设备参数</span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <li class="treeview" ng-if="userInfo.role == 'ROLE_SYSADMIN' ||userInfo.role == 'ROLE_ADMIN'">
+        <a ui-sref="home.userinfomng">
+          <i class="fa fa-edit"></i> <span>用户管理</span>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <li>
+        <a ui-sref="home.calendar">
+          <i class="fa fa-calendar"></i> <span>日历</span>
+          <small class="badge pull-right bg-red" ng-if="statistics">{{statistics.calendarnum}}</small>
+        </a>
+        <ul class="treeview-menu">
+        </ul>
+      </li>
+      <!--<li>-->
+      <!--<a href="pages/mailbox.html">-->
+      <!--<i class="fa fa-envelope"></i> <span>邮件</span>-->
+      <!--<small class="badge pull-right bg-yellow" ng-if="statistics">{{statistics.mailnum}}</small>-->
+      <!--</a>-->
+      <!--</li>-->
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
