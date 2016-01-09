@@ -111,6 +111,7 @@
         var sortUrl = sort || DEFAULT_DEVICE_SORT_BY;
         restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
         if (queryCondition){
+          restCallURL += "&";
           restCallURL += queryCondition;
         }
         return restCallService(restCallURL,"GET");

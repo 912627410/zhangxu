@@ -18,7 +18,10 @@
     vm.radioListType = "block";
 
     vm.queryDeviceInfo = function(page,size,sort,queryCondition){
-      var deviceDataPromis = serviceResource.queryDeviceInfo(page,size,sort,queryCondition);
+      if (queryCondition){
+        var filterTerm = "filter=" + queryCondition;
+      }
+      var deviceDataPromis = serviceResource.queryDeviceInfo(page,size,sort,filterTerm);
       deviceDataPromis.then(function (data) {
         var deviceInfoList = data.content;
         deviceInfoList.forEach(function(deviceInfo){
