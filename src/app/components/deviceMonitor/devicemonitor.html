@@ -42,6 +42,10 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,DeviceNumber)">确定</button>
+          <div class="btn-group">
+            <label class="btn btn-default small" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>块</label>
+            <label class="btn btn-default small" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+          </div>
         </div>
   </div>
 

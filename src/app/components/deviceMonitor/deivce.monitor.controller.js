@@ -15,6 +15,7 @@
     vm.refreshMainMap = function(){
       serviceResource.refreshMapWithDeviceInfo("monitorMap");
     }
+    vm.radioListType = "block";
 
     vm.queryDeviceInfo = function(page,size,sort,queryCondition){
       var deviceDataPromis = serviceResource.queryDeviceInfo(page,size,sort,queryCondition);
