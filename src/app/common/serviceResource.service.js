@@ -12,8 +12,8 @@
   function serviceResource($rootScope,$resource,$http,$q,$window,TipService,USER_LOGIN_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,
                            DEFAULT_DEVICE_SORT_BY,AMAP_GEO_CODER_URL) {
-    var restCallService = function(URL,action){
-      var loginCall = $resource(URL);
+    var restCallService = function(URL,action,params){
+      var restCall = $resource(URL);
       var defer = $q.defer();
       var succCallback = function(data){
         defer.resolve(data);
@@ -22,11 +22,21 @@
         defer.reject(data);
       };
       if (action == "GET"){
-        loginCall.get(succCallback,failCallback);
+        restCall.get(succCallback,failCallback);
       }
       //如果返回json是array的话需要用query，否则用get
       if (action == "QUERY"){
-        loginCall.query(succCallback,failCallback);
+        restCall.query(succCallback,failCallback);
+      }
+      //POST
+      if (action == "ADD"){
+        restCall.save(params,succCallback,failCallback);
+      }
+      //PUT
+      if (action == "UPDATE"){
+        var restUpdateCall = $resource(URL,{},{'update': { method:'PUT' }});
+        restUpdateCall.update(params,succCallback,failCallback);
+
       }
       return defer.promise
     };

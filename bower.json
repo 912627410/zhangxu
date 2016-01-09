@@ -39,6 +39,10 @@
         "dist/fonts/glyphicons-halflings-regular.woff",
         "dist/fonts/glyphicons-halflings-regular.woff2"
       ]
+    },
+    "jquery": {
+      "main": [
+      ]
     }
   },
   "resolutions": {

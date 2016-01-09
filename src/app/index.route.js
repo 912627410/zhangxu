@@ -56,6 +56,19 @@
           }
         }
       })
+      .state('home.register', {
+        url: '/register',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/widefooter.html'
+          },
+          'main@home': {
+            templateUrl: 'app/components/register/register.html',
+            controller: 'RegisterController',
+            controllerAs: 'registerCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {
