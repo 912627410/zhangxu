@@ -46,8 +46,8 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
       <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
   </div>
   <div class="row" style="padding-top: 30px">
@@ -78,7 +78,7 @@
               车牌号／机号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.storeLocation}}
+              {{deviceinfo.hostNo}}
             </div>
           </div>
           <div class="row">
@@ -105,7 +105,7 @@
               终端类型:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.gsmPhoneNo}}
+              {{deviceinfo.deviceTypeDto.name}}
             </div>
           </div>
           <div class="row">
@@ -125,17 +125,24 @@
             </div>
           </div>
         </div>
+        <div class="box-footer">
+            <div class="pull-right">
+              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>
+            </div>
         </div>
       </div>
+    </div>
     <!--列表模式-->
-        <div ng-if="monitorCtrl.radioListType == 'list'" >
-          <table class="table table-striped">
+
+
+    <div ng-if="monitorCtrl.radioListType == 'list'" >
+          <table class="table table-striped" id="deviceTable">
             <tr>
               <th>GPS终端号</th>
               <th>车辆类型</th>
               <th>车牌号/机号</th>
               <th>定位状态</th>
-              <th>当前位置</th>
+              <th style="width: 300px">当前位置</th>
               <th>终端类型</th>
               <th>所属组织</th>
               <th>最后更新时间</th>
@@ -144,19 +151,17 @@
             <tr ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
               <td>{{deviceinfo.deviceNum}}</td>
               <td>{{deviceinfo.device_type}}</td>
-              <td>车牌号/机号</td>
+              <td>{{deviceinfo.hostNo}}</td>
               <td>
                 <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
                 <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
               </td>
               <td>{{deviceinfo.address}}</td>
-              <td>终端类型</td>
-              <td>所属组织</td>
+              <td>{{deviceinfo.deviceTypeDto.name}}</td>
+              <td></td>
               <td>{{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-xs" ng-click="deviceDetail(deviceinfo,'lg')">最新状态</button>
-                <button type="button" class="btn btn-default btn-xs" ng-click="deviceHistory(deviceinfo,'lg')">历史状态</button>
-                <button type="button" class="btn btn-primary btn-xs" ng-if="userInfo.role == 'ROLE_SYSADMIN' ||userInfo.role == 'ROLE_ADMIN'" ng-click="updateDeviceInfo(deviceinfo,'lg')">修改</button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>
               </td>
             </tr>
           </table>
@@ -165,7 +170,7 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="page.totalElements" ng-change="loadPage(deviceData_pagenumber-1,40,sort,deviceNum)" max-size="5" ng-model="deviceData_pagenumber" items-per-page="page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="5" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
   <!-- Main row -->
 </section><!-- /.content -->

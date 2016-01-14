@@ -9,3 +9,6 @@
 
 ## 其他注意事项
 * 测试服务器端口配置在protractor.conf.js
+
+## 发布
+* gulp build, 在当前目录生成distwh

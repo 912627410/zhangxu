@@ -2,8 +2,8 @@
   "name": "emcloudGulp",
   "version": "0.0.0",
   "dependencies": {
-    "jquery": "^2.1.4",
-    "angular": "^1.4.2",
+    "jquery": "2.1.4",
+    "angular": "1.4.8",
     "angular-animate": "^1.4.2",
     "angular-cookies": "^1.4.2",
     "angular-touch": "^1.4.2",
@@ -41,11 +41,25 @@
       ]
     },
     "jquery": {
-      "main": []
+      "main": [
+      ]
+    },
+    "labjs": {
+      "main": [
+        "LAB.min.js"
+      ]
+    },
+    "highcharts": {
+      "main": [
+        "highcharts.js",
+        "highcharts-more.js",
+        "modules/solid-gauge.js",
+        "modules/exporting.js"
+      ]
     }
   },
   "resolutions": {
-    "jquery": "^2.1.4",
-    "angular": "^1.4.2"
+    "jquery": "2.1.4",
+    "angular": "1.4.8"
   }
 }

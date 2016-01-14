@@ -54,8 +54,8 @@
           });
         })
       },
-      //mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId) {
+      //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
+      refreshMapWithDeviceInfo: function (mapId,deviceList) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -70,29 +70,42 @@
             map.addControl(new AMap.ToolBar());
           });
           //读取所有设备的gps信息，home map使用
-          if ($rootScope.userInfo) {
-            var rspdata = restCallService(HOME_GPSDATA_URL, "QUERY");
-            rspdata.then(function (data) {
-              var deviceGPSInfo = data;
-              for (var i = 0; i < deviceGPSInfo.length; i++) {
-                if (deviceGPSInfo[i].latitudeNum != null) {
-                  var latitude = deviceGPSInfo[i].latitudeNum;     //纬度
+          if ($rootScope.userInfo ) {
+            if(deviceList == null){
+              var rspdata = restCallService(HOME_GPSDATA_URL, "QUERY");
+              rspdata.then(function (data) {
+                var deviceGPSInfo = data;
+                for (var i = 0; i < deviceGPSInfo.length; i++) {
+                  if (deviceGPSInfo[i].latitudeNum != null) {
+                    var latitude = deviceGPSInfo[i].latitudeNum;     //纬度
+                  }
+                  if (deviceGPSInfo[i].longitudeNum != null) {
+                    var longitude = deviceGPSInfo[i].longitudeNum;   //经度
+                  }
+                  if (latitude != null && longitude != null) {
+                    var marker = new AMap.Marker({
+                      icon: "http://webapi.amap.com/images/marker_sprite.png",
+                      position: [longitude, latitude]
+                    });
+                    marker.setMap(map);
+                  }
                 }
-                if (deviceGPSInfo[i].longitudeNum != null) {
-                  var longitude = deviceGPSInfo[i].longitudeNum;   //经度
-                }
-                if (latitude != null && longitude != null) {
+              }, function (reason) {
+                map.clearMap();
+                TipService.setMessage('获取设备信息失败', 'error');
+              })
+            }
+            else{
+              deviceList.forEach(function(deviceInfo){
+                if (deviceInfo.longitudeNum != null && deviceInfo.latitudeNum != null) {
                   var marker = new AMap.Marker({
                     icon: "http://webapi.amap.com/images/marker_sprite.png",
-                    position: [longitude, latitude]
+                    position: [deviceInfo.longitudeNum, deviceInfo.latitudeNum]
                   });
                   marker.setMap(map);
                 }
-              }
-            }, function (reason) {
-              map.clearMap();
-              TipService.setMessage('获取设备信息失败', 'error');
-            })
+              })
+            }
           }
         })
       },
