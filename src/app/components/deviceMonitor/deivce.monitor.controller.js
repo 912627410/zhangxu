@@ -48,7 +48,8 @@
           })
         }, function (reason) {
         TipService.setMessage('获取设备信息失败', 'error');
-      })
+        }
+      )
       vm.refreshDOM();
     }
 
@@ -65,8 +66,7 @@
         animation: vm.animationsEnabled,
         backdrop: false,
         templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-        controller: 'DeviceCurrentInfoController',
-        controllerAs: 'deviceCurrentInfoCtrl',
+        controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
         size: size,
         resolve: { //用来向controller传数据
           deviceinfo: function () {

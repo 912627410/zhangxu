@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$uibModal,$timeout,$uibModalInstance,serviceResource,deviceinfo) {
+  function DeviceCurrentInfoController($rootScope,$timeout,$uibModalInstance,serviceResource,TipService,DEVCE_DATA_PAGED_QUERY,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -315,10 +315,86 @@
         serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList);
       })
     };
-    
+
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+
+
+    //历史数据tab
+    var startDate = new Date();
+    startDate.setDate(startDate.getDate()-5);
+    vm.startDate = startDate;
+    vm.endDate = new Date();
+
+    vm.startDateDeviceData = startDate;
+    vm.endDateDeviceData = new Date();
+
+    //date picker
+    vm.startDateOpenStatusDeviceData = {
+      opened: false
+    };
+    vm.endDateOpenStatusDeviceData = {
+      opened: false
+    };
+
+    vm.startDateOpenDeviceData = function($event) {
+      vm.startDateOpenStatusDeviceData.opened = true;
+    };
+    vm.endDateOpenDeviceData = function($event) {
+      vm.endDateOpenStatusDeviceData.opened = true;
+    };
+
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
+
+    vm.getDeviceData = function(page,size,sort,deviceNum,startData,endDate){
+      if (deviceNum){
+        var filterTerm = "deviceNum=" + deviceNum;
+      }
+      if (startData){
+        var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        if (filterTerm){
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else{
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      }
+      if (endDate){
+        var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        if (filterTerm){
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else{
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      }
+      var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
+      deviceDataPromis.then(function (data) {
+          vm.deviceDataList = data.content;
+          vm.page = data.page;
+          vm.deviceData_pagenumber = data.page.number + 1;
+          vm.basePath = DEVCE_DATA_PAGED_QUERY;
+
+          vm.deviceDataList.forEach(function (deviceData) {
+            var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
+            serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
+              deviceData.address = newaddress;
+            })
+          })
+        }, function (reason) {
+          TipService.setMessage('获取设备信息失败', 'error');
+        }
+      )
+
+    }
 
   }
 })();

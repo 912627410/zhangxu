@@ -55,13 +55,6 @@
         </ul>
       </li>
 
-      <li>
-        <a ui-sref="home.devicelist">
-          <i class="fa fa-th"></i> <span>设备列表</span>
-        </a>
-        <ul class="treeview-menu">
-        </ul>
-      </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-bar-chart-o"></i>
@@ -70,42 +63,20 @@
         <ul class="treeview-menu">
         </ul>
       </li>
-      <li class="treeview">
-        <a ui-sref="home.devicemng">
-          <i class="fa fa-laptop"></i>
-          <span>设备管理</span>
-        </a>
-        <ul class="treeview-menu">
-        </ul>
-      </li>
-      <li class="treeview" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
+      <li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
         <a ui-sref="home.deviceparameter">
           <i class="fa  fa-gear"></i> <span>设备参数</span>
         </a>
         <ul class="treeview-menu">
         </ul>
       </li>
-      <li class="treeview" ng-if="userInfo.role == 'ROLE_SYSADMIN' ||userInfo.role == 'ROLE_ADMIN'">
+      <li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.role == 'ROLE_ADMIN'">
         <a ui-sref="home.userinfomng">
           <i class="fa fa-edit"></i> <span>用户管理</span>
         </a>
         <ul class="treeview-menu">
         </ul>
       </li>
-      <li>
-        <a ui-sref="home.calendar">
-          <i class="fa fa-calendar"></i> <span>日历</span>
-          <small class="badge pull-right bg-red" ng-if="statistics">{{statistics.calendarnum}}</small>
-        </a>
-        <ul class="treeview-menu">
-        </ul>
-      </li>
-      <!--<li>-->
-      <!--<a href="pages/mailbox.html">-->
-      <!--<i class="fa fa-envelope"></i> <span>邮件</span>-->
-      <!--<small class="badge pull-right bg-yellow" ng-if="statistics">{{statistics.mailnum}}</small>-->
-      <!--</a>-->
-      <!--</li>-->
     </ul>
   </section>
   <!-- /.sidebar -->

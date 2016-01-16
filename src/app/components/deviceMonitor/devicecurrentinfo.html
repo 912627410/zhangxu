@@ -28,21 +28,133 @@
             <!--</div>-->
           </div>
           <div class="row">
-            <div class="col-md-6">
-              <small><em>GSM数据</em></small>
-              <uib-progressbar max="deviceinfo.gsmDataLimit" min="20" value="deviceinfo.gsmDataCurrentMonth" type="info"><span style="color:white; white-space:nowrap;">{{deviceinfo.gsmDataCurrentMonth}}/{{deviceinfo.gsmDataLimit}}</span></uib-progressbar>
-              <small><em>GPRS信号百分比</em></small>
-              <uib-progressbar max="100" value="deviceinfo.gprsSignal" type="warning"><span style="color:white; white-space:nowrap;">{{deviceinfo.gprsSignal}}/100</span></uib-progressbar>
-              <!--<div style="height: 200px;width: 400px">-->
-              <!--<highchart id="VU_meter" config="highchartsPower"></highchart>-->
-              <!--highchart id="container-power" config="highchartsPower"></highchart-->
-              <!--</div>-->
-            </div>
-            <div class="col-md-6">
-              <small><em>电池电量</em></small>
-              <uib-progressbar max="100" value="deviceinfo.batteryPower"><span style="color:white; white-space:nowrap;">{{deviceinfo.batteryPower}}/100</span></uib-progressbar>
-              <small><em>工作负载</em></small>
-              <uib-progressbar max="65536" value="deviceinfo.hostWorkload" type="success"><span style="color:white; white-space:nowrap;">{{deviceinfo.hostWorkload}}/65535</span></uib-progressbar>
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <!-- Default panel contents -->
+                <!-- Table -->
+                <table class="table">
+                  <tr>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
+                      <div ng-switch-when="0" class="chargeNormal" title="充电"></div>
+                      <div ng-switch-when="1" class="chargeWarning" title="充电"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:1">
+                      <div ng-switch-when="0" class="turnLeftNormal" title="左转"></div>
+                      <div ng-switch-when="1" class="turnLeftWarning" title="左转"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:2">
+                      <div ng-switch-when="0" class="centerCodeNormal" title="中央报警"></div>
+                      <div ng-switch-when="1" class="centerCodeWarning" title="中央报警"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:3">
+                      <div ng-switch-when="0" class="turnRightNormal" title="右转"></div>
+                      <div ng-switch-when="1" class="turnRightNormal" title="右转"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
+                      <div ng-switch-when="0" class="stopPressNormal" title="制动压力"></div>
+                      <div ng-switch-when="1" class="stopPressWarning" title="制动压力"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
+                      <div ng-switch-when="0" class="oilLevelNormal" title="燃油液位低"></div>
+                      <div ng-switch-when="1" class="oilLevelWarning" title="燃油液位低"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
+                      <div ng-switch-when="0" class="holdNormal" title="驻车制动"></div>
+                      <div ng-switch-when="1" class="holdWarning" title="驻车制动"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
+                      <div ng-switch-when="0" class="farLightNormal" title="远光"></div>
+                      <div ng-switch-when="1" class="farLightWarning" title="远光"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:8">
+                      <div ng-switch-when="0" class="fastSwitchNormal" title="快速切换"></div>
+                      <div ng-switch-when="1" class="fastSwitchWarning" title="快速切换"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:9">
+                      <div ng-switch-when="0" class="stabilizerNormal" title="稳压模块"></div>
+                      <div ng-switch-when="1" class="stabilizerWarning" title="稳压模块"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:10">
+                      <div ng-switch-when="0" class="differentialNormal" title="差速锁"></div>
+                      <div ng-switch-when="1" class="differentialWarning" title="差速锁"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:11">
+                      <div ng-switch-when="0" class="bridgeColderNormal" title="桥散热"></div>
+                      <div ng-switch-when="1" class="bridgeColderWarning" title="桥散热"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
+                      <div ng-switch-when="0" class="oilWaterNormal" title="油水分离"></div>
+                      <div ng-switch-when="1" class="oilWaterWarning" title="油水分离"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
+                      <div ng-switch-when="0" class="oilFilter2Normal" title="油滤"></div>
+                      <div ng-switch-when="1" class="oilFilter2Warning" title="油滤"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
+                      <div ng-switch-when="0" class="oilTempratureNormal" title="液压油温"></div>
+                      <div ng-switch-when="1" class="oilTempratureWarning" title="液压油温"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
+                      <div ng-switch-when="0" class="safeLockNormal" title="安全锁定"></div>
+                      <div ng-switch-when="1" class="safeLockWarning" title="安全锁定"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
+                      <div ng-switch-when="0" class="colderOilLevelNormal" title="冷却液位"></div>
+                      <div ng-switch-when="1" class="colderOilLevelWarning" title="冷却液位"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:17">
+                      <div ng-switch-when="0" class="preWarmNormal" title="预热"></div>
+                      <div ng-switch-when="1" class="preWarmWarning" title="预热"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:18">
+                      <div ng-switch-when="0" class="powerShutNormal" title="动力切断"></div>
+                      <div ng-switch-when="1" class="powerShutWarning" title="动力切断"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
+                      <div ng-switch-when="0" class="muteNormal" title="静音"></div>
+                      <div ng-switch-when="1" class="muteWarning" title="静音"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
+                      <div ng-switch-when="0" class="backCoverNormal" title="后罩开启"></div>
+                      <div ng-switch-when="1" class="backCoverWarning" title="后罩开启"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
+                      <div ng-switch-when="0" class="oilFilterNormal" title="油滤"></div>
+                      <div ng-switch-when="1" class="oilFilterWarning" title="油滤"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
+                      <div ng-switch-when="0" class="airFilterNormal" title="空滤"></div>
+                      <div ng-switch-when="1" class="airFilterWarning" title="空滤"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
+                      <div ng-switch-when="0" class="colderNormal" title="散热故障"></div>
+                      <div ng-switch-when="1" class="colderWarning" title="散热故障"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
+                      <div ng-switch-when="0" class="speedSwitchNormal" title="变速箱压力低"></div>
+                      <div ng-switch-when="1" class="speedSwitchWarning" title="变速箱压力低"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
+                      <div ng-switch-when="0" class="engineError1Normal" title="发动机故障1"></div>
+                      <div ng-switch-when="1" class="engineError1Warning" title="发动机故障1"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:26">
+                      <div ng-switch-when="0" class="engineError2Normal" title="发动机故障2"></div>
+                      <div ng-switch-when="1" class="engineError2Warning" title="发动机故障2"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:27">
+                      <div ng-switch-when="0" class="colderOilTempratureNormal" title="冷却液温度高"></div>
+                      <div ng-switch-when="1" class="colderOilTempratureNormal" title="冷却液温度高"></div>
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
+                      <div ng-switch-when="0" class="engineOilPressureNormal" title="机油压力低"></div>
+                      <div ng-switch-when="1" class="engineOilPressureWarning" title="机油压力低"></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -149,7 +261,7 @@
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
                     <td>当前位置</td>
-                    <td style="white-space:nowrap;">{{deviceCurrentInfoCtrl.deviceinfo.address}}</td>
+                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}</td>
                   </tr>
                 </table>
 
@@ -190,48 +302,48 @@
               </p>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.refreshPageDateDeviceData(0,20,'recordTime,desc',deviceCurrentInfoCtrl.deviceinfo,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">确定</button>
+              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">确定</button>
             </div>
 
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="table-responsive tableScroll">
+              <div class="table-responsive">
                 <!-- Default panel contents -->
                 <!-- Table -->
-                <table class="table" >
+                <table class="table">
                   <tr>
-                    <th  style="white-space:nowrap;">数据回传时间</th>
-                    <th  style="white-space:nowrap;">定位时间</th>
-                    <th  style="white-space:nowrap;">定位方式</th>
-                    <th  style="white-space:nowrap;">位置</th>
-                    <th  style="white-space:nowrap;">速度</th>
+                    <th class="text-nowrap">数据回传时间</th>
+                    <th class="text-nowrap">定位时间</th>
+                    <th class="text-nowrap">定位方式</th>
+                    <th class="text-nowrap">位置</th>
+                    <th class="text-nowrap">速度</th>
 
-                    <th  style="white-space:nowrap;">总工时</th>
-                    <th  style="white-space:nowrap;">燃油液位</th>
-                    <th  style="white-space:nowrap;">发动机转速</th>
-                    <th  style="white-space:nowrap;">水温</th>
-                    <th  style="white-space:nowrap;">串口通信状态</th>
+                    <th class="text-nowrap">总工时</th>
+                    <th class="text-nowrap">燃油液位</th>
+                    <th class="text-nowrap">发动机转速</th>
+                    <th class="text-nowrap">水温</th>
+                    <th class="text-nowrap">串口通信状态</th>
 
-                    <th  style="white-space:nowrap;">供电方式</th>
-                    <th  style="white-space:nowrap;">变矩器油温</th>
-                    <th  style="white-space:nowrap;">制动气压</th>
-                    <th  style="white-space:nowrap;">GPS信号质量</th>
-                    <th  style="white-space:nowrap;">运行监控</th>
+                    <th class="text-nowrap">供电方式</th>
+                    <th class="text-nowrap">变矩器油温</th>
+                    <th class="text-nowrap">制动气压</th>
+                    <th class="text-nowrap">GPS信号质量</th>
+                    <th class="text-nowrap">运行监控</th>
 
-                    <th  style="white-space:nowrap;">LED状态</th>
-                    <th  style="white-space:nowrap;">实时工时</th>
-                    <th  style="white-space:nowrap;">启动次数</th>
-                    <th  style="white-space:nowrap;">锁车状态</th>
-                    <th  style="white-space:nowrap;">ACC状态</th>
+                    <th class="text-nowrap">LED状态</th>
+                    <th class="text-nowrap">实时工时</th>
+                    <th class="text-nowrap">启动次数</th>
+                    <th class="text-nowrap">锁车状态</th>
+                    <th class="text-nowrap">ACC状态</th>
 
-                    <th  style="white-space:nowrap;">发电机状态</th>
-                    <th  style="white-space:nowrap;">GPS电源检测</th>
-                    <th  style="white-space:nowrap;">开盖状态</th>
-                    <th  style="white-space:nowrap;">模拟量1</th>
-                    <th  style="white-space:nowrap;">模拟量2</th>
+                    <th class="text-nowrap">发电机状态</th>
+                    <th class="text-nowrap">GPS电源检测</th>
+                    <th class="text-nowrap">开盖状态</th>
+                    <th class="text-nowrap">模拟量1</th>
+                    <th class="text-nowrap">模拟量2</th>
 
-                    <th  style="white-space:nowrap;">总里程</th>
+                    <th class="text-nowrap">总里程</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList">
                     <td ng-cloak>
@@ -299,7 +411,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <uib-pagination total-items="deviceCurrentInfoCtrl.page.totalElements" ng-change="deviceCurrentInfoCtrl.refreshPageDateDeviceData(ddeviceCurrentInfoCtrl.eviceData_pagenumber-1,20,sort,deviceCurrentInfoCtrl.deviceinfo,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceData_pagenumber" items-per-page="page.size" class="pagination-sm" boundary-links="true" rotate="false" ></uib-pagination>
+              <uib-pagination total-items="deviceCurrentInfoCtrl.page.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(ddeviceCurrentInfoCtrl.deviceData_pagenumber-1,20,sort,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceData_pagenumber" items-per-page="page.size" class="pagination-sm" boundary-links="true" rotate="false" ></uib-pagination>
             </div>
           </div>
         </div>
@@ -334,6 +446,6 @@
 
   <div class="modal-footer">
     <!--<button class="btn btn-primary" type="submit">OK</button>-->
-    <button class="btn btn-warning" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">Cancel</button>
+    <button class="btn btn-warning" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">关闭</button>
   </div>
 </form>
