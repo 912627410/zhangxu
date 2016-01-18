@@ -6,10 +6,8 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $window,$http,TipService) {
+  function MainController($rootScope, $window,$http,Notification) {
     var vm = this;
-    //因为全局提示框需要在页面上直接访问tipService，需要在最外层controller（如果没有可以直接绑定到$rootScope)中绑定
-    $rootScope.tipService = TipService;
     vm.profileFormHided = true;
     vm.logout = function(){
       $rootScope.userInfo = null;
@@ -27,7 +25,7 @@
       //    map: map
       //});
       $rootScope.$state.go('home.login');
-      TipService.setMessage('成功退出', 'success');
+      Notification.success('成功退出');
 
     }
 

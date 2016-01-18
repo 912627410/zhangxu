@@ -9,7 +9,7 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($rootScope, $window,$http,TipService,serviceResource) {
+  function LoginController($rootScope, $window,$http,Notification,serviceResource) {
     var vm = this;
     var userInfo;
     vm.loginMe = function(){
@@ -21,12 +21,12 @@
         };
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+        Notification.success('登录成功');
         $rootScope.$state.go('home');
-        TipService.setMessage('登录成功', 'success');
       },function(reason){
         $rootScope.userInfo = null;
         $window.sessionStorage["userInfo"] = null;
-        TipService.setMessage('用户名或密码错误', 'error');
+        Notification.error('用户名或密码错误');
       });
     };
   }

@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,TipService) {
+  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -47,7 +47,7 @@
             })
           })
         }, function (reason) {
-        TipService.setMessage('获取设备信息失败', 'error');
+          Notification.error('获取设备信息失败');
         }
       )
       vm.refreshDOM();

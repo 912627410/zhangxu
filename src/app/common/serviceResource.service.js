@@ -9,9 +9,10 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,TipService,USER_LOGIN_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
+                           DEVCE_WARNING_DATA_PAGED_QUERY,
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
       var defer = $q.defer();
@@ -92,7 +93,7 @@
                 }
               }, function (reason) {
                 map.clearMap();
-                TipService.setMessage('获取设备信息失败', 'error');
+                Notification.error('获取设备信息失败');
               })
             }
             else{
@@ -143,6 +144,23 @@
         }
         return restCallService(restCallURL,"GET");
       },
+      //分页查询设备报警数据信息(device warning data)
+      queryDeviceWarningData:function(page,size,sort,queryCondition){
+        var restCallURL = DEVCE_WARNING_DATA_PAGED_QUERY;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_DEVICE_WARNING_DATA_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
+      //TODO
+      getWarningMsg:function(deviceWarningData){
+        return "TODO";
+      }
 
     }
   }

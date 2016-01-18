@@ -9,7 +9,7 @@
     .controller('HomeController', HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope, $window,$http,serviceResource,HOME_STATISTICS_DATA_URL,TipService) {
+  function HomeController($rootScope, serviceResource,HOME_STATISTICS_DATA_URL,Notification) {
     var vm = this;
     var statisticInfo = {
       totalDevices: 0,
@@ -34,7 +34,7 @@
 
         statisticInfo.totalAbnormalDevices = data.deviceAbnormalStatics.deviceNumber
       }, function (reason) {
-        TipService.setMessage('获取设备信息失败', 'error');
+        Notification.error('获取设备信息失败');
       })
     }
     vm.statisticInfo = statisticInfo;

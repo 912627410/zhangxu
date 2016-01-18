@@ -271,6 +271,8 @@
         </div>
       </div>
     </uib-tab>
+
+    <!--历史数据-->
     <uib-tab select="">
       <uib-tab-heading>
         历史数据
@@ -315,94 +317,88 @@
                   <tr>
                     <th class="text-nowrap">数据回传时间</th>
                     <th class="text-nowrap">定位时间</th>
-                    <th class="text-nowrap">定位方式</th>
                     <th class="text-nowrap">位置</th>
                     <th class="text-nowrap">速度</th>
-
                     <th class="text-nowrap">总工时</th>
+
                     <th class="text-nowrap">燃油液位</th>
                     <th class="text-nowrap">发动机转速</th>
                     <th class="text-nowrap">水温</th>
                     <th class="text-nowrap">串口通信状态</th>
-
                     <th class="text-nowrap">供电方式</th>
+
                     <th class="text-nowrap">变矩器油温</th>
                     <th class="text-nowrap">制动气压</th>
                     <th class="text-nowrap">GPS信号质量</th>
                     <th class="text-nowrap">运行监控</th>
-
                     <th class="text-nowrap">LED状态</th>
+
                     <th class="text-nowrap">实时工时</th>
                     <th class="text-nowrap">启动次数</th>
                     <th class="text-nowrap">锁车状态</th>
                     <th class="text-nowrap">ACC状态</th>
-
                     <th class="text-nowrap">发电机状态</th>
+
                     <th class="text-nowrap">GPS电源检测</th>
                     <th class="text-nowrap">开盖状态</th>
                     <th class="text-nowrap">模拟量1</th>
                     <th class="text-nowrap">模拟量2</th>
-
-                    <th class="text-nowrap">总里程</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList">
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
+                    <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+                    <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
+                    <td ng-cloak>{{deviceData.totalDuration | number:2}}</td>
 
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
+                    <td ng-cloak>{{deviceData.oilLevel}}</td>
+                    <td ng-cloak>{{deviceData.enginRotate | number:2}}</td>
+                    <td ng-cloak>{{deviceData.engineTemperature}}</td>
+                    <!--串口通信状态-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='00'" class="bg-danger text-danger">异常</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">没有数据</td>
+                    <!--供电方式-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">车载电源</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">内部电池</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">没有数据</td>
 
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
+                    <td ng-cloak>{{deviceData.oilTemperature}}</td>
+                    <td ng-cloak>{{deviceData.pressureMeter}}</td>
+                    <td ng-cloak>{{deviceData.gsmSignal}}</td>
+                    <td ng-cloak>{{deviceData.workMonitor}}</td>
+                    <td ng-cloak>{{deviceData.ledStatus}}</td>
 
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
+                    <td ng-cloak>{{deviceData.realtimeDuration | number:2}}</td>
+                    <td ng-cloak>{{deviceData.startTimes}}</td>
+                    <!--锁车状态-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">一级</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">二级</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">没有数据</td>
+                    <!--ACC状态-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">工作</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">不工作</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">没有数据</td>
+                    <!--发电机状态-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">工作</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">不工作</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">没有数据</td>
 
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-                    <td ng-cloak>
-                    </td>
-
-                    <td ng-cloak>
-                    </td>
+                    <!--GPS电源检测-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">无电源</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">无信号</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">没有数据</td>
+                    <!--开盖状态-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">未开盖</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">开盖</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">没有数据</td>
+                    <!--模拟量1-->
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>
+                    <!--模拟量2-->
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate2}}</td>
+                    <!--总里程 消息结构中没有数据-->
                   </tr>
 
                 </table>
@@ -411,25 +407,82 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <uib-pagination total-items="deviceCurrentInfoCtrl.page.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(ddeviceCurrentInfoCtrl.deviceData_pagenumber-1,20,sort,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceData_pagenumber" items-per-page="page.size" class="pagination-sm" boundary-links="true" rotate="false" ></uib-pagination>
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(ddeviceCurrentInfoCtrl.deviceDataPageNumber-1,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
             </div>
           </div>
         </div>
 
       </div>
     </uib-tab>
+
+    <!--报警数据-->
     <uib-tab select="">
       <uib-tab-heading>
         报警数据
       </uib-tab-heading>
       <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box-body" style="height: 600px"></div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="control-label">起始日期:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="deviceCurrentInfoCtrl.startDateDeviceWarningData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceWarningData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenDeviceWarningData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">结束日期:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="deviceCurrentInfoCtrl.endDateDeviceWarningData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceWarningData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenDeviceWarningData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceWarningData(0,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)">确定</button>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <!-- Default panel contents -->
+                <!-- Table -->
+                <table class="table">
+                  <tr>
+                    <th class="text-nowrap">终端编号</th>
+                    <th class="text-nowrap">报警时间</th>
+                    <th class="text-nowrap">数据回传时间</th>
+                    <th class="text-nowrap">故障内容</th>
+                  </tr>
+                  <tr ng-repeat="deviceWarningData in deviceCurrentInfoCtrl.deviceWarningDataList">
+                    <td ng-cloak class="text-nowrap">{{deviceWarningData.deviceNum}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceWarningData.warningTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceWarningData.warningMsg}}</td>
+                  </tr>
+
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceWarningDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceWarningData(ddeviceCurrentInfoCtrl.deviceDataPageNumber-1,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceWarningDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceWarningDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+            </div>
           </div>
         </div>
       </div>
     </uib-tab>
+
+    <!--地图-->
     <uib-tab select="deviceCurrentInfoCtrl.refreshMapTab(deviceCurrentInfoCtrl.deviceinfo)">
       <uib-tab-heading>
         地图

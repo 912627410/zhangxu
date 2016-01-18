@@ -9,7 +9,8 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$timeout,$uibModalInstance,serviceResource,TipService,DEVCE_DATA_PAGED_QUERY,deviceinfo) {
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$uibModalInstance,serviceResource,Notification,
+                                       DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -352,11 +353,19 @@
       startingDay: 1
     };
 
-    vm.getDeviceData = function(page,size,sort,deviceNum,startData,endDate){
+    //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
+    vm.refreshDOM = function() {
+      setTimeout(function(){
+        $scope.$apply();
+      }, AMAP_QUERY_TIMEOUT_MS);
+    };
+
+
+    vm.getDeviceData = function(page,size,sort,deviceNum,startDate,endDate){
       if (deviceNum){
         var filterTerm = "deviceNum=" + deviceNum;
       }
-      if (startData){
+      if (startDate){
         var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
         var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
         if (filterTerm){
@@ -379,21 +388,90 @@
       var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           vm.deviceDataList = data.content;
-          vm.page = data.page;
-          vm.deviceData_pagenumber = data.page.number + 1;
-          vm.basePath = DEVCE_DATA_PAGED_QUERY;
-
-          vm.deviceDataList.forEach(function (deviceData) {
-            var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
-            serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-              deviceData.address = newaddress;
+          vm.deviceDataPage = data.page;
+          vm.deviceDataPageNumber = data.page.number + 1;
+          vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
+          if (vm.deviceDataList.length == 0){
+            Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
+          }
+          else{
+            vm.deviceDataList.forEach(function (deviceData) {
+              var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
+              serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
+                deviceData.address = newaddress;
+              })
             })
-          })
+          }
+
         }, function (reason) {
-          TipService.setMessage('获取设备信息失败', 'error');
+          Notification.error('获取该设备历史数据失败');
         }
       )
+      vm.refreshDOM();
+    }
 
+
+    //报警数据tab
+    vm.startDateDeviceWarningData = startDate;
+    vm.endDateDeviceWarningData = new Date();
+
+    //date picker
+    vm.startDateOpenStatusDeviceWarningData = {
+      opened: false
+    };
+    vm.endDateOpenStatusDeviceWarningData = {
+      opened: false
+    };
+
+    vm.startDateOpenDeviceWarningData = function($event) {
+      vm.startDateOpenStatusDeviceWarningData.opened = true;
+    };
+    vm.endDateOpenDeviceWarningData = function($event) {
+      vm.endDateOpenStatusDeviceWarningData.opened = true;
+    };
+
+    vm.getDeviceWarningData = function(page,size,sort,deviceNum,startDate,endDate){
+      if (deviceNum){
+        var filterTerm = "deviceNum=" + deviceNum;
+      }
+      if (startDate){
+        var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        if (filterTerm){
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else{
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      }
+      if (endDate){
+        var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        if (filterTerm){
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else{
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      }
+      var deviceWarningDataPromis = serviceResource.queryDeviceWarningData(page, size, sort, filterTerm);
+      deviceWarningDataPromis.then(function (data) {
+          vm.deviceWarningDataList = data.content;
+          vm.deviceWarningDataPage = data.page;
+          vm.deviceWarningDataPageNumber = data.page.number + 1;
+          vm.deviceWarningDataBasePath = DEVCE_WARNING_DATA_PAGED_QUERY;
+          if (vm.deviceWarningDataList.length == 0){
+            Notification.warning('没有该设备此时间段内的报警信息,请重新选择');
+          }
+          else{
+            vm.deviceWarningDataList.forEach(function (deviceWarningData) {
+              deviceWarningData.warningMsg = serviceResource.getWarningMsg(deviceWarningData);
+            })
+          }
+        }, function (reason) {
+          Notification.error('获取该设备报警信息失败');
+        }
+      )
     }
 
   }
