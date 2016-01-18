@@ -9,7 +9,7 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($rootScope, $window,$http,Notification,serviceResource) {
+  function LoginController($rootScope, $window,Notification,serviceResource) {
     var vm = this;
     var userInfo;
     vm.loginMe = function(){

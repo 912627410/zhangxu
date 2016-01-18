@@ -11,7 +11,7 @@
   /** @ngInject */
   function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,
-                           DEVCE_WARNING_DATA_PAGED_QUERY,
+                           USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
@@ -43,6 +43,10 @@
     };
     return {
       restCallService:restCallService,
+      refreshUserAuthtoken:function(newpassword){
+        $rootScope.userInfo.authtoken ="Basic "+ btoa($rootScope.userInfo.userdto.ssn+":"+newpassword);
+        $window.sessionStorage["userInfo"] = JSON.stringify($rootScope.userInfo);
+      },
       //高德地图逆向地理编码(坐标->地址)
       getAddressFromXY: function(lnglatXY,callback){
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -157,6 +161,24 @@
         }
         return restCallService(restCallURL,"GET");
       },
+      //分页查询用户信息(user info)
+      queryUserInfo:function(page,size,sort,queryCondition){
+        var restCallURL = USER_PAGED_URL;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_USER_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
+      //修改数据通用接口
+      restUpdateRequest:function(URL,params){
+        return restCallService(URL,"UPDATE",params);
+      },
+
       //TODO
       getWarningMsg:function(deviceWarningData){
         return "TODO";

@@ -69,6 +69,24 @@
           }
         }
       })
+      .state('home.profile', {
+        url: '/profile',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/userManagement/profile.html',
+            controller: 'profileController as profileCtrl'
+          }
+        }
+      })
+      .state('home.userinfomng', {
+        url: '/userinfomng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/userManagement/userinfomng.html',
+            controller: 'userMngController as userMngCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {
