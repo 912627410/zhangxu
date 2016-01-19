@@ -9,9 +9,12 @@
     .controller('userMngController', userMngController);
 
   /** @ngInject */
-  function userMngController($rootScope,$uibModal,Notification,serviceResource,UPDATE_USERINFO_URL,USER_GROUPBY_ROLE_URL,USER_PAGED_URL) {
+  function userMngController($rootScope,$uibModal,Notification,serviceResource,
+                             UPDATE_USERINFO_URL,USER_GROUPBY_ROLE_URL,
+                             USER_PAGED_URL,$scope, $TreeDnDConvert, DataDemo ) {
     var vm = this;
-    vm.operatorInfo =$rootScope.userInfo;
+    vm.operatorInfo = $rootScope.userInfo;
+
     vm.loadUsersStatistic = function(){
         var rspData = serviceResource.restCallService(USER_GROUPBY_ROLE_URL,"QUERY");
         rspData.then(function(data){
@@ -157,5 +160,29 @@
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
+
+    vm.treeshow = false;
+    vm.openOrg = function (usermnginfo,size) {
+      vm.treeshow = !vm.treeshow;
+      //var modalInstance = $uibModal.open({
+      //  animation: vm.animationsEnabled,
+      //  templateUrl: 'app/components/common/organazition.html',
+      //  controller: 'organazitionController as orgCtrl',
+      //  size: size,
+      //  resolve: {
+      //    usermnginfo: function () {
+      //      return usermnginfo;
+      //    }
+      //  }
+      //});
+      //
+      //modalInstance.result.then(function (selectedItem) {
+      //  vm.selected = selectedItem;
+      //  console.log('Modal select: ' + selectedItem);
+      //}, function () {
+      //  console.log('Modal dismissed at: ' + new Date());
+      //});
+    };
+
   }
 })();

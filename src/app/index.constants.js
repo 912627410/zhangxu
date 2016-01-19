@@ -27,6 +27,7 @@
     .constant('UPDATE_USERINFO_URL', SERVER_BASE_URL + 'user/userinfo')   //修改用户基本信息
     .constant('USER_GROUPBY_ROLE_URL', SERVER_BASE_URL + 'user/userinfobyrole')   //按照role分组得到用户信息
     .constant('USER_PAGED_URL', SERVER_BASE_URL + 'user/userinfopage')   //用户信息分页
+    .constant('ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'config/organazition')   //组织机构信息,返回树状json代码
 
   ;
 

@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider, toastrConfig) {
+  function config($logProvider, $httpProvider,toastrConfig) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -16,6 +16,8 @@
     toastrConfig.positionClass = 'toast-top-right';
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
+
+    //树状列表配置
 
     /* Register error provider that shows message on failed requests or redirects to login page on
      * unauthenticated requests */

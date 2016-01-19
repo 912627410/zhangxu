@@ -26,7 +26,8 @@
     "Ionicons": "ionicons#^2.0.1",
     "angular-ui-notification": "~0.1.0",
     "angular-validation-match": "~1.7.1",
-    "angular-ivh-treeview": "~1.0.2"
+    "angular-tree-dnd": "~3.0.4",
+    "angular-bootstrap-nav-tree": "*"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.2"
