@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('updatePasswordController', updatePasswordController);
+    .controller('updateSelfPasswordController', updateSelfPasswordController);
 
   /** @ngInject */
-  function updatePasswordController($rootScope,$window,$uibModalInstance,RESET_PASSWORD_URL,serviceResource, Notification,usermnginfo) {
+  function updateSelfPasswordController($rootScope,$window,$uibModalInstance,RESET_PASSWORD_URL,serviceResource, Notification,usermnginfo) {
     var vm = this;
     var userInfo =$rootScope.userInfo;
     vm.ok = function (currentPassword,newpassword) {

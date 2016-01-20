@@ -3,7 +3,7 @@
 
   angular
     .module('GPSCloud', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngResource', 'ui.router',
-      'ui.bootstrap', 'toastr','highcharts-ng','ngLoadingSpinner','angularTreeview',
-      'ui-notification','validation.match','ntt.TreeDnD','angularBootstrapNavTree']);
+      'ui.bootstrap', 'toastr','highcharts-ng','ngLoadingSpinner','angular-underscore',
+      'ui-notification','validation.match','angularBootstrapNavTree']);
 
 })();

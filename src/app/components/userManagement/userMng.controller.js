@@ -11,7 +11,7 @@
   /** @ngInject */
   function userMngController($rootScope,$uibModal,Notification,serviceResource,
                              UPDATE_USERINFO_URL,USER_GROUPBY_ROLE_URL,
-                             USER_PAGED_URL,$scope, $TreeDnDConvert, DataDemo ) {
+                             USER_PAGED_URL ) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -101,7 +101,7 @@
     vm.addUser = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'tpls/UserInfo/newUser.html',
+        templateUrl: 'app/components/userManagement/newUser.html',
         controller: 'AddUserinfoInstanceCtrl',
         size: size,
         resolve: {
@@ -122,8 +122,8 @@
     vm.updatePassword = function (usermnginfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'tpls/UserInfo/updatePassword.html',
-        controller: 'UpdatePasswordInstanceCtrl',
+        templateUrl: 'app/components/userManagement/updatePassword.html',
+        controller: 'updatePasswordController as updatePasswordCtrl',
         size: size,
         resolve: {
           usermnginfo: function () {
@@ -135,7 +135,7 @@
       modalInstance.result.then(function (selectedItem) {
         vm.selected = selectedItem;
       }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
+        //$log.info('Modal dismissed at: ' + new Date());
       });
     };
 
@@ -144,8 +144,8 @@
     vm.updateUserInfo = function (usermnginfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'tpls/UserInfo/updateUserInfo.html',
-        controller: 'UpdateUserinfoInstanceCtrl',
+        templateUrl: 'app/components/userManagement/updateUserInfo.html',
+        controller: 'updateUserinfoController as updateUserinfoCtrl',
         size: size,
         resolve: {
           usermnginfo: function () {
@@ -157,9 +157,11 @@
       modalInstance.result.then(function (selectedItem) {
         vm.selected = selectedItem;
       }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
+        //$log.info('Modal dismissed at: ' + new Date());
       });
     };
+
+    //测试用
 
     vm.treeshow = false;
     vm.openOrg = function (usermnginfo,size) {
