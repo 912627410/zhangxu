@@ -9,12 +9,12 @@
     .controller('updateUserinfoController', updateUserinfoController);
 
   /** @ngInject */
-  function updateUserinfoController($rootScope,$scope,$uibModalInstance,UPDATE_USERINFO_URL,serviceResource, Notification,usermnginfo) {
+  function updateUserinfoController($rootScope,$scope,$uibModalInstance,USERINFO_URL,serviceResource, Notification,usermnginfo) {
     var vm = this;
     vm.updatedUser = usermnginfo;
     vm.operatorInfo =$rootScope.userInfo;
     vm.ok = function (updatedUser) {
-      var restPromise = serviceResource.restUpdateRequest(UPDATE_USERINFO_URL,updatedUser);
+      var restPromise = serviceResource.restUpdateRequest(USERINFO_URL,updatedUser);
       restPromise.then(function (data){
         Notification.success("修改用户信息成功!");
         $uibModalInstance.close();
@@ -24,11 +24,6 @@
     };
 
 
-    vm.dynamicPopover = {
-      content: 'Hello, World!',
-      templateUrl: 'myPopoverTemplate.html',
-      title: '组织机构选择'
-    };
     vm.showOrgTree = false;
 
     vm.openOrgTree = function(){

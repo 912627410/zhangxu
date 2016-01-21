@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function userMngController($rootScope,$uibModal,Notification,serviceResource,
-                             UPDATE_USERINFO_URL,USER_GROUPBY_ROLE_URL,
+                             USERINFO_URL,USER_GROUPBY_ROLE_URL,
                              USER_PAGED_URL ) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -67,7 +67,7 @@
 
     //设置用户状态
     vm.revertUserStatus = function(userMng){
-      if (operatorInfo){
+      if (vm.operatorInfo){
         if (userMng.status == 0)
         {
           userMng.status =1;
@@ -75,7 +75,7 @@
         else{
           userMng.status =0;
         }
-        var rspData = serviceResource.restCallService(UPDATE_USERINFO_URL,"UPDATE");
+        var rspData = serviceResource.restCallService(USERINFO_URL,"UPDATE",userMng);
         rspData.then(function(data){
           Notification.success("更新成功");
         },function(reason){
@@ -102,19 +102,19 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/userManagement/newUser.html',
-        controller: 'AddUserinfoInstanceCtrl',
+        controller: 'AddUserController as addUserCtrl',
         size: size,
         resolve: {
-          userInfo: function () {
-            return vm.userInfo;
+          operatorInfo: function () {
+            return vm.operatorInfo;
           }
         }
       });
 
       modalInstance.result.then(function () {
-        $log.info('new user is added: ' + new Date());
+        //正常返回
       }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
+        //取消
       });
     };
 

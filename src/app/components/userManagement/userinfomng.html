@@ -18,7 +18,7 @@
                 <div class="box box-solid box-primary">
 
                     <div class="box-body">
-                        <a class="btn btn-app btn-link" ng-if="userMngCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN'" ng-click="userMngCtrl.showUserMng('ROLE_SYSADMIN')">
+                        <a class="btn btn-app btn-link" style="width: 15%" ng-if="userMngCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN'" ng-click="userMngCtrl.showUserMng('ROLE_SYSADMIN')">
                             <span class="badge bg-purple">{{userMngCtrl.userMngNumberByRole.sysadminnumber}}</span>
                             <i class="fa fa-users"></i> 系统管理员
                         </a>
@@ -26,6 +26,10 @@
                             <span class="badge bg-purple">{{userMngCtrl.userMngNumberByRole.adminnumber}}</span>
                             <i class="fa fa-users"></i> 管理员
                         </a>
+                      <a class="btn btn-app btn-link" style="width: 15%" ng-if="userMngCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN' ||userMngCtrl.operatorInfo.userdto.role == 'ROLE_ADMIN'" ng-click="userMngCtrl.showUserMng('ROLE_OPERATOR')">
+                        <span class="badge bg-purple">{{userMngCtrl.userMngNumberByRole.operatornumber}}</span>
+                        <i class="fa fa-users"></i> 操作员
+                      </a>
                         <!--<a class="btn btn-app" style="width: 15%" ng-click="showUserMng('ROLE_OPERATOR')">-->
                             <!--<span class="badge bg-purple">{{userMngNumberByRole.operatornumber}}</span>-->
                             <!--<i class="fa fa-users"></i> 操作员-->

@@ -179,6 +179,11 @@
         return restCallService(URL,"UPDATE",params);
       },
 
+      //添加数据通用接口
+      restAddRequest:function(URL,params){
+        return restCallService(URL,"ADD",params);
+      },
+
       //TODO
       getWarningMsg:function(deviceWarningData){
         return "TODO";
