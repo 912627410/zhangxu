@@ -9,13 +9,13 @@
     .controller('profileController', profileController);
 
   /** @ngInject */
-  function profileController($rootScope,$uibModal,Notification,serviceResource,UPDATE_USERINFO_URL) {
+  function profileController($rootScope,$uibModal,Notification,serviceResource,USERINFO_URL) {
     var vm = this;
     vm.currentUserInfo = $rootScope.userInfo;
 
 //update userinfo
     vm.updateUserInfo = function () {
-      var rspData = serviceResource.restUpdateRequest(UPDATE_USERINFO_URL,vm.currentUserInfo.userdto);
+      var rspData = serviceResource.restUpdateRequest(USERINFO_URL,vm.currentUserInfo.userdto);
       rspData.then(function(data){
         Notification.success("修改用户信息成功");
       },function(reason){
