@@ -9,7 +9,7 @@
     .controller('RegisterController', RegisterController);
 
   /** @ngInject */
-  function RegisterController($rootScope, $window,USER_REGISTER_URL,TipService,serviceResource) {
+  function RegisterController($rootScope, $window,USER_REGISTER_URL,Notification,serviceResource) {
     var vm = this;
     var userInfo;
     var registerProcess = function(registerInfo, callback){
@@ -37,11 +37,11 @@
     vm.registerMe = function() {
       registerProcess(vm.registerInfo, function(){
         if (userInfo){
-          TipService.setMessage('注册成功', 'success');
+          Notification.success('注册成功');
           $rootScope.$state.go('home');
         }
         else{
-          TipService.setMessage('注册失败', 'success');
+          Notification.error('注册失败');
         }
       })
     }
