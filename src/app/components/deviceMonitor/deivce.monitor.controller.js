@@ -41,10 +41,15 @@
           vm.refreshMainMap(vm.deviceInfoList);
 
           vm.deviceInfoList.forEach(function (deviceInfo) {
-            var lnglatXY = [parseFloat(deviceInfo.longitudeNum), parseFloat(deviceInfo.latitudeNum)];
-            serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-              deviceInfo.address = newaddress;
-            })
+            if (deviceInfo.locateStatus === 'A'){
+              var lnglatXY = [parseFloat(deviceInfo.longitudeNum), parseFloat(deviceInfo.latitudeNum)];
+              serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
+                deviceInfo.address = newaddress;
+              })
+            }
+            else{
+              deviceInfo.address = "未定位";
+            }
           })
         }, function (reason) {
           Notification.error('获取设备信息失败');

@@ -396,10 +396,15 @@
           }
           else{
             vm.deviceDataList.forEach(function (deviceData) {
-              var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
-              serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-                deviceData.address = newaddress;
-              })
+              if (deviceData.locateStatus === 'A'){
+                var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
+                serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
+                  deviceData.address = newaddress;
+                })
+              }
+              else{
+                deviceData.address = "未定位";
+              }
             })
           }
 

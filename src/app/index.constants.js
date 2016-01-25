@@ -3,7 +3,7 @@
   'use strict';
   var SERVER_BASE_URL = 'http://127.0.0.1:8080/rest/';
   //生产环境的https协议地址
-  //var SERVER_BASE_URL = 'https://139.196.190.56/rest/';
+  //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
     .module('GPSCloud')
     .constant('malarkey', malarkey)
