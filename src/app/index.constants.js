@@ -31,6 +31,9 @@
     .constant('USER_PAGED_URL', SERVER_BASE_URL + 'user/userinfopage')   //用户信息分页
     .constant('ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'config/organazition')   //组织机构信息,返回树状json代码
 
+    //车辆管理相关
+    .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
+    .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //用户基本信息
   ;
 
 })();

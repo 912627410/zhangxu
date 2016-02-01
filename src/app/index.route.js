@@ -87,6 +87,15 @@
           }
         }
       })
+      .state('home.machinemng', {
+        url: '/machinemng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/machineManagement/machinemng.html',
+            controller: 'machineMngController as machineMngCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {
