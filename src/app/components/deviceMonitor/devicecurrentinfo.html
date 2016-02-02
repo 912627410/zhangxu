@@ -206,8 +206,8 @@
                   <tr>
                     <td>变矩器油温</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}</td>
-                    <td>通讯状态</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='00'" class="bg-danger text-danger">异常</td>
+                    <td>CAN通讯状态</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">异常</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">正常</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">没有数据</td>
                     <td>供电方式</td>
@@ -324,7 +324,7 @@
                     <th class="text-nowrap">燃油液位</th>
                     <th class="text-nowrap">发动机转速</th>
                     <th class="text-nowrap">水温</th>
-                    <th class="text-nowrap">串口通信状态</th>
+                    <th class="text-nowrap">CAN通信状态</th>
                     <th class="text-nowrap">供电方式</th>
 
                     <th class="text-nowrap">变矩器油温</th>
@@ -355,13 +355,13 @@
                     <td ng-cloak>{{deviceData.enginRotate | number:2}}</td>
                     <td ng-cloak>{{deviceData.engineTemperature}}</td>
                     <!--串口通信状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='00'" class="bg-danger text-danger">异常</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">正常</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">没有数据</td>
+                    <td ng-if="deviceData.commStatus=='10'" class="bg-danger text-danger">异常</td>
+                    <td ng-if="deviceData.commStatus=='01'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceData.commStatus==null">没有数据</td>
                     <!--供电方式-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">车载电源</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">内部电池</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">没有数据</td>
+                    <td ng-if="deviceData.powerType=='00'" class="bg-info text-info">车载电源</td>
+                    <td ng-if="deviceData.powerType=='01'" class="bg-warning text-warning">内部电池</td>
+                    <td ng-if="deviceData.powerType==null">没有数据</td>
 
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
@@ -372,32 +372,32 @@
                     <td ng-cloak>{{deviceData.realtimeDuration | number:2}}</td>
                     <td ng-cloak>{{deviceData.startTimes}}</td>
                     <!--锁车状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">正常</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">一级</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">二级</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">没有数据</td>
+                    <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">一级</td>
+                    <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">二级</td>
+                    <td ng-if="deviceData.lockStatus==null">没有数据</td>
                     <!--ACC状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">工作</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">不工作</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">没有数据</td>
+                    <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">工作</td>
+                    <td ng-if="deviceData.accStatus=='10'" class="bg-danger text-danger">不工作</td>
+                    <td ng-if="deviceData.accStatus==null">没有数据</td>
                     <!--发电机状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">工作</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">不工作</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">没有数据</td>
+                    <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">工作</td>
+                    <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">不工作</td>
+                    <td ng-if="deviceData.elecStatus==null">没有数据</td>
 
                     <!--GPS电源检测-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">正常</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">无电源</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">无信号</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">没有数据</td>
+                    <td ng-if="deviceData.gpsPowerStatus=='00'" class="bg-info text-info">正常</td>
+                    <td ng-if="deviceData.gpsPowerStatus=='01'" class="bg-warning text-warning">无电源</td>
+                    <td ng-if="deviceData.gpsPowerStatus=='10'" class="bg-danger text-danger">无信号</td>
+                    <td ng-if="deviceData.gpsPowerStatus==null">没有数据</td>
                     <!--开盖状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">未开盖</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">开盖</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">没有数据</td>
+                    <td ng-if="deviceData.lockerStatus=='00'">未开盖</td>
+                    <td ng-if="deviceData.lockerStatus=='11'">开盖</td>
+                    <td ng-if="deviceData.lockerStatus==null">没有数据</td>
                     <!--模拟量1-->
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>
+                    <td ng-cloak>{{deviceData.imitate1}}</td>
                     <!--模拟量2-->
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate2}}</td>
+                    <td ng-cloak>{{deviceData.imitate2}}</td>
                     <!--总里程 消息结构中没有数据-->
                   </tr>
 

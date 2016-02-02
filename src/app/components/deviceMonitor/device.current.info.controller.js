@@ -396,7 +396,7 @@
           }
           else{
             vm.deviceDataList.forEach(function (deviceData) {
-              if (deviceData.locateStatus === 'A'){
+              if (deviceData.locateStatus === 'A' && deviceData.address == null){
                 var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
                 serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
                   deviceData.address = newaddress;

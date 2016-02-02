@@ -102,7 +102,7 @@
             }
             else{
               deviceList.forEach(function(deviceInfo){
-                if (deviceInfo.longitudeNum != null && deviceInfo.latitudeNum != null) {
+                if (deviceInfo.locateStatus === 'A' && deviceInfo.longitudeNum != null && deviceInfo.latitudeNum != null) {
                   var marker = new AMap.Marker({
                     icon: "http://webapi.amap.com/images/marker_sprite.png",
                     position: [deviceInfo.longitudeNum, deviceInfo.latitudeNum]
