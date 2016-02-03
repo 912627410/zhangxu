@@ -41,7 +41,7 @@
           vm.refreshMainMap(vm.deviceInfoList);
 
           vm.deviceInfoList.forEach(function (deviceInfo) {
-            if (deviceInfo.locateStatus === 'A'){
+            if (deviceInfo.locateStatus === 'A' && deviceInfo.address == null){
               var lnglatXY = [parseFloat(deviceInfo.longitudeNum), parseFloat(deviceInfo.latitudeNum)];
               serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
                 deviceInfo.address = newaddress;
