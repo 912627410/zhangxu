@@ -23,9 +23,20 @@
     //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
     vm.refreshDOM = function() {
       setTimeout(function(){
+        vm.setDefaultAddress();
         $scope.$apply();
       }, AMAP_QUERY_TIMEOUT_MS);
     };
+
+    vm.setDefaultAddress = function(){
+      if (vm.deviceInfoList != null){
+        vm.deviceInfoList.forEach(function (deviceInfo) {
+          if (deviceInfo.address === '正在请求定位数据...'){
+            deviceInfo.address = '--';
+          }
+        })
+      }
+    }
 
     vm.queryDeviceInfo = function(page,size,sort,queryCondition){
       if (queryCondition){
@@ -41,14 +52,15 @@
           vm.refreshMainMap(vm.deviceInfoList);
 
           vm.deviceInfoList.forEach(function (deviceInfo) {
-            if (deviceInfo.locateStatus === 'A' && deviceInfo.address == null){
+            if (deviceInfo.locateStatus === 'A' && deviceInfo.address == null && deviceInfo.longitudeNum!=null && deviceInfo.latitudeNum!=null){
+              deviceInfo.address = '正在请求定位数据...';
               var lnglatXY = [parseFloat(deviceInfo.longitudeNum), parseFloat(deviceInfo.latitudeNum)];
               serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
                 deviceInfo.address = newaddress;
               })
             }
             else{
-              deviceInfo.address = "未定位";
+              deviceInfo.address = "--";
             }
           })
         }, function (reason) {

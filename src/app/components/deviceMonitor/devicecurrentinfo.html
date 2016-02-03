@@ -217,7 +217,7 @@
                   </tr>
                   <tr>
                     <td>GPS信号质量</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gsmSignal}}</td>
                     <td>运行监控</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
                     <td>实时工时(H)</td>
@@ -475,7 +475,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceWarningDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceWarningData(ddeviceCurrentInfoCtrl.deviceDataPageNumber-1,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceWarningDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceWarningDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceWarningDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceWarningData(deviceCurrentInfoCtrl.deviceWarningDataPageNumber-1,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)" max-size="5" ng-model="deviceCurrentInfoCtrl.deviceWarningDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceWarningDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
             </div>
           </div>
         </div>

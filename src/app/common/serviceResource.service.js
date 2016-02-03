@@ -56,6 +56,10 @@
             if (status === 'complete' && result.info === 'OK') {
               callback(result.regeocode.formattedAddress);
             }
+            else{
+              //如果请求失败则把地址设置为'--'
+              callback('--');
+            }
           });
         })
       },
@@ -186,7 +190,7 @@
 
       //TODO
       getWarningMsg:function(deviceWarningData){
-        return "TODO";
+        return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
       }
 
     }
