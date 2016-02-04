@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider,toastrConfig) {
+  function config($logProvider, $httpProvider,toastrConfig,IdleProvider, KeepaliveProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -18,7 +18,6 @@
     toastrConfig.progressBar = true;
 
     //树状列表配置
-
     /* Register error provider that shows message on failed requests or redirects to login page on
      * unauthenticated requests */
     $httpProvider.interceptors.push(function ($q, $rootScope) {
@@ -54,6 +53,21 @@
         }
       };
     });
+
+// configure Idle settings
+    //idle(seconds) (integer, default is 20min): The idle timeout duration in seconds.
+    // After this amount of time passes without the user performing an action that triggers one of the watched DOM events, the user is considered idle.
+    // Note: Prior to v1.0, this method is called idleDuration
+    IdleProvider.idle(20 * 60); // in seconds
+
+    //timeout(seconds) (integer, default is 30s): The amount of time the user has to respond (in seconds) before they have been considered timed out. Set to 0 or false to disable this feature, if you want Idle to nothing but detect when a user is idle or not forever. Note: Prior to v1.0, this method is called warningDuration, and could not be disabled;
+    //it always had to have a positive integer value.
+    IdleProvider.timeout(60); // in seconds
+
+
+    //interval(seconds) (integer, default is 10 minutes): Must be greater than 0.
+    //This specifies how often the Keepalive event is triggered and the HTTP request is issued.
+    //KeepaliveProvider.interval(10); // in seconds
 
   }
 

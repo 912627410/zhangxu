@@ -79,7 +79,7 @@
 
 //监控
     vm.currentInfo = function (deviceinfo,size) {
-      var modalInstance = $uibModal.open({
+      $rootScope.currentOpenModal = $uibModal.open({
         animation: vm.animationsEnabled,
         backdrop: false,
         templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',

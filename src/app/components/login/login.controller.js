@@ -9,7 +9,7 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($rootScope, $window,Notification,serviceResource) {
+  function LoginController($rootScope, $window,Notification,serviceResource,Idle) {
     var vm = this;
     var userInfo;
     vm.loginMe = function(){
@@ -22,6 +22,8 @@
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
         Notification.success('登录成功');
+        //监控用户登录超时
+        Idle.watch();
         $rootScope.$state.go('home');
       },function(reason){
         $rootScope.userInfo = null;

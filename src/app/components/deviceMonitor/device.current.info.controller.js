@@ -207,7 +207,7 @@
       },
       series: [{
         name: '转速',
-        data: [vm.deviceinfo.enginRotate * 0.125],
+        data: [vm.deviceinfo.enginRotate],
         tooltip: {
           valueSuffix: ' 转'
         }

@@ -183,7 +183,8 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'" class="bg-danger text-danger">未定位</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">没有数据</td>
                     <td>定位时间</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'">--</td>
                     <td>回传时间</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
@@ -346,8 +347,10 @@
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList">
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap" style="min-width: 300px">--</td>
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <td ng-cloak>{{deviceData.totalDuration | number:2}}</td>
 

@@ -27,7 +27,8 @@
     "angular-validation-match": "~1.7.1",
     "angular-bootstrap-nav-tree": "*",
     "angular-underscore": "~0.5.0",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "ng-idle": "~1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.2"
