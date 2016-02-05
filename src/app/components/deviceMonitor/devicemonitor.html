@@ -32,6 +32,7 @@
   </div>
 
   <div class="row">
+    <hr>
     <div class="col-md-2">
           <label class="control-label">车牌号/机号/终端号:</label>
         </div>
@@ -45,9 +46,13 @@
     </div>
   </div>
   <div class="row">
+    <hr>
     <div class="btn-group col-md-2">
       <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
       <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+    </div>
+    <div class="btn-group col-md-2">
+      <span>记录总数 {{monitorCtrl.page.totalElements}}</span>
     </div>
   </div>
   <div class="row" style="padding-top: 30px">

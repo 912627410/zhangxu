@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,
-                           AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,
+                           AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
     var restCallService = function(URL,action,params){
@@ -72,6 +72,7 @@
           }
           var map = new AMap.Map(mapId, {
             resizeEnable: true,
+            center: [103.39,36.9],   //设置中心点大概在兰州附近
             zooms: [5, 18]
           });
           map.setZoom(1);
@@ -142,6 +143,19 @@
       //分页查询设备数据信息(device data)
       queryDeviceData:function(page,size,sort,queryCondition){
         var restCallURL = DEVCE_DATA_PAGED_QUERY;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_DEVICE_DATA_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
+      //分页查询设备数据简化信息(device simple data)
+      queryDeviceSimpleData:function(page,size,sort,queryCondition){
+        var restCallURL = DEVCE_SIMPLE_DATA_PAGED_QUERY;
         var pageUrl = page || 0;
         var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
         var sortUrl = sort || DEFAULT_DEVICE_DATA_SORT_BY;

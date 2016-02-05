@@ -10,7 +10,8 @@
 
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope,$scope,$timeout,$uibModalInstance,serviceResource,Notification,
-                                       DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,deviceinfo) {
+                                       DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
+                                       AMAP_GEO_CODER_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -309,14 +310,6 @@
       }
     };
 
-    vm.refreshMapTab = function(deviceInfo){
-      $timeout(function(){
-        var deviceInfoList = new Array();
-        deviceInfoList.push(deviceInfo);
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList);
-      })
-    };
-
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
@@ -486,6 +479,121 @@
           }
         }, function (reason) {
           Notification.error('获取该设备报警信息失败');
+        }
+      )
+    }
+
+
+
+    //地图tab,请求该设备一段时间内的数据用于绘制轨迹
+    vm.startDateMapData = startDate;
+    vm.endDateMapData = new Date();
+
+    //date picker
+    vm.startDateOpenStatusMapData = {
+      opened: false
+    };
+    vm.endDateOpenStatusMapData = {
+      opened: false
+    };
+
+    vm.startDateOpenMapData = function($event) {
+      vm.startDateOpenStatusMapData.opened = true;
+    };
+    vm.endDateOpenMapData = function($event) {
+      vm.endDateOpenStatusMapData.opened = true;
+    };
+
+    //参数: 地图轨迹gps 数据
+    vm.refreshMapTab = function(lineAttr){
+      $timeout(function(){
+        $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
+          var marker, lineArr = [];
+          if (lineAttr){
+            lineArr = lineAttr;
+          }
+          var map = new AMap.Map("deviceDetailMap", {
+            resizeEnable: true,
+            //center: [116.397428, 39.90923],
+            zoom: 17
+          });
+          map.on("complete", completeEventHandler);
+          AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
+            marker.moveAlong(lineArr, 500);
+          }, false);
+          AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
+            marker.stopMove();
+          }, false);
+          var carPostion = [116.397428, 39.90923];   //默认地点
+          if (lineArr.length > 0){
+            carPostion = lineArr[0];
+          }
+          // 地图图块加载完毕后执行函数
+          function completeEventHandler() {
+            marker = new AMap.Marker({
+              map: map,
+              position: carPostion,
+              //icon: "http://code.mapabc.com/images/car_03.png",
+              icon: "assets/images/car_03.png",
+              offset: new AMap.Pixel(-26, -13),
+              autoRotation: true
+            });
+            // 绘制轨迹
+            var polyline = new AMap.Polyline({
+              map: map,
+              path: lineArr,
+              strokeColor: "#00A",  //线颜色
+              strokeOpacity: 1,     //线透明度
+              strokeWeight: 3,      //线宽
+              strokeStyle: "solid"  //线样式
+            });
+            map.setFitView();
+          }
+        })
+      })
+    };
+
+
+    vm.getDeviceMapData = function(page,size,sort,deviceNum,startDate,endDate){
+      if (deviceNum){
+        var filterTerm = "deviceNum=" + deviceNum;
+      }
+      if (startDate){
+        var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        if (filterTerm){
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else{
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      }
+      if (endDate){
+        var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        if (filterTerm){
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else{
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      }
+      var lineArr = [];
+      var deviceDataPromis = serviceResource.queryDeviceSimpleData(page, size, sort, filterTerm);
+      deviceDataPromis.then(function (data) {
+          var deviceMapDataList = data.content;
+          if (deviceMapDataList.length == 0){
+            Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
+          }
+          else{
+            vm.deviceMapDataList = _.sortBy(deviceMapDataList,"locateDateTime");
+            vm.deviceMapDataList.forEach(function (deviceData) {
+              lineArr.push([deviceData.longitudeNum,deviceData.latitudeNum]);
+            })
+            vm.refreshMapTab(lineArr);
+          }
+        }, function (reason) {
+          Notification.error('获取该设备历史数据失败');
         }
       )
     }

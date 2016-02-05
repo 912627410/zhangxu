@@ -486,11 +486,47 @@
     </uib-tab>
 
     <!--地图-->
-    <uib-tab select="deviceCurrentInfoCtrl.refreshMapTab(deviceCurrentInfoCtrl.deviceinfo)">
+    <uib-tab select="deviceCurrentInfoCtrl.refreshMapTab(null)">
       <uib-tab-heading>
         地图
       </uib-tab-heading>
       <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1">
+            <label class="control-label text-nowrap">起始日期:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <label class="control-label text-nowrap">结束日期:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceMapData(0,1000,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">确定</button>
+          </div>
+          <div class="col-md-3">
+            <button id="start" class="btn btn-default" type="button">开始动画</button>
+            <button id="stop" class="btn btn-default" type="button">结束动画</button>
+          </div>
+          <!--<div class="col-md-1">-->
+          <!--</div>-->
+
+        </div>
+
+
         <div class="row">
           <div class="col-md-12">
             <div class="box-body" style="height: 600px" id="deviceDetailMap"></div>
