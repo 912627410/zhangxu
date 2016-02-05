@@ -34,6 +34,11 @@
     //车辆管理相关
     .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
     .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //用户基本信息
+
+    //sim卡管理相关
+    .constant('SIM_PAGE_URL',SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页
+    .constant('SIM_URL', SERVER_BASE_URL + 'sim/sim')   //sim基本信息
+    .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //sim基本信息
   ;
 
 })();

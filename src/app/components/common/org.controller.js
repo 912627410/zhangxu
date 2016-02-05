@@ -12,6 +12,13 @@
   /** @ngInject */
   function orgController($rootScope,$scope) {
     var vm = this;
+
+    vm.showOrgTree = false;
+
+    vm.openOrgTree = function(){
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+
     vm.my_tree_handler = function(branch) {
       $scope.$emit("OrgSelectedEvent",branch);
     };

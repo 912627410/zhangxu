@@ -14,11 +14,11 @@
     var userInfo;
     var registerProcess = function(registerInfo, callback){
       var userInfoForRegister = {
-        ssn : registerInfo.username,
-        password : registerInfo.password,
-        email : registerInfo.email,
-        mobile : registerInfo.mobile
-      };
+        ssn: registerInfo.username,
+        password: registerInfo.password,
+        email: registerInfo.email,
+        mobile: registerInfo.mobile
+      }
       var rspData = serviceResource.restCallService(USER_REGISTER_URL,'ADD',userInfoForRegister);
       rspData.then(function(data){
         userInfo = {

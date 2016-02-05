@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">车辆管理</li>
+    <li class="active">Sim卡管理</li>
   </ol>
 </section>
 
@@ -34,141 +34,178 @@
     </span>
     <a class="btn btn-primary pull-right"
        ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-       ng-click="machineMngCtrl.newMachine('lg')">
+       ng-click="simMngCtrl.newSim('lg')">
       <i class="fa fa-plus"></i> 增加
     </a>
   </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+    </div>
+  </div>
   <div class="row " style="padding-top: 10px">
-    <div class="col-md-3" ng-repeat="machine in machineMngCtrl.macheineList">
+    <div ng-if="simMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="sim in simMngCtrl.simList">
       <div class="box box-success">
         <div class="box-header">
-          <h5 class="box-title">{{machine.identityId}}</h5>
+          <h5 class="box-title">{{sim.identityId}}</h5>
         </div>
         <div class="box-body">
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车辆识别号:
+              sim卡号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.identityId}}
+              {{sim.phoneNumber}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车牌号码:
+              序列号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.licenseId}}
+              {{sim.serialNumber}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              发动机号码:
+              价格:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.engineId}}
+              {{sim.price}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              绑定终端:
+              当前状态:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.deviceinfo.devicenum}}
+              {{sim.statusDesc}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主姓名:
+              企业名称:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerName}}
+              {{sim.org.label}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主联系电话:
+              流量统计月份:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerPhone}}
+              {{sim.gsmDataMonth}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主地址:
+              当月流量限额:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerAddress}}
+              {{sim.gsmDataLimit}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装人:
+              当月已用流量:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installPerson}}
+              {{sim.gsmDataCurrentMonth}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装时间:
+              总共已用流量:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installTime | date:'yyyy-MM-dd'}}
+              {{sim.gsmDataTotal}}
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              备注:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{sim.description}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装人联系电话:
+              开通时间:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installPersonPhone}}
+              {{sim.serviceBeginDate | date:'yyyy-MM-dd'}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装位置:
+              到期时间:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installLocation}}
-            </div>
-          </div>
-          <div class="row" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装地点:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installAddress}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              报警短信号码:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.alterPhone}}
+              {{sim.serviceEndDate | date: 'yyyy-MM-dd'}}
             </div>
           </div>
         </div>
         <div class="box-footer">
           <code>
             <div class="pull-right">
-              <button type="button" class="btn btn-primary btn-xs"
+              <button type="button" class="btn btn-default btn-xs"
                       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-                      ng-click="updateDeviceInfo(machine,'lg')">修改
+                      ng-click="simMngCtrl.updateSim(sim,'lg')">修改
               </button>
             </div>
           </code>
         </div>
       </div>
     </div>
+    <div ng-if="simMngCtrl.radioListType == 'list'" >
+      <table class="table table-striped" id="deviceTable">
+        <tr>
+          <th>sim卡号</th>
+          <th>序列号</th>
+          <th>价格</th>
+          <th>当前状态</th>
+          <th>企业名称</th>
+          <th>流量统计月份</th>
+          <th>当月流量限额</th>
+          <th>当月已用流量</th>
+          <th>总共已用流量</th>
+          <th>备注</th>
+          <th>开通时间</th>
+          <th>到期时间</th>
+          <th>操作</th>
+        </tr>
+        <tr ng-repeat="sim in simMngCtrl.simList">
+          <td> {{sim.phoneNumber}}</td>
+          <td> {{sim.serialNumber}}</td>
+          <td> {{sim.price}}</td>
+          <td> {{sim.statusDesc}}</td>
+          <td> {{sim.org.label}}</td>
+          <td> {{sim.gsmDataMonth}}</td>
+          <td> {{sim.gsmDataLimit}}</td>
+          <td> {{sim.gsmDataCurrentMonth}}</td>
+          <td> {{sim.gsmDataTotal}}</td>
+          <td> {{sim.description}}</td>
+          <td>   {{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
+          <td>   {{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                    ng-click="simMngCtrl.updateSim(sim,'lg')">修改
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="page.totalElements" ng-change="loadPage(deviceData_pagenumber-1,40,sort,deviceNum)"
-                    max-size="5" ng-model="deviceData_pagenumber" items-per-page="page.size" class="pagination-sm"
-                    boundary-links="true" rotate="false"></uib-pagination>
+    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="5" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 
 </section>

@@ -96,6 +96,15 @@
           }
         }
       })
+      .state('home.simMng', {
+        url: '/simMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/simManagement/simMng.html',
+            controller: 'simMngController as simMngCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {
