@@ -28,7 +28,12 @@
     "angular-bootstrap-nav-tree": "*",
     "angular-underscore": "~0.5.0",
     "underscore": "~1.8.3",
-    "ng-idle": "~1.1.1"
+    "ng-idle": "~1.1.1",
+    "angular-w5c-validator": "^2.4.11",
+    "angular-ui-select":"^0.14.2",
+    "angular-sanitize":"1.4.9",
+    "angular-validation":"1.4.1"
+
   },
   "devDependencies": {
     "angular-mocks": "^1.4.2"
