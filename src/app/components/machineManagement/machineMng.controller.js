@@ -36,6 +36,7 @@
         templateUrl: 'app/components/machineManagement/newMachine.html',
         controller: 'newMachineController as newMachineController',
         size: size,
+        backdrop:false,
         resolve: {
           operatorInfo: function () {
             return vm.operatorInfo;

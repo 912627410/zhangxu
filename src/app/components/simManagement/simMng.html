@@ -15,28 +15,31 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row" style="padding-top: 10px;padding-left: 10px; padding-right: 20px">
-    <span class="input-group col-md-8">
-        <input type="text" name="deviceNum" class="form-control " ng-model="deviceNum"
-               placeholder="设备编号/用户自定义名称/装机号..."/>
-            <span class="input-group-btn">
-                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"
-                        ng-click="loadPage(0,40,null,deviceNum)"><i class="fa fa-search"></i></button>
-            </span>
-        <span class="label label-info pull-right">{{page.totalElements}}</span>
-    </span>
-    <span class="col-md-4">
-        <i class="text-gray fa fa-exclamation-triangle"></i>空闲
-        <i class="text-green fa fa-check-square"></i>出租
-        <i class="text-yellow fa fa-anchor"></i> 维修
-        <i class="text-yellow fa fa-check-circle-o"></i> 已注册
-        <i class="text-red fa fa-info"></i> 未注册
-    </span>
-    <a class="btn btn-primary pull-right"
-       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-       ng-click="simMngCtrl.newSim('lg')">
-      <i class="fa fa-plus"></i> 增加
-    </a>
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">Sim卡号:</label>
+
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.query(0,10,null,simMngCtrl.phoneNumber)">查询</button>
+    </div>
+
+    <div class="col-md-5">
+
+      <a class="btn btn-primary pull-right"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-click="simMngCtrl.newSim('lg')">
+        <i class="fa fa-plus"></i> 增加
+      </a>
+      <a class="btn btn-primary pull-right"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-click="simMngCtrl.uploadSim('lg')">
+        <i class="fa fa-plus"></i> 批量导入
+      </a>
+    </div>
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
@@ -205,7 +208,9 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="5" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,10,null,simMngCtrl.phoneNumber)"
+                    max-size="5" ng-model="simMngCtrl.pageNumber" items-per-page="simMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 
 </section>

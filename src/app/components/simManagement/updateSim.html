@@ -2,6 +2,7 @@
   <h3 class="modal-title">修改Sim</h3>
 </div>
 <form name="newMachineForm" class="form-horizontal" ng-submit="updateSimController.ok(updateSimController.sim)">
+  <input type="hidden" ng-model="updateSimController.sim.statusDesc"/>
   <div class="modal-body">
     <div class="box-body">
       <div class="col-md-6">
@@ -67,18 +68,32 @@
         <div class="form-group">
           <label class="col-sm-4 control-label">状态</label>
           <div class="col-sm-8">
-            <input type="text" id="status" class="form-control" placeholder="状态"
-                   ng-model="updateSimController.sim.ownerName" name="status" required/>
+
+            <select class="form-control" name="status" id="status" convert-to-number ng-model="updateSimController.sim.status" ng-change="updateSimController.changeStatus();" required>
+              <option ng-repeat="simStatus in updateSimController.sim.simStatusList" value="{{simStatus.value}}"  ng-selected="updateSimController.sim.status==0">
+                {{simStatus.desc}}
+              </option>
+            </select>
+
+            <!--
+            <select class="form-control" ng-model="updateSimController.sim.status" ng-options="x.value as x.desc for x in updateSimController.sim.simStatusList"></select>
+            -->
           </div>
         </div>
       </div>
-
       <div class="col-md-6">
         <div class="form-group">
           <label class="col-sm-4 control-label">开通时间</label>
           <div class="col-sm-8">
-            <input type="date" name="serviceBeginDate" class="form-control" placeholder="开通时间"
-                   ng-model="updateSimController.sim.serviceBeginDate" name="serviceBeginDate"/>
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                     ng-model="updateSimController.sim.serviceBeginDate" is-open="updateSimController.serviceBeginDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="updateSimController.serviceBeginDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
           </div>
         </div>
       </div>
@@ -86,8 +101,15 @@
         <div class="form-group">
           <label class="col-sm-4 control-label">服务结束时间</label>
           <div class="col-sm-8">
-            <input type="date" name="serviceEndDate" class="form-control" placeholder="服务结束时间"
-                   ng-model="updateSimController.sim.serviceEndDate" name="serviceEndDate"/>
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                     ng-model="updateSimController.sim.serviceEndDate" is-open="updateSimController.serviceEndDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" required close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="updateSimController.serviceEndDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
           </div>
         </div>
       </div>

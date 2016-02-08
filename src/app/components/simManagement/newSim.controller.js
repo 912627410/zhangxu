@@ -9,17 +9,18 @@
     .controller('newSimController', newSimController);
 
   /** @ngInject */
-  function newSimController($scope, $uibModalInstance,SIM_STATUS_URL, SIM_URL, serviceResource, Notification, operatorInfo) {
+  function newSimController($scope, $uibModalInstance, SIM_STATUS_URL, SIM_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
     vm.sim = {};
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL,"QUERY");
-    simStatusData.then(function(data){
 
-     vm.sim.simStatusList=data;
-    },function(reason){
-      Notification.error('获取组织机构信息失败');
+    //查询sim卡的状态集合
+    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
+    simStatusData.then(function (data) {
+      vm.sim.simStatusList = data;
+    }, function (reason) {
+      Notification.error('获取Sim状态集合失败');
     })
 
 
@@ -32,10 +33,10 @@
       opened: false
     };
 
-    vm.serviceBeginDateOpen = function($event) {
+    vm.serviceBeginDateOpen = function ($event) {
       vm.serviceBeginDateOpenStatus.opened = true;
     };
-    vm.serviceEndDateOpen = function($event) {
+    vm.serviceEndDateOpen = function ($event) {
       vm.serviceEndDateOpenStatus.opened = true;
     };
 
@@ -46,7 +47,6 @@
     };
 
     vm.ok = function (sim) {
-      alert(sim.phoneNumber);
       var restPromise = serviceResource.restAddRequest(SIM_URL, sim);
       restPromise.then(function (data) {
         Notification.success("新建Sim卡信息成功!");
@@ -58,11 +58,11 @@
 
     vm.showOrgTree = false;
 
-    vm.openOrgTree = function(){
+    vm.openOrgTree = function () {
       vm.showOrgTree = !vm.showOrgTree;
     }
 
-    $scope.$on('OrgSelectedEvent',function(event,data){
+    $scope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
       vm.sim.org = vm.selectedOrg;
       vm.showOrgTree = false;

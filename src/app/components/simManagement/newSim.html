@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">新建Sim</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal" ng-submit="newSimController.ok(newSimController.sim)">
+<form name="newSimForm" class="form-horizontal w5c-form demo-form"  w5c-form-validate="vm.validateOptions"    w5c-form-submit="newSimController.ok(newSimController.sim)">
   <div class="modal-body">
     <div class="box-body">
       <div class="col-md-6">
@@ -9,7 +9,7 @@
           <label for="phoneNumber" class="col-sm-4 control-label">Sim卡号</label>
           <div class="col-sm-8">
             <input type="text" id="phoneNumber" class="form-control" placeholder="Sim卡号"
-                   ng-model="newSimController.sim.phoneNumber" name="phoneNumber" required/>
+                   ng-model="newSimController.sim.phoneNumber" name="phoneNumber"  required/>
           </div>
         </div>
       </div>
@@ -32,12 +32,72 @@
           </div>
         </div>
       </div>
+
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">流量限额</label>
+          <div class="col-sm-8">
+            <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
+                   ng-model="newSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">状态</label>
+          <div class="col-sm-8">
+            <ui-select type="text" name="status" ng-required="true"  ng-model="newSimController.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
+              <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+              <ui-select-choices  repeat="simStatus.value as simStatus in newSimController.sim.simStatusList | propsFilter: {desc: $select.search}" >
+
+                <div  ng-bind-html="simStatus.desc | highlight: $select.search"></div>
+
+
+              </ui-select-choices>
+            </ui-select>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">开通时间</label>
+          <div class="col-sm-8">
+            <p class="input-group">
+              <input type="text" name="serviceBeginDate" class="form-control" uib-datepicker-popup="{{format}}"
+                     ng-model="newSimController.sim.serviceBeginDate" is-open="newSimController.serviceBeginDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="newSimController.serviceBeginDateOpen($event)">
+                    <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="col-sm-4 control-label">服务结束时间</label>
+          <div class="col-sm-8">
+            <p class="input-group">
+              <input type="text" name="serviceEndDate" class="form-control" uib-datepicker-popup="{{format}}"
+                     ng-model="newSimController.sim.serviceEndDate" is-open="newSimController.serviceEndDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" required close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="newSimController.serviceEndDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="col-md-6">
         <div class="form-group">
           <label for="org" class="col-sm-4 control-label">所属组织</label>
-          <!--<div ng-controller="orgController as orgCtrl1">-->
-          <!--<button uib-popover-template="updateUserinfoCtrl.dynamicPopover.templateUrl" popover-title="{{updateUserinfoCtrl.dynamicPopover.title}}" type="button" class="btn btn-default">组织机构</button>-->
-          <!--</div>-->
           <div class="col-sm-8">
             <p class="input-group">
               <input type="text" id="org" class="form-control" placeholder="所属组织"
@@ -61,62 +121,6 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">流量限额</label>
-          <div class="col-sm-8">
-            <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
-                   ng-model="newSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">状态</label>
-          <div class="col-sm-8">
-
-            <select class="form-control" name="status" id="status" ng-model="newSimController.sim.status" required>
-              <option ng-repeat="simStatus in newSimController.sim.simStatusList" value="{{simStatus.value}}">
-                {{simStatus.desc}}
-              </option>
-            </select>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">开通时间</label>
-          <div class="col-sm-8">
-            <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                     ng-model="newSimController.serviceBeginDate" is-open="newSimController.serviceBeginDateOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="newSimController.serviceBeginDateOpen($event)">
-                    <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">服务结束时间</label>
-          <div class="col-sm-8">
-            <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
-                     ng-model="newSimController.serviceEndDate" is-open="newSimController.serviceEndDateOpen.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="newSimController.serviceEndDateOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
           <label class="col-sm-4 control-label">备注</label>
           <div class="col-sm-8">
             <input type="text" id="description" class="form-control" placeholder="备注"
@@ -126,11 +130,34 @@
       </div>
 
     </div>
-
   </div>
+
+  <!--
+  <div ng-cloak>
+  <div  class="form-group" ng-show="newSimForm.$errors.length > 0 ">
+    <label class="col-sm-2 control-label"></label>
+
+    <div class="col-sm-8">
+      <div class="alert alert-danger">
+        <ui>
+          <li  ng-repeat="error in newSimForm.$errors track by $index">
+            {{error}}
+          </li>
+        </ui>
+      </div>
+    </div>
+    <div class="col-sm-2 control-label"></div>
+  </div>
+
+</div>
+  -->
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="submit">保存</button>
+    <button class="btn btn-primary" type="button">保存</button>
     <button class="btn btn-warning" type="button" ng-click="newSimController.cancel()">取消</button>
   </div>
 </form>
+
+
+
+
