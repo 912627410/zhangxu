@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">新建Sim</h3>
 </div>
-<form name="newSimForm" class="form-horizontal w5c-form demo-form"  w5c-form-validate="vm.validateOptions"    w5c-form-submit="newSimController.ok(newSimController.sim)">
+<form name="newSimForm" class="form-horizontal w5c-form demo-form"  w5c-form-validate="vm.validateOptions">
   <div class="modal-body">
     <div class="box-body">
       <div class="col-md-6">
@@ -40,23 +40,6 @@
           <div class="col-sm-8">
             <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
                    ng-model="newSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">状态</label>
-          <div class="col-sm-8">
-            <ui-select type="text" name="status" ng-required="true"  ng-model="newSimController.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
-              <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
-              <ui-select-choices  repeat="simStatus.value as simStatus in newSimController.sim.simStatusList | propsFilter: {desc: $select.search}" >
-
-                <div  ng-bind-html="simStatus.desc | highlight: $select.search"></div>
-
-
-              </ui-select-choices>
-            </ui-select>
-
           </div>
         </div>
       </div>
@@ -153,7 +136,7 @@
   -->
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button">保存</button>
+    <button class="btn btn-primary" type="button"  w5c-form-submit="newSimController.ok(newSimController.sim)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="newSimController.cancel()">取消</button>
   </div>
 </form>

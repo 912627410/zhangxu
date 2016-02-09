@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h3 class="modal-title">批量导入Sim</h3>
+</div>
+<form name="newMachineForm" class="form-horizontal w5c-form "  w5c-form-validate="vm.validateOptions"   w5c-form-submit="newSimController.ok(newSimController.sim)">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-md-6">
+          单文件：<input ng-file-select type="file"/>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="uploadSimController.cancel()">取消</button>
+  </div>
+</form>
+
+

@@ -105,6 +105,16 @@
           }
         }
       })
+      .state('home.deviceinfoMng', {
+        url: '/deviceinfoMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceinfoManagement/deviceinfoMng.html',
+            controller: 'deviceinfoMngController as deviceinfoMngCtrl'
+          }
+        }
+      })
+
       .state('home.monitor', {
         url: '/monitor',
         views: {
