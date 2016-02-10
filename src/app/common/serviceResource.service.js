@@ -9,7 +9,7 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
@@ -204,6 +204,11 @@
           restCallURL += queryCondition;
         }
         return restCallService(restCallURL,"GET");
+      },
+      //查询用户提醒信息统计数据()
+      queryNotificationStatistics:function(){
+        var restCallURL = NOTIFICATION_STATISTICS_URL;
+        return restCallService(restCallURL,"QUERY");
       },
       //修改数据通用接口
       restUpdateRequest:function(URL,params){

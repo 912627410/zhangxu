@@ -9,12 +9,49 @@
     .controller('NotificationController', NotificationController);
 
   /** @ngInject */
-  function NotificationController($rootScope,$window,serviceResource,Notification,NOTIFICATION_PAGED_URL) {
+  function NotificationController($rootScope,$window,$timeout,serviceResource,Notification,NOTIFICATION_PAGED_URL) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     vm.classNoProcessedMsg = "active";
     var userInfo = $rootScope.userInfo;
+    vm.noProcessNumber = 0;
+    vm.allNotificationNumber = 0;   //所有的notification数量
+    vm.noConnectionNotificationNumber = 0;   //所有的未连接notification数量
+    vm.maintainNotificationNumber = 0;   //所有的保养notification数量
+
+    var userInfo = $rootScope.userInfo;
+
+    //查询notification的数量统计
+    vm.queryNotificationStatistics = function(){
+      vm.noProcessNumber = 0;
+      vm.allNotificationNumber = 0;   //所有的notification数量
+      vm.noConnectionNotificationNumber = 0;   //所有的未连接notification数量
+      vm.maintainNotificationNumber = 0;   //所有的保养notification数量
+      var notificationStatisticsPromis = serviceResource.queryNotificationStatistics();
+      notificationStatisticsPromis.then(function (data) {
+          var notificationStatisticsList = data;
+          notificationStatisticsList.forEach(function(notification){
+            if (notification.processStatus == 0){
+              vm.noProcessNumber += notification.totalCount;
+              if(notification.type == '01'){
+                vm.maintainNotificationNumber += notification.totalCount;
+              }
+              if(notification.type == '02'){
+                vm.noConnectionNotificationNumber += notification.totalCount;
+              }
+            }
+            vm.allNotificationNumber += notification.totalCount;
+          })
+          $rootScope.notificationNumber = vm.noProcessNumber;
+          $window.sessionStorage["notificationNumber"] = $rootScope.notificationNumber;
+        }, function (reason) {
+          Notification.error('获取提醒信息数量失败');
+        }
+      )
+    };
+
+    //查询未处理notification数据
     vm.queryNotificationInfo = function(page,size,sort,queryCondition,filterCondition){
       var filterTerm;
       if (queryCondition){
@@ -39,8 +76,8 @@
         }
       )
     };
-
-    vm.updateProcessStatus = function(notification){
+    //设置为已处理
+    vm.updateProcessStatus = function(notification,refreshStatistics){
       if (notification){
         if (notification.processStatus == 0){
           notification.processStatus = 1;
@@ -59,6 +96,9 @@
             $rootScope.notificationNumber = Number($rootScope.notificationNumber) + 1;
           }
           $window.sessionStorage["notificationNumber"] = $rootScope.notificationNumber;
+          if (refreshStatistics){
+            vm.queryNotificationStatistics();
+          }
           //Notification.success('设置处理状态成功');
         },function(reason){
           if (notification.processStatus == 0){
@@ -75,6 +115,21 @@
       }
     };
 
+    //批量设置为已处理
+    vm.batchUpdateProcessStatus = function(){
+      var notificationList = vm.notificationList;
+      if (notificationList){
+        notificationList.forEach(function(notification){
+          if (notification.checked && notification.processStatus == 0){
+            vm.updateProcessStatus(notification,false);
+          }
+        });
+        $timeout(function(){
+          vm.queryNotificationStatistics();
+          Notification.success("批量设置为已处理成功!");
+        })
+      }
+    };
 
     vm.checkAll = function(){
       vm.notificationList.forEach(function(notification){
@@ -120,7 +175,6 @@
     }
 
     vm.queryNoProcessedNotification(0,null,null,null);
-
-
+    vm.queryNotificationStatistics();
   }
 })();
