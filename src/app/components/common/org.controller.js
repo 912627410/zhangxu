@@ -22,7 +22,13 @@
     vm.my_tree_handler = function(branch) {
       $scope.$emit("OrgSelectedEvent",branch);
     };
-    vm.my_data=[$rootScope.orgChart[0]];
+
+    if ($rootScope.orgChart && $rootScope.orgChart.length > 0){
+      vm.my_data=[$rootScope.orgChart[0]];
+    }
+    else{
+      Notification.error('获取组织机构信息失败');
+    }
     //vm.my_data[0].label = '组织架构';
     //示例代码
     //vm.my_data = [{

@@ -11,7 +11,7 @@
   /** @ngInject */
   function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
-                           USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,
+                           NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
@@ -185,6 +185,19 @@
         var pageUrl = page || 0;
         var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
         var sortUrl = sort || DEFAULT_USER_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
+      //分页查询用户提醒信息(notification info)
+      queryNotification:function(page,size,sort,queryCondition){
+        var restCallURL = NOTIFICATION_PAGED_URL;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_NOTIFICATION_SORT_BY;
         restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
         if (queryCondition){
           restCallURL += "&";

@@ -114,7 +114,15 @@
           }
         }
       })
-
+      .state('home.notification', {
+        url: '/notification',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/notification/notification.html',
+            controller: 'NotificationController as notificationCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {
