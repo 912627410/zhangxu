@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title">批量导入Sim</h3>
+  <h3 class="modal-title">批量导入设备</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal w5c-form "  w5c-form-validate="vm.validateOptions"   w5c-form-submit="newSimController.ok(newSimController.sim)">
+<form name="uploadForm" class="form-horizontal w5c-form "  w5c-form-validate="vm.validateOptions"   >
   <div class="modal-body">
     <div class="box-body">
       <div class="row">
@@ -15,8 +15,8 @@
   </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="uploadSimController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" w5c-form-submit="">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="uploadDeviceinfoController.cancel()">取消</button>
   </div>
 </form>
 

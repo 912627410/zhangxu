@@ -46,7 +46,6 @@
       opened: false
     };
 
-
     vm.produceDateOpen = function ($event) {
       vm.produceDateOpenStatus.opened = true;
     };

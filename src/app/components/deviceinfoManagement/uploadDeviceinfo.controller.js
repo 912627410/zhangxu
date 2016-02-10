@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('uploadSimController', uploadSimController);
+    .controller('uploadDeviceinfoController', uploadDeviceinfoController);
 
   /** @ngInject */
-  function uploadSimController($scope, $uibModalInstance,SIM_STATUS_URL, SIM_URL, serviceResource, Notification, operatorInfo) {
+  function uploadDeviceinfoController($scope, $uibModalInstance,SIM_STATUS_URL, SIM_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     //

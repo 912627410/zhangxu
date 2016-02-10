@@ -12,6 +12,7 @@
   function machineMngController($rootScope,$uibModal,Notification,serviceResource, MACHINE_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.radioListType = "list";
 
     vm.loadMachine = function(){
         var rspData = serviceResource.restCallService(MACHINE_PAGE_URL,"GET");

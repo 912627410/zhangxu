@@ -25,21 +25,28 @@
             </span>
         <span class="label label-info pull-right">{{page.totalElements}}</span>
     </span>
-    <span class="col-md-4">
-        <i class="text-gray fa fa-exclamation-triangle"></i>空闲
-        <i class="text-green fa fa-check-square"></i>出租
-        <i class="text-yellow fa fa-anchor"></i> 维修
-        <i class="text-yellow fa fa-check-circle-o"></i> 已注册
-        <i class="text-red fa fa-info"></i> 未注册
-    </span>
-    <a class="btn btn-primary pull-right"
-       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-       ng-click="machineMngCtrl.newMachine('lg')">
-      <i class="fa fa-plus"></i> 增加
-    </a>
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+    </div>
+    <div class="col-md-10">
+
+      <a class="btn btn-primary pull-right"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-click="machineMngCtrl.newMachine()">
+        <i class="fa fa-plus"></i> 增加
+      </a>
+      <a class="btn btn-primary pull-right"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
+        <i class="fa fa-plus"></i> 批量导入
+      </a>
+    </div>
   </div>
   <div class="row " style="padding-top: 10px">
-    <div class="col-md-3" ng-repeat="machine in machineMngCtrl.macheineList">
+    <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="machine in machineMngCtrl.macheineList">
       <div class="box box-success">
         <div class="box-header">
           <h5 class="box-title">{{machine.identityId}}</h5>
@@ -87,7 +94,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主联系电话:
+              车主电话:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{machine.ownerPhone}}
@@ -119,7 +126,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装人联系电话:
+              安装人电话:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{machine.installPersonPhone}}
@@ -133,7 +140,7 @@
               {{machine.installLocation}}
             </div>
           </div>
-          <div class="row" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
+          <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               安装地点:
             </div>
@@ -143,7 +150,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              报警短信号码:
+              报警号码:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{machine.alterPhone}}
@@ -162,9 +169,49 @@
         </div>
       </div>
     </div>
+    <div ng-if="machineMngCtrl.radioListType == 'list'" >
+      <table class="table table-striped" id="machineTable">
+        <tr>
+          <th>车辆识别号</th>
+          <th>车牌号码</th>
+          <th>发动机号码</th>
+          <th>绑定终端</th>
+          <th>车主姓名</th>
+          <th>车主电话</th>
+          <th>车主地址</th>
+          <th>安装人</th>
+          <th>安装时间</th>
+          <th>安装人电话</th>
+          <th>安装位置</th>
+          <th>安装地点</th>
+          <th>报警号码</th>
+          <th>操作</th>
+        </tr>
+        <tr ng-repeat="machine in machineMngCtrl.macheineList">
+          <td> {{machine.identityId}}</td>
+          <td> {{machine.licenseId}}</td>
+          <td> {{machine.engineId}}</td>
+          <td> {{machine.deviceinfo.devicenum}}</td>
+          <td> {{machine.ownerName}}</td>
+          <td> {{machine.ownerPhone}}</td>
+          <td> {{machine.ownerAddress}}</td>
+          <td> {{machine.installPerson}}</td>
+          <td> {{machine.installTime | date:'yyyy-MM-dd'}}</td>
+          <td> {{machine.installPersonPhone}}</td>
+          <td> {{machine.installLocation}}</td>
+          <td> {{machine.installAddress}}</td>
+          <td> {{machine.alterPhone}}</td>
+          <td>
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                    ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="row">
-  </div>
+
   <div class="box-footer">
     <uib-pagination total-items="page.totalElements" ng-change="loadPage(deviceData_pagenumber-1,40,sort,deviceNum)"
                     max-size="5" ng-model="deviceData_pagenumber" items-per-page="page.size" class="pagination-sm"

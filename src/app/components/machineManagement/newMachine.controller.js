@@ -24,17 +24,21 @@
       });
     };
 
-    //vm.showOrgTree = false;
-    //
-    //vm.openOrgTree = function(){
-    //  vm.showOrgTree = !vm.showOrgTree;
-    //}
-    //
-    //$scope.$on('OrgSelectedEvent',function(event,data){
-    //  vm.selectedOrg = data;
-    //  vm.newMachine.organizationDto = vm.selectedOrg;
-    //  vm.showOrgTree = false;
-    //})
+    //日期控件相关
+    //date picker
+    vm.installTimeOpenStatus = {
+      opened: false
+    };
+
+    vm.installTimeOpen = function ($event) {
+      vm.installTimeOpenStatus.opened = true;
+    };
+
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');

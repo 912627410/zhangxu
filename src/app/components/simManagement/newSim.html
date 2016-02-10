@@ -1,54 +1,44 @@
 <div class="modal-header">
   <h3 class="modal-title">新建Sim</h3>
 </div>
-<form name="newSimForm" class="form-horizontal w5c-form demo-form"  w5c-form-validate="vm.validateOptions">
+<form name="newSimForm" class="form-horizontal w5c-form"  w5c-form-validate="vm.validateOptions">
   <div class="modal-body">
     <div class="box-body">
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="phoneNumber" class="col-sm-4 control-label">Sim卡号</label>
-          <div class="col-sm-8">
+          <label for="phoneNumber" class="col-sm-2 control-label">Sim卡号</label>
+          <div class="col-sm-10">
             <input type="text" id="phoneNumber" class="form-control" placeholder="Sim卡号"
                    ng-model="newSimController.sim.phoneNumber" name="phoneNumber"  required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label for="serialNumber" class="col-sm-4 control-label">序列号</label>
-          <div class="col-sm-8">
+          <label for="serialNumber" class="col-sm-2 control-label">序列号</label>
+          <div class="col-sm-10">
             <input type="text" id="serialNumber" class="form-control" placeholder="序列号"
                    ng-model="newSimController.sim.serialNumber" name="serialNumber" required/>
           </div>
         </div>
 
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">价格</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">价格</label>
+          <div class="col-sm-10">
             <input type="text" id="price" class="form-control" placeholder="价格"
                    ng-model="newSimController.sim.price" name="price" required/>
           </div>
         </div>
-      </div>
 
-
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">流量限额</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">流量限额</label>
+          <div class="col-sm-10">
             <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
                    ng-model="newSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
           </div>
         </div>
-      </div>
 
-
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">开通时间</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">开通时间</label>
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" name="serviceBeginDate" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="newSimController.sim.serviceBeginDate" is-open="newSimController.serviceBeginDateOpenStatus.opened"
@@ -60,11 +50,10 @@
             </p>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label class="col-sm-4 control-label">服务结束时间</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">服务结束时间</label>
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" name="serviceEndDate" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="newSimController.sim.serviceEndDate" is-open="newSimController.serviceEndDateOpenStatus.opened"
@@ -76,12 +65,10 @@
             </p>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="org" class="col-sm-4 control-label">所属组织</label>
-          <div class="col-sm-8">
+          <label for="org" class="col-sm-2 control-label">所属组织</label>
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" id="org" class="form-control" placeholder="所属组织"
                      ng-model="newSimController.sim.org.label" name="org" readonly required/>
@@ -100,41 +87,18 @@
             </p>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">备注</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">备注</label>
+          <div class="col-sm-10">
             <input type="text" id="description" class="form-control" placeholder="备注"
                    ng-model="newSimController.sim.description" name="description" required/>
           </div>
         </div>
-      </div>
 
     </div>
   </div>
 
-  <!--
-  <div ng-cloak>
-  <div  class="form-group" ng-show="newSimForm.$errors.length > 0 ">
-    <label class="col-sm-2 control-label"></label>
-
-    <div class="col-sm-8">
-      <div class="alert alert-danger">
-        <ui>
-          <li  ng-repeat="error in newSimForm.$errors track by $index">
-            {{error}}
-          </li>
-        </ui>
-      </div>
-    </div>
-    <div class="col-sm-2 control-label"></div>
-  </div>
-
-</div>
-  -->
-  </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button"  w5c-form-submit="newSimController.ok(newSimController.sim)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="newSimController.cancel()">取消</button>

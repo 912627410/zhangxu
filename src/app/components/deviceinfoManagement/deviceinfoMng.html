@@ -15,19 +15,53 @@
 <!-- Main content -->
 <section class="content">
 
+
   <div class="row">
     <div class="col-md-1">
       <label class="control-label">设备编号:</label>
-
     </div>
     <div class="col-md-2">
-      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
+      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum" placeholder="支持模糊查询"/>
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(0,10,null,deviceinfoMngCtrl.phoneNumber)">查询</button>
+    <div class="col-md-1">
+      <label class="control-label">所属组织:</label>
     </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织"
+               ng-model="deviceinfoMngCtrl.deviceinfo.org.label" name="org" readonly required/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="deviceinfoMngCtrl.openOrgTree()"><i
+                      class="fa fa-sitemap"></i></button>
+                  </span>
+      <div ng-controller="orgController as orgCtrl">
+        <div
+          style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
+          ng-show="deviceinfoMngCtrl.showOrgTree">
+          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+        </div>
+      </div>
+      </p>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">SIM:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(0,10,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
+    </div>
+  </div>
 
-    <div class="col-md-5">
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+    </div>
+    <div class="col-md-10">
 
       <a class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
@@ -40,12 +74,9 @@
         <i class="fa fa-plus"></i> 批量导入
       </a>
     </div>
-  </div>
-  <div class="row">
-    <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
+  <div class="row">
+
   </div>
   <div class="row " style="padding-top: 10px">
     <div ng-if="deviceinfoMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
@@ -195,8 +226,7 @@
       </table>
     </div>
   </div>
-  <div class="row">
-  </div>
+
   <div class="box-footer">
     <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements" ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,10,null,deviceinfoMngCtrl.phoneNumber)"
                     max-size="5" ng-model="deviceinfoMngCtrl.pageNumber" items-per-page="deviceinfoMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"

@@ -1,45 +1,40 @@
 <div class="modal-header">
   <h3 class="modal-title">修改Sim</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal" ng-submit="updateSimController.ok(updateSimController.sim)">
+<form name="newMachineForm"class="form-horizontal w5c-form"  w5c-form-validate="vm.validateOptions">
   <input type="hidden" ng-model="updateSimController.sim.statusDesc"/>
   <div class="modal-body">
     <div class="box-body">
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="phoneNumber" class="col-sm-4 control-label">Sim卡号</label>
-          <div class="col-sm-8">
+          <label for="phoneNumber" class="col-sm-2 control-label">Sim卡号</label>
+          <div class="col-sm-10">
             <input type="text" id="phoneNumber" class="form-control" placeholder="Sim卡号"
                    ng-model="updateSimController.sim.phoneNumber" name="phoneNumber" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label for="serialNumber" class="col-sm-4 control-label">序列号</label>
-          <div class="col-sm-8">
+          <label for="serialNumber" class="col-sm-2 control-label">序列号</label>
+          <div class="col-sm-10">
             <input type="text" id="serialNumber" class="form-control" placeholder="序列号"
                    ng-model="updateSimController.sim.serialNumber" name="serialNumber" required/>
           </div>
         </div>
 
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">价格</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">价格</label>
+          <div class="col-sm-10">
             <input type="text" id="price" class="form-control" placeholder="价格"
                    ng-model="updateSimController.sim.price" name="price" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label for="org" class="col-sm-4 control-label">所属组织</label>
+          <label for="org" class="col-sm-2 control-label">所属组织</label>
           <!--<div ng-controller="orgController as orgCtrl1">-->
           <!--<button uib-popover-template="updateUserinfoCtrl.dynamicPopover.templateUrl" popover-title="{{updateUserinfoCtrl.dynamicPopover.title}}" type="button" class="btn btn-default">组织机构</button>-->
           <!--</div>-->
-          <div class="col-sm-8">
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="updateSimController.sim.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
@@ -53,38 +48,18 @@
             </p>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">流量限额</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">流量限额</label>
+          <div class="col-sm-10">
             <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
                    ng-model="updateSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">状态</label>
-          <div class="col-sm-8">
 
-            <select class="form-control" name="status" id="status" convert-to-number ng-model="updateSimController.sim.status" ng-change="updateSimController.changeStatus();" required>
-              <option ng-repeat="simStatus in updateSimController.sim.simStatusList" value="{{simStatus.value}}"  ng-selected="updateSimController.sim.status==0">
-                {{simStatus.desc}}
-              </option>
-            </select>
-
-            <!--
-            <select class="form-control" ng-model="updateSimController.sim.status" ng-options="x.value as x.desc for x in updateSimController.sim.simStatusList"></select>
-            -->
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">开通时间</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">开通时间</label>
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="updateSimController.sim.serviceBeginDate" is-open="updateSimController.serviceBeginDateOpenStatus.opened"
@@ -96,11 +71,10 @@
             </p>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label class="col-sm-4 control-label">服务结束时间</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">服务结束时间</label>
+          <div class="col-sm-10">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="updateSimController.sim.serviceEndDate" is-open="updateSimController.serviceEndDateOpenStatus.opened"
@@ -112,23 +86,19 @@
             </p>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label class="col-sm-4 control-label">备注</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">备注</label>
+          <div class="col-sm-10">
             <input type="text" id="description" class="form-control" placeholder="备注"
                    ng-model="updateSimController.sim.description" name="description" required/>
           </div>
         </div>
       </div>
 
-    </div>
-
-  </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="submit">保存</button>
+    <button class="btn btn-primary" type="button"  w5c-form-submit="updateSimController.ok(updateSimController.sim)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="updateSimController.cancel()">取消</button>
   </div>
 </form>

@@ -1,123 +1,108 @@
 <div class="modal-header">
   <h3 class="modal-title">新建车辆</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal" ng-submit="newMachineController.ok(newMachineController.machine)">
+<form name="newMachineForm"  class="form-horizontal w5c-form" w5c-form-validate="vm.validateOptions">
   <div class="modal-body">
     <div class="box-body">
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="identityId" class="col-sm-4 control-label">车辆识别号</label>
-          <div class="col-sm-8">
+          <label for="identityId" class="col-sm-3  control-label">车辆识别号</label>
+          <div class="col-sm-9">
             <input type="text" id="identityId" class="form-control" placeholder="车辆识别号" ng-model="newMachineController.machine.identityId" name="identityId" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="licenseId" class="col-sm-4 control-label" >车牌号码</label>
-          <div class="col-sm-8">
+          <label for="licenseId" class="col-sm-2 control-label" >车牌号码</label>
+          <div class="col-sm-10">
             <input type="text" id="licenseId" class="form-control" placeholder="车牌号码" ng-model="newMachineController.machine.licenseId" name="licenseId" required/>
           </div>
         </div>
-
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">发动机号码</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">发动机号码</label>
+          <div class="col-sm-10">
             <input type="text" id="engineId" class="form-control" placeholder="发动机号码" ng-model="newMachineController.machine.engineId" name="engineId" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="devicepowertype" class="col-sm-4 control-label">绑定终端</label>
-          <div class="col-sm-8">
+          <label for="devicepowertype" class="col-sm-2 control-label">绑定终端</label>
+          <div class="col-sm-10">
             <select id="devicepowertype" class="form-control" ng-model="newMachineController.machine.devicePowerType.id" ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in devicePowerTypeList">
               <option value="">请选择...</option>
             </select>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">车主姓名</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">车主姓名</label>
+          <div class="col-sm-10">
             <input type="text" id="ownerName" class="form-control" placeholder="车主姓名" ng-model="newMachineController.machine.ownerName" name="ownerName" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">车主联系电话</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">车主电话</label>
+          <div class="col-sm-10">
             <input type="text" id="ownerPhone" class="form-control" placeholder="车主联系电话" ng-model="newMachineController.machine.ownerPhone" name="ownerPhone" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label for="devicepowertype" class="col-sm-4 control-label">车主地址</label>
-          <div class="col-sm-8">
+          <label for="devicepowertype" class="col-sm-2 control-label">车主地址</label>
+          <div class="col-sm-10">
             <input type="text" id="ownerAddress" class="form-control" placeholder="车主地址" ng-model="newMachineController.machine.ownerAddress" name="ownerAddress" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">安装人</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">安装人</label>
+          <div class="col-sm-10">
             <input type="text" id="installPerson" class="form-control" placeholder="安装人" ng-model="newMachineController.machine.installPerson" name="installPerson" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
+
         <div class="form-group">
-          <label class="col-sm-4 control-label">安装时间</label>
-          <div class="col-sm-8">
-            <input type="date" name="installTime" class="form-control" placeholder="安装时间" ng-model="newMachineController.machine.installTime" name="installTime"/>
+          <label class="col-sm-2 control-label">安装时间</label>
+          <div class="col-sm-10">
+            <p class="input-group">
+              <input type="text" name="installTime" class="form-control" uib-datepicker-popup="{{format}}"
+                     ng-model="newMachineController.machine.installTime"
+                     is-open="newMachineController.installTimeOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="newMachineController.installTimeOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">安装人联系电话</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">安装人电话</label>
+          <div class="col-sm-10">
             <input type="text" id="installPersonPhone" class="form-control" placeholder="安装人联系电话" ng-model="newMachineController.machine.installPersonPhone" name="installPersonPhone" required/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
-          <label class="col-sm-4 control-label">安装位置</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">安装位置</label>
+          <div class="col-sm-10">
             <input type="text" name="installLocation" class="form-control" placeholder="安装位置" ng-model="newMachineController.machine.installLocation" name="installLocation"/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
-          <label class="col-sm-4 control-label">安装地点</label>
-          <div class="col-sm-8">
+          <label class="col-sm-2 control-label">安装地点</label>
+          <div class="col-sm-10">
             <input type="number" name="installAddress" class="form-control" placeholder="安装地点" ng-model="newMachineController.machine.installAddress" name="installAddress"/>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group" >
-          <label class="col-md-4 control-label">报警短信号码</label>
-          <div class="col-md-8">
+          <label class="col-sm-2 control-label">报警号码</label>
+          <div class="col-sm-10">
             <input type="text" name="alterPhone" class="form-control" placeholder="报警短信号码" ng-model="newMachineController.machine.alterPhone" name="alterPhone"/>
           </div>
         </div>
-      </div>
+
+
 
     </div>
 
   </div>
-  </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="submit">保存</button>
+    <button class="btn btn-primary" type="button" w5c-form-submit="newMachineController.ok(newMachineController.machine)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="newMachineController.cancel()">取消</button>
   </div>
 </form>

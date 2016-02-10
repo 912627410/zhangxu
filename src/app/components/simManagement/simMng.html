@@ -31,12 +31,12 @@
 
       <a class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-         ng-click="simMngCtrl.newSim('lg')">
+         ng-click="simMngCtrl.newSim()">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-         ng-click="simMngCtrl.uploadSim('lg')">
+         ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
     </div>
@@ -158,7 +158,7 @@
             <div class="pull-right">
               <button type="button" class="btn btn-default btn-xs"
                       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-                      ng-click="simMngCtrl.updateSim(sim,'lg')">修改
+                      ng-click="simMngCtrl.updateSim(sim)">修改
               </button>
             </div>
           </code>
@@ -198,7 +198,7 @@
           <td>
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-                    ng-click="simMngCtrl.updateSim(sim,'lg')">修改
+                    ng-click="simMngCtrl.updateSim(sim)">修改
             </button>
           </td>
         </tr>
