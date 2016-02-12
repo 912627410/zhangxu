@@ -1,13 +1,13 @@
 <div class="modal-header">
-  <h3 class="modal-title">新建Sim</h3>
+  <h3 class="modal-title">新建SIM</h3>
 </div>
 <form name="newSimForm" class="form-horizontal w5c-form"  w5c-form-validate="vm.validateOptions">
   <div class="modal-body">
     <div class="box-body">
         <div class="form-group">
-          <label for="phoneNumber" class="col-sm-2 control-label">Sim卡号</label>
+          <label for="phoneNumber" class="col-sm-2 control-label">SIM卡号</label>
           <div class="col-sm-10">
-            <input type="text" id="phoneNumber" class="form-control" placeholder="Sim卡号"
+            <input type="text" id="phoneNumber" class="form-control" placeholder="SIM卡号"
                    ng-model="newSimController.sim.phoneNumber" name="phoneNumber"  required/>
           </div>
         </div>
@@ -21,17 +21,17 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">价格</label>
+          <label class="col-sm-2 control-label">价格(元)</label>
           <div class="col-sm-10">
-            <input type="text" id="price" class="form-control" placeholder="价格"
+            <input type="text" id="price" class="form-control" placeholder="价格(元)"
                    ng-model="newSimController.sim.price" name="price" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">流量限额</label>
+          <label class="col-sm-2 control-label">流量限额(MB)</label>
           <div class="col-sm-10">
-            <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额"
+            <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额(MB)"
                    ng-model="newSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
           </div>
         </div>
@@ -92,7 +92,7 @@
           <label class="col-sm-2 control-label">备注</label>
           <div class="col-sm-10">
             <input type="text" id="description" class="form-control" placeholder="备注"
-                   ng-model="newSimController.sim.description" name="description" required/>
+                   ng-model="newSimController.sim.description" name="description"/>
           </div>
         </div>
 

@@ -20,7 +20,7 @@
     simStatusData.then(function (data) {
       vm.sim.simStatusList = data;
     }, function (reason) {
-      Notification.error('获取Sim状态集合失败');
+      Notification.error('获取SIM卡状态集合失败');
     })
 
 
@@ -49,10 +49,10 @@
     vm.ok = function (sim) {
       var restPromise = serviceResource.restAddRequest(SIM_URL, sim);
       restPromise.then(function (data) {
-        Notification.success("新建Sim卡信息成功!");
+        Notification.success("新建SIM卡信息成功!");
         $uibModalInstance.close();
       }, function (reason) {
-        Notification.error("新建Sim卡信息出错!");
+        Notification.error("新建SIM卡信息出错!");
       });
     };
 

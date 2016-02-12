@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">Sim卡管理</li>
+    <li class="active">SIM卡管理</li>
   </ol>
 </section>
 
@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">Sim卡号:</label>
+      <label class="control-label">SIM卡号:</label>
 
     </div>
     <div class="col-md-2">
@@ -56,7 +56,7 @@
         <div class="box-body">
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              sim卡号:
+              SIM卡号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.phoneNumber}}
@@ -72,7 +72,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              价格:
+              价格(元):
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.price}}
@@ -104,7 +104,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              当月流量限额:
+              当月流量限额(MB):
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.gsmDataLimit}}
@@ -112,7 +112,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              当月已用流量:
+              当月已用流量(MB):
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.gsmDataCurrentMonth}}
@@ -120,7 +120,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              总共已用流量:
+              总共已用流量(MB):
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.gsmDataTotal}}
@@ -168,15 +168,15 @@
     <div ng-if="simMngCtrl.radioListType == 'list'" >
       <table class="table table-striped" id="deviceTable">
         <tr>
-          <th>sim卡号</th>
+          <th>SIM卡号</th>
           <th>序列号</th>
-          <th>价格</th>
+          <th>价格(元)</th>
           <th>当前状态</th>
           <th>企业名称</th>
           <th>流量统计月份</th>
-          <th>当月流量限额</th>
-          <th>当月已用流量</th>
-          <th>总共已用流量</th>
+          <th>当月流量限额(MB)</th>
+          <th>当月已用流量(MB)</th>
+          <th>总共已用流量(MB)</th>
           <th>备注</th>
           <th>开通时间</th>
           <th>到期时间</th>

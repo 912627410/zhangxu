@@ -19,7 +19,7 @@
     simStatusData.then(function (data) {
       vm.sim.simStatusList = data;
     }, function (reason) {
-      Notification.error('获取Sim状态集合失败');
+      Notification.error('获取SIM状态集合失败');
     })
 
     vm.changeStatus=function(){
@@ -62,10 +62,10 @@
     vm.ok = function (sim) {
       var restPromise = serviceResource.restUpdateRequest(SIM_URL,sim);
       restPromise.then(function (data){
-        Notification.success("修改用户信息成功!");
+        Notification.success("修改SIM卡信息成功!");
         $uibModalInstance.close();
       },function(reason){
-        Notification.error("修改用户信息出错!");
+        Notification.error("修改SIM卡信息出错!");
       });
     };
 
