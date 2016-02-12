@@ -6,7 +6,7 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, serviceResource, DEVCE_PAGED_QUERY) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, serviceResource, DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
@@ -63,7 +63,7 @@
     };
 
     if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN") {
-      vm.query(0, 10, null, null);
+      vm.query(null, null, null, null);
     }
 
     //重置查询框

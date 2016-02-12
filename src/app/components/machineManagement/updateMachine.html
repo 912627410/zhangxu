@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <h3 class="modal-title">修改用户信息</h3>
+</div>
+<!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
+  <!--<div >{{updateUserinfoCtrl.dynamicPopover.content}}</div>-->
+  <!--<div class="form-group">-->
+    <!--<abn-tree tree-data="orgCtrl1.my_data" tree-control="orgCtrl1.my_tree" on-select="orgCtrl1.my_tree_handler(branch)" expand-level="2"></abn-tree>-->
+  <!--</div>-->
+<!--</script>-->
+
+<form name="updateMachineForm"  class="form-horizontal w5c-form" w5c-form-validate="vm.validateOptions">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="identityId" class="col-sm-2  control-label">车辆识别号</label>
+        <div class="col-sm-10">
+          <input type="text" id="identityId" class="form-control" placeholder="车辆识别号" ng-model="updateMachineController.machine.identityId" name="identityId" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="licenseId" class="col-sm-2 control-label" >车牌号码</label>
+        <div class="col-sm-10">
+          <input type="text" id="licenseId" class="form-control" placeholder="车牌号码" ng-model="updateMachineController.machine.licenseId" name="licenseId" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">发动机号码</label>
+        <div class="col-sm-10">
+          <input type="text" id="engineId" class="form-control" placeholder="发动机号码" ng-model="updateMachineController.machine.engineId" name="engineId" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">绑定终端</label>
+        <div class="col-sm-10">
+          <input type="text" id="deviceNum" class="form-control" placeholder="终端号" ng-model="updateMachineController.machine.deviceinfo.deviceNum" name="deviceNum" required/>
+        </div>
+        <!--<div class="col-sm-10">
+            <ui-select ng-model="updateMachineController.machine.deviceinfo" theme="bootstrap" ng-disabled="disabled">
+              <ui-select-match allow-clear="true" placeholder="请选择终端">{{$select.selected.deviceNum}}
+              </ui-select-match>
+              <ui-select-choices
+                repeat="deviceinfo in updateMachineController.deviceinfoList | propsFilter: {deviceNum: $select.search}">
+                <div ng-bind-html="deviceinfo.deviceNum | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>-->
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车主姓名</label>
+        <div class="col-sm-10">
+          <input type="text" id="ownerName" class="form-control" placeholder="车主姓名" ng-model="updateMachineController.machine.ownerName" name="ownerName" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车主电话</label>
+        <div class="col-sm-10">
+          <input type="text" id="ownerPhone" class="form-control" placeholder="车主联系电话" ng-model="updateMachineController.machine.ownerPhone" name="ownerPhone" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-2 control-label">车主地址</label>
+        <div class="col-sm-10">
+          <input type="text" id="ownerAddress" class="form-control" placeholder="车主地址" ng-model="updateMachineController.machine.ownerAddress" name="ownerAddress" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">安装人</label>
+        <div class="col-sm-10">
+          <input type="text" id="installPerson" class="form-control" placeholder="安装人" ng-model="updateMachineController.machine.installPerson" name="installPerson" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">安装时间</label>
+        <div class="col-sm-10">
+          <p class="input-group">
+            <input type="text" name="installTime" class="form-control" uib-datepicker-popup="{{format}}"
+                   ng-model="updateMachineController.machine.installTime"
+                   is-open="updateMachineController.installTimeOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="updateMachineController.installTimeOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">安装人电话</label>
+        <div class="col-sm-10">
+          <input type="text" id="installPersonPhone" class="form-control" placeholder="安装人联系电话" ng-model="updateMachineController.machine.installPersonPhone" name="installPersonPhone" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">安装位置</label>
+        <div class="col-sm-10">
+          <input type="text" name="installLocation" class="form-control" placeholder="安装位置" ng-model="updateMachineController.machine.installLocation" name="installLocation"/>
+        </div>
+      </div>
+      <div class="form-group" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
+        <label class="col-sm-2 control-label">安装地点</label>
+        <div class="col-sm-10">
+          <input type="number" name="installAddress" class="form-control" placeholder="安装地点" ng-model="updateMachineController.machine.installAddress" name="installAddress"/>
+        </div>
+      </div>
+      <div class="form-group" >
+        <label class="col-sm-2 control-label">报警号码</label>
+        <div class="col-sm-10">
+          <input type="text" name="alterPhone" class="form-control" placeholder="报警短信号码" ng-model="updateMachineController.machine.alterPhone" name="alterPhone"/>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" w5c-form-submit="updateMachineController.ok(updateMachineController.machine)">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="updateMachineController.cancel()">取消</button>
+  </div>
+</form>

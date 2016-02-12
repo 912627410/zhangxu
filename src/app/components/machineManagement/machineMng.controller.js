@@ -52,5 +52,26 @@
       });
     };
 
+    vm.updateMachine = function (machine, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/machineManagement/updateMachine.html',
+        controller: 'updateMachineController as updateMachineController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          machine: function () {
+            return machine;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        vm.selected = selectedItem;
+      }, function () {
+        //$log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
   }
 })();

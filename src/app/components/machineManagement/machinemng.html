@@ -81,7 +81,7 @@
               绑定终端:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.deviceinfo.devicenum}}
+              {{machine.deviceinfo.deviceNum}}
             </div>
           </div>
           <div class="row">
@@ -191,7 +191,7 @@
           <td> {{machine.identityId}}</td>
           <td> {{machine.licenseId}}</td>
           <td> {{machine.engineId}}</td>
-          <td> {{machine.deviceinfo.devicenum}}</td>
+          <td> {{machine.deviceinfo.deviceNum}}</td>
           <td> {{machine.ownerName}}</td>
           <td> {{machine.ownerPhone}}</td>
           <td> {{machine.ownerAddress}}</td>
@@ -204,7 +204,7 @@
           <td>
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-                    ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
+                    ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
           </td>
         </tr>
@@ -213,9 +213,9 @@
   </div>
 
   <div class="box-footer">
-    <uib-pagination total-items="page.totalElements" ng-change="loadPage(deviceData_pagenumber-1,40,sort,deviceNum)"
-                    max-size="5" ng-model="deviceData_pagenumber" items-per-page="page.size" class="pagination-sm"
-                    boundary-links="true" rotate="false"></uib-pagination>
+    <uib-pagination total-items="machineMngCtrl.page.totalElements" ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="machineMngCtrl.pageNumber" items-per-page="machineMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 
 </section>

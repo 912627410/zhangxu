@@ -95,7 +95,18 @@
                    ng-model="newSimController.sim.description" name="description"/>
           </div>
         </div>
-
+      <!--
+      <div class="form-group">
+        <label class="col-sm-2 control-label">设备类型</label>
+        <div class="col-sm-10">
+          <select name="devicetype"  class="form-control"
+                  ng-model="newSimController.sim.status"
+                  ng-options="simStatus.value as simStatus.desc for simStatus in newSimController.sim.simStatusList">
+            <option value="">请选择...</option>
+          </select>
+        </div>
+      </div>
+      -->
     </div>
   </div>
 

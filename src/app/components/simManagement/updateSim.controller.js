@@ -9,10 +9,10 @@
     .controller('updateSimController', updateSimController);
 
   /** @ngInject */
-  function updateSimController($rootScope,$scope,$uibModalInstance,SIM_STATUS_URL,SIM_URL,serviceResource, Notification,sim) {
+  function updateSimController($scope,$uibModalInstance,SIM_STATUS_URL,SIM_URL,simService,serviceResource, Notification,sim) {
     var vm = this;
     vm.sim = sim;
-    vm.operatorInfo =$rootScope.userInfo;
+    vm.operatorInfo =$scope.userInfo;
 
     //查询sim卡的状态集合
     var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
@@ -63,6 +63,9 @@
       var restPromise = serviceResource.restUpdateRequest(SIM_URL,sim);
       restPromise.then(function (data){
         Notification.success("修改SIM卡信息成功!");
+    //    $scope.query();
+   //     alert(vm.radioListType);
+     //   vm.query(0,10,null,null);
         $uibModalInstance.close();
       },function(reason){
         Notification.error("修改SIM卡信息出错!");
@@ -70,8 +73,8 @@
     };
 
 
-    vm.showOrgTree = false;
 
+    vm.showOrgTree = false;
     vm.openOrgTree = function(){
       vm.showOrgTree = !vm.showOrgTree;
     }

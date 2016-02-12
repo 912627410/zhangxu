@@ -51,7 +51,7 @@
       <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(0,10,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
       <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
     </div>
   </div>
@@ -61,7 +61,10 @@
       <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
       <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
-    <div class="col-md-10">
+    <div class="btn-group col-md-1">
+      <span class="label label-info pull-left">{{deviceinfoMngCtrl.page.totalElements}}</span>
+      </div>
+    <div class="col-md-9">
 
       <a class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
@@ -98,6 +101,14 @@
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.deviceNum}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              车辆识别号:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.machine.identityId}}
             </div>
           </div>
           <div class="row">
@@ -193,6 +204,7 @@
       <table class="table table-striped" id="deviceTable">
         <tr>
           <th>设备编号</th>
+          <th>车辆识别号</th>
           <th>设备类型</th>
           <th>所属组织</th>
           <th>协议类型</th>
@@ -206,6 +218,7 @@
         </tr>
         <tr ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
           <td> {{deviceinfo.deviceNum}}</td>
+          <td> {{deviceinfo.machine.identityId}}</td>
           <td> {{deviceinfo.deviceTypeDto.name}}</td>
           <td> {{deviceinfo.org.label}}</td>
           <td> {{deviceinfo.protocalTypeDesc}}</td>

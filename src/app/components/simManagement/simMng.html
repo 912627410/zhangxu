@@ -24,7 +24,7 @@
       <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-4">
-      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.query(0,10,null,simMngCtrl.phoneNumber)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
     </div>
 
     <div class="col-md-5">
@@ -45,6 +45,7 @@
     <div class="btn-group col-md-2">
       <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
       <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+      <span class="label label-info pull-left">{{simMngCtrl.page.totalElements}}</span>
     </div>
   </div>
   <div class="row " style="padding-top: 10px">
