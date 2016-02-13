@@ -150,7 +150,7 @@
               <th style="width: 300px">当前位置</th>
               <th>终端类型</th>
               <th>所属组织</th>
-              <th>最后更新时间</th>
+              <th>最近数据上传时间</th>
               <th>操作</th>
             </tr>
             <tr ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
@@ -164,7 +164,7 @@
               <td>{{deviceinfo.address}}</td>
               <td>{{deviceinfo.deviceTypeDto.name}}</td>
               <td></td>
-              <td>{{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>
                 <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>
               </td>
@@ -175,7 +175,7 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="5" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
   <!-- Main row -->
 </section><!-- /.content -->

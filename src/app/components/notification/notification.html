@@ -22,19 +22,12 @@
             <ul class="nav nav-pills nav-stacked">
               <li ng-class="notificationCtrl.classNoProcessedMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoProcessedNotification(0,null,null,notificationCtrl.filterTerm)" ><i class="fa fa-envelope-o"></i> 全部未处理消息
                 <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span></a></li>
-<<<<<<< e0d54ee5321909b3dee21ffdf7d28fa207dd2b39
-              <li ng-class="notificationCtrl.classNoConnectMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoConnectNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-unlink"></i>长时间未连接设备</a></li>
-              <li ng-class="notificationCtrl.classMaintainMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryMaintainNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-cog"></i> 保养提醒 </a>
-              <li ng-class="notificationCtrl.classAllMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryAllNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-check-square-o"></i> 全部消息
-                <span class="label label-primary pull-right">{{notificationCtrl.page.totalElements}}</span></a>
-=======
               <li ng-class="notificationCtrl.classNoConnectMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoConnectNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-unlink"></i>长时间未连接设备
                 <span class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span></a></li>
               <li ng-class="notificationCtrl.classMaintainMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryMaintainNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-cog"></i> 保养提醒
                 <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span></a></li>
               <li ng-class="notificationCtrl.classAllMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryAllNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-check-square-o"></i> 全部消息
                 <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span></a>
->>>>>>> 添加消息提醒界面
               </li>
             </ul>
           </div>

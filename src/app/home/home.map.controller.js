@@ -11,6 +11,6 @@
   /** @ngInject */
   function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource) {
     var vm = this;
-    serviceResource.refreshMapWithDeviceInfo("homeMap");
+    serviceResource.refreshMapWithDeviceInfo("homeMap",null,5);
   }
 })();

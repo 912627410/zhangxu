@@ -64,16 +64,24 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList) {
+      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
             location.reload(false);
           }
+          var localZoomSize = 4;  //默认缩放结拜
+          if (zoomsize){
+            localZoomSize = zoomsize;
+          }
+          var localCenterAddr = [103.39,36.9];//设置中心点大概在兰州附近
+          if (centeraddr){
+            localCenterAddr = centeraddr;
+          }
           var map = new AMap.Map(mapId, {
             resizeEnable: true,
-            center: [103.39,36.9],   //设置中心点大概在兰州附近
-            zooms: [5, 18]
+            center: localCenterAddr,
+            zooms: [localZoomSize, 18]
           });
           map.setZoom(1);
           map.plugin(['AMap.ToolBar'], function () {

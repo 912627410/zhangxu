@@ -9,7 +9,7 @@
     .constant('malarkey', malarkey)
     .constant('DEFAULT_SIZE_PER_PAGE', 40)    //默认每页显示纪录数
     .constant('AMAP_QUERY_TIMEOUT_MS', 3000)  //高德地图api调用延时毫秒数
-    .constant('DEFAULT_DEVICE_SORT_BY', 'deviceNum,desc')    //读取设备时的默认排序规则
+    .constant('DEFAULT_DEVICE_SORT_BY', 'lastDataUploadTime,desc')    //读取设备时的默认排序规则
     .constant('DEFAULT_USER_SORT_BY', 'ssn,desc')    //读取用户信息时的默认排序规则
     .constant('DEFAULT_DEVICE_DATA_SORT_BY', 'recordTime,desc')    //读取设备数据时的默认排序规则
     .constant('DEFAULT_DEVICE_WARNING_DATA_SORT_BY', 'warningTime,desc')    //读取设备报警数据时的默认排序规则
