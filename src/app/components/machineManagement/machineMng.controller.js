@@ -14,7 +14,7 @@
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
 
-    vm.loadMachine = function(){
+    vm.query = function(){
         var rspData = serviceResource.restCallService(MACHINE_PAGE_URL,"GET");
         rspData.then(function(data){
 
@@ -26,7 +26,7 @@
     };
 
     if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
-      vm.loadMachine();
+      vm.query();
     }
 
 
@@ -46,7 +46,8 @@
       });
 
       modalInstance.result.then(function () {
-        //正常返回
+        //刷新
+        vm.query();
       }, function () {
         //取消
       });
@@ -68,6 +69,8 @@
 
       modalInstance.result.then(function (selectedItem) {
         vm.selected = selectedItem;
+        //刷新
+        vm.query();
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });

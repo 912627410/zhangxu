@@ -54,12 +54,11 @@
       restPromise.then(function (data) {
         Notification.success("新建SIM卡信息成功!");
         $uibModalInstance.close();
-        alert($scope.radioListType);
+     //   alert($scope.radioListType);
       }, function (reason) {
         Notification.error("新建SIM卡信息出错!");
       });
     };
-
 
     vm.showOrgTree = false;
     vm.openOrgTree = function () {

@@ -90,7 +90,8 @@
       });
 
       modalInstance.result.then(function () {
-        //正常返回
+        //刷新
+        vm.query();
       }, function () {
         //取消
       });
@@ -113,6 +114,7 @@
 
       modalInstance.result.then(function (selectedItem) {
         vm.selected = selectedItem;
+        vm.query();
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });
