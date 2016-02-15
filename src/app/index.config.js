@@ -57,7 +57,7 @@
 // configure Idle settings
     //idle(seconds) (integer, default is 20min): The idle timeout duration in seconds.
     // After this amount of time passes without the user performing an action that triggers one of the watched DOM events, the user is considered idle.
-    // Note: Prior to v1.0, this method is called idleDuration
+    // Note: Prior to v1.0, this method is called idleDuratio
     IdleProvider.idle(20 * 60); // in seconds
 
     //timeout(seconds) (integer, default is 30s): The amount of time the user has to respond (in seconds) before they have been considered timed out. Set to 0 or false to disable this feature, if you want Idle to nothing but detect when a user is idle or not forever. Note: Prior to v1.0, this method is called warningDuration, and could not be disabled;

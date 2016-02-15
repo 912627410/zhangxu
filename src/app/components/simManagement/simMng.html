@@ -169,12 +169,21 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              激活时间:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{sim.activeTime | date:'yyyy-MM-dd'}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               企业名称:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{sim.deviceinfo.org.label}}
             </div>
           </div>
+          <!--
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               流量统计月份:
@@ -199,6 +208,7 @@
               {{sim.gsmDataCurrentMonth}}
             </div>
           </div>
+          -->
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               总共已用流量(MB):
@@ -253,11 +263,14 @@
           <th>序列号</th>
           <th>价格(元)</th>
           <th>当前状态</th>
+          <th>激活时间</th>
           <th>企业名称</th>
+          <!--
           <th>流量统计月份</th>
           <th>当月流量限额(MB)</th>
           <th>当月已用流量(MB)</th>
           <th>总共已用流量(MB)</th>
+          -->
           <th>备注</th>
           <th>开通时间</th>
           <th>到期时间</th>
@@ -268,11 +281,14 @@
           <td> {{sim.serialNumber}}</td>
           <td> {{sim.price}}</td>
           <td> {{sim.statusDesc}}</td>
+          <td> {{sim.activeTime | date:'yyyy-MM-dd'}}</td>
           <td> {{sim.deviceinfo.org.label}}</td>
+          <!--
           <td> {{sim.gsmDataMonth}}</td>
           <td> {{sim.gsmDataLimit}}</td>
           <td> {{sim.gsmDataCurrentMonth}}</td>
           <td> {{sim.gsmDataTotal}}</td>
+          -->
           <td> {{sim.description}}</td>
           <td>   {{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
           <td>   {{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>

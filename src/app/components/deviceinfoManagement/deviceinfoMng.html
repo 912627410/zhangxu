@@ -23,13 +23,29 @@
     <div class="col-md-2">
       <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum" placeholder="支持模糊查询"/>
     </div>
+
     <div class="col-md-1">
-      <label class="control-label">所属组织:</label>
+      <label class="control-label">SIM:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
+    </div>
+  </div>
+
+  <div class="row">
+
+
+    <div class="col-md-1">
+      <label class="control-label">调拨组织:</label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="deviceinfoMngCtrl.deviceinfo.org.label" name="org" readonly required/>
+               ng-model="deviceinfoMngCtrl.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="deviceinfoMngCtrl.openOrgTree()"><i
                       class="fa fa-sitemap"></i></button>
@@ -44,15 +60,9 @@
       </div>
       </p>
     </div>
-    <div class="col-md-1">
-      <label class="control-label">SIM:</label>
-    </div>
     <div class="col-md-2">
-      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber" placeholder="支持模糊查询"/>
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨</button>
+
     </div>
   </div>
 
@@ -143,14 +153,7 @@
               {{deviceinfo.statusDesc}}
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              激活时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
 
-            </div>
-          </div>
          <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
               SIM:
@@ -169,10 +172,10 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              创建时间:
+              调拨时间:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+              {{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}
             </div>
           </div>
           <div class="row">
@@ -203,31 +206,30 @@
     <div ng-if="deviceinfoMngCtrl.radioListType == 'list'" >
       <table class="table table-striped" id="deviceTable">
         <tr>
+          <th><input type="checkbox" ng-click="deviceinfoMngCtrl.updateAllSelection($event)" ng-model="deviceinfoMngCtrl.checked"></th>
           <th>设备编号</th>
           <th>车辆识别号</th>
           <th>设备类型</th>
           <th>所属组织</th>
           <th>协议类型</th>
           <th>状态</th>
-          <th>激活时间</th>
           <th>SIM</th>
           <th>SIM序列号</th>
-          <th>创建时间</th>
+          <th>调拨时间</th>
           <th>更新时间</th>
           <th>操作</th>
         </tr>
         <tr ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
+          <td><input type="checkbox" id="deviceinfo.id" ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)" ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)" ng-model="deviceinfo.checked"></td>
           <td> {{deviceinfo.deviceNum}}</td>
           <td> {{deviceinfo.machine.identityId}}</td>
           <td> {{deviceinfo.deviceTypeDto.name}}</td>
           <td> {{deviceinfo.org.label}}</td>
           <td> {{deviceinfo.protocalTypeDesc}}</td>
           <td> {{deviceinfo.statusDesc}}</td>
-          <td> </td>
-
           <td> {{deviceinfo.sim.phoneNumber}}</td>
           <td> {{deviceinfo.sim.serialNumber}}</td>
-          <td>   {{deviceinfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td>   {{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td>   {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td>
             <button type="button" class="btn btn-default btn-xs"

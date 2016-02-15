@@ -23,6 +23,10 @@
       $scope.$emit("OrgSelectedEvent",branch);
     };
 
+    vm.user_tree_handler = function(eventName,branch) {
+      $scope.$emit(eventName,branch);
+    };
+
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0){
       vm.my_data=[$rootScope.orgChart[0]];
     }

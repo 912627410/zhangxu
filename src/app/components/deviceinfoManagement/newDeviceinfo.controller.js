@@ -56,6 +56,8 @@
       startingDay: 1
     };
 
+    vm.deviceinfo.produceDate=new Date();
+
     vm.ok = function (deiceinfo) {
       var restPromise = serviceResource.restAddRequest(DEVCEINFO_URL, deiceinfo);
       restPromise.then(function (data) {
@@ -67,18 +69,6 @@
         Notification.error("新建设备信息出错!");
       });
     };
-
-    vm.showOrgTree = false;
-
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.deviceinfo.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
