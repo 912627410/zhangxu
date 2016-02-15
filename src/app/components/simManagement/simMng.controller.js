@@ -7,10 +7,18 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$uibModal,Notification,simService,serviceResource, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$uibModal,Notification,simService,serviceResource,SIM_STATUS_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
+
+    //初始化查询参数
+    vm.sim={
+      "phoneNumber":"",
+      "deviceinfo":{},
+
+    };
+
     //vm.query = function(page,size,sort,queryPhoneNumber){
     //
     //  var restCallURL = SIM_PAGE_URL;
@@ -38,7 +46,54 @@
     //  vm.query(0,10,null,null);
     //}
 
-     vm.query=function(page,size,sort,queryPhoneNumber){
+    //查询条件相关
+    vm.showOrgTree = false;
+    vm.openOrgTree = function () {
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+
+    $scope.$on('OrgSelectedEvent', function (event, data) {
+      vm.selectedOrg = data;
+      vm.sim.deviceinfo.org = vm.selectedOrg;
+      vm.showOrgTree = false;
+    })
+
+
+    //日期控件相关
+    //date picker
+    vm.activeTimeStartOpenStatus = {
+      opened: false
+    };
+
+    vm.activeTimeStartOpen = function ($event) {
+      vm.activeTimeStartOpenStatus.opened = true;
+    };
+
+    vm.activeTimeEndOpenStatus = {
+      opened: false
+    };
+
+    vm.activeTimeEndOpen = function ($event) {
+      vm.activeTimeEndOpenStatus.opened = true;
+    };
+
+
+    var date = new Date();
+    date.setDate(date.getDate()-30);  //默认查询最近一个月的异常数据
+    vm.sim.activeTimeStart=date;
+    vm.sim.activeTimeEnd=new Date();
+
+    //查询sim卡的状态集合
+    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
+    simStatusData.then(function (data) {
+      vm.sim.simStatusList = data;
+    }, function (reason) {
+      Notification.error('获取SIM卡状态集合失败');
+    })
+
+
+
+    vm.query=function(page,size,sort,queryPhoneNumber){
        var rspData=simService.queryPage(page,size,sort,queryPhoneNumber);
        rspData.then(function(data){
          vm.simList = data.content;

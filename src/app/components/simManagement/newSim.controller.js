@@ -60,17 +60,6 @@
       });
     };
 
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.sim.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };

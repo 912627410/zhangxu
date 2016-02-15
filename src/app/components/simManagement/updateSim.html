@@ -25,27 +25,7 @@
           <label class="col-sm-2 control-label">价格(元)</label>
           <div class="col-sm-10">
             <input type="text" id="price" class="form-control" placeholder="价格(元)"
-                   ng-model="updateSimController.sim.price" name="price" required/>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="org" class="col-sm-2 control-label">所属组织</label>
-          <!--<div ng-controller="orgController as orgCtrl1">-->
-          <!--<button uib-popover-template="updateUserinfoCtrl.dynamicPopover.templateUrl" popover-title="{{updateUserinfoCtrl.dynamicPopover.title}}" type="button" class="btn btn-default">组织机构</button>-->
-          <!--</div>-->
-          <div class="col-sm-10">
-            <p class="input-group">
-              <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="updateSimController.sim.org.label" name="org" readonly required/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="updateSimController.openOrgTree()"><i class="fa fa-sitemap"></i></button>
-                  </span>
-            <div ng-controller="orgController as orgCtrl">
-              <div style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; " ng-show="updateSimController.showOrgTree"  >
-                <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree" on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-              </div>
-            </div>
-            </p>
+                   ng-model="updateSimController.sim.price" name="price" />
           </div>
         </div>
 
@@ -53,7 +33,7 @@
           <label class="col-sm-2 control-label">流量限额(MB)</label>
           <div class="col-sm-10">
             <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额(MB)"
-                   ng-model="updateSimController.sim.gsmDataLimit" name="gsmDataLimit" required/>
+                   ng-model="updateSimController.sim.gsmDataLimit" name="gsmDataLimit" />
           </div>
         </div>
 

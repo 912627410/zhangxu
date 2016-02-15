@@ -23,11 +23,98 @@
     <div class="col-md-2">
       <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
+
+
+    <div class="col-md-1">
+      <label class="control-label">所属组织:</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织"
+               ng-model="simMngCtrl.sim.deviceinfo.org.label" name="org" readonly required/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="simMngCtrl.openOrgTree()"><i
+                      class="fa fa-sitemap"></i></button>
+                  </span>
+      <div ng-controller="orgController as orgCtrl">
+        <div
+          style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
+          ng-show="simMngCtrl.showOrgTree">
+          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+        </div>
+      </div>
+      </p>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">状态:</label>
+    </div>
+    <div class="col-md-2">
+      <ui-select type="text" name="status" ng-required="true"  ng-model="simMngCtrl.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
+        <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+        <ui-select-choices  repeat="simStatus.value as simStatus in simMngCtrl.sim.simStatusList | propsFilter: {desc: $select.search}" >
+          <div  ng-bind-html="simStatus.desc | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="col-md-2">
+
     </div>
 
-    <div class="col-md-5">
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">激活开始时间:</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" name="activeTimeStart" class="form-control" uib-datepicker-popup="{{format}}"
+               ng-model="simMngCtrl.sim.activeTimeStart"
+               is-open="simMngCtrl.activeTimeStartOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="simMngCtrl.activeTimeStartOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">激活结束时间:</label>
+    </div>
+    <div class="col-md-2">
+
+        <p class="input-group">
+          <input type="text" name="activeTimeEnd" class="form-control" uib-datepicker-popup="{{format}}"
+                 ng-model="simMngCtrl.sim.activeTimeEnd"
+                 is-open="simMngCtrl.activeTimeEndOpenStatus.opened"
+                 datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="simMngCtrl.activeTimeEndOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="simMngCtrl.reset()">重置</button>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+      <span class="label label-info pull-left">{{simMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-10">
 
       <a class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
@@ -39,13 +126,6 @@
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
-      <span class="label label-info pull-left">{{simMngCtrl.page.totalElements}}</span>
     </div>
   </div>
   <div class="row " style="padding-top: 10px">
@@ -92,7 +172,7 @@
               企业名称:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.org.label}}
+              {{sim.deviceinfo.org.label}}
             </div>
           </div>
           <div class="row">
@@ -188,7 +268,7 @@
           <td> {{sim.serialNumber}}</td>
           <td> {{sim.price}}</td>
           <td> {{sim.statusDesc}}</td>
-          <td> {{sim.org.label}}</td>
+          <td> {{sim.deviceinfo.org.label}}</td>
           <td> {{sim.gsmDataMonth}}</td>
           <td> {{sim.gsmDataLimit}}</td>
           <td> {{sim.gsmDataCurrentMonth}}</td>
