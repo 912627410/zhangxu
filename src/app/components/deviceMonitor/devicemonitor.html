@@ -161,7 +161,10 @@
                 <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
                 <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
               </td>
-              <td>{{deviceinfo.address}}</td>
+              <!--地址-->
+              <td ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
+              <td ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
+
               <td>{{deviceinfo.deviceTypeDto.name}}</td>
               <td></td>
               <td>{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

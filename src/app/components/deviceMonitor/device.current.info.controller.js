@@ -397,21 +397,6 @@
           if (vm.deviceDataList.length == 0){
             Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
           }
-          else{
-            vm.deviceDataList.forEach(function (deviceData) {
-              if (deviceData.locateStatus === 'A' && deviceData.address == null && deviceData.longitudeNum!=null && deviceData.latitudeNum!=null){
-                deviceData.address = '正在请求定位数据...';
-                var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
-                serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-                  deviceData.address = newaddress;
-                })
-              }
-              else{
-                deviceData.address = "--";
-              }
-            })
-          }
-
         }, function (reason) {
           Notification.error('获取该设备历史数据失败');
         }
