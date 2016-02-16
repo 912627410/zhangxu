@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
+  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -40,7 +40,7 @@
 
     vm.queryDeviceInfo = function(page,size,sort,queryCondition){
       if (queryCondition){
-        var filterTerm = "filter=" + queryCondition;
+        var filterTerm = "search_LIKE_deviceNum=" + $filter('uppercase')(queryCondition);
       }
       var deviceDataPromis = serviceResource.queryDeviceInfo(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {

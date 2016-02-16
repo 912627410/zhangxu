@@ -37,7 +37,7 @@
           <label class="control-label">车牌号/机号/终端号:</label>
         </div>
     <div class="col-md-3">
-          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.deviceNum" placeholder="支持模糊查询"/>
+          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.deviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.deviceNum) : null" placeholder="支持模糊查询"/>
         </div>
     <div class="col-md-5">
         </div>

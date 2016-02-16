@@ -6,9 +6,9 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($rootScope, $state, $stateParams, serviceResource,ORG_TREE_JSON_DATA_URL,$window,$log,Notification,Idle) {
+  function runBlock($rootScope, $state, $stateParams,SYSTEM_VERSION, serviceResource,ORG_TREE_JSON_DATA_URL,$window,$log,Notification,Idle) {
 
-
+    $rootScope.SYSTEM_VERSION = SYSTEM_VERSION;
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     //当前登录用户信息保存在session里面
