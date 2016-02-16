@@ -9,18 +9,38 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope,$uibModal,Notification,serviceResource, MACHINE_PAGE_URL) {
+  function machineMngController($rootScope,$scope,$uibModal,Notification,serviceResource,DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_MOVE_ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
+    vm.org={label:""};    //调拨组织
 
-    vm.query = function(){
-        var rspData = serviceResource.restCallService(MACHINE_PAGE_URL,"GET");
+    vm.query = function(page, size, sort, machine){
+      var restCallURL = MACHINE_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      if (null != machine) {
+
+        if (null != machine.deviceNum) {
+          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + machine.deviceNum;
+        }
+        if (null != machine.identityId) {
+          restCallURL += "&search_LIKE_identityId=" + machine.identityId;
+        }
+
+      }
+
+        var rspData = serviceResource.restCallService(restCallURL,"GET");
         rspData.then(function(data){
 
-          vm.macheineList = data.content;
+          vm.machineList = data.content;
+          vm.page = data.page;
+          vm.pageNumber = data.page.number + 1;
         },function(reason){
-          vm.macheineList = null;
+          vm.machineList = null;
           Notification.error("获取车辆数据失败");
         });
     };
@@ -28,6 +48,26 @@
     if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
       vm.query();
     }
+
+    //重置查询框
+    vm.reset = function () {
+      vm.machine.identityId = null;
+      vm.machine.deviceNum = null;
+    }
+
+
+
+    //查询条件相关
+    vm.showOrgTree = false;
+    vm.openOrgTree = function () {
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+
+    $scope.$on('OrgSelectedEvent', function (event, data) {
+      vm.selectedOrg = data;
+      vm.org = vm.selectedOrg;
+      vm.showOrgTree = false;
+    })
 
 
     vm.newMachine = function (size) {
@@ -68,7 +108,7 @@
       });
 
       modalInstance.result.then(function (selectedItem) {
-        vm.selected = selectedItem;
+//        vm.selected = selectedItem;
         //刷新
         vm.query();
       }, function () {
@@ -76,5 +116,89 @@
       });
     };
 
+
+
+    vm.selectAll=false;//是否全选标志
+    vm.selected = []; //选中的设备id
+
+    var updateSelected = function(action,id){
+      if(action == 'add' && vm.selected.indexOf(id) == -1){
+        vm.selected.push(id);
+      }
+      if(action == 'remove' && vm.selected.indexOf(id)!=-1){
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx,1);
+
+      }
+    }
+
+    vm.updateSelection = function($event, id,status){
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked?'add':'remove');
+      updateSelected(action,id);
+    }
+
+
+    vm.updateAllSelection = function($event){
+      var checkbox = $event.target;
+      var action = (checkbox.checked?'add':'remove');
+      // alert(action);
+      vm.machineList.forEach(function(machine){
+        updateSelected(action,machine.id);
+      })
+
+    }
+
+    vm.isSelected = function(id){
+      //   alert(vm.selected);
+      return vm.selected.indexOf(id)>=0;
+    }
+    vm.checkAll = function(){
+      var operStatus=false;
+      if(vm.selectAll) {
+        operStatus=false;
+        vm.selectAll=false;
+      }else{
+        operStatus=true;
+        vm.selectAll=true;
+      }
+
+      vm.deviceinfoList.forEach(function(deviceinfo){
+        deviceinfo.checked=operStatus;
+      })
+    }
+
+
+    //批量设置为已处理
+    vm.batchMoveOrg = function(){
+
+      if(vm.selected.length==0){
+        alert("请选择要调拨的车辆");
+        return;
+      }
+
+
+      if(vm.org.label==""){
+        alert("请选择要调拨的组织");
+        return;
+      }
+
+      //alert(vm.org.id+" "+vm.org.label);
+
+      var moveOrg={ids:vm.selected,"orgId":vm.org.id};
+      // alert(moveOrg.ids+"  "+moveOrg.orgId);
+
+
+      var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
+      restPromise.then(function (data) {
+        Notification.success("调拨车辆成功!");
+        vm.query(null, null, null, null);
+      }, function (reason) {
+        Notification.error("调拨车辆出错!");
+      });
+
+
+    };
   }
 })();

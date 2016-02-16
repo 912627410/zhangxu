@@ -12,6 +12,8 @@
     vm.radioListType = "list";
     vm.deviceinfo = {};
 
+    vm.org={label:""};    //调拨组织
+
     //查询条件相关
     vm.showOrgTree = false;
     vm.openOrgTree = function () {
@@ -25,8 +27,7 @@
     })
 
 
-    //调拨组织
-    vm.org={label:""};
+
     vm.showMoveOrgTree = false;
     vm.openMoveOrgTree = function () {
       vm.showMoveOrgTree = !vm.showMoveOrgTree;
@@ -34,7 +35,7 @@
 
     $scope.$on('showMoveOrgEvent', function (event, data) {
       vm.selectedMoveOrg = data;
-      vm.deviceinfo.moverg = vm.selectedMoveOrg;
+      vm.deviceinfo.moveOrg = vm.selectedMoveOrg;
       vm.showMoveOrgTree = false;
     })
 
@@ -72,7 +73,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.deviceinfoList = {};
-        Notification.error("获取SIM数据失败");
+        Notification.error("获取设备数据失败");
       });
     };
 
@@ -108,7 +109,7 @@
 
       modalInstance.result.then(function () {
         //刷新
-        vm.query();
+       // vm.query();
       }, function () {
         //取消
       });
@@ -130,8 +131,8 @@
       });
 
       modalInstance.result.then(function (selectedItem) {
-        vm.selected = selectedItem;
-        vm.query();
+      //  vm.selected = selectedItem;
+      //  vm.query();
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });
@@ -161,53 +162,10 @@
 
 
 
-    //批量设置为已处理
-    vm.batchMoveOrg = function(){
-
-      if(vm.selected.length==0){
-        alert("请选择要调拨的设备");
-        return;
-      }
 
 
-      if(vm.org.label==""){
-        alert("请选择要调拨的组织");
-        return;
-      }
-
-      //alert(vm.org.id+" "+vm.org.label);
-
-      var moveOrg={ids:vm.selected,"orgId":vm.org.id};
-     // alert(moveOrg.ids+"  "+moveOrg.orgId);
-
-
-      var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
-      restPromise.then(function (data) {
-        Notification.success("调拨设备成功!");
-        vm.query(null, null, null, null);
-      }, function (reason) {
-        Notification.error("调拨设备出错!");
-      });
-
-
-      //if (deviceinfoList){
-      //  deviceinfoList.forEach(function(deviceinfo){
-      //    //9表示初始状态
-      //    if (deviceinfo.checked && deviceinfo.status == 9){
-      //      ids.push(deviceinfo.id);
-      //    }
-      //  });
-      //  //$timeout(function(){
-      //  //  vm.queryNotificationStatistics();
-      //  //  Notification.success("批量设置为已处理成功!");
-      //  //})
-      //}
-
-
-    };
-
-
-    vm.selected = [];
+    vm.selectAll=false;//是否全选标志
+    vm.selected = []; //选中的设备id
 
     var updateSelected = function(action,id){
       if(action == 'add' && vm.selected.indexOf(id) == -1){
@@ -227,10 +185,11 @@
       updateSelected(action,id);
     }
 
-    vm.selectAll=false;
+
     vm.updateAllSelection = function($event){
       var checkbox = $event.target;
       var action = (checkbox.checked?'add':'remove');
+   // alert(action);
       vm.deviceinfoList.forEach(function(deviceinfo){
         updateSelected(action,deviceinfo.id);
       })
@@ -238,11 +197,9 @@
     }
 
     vm.isSelected = function(id){
+   //   alert(vm.selected);
       return vm.selected.indexOf(id)>=0;
     }
-
-
-
     vm.checkAll = function(){
       var operStatus=false;
       if(vm.selectAll) {
@@ -257,6 +214,37 @@
         deviceinfo.checked=operStatus;
       })
     }
+
+
+    //批量设置为已处理
+    vm.batchMoveOrg = function(){
+      if(vm.selected.length==0){
+        alert("请选择要调拨的设备");
+        return;
+      }
+
+
+      if(vm.org.label==""){
+        alert("请选择要调拨的组织");
+        return;
+      }
+
+      //alert(vm.org.id+" "+vm.org.label);
+
+      var moveOrg={ids:vm.selected,"orgId":vm.org.id};
+      // alert(moveOrg.ids+"  "+moveOrg.orgId);
+
+
+      var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
+      restPromise.then(function (data) {
+        Notification.success("调拨设备成功!");
+        vm.query(null, null, null, null);
+      }, function (reason) {
+        Notification.error("调拨设备出错!");
+      });
+
+
+    };
 
   }
 })();

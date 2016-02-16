@@ -13,7 +13,9 @@
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
-    vm.machine = {};
+    vm.machine = {deviceinfo:{deviceNum:""}};
+    vm.machine.installTime=new Date();
+    vm.machine.buyTime=new Date();
 
     //查询未激活的设备集合
     //var deviceinfoData = serviceResource.restCallService(DEIVCIE_NOT_REGISTER_LIST_URL, "QUERY");
@@ -22,23 +24,6 @@
     //}, function (reason) {
     //  Notification.error('获取Sim状态集合失败');
     //})
-
-
-    $scope.deviceinfoList = {};
-    //$scope.refreshDeviceinfo = function(deviceNum) {
-    //
-    //  var url=DEIVCIE_NOT_REGISTER_LIST_URL;
-    //  if(null!=deviceNum){
-    //    url+="&deviceNum=deviceNum"
-    //  }
-    //  var deviceinfoData = serviceResource.restCallService(url, "QUERY");
-    //  deviceinfoData.then(function (data) {
-    //    vm.deviceinfoList = data;
-    //  }, function (reason) {
-    //    Notification.error('获取Sim状态集合失败');
-    //  })
-    //};
-
 
 
 
@@ -52,15 +37,36 @@
       vm.installTimeOpenStatus.opened = true;
     };
 
-    vm.maxDate = new Date();
-    vm.dateOptions = {
-      formatYear: 'yyyy',
-      startingDay: 1
+    vm.buyTimeOpenStatus = {
+      opened: false
+    };
+
+    vm.buyTimeOpen = function ($event) {
+      vm.buyTimeOpenStatus.opened = true;
     };
 
 
+    vm.showOrgTree = false;
+    vm.openOrgTree = function () {
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+    $scope.$on('OrgSelectedEvent', function (event, data) {
+      vm.selectedOrg = data;
+      vm.machine.org = vm.selectedOrg;
+      vm.showOrgTree = false;
+    })
+
+
     vm.ok = function (machine) {
-      var restPromise = serviceResource.restAddRequest(MACHINE_URL, machine);
+
+      //如果设备没有输入,则给出提示信息,
+      if(vm.machine.deviceinfo.deviceNum==""){
+        if(!confirm("设备号没有输入,请注意")){
+          return;
+        }
+      }
+
+     var restPromise = serviceResource.restAddRequest(MACHINE_URL, machine);
       restPromise.then(function (data) {
         Notification.success("新建车辆信息成功!");
         $uibModalInstance.close();

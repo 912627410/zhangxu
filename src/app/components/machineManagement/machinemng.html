@@ -15,27 +15,67 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row" style="padding-top: 10px;padding-left: 10px; padding-right: 20px">
-    <span class="input-group col-md-8">
-        <input type="text" name="deviceNum" class="form-control " ng-model="deviceNum"
-               placeholder="设备编号/用户自定义名称/装机号..."/>
-            <span class="input-group-btn">
-                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"
-                        ng-click="loadPage(0,40,null,deviceNum)"><i class="fa fa-search"></i></button>
-            </span>
-        <span class="label label-info pull-right">{{page.totalElements}}</span>
-    </span>
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">设备编号:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum" placeholder="支持模糊查询"/>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">车辆识别号:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="identityId" class="form-control " ng-model="machineMngCtrl.machine.identityId" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">调拨组织:</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织"
+               ng-model="machineMngCtrl.org.label" name="org" readonly required/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()"><i
+                      class="fa fa-sitemap"></i></button>
+                  </span>
+      <div ng-controller="orgController as orgCtrl">
+        <div
+          style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
+          ng-show="machineMngCtrl.showOrgTree">
+          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+        </div>
+      </div>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.batchMoveOrg()">调拨</button>
+
+
+    </div>
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
       <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
       <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
-    <div class="col-md-10">
+    <div class="btn-group col-md-1">
+      <span class="label label-info pull-left">{{machineMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-9">
 
       <a  presentation-href="machine.oper" class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-         ng-click="machineMngCtrl.newMachine()">
+         ng-click="machineMngCtrl.newMachine('lg')">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-primary pull-right"
@@ -172,9 +212,11 @@
     <div ng-if="machineMngCtrl.radioListType == 'list'" >
       <table class="table table-striped" id="machineTable">
         <tr>
+          <th><input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)" ng-model="machineMngCtrl.checked"></th>
           <th>车辆识别号</th>
           <th>车牌号码</th>
           <th>发动机号码</th>
+          <th>所属组织</th>
           <th>绑定终端</th>
           <th>车主姓名</th>
           <th>车主电话</th>
@@ -187,10 +229,12 @@
           <th>报警号码</th>
           <th>操作</th>
         </tr>
-        <tr ng-repeat="machine in machineMngCtrl.macheineList">
+        <tr ng-repeat="machine in machineMngCtrl.machineList">
+          <td><input type="checkbox" id="machine.id" ng-checked="machineMngCtrl.isSelected(machine.id)" ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked"></td>
           <td> {{machine.identityId}}</td>
           <td> {{machine.licenseId}}</td>
           <td> {{machine.engineId}}</td>
+          <td> {{machine.org.label}}</td>
           <td> {{machine.deviceinfo.deviceNum}}</td>
           <td> {{machine.ownerName}}</td>
           <td> {{machine.ownerPhone}}</td>
@@ -204,7 +248,7 @@
           <td>
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
-                    ng-click="machineMngCtrl.updateMachine(machine)">修改
+                    ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
             </button>
           </td>
         </tr>
