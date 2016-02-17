@@ -11,11 +11,12 @@
   /** @ngInject */
   function userMngController($rootScope,$uibModal,Notification,serviceResource,
                              USERINFO_URL,USER_GROUPBY_ROLE_URL,
-                             USER_PAGED_URL ) {
+                             USER_PAGED_URL,DEFAULT_SIZE_PER_PAGE ) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     vm.loadUsersStatistic = function(){
+
         var rspData = serviceResource.restCallService(USER_GROUPBY_ROLE_URL,"QUERY");
         rspData.then(function(data){
           var userMngNumberByRole = {sysadminnumber:0,adminnumber:0,operatornumber:0,usernumber:0};
@@ -45,10 +46,21 @@
         });
     };
     vm.showUserMng = function(role,page,size,sort){
+
+      var restCallURL = USER_PAGED_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+     // alert(role);
+
       if (role){
-        var queryCondition = "role=" + role;
+         restCallURL += "&search_EQ_role=" + role;
       }
-      var rspData = serviceResource.queryUserInfo(page,size,sort,queryCondition);
+
+     //alert(restCallURL);
+     // var rspData = serviceResource.queryUserInfo(page,size,sort,queryCondition);
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
           vm.userMngList = data.content;
           vm.page = data.page;
