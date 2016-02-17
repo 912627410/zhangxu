@@ -347,6 +347,7 @@
     };
 
     //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
+    //现在废弃
     vm.refreshDOM = function() {
       setTimeout(function(){
         vm.setDefaultAddress();
@@ -401,7 +402,7 @@
           Notification.error('获取该设备历史数据失败');
         }
       )
-      vm.refreshDOM();
+      //vm.refreshDOM();
     }
 
 
@@ -584,7 +585,7 @@
           else{
             vm.deviceMapDataList = _.sortBy(deviceMapDataList,"locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
-              lineArr.push([deviceData.longitudeNum,deviceData.latitudeNum]);
+              lineArr.push([deviceData.amaplongitudeNum,deviceData.amaplatitudeNum]);
             })
             vm.refreshMapTab(lineArr);
           }
