@@ -19,7 +19,7 @@
 
         var rspData = serviceResource.restCallService(USER_GROUPBY_ROLE_URL,"QUERY");
         rspData.then(function(data){
-          var userMngNumberByRole = {sysadminnumber:0,adminnumber:0,operatornumber:0,usernumber:0};
+          var userMngNumberByRole = {sysadminnumber:0,adminnumber:0,operatornumber:0,usernumber:0,producernumber:0};
           for(var i=0; i< data.length;i++)
           {
             if (data[i].role == "ROLE_SYSADMIN")
@@ -37,6 +37,11 @@
             if (data[i].role == "ROLE_OPERATOR")
             {
               userMngNumberByRole.operatornumber = data[i].number;
+            }
+
+            if (data[i].role == "ROLE_PRODUCER")
+            {
+              userMngNumberByRole.producernumber = data[i].number;
             }
           }
           vm.userMngNumberByRole = userMngNumberByRole;
@@ -116,6 +121,7 @@
         templateUrl: 'app/components/userManagement/newUser.html',
         controller: 'AddUserController as addUserCtrl',
         size: size,
+        backdrop: false,
         resolve: {
           operatorInfo: function () {
             return vm.operatorInfo;
@@ -124,7 +130,8 @@
       });
 
       modalInstance.result.then(function () {
-        //正常返回
+        vm.showUserMng(vm.operatorInfo.userdto.role,null,null,null);
+        vm.loadUsersStatistic();
       }, function () {
         //取消
       });
@@ -137,6 +144,7 @@
         templateUrl: 'app/components/userManagement/updatePassword.html',
         controller: 'updatePasswordController as updatePasswordCtrl',
         size: size,
+        backdrop: false,
         resolve: {
           usermnginfo: function () {
             return usermnginfo;
@@ -159,6 +167,7 @@
         templateUrl: 'app/components/userManagement/updateUserInfo.html',
         controller: 'updateUserinfoController as updateUserinfoCtrl',
         size: size,
+        backdrop: false,
         resolve: {
           usermnginfo: function () {
             return usermnginfo;
@@ -167,7 +176,7 @@
       });
 
       modalInstance.result.then(function (selectedItem) {
-        vm.selected = selectedItem;
+        vm.showUserMng(vm.operatorInfo.userdto.role,null,null,null);
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });

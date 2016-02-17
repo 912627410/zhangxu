@@ -71,6 +71,12 @@
                               操作员
                             </label>
                           </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="role" ng-model="addUserCtrl.newUser.role" id="optionsRadios4" value="ROLE_PRODUCER">
+                              生产
+                            </label>
+                          </div>
                             <div class="radio" ng-if="addUserCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN'">
                                 <label>
                                     <input type="radio" name="newUser.role" ng-model="addUserCtrl.newUser.role" id="optionsRadios3" value="ROLE_ADMIN">

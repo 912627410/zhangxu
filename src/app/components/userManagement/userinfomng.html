@@ -29,6 +29,9 @@
                       <a class="btn btn-app btn-link" style="width: 15%" ng-if="userMngCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN' ||userMngCtrl.operatorInfo.userdto.role == 'ROLE_ADMIN'" ng-click="userMngCtrl.showUserMng('ROLE_OPERATOR')">
                         <span class="badge bg-purple">{{userMngCtrl.userMngNumberByRole.operatornumber}}</span>
                         <i class="fa fa-users"></i> 操作员
+                      </a><a class="btn btn-app btn-link" style="width: 15%" ng-if="userMngCtrl.operatorInfo.userdto.role == 'ROLE_SYSADMIN' ||userMngCtrl.operatorInfo.userdto.role == 'ROLE_ADMIN'" ng-click="userMngCtrl.showUserMng('ROLE_PRODUCER')">
+                        <span class="badge bg-purple">{{userMngCtrl.userMngNumberByRole.producernumber}}</span>
+                        <i class="fa fa-users"></i>生产
                       </a>
                         <!--<a class="btn btn-app" style="width: 15%" ng-click="showUserMng('ROLE_OPERATOR')">-->
                             <!--<span class="badge bg-purple">{{userMngNumberByRole.operatornumber}}</span>-->
@@ -64,6 +67,7 @@
                                         <span ng-if="userMng.role == 'ROLE_SYSADMIN'"> 系统管理员 </span>
                                         <span ng-if="userMng.role == 'ROLE_ADMIN'"> 管理员 </span>
                                         <span ng-if="userMng.role == 'ROLE_OPERATOR'"> 操作员 </span>
+                                        <span ng-if="userMng.role == 'ROLE_PRODUCER'"> 生产 </span>
                                         <span ng-if="userMng.role == 'ROLE_USER'"> 普通用户 </span>
                                     </div>
                                 </div>
@@ -97,7 +101,7 @@
                                             公司:
                                         </div>
                                         <div class="col-md-9" style="padding-left: 0px;padding-right: 0px">
-                                            {{userMng.rentOrgLevel1.rentname}} <i class="fa fa-chevron-circle-right" ng-if="userMng.rentOrgLevel2.rentname"></i> {{userMng.rentOrgLevel2.rentname}}
+                                            {{userMng.organizationDto.label}}
                                         </div>
                                     </div>
                                 </div>
@@ -106,8 +110,8 @@
                                 <code>
                                     <div class="pull-right">
                                         <button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.updatePassword(userMng)">重置密码</button>
-                                        <span ng-if="userMng.status == 1"><button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.revertUserStatus(userMng)">失效</button></span>
-                                        <span ng-if="userMng.status == 0"><button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.revertUserStatus(userMng)">激活</button></span>
+                                        <span ng-if="userMng.status == 1 && userMng.id!=userMngCtrl.operatorInfo.userdto.id"><button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.revertUserStatus(userMng)">失效</button></span>
+                                        <span ng-if="userMng.status == 0 && userMng.id!=userMngCtrl.operatorInfo.userdto.id"><button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.revertUserStatus(userMng)">激活</button></span>
                                         <!--<button type="button" class="btn btn-primary btn-xs" ng-click="revertUserStatus(userMng)"><span ng-if="userMng.status == 1">失效</span> <span ng-if="userMng.status == 0">激活</span></button>-->
                                         <button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.updateUserInfo(userMng)">修改信息</button>
                                       <!--<button type="button" class="btn btn-default btn-xs" ng-click="userMngCtrl.openOrg()">组织</button>-->
