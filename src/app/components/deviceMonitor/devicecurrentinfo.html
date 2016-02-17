@@ -349,8 +349,8 @@
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap" style="min-width: 300px">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <td ng-cloak>{{deviceData.totalDuration | number:2}}</td>
 
@@ -486,7 +486,7 @@
     </uib-tab>
 
     <!--地图-->
-    <uib-tab select="deviceCurrentInfoCtrl.refreshMapTab(null)">
+    <uib-tab select="deviceCurrentInfoCtrl.initMapTab(deviceCurrentInfoCtrl.deviceinfo)">
       <uib-tab-heading>
         地图
       </uib-tab-heading>

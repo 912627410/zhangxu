@@ -37,7 +37,7 @@
           <label class="control-label">车牌号/机号/终端号:</label>
         </div>
     <div class="col-md-3">
-          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.deviceNum" placeholder="支持模糊查询"/>
+          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.deviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.deviceNum) : null" placeholder="支持模糊查询"/>
         </div>
     <div class="col-md-5">
         </div>
@@ -161,7 +161,10 @@
                 <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
                 <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
               </td>
-              <td>{{deviceinfo.address}}</td>
+              <!--地址-->
+              <td ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
+              <td ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
+
               <td>{{deviceinfo.deviceTypeDto.name}}</td>
               <td></td>
               <td>{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

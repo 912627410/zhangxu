@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
+  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,DEVCE_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -21,6 +21,7 @@
     }
     vm.radioListType = "list";
     //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
+    //已废弃
     vm.refreshDOM = function() {
       setTimeout(function(){
         vm.setDefaultAddress();
@@ -40,7 +41,7 @@
 
     vm.queryDeviceInfo = function(page,size,sort,queryCondition){
       if (queryCondition){
-        var filterTerm = "filter=" + queryCondition;
+        var filterTerm = "search_LIKE_deviceNum=" + $filter('uppercase')(queryCondition);
       }
       var deviceDataPromis = serviceResource.queryDeviceInfo(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
@@ -50,24 +51,11 @@
           vm.basePath = DEVCE_PAGED_QUERY;
           //地图数据
           vm.refreshMainMap(vm.deviceInfoList);
-
-          vm.deviceInfoList.forEach(function (deviceInfo) {
-            if (deviceInfo.locateStatus === 'A' && deviceInfo.address == null && deviceInfo.longitudeNum!=null && deviceInfo.latitudeNum!=null){
-              deviceInfo.address = '正在请求定位数据...';
-              var lnglatXY = [parseFloat(deviceInfo.longitudeNum), parseFloat(deviceInfo.latitudeNum)];
-              serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-                deviceInfo.address = newaddress;
-              })
-            }
-            else{
-              deviceInfo.address = "--";
-            }
-          })
-        }, function (reason) {
+       }, function (reason) {
           Notification.error('获取设备信息失败');
         }
       )
-      vm.refreshDOM();
+      //vm.refreshDOM();  改为直接从后台返回
     }
 
     if (userInfo == null){

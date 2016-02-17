@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$uibModalInstance,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$filter,$uibModalInstance,serviceResource,Notification,
                                        DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,deviceinfo) {
     var vm = this;
@@ -397,21 +397,6 @@
           if (vm.deviceDataList.length == 0){
             Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
           }
-          else{
-            vm.deviceDataList.forEach(function (deviceData) {
-              if (deviceData.locateStatus === 'A' && deviceData.address == null && deviceData.longitudeNum!=null && deviceData.latitudeNum!=null){
-                deviceData.address = '正在请求定位数据...';
-                var lnglatXY = [parseFloat(deviceData.longitudeNum), parseFloat(deviceData.latitudeNum)];
-                serviceResource.getAddressFromXY(lnglatXY, function (newaddress) {
-                  deviceData.address = newaddress;
-                })
-              }
-              else{
-                deviceData.address = "--";
-              }
-            })
-          }
-
         }, function (reason) {
           Notification.error('获取该设备历史数据失败');
         }
@@ -441,7 +426,7 @@
 
     vm.getDeviceWarningData = function(page,size,sort,deviceNum,startDate,endDate){
       if (deviceNum){
-        var filterTerm = "deviceNum=" + deviceNum;
+        var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       }
       if (startDate){
         var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
@@ -486,6 +471,17 @@
 
 
     //地图tab,请求该设备一段时间内的数据用于绘制轨迹
+
+    //默认显示当前设备的最新地址
+    vm.initMapTab = function(deviceInfo){
+      $timeout(function(){
+        var deviceInfoList = new Array();
+        deviceInfoList.push(deviceInfo);
+        var centerAddr = [deviceInfo.longitudeNum,deviceInfo.latitudeNum];
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,8,centerAddr);
+      })
+    };
+
     vm.startDateMapData = startDate;
     vm.endDateMapData = new Date();
 
@@ -556,7 +552,7 @@
 
     vm.getDeviceMapData = function(page,size,sort,deviceNum,startDate,endDate){
       if (deviceNum){
-        var filterTerm = "deviceNum=" + deviceNum;
+        var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       }
       if (startDate){
         var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
