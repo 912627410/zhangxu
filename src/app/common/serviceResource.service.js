@@ -9,7 +9,7 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,Notification,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,Notification,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
@@ -41,6 +41,82 @@
       }
       return defer.promise
     };
+
+
+//添加带文本的点标记覆盖物
+    var addMarkerModel = function(mapObj,item, icon) {
+      var mapObj = mapObj;
+      //实例化信息窗体
+      var infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        offset: new AMap.Pixel(105, -25)//-113, -140
+      });
+
+      var marker = new AMap.Marker({
+        map: mapObj,
+        position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
+        icon: icon, //复杂图标
+        //offset: new AMap.Pixel(-108, 124), //相对于基点的偏移位置
+        // draggable: true,  //是否可拖动
+        //  content: markerInfoLayer   //自定义点标记覆盖物内容
+      });
+      // marker.setMap(mapObj);  //在地图上添加点
+      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+        infoWindow.open(mapObj, marker.getPosition());
+        var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
+        var title = '';
+        var contentInfo = "终端编号：" + item.deviceNum + "</br>当前位置：" + item.address + "<br/>数据更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
+        //contentInfo += "<a href='../../Equipment/EquipmentDetail/" + item.TerminalEquipmentId + "' class='btn btn-xs btn-primary'>详细信息</a>";
+        //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"showFence('" + item.TNum + "');\">查看围栏</a>";
+        //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"setFence('" + item.TNum + "'," + item.G_Lng + "," + item.G_Lat + ");\">设置围栏</a>";
+        //contentInfo += "<a style='display:none;' href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"endEddit();\" id='saveFence'>保存设置</a>";
+        var info = createInfoWindow(title, contentInfo,mapObj);
+        //设置窗体内容
+        infoWindow.setContent(info);
+      });
+
+      //构建自定义信息窗体
+      function createInfoWindow(title, content) {
+        var info = document.createElement("div");
+        info.className = "info";
+        //可以通过下面的方式修改自定义窗体的宽高
+        //info.style.width = "400px";
+        // 定义顶部标题
+        var top = document.createElement("div");
+        top.className = "info-top";
+        var titleD = document.createElement("div");
+        titleD.innerHTML = title;
+        var closeX = document.createElement("img");
+        closeX.src = "http://webapi.amap.com/images/close2.gif";
+        closeX.onclick = closeInfoWindow;
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
+        // 定义中部内容
+        var middle = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        middle.innerHTML = content;
+        info.appendChild(middle);
+        // 定义底部内容
+        var bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        var sharp = document.createElement("img");
+        sharp.src = "http://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+      };
+
+      function closeInfoWindow() {
+        mapObj.clearInfoWindow();
+      };
+
+    };
+
     return {
       restCallService:restCallService,
       refreshUserAuthtoken:function(newpassword){
@@ -70,7 +146,8 @@
           if (!AMap) {
             location.reload(false);
           }
-          var localZoomSize = 4;  //默认缩放结拜
+          var amapRuler, amapScale, toolBar,overView;
+          var localZoomSize = 4;  //默认缩放级别
           if (zoomsize){
             localZoomSize = zoomsize;
           }
@@ -87,12 +164,40 @@
           map.plugin(['AMap.ToolBar'], function () {
             map.addControl(new AMap.ToolBar());
           });
+          //加载比例尺插件
+          map.plugin(["AMap.Scale"], function () {
+            amapScale = new AMap.Scale();
+            map.addControl(amapScale);
+          });
+          //添加地图类型切换插件
+          map.plugin(["AMap.MapType"], function () {
+            //地图类型切换
+            var mapType = new AMap.MapType({
+              defaultType: 0,//默认显示卫星图
+              showRoad: false //叠加路网图层
+            });
+            map.addControl(mapType);
+          });
+          //在地图中添加ToolBar插件
+          map.plugin(["AMap.ToolBar"], function () {
+            toolBar = new AMap.ToolBar();
+            map.addControl(toolBar);
+          });
+          //在地图中添加鹰眼插件
+          map.plugin(["AMap.OverView"], function () {
+            //加载鹰眼
+            overView = new AMap.OverView({
+              visible: true //初始化隐藏鹰眼
+            });
+            map.addControl(overView);
+          });
+
           //读取所有设备的gps信息，home map使用
           if ($rootScope.userInfo ) {
             if(deviceList == null){
               var rspdata = restCallService(HOME_GPSDATA_URL, "QUERY");
               rspdata.then(function (data) {
-                var deviceGPSInfo = data;
+                var deviceGPSInfo = data;  //返回的数组列表
                 for (var i = 0; i < deviceGPSInfo.length; i++) {
                   if (deviceGPSInfo[i].amaplatitudeNum != null) {
                     var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
@@ -101,11 +206,7 @@
                     var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
                   }
                   if (latitude != null && longitude != null) {
-                    var marker = new AMap.Marker({
-                      icon: "http://webapi.amap.com/images/marker_sprite.png",
-                      position: [longitude, latitude]
-                    });
-                    marker.setMap(map);
+                    addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
                   }
                 }
               }, function (reason) {
@@ -116,11 +217,7 @@
             else{
               deviceList.forEach(function(deviceInfo){
                 if (deviceInfo.locateStatus === 'A' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
-                  var marker = new AMap.Marker({
-                    icon: "http://webapi.amap.com/images/marker_sprite.png",
-                    position: [deviceInfo.amaplongitudeNum, deviceInfo.amaplatitudeNum]
-                  });
-                  marker.setMap(map);
+                  addMarkerModel(map,deviceInfo,"http://webapi.amap.com/images/marker_sprite.png");
                 }
               })
             }
