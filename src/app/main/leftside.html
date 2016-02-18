@@ -54,13 +54,6 @@
           </li>
         </ul>
       </li>
-      <li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
-        <a ui-sref="home.deviceparameter">
-          <i class="fa  fa-gear"></i> <span>设备参数</span>
-        </a>
-        <ul class="treeview-menu">
-        </ul>
-      </li>
       <li>
         <a ui-sref="home.simMng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
           <i class="fa fa-mobile"></i> <span>SIM卡管理</span>

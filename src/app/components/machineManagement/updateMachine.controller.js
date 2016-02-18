@@ -51,8 +51,16 @@
 
     vm.ok = function (machine) {
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
-      machine.deviceinfo.sim.deviceinfo={};
-      machine.deviceinfo.machine={};
+      if(null!=machine.deviceinfo) {
+
+
+        machine.deviceinfo.machine = {};
+
+        if(null!=machine.deviceinfo.sim){
+          machine.deviceinfo.sim.deviceinfo = {};
+        }
+
+      }
 
 
       //如果设备没有输入,则给出提示信息,

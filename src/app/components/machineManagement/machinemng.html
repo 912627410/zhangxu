@@ -261,6 +261,11 @@
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
             </button>
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-if="machineMngCtrl.hasRemoveDevice(machine)"
+                    ng-click="machineMngCtrl.removeDevice(machine)">解绑
+            </button>
+
           </td>
         </tr>
       </table>
