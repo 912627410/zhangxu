@@ -165,8 +165,8 @@
               <td ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
               <td ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
 
-              <td>{{deviceinfo.deviceTypeDto.name}}</td>
-              <td></td>
+              <td> {{deviceinfo.deviceTypeDto.name}}</td>
+              <td> {{deviceinfo.org.label}}</td>
               <td>{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>
                 <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>

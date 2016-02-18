@@ -61,7 +61,7 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨</button>
+      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨</button>
 
     </div>
   </div>
@@ -77,12 +77,12 @@
     <div class="col-md-9">
 
       <a class="btn btn-primary pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-primary pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
@@ -194,7 +194,7 @@
               <button type="button" class="btn btn-default btn-xs" ng-click="deviceDetail(deviceinfo,'lg')">最新状态</button>
               <button type="button" class="btn btn-default btn-xs" ng-click="deviceHistory(deviceinfo,'lg')">历史状态</button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                       ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
               </button>
             </div>
@@ -233,7 +233,7 @@
           <td>   {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td>
             <button type="button" class="btn btn-default btn-xs"
-                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                     ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
             </button>
           </td>

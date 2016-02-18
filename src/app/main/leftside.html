@@ -33,22 +33,22 @@
         </a>
         <ul class="treeview-menu" style="display: block">
           <li>
-            <a ui-sref="home.monitor">
+            <a ui-sref="home.monitor" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
               <i class="fa fa-th-list"></i> <span>设备监控</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.deviceinfoMng">
+            <a ui-sref="home.deviceinfoMng"   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
               <i class="fa fa-database"></i> <span>设备管理</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.warningdevices">
+            <a   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
               <i class="fa fa-warning"></i> <span>报警设备</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.exceptionaldevices">
+            <a    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
               <i class="fa fa-bar-chart-o"></i> <span>统计图表</span>
             </a>
           </li>

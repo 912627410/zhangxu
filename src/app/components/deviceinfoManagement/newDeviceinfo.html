@@ -16,7 +16,7 @@
       <div class="form-group">
         <label for="deviceNum" class="col-sm-2 control-label">SIM卡号</label>
         <div class="col-sm-10">
-          <ui-select ng-model="newDeviceinfoController.deviceinfo.sim" theme="bootstrap" ng-disabled="disabled">
+          <ui-select name="phoneNumber" ng-model="newDeviceinfoController.deviceinfo.sim" theme="bootstrap" ng-disabled="disabled" ng-required="true">
             <ui-select-match allow-clear="true" placeholder="请选择SIM卡号">{{$select.selected.phoneNumber}}
             </ui-select-match>
             <ui-select-choices
