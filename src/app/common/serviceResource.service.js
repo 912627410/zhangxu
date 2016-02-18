@@ -94,11 +94,11 @@
               rspdata.then(function (data) {
                 var deviceGPSInfo = data;
                 for (var i = 0; i < deviceGPSInfo.length; i++) {
-                  if (deviceGPSInfo[i].latitudeNum != null) {
-                    var latitude = deviceGPSInfo[i].latitudeNum;     //纬度
+                  if (deviceGPSInfo[i].amaplatitudeNum != null) {
+                    var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
                   }
-                  if (deviceGPSInfo[i].longitudeNum != null) {
-                    var longitude = deviceGPSInfo[i].longitudeNum;   //经度
+                  if (deviceGPSInfo[i].amaplongitudeNum != null) {
+                    var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
                   }
                   if (latitude != null && longitude != null) {
                     var marker = new AMap.Marker({
@@ -115,10 +115,10 @@
             }
             else{
               deviceList.forEach(function(deviceInfo){
-                if (deviceInfo.locateStatus === 'A' && deviceInfo.longitudeNum != null && deviceInfo.latitudeNum != null) {
+                if (deviceInfo.locateStatus === 'A' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   var marker = new AMap.Marker({
                     icon: "http://webapi.amap.com/images/marker_sprite.png",
-                    position: [deviceInfo.longitudeNum, deviceInfo.latitudeNum]
+                    position: [deviceInfo.amaplongitudeNum, deviceInfo.amaplatitudeNum]
                   });
                   marker.setMap(map);
                 }
