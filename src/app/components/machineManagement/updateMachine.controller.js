@@ -15,6 +15,11 @@
     vm.operatorInfo =$rootScope.userInfo;
 
 
+    //如果设备号不存在,则设置设备为空
+    if(vm.machine.deviceinfo==null){
+      vm.machine.deviceinfo={deviceNum:""};
+    }
+
     //日期控件相关
     //date picker
     vm.installTimeOpenStatus = {
@@ -45,6 +50,11 @@
     })
 
     vm.ok = function (machine) {
+      //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
+      machine.deviceinfo.sim.deviceinfo={};
+      machine.deviceinfo.machine={};
+
+
       //如果设备没有输入,则给出提示信息,
       if(vm.machine.deviceinfo.deviceNum==""){
         if(!confirm("设备号没有输入,请注意")){

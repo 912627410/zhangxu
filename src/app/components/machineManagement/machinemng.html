@@ -20,17 +20,22 @@
       <label class="control-label">设备编号:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum" placeholder="支持模糊查询"/>
+      <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+             placeholder="支持模糊查询"/>
     </div>
 
     <div class="col-md-1">
       <label class="control-label">车辆识别号:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="identityId" class="form-control " ng-model="machineMngCtrl.machine.identityId" placeholder="支持模糊查询"/>
+      <input type="text" name="identityId" class="form-control " ng-model="machineMngCtrl.machine.identityId"
+             placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询</button>
+      <button class="btn btn-primary" type="button"
+              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
+              ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询
+      </button>
       <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
     </div>
   </div>
@@ -58,7 +63,10 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.batchMoveOrg()">调拨</button>
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.batchMoveOrg()"
+              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
+        调拨
+      </button>
 
 
     </div>
@@ -73,20 +81,21 @@
     </div>
     <div class="col-md-9">
 
-      <a  presentation-href="machine.oper" class="btn btn-primary pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+      <a presentation-href="machine.oper" class="btn btn-primary pull-right"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
          ng-click="machineMngCtrl.newMachine('lg')">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-primary pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
     </div>
   </div>
   <div class="row " style="padding-top: 10px">
-    <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="machine in machineMngCtrl.macheineList">
+    <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3"
+         ng-repeat="machine in machineMngCtrl.macheineList">
       <div class="box box-success">
         <div class="box-header">
           <h5 class="box-title">{{machine.identityId}}</h5>
@@ -201,7 +210,7 @@
           <code>
             <div class="pull-right">
               <button type="button" class="btn btn-primary btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
                       ng-click="updateDeviceInfo(machine,'lg')">修改
               </button>
             </div>
@@ -209,10 +218,11 @@
         </div>
       </div>
     </div>
-    <div ng-if="machineMngCtrl.radioListType == 'list'" >
+    <div ng-if="machineMngCtrl.radioListType == 'list'">
       <table class="table table-striped" id="machineTable">
         <tr>
-          <th><input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)" ng-model="machineMngCtrl.checked"></th>
+          <th><input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
+                     ng-model="machineMngCtrl.checked"></th>
           <th>车辆识别号</th>
           <th>车牌号码</th>
           <th>发动机号码</th>
@@ -230,7 +240,8 @@
           <th>操作</th>
         </tr>
         <tr ng-repeat="machine in machineMngCtrl.machineList">
-          <td><input type="checkbox" id="machine.id" ng-checked="machineMngCtrl.isSelected(machine.id)" ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked"></td>
+          <td><input type="checkbox" id="machine.id" ng-checked="machineMngCtrl.isSelected(machine.id)"
+                     ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked"></td>
           <td> {{machine.identityId}}</td>
           <td> {{machine.licenseId}}</td>
           <td> {{machine.engineId}}</td>
@@ -247,7 +258,7 @@
           <td> {{machine.alertPhone}}</td>
           <td>
             <button type="button" class="btn btn-default btn-xs"
-                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'"
+                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
             </button>
           </td>
@@ -257,8 +268,10 @@
   </div>
 
   <div class="box-footer">
-    <uib-pagination total-items="machineMngCtrl.page.totalElements" ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,null)"
-                    max-size="5" ng-model="machineMngCtrl.pageNumber" items-per-page="machineMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+    <uib-pagination total-items="machineMngCtrl.page.totalElements"
+                    ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="machineMngCtrl.pageNumber" items-per-page="machineMngCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 

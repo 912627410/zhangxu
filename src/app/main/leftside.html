@@ -62,12 +62,12 @@
         </ul>
       </li>
       <li>
-        <a ui-sref="home.simMng">
+        <a ui-sref="home.simMng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
           <i class="fa fa-mobile"></i> <span>SIM卡管理</span>
         </a>
       </li>
       <li>
-        <a ui-sref="home.machinemng">
+        <a ui-sref="home.machinemng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
           <i class="fa fa-car"></i> <span>车辆管理</span>
         </a>
       </li>

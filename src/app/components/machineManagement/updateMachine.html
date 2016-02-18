@@ -13,9 +13,10 @@
     <div class="box-body">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="org" class="col-sm-4 control-label">所属组织</label>
+          <label class="col-sm-4 control-label">所属组织</label>
           <div class="col-sm-8">
-            <p class="input-group">
+            {{updateMachineController.machine.org.label}}
+           <!-- <p class="input-group">
               <input type="text" id="org" class="form-control" placeholder="所属组织"
                      ng-model=" updateMachineController.machine.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
@@ -30,7 +31,7 @@
                           on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
               </div>
             </div>
-            </p>
+            </p>-->
           </div>
         </div>
       </div><div class="col-md-6">
