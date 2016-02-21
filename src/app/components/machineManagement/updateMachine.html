@@ -8,182 +8,42 @@
   <!--</div>-->
 <!--</script>-->
 
-<form  name="updateMachineForm"  class="form-horizontal w5c-form" w5c-form-validate="vm.validateOptions">
+<form  name="updateMachineForm"  class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">所属组织</label>
-          <div class="col-sm-8">
-            {{updateMachineController.machine.org.label}}
-           <!-- <p class="input-group">
-              <input type="text" id="org" class="form-control" placeholder="所属组织"
-                     ng-model=" updateMachineController.machine.org.label" name="org" readonly required/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click=" updateMachineController.openOrgTree()"><i
-                      class="fa fa-sitemap"></i></button>
-                  </span>
-            <div ng-controller="orgController as orgCtrl">
-              <div
-                style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
-                ng-show=" updateMachineController.showOrgTree">
-                <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
-                          on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-              </div>
-            </div>
-            </p>-->
-          </div>
-        </div>
-      </div><div class="col-md-6">
       <div class="form-group">
-        <label for="identityId" class="col-sm-4 control-label">识别号</label>
-        <div class="col-sm-8">
-          <input type="text" id="identityId" class="form-control" placeholder="车辆识别号" ng-model=" updateMachineController.machine.identityId" name="identityId" required/>
+        <label for="licenseId" class="col-sm-2 control-label">车牌号码</label>
+        <div class="col-sm-10">
+          <input type="text" id="licenseId" class="form-control" placeholder="车牌号码"
+                 ng-model="updateMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
+                 validator="required"/>
         </div>
       </div>
-    </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="licenseId" class="col-sm-4 control-label" >车牌号码</label>
-          <div class="col-sm-8">
-            <input type="text" id="licenseId" class="form-control" placeholder="车牌号码" ng-model=" updateMachineController.machine.licenseId" name="licenseId" />
-          </div>
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">发动机号</label>
-          <div class="col-sm-8">
-            <input type="text" id="engineId" class="form-control" placeholder="发动机号码" ng-model=" updateMachineController.machine.engineId" name="engineId" />
-          </div>
+      <div class="form-group">
+        <label  class="col-sm-2 control-label">绑定终端</label>
+        <div class="col-sm-10">
+          <ui-select  name="deviceNum" ng-model="updateMachineController.machine.deviceinfo" theme="bootstrap"
+                      ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="输入终端号,支持模糊搜索">{{$select.selected.deviceNum}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceinfo in updateMachineController.deviceinfoList "
+                               refresh="updateMachineController.refreshDeviceList($select.search)"
+                               refresh-delay="0">
+              <div ng-bind-html="deviceinfo.deviceNum | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="deviceNum" class="col-sm-4 control-label">绑定终端</label>
-          <div class="col-sm-8">
-            <input type="text" id="deviceNum" class="form-control" placeholder="终端号" ng-model=" updateMachineController.machine.deviceinfo.deviceNum" name="deviceNum" />
-            <!--
-              <ui-select ng-model=" updateMachineController.machine.deviceinfo" theme="bootstrap" ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="请选择终端">{{$select.selected.deviceNum}}
-                </ui-select-match>
-                <ui-select-choices
-                  repeat="deviceinfo in  updateMachineController.deviceinfoList | propsFilter: {deviceNum: $select.search}">
-                  <div ng-bind-html="deviceinfo.deviceNum | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-             -->
-          </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">所属组织</label>
+        <div class="col-sm-10">
+          {{updateMachineController.machine.org.label}}
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">车主姓名</label>
-          <div class="col-sm-8">
-            <input type="text" id="ownerName" class="form-control" placeholder="车主姓名" ng-model=" updateMachineController.machine.ownerName" name="ownerName" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">车主电话</label>
-          <div class="col-sm-8">
-            <input type="text" id="ownerPhone" class="form-control" placeholder="车主联系电话" ng-model=" updateMachineController.machine.ownerPhone" name="ownerPhone" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="ownerAddress" class="col-sm-4 control-label">车主地址</label>
-          <div class="col-sm-8">
-            <input type="text" id="ownerAddress" class="form-control" placeholder="车主地址" ng-model=" updateMachineController.machine.ownerAddress" name="ownerAddress" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">安装人</label>
-          <div class="col-sm-8">
-            <input type="text" id="installPerson" class="form-control" placeholder="安装人" ng-model=" updateMachineController.machine.installPerson" name="installPerson" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">安装时间</label>
-          <div class="col-sm-8">
-            <p class="input-group">
-              <input type="text" name="installTime" class="form-control" uib-datepicker-popup="{{format}}"
-                     ng-model=" updateMachineController.machine.installTime"
-                     is-open=" updateMachineController.installTimeOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click=" updateMachineController.installTimeOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">出厂时间</label>
-          <div class="col-sm-8">
-            <p class="input-group">
-              <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{format}}"
-                     ng-model="updateMachineController.machine.buyTime"
-                     is-open="updateMachineController.buyimeOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="updateMachineController.buyTimeOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">安装人电话</label>
-          <div class="col-sm-8">
-            <input type="text" id="installPersonPhone" class="form-control" placeholder="安装人联系电话" ng-model=" updateMachineController.machine.installPersonPhone" name="installPersonPhone" />
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="col-sm-4 control-label">安装位置</label>
-          <div class="col-sm-8">
-            <input type="text" name="installLocation" class="form-control" placeholder="安装位置" ng-model=" updateMachineController.machine.installLocation" name="installLocation"/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" ng-if="userInfo.role == 'ROLE_SYSADMIN'">
-          <label class="col-sm-4 control-label">安装地点</label>
-          <div class="col-sm-8">
-            <input type="number" name="installAddress" class="form-control" placeholder="安装地点" ng-model=" updateMachineController.machine.installAddress" name="installAddress"/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" >
-          <label class="col-md-4 control-label">报警号码</label>
-          <div class="col-md-8">
-            <input type="text" name="alertPhone" class="form-control" placeholder="报警短信号码" ng-model=" updateMachineController.machine.alertPhone" name="alertPhone"/>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" w5c-form-submit="updateMachineController.ok(updateMachineController.machine)">保存</button>
+    <button class="btn btn-primary" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.ok(updateMachineController.machine)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="updateMachineController.cancel()">取消</button>
   </div>
 </form>

@@ -9,19 +9,46 @@
     .controller('newDeviceinfoController', newDeviceinfoController);
 
   /** @ngInject */
-  function newDeviceinfoController($scope, $uibModalInstance, SIM_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
+  function newDeviceinfoController($scope,$http, $uibModalInstance, SIM_UNUSED_URL,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
-
     vm.deviceinfo = {};
 
+    $scope.address =[];
+    //动态查询未使用的sim卡
+    vm.refreshSimList = function(value) {
+
+      //var reg = /^\d+$/;
+      //if (!reg.test(value)) {
+      //  alert(value);
+      //  return ;
+      //}
+
+      if(!onlyNumber(value)){
+        return;
+      }
+
+
+      var params = {phoneNumber: value};
+      return $http.get(
+        SIM_FETCH_UNUSED_URL,
+        {params: params}
+      ).then(function(response) {
+
+        vm.simList = response.data
+      //  alert( vm.simList.length);
+      });
+    };
+
+
+
     //查询sim卡的状态集合
-    var simData = serviceResource.restCallService(SIM_UNUSED_URL, "QUERY");
-    simData.then(function (data) {
-      vm.simList = data;
-    }, function (reason) {
-      Notification.error('获取Sim状态集合失败');
-    })
+    //var simData = serviceResource.restCallService(SIM_UNUSED_URL, "QUERY");
+    //simData.then(function (data) {
+    //  vm.simList = data;
+    //}, function (reason) {
+    //  Notification.error('获取Sim状态集合失败');
+    //})
 
 
     //得到设备类型集合

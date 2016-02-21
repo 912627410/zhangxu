@@ -83,7 +83,7 @@
 
       <a presentation-href="machine.oper" class="btn btn-primary pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-         ng-click="machineMngCtrl.newMachine('lg')">
+         ng-click="machineMngCtrl.newMachine()">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-primary pull-right"
@@ -98,16 +98,11 @@
          ng-repeat="machine in machineMngCtrl.macheineList">
       <div class="box box-success">
         <div class="box-header">
-          <h5 class="box-title">{{machine.identityId}}</h5>
+          <h5 class="box-title">{{machine.licenseId}}</h5>
         </div>
         <div class="box-body">
           <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车辆识别号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.identityId}}
-            </div>
+
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
@@ -117,14 +112,7 @@
               {{machine.licenseId}}
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              发动机号码:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.engineId}}
-            </div>
-          </div>
+
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               绑定终端:
@@ -135,74 +123,10 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主姓名:
+              所属组织:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerName}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主电话:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerPhone}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车主地址:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.ownerAddress}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装人:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installPerson}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installTime | date:'yyyy-MM-dd'}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装人电话:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installPersonPhone}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装位置:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installLocation}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              安装地点:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.installAddress}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              报警号码:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.alertPhone}}
+              {{machine.org.label}}
             </div>
           </div>
         </div>
@@ -223,39 +147,19 @@
         <tr>
           <th><input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
                      ng-model="machineMngCtrl.checked"></th>
-          <th>车辆识别号</th>
           <th>车牌号码</th>
-          <th>发动机号码</th>
-          <th>所属组织</th>
           <th>绑定终端</th>
-          <th>车主姓名</th>
-          <th>车主电话</th>
-          <th>车主地址</th>
-          <th>安装人</th>
-          <th>安装时间</th>
-          <th>安装人电话</th>
-          <th>安装位置</th>
-          <th>安装地点</th>
-          <th>报警号码</th>
+          <th>所属组织</th>
+
           <th>操作</th>
         </tr>
         <tr ng-repeat="machine in machineMngCtrl.machineList">
           <td><input type="checkbox" id="machine.id" ng-checked="machineMngCtrl.isSelected(machine.id)"
                      ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked"></td>
-          <td> {{machine.identityId}}</td>
           <td> {{machine.licenseId}}</td>
-          <td> {{machine.engineId}}</td>
-          <td> {{machine.org.label}}</td>
           <td> {{machine.deviceinfo.deviceNum}}</td>
-          <td> {{machine.ownerName}}</td>
-          <td> {{machine.ownerPhone}}</td>
-          <td> {{machine.ownerAddress}}</td>
-          <td> {{machine.installPerson}}</td>
-          <td> {{machine.installTime | date:'yyyy-MM-dd'}}</td>
-          <td> {{machine.installPersonPhone}}</td>
-          <td> {{machine.installLocation}}</td>
-          <td> {{machine.installAddress}}</td>
-          <td> {{machine.alertPhone}}</td>
+          <td> {{machine.org.label}}</td>
+
           <td>
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"

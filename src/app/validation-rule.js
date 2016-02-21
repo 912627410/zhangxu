@@ -22,6 +22,10 @@
       }
     };
 
+    //var $http = $validationProvider.$http;
+
+    //alert($validationProvider.$q);
+
     var defaultMsg = {
       required: {
         error: '该字段不能为空',
@@ -36,7 +40,7 @@
         success: 'It\'s Email'
       },
       number: {
-        error: 'This should be Number',
+        error: '输入内容只能为数字',
         success: 'It\'s Number'
       },
       minlength: {
@@ -49,6 +53,58 @@
       }
     };
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);
+
+    //
+    $validationProvider.setExpression({
+      foo: function (value, scope, element, attrs) {
+        $validationProvider.setDefaultMsg({
+          foo: {
+            error: 'Foo must equal ' + attrs.validfoo
+          }
+        });
+
+        return value === attrs.validfoo;
+      }
+    });
+
+    $validationProvider.setExpression({
+        abc: function(value, scope, element, attrs) {
+
+          var params = {deviceNum: "c"};
+          return $http.get(
+            "rest/device/fetchUnused",
+            {params: params}
+          ).then(function(response) {
+            alert(response.data);
+          });
+
+
+          $validationProvider.setDefaultMsg({
+            abc: {
+              error: 'Foo must equal ' + attrs.validfoo
+            }
+          });
+
+          //alert(attrs.validfoo);
+          return value === attrs.validfoo;
+        }
+      }
+    );
+
+    $validationProvider.setExpression({
+        mock: function(value, scope, element, attrs) {
+          //var $http = $injector.get('$http');
+          $validationProvider.setDefaultMsg({
+            mock: {
+              error: 'Foo must equal ' + attrs.validfoo
+            }
+          });
+
+          return value === attrs.validfoo;
+        },
+        url:"abc"
+      }
+    );
 
 
     $validationProvider.setErrorHTML(function (msg) {

@@ -9,16 +9,41 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$uibModalInstance,MACHINE_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
 
 
+   // vm.deviceinfoList=[];
+
     //如果设备号不存在,则设置设备为空
-    if(vm.machine.deviceinfo==null){
-      vm.machine.deviceinfo={deviceNum:""};
+    //if(vm.machine.deviceinfo==null){
+    //  vm.machine.deviceinfo={deviceNum:""};
+    //}
+
+    if(null!=vm.machine.deviceinfo) {
+      vm.oldMachine=vm.machine.deviceinfo;
     }
+
+    //vm.deviceinfoList=[];
+   // vm.deviceinfoList.push(vm.machine.deviceinfo);
+
+    //动态查询未使用的本组织的设备
+    vm.refreshDeviceList = function(value) {
+      var params = {deviceNum: value};
+      return $http.get(
+        DEIVCIE_FETCH_UNUSED_URL,
+        {params: params}
+      ).then(function(response) {
+        //vm.deviceinfoList = response.data
+        vm.deviceinfoList=response.data;
+
+        if(null!=vm.machine.deviceinfo)
+        vm.deviceinfoList.push(vm.oldMachine);
+
+      });
+    };
 
     //日期控件相关
     //date picker

@@ -112,7 +112,8 @@
             templateUrl: 'app/components/deviceinfoManagement/deviceinfoMng.html',
             controller: 'deviceinfoMngController as deviceinfoMngCtrl'
           }
-        }
+        },
+
       })
       .state('home.notification', {
         url: '/notification',
