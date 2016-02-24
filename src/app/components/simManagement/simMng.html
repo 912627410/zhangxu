@@ -112,7 +112,7 @@
     <div class="btn-group col-md-2">
       <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
       <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
-      <span class="label label-info pull-left">{{simMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">SIM卡总数:  {{simMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
 
@@ -262,6 +262,7 @@
           <th>SIM卡号</th>
           <th>序列号</th>
           <th>价格(元)</th>
+          <th>所属设备</th>
           <th>当前状态</th>
           <th>激活时间</th>
           <th>所属组织</th>
@@ -280,6 +281,7 @@
           <td> {{sim.phoneNumber}}</td>
           <td> {{sim.serialNumber}}</td>
           <td> {{sim.price}}</td>
+          <td> {{sim.deviceinfo.deviceNum}}</td>
           <td> {{sim.statusDesc}}</td>
           <td> {{sim.activeTime | date:'yyyy-MM-dd'}}</td>
           <td> {{sim.deviceinfo.org.label}}</td>

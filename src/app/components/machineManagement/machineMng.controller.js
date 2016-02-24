@@ -27,8 +27,8 @@
         if (null != machine.deviceNum) {
           restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + machine.deviceNum;
         }
-        if (null != machine.identityId) {
-          restCallURL += "&search_LIKE_identityId=" + machine.identityId;
+        if (null != machine.licenseId) {
+          restCallURL += "&search_LIKE_licenseId=" + machine.licenseId;
         }
 
       }
@@ -51,7 +51,7 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.machine.identityId = null;
+      vm.machine.licenseId = null;
       vm.machine.deviceNum = null;
     }
 

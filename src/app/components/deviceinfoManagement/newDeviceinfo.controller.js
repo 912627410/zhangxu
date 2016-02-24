@@ -89,9 +89,9 @@
       var restPromise = serviceResource.restAddRequest(DEVCEINFO_URL, deiceinfo);
       restPromise.then(function (data) {
         Notification.success("新建设备信息成功!");
-        $uibModalInstance.close();
+       // $uibModalInstance.close();
 
-      //  $scope.query(0,10,null,null);//更新列表展示
+       // $scope.query(0,null,null,null);//更新列表展示
       }, function (reason) {
         Notification.error("新建设备信息出错!");
       });

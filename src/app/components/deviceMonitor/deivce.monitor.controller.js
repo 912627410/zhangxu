@@ -43,7 +43,7 @@
       if (queryCondition){
         var filterTerm = "search_LIKE_deviceNum=" + $filter('uppercase')(queryCondition);
       }
-      var deviceDataPromis = serviceResource.queryDeviceInfo(page, size, sort, filterTerm);
+      var deviceDataPromis = serviceResource.queryDeviceMonitorInfo(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           vm.deviceInfoList = data.content;
           vm.page = data.page;

@@ -54,6 +54,11 @@
       };
     });
 
+    //$httpProvider.defaults.transformResponse = function(data, headersGetter, status) {
+    //
+    //
+    //};
+
 // configure Idle settings
     //idle(seconds) (integer, default is 20min): The idle timeout duration in seconds.
     // After this amount of time passes without the user performing an action that triggers one of the watched DOM events, the user is considered idle.

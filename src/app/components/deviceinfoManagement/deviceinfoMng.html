@@ -72,7 +72,7 @@
       <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
     <div class="btn-group col-md-1">
-      <span class="label label-info pull-left">{{deviceinfoMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">设备总数:{{deviceinfoMngCtrl.page.totalElements}}</span>
       </div>
     <div class="col-md-9">
 
@@ -115,18 +115,18 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车辆识别号:
+              车牌号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.machine.identityId}}
+              {{deviceinfo.machine.licenseId}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              设备类型:
+              协议类型:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.deviceTypeDto.name}}
+              {{deviceinfo.protocalTypeDesc}}
             </div>
           </div>
           <div class="row">
@@ -137,14 +137,7 @@
               {{deviceinfo.org.label}}
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              协议类型:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-                {{deviceinfo.protocalTypeDesc}}
-            </div>
-          </div>
+
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
               状态:
@@ -208,10 +201,9 @@
         <tr>
           <th><input type="checkbox" ng-click="deviceinfoMngCtrl.updateAllSelection($event)" ng-model="deviceinfoMngCtrl.checked"></th>
           <th>设备编号</th>
-          <th>车辆识别号</th>
-          <th>设备类型</th>
-          <th>所属组织</th>
+          <th>车牌号</th>
           <th>协议类型</th>
+          <th>所属组织</th>
           <th>状态</th>
           <th>SIM</th>
           <th>SIM序列号</th>
@@ -222,10 +214,9 @@
         <tr ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
           <td><input type="checkbox" id="deviceinfo.id" ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)" ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)" ng-model="deviceinfo.checked"></td>
           <td> {{deviceinfo.deviceNum}}</td>
-          <td> {{deviceinfo.machine.identityId}}</td>
-          <td> {{deviceinfo.deviceTypeDto.name}}</td>
-          <td> {{deviceinfo.org.label}}</td>
+          <td> {{deviceinfo.machine.licenseId}}</td>
           <td> {{deviceinfo.protocalTypeDesc}}</td>
+          <td> {{deviceinfo.org.label}}</td>
           <td> {{deviceinfo.statusDesc}}</td>
           <td> {{deviceinfo.sim.phoneNumber}}</td>
           <td> {{deviceinfo.sim.serialNumber}}</td>
@@ -243,7 +234,7 @@
   </div>
 
   <div class="box-footer">
-    <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements" ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,10,null,deviceinfoMngCtrl.phoneNumber)"
+    <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements" ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,null,null,deviceinfoMngCtrl.phoneNumber)"
                     max-size="5" ng-model="deviceinfoMngCtrl.pageNumber" items-per-page="deviceinfoMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>

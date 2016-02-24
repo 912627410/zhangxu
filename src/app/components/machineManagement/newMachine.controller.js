@@ -32,6 +32,10 @@
 
     //动态查询未使用的本组织的设备
     vm.refreshDeviceList = function(value) {
+      if(value==""){
+        return;
+      }
+
       var params = {deviceNum: value};
       return $http.get(
         DEIVCIE_FETCH_UNUSED_URL,
@@ -39,7 +43,7 @@
       ).then(function(response) {
         vm.deviceinfoList = response.data
 
-       // alert( vm.deviceinfoList.length);
+     //   alert( vm.deviceinfoList.length);
       });
     };
 
@@ -74,7 +78,7 @@
     })
 
 
-    vm.ok = function () {
+    vm.ok = function (machine) {
 
     //  alert(machine.deviceinfo.id);
       //如果设备没有输入,则给出提示信息,
@@ -91,10 +95,10 @@
     //  alert(vm.machine.deviceinfoId+"   "+vm.machine.orgId);
    //   alert(vm.machine.deviceinfo.deviceNum);
 
-      var postInfo=vm.machine;
+      var postInfo=machine;
 
-      postInfo.deviceinfo={id:vm.machine.deviceinfo.id};
-      postInfo.org={id:vm.machine.org.id};
+      postInfo.deviceinfo={id:machine.deviceinfo.id};
+      postInfo.org={id:machine.org.id};
 
 
 
@@ -102,11 +106,22 @@
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
       restPromise.then(function (data) {
-        Notification.success("新建车辆信息成功!");
-        $uibModalInstance.close();
+        if(data.code===0){
+          Notification.success("新建车辆信息成功!");
+          $uibModalInstance.close();
+        }else{
+          vm.machine = machine;
+          Notification.error(data.message);
+        }
+
+
       }, function (reason) {
-        Notification.error("新建车辆信息出错!");
-      });
+       // alert(reason.data.message);
+        console.error(reason);
+        Notification.error(reason.data.message);
+      }
+
+      );
     };
 
     vm.cancel = function () {

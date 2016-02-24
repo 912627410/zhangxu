@@ -14,6 +14,9 @@
       url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
       email: /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
       number: /^\d+$/,
+      numberAndChar: /^[a-zA-Z0-9]+$/,
+     // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
+
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
       },
@@ -42,6 +45,10 @@
       number: {
         error: '输入内容只能为数字',
         success: 'It\'s Number'
+      },
+      numberAndChar: {
+        error: '输入内容只能为数字和字母',
+        success: ''
       },
       minlength: {
         error: 'This should be longer',

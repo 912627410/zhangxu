@@ -17,6 +17,14 @@
 
   <div class="row">
     <div class="col-md-1">
+      <label class="control-label">车牌号:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+             placeholder="支持模糊查询"/>
+    </div>
+
+    <div class="col-md-1">
       <label class="control-label">设备编号:</label>
     </div>
     <div class="col-md-2">
@@ -24,13 +32,7 @@
              placeholder="支持模糊查询"/>
     </div>
 
-    <div class="col-md-1">
-      <label class="control-label">车辆识别号:</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="identityId" class="form-control " ng-model="machineMngCtrl.machine.identityId"
-             placeholder="支持模糊查询"/>
-    </div>
+
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
               ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
@@ -77,7 +79,7 @@
       <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
     </div>
     <div class="btn-group col-md-1">
-      <span class="label label-info pull-left">{{machineMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">车辆总数:{{machineMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
 
@@ -95,7 +97,7 @@
   </div>
   <div class="row " style="padding-top: 10px">
     <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3"
-         ng-repeat="machine in machineMngCtrl.macheineList">
+         ng-repeat="machine in machineMngCtrl.machineList">
       <div class="box box-success">
         <div class="box-header">
           <h5 class="box-title">{{machine.licenseId}}</h5>
@@ -135,7 +137,7 @@
             <div class="pull-right">
               <button type="button" class="btn btn-primary btn-xs"
                       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-                      ng-click="updateDeviceInfo(machine,'lg')">修改
+                      ng-click="machineMngCtrl.updateMachine(machine)">修改
               </button>
             </div>
           </code>
@@ -161,11 +163,11 @@
           <td> {{machine.org.label}}</td>
 
           <td>
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-primary btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-                    ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
+                    ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-primary btn-xs"
                     ng-if="machineMngCtrl.hasRemoveDevice(machine)"
                     ng-click="machineMngCtrl.removeDevice(machine)">解绑
             </button>
@@ -183,6 +185,9 @@
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
+
+
+
 
 </section>
 
