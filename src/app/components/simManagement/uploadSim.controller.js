@@ -9,64 +9,39 @@
     .controller('uploadSimController', uploadSimController);
 
   /** @ngInject */
-  function uploadSimController($scope, $uibModalInstance,SIM_STATUS_URL, SIM_URL, serviceResource, Notification, operatorInfo) {
+  function uploadSimController($scope,$timeout, $uibModalInstance,Upload, SIM_UPLOAD_URL,serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
-    //
-    //vm.sim = {};
-    //var simStatusData = serviceResource.restCallService(SIM_STATUS_URL,"QUERY");
-    //simStatusData.then(function(data){
-    //
-    // vm.sim.simStatusList=data;
-    //},function(reason){
-    //  Notification.error('获取组织机构信息失败');
-    //})
-    //
-    //
-    ////日期控件相关
-    ////date picker
-    //vm.serviceBeginDateOpenStatus = {
-    //  opened: false
-    //};
-    //vm.serviceEndDateOpenStatus = {
-    //  opened: false
-    //};
-    //
-    //vm.serviceBeginDateOpen = function($event) {
-    //  vm.serviceBeginDateOpenStatus.opened = true;
-    //};
-    //vm.serviceEndDateOpen = function($event) {
-    //  vm.serviceEndDateOpenStatus.opened = true;
-    //};
-    //
-    //vm.maxDate = new Date();
-    //vm.dateOptions = {
-    //  formatYear: 'yyyy',
-    //  startingDay: 1
-    //};
-    //
-    //vm.ok = function (sim) {
-    //  alert(sim.phoneNumber);
-    //  var restPromise = serviceResource.restAddRequest(SIM_URL, sim);
-    //  restPromise.then(function (data) {
-    //    Notification.success("新建Sim卡信息成功!");
-    //    $uibModalInstance.close();
-    //  }, function (reason) {
-    //    Notification.error("新建Sim卡信息出错!");
-    //  });
-    //};
-    //
-    //vm.showOrgTree = false;
-    //
-    //vm.openOrgTree = function(){
-    //  vm.showOrgTree = !vm.showOrgTree;
-    //}
-    //
-    //$scope.$on('OrgSelectedEvent',function(event,data){
-    //  vm.selectedOrg = data;
-    //  vm.sim.org = vm.selectedOrg;
-    //  vm.showOrgTree = false;
-    //})
+
+
+    vm.upload = function(file) {
+        file.upload = Upload.upload({
+          url: SIM_UPLOAD_URL,
+          data: {file: file}
+        });
+
+        file.upload.then(function (response) {
+          $timeout(function () {
+            file.result = response.data;
+            console.log(response.data);
+            vm.errorList=file.result.content;
+            if (vm.errorList.length > 0){
+              vm.operMsg = "存在异常数据";
+            }else{
+              vm.operMsg = "上传成功";
+            }
+
+            vm.file=null;
+            console.log(vm.operMsg);
+
+          });
+        }, function (response) {
+
+        }, function (evt) {
+          // Math.min is to fix IE which reports 200% sometimes
+          file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
+      }
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');

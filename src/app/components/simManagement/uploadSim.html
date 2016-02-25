@@ -1,21 +1,34 @@
 <div class="modal-header">
   <h3 class="modal-title">批量导入Sim</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal w5c-form "  w5c-form-validate="vm.validateOptions"   w5c-form-submit="newSimController.ok(newSimController.sim)">
+<form name="myForm" class="form-horizontal ">
   <div class="modal-body">
     <div class="box-body">
       <div class="row">
         <div class="col-md-6">
-          单文件：<input ng-file-select type="file"/>
+          <input type="file" ngf-select ng-model="uploadSimController.file" name="file"
+                     accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ngf-max-size="2MB" required
+                     ngf-model-invalid="errorFiles">
+          <i ng-show="myForm.file.$error.required">*required</i><br>
+          <i ng-show="myForm.file.$error.maxSize">File too large
+            {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+          <button ng-click="picFile = null" ng-show="picFile">移除</button>
         </div>
-      </div>
 
+      </div>
+      <div class="row">
+        <i ng-if="null!=uploadSimController.operMsg" style="color: red" >{{uploadSimController.operMsg}}</i>
+        <br/>
+        <i style="color: red" ng-repeat="message in uploadSimController.errorList">
+            {{message}}<br/>
+          </i>
+        </div>
     </div>
 
   </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button">保存</button>
+    <button class="btn btn-primary" type="button" ng-disabled="!myForm.$valid" ng-click="uploadSimController.upload(uploadSimController.file)">保存</button>
     <button class="btn btn-warning" type="button" ng-click="uploadSimController.cancel()">取消</button>
   </div>
 </form>
