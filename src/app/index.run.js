@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($rootScope, $state, $stateParams,SYSTEM_VERSION, serviceResource,ORG_TREE_JSON_DATA_URL,$window,$log,Notification,Idle) {
+  function runBlock($rootScope, $state, $stateParams,SYSTEM_VERSION, $uibModalStack, serviceResource,ORG_TREE_JSON_DATA_URL,$window,$log,Notification,Idle) {
 
     $rootScope.SYSTEM_VERSION = SYSTEM_VERSION;
     $rootScope.$state = $state;
@@ -37,7 +37,13 @@
     //保存当前打开的modal,用于超时时关闭
     $rootScope.currentOpenModal = null;
 
+    //用户在modal打开的时候按回退键时把所有打开的modal关掉
+    $rootScope.$on('$stateChangeSuccess', function() {
+      $uibModalStack.dismissAll();
+    });
+
     $log.debug('runBlock end');
+
 
   }
 
