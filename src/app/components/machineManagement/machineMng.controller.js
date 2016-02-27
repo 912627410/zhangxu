@@ -58,8 +58,14 @@
 
     //查询条件相关
     vm.showOrgTree = false;
+
     vm.openOrgTree = function () {
       vm.showOrgTree = !vm.showOrgTree;
+    }
+
+
+    vm.hideOrgTree = function () {
+      vm.showOrgTree = false;
     }
 
     $scope.$on('OrgSelectedEvent', function (event, data) {

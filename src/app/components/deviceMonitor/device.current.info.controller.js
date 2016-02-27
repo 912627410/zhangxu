@@ -10,13 +10,21 @@
 
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope,$scope,$timeout,$filter,$uibModalInstance,serviceResource,Notification,
-                                       DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
+                                       DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
-    deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
+
+
+
+    console.log(deviceinfo);
+
     vm.deviceinfo = deviceinfo;
+    vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
+
+
+
 
     //气压图
     vm.highchartsAir = {

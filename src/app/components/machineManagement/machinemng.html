@@ -49,17 +49,17 @@
     <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="machineMngCtrl.org.label" name="org" readonly required/>
+               ng-model="machineMngCtrl.org.label" name="org" readonly required />
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()"><i
+                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()" ><i
                       class="fa fa-sitemap"></i></button>
                   </span>
       <div ng-controller="orgController as orgCtrl">
         <div
           style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
-          ng-show="machineMngCtrl.showOrgTree">
+          ng-show="machineMngCtrl.showOrgTree" ng-blur="machineMngCtrl.hideOrgTree()">
           <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
-                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4" ></abn-tree>
         </div>
       </div>
       </p>

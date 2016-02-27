@@ -12,7 +12,7 @@
           <i ng-show="myForm.file.$error.required">*required</i><br>
           <i ng-show="myForm.file.$error.maxSize">File too large
             {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
-          <button ng-click="picFile = null" ng-show="picFile">移除</button>
+          <button ng-click="uploadSimController.file = null" ng-show="uploadSimController.file">移除</button>
         </div>
 
       </div>

@@ -219,8 +219,8 @@
                   <tr>
                     <td>GPS信号质量</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gsmSignal}}</td>
-                    <td>运行监控</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+                    <td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">运行监控</td>
+                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
                     <td>实时工时(H)</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | number:2}}</td>
                   </tr>
@@ -333,7 +333,7 @@
                     <th class="text-nowrap">变矩器油温</th>
                     <th class="text-nowrap">制动气压</th>
                     <th class="text-nowrap">GPS信号质量</th>
-                    <th class="text-nowrap">运行监控</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">运行监控</th>
                     <th class="text-nowrap">LED状态</th>
 
                     <th class="text-nowrap">实时工时</th>
@@ -371,7 +371,7 @@
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <td ng-cloak>{{deviceData.gsmSignal}}</td>
-                    <td ng-cloak>{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
                     <td ng-cloak>{{deviceData.realtimeDuration | number:2}}</td>

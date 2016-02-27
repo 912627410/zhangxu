@@ -33,16 +33,21 @@
 
   <div class="row">
     <hr>
-    <div class="col-md-2">
-          <label class="control-label">车牌号/机号/终端号:</label>
-        </div>
-    <div class="col-md-3">
-          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.deviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.deviceNum) : null" placeholder="支持模糊查询"/>
-        </div>
-    <div class="col-md-5">
+    <div class="col-md-1">
+          <label class="control-label">终端号:</label>
         </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.deviceNum)">确定</button>
+          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.device.deviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+        </div>
+    <div class="col-md-1">
+      <label class="control-label">车牌号:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="machineLicenseId" class="form-control " ng-model="monitorCtrl.device.machineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">重置</button>
     </div>
   </div>
   <div class="row">
@@ -60,8 +65,8 @@
     <div ng-if="monitorCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
       <div class="box box-success">
         <div class="box-header">
-          <h5 class="box-title" ng-if="deviceinfo.userDefinedName">{{deviceinfo.userDefinedName}}</h5>
-          <h5 class="box-title text-gray" ng-if="deviceinfo.userDefinedName==null">未定义</h5>
+          <h5 class="box-title" ng-if="deviceinfo.machineLicenseId">{{deviceinfo.machineLicenseId}}</h5>
+          <h5 class="box-title text-gray" ng-if="deviceinfo.machineLicenseId==null">未定义</h5>
           <div class="box-tools pull-right">
             <div class="text-gray" ng-if="deviceinfo.status == 0"> <i class="fa fa-exclamation-triangle"></i> </div>
             <div class="text-green" ng-if="deviceinfo.status == 1"> <i class="fa fa-check-square"></i> </div>
@@ -75,15 +80,15 @@
               车辆类型:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.device_type}}
+
             </div>
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              车牌号／机号:
+              车牌号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.hostNo}}
+              {{deviceinfo.machineLicenseId}}
             </div>
           </div>
           <div class="row">
@@ -107,10 +112,10 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              终端类型:
+              协议类型:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.deviceTypeDto.name}}
+              {{deviceinfo.protocalTypeDesc}}
             </div>
           </div>
           <div class="row">
@@ -132,7 +137,7 @@
         </div>
         <div class="box-footer">
             <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">设备监控</button>
             </div>
         </div>
       </div>
@@ -145,18 +150,18 @@
             <tr>
               <th>GPS终端号</th>
               <th>车辆类型</th>
-              <th>车牌号/机号</th>
+              <th>车牌号</th>
               <th>定位状态</th>
               <th style="width: 300px">当前位置</th>
-              <th>终端类型</th>
+              <th>协议类型</th>
               <th>所属组织</th>
               <th>最近数据上传时间</th>
               <th>操作</th>
             </tr>
             <tr ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
               <td>{{deviceinfo.deviceNum}}</td>
-              <td>{{deviceinfo.device_type}}</td>
-              <td>{{deviceinfo.hostNo}}</td>
+              <td></td>
+              <td>{{deviceinfo.machineLicenseId}}</td>
               <td>
                 <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
                 <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
@@ -165,11 +170,11 @@
               <td ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
               <td ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
 
-              <td> {{deviceinfo.deviceTypeDto.name}}</td>
-              <td> {{deviceinfo.org.label}}</td>
+              <td> {{deviceinfo.protocalTypeDesc}}</td>
+              <td> {{deviceinfo.orgLabel}}</td>
               <td>{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>
-                <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo,'lg')">设备监控</button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">设备监控</button>
               </td>
             </tr>
           </table>

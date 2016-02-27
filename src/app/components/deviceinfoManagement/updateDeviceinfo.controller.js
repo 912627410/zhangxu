@@ -98,6 +98,11 @@
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
       deviceinfo.sim.deviceinfo={};
 
+      if(null!=deviceinfo.machine){
+        deviceinfo.machine.deviceinfo={};
+      }
+
+
 
       var restPromise = serviceResource.restUpdateRequest(DEVCEINFO_URL, deviceinfo);
       restPromise.then(function (data) {
