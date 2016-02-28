@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,DEVCE_MONITOR_SINGL_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
+  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,DEVCE_MONITOR_SINGL_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_DEVICE_SORT_BY,DEFAULT_SIZE_PER_PAGE,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -47,13 +47,13 @@
       var restCallURL = DEVCE_MONITOR_PAGED_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
+      var sortUrl = sort || DEFAULT_DEVICE_SORT_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != deviceinfo) {
 
         if (null != deviceinfo.deviceNum) {
-          restCallURL += "&search_LIKE_deviceNum=" + deviceinfo.deviceNum;
+          restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(deviceinfo.deviceNum);
         }
         if (null != deviceinfo.machineLicenseId) {
           restCallURL += "&search_LIKE_machine.licenseId=" + deviceinfo.machineLicenseId;
