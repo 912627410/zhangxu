@@ -9,11 +9,14 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL,MACHINE_REMOVE_ORG_URL) {
+  function machineMngController($rootScope, $scope, $uibModal,NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL,MACHINE_REMOVE_ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
     vm.org = {label: ""};    //调拨组织
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, machine) {
       var restCallURL = MACHINE_PAGE_URL;
@@ -36,7 +39,14 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        vm.machineList = data.content;
+        //vm.machineList = data.content;
+
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
@@ -148,7 +158,7 @@
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       // alert(action);
-      vm.machineList.forEach(function (machine) {
+      vm.tableParams.data.forEach(function (machine) {
         updateSelected(action, machine.id);
       })
 

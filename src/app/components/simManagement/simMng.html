@@ -128,7 +128,7 @@
       </a>
     </div>
   </div>
-  <div class="row " style="padding-top: 10px">
+  <div class="row " style="padding: 10px">
     <div ng-if="simMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="sim in simMngCtrl.simList">
       <div class="box box-success">
         <div class="box-header">
@@ -257,44 +257,20 @@
       </div>
     </div>
     <div ng-if="simMngCtrl.radioListType == 'list'" >
-      <table class="table table-striped" id="deviceTable">
-        <tr>
-          <th>SIM卡号</th>
-          <th>序列号</th>
-          <th>价格(元)</th>
-          <th>所属设备</th>
-          <th>当前状态</th>
-          <th>激活时间</th>
-          <th>所属组织</th>
-          <!--
-          <th>流量统计月份</th>
-          <th>当月流量限额(MB)</th>
-          <th>当月已用流量(MB)</th>
-          <th>总共已用流量(MB)</th>
-          -->
-          <th>备注</th>
-          <th>开通时间</th>
-          <th>到期时间</th>
-          <th>操作</th>
-        </tr>
-        <tr ng-repeat="sim in simMngCtrl.simList">
-          <td> {{sim.phoneNumber}}</td>
-          <td> {{sim.serialNumber}}</td>
-          <td> {{sim.price}}</td>
-          <td> {{sim.deviceinfo.deviceNum}}</td>
-          <td> {{sim.statusDesc}}</td>
-          <td> {{sim.activeTime | date:'yyyy-MM-dd'}}</td>
-          <td> {{sim.deviceinfo.org.label}}</td>
-          <!--
-          <td> {{sim.gsmDataMonth}}</td>
-          <td> {{sim.gsmDataLimit}}</td>
-          <td> {{sim.gsmDataCurrentMonth}}</td>
-          <td> {{sim.gsmDataTotal}}</td>
-          -->
-          <td> {{sim.description}}</td>
-          <td>   {{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
-          <td>   {{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
-          <td>
+      <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="sim in $data">
+
+          <td data-title="'SIM卡号'" sortable="'phoneNumber'">{{sim.phoneNumber}}</td>
+          <td data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
+          <td data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
+          <td data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
+          <td data-title="'当前状态'" sortable="'statusDesc'">{{sim.statusDesc}}</td>
+          <td data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
+          <td data-title="'所属组织'" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
+          <td data-title="'备注'" sortable="'description'">{{sim.description}}</td>
+          <td data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
+          <td data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
+          <td data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                     ng-click="simMngCtrl.updateSim(sim)">修改
@@ -302,12 +278,13 @@
           </td>
         </tr>
       </table>
+
     </div>
   </div>
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,10,null,simMngCtrl.phoneNumber)"
+    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,null,null,simMngCtrl.phoneNumber)"
                     max-size="5" ng-model="simMngCtrl.pageNumber" items-per-page="simMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>

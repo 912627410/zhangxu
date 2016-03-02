@@ -6,13 +6,18 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, serviceResource, DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEIVCIE_MOVE_ORG_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification,NgTableParams, ngTableDefaults,serviceResource, DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEIVCIE_MOVE_ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
     vm.deviceinfo = {};
 
     vm.org={label:""};    //调拨组织
+
+
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     //查询条件相关
     vm.showOrgTree = false;
@@ -38,6 +43,8 @@
       vm.deviceinfo.moveOrg = vm.selectedMoveOrg;
       vm.showMoveOrgTree = false;
     })
+
+
 
 
     vm.query = function (page, size, sort, deviceinfo) {
@@ -66,7 +73,14 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        vm.deviceinfoList = data.content;
+      //  vm.deviceinfoList = data.content;
+
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+         // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
 
         //  alert(vm.deviceinfoList[0].id);
         vm.page = data.page;
@@ -190,7 +204,7 @@
       var checkbox = $event.target;
       var action = (checkbox.checked?'add':'remove');
    // alert(action);
-      vm.deviceinfoList.forEach(function(deviceinfo){
+      vm.tableParams.data.forEach(function(deviceinfo){
         updateSelected(action,deviceinfo.id);
       })
 
@@ -210,7 +224,7 @@
         vm.selectAll=true;
       }
 
-      vm.deviceinfoList.forEach(function(deviceinfo){
+      vm.tableParams.data.forEach(function(deviceinfo){
         deviceinfo.checked=operStatus;
       })
     }
