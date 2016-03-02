@@ -21,17 +21,21 @@
       <label class="control-label">设备编号:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum" placeholder="支持模糊查询"/>
+      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum"
+             placeholder="支持模糊查询"/>
     </div>
 
     <div class="col-md-1">
       <label class="control-label">SIM:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber" placeholder="支持模糊查询"/>
+      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber"
+             placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询</button>
+      <button class="btn btn-primary" type="button"
+              ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询
+      </button>
       <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
     </div>
   </div>
@@ -61,19 +65,23 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨</button>
+      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
+      </button>
 
     </div>
   </div>
 
   <div class="row">
     <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'"
+             uncheckable>列表</label>
+      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'"
+             uncheckable>列块</label>
     </div>
     <div class="btn-group col-md-1">
       <span class="label label-info pull-left">设备总数:{{deviceinfoMngCtrl.page.totalElements}}</span>
-      </div>
+    </div>
     <div class="col-md-9">
 
       <a class="btn btn-primary pull-right"
@@ -87,21 +95,22 @@
         <i class="fa fa-plus"></i> 批量导入
       </a>
     </div>
-    </div>
+  </div>
   <div class="row">
 
   </div>
   <div class="row " style="padding-top: 10px">
-    <div ng-if="deviceinfoMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
+    <div ng-if="deviceinfoMngCtrl.radioListType == 'block'" class="col-md-3"
+         ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
       <div class="box box-success">
         <div class="box-header">
           <h5 class="box-title" ng-if="deviceinfo.userDefinedName">{{deviceinfo.userDefinedName}}</h5>
           <h5 class="box-title text-gray" ng-if="deviceinfo.userDefinedName==null">未定义</h5>
           <div class="box-tools pull-right">
-            <div class="text-gray" ng-if="deviceinfo.status == 0"> <i class="fa fa-exclamation-triangle"></i> </div>
-            <div class="text-green" ng-if="deviceinfo.status == 1"> <i class="fa fa-check-square"></i> </div>
-            <div class="text-yellow" ng-if="deviceinfo.status == 2"> <i class="fa fa-anchor"></i> </div>
-            <div class="text-red" ng-if="deviceinfo.status == 9"> <i class="fa fa-info"></i> </div>
+            <div class="text-gray" ng-if="deviceinfo.status == 0"><i class="fa fa-exclamation-triangle"></i></div>
+            <div class="text-green" ng-if="deviceinfo.status == 1"><i class="fa fa-check-square"></i></div>
+            <div class="text-yellow" ng-if="deviceinfo.status == 2"><i class="fa fa-anchor"></i></div>
+            <div class="text-red" ng-if="deviceinfo.status == 9"><i class="fa fa-info"></i></div>
           </div>
         </div>
         <div class="box-body">
@@ -122,7 +131,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               协议类型:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -130,7 +139,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               所属组织:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -139,7 +148,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               状态:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -147,8 +156,8 @@
             </div>
           </div>
 
-         <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               SIM:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -156,7 +165,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               SIM序列号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -164,7 +173,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               调拨时间:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -172,7 +181,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               更新时间:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -184,8 +193,10 @@
         <div class="box-footer">
           <code>
             <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs" ng-click="deviceDetail(deviceinfo,'lg')">最新状态</button>
-              <button type="button" class="btn btn-default btn-xs" ng-click="deviceHistory(deviceinfo,'lg')">历史状态</button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="deviceDetail(deviceinfo,'lg')">最新状态
+              </button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="deviceHistory(deviceinfo,'lg')">历史状态
+              </button>
               <button type="button" class="btn btn-default btn-xs"
                       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                       ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
@@ -195,47 +206,45 @@
         </div>
       </div>
     </div>
-    </div>
-    <div ng-if="deviceinfoMngCtrl.radioListType == 'list'" >
-      <table class="table table-striped" id="deviceTable">
-        <tr>
-          <th><input type="checkbox" ng-click="deviceinfoMngCtrl.updateAllSelection($event)" ng-model="deviceinfoMngCtrl.checked"></th>
-          <th>设备编号</th>
-          <th>车牌号</th>
-          <th>协议类型</th>
-          <th>所属组织</th>
-          <th>状态</th>
-          <th>SIM</th>
-          <th>SIM序列号</th>
-          <th>调拨时间</th>
-          <th>更新时间</th>
-          <th>操作</th>
-        </tr>
-        <tr ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
-          <td><input type="checkbox" id="deviceinfo.id" ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)" ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)" ng-model="deviceinfo.checked"></td>
-          <td> {{deviceinfo.deviceNum}}</td>
-          <td> {{deviceinfo.machine.licenseId}}</td>
-          <td> {{deviceinfo.protocalTypeDesc}}</td>
-          <td> {{deviceinfo.org.label}}</td>
-          <td> {{deviceinfo.statusDesc}}</td>
-          <td> {{deviceinfo.sim.phoneNumber}}</td>
-          <td> {{deviceinfo.sim.serialNumber}}</td>
-          <td>   {{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td>   {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td>
-            <button type="button" class="btn btn-default btn-xs"
-                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                    ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
-            </button>
-          </td>
-        </tr>
-      </table>
-    </div>
+  </div>
+  <div ng-if="deviceinfoMngCtrl.radioListType == 'list'">
+    <script id="selectAllHeader" type="text/ng-template">
+      <input type="checkbox" ng-click="deviceinfoMngCtrl.updateAllSelection($event)"
+             ng-model="deviceinfoMngCtrl.checked">
+    </script>
+    <table ng-table="deviceinfoMngCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+      <tr ng-repeat="deviceinfo in $data">
+        <td data-header="'selectAllHeader'">
+          <input type="checkbox"
+                 ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)"
+                 ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)"
+                 ng-model="deviceinfo.checked"></td>
+        <td data-title="'设备号'" sortable="'deviceNum'">{{deviceinfo.deviceNum}}</td>
+        <td data-title="'车牌号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}</td>
+        <td data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}</td>
+        <td data-title="'所属组织'" sortable="'org.label'">{{deviceinfo.org.label}}</td>
+        <td data-title="'状态'" sortable="'statusDesc'">{{deviceinfo.statusDesc}}</td>
+        <td data-title="'SIM'" sortable="'sim.phoneNumber'">{{deviceinfo.sim.phoneNumber}}</td>
+        <td data-title="'SIM序列号'" sortable="'sim.serialNumber'">{{deviceinfo.sim.serialNumber}}</td>
+        <td data-title="'调拨时间'" sortable="'moveTime'">{{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td data-title="'更新时间'" sortable="'lastUpdateTime'">{{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+        </td>
+        <td data-title="'操作'">
+          <button type="button" class="btn btn-default btn-xs"
+                  ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
   </div>
 
   <div class="box-footer">
-    <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements" ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,null,null,deviceinfoMngCtrl.phoneNumber)"
-                    max-size="5" ng-model="deviceinfoMngCtrl.pageNumber" items-per-page="deviceinfoMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+    <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements"
+                    ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,null,null,deviceinfoMngCtrl.phoneNumber)"
+                    max-size="5" ng-model="deviceinfoMngCtrl.pageNumber" items-per-page="deviceinfoMngCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 

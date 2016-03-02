@@ -49,9 +49,9 @@
     <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="machineMngCtrl.org.label" name="org" readonly required />
+               ng-model="machineMngCtrl.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()" ><i
+                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()"><i
                       class="fa fa-sitemap"></i></button>
                   </span>
       <div ng-controller="orgController as orgCtrl">
@@ -59,7 +59,7 @@
           style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
           ng-show="machineMngCtrl.showOrgTree" ng-blur="machineMngCtrl.hideOrgTree()">
           <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
-                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4" ></abn-tree>
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
         </div>
       </div>
       </p>
@@ -95,7 +95,7 @@
       </a>
     </div>
   </div>
-  <div class="row " style="padding-top: 10px">
+  <div class="row " style="padding: 10px">
     <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3"
          ng-repeat="machine in machineMngCtrl.machineList">
       <div class="box box-success">
@@ -145,33 +145,28 @@
       </div>
     </div>
     <div ng-if="machineMngCtrl.radioListType == 'list'">
-      <table class="table table-striped" id="machineTable">
-        <tr>
-          <th><input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
-                     ng-model="machineMngCtrl.checked"></th>
-          <th>车牌号码</th>
-          <th>绑定终端</th>
-          <th>所属组织</th>
-
-          <th>操作</th>
-        </tr>
-        <tr ng-repeat="machine in machineMngCtrl.machineList">
-          <td><input type="checkbox" id="machine.id" ng-checked="machineMngCtrl.isSelected(machine.id)"
-                     ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked"></td>
-          <td> {{machine.licenseId}}</td>
-          <td> {{machine.deviceinfo.deviceNum}}</td>
-          <td> {{machine.org.label}}</td>
-
-          <td>
-            <button type="button" class="btn btn-primary btn-xs"
+      <script id="selectAllHeader" type="text/ng-template">
+        <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
+               ng-model="machineMngCtrl.checked">
+      </script>
+      <table ng-table="machineMngCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="machine in $data">
+          <td data-header="'selectAllHeader'" align="center">
+            <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
+                   ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+          </td>
+          <td data-title="'车牌号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+          <td data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+          <td data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
+          <td data-title="'操作'">
+            <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
                     ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
-            <button type="button" class="btn btn-primary btn-xs"
+            <button type="button" class="btn btn-danger btn-xs"
                     ng-if="machineMngCtrl.hasRemoveDevice(machine)"
                     ng-click="machineMngCtrl.removeDevice(machine)">解绑
             </button>
-
           </td>
         </tr>
       </table>
@@ -185,8 +180,6 @@
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
-
-
 
 
 </section>

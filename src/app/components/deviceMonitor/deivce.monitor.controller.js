@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,DEVCE_MONITOR_SINGL_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_DEVICE_SORT_BY,DEFAULT_SIZE_PER_PAGE,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
+  function DeviceMonitorController($rootScope,$scope,$uibModal,$timeout,$filter,NgTableParams, ngTableDefaults,DEVCE_MONITOR_SINGL_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_DEVICE_SORT_BY,DEFAULT_SIZE_PER_PAGE,AMAP_QUERY_TIMEOUT_MS,serviceResource,Notification) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -19,6 +19,10 @@
         serviceResource.refreshMapWithDeviceInfo("monitorMap",deviceList);
       })
     }
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
+
     vm.radioListType = "list";
     //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
     //已废弃
@@ -65,7 +69,10 @@
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
       deviceDataPromis.then(function (data) {
           vm.deviceInfoList = data.content;
-       // console.log(vm.deviceInfoList[0].machine);
+          vm.tableParams = new NgTableParams({},
+          {
+            dataset: data.content
+          });
           vm.page = data.page;
           vm.deviceData_pagenumber = data.page.number + 1;
           vm.basePath = DEVCE_MONITOR_PAGED_QUERY;

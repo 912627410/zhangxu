@@ -7,7 +7,7 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$uibModal,Notification,simService,serviceResource,SIM_STATUS_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
@@ -18,6 +18,10 @@
       "deviceinfo":{},
 
     };
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
+
 
     //vm.query = function(page,size,sort,queryPhoneNumber){
     //
@@ -97,6 +101,11 @@
        var rspData=simService.queryPage(page,size,sort,queryPhoneNumber);
        rspData.then(function(data){
          vm.simList = data.content;
+
+         vm.tableParams = new NgTableParams({},
+           {
+           dataset: data.content
+         });
          vm.page = data.page;
          vm.pageNumber = data.page.number + 1;
        },function(reason){
