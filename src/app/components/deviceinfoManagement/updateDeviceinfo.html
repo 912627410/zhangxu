@@ -18,7 +18,7 @@
         <div class="col-sm-10">
           <ui-select  name="phoneNumber" ng-model="updateDeviceinfoController.deviceinfo.sim" theme="bootstrap"
                       ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true"  placeholder="输入SIM卡号,支持模糊搜索">{{$select.selected.phoneNumber}}
+            <ui-select-match allow-clear="true"  placeholder="输入SIM卡号后4位">{{$select.selected.phoneNumber}}
             </ui-select-match>
             <ui-select-choices repeat="sim in updateDeviceinfoController.simList"
                                refresh="updateDeviceinfoController.refreshSimList($select.search)"
@@ -79,7 +79,9 @@
           </p>
         </div>
       </div>
-
+      <i style="color: red" ng-if="null!=updateDeviceinfoController.errorMsg">
+        {{updateDeviceinfoController.errorMsg}}<br/>
+      </i>
     </div>
   </div>
   <div class="modal-footer">

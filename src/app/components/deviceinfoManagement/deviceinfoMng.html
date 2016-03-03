@@ -199,7 +199,7 @@
               </button>
               <button type="button" class="btn btn-default btn-xs"
                       ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                      ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
+                      ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">修改
               </button>
             </div>
           </code>
@@ -232,7 +232,7 @@
         <td data-title="'操作'">
           <button type="button" class="btn btn-default btn-xs"
                   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo)">修改
+                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">修改
           </button>
         </td>
       </tr>

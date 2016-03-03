@@ -28,7 +28,13 @@
     }
 
     vm.refreshSimList = function(value) {
+      vm.simList=[];
       if(!onlyNumber(value)){
+        return;
+      }
+
+      if(value.length!=4){
+        //vm.errorMsg="请输入sim卡号后4位";
         return;
       }
 
@@ -94,6 +100,19 @@
 
 
     vm.ok = function (deviceinfo) {
+      vm.errorMsg=null;
+
+      //重新构造需要传输的数据
+      var operDeviceinfo={
+        "id":deviceinfo.id,
+        "deviceNum":deviceinfo.deviceNum,
+        "protocalType":deviceinfo.protocalType,
+        "produceDate":deviceinfo.produceDate,
+        "simPhoneNumber":deviceinfo.sim.phoneNumber,
+        "orgId":deviceinfo.org.id
+      };
+
+
 
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
       deviceinfo.sim.deviceinfo={};
@@ -104,12 +123,18 @@
 
 
 
-      var restPromise = serviceResource.restUpdateRequest(DEVCEINFO_URL, deviceinfo);
+      var restPromise = serviceResource.restUpdateRequest(DEVCEINFO_URL, operDeviceinfo);
       restPromise.then(function (data) {
-        Notification.success("修改设备信息成功!");
-        $uibModalInstance.close();
+        if(data.code===0){
+          Notification.success("修改设备信息成功!");
+          $uibModalInstance.close();
+        }else{
+          Notification.error(data.message);
+        }
+
       }, function (reason) {
-        Notification.error("修改设备信息出错!");
+        vm.errorMsg=reason.data.message;
+        Notification.error(reason.data.message);
       });
     };
 
