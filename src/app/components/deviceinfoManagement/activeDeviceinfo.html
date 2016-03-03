@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h3 class="modal-title">激活设备</h3>
+</div>
+<form name="operForm" class="form-horizontal w5c-form" w5c-form-validate="vm.validateOptions">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">设备编号</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="deviceNum" class="form-control" placeholder="设备编号"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.deviceNum" name="deviceNum"/>
+          </div>
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定车牌号</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="licenseId" class="form-control" placeholder="绑定车牌号"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.licenseId" name="licenseId"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">发动机通讯密码</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="enginePassCode" class="form-control" placeholder="发动机通讯密码"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
+          </div>
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">车架号</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="identityId" class="form-control" placeholder="请先在车辆信息中设置车架号,否则无法锁车和解锁"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.identityId" name="identityId"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定SIM号</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="phoneNumber" class="form-control" placeholder="绑定SIM号"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
+          </div>
+          <label ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" for="deviceNum" class="col-md-2 control-label text-nowrap">永久解锁密码</label>
+          <div ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" class="col-md-4">
+            <input type="text" readonly id="UnLockPass" ng-mouseover="activeDeviceinfoController.UnLockPass = activeDeviceinfoController.deviceUnLockFactor.unlockerPass" class="form-control text-red" placeholder="鼠标移动在输入框显示"
+                   ng-mouseleave="activeDeviceinfoController.UnLockPass = null" ng-model="activeDeviceinfoController.UnLockPass" name="licenseId"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">激活次数</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="activeCount" class="form-control" placeholder="激活次数"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.activeCount" name="activeCount"/>
+          </div>
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">上次激活时间</label>
+          <div class="col-md-4">
+            <input type="text" readonly id="lastActiveTime" class="form-control" placeholder="上次激活时间"
+                   ng-model="activeDeviceinfoController.deviceUnLockFactor.lastActiveTime" name="lastActiveTime"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">启动锁车短信内容</label>
+          <div class="col-md-10">
+            <input type="text" readonly id="activeMsg" class="form-control" placeholder="启动锁车"
+                   ng-model="activeDeviceinfoController.activeMsg" name="activeMsg"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="deviceNum" class="col-md-2 control-label text-nowrap">取消锁车短信内容</label>
+          <div class="col-md-10">
+            <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="取消锁车"
+                   ng-model="activeDeviceinfoController.unActiveMsg" name="unActiveMsg"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!--<button class="btn btn-primary" type="button" w5c-form-submit="activeDeviceinfoController.ok(activeDeviceinfoController.deviceinfo)">发送激活短信</button>-->
+    <button class="btn btn-warning" type="button" ng-click="activeDeviceinfoController.cancel()">取消</button>
+  </div>
+</form>

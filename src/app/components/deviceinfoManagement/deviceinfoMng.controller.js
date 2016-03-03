@@ -261,5 +261,28 @@
 
     };
 
+
+    //激活设备
+    vm.activeDeviceinfo = function (deviceinfo, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/activeDeviceinfo.html',
+        controller: 'activeDeviceinfoController as activeDeviceinfoController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return deviceinfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        //  vm.selected = selectedItem;
+        //  vm.query();
+      }, function () {
+        //$log.info('Modal dismissed at: ' + new Date());
+      });
+    };
   }
 })();
