@@ -68,6 +68,10 @@
         <a ui-sref="home.userinfomng">
           <i class="fa fa-user"></i> <span>用户管理</span>
         </a>
+      </li><li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'">
+        <a href="http://releasenotegpscloud.mydoc.io/" target="_blank">
+          <i class="fa fa-user"></i> <span>更新日志</span>
+        </a>
       </li>
     </ul>
   </section>
