@@ -6,14 +6,13 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification,NgTableParams, ngTableDefaults,serviceResource, DEVCE_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEIVCIE_MOVE_ORG_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
     vm.deviceinfo = {};
 
-    vm.org={label:""};    //调拨组织
-
+    vm.org = {label: ""};    //调拨组织
 
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -32,7 +31,6 @@
     })
 
 
-
     vm.showMoveOrgTree = false;
     vm.openMoveOrgTree = function () {
       vm.showMoveOrgTree = !vm.showMoveOrgTree;
@@ -43,8 +41,6 @@
       vm.deviceinfo.moveOrg = vm.selectedMoveOrg;
       vm.showMoveOrgTree = false;
     })
-
-
 
 
     vm.query = function (page, size, sort, deviceinfo) {
@@ -73,11 +69,11 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-      //  vm.deviceinfoList = data.content;
+        //  vm.deviceinfoList = data.content;
 
         vm.tableParams = new NgTableParams({
           // initial sort order
-         // sorting: { name: "desc" }
+          // sorting: { name: "desc" }
         }, {
           dataset: data.content
         });
@@ -103,9 +99,6 @@
     }
 
 
-
-
-
     vm.newDeviceinfo = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -123,33 +116,44 @@
 
       modalInstance.result.then(function () {
         //刷新
-       // vm.query();
+        // vm.query();
       }, function () {
         //取消
       });
     };
 
 
-    vm.updateDeviceinfo = function (deviceinfo, size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
-        controller: 'updateDeviceinfoController as updateDeviceinfoController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          deviceinfo: function () {
-            return deviceinfo;
-          }
-        }
-      });
+    vm.updateDeviceinfo = function (id, size) {
+      var singlUrl = DEVCEINFO_URL + "?id=" + id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+          vm.deviceinfo = data.content;
+          var modalInstance = $uibModal.open({
+            animation: vm.animationsEnabled,
+            templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
+            controller: 'updateDeviceinfoController as updateDeviceinfoController',
+            size: size,
+            backdrop: false,
+            resolve: {
+              deviceinfo: function () {
+                return vm.deviceinfo;
+              }
+            }
+          });
 
-      modalInstance.result.then(function (selectedItem) {
-      //  vm.selected = selectedItem;
-      //  vm.query();
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
-      });
+          modalInstance.result.then(function (selectedItem) {
+            //  vm.selected = selectedItem;
+             vm.query();
+          }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+          });
+
+        }, function (reason) {
+          Notification.error('获取设备信息失败');
+        }
+      )
+
+
     };
 
     //批量导入
@@ -175,77 +179,74 @@
     };
 
 
-
-
-
-    vm.selectAll=false;//是否全选标志
+    vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
-    var updateSelected = function(action,id){
-      if(action == 'add' && vm.selected.indexOf(id) == -1){
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
         vm.selected.push(id);
       }
-      if(action == 'remove' && vm.selected.indexOf(id)!=-1){
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
         var idx = vm.selected.indexOf(id);
-        vm.selected.splice(idx,1);
+        vm.selected.splice(idx, 1);
 
       }
     }
 
-    vm.updateSelection = function($event, id,status){
+    vm.updateSelection = function ($event, id, status) {
 
       var checkbox = $event.target;
-      var action = (checkbox.checked?'add':'remove');
-      updateSelected(action,id);
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
     }
 
 
-    vm.updateAllSelection = function($event){
+    vm.updateAllSelection = function ($event) {
       var checkbox = $event.target;
-      var action = (checkbox.checked?'add':'remove');
-   // alert(action);
-      vm.tableParams.data.forEach(function(deviceinfo){
-        updateSelected(action,deviceinfo.id);
+      var action = (checkbox.checked ? 'add' : 'remove');
+      // alert(action);
+      vm.tableParams.data.forEach(function (deviceinfo) {
+        updateSelected(action, deviceinfo.id);
       })
 
     }
 
-    vm.isSelected = function(id){
-   //   alert(vm.selected);
-      return vm.selected.indexOf(id)>=0;
+    vm.isSelected = function (id) {
+      //   alert(vm.selected);
+      return vm.selected.indexOf(id) >= 0;
     }
-    vm.checkAll = function(){
-      var operStatus=false;
-      if(vm.selectAll) {
-        operStatus=false;
-        vm.selectAll=false;
-      }else{
-        operStatus=true;
-        vm.selectAll=true;
+    vm.checkAll = function () {
+      var operStatus = false;
+      if (vm.selectAll) {
+        operStatus = false;
+        vm.selectAll = false;
+      } else {
+        operStatus = true;
+        vm.selectAll = true;
       }
 
-      vm.tableParams.data.forEach(function(deviceinfo){
-        deviceinfo.checked=operStatus;
+      vm.tableParams.data.forEach(function (deviceinfo) {
+        deviceinfo.checked = operStatus;
       })
     }
 
 
     //批量设置为已处理
-    vm.batchMoveOrg = function(){
-      if(vm.selected.length==0){
+    vm.batchMoveOrg = function () {
+      if (vm.selected.length == 0) {
         alert("请选择要调拨的设备");
         return;
       }
 
 
-      if(vm.org.label==""){
+      if (vm.org.label == "") {
         alert("请选择要调拨的组织");
         return;
       }
 
       //alert(vm.org.id+" "+vm.org.label);
 
-      var moveOrg={ids:vm.selected,"orgId":vm.org.id};
+      var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
       // alert(moveOrg.ids+"  "+moveOrg.orgId);
 
 

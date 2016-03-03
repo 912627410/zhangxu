@@ -9,7 +9,7 @@
     .controller('newDeviceinfoController', newDeviceinfoController);
 
   /** @ngInject */
-  function newDeviceinfoController($scope,$http, $uibModalInstance, SIM_UNUSED_URL,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
+  function newDeviceinfoController($q,$scope,$http, $uibModalInstance, SIM_UNUSED_URL,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.deviceinfo = {};
@@ -17,7 +17,7 @@
     $scope.address =[];
     //动态查询未使用的sim卡
     vm.refreshSimList = function(value) {
-
+      vm.simList=[];
       //var reg = /^\d+$/;
       //if (!reg.test(value)) {
       //  alert(value);
@@ -25,6 +25,10 @@
       //}
 
       if(!onlyNumber(value)){
+        return;
+      }
+      if(value.length!=4){
+        //vm.errorMsg="请输入sim卡号后4位";
         return;
       }
 
@@ -86,14 +90,33 @@
     vm.deviceinfo.produceDate=new Date();
 
     vm.ok = function (deiceinfo) {
-      var restPromise = serviceResource.restAddRequest(DEVCEINFO_URL, deiceinfo);
-      restPromise.then(function (data) {
-        Notification.success("新建设备信息成功!");
-       // $uibModalInstance.close();
+      vm.errorMsg=null;
 
-       // $scope.query(0,null,null,null);//更新列表展示
+      //重新构造需要传输的数据
+      var operDeviceinfo={
+        "deviceNum":deiceinfo.deviceNum,
+        "protocalType":deiceinfo.protocalType,
+        "produceDate":deiceinfo.produceDate,
+        "simPhoneNumber":deiceinfo.sim.phoneNumber
+      };
+
+   //   console.log(operDeviceinfo);
+
+      var restPromise = serviceResource.restAddRequest(DEVCEINFO_URL, operDeviceinfo);
+      restPromise.then(function (data) {
+
+        if(data.code===0){
+          Notification.success("新建设备信息成功!");
+          $uibModalInstance.close();
+        }else{
+      //    vm.machine = machine;
+          Notification.error(data.message);
+        }
+
       }, function (reason) {
-        Notification.error("新建设备信息出错!");
+     //   Notification.error("新建设备信息出错!");
+        vm.errorMsg=reason.data.message;
+        Notification.error(reason.data.message);
       });
     };
 
@@ -101,5 +124,70 @@
       $uibModalInstance.dismiss('cancel');
     };
 
+
+
+    //
+
+     vm.loadingItem = {type: 'loading'},
+       vm.hasNextChunk = true,
+       vm.queryString = '';
+
+     vm.getInfinityScrollChunk=function(value) {
+       alert(1);
+      var params = {phoneNumber: value};
+      return $http.get(
+        SIM_FETCH_UNUSED_URL,
+        {params: params}
+      )
+    }
+
+     vm.addLoadingStateItem=function() {
+       alert(2);
+      vm.collections.push(vm.loadingItem);
+    }
+
+     vm.removeLoadingStateItem=function() {
+       alert(3);
+      var index = $scope.collections.indexOf(vm.loadingItem);
+      if (index < 0) {
+        return;
+      }
+
+      vm.collections.splice(index, 1);
+    }
+
+
+    vm.isItemMatch = function($select) {
+      //implement your match function here by $select.search
+
+      alert(4);
+    };
+
+    vm.requestMoreItems = function() {
+      alert(111);
+      if (vm.isRequestMoreItems || !vm.hasNextChunk) {
+        return $q.reject();
+      }
+
+      addLoadingStateItem();
+
+      vm.isRequestMoreItems = true;
+      return vm.getInfinityScrollChunk(nextChunkId)
+        .then(function(newItems) {
+          nextChunkId = newItems.nextId;
+          vm.simList = vm.simList.concat($scope.newItems.items);
+          return newItems;
+        }, function(err) {
+          return $q.reject(err);
+        })
+        .finally(function() {
+          vm.removeLoadingStateItem();
+          vm.isRequestMoreItems = false;
+        });
+    };
+
+    vm.refreshList = function() {
+      vm.queryString =  SIM_FETCH_UNUSED_URL;
+    };
   }
 })();

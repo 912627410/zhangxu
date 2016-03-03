@@ -44,7 +44,7 @@
       },
       number: {
         error: '输入内容只能为数字',
-        success: 'It\'s Number'
+        success: ''
       },
       numberAndChar: {
         error: '输入内容只能为数字和字母',
