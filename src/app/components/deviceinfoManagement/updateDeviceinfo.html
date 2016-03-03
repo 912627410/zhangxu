@@ -33,7 +33,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">协议类型</label>
         <div class="col-sm-10">
-          <select name="deviceMF" required class="form-control" onchange="updateDeviceinfoController.changeProtocalType()"
+          <select name="deviceMF" required class="form-control" ng-change="updateDeviceinfoController.changeProtocalType()"
                   ng-model="updateDeviceinfoController.deviceinfo.protocalType"
                   ng-options="protocalType.value as protocalType.desc for protocalType in updateDeviceinfoController.protocalTypeList">
             <option value="">请选择...</option>

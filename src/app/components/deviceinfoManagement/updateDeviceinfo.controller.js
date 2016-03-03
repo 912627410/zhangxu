@@ -86,11 +86,11 @@
 
     vm.changeProtocalType = function () {
 
-      for (var i = 0; i < vm.sim.protocalTypeList.length; i++) {
+      for (var i = 0; i < vm.protocalTypeList.length; i++) {
         //alert(vm.sim.simStatusList[i].desc);
-        if (vm.sim.protocalTypeList[i].value == vm.deviceinfo.protocalType) {
+        if (vm.protocalTypeList[i].value == vm.deviceinfo.protocalType) {
           //  alert(vm.sim.simStatusList[i].value);
-          vm.sim.protocalTypeDesc = vm.deviceinfo.protocalTypeList[i].desc;
+          vm.protocalTypeDesc = vm.protocalTypeList[i].desc;
           break;
         }
       }
