@@ -116,7 +116,7 @@
 
       modalInstance.result.then(function () {
         //刷新
-        // vm.query();
+         vm.query();
       }, function () {
         //取消
       });
