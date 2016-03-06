@@ -96,13 +96,13 @@
    //   alert(vm.machine.deviceinfo.deviceNum);
 
       var postInfo=machine;
-
-      postInfo.deviceinfo={id:machine.deviceinfo.id};
+      if (machine.deviceinfo){
+        postInfo.deviceinfo={id:machine.deviceinfo.id};
+      }
+      else{
+        postInfo.deviceinfo=null;
+      }
       postInfo.org={id:machine.org.id};
-
-
-
-    //  alert(postInfo.licenseId+"  "+postInfo.deviceNum+"  "+postInfo.orgId);
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
       restPromise.then(function (data) {
@@ -113,8 +113,6 @@
           vm.machine = machine;
           Notification.error(data.message);
         }
-
-
       }, function (reason) {
        // alert(reason.data.message);
         console.error(reason);

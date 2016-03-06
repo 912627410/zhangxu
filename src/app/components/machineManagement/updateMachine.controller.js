@@ -89,7 +89,7 @@
 
 
       //如果设备没有输入,则给出提示信息,
-      if(vm.machine.deviceinfo.deviceNum==""){
+      if(vm.machine.deviceinfo==null || vm.machine.deviceinfo.deviceNum==""){
         if(!confirm("设备号没有输入,请注意")){
           return;
         }

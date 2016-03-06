@@ -30,12 +30,12 @@
         <label  class="col-sm-2 control-label">绑定终端</label>
         <div class="col-sm-10">
           <ui-select  name="deviceNum" ng-model="updateMachineController.machine.deviceinfo" theme="bootstrap"
-                      ng-disabled="disabled" validator="required">
+                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="输入终端号,支持模糊搜索">{{$select.selected.deviceNum}}
             </ui-select-match>
             <ui-select-choices repeat="deviceinfo in updateMachineController.deviceinfoList "
                                refresh="updateMachineController.refreshDeviceList($select.search)"
-                               refresh-delay="0">
+                               refresh-delay="1000">
               <div ng-bind-html="deviceinfo.deviceNum | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
