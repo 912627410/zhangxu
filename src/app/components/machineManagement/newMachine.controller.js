@@ -32,6 +32,7 @@
 
     //动态查询未使用的本组织的设备
     vm.refreshDeviceList = function(value) {
+      vm.deviceinfoList=[];
       if(value==""){
         return;
       }
