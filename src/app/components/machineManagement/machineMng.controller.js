@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal,NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL,MACHINE_REMOVE_ORG_URL) {
+  function machineMngController($rootScope, $scope, $uibModal,$filter,NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL,MACHINE_REMOVE_ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
@@ -28,7 +28,7 @@
       if (null != machine) {
 
         if (null != machine.deviceNum) {
-          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + machine.deviceNum;
+          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" +$filter('uppercase')(machine.deviceNum);
         }
         if (null != machine.licenseId) {
           restCallURL += "&search_LIKE_licenseId=" + machine.licenseId;

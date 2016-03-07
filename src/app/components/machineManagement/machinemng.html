@@ -117,6 +117,15 @@
 
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              车架号:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{machine.identityId}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
               绑定终端:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
@@ -157,6 +166,7 @@
           </td>
           <td data-title="'车牌号'" sortable="'licenseId'">{{machine.licenseId}}</td>
           <td data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+          <td data-title="'车架号'" sortable="'identityId'">{{machine.identityId}}</td>
           <td data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
           <td data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs"

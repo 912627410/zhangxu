@@ -6,7 +6,7 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
@@ -58,7 +58,7 @@
           restCallURL += "&search_EQ_organization.id=" + deviceinfo.org.id;
         }
         if (null != deviceinfo.deviceNum) {
-          restCallURL += "&search_LIKE_deviceNum=" + deviceinfo.deviceNum;
+          restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
         }
         if (null != deviceinfo.phoneNumber) {
           restCallURL += "&search_LIKE_sim.phoneNumber=" + deviceinfo.phoneNumber;
@@ -261,5 +261,28 @@
 
     };
 
+
+    //激活设备
+    vm.activeDeviceinfo = function (deviceinfo, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/activeDeviceinfo.html',
+        controller: 'activeDeviceinfoController as activeDeviceinfoController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return deviceinfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        //  vm.selected = selectedItem;
+        //  vm.query();
+      }, function () {
+        //$log.info('Modal dismissed at: ' + new Date());
+      });
+    };
   }
 })();
