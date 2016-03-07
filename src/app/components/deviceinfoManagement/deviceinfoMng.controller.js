@@ -143,7 +143,7 @@
 
           modalInstance.result.then(function (selectedItem) {
             //  vm.selected = selectedItem;
-             vm.query();
+            vm.query();
           }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
           });

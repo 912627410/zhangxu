@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal,$filter,NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL,MACHINE_REMOVE_ORG_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_REMOVE_ORG_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.radioListType = "list";
@@ -28,10 +28,10 @@
       if (null != machine) {
 
         if (null != machine.deviceNum) {
-          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" +$filter('uppercase')(machine.deviceNum);
+          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
         }
         if (null != machine.licenseId) {
-          restCallURL += "&search_LIKE_licenseId=" + machine.licenseId;
+          restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
         }
 
       }
@@ -108,26 +108,35 @@
       });
     };
 
-    vm.updateMachine = function (machine, size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/machineManagement/updateMachine.html',
-        controller: 'updateMachineController as updateMachineController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          machine: function () {
-            return machine;
-          }
-        }
-      });
+    //更新车辆
+    vm.updateMachine = function (id, size) {
 
-      modalInstance.result.then(function (selectedItem) {
-//        vm.selected = selectedItem;
-        //刷新
-        vm.query();
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
+      var singlUrl = MACHINE_URL + "?id=" + id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+        vm.machine = data.content;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/machineManagement/updateMachine.html',
+          controller: 'updateMachineController as updateMachineController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            machine: function () {
+              return vm.machine;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          //  vm.selected = selectedItem;
+          vm.query();
+        }, function () {
+          //$log.info('Modal dismissed at: ' + new Date());
+        });
+
+      }, function (reason) {
+        Notification.error('获取车辆信息失败');
       });
     };
 
@@ -221,14 +230,14 @@
       var rolePermission = (role == 'ROLE_SYSADMIN' || role == 'ROLE_ADMIN' || role == 'ROLE_OPERATOR' || role == 'ROLE_PRODUCER');
 
       //设备是否已绑定
-      var devicePermission=machine.deviceinfo==null?false:true;
-     // alert(rolePermission&&devicePermission);
-        return rolePermission&&devicePermission;
+      var devicePermission = machine.deviceinfo == null ? false : true;
+      // alert(rolePermission&&devicePermission);
+      return rolePermission && devicePermission;
 
     };
 
     vm.removeDevice = function (machine) {
-      if(!confirm("确认要解绑吗?")){
+      if (!confirm("确认要解绑吗?")) {
         return false;
       }
 
