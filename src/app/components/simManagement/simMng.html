@@ -257,20 +257,21 @@
       </div>
     </div>
     <div ng-if="simMngCtrl.radioListType == 'list'" >
-      <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+      <div class="table-responsive">
+      <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="sim in $data">
 
-          <td data-title="'SIM卡号'" sortable="'phoneNumber'">{{sim.phoneNumber}}</td>
-          <td data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
-          <td data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
-          <td data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
-          <td data-title="'当前状态'" sortable="'statusDesc'">{{sim.statusDesc}}</td>
-          <td data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
-          <td data-title="'所属组织'" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
-          <td data-title="'备注'" sortable="'description'">{{sim.description}}</td>
-          <td data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
-          <td data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
-          <td data-title="'操作'">
+          <td class="text-nowrap" data-title="'SIM卡号'" sortable="'phoneNumber'">{{sim.phoneNumber}}</td>
+          <td class="text-nowrap" data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
+          <td class="text-nowrap" data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
+          <td class="text-nowrap" data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{sim.statusDesc}}</td>
+          <td class="text-nowrap" data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'所属组织'" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
+          <td class="text-nowrap" data-title="'备注'" sortable="'description'">{{sim.description}}</td>
+          <td class="text-nowrap" data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                     ng-click="simMngCtrl.updateSim(sim)">修改
@@ -278,7 +279,7 @@
           </td>
         </tr>
       </table>
-
+      </div>
     </div>
   </div>
   <div class="row">

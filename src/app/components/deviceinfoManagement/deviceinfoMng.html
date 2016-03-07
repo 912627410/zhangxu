@@ -73,12 +73,7 @@
   </div>
 
   <div class="row">
-    <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'list'"
-             uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="deviceinfoMngCtrl.radioListType" uib-btn-radio="'block'"
-             uncheckable>列块</label>
-    </div>
+
     <div class="btn-group col-md-1">
       <span class="label label-info pull-left">设备总数:{{deviceinfoMngCtrl.page.totalElements}}</span>
     </div>
@@ -99,114 +94,7 @@
   <div class="row">
 
   </div>
-  <div class="row " style="padding-top: 10px">
-    <div ng-if="deviceinfoMngCtrl.radioListType == 'block'" class="col-md-3"
-         ng-repeat="deviceinfo in deviceinfoMngCtrl.deviceinfoList">
-      <div class="box box-success">
-        <div class="box-header">
-          <h5 class="box-title" ng-if="deviceinfo.userDefinedName">{{deviceinfo.userDefinedName}}</h5>
-          <h5 class="box-title text-gray" ng-if="deviceinfo.userDefinedName==null">未定义</h5>
-          <div class="box-tools pull-right">
-            <div class="text-gray" ng-if="deviceinfo.status == 0"><i class="fa fa-exclamation-triangle"></i></div>
-            <div class="text-green" ng-if="deviceinfo.status == 1"><i class="fa fa-check-square"></i></div>
-            <div class="text-yellow" ng-if="deviceinfo.status == 2"><i class="fa fa-anchor"></i></div>
-            <div class="text-red" ng-if="deviceinfo.status == 9"><i class="fa fa-info"></i></div>
-          </div>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              设备编号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.deviceNum}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车牌号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.machine.licenseId}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              协议类型:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.protocalTypeDesc}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              所属组织:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.org.label}}
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              状态:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.statusDesc}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              SIM:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.sim.phoneNumber}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              SIM序列号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.sim.serialNumber}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              调拨时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              更新时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-          </div>
-
-        </div>
-        <div class="box-footer">
-          <code>
-            <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                      ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">修改
-              </button>
-              <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                      ng-click="deviceinfoMngCtrl.activeDeviceinfo(deviceinfo)">激活
-              </button>
-            </div>
-          </code>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="row " style="padding-top: 10px">
     <div class="col-md-12">
@@ -216,7 +104,7 @@
              ng-model="deviceinfoMngCtrl.checked">
     </script>
     <div class="table-responsive">
-    <table ng-table="deviceinfoMngCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+    <table ng-table="deviceinfoMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="deviceinfo in $data">
         <td class="text-nowrap"  data-header="'selectAllHeader'">
           <input type="checkbox"
@@ -227,7 +115,6 @@
         <td class="text-nowrap" data-title="'车牌号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}</td>
         <td class="text-nowrap" data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}</td>
         <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{deviceinfo.org.label}}</td>
-        <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{deviceinfo.statusDesc}}</td>
         <td class="text-nowrap" data-title="'SIM'" sortable="'sim.phoneNumber'">{{deviceinfo.sim.phoneNumber}}</td>
         <td class="text-nowrap" data-title="'SIM序列号'" sortable="'sim.serialNumber'">{{deviceinfo.sim.serialNumber}}</td>
         <td class="text-nowrap" data-title="'调拨时间'" sortable="'moveTime'">{{deviceinfo.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

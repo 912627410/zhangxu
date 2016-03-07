@@ -60,7 +60,7 @@
           restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(deviceinfo.deviceNum);
         }
         if (null != deviceinfo.machineLicenseId) {
-          restCallURL += "&search_LIKE_machine.licenseId=" + deviceinfo.machineLicenseId;
+          restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(deviceinfo.machineLicenseId);
         }
 
       }

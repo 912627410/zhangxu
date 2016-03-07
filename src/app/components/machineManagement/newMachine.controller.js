@@ -98,7 +98,7 @@
 
       var postInfo=machine;
       if (machine.deviceinfo){
-        postInfo.deviceinfo={id:machine.deviceinfo.id};
+        postInfo.deviceinfo={deviceNum:machine.deviceinfo.deviceNum};
       }
       else{
         postInfo.deviceinfo=null;
@@ -116,8 +116,8 @@
         }
       }, function (reason) {
        // alert(reason.data.message);
-        console.error(reason);
-        Notification.error(reason.data.message);
+          vm.errorMsg=reason.data.message;
+          Notification.error(reason.data.message);
       }
 
       );

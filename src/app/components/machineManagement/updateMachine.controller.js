@@ -81,31 +81,46 @@
 
     vm.ok = function (machine) {
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
-      if(null!=machine.deviceinfo) {
-
-
-        machine.deviceinfo.machine = {};
-
-        if(null!=machine.deviceinfo.sim){
-          machine.deviceinfo.sim.deviceinfo = {};
-        }
-
-      }
+      //if(null!=machine.deviceinfo) {
+      //
+      //
+      //  machine.deviceinfo.machine = {};
+      //
+      //  if(null!=machine.deviceinfo.sim){
+      //    machine.deviceinfo.sim.deviceinfo = {};
+      //  }
+      //
+      //}
 
 
       //如果设备没有输入,则给出提示信息,
-      if(vm.machine.deviceinfo==null || vm.machine.deviceinfo.deviceNum==""){
-        if(!confirm("设备号没有输入,请注意")){
-          return;
-        }
-      }
+      //if(vm.machine.deviceinfo==null || vm.machine.deviceinfo.deviceNum==""){
+      //  if(!confirm("设备号没有输入,请注意")){
+      //    return;
+      //  }
+      //}
 
-      var restPromise = serviceResource.restUpdateRequest(MACHINE_URL,machine);
+      var postInfo=machine;
+      if (machine.deviceinfo){
+        postInfo.deviceinfo={deviceNum:machine.deviceinfo.deviceNum};
+      }
+      else{
+        postInfo.deviceinfo=null;
+      }
+      postInfo.org={id:machine.org.id};
+
+      var restPromise = serviceResource.restUpdateRequest(MACHINE_URL,postInfo);
       restPromise.then(function (data){
-        Notification.success("修改车辆信息成功!");
-        $uibModalInstance.close();
+
+        if(data.code===0){
+          Notification.success("修改车辆信息成功!");
+          $uibModalInstance.close();
+        }else{
+          Notification.error(data.message);
+        }
       },function(reason){
-        Notification.error("修改车辆信息出错!");
+        vm.errorMsg=reason.data.message;
+        Notification.error(reason.data.message);
       });
     };
 
