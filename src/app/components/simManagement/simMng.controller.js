@@ -7,7 +7,7 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -138,27 +138,30 @@
       });
     };
 
-
-    vm.updateSim = function (sim,size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/simManagement/updateSim.html',
-        controller: 'updateSimController as updateSimController',
-        size: size,
-        backdrop:false,
-        scope:$scope,
-        resolve: {
-          sim: function () {
-            return sim;
+    //更新SIM卡
+    vm.updateSim = function (id,size) {
+      var singleUrl = SIM_URL + "?id=" + id;
+      var promis = serviceResource.restCallService(singleUrl, "GET");
+      promis.then(function (data) {
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/simManagement/updateSim.html',
+          controller: 'updateSimController as updateSimController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            sim: function () {
+              return data.content;
+            }
           }
-        }
-      });
+        });
+        modalInstance.result.then(function (selectedItem) {
+          vm.query();
+        }, function () {
+        });
 
-      modalInstance.result.then(function (selectedItem) {
-        vm.selected = selectedItem;
-        vm.query();
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
+      }, function (reason) {
+        Notification.error('获取SIM卡信息失败');
       });
     };
 

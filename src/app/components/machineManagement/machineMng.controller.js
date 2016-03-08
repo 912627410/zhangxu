@@ -109,11 +109,10 @@
 
     //更新车辆
     vm.updateMachine = function (id, size) {
-
       var singlUrl = MACHINE_URL + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
-        vm.machine = data.content;
+        var operMachine = data.content;
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
           templateUrl: 'app/components/machineManagement/updateMachine.html',
@@ -122,16 +121,13 @@
           backdrop: false,
           resolve: {
             machine: function () {
-              return vm.machine;
+              return operMachine;
             }
           }
         });
-
         modalInstance.result.then(function (selectedItem) {
-          //  vm.selected = selectedItem;
           vm.query();
         }, function () {
-          //$log.info('Modal dismissed at: ' + new Date());
         });
 
       }, function (reason) {
