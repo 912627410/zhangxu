@@ -110,8 +110,6 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="simMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
       <span class="label label-info pull-left">SIM卡总数:  {{simMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
@@ -129,134 +127,6 @@
     </div>
   </div>
   <div class="row " style="padding: 10px">
-    <div ng-if="simMngCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="sim in simMngCtrl.simList">
-      <div class="box box-success">
-        <div class="box-header">
-          <h5 class="box-title">{{sim.identityId}}</h5>
-        </div>
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              SIM卡号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.phoneNumber}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              序列号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.serialNumber}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              价格(元):
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.price}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              当前状态:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.statusDesc}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              激活时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.activeTime | date:'yyyy-MM-dd'}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              所属组织:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.deviceinfo.org.label}}
-            </div>
-          </div>
-          <!--
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              流量统计月份:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.gsmDataMonth}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              当月流量限额(MB):
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.gsmDataLimit}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              当月已用流量(MB):
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.gsmDataCurrentMonth}}
-            </div>
-          </div>
-          -->
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              总共已用流量(MB):
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.gsmDataTotal}}
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              备注:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.description}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              开通时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.serviceBeginDate | date:'yyyy-MM-dd'}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              到期时间:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{sim.serviceEndDate | date: 'yyyy-MM-dd'}}
-            </div>
-          </div>
-        </div>
-        <div class="box-footer">
-          <code>
-            <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-                      ng-click="simMngCtrl.updateSim(sim)">修改
-              </button>
-            </div>
-          </code>
-        </div>
-      </div>
-    </div>
-    <div ng-if="simMngCtrl.radioListType == 'list'" >
       <div class="table-responsive">
       <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="sim in $data">
@@ -281,7 +151,6 @@
       </table>
       </div>
     </div>
-  </div>
   <div class="row">
   </div>
   <div class="box-footer">

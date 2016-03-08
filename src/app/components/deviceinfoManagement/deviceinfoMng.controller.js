@@ -9,7 +9,6 @@
   function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.radioListType = "list";
     vm.deviceinfo = {};
 
     vm.org = {label: ""};    //调拨组织
