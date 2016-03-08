@@ -52,11 +52,16 @@
     vm.ok = function (sim) {
       var restPromise = serviceResource.restAddRequest(SIM_URL, sim);
       restPromise.then(function (data) {
-        Notification.success("新建SIM卡信息成功!");
-        $uibModalInstance.close();
-     //   alert($scope.radioListType);
+        if(data.code===0){
+          Notification.success("新建SIM卡信息成功!");
+          $uibModalInstance.close();
+        }else{
+          Notification.error(data.message);
+        }
+
       }, function (reason) {
-        Notification.error("新建SIM卡信息出错!");
+        vm.errorMsg=reason.data.message;
+        Notification.error(reason.data.message);
       });
     };
 

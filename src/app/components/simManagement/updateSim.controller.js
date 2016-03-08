@@ -62,14 +62,18 @@
     vm.ok = function (sim) {
       var restPromise = serviceResource.restUpdateRequest(SIM_URL,sim);
       restPromise.then(function (data){
-        Notification.success("修改SIM卡信息成功!");
-    //    $scope.query();
-   //     alert(vm.radioListType);
-     //   vm.query(0,10,null,null);
-        $uibModalInstance.close();
+
+        if(data.code===0){
+          Notification.success("修改SIM卡信息成功!");
+          $uibModalInstance.close();
+        }else{
+          Notification.error(data.message);
+        }
       },function(reason){
-        Notification.error("修改SIM卡信息出错!");
+        vm.errorMsg=reason.data.message;
+        Notification.error(reason.data.message);
       });
+
     };
 
     vm.cancel = function () {

@@ -74,6 +74,9 @@
                    ng-model="updateSimController.sim.description" name="description"/>
           </div>
         </div>
+      <i style="color: red" ng-if="null!=updateSimController.errorMsg">
+        {{updateSimController.errorMsg}}<br/>
+      </i>
       </div>
 
   </div>
