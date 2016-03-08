@@ -11,6 +11,20 @@
   /** @ngInject */
   function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
     var vm = this;
+
+   // vm.org = {label: ""};
+    vm.showOrgTree = false;
+    vm.openOrgTree = function () {
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+
+    $scope.$on('OrgSelectedEvent', function (event, data) {
+      vm.selectedOrg = data;
+      vm.queryOrg = vm.selectedOrg;
+      vm.showOrgTree = false;
+    })
+
+
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
@@ -54,16 +68,18 @@
       var sortUrl = sort || DEFAULT_DEVICE_SORT_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != deviceinfo) {
-
-        if (null != deviceinfo.deviceNum) {
-          restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(deviceinfo.deviceNum);
-        }
-        if (null != deviceinfo.machineLicenseId) {
-          restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(deviceinfo.machineLicenseId);
-        }
-
+      if (null != vm.queryOrg) {
+        restCallURL += "&search_EQ_organization.id=" +vm.queryOrg.id;
       }
+
+
+      if (null !=vm.queryDeviceNum) {
+          restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
+        }
+        if (null != vm.queryMachineLicenseId) {
+          restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
+        }
+
 
       // var deviceDataPromis = serviceResource.queryDeviceMonitorInfo(page, size, sort, filterTerm);
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
@@ -119,8 +135,9 @@
 
 
     vm.reset = function () {
-      vm.device.deviceNum = null;
-      vm.device.machineLicenseId = null;
+      vm.queryDeviceNum = null;
+      vm.queryMachineLicenseId = null;
+      vm.queryOrg = null;
     }
 
   }
