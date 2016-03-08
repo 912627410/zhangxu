@@ -92,7 +92,7 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.deviceinfo.org = null;
+      vm.org = null;
       vm.deviceinfo.deviceNum = null;
       vm.deviceinfo.phoneNumber = null;
     }
