@@ -12,7 +12,6 @@
   function machineMngController($rootScope, $scope, $uibModal, $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_REMOVE_ORG_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.radioListType = "list";
     vm.org = {label: ""};    //调拨组织
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;

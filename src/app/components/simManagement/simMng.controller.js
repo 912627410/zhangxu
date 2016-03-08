@@ -10,7 +10,6 @@
   function simMngController($rootScope,$scope,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.radioListType = "list";
 
     //初始化查询参数
     vm.sim={

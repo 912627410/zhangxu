@@ -74,11 +74,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="machineMngCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
-    </div>
-    <div class="btn-group col-md-1">
+    <div class="btn-group col-md-3">
       <span class="label label-info pull-left">车辆总数:{{machineMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
@@ -96,64 +92,6 @@
     </div>
   </div>
   <div class="row " style="padding: 10px">
-    <div ng-if="machineMngCtrl.radioListType == 'block'" class="col-md-3"
-         ng-repeat="machine in machineMngCtrl.machineList">
-      <div class="box box-success">
-        <div class="box-header">
-          <h5 class="box-title">{{machine.licenseId}}</h5>
-        </div>
-        <div class="box-body">
-          <div class="row">
-
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车牌号码:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.licenseId}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车架号:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.identityId}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              绑定终端:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.deviceinfo.deviceNum}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              所属组织:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{machine.org.label}}
-            </div>
-          </div>
-        </div>
-        <div class="box-footer">
-          <code>
-            <div class="pull-right">
-              <button type="button" class="btn btn-primary btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-                      ng-click="machineMngCtrl.updateMachine(machine)">修改
-              </button>
-            </div>
-          </code>
-        </div>
-      </div>
-    </div>
-    <div ng-if="machineMngCtrl.radioListType == 'list'">
       <script id="selectAllHeader" type="text/ng-template">
         <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
                ng-model="machineMngCtrl.checked">
@@ -183,7 +121,6 @@
       </table>
         </div>
     </div>
-  </div>
 
   <div class="box-footer">
     <uib-pagination total-items="machineMngCtrl.page.totalElements"
