@@ -34,16 +34,36 @@
   <div class="row">
     <hr>
     <div class="col-md-1">
+      <label class="control-label">所属组织:</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织"
+               ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="monitorCtrl.openOrgTree()"><i
+                      class="fa fa-sitemap"></i></button>
+                  </span>
+      <div ng-controller="orgController as orgCtrl">
+        <div style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; "
+          ng-show="monitorCtrl.showOrgTree">
+          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
+                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+        </div>
+      </div>
+      </p>
+    </div>
+    <div class="col-md-1">
           <label class="control-label">终端号:</label>
         </div>
     <div class="col-md-2">
-          <input type="text" name="deviceNum" class="form-control " ng-model="monitorCtrl.device.deviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+          <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
         </div>
     <div class="col-md-1">
       <label class="control-label">车牌号:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="machineLicenseId" class="form-control " ng-model="monitorCtrl.device.machineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">查询</button>
