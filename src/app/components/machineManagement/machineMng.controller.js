@@ -192,13 +192,15 @@
     vm.batchMoveOrg = function () {
 
       if (vm.selected.length == 0) {
-        alert("请选择要调拨的车辆");
+        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+
         return;
       }
 
 
       if (vm.org.label == "") {
-        alert("请选择要调拨的组织");
+        Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
+
         return;
       }
 
@@ -220,6 +222,7 @@
         })
 
         Notification.success("调拨车辆成功!");
+        vm.org=null;
       }, function (reason) {
         Notification.error("调拨车辆出错!");
       });

@@ -10,7 +10,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.deviceinfo = {};
-
+    vm.unMoveDevice=false; //未调拨设备复选框
     vm.org = {label: ""};    //调拨组织
 
 
@@ -43,6 +43,7 @@
 
 
     vm.query = function (page, size, sort, deviceinfo) {
+      //alert(vm.unMoveDevice);
       var restCallURL = DEVCE_PAGED_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
@@ -53,9 +54,7 @@
         // alert(deviceinfo.phoneNumber);
         //alert(deviceinfo.org.id);
         //alert(deviceinfo.deviceNum);
-        if (null != deviceinfo.org) {
-          restCallURL += "&search_EQ_organization.id=" + deviceinfo.org.id;
-        }
+
         if (null != deviceinfo.deviceNum) {
           restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
         }
@@ -64,6 +63,16 @@
         }
 
       }
+
+
+      if(vm.unMoveDevice){
+        console.log(vm.operatorInfo.userdto);
+        restCallURL += "&search_EQ_organization.id="+vm.operatorInfo.userdto.organizationDto.id;
+      }else if (null != vm.org&&null != vm.org.id) {
+        restCallURL += "&search_EQ_organization.id=" + vm.org.id;
+      }
+
+
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -95,6 +104,7 @@
       vm.org = null;
       vm.deviceinfo.deviceNum = null;
       vm.deviceinfo.phoneNumber = null;
+      vm.unMoveDevice=false;
     }
 
 
@@ -233,13 +243,14 @@
     //批量设置为已处理
     vm.batchMoveOrg = function () {
       if (vm.selected.length == 0) {
-        alert("请选择要调拨的设备");
+        Notification.warning({message: '请选择要调拨的设备', positionY: 'top', positionX: 'center'});
         return;
       }
 
 
-      if (vm.org.label == "") {
-        alert("请选择要调拨的组织");
+      if (vm.org== ""||vm.org.id=="") {
+        Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
+
         return;
       }
 

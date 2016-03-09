@@ -32,10 +32,17 @@
       <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber"
              placeholder="支持模糊查询"/>
     </div>
+
+
+
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
               ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询
       </button>
+      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
+      </button>
+
       <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
     </div>
   </div>
@@ -44,7 +51,7 @@
 
 
     <div class="col-md-1">
-      <label class="control-label">调拨组织:</label>
+      <label class="control-label">组织:</label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
@@ -65,16 +72,23 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
-      </button>
+
+
+      <input  type="checkbox" ng-model="deviceinfoMngCtrl.unMoveDevice"/>
+      &nbsp;
+      <label class="control-label" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">未调拨设备</label>
+    </div>
+
+
+    <div class="col-md-1" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
 
     </div>
+
   </div>
 
   <div class="row">
 
-    <div class="btn-group col-md-1">
+    <div class="btn-group col-md-2">
       <span class="label label-info pull-left">设备总数:{{deviceinfoMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
