@@ -64,14 +64,16 @@
 
       }
 
-
-      if(vm.unMoveDevice){
-        console.log(vm.operatorInfo.userdto);
-        restCallURL += "&search_EQ_organization.id="+vm.operatorInfo.userdto.organizationDto.id;
-      }else if (null != vm.org&&null != vm.org.id) {
+      if (null != vm.org&&null != vm.org.id) {
         restCallURL += "&search_EQ_organization.id=" + vm.org.id;
       }
 
+
+
+      //if(vm.unMoveDevice){
+      //  console.log(vm.operatorInfo.userdto);
+      //  restCallURL += "&search_EQ_organization.id="+vm.operatorInfo.userdto.organizationDto.id;
+      //}else
 
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -268,6 +270,7 @@
         vm.tableParams.data.forEach(function (deviceinfo) {
           //循环table,更新选中的设备
           if(vm.selected.indexOf(deviceinfo.id)!=-1){
+            deviceinfo.checked=false;
             deviceinfo.org.label=vm.org.label;
            // console.log(deviceinfo.org.label);
           }
