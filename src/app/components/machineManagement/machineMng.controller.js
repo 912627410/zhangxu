@@ -210,8 +210,16 @@
 
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
+        //更新页面显示
+        vm.tableParams.data.forEach(function (machine) {
+          //循环table,更新选中的设备
+          if(vm.selected.indexOf(machine.id)!=-1){
+            machine.org.label=vm.org.label;
+            // console.log(deviceinfo.org.label);
+          }
+        })
+
         Notification.success("调拨车辆成功!");
-        vm.query(null, null, null, null);
       }, function (reason) {
         Notification.error("调拨车辆出错!");
       });
