@@ -216,6 +216,7 @@
         vm.tableParams.data.forEach(function (machine) {
           //循环table,更新选中的设备
           if(vm.selected.indexOf(machine.id)!=-1){
+            machine.checked=false;
             machine.org.label=vm.org.label;
             // console.log(deviceinfo.org.label);
           }
