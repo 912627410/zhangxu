@@ -131,7 +131,7 @@
       <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="sim in $data">
 
-          <td class="text-nowrap" data-title="'SIM卡号'" sortable="'phoneNumber'">{{sim.phoneNumber}}</td>
+          <td class="text-nowrap" data-title="'SIM卡号'" sortable="'phoneNumber'"><a href ng-click="simMngCtrl.updateSim(sim)">{{sim.phoneNumber}}</a></td>
           <td class="text-nowrap" data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
           <td class="text-nowrap" data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
           <td class="text-nowrap" data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
