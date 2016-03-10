@@ -62,6 +62,9 @@
     .constant('DEIVCIE_FETCH_UNUSED_URL', SERVER_BASE_URL + 'device/fetchUnused')   //动态查询未使用的
 
     .constant('DEIVCIE_UNLOCK_FACTOR_URL', SERVER_BASE_URL + 'device/deviceunlock')   //查询解锁url
+
+    .constant('SMS_URL', SERVER_BASE_URL + 'sms/sendsms')   //发送短消息
+
   ;
 
 
