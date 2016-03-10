@@ -119,8 +119,10 @@
                      ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)"
                      ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)"
                      ng-model="deviceinfo.checked"></td>
-            <td class=" text-nowrap" data-title="'设备号'" sortable="'deviceNum'"><a href
-                                                                                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
+            <td class=" text-nowrap" data-title="'设备号'" sortable="'deviceNum'">
+              <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" href
+                 ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
+              <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN'">{{deviceinfo.deviceNum}}</span>
             </td>
             <td class="text-nowrap" data-title="'车牌号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
             </td>
