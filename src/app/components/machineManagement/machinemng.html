@@ -38,6 +38,10 @@
               ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
               ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询
       </button>
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.batchMoveOrg()"
+              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
+        调拨
+      </button>
       <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
     </div>
   </div>
@@ -65,12 +69,7 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.batchMoveOrg()"
-              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
-        调拨
-      </button>
-
-
+      (组织可以做为查询条件)
     </div>
   </div>
   <div class="row">

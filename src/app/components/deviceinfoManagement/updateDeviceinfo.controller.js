@@ -127,7 +127,9 @@
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("修改设备信息成功!");
+
           $uibModalInstance.close();
+
         }else{
           Notification.error(data.message);
         }
