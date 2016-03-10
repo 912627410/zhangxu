@@ -39,9 +39,6 @@
       <button class="btn btn-primary" type="button"
               ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询
       </button>
-      <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
-      </button>
 
       <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
     </div>
@@ -71,8 +68,13 @@
       </div>
       </p>
     </div>
+    <div class="col-md-3  text-blue text-sm">
+      组织可以做为查询条件
+    </div>
     <div class="col-md-2">
-      (组织可以做为查询条件)
+      <button class="btn btn-warning" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
+      </button>
     </div>
 
 
