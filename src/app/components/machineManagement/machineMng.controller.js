@@ -13,6 +13,10 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的设备id
+    vm.showOrgTree = false; //是否显示组织
+
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -26,13 +30,17 @@
 
       if (null != machine) {
 
-        if (null != machine.deviceNum) {
+        if (null != machine.deviceNum&&machine.deviceNum!="") {
           restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
         }
-        if (null != machine.licenseId) {
+        if (null != machine.licenseId&&machine.licenseId!="") {
           restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
         }
 
+      }
+
+      if (null != vm.org&&null != vm.org.id) {
+        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -60,13 +68,13 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.machine.licenseId = null;
-      vm.machine.deviceNum = null;
+      vm.machine = null;
+      vm.org=null;
+      vm.selected=[]; //把选中的设备设置为空
     }
 
 
     //查询条件相关
-    vm.showOrgTree = false;
 
     vm.openOrgTree = function () {
       vm.showOrgTree = !vm.showOrgTree;
@@ -136,8 +144,7 @@
     };
 
 
-    vm.selectAll = false;//是否全选标志
-    vm.selected = []; //选中的设备id
+
 
     var updateSelected = function (action, id) {
       if (action == 'add' && vm.selected.indexOf(id) == -1) {
@@ -198,7 +205,7 @@
       }
 
 
-      if (vm.org.label == "") {
+      if (null==vm.org||vm.org.label == "") {
         Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
 
         return;
@@ -217,13 +224,14 @@
           //循环table,更新选中的设备
           if(vm.selected.indexOf(machine.id)!=-1){
             machine.checked=false;
-            machine.org.label=vm.org.label;
+machine.org.label=vm.org.label;
             // console.log(deviceinfo.org.label);
           }
         })
-
-        Notification.success("调拨车辆成功!");
         vm.org=null;
+        vm.selected=[]; //把选中的设备设置为空
+        Notification.success("调拨车辆成功!");
+
       }, function (reason) {
         Notification.error("调拨车辆出错!");
       });

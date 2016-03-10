@@ -68,15 +68,15 @@
       var sortUrl = sort || DEFAULT_DEVICE_SORT_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != vm.queryOrg) {
+      if (null != vm.queryOrg&&null!=vm.queryOrg.id) {
         restCallURL += "&search_EQ_organization.id=" +vm.queryOrg.id;
       }
 
 
-      if (null !=vm.queryDeviceNum) {
+      if (null !=vm.queryDeviceNum&&vm.queryDeviceNum!="") {
           restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
         }
-        if (null != vm.queryMachineLicenseId) {
+        if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
           restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
         }
 

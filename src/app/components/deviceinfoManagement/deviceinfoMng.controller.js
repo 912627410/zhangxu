@@ -10,15 +10,15 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.deviceinfo = {};
-    vm.unMoveDevice=false; //未调拨设备复选框
     vm.org = {label: ""};    //调拨组织
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的设备id
+    vm.showOrgTree = false; //是否显示组织
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
+    ngTableDefaults.settings.counts = [];//默认表格设置
 
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
-
-    //查询条件相关
-    vm.showOrgTree = false;
     vm.openOrgTree = function () {
       vm.showOrgTree = !vm.showOrgTree;
     }
@@ -30,20 +30,8 @@
     })
 
 
-    vm.showMoveOrgTree = false;
-    vm.openMoveOrgTree = function () {
-      vm.showMoveOrgTree = !vm.showMoveOrgTree;
-    }
-
-    $scope.$on('showMoveOrgEvent', function (event, data) {
-      vm.selectedMoveOrg = data;
-      vm.deviceinfo.moveOrg = vm.selectedMoveOrg;
-      vm.showMoveOrgTree = false;
-    })
-
 
     vm.query = function (page, size, sort, deviceinfo) {
-      //alert(vm.unMoveDevice);
       var restCallURL = DEVCE_PAGED_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
@@ -51,44 +39,24 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != deviceinfo) {
-        // alert(deviceinfo.phoneNumber);
-        //alert(deviceinfo.org.id);
-        //alert(deviceinfo.deviceNum);
-
-        if (null != deviceinfo.deviceNum) {
+        if (null != deviceinfo.deviceNum&&deviceinfo.deviceNum!="") {
           restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
         }
-        if (null != deviceinfo.phoneNumber) {
+        if (null != deviceinfo.phoneNumber&&deviceinfo.phoneNumber!="") {
           restCallURL += "&search_LIKE_sim.phoneNumber=" + deviceinfo.phoneNumber;
         }
-
       }
 
       if (null != vm.org&&null != vm.org.id) {
         restCallURL += "&search_EQ_organization.id=" + vm.org.id;
       }
 
-
-
-      //if(vm.unMoveDevice){
-      //  console.log(vm.operatorInfo.userdto);
-      //  restCallURL += "&search_EQ_organization.id="+vm.operatorInfo.userdto.organizationDto.id;
-      //}else
-
-
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-
-        //  vm.deviceinfoList = data.content;
-
         vm.tableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
         }, {
           dataset: data.content
         });
-
-        //  alert(vm.deviceinfoList[0].id);
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
@@ -97,6 +65,7 @@
       });
     };
 
+    //首次触发查询
     if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN") {
       vm.query(null, null, null, null);
     }
@@ -106,7 +75,8 @@
       vm.org = null;
       vm.deviceinfo.deviceNum = null;
       vm.deviceinfo.phoneNumber = null;
-      vm.unMoveDevice=false;
+      vm.selectAll = false;//是否全选标志
+      vm.selected = []; //选中的设备id
     }
 
 
@@ -153,10 +123,8 @@
           });
 
           modalInstance.result.then(function (selectedItem) {
-            //  vm.selected = selectedItem;
             vm.query();
           }, function () {
-            //$log.info('Modal dismissed at: ' + new Date());
           });
 
         }, function (reason) {
@@ -190,8 +158,7 @@
     };
 
 
-    vm.selectAll = false;//是否全选标志
-    vm.selected = []; //选中的设备id
+
 
     var updateSelected = function (action, id) {
       if (action == 'add' && vm.selected.indexOf(id) == -1) {
@@ -205,7 +172,6 @@
     }
 
     vm.updateSelection = function ($event, id, status) {
-
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       updateSelected(action, id);
@@ -223,7 +189,6 @@
     }
 
     vm.isSelected = function (id) {
-      //   alert(vm.selected);
       return vm.selected.indexOf(id) >= 0;
     }
     vm.checkAll = function () {
@@ -250,19 +215,14 @@
       }
 
 
-      if (vm.org== ""||vm.org.id=="") {
+      if (vm.org== null||vm.org.id=="") {
         Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
 
         return;
       }
 
-      //alert(vm.org.id+" "+vm.org.label);
 
       var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
-      // alert(moveOrg.ids+"  "+moveOrg.orgId);
-
-
-
       var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
 
@@ -272,9 +232,11 @@
           if(vm.selected.indexOf(deviceinfo.id)!=-1){
             deviceinfo.checked=false;
             deviceinfo.org.label=vm.org.label;
-           // console.log(deviceinfo.org.label);
           }
         })
+
+        vm.org=null;
+        vm.selected=[]; //把选中的设备设置为空
         Notification.success("调拨设备成功!");
       //  vm.query(null, null, null, null);
       }, function (reason) {
