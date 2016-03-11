@@ -15,6 +15,7 @@
       email: /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
       number: /^\d+$/,
       numberAndChar: /^[a-zA-Z0-9]+$/,
+      numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
 
       minlength: function(value, scope, element, attrs, param) {
@@ -35,12 +36,12 @@
         success: ''
       },
       url: {
-        error: 'This should be Url',
-        success: 'It\'s Url'
+        error: '请输入合法的url',
+        success: ''
       },
       email: {
-        error: 'This should be Email',
-        success: 'It\'s Email'
+        error: '请输入合法的邮件地址',
+        success: ''
       },
       number: {
         error: '输入内容只能为数字',
@@ -50,13 +51,17 @@
         error: '输入内容只能为数字和字母',
         success: ''
       },
+      numberAndCharAndDot: {
+        error: '输入内容只能为数字,字母和点',
+        success: ''
+      },
       minlength: {
-        error: 'This should be longer',
-        success: 'Long enough!'
+        error: '位数不够',
+        success: ''
       },
       maxlength: {
-        error: 'This should be shorter',
-        success: 'Short enough!'
+        error: '超出最大允许长度',
+        success: ''
       }
     };
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);

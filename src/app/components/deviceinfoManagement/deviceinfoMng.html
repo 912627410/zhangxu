@@ -17,18 +17,18 @@
 
 
   <div class="row">
-    <div class="col-md-1">
-      <label class="control-label">设备编号:</label>
-    </div>
     <div class="col-md-2">
+      <label class="control-label">设备编号</label>
+    </div>
+    <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum"
              placeholder="支持模糊查询"/>
     </div>
 
-    <div class="col-md-1">
-      <label class="control-label">SIM:</label>
-    </div>
     <div class="col-md-2">
+      <label class="control-label">SIM</label>
+    </div>
+    <div class="col-md-3">
       <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber"
              placeholder="支持模糊查询"/>
     </div>
@@ -47,10 +47,11 @@
   <div class="row">
 
 
-    <div class="col-md-1">
-      <label class="control-label">组织:</label>
-    </div>
     <div class="col-md-2">
+      <label class="control-label">组织</label>
+      <label class="text-blue text-sm">可做为查询条件</label>
+    </div>
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
                ng-model="deviceinfoMngCtrl.org.label" name="org" readonly required/>
@@ -67,9 +68,6 @@
         </div>
       </div>
       </p>
-    </div>
-    <div class="col-md-3  text-blue text-sm">
-      组织可以做为查询条件
     </div>
     <div class="col-md-2">
       <button class="btn btn-warning" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
@@ -88,12 +86,12 @@
     </div>
     <div class="col-md-9">
 
-      <a class="btn btn-primary pull-right"
+      <a class="btn btn-default pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-primary pull-right"
+      <a class="btn btn-default pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入

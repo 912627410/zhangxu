@@ -98,6 +98,10 @@
 
       var postInfo=machine;
       if (machine.deviceinfo){
+        //条码输入
+        if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner !='') {
+          machine.deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
+        }
         postInfo.deviceinfo={deviceNum:machine.deviceinfo.deviceNum};
       }
       else{
@@ -126,6 +130,29 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    //默认不是通过扫码输入
+    vm.deviceNumFromScanner = false;
+    vm.deviceNumContentFromScanner = '';
+    //用于判断设备号输入的数据是否是通过扫码输入
+    //扫码格式是 ".LG4130002690.43985.C202B5"
+    vm.deviceNumInputChanged = function(deviceNum){
+      if (deviceNum.length == 26){
+        if (deviceNum.substring(0,1) == '.' && deviceNum.substring(13,14) == '.' && deviceNum.substring(19,20) == '.'){
+          vm.deviceNumFromScanner = true;
+          vm.deviceNumContentFromScanner = deviceNum.substring(20);
+        }
+        else{
+          vm.deviceNumFromScanner = false;
+          vm.deviceNumContentFromScanner = '';
+        }
+      }
+      else{
+        vm.deviceNumFromScanner = false;
+        vm.deviceNumContentFromScanner = '';
+      }
+    }
+
 
   }
 })();
