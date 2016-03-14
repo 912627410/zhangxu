@@ -124,7 +124,7 @@
 
         if(data.code===0){
           Notification.success("新建设备信息成功!");
-          $uibModalInstance.close();
+          $uibModalInstance.close(data.content);
         }else{
       //    vm.machine = machine;
           Notification.error(data.message);

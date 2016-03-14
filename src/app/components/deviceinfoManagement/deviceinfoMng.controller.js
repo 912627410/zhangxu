@@ -9,7 +9,7 @@
   function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.deviceinfo = {};
+    vm.queryDeviceinfo = {};
     vm.org = {label: ""};    //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -73,8 +73,8 @@
     //重置查询框
     vm.reset = function () {
       vm.org = null;
-      vm.deviceinfo.deviceNum = null;
-      vm.deviceinfo.phoneNumber = null;
+      vm.queryDeviceinfo.deviceNum = null;
+      vm.queryDeviceinfo.phoneNumber = null;
       vm.selectAll = false;//是否全选标志
       vm.selected = []; //选中的设备id
     }
@@ -95,9 +95,9 @@
         }
       });
 
-      modalInstance.result.then(function () {
-        //刷新
-         vm.query();
+      modalInstance.result.then(function (result) {
+        vm.tableParams.data.splice(0, 0, result);
+
       }, function () {
         //取消
       });
@@ -108,7 +108,6 @@
       var singlUrl = DEVCEINFO_URL + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
-          vm.deviceinfo = data.content;
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
             templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
@@ -117,15 +116,24 @@
             backdrop: false,
             resolve: {
               deviceinfo: function () {
-                return vm.deviceinfo;
+                return data.content;
               }
             }
           });
 
-          modalInstance.result.then(function (selectedItem) {
-            vm.query();
-          }, function () {
-          });
+        modalInstance.result.then(function(result) {
+          console.log(result);
+          var tabList=vm.tableParams.data;
+          //恢复列表中的值
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
 
         }, function (reason) {
           Notification.error('获取设备信息失败');

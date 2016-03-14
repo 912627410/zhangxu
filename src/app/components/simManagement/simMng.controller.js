@@ -7,7 +7,7 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$timeout,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -139,30 +139,88 @@
     };
 
     //更新SIM卡
-    vm.updateSim = function (id,size) {
-      var singleUrl = SIM_URL + "?id=" + id;
-      var promis = serviceResource.restCallService(singleUrl, "GET");
-      promis.then(function (data) {
+    //vm.updateSim = function (id,size) {
+    //  var singleUrl = SIM_URL + "?id=" + id;
+    //  var promis = serviceResource.restCallService(singleUrl, "GET");
+    //  promis.then(function (data) {
+    //    var modalInstance = $uibModal.open({
+    //      animation: vm.animationsEnabled,
+    //      templateUrl: 'app/components/simManagement/updateSim.html',
+    //      controller: 'updateSimController as updateSimController',
+    //      size: size,
+    //      backdrop: false,
+    //      resolve: {
+    //        sim: function () {
+    //          return data.content;
+    //        }
+    //      }
+    //    });
+    //    modalInstance.result.then(function (selectedItem) {
+    //      vm.query();
+    //    }, function () {
+    //    });
+    //
+    //  }, function (reason) {
+    //    Notification.error('获取SIM卡信息失败');
+    //  });
+    //};
+
+    vm.updateSim = function (abc,size) {
+      var sourceSim = angular.copy(abc); //深度copy
+
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
           templateUrl: 'app/components/simManagement/updateSim.html',
           controller: 'updateSimController as updateSimController',
           size: size,
           backdrop: false,
+          scope:$scope,
           resolve: {
             sim: function () {
-              return data.content;
+              return abc;
             }
           }
         });
-        modalInstance.result.then(function (selectedItem) {
-          vm.query();
-        }, function () {
-        });
+        //modalInstance.result.then(function (selectedItem) {
+        ////  vm.query();
+        //}, function () {
+        //});
 
-      }, function (reason) {
-        Notification.error('获取SIM卡信息失败');
+      modalInstance.result.then(function(result) {
+        console.log('client: resolved: ' + result);
+        abc=angular.copy(sourceSim);
+
+    //    $scope.$apply(abc);
+
+        abc.phoneNumber=2;
+        console.log(abc);
+
+        //vm.tableParams.data.push(abc);//刷新的内容
+
+
+
+
+
+        //$timeout(function() {
+        //  abc=angular.copy(sourceSim);
+        //});
+
+
+      }, function(reason) {
+        //console.log('client: rejected: ' + reason);
+        //console.log("aaa  ==");
+        //console.log(sourceSim);
+        // abc=sourceSim;
+        //console.log(abc);
+        //恢复列表中的值
+        for(var i=0;i<vm.tableParams.data.length;i++){
+          if(vm.tableParams.data[i].id==sourceSim.id){
+            vm.tableParams.data[i]=sourceSim;
+          }
+
+        }
       });
+
     };
 
     //批量导入

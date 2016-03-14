@@ -9,9 +9,10 @@
     .controller('updateSimController', updateSimController);
 
   /** @ngInject */
-  function updateSimController($scope,$uibModalInstance,SIM_STATUS_URL,SIM_URL,simService,serviceResource, Notification,sim) {
+  function updateSimController($scope,$uibModalInstance,$timeout,SIM_STATUS_URL,SIM_URL,simService,serviceResource, Notification,sim) {
     var vm = this;
     vm.sim = sim;
+    var sourceSim = angular.copy(sim); //深度copy
     vm.operatorInfo =$scope.userInfo;
 
     //查询sim卡的状态集合
@@ -77,7 +78,23 @@
     };
 
     vm.cancel = function () {
+   //   console.log(sourceSim);
+   // //  vm.sim=sourceSim;
+   ////
+   //
+   //   $timeout(function() {
+   //     vm.sim=sourceSim;
+   //     sim=sourceSim;
+   //     console.log(sim);
+   //     $scope.$apply();
+   //     $uibModalInstance.close(sourceSim);
+   //   });
+
+
+      //
       $uibModalInstance.dismiss('cancel');
+
+  //    $uibModalInstance.close();
     };
   }
 })();

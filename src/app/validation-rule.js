@@ -35,6 +35,7 @@
         error: '该字段不能为空',
         success: ''
       },
+
       url: {
         error: '请输入合法的url',
         success: ''

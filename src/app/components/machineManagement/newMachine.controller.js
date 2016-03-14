@@ -113,7 +113,7 @@
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("新建车辆信息成功!");
-          $uibModalInstance.close();
+          $uibModalInstance.close(data.content);
         }else{
           vm.machine = machine;
           Notification.error(data.message);
