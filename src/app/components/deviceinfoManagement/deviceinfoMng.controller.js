@@ -6,7 +6,7 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
