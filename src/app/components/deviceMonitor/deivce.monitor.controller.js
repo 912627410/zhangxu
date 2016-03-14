@@ -94,6 +94,7 @@
           vm.basePath = DEVCE_MONITOR_PAGED_QUERY;
           //地图数据
           vm.refreshMainMap(vm.deviceInfoList);
+          $scope.apply();
         }, function (reason) {
           Notification.error('获取设备信息失败');
         }
