@@ -26,11 +26,6 @@
             <input type="text" readonly id="enginePassCode" class="form-control" placeholder="发动机通讯密码"
                    ng-model="activeDeviceinfoController.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
           </div>
-          <label for="deviceNum" class="col-md-2 control-label text-nowrap">车架号</label>
-          <div class="col-md-4">
-            <input type="text" readonly id="identityId" class="form-control" placeholder="请先在车辆信息中设置车架号,否则无法锁车和解锁"
-                   ng-model="activeDeviceinfoController.deviceUnLockFactor.identityId" name="identityId"/>
-          </div>
         </div>
       </div>
 
@@ -51,25 +46,13 @@
 
       <div class="row">
         <div class="form-group">
-          <label for="deviceNum" class="col-md-2 control-label text-nowrap">激活次数</label>
-          <div class="col-md-4">
-            <input type="text" readonly id="activeCount" class="form-control" placeholder="激活次数"
-                   ng-model="activeDeviceinfoController.deviceUnLockFactor.activeCount" name="activeCount"/>
-          </div>
-          <label for="deviceNum" class="col-md-2 control-label text-nowrap">上次激活时间</label>
-          <div class="col-md-4">
-            <input type="text" readonly id="lastActiveTime" class="form-control" placeholder="上次激活时间"
-                   ng-model="activeDeviceinfoController.deviceUnLockFactor.lastActiveTime" name="lastActiveTime"/>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group">
           <label for="deviceNum" class="col-md-2 control-label text-nowrap">启动锁车短信内容</label>
-          <div class="col-md-10">
+          <div class="col-md-8">
             <input type="text" readonly id="activeMsg" class="form-control" placeholder="启动锁车"
                    ng-model="activeDeviceinfoController.activeMsg" name="activeMsg"/>
+          </div>
+          <div class="col-md-2" ng-if="activeDeviceinfoController.hasValidMsg == true">
+            <button class="btn btn-default" type="button" ng-click="activeDeviceinfoController.sendSMS(1,activeDeviceinfoController.deviceUnLockFactor.phoneNumber,activeDeviceinfoController.activeMsg)">发送短信</button>
           </div>
         </div>
       </div>
@@ -77,9 +60,12 @@
       <div class="row">
         <div class="form-group">
           <label for="deviceNum" class="col-md-2 control-label text-nowrap">取消锁车短信内容</label>
-          <div class="col-md-10">
+          <div class="col-md-8">
             <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="取消锁车"
                    ng-model="activeDeviceinfoController.unActiveMsg" name="unActiveMsg"/>
+          </div>
+          <div class="col-md-2" ng-if="activeDeviceinfoController.hasValidMsg == true">
+            <button class="btn btn-default" type="button" ng-click="activeDeviceinfoController.sendSMS(2,activeDeviceinfoController.deviceUnLockFactor.phoneNumber,activeDeviceinfoController.unActiveMsg)">发送短信</button>
           </div>
         </div>
       </div>

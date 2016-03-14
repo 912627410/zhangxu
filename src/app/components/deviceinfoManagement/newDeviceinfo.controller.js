@@ -44,15 +44,27 @@
       });
     };
 
-
-
-    //查询sim卡的状态集合
-    //var simData = serviceResource.restCallService(SIM_UNUSED_URL, "QUERY");
-    //simData.then(function (data) {
-    //  vm.simList = data;
-    //}, function (reason) {
-    //  Notification.error('获取Sim状态集合失败');
-    //})
+    //默认不是通过扫码输入
+    vm.deviceNumFromScanner = false;
+    vm.deviceNumContentFromScanner = '';
+    //用于判断设备号输入的数据是否是通过扫码输入
+    //扫码格式是 ".LG4130002690.43985.C202B5"
+    vm.deviceNumInputChanged = function(deviceNum){
+      if (deviceNum.length == 26){
+        if (deviceNum.substring(0,1) == '.' && deviceNum.substring(13,14) == '.' && deviceNum.substring(19,20) == '.'){
+          vm.deviceNumFromScanner = true;
+          vm.deviceNumContentFromScanner = deviceNum.substring(20);
+        }
+        else{
+          vm.deviceNumFromScanner = false;
+          vm.deviceNumContentFromScanner = '';
+        }
+      }
+      else{
+        vm.deviceNumFromScanner = false;
+        vm.deviceNumContentFromScanner = '';
+      }
+    }
 
 
     //得到设备类型集合
@@ -89,15 +101,20 @@
 
     vm.deviceinfo.produceDate=new Date();
 
-    vm.ok = function (deiceinfo) {
+    vm.ok = function (deviceinfo) {
       vm.errorMsg=null;
+
+      //条码输入
+      if (deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner !='') {
+        deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
+      }
 
       //重新构造需要传输的数据
       var operDeviceinfo={
-        "deviceNum":deiceinfo.deviceNum,
-        "protocalType":deiceinfo.protocalType,
-        "produceDate":deiceinfo.produceDate,
-        "simPhoneNumber":deiceinfo.sim.phoneNumber
+        "deviceNum":deviceinfo.deviceNum,
+        "protocalType":deviceinfo.protocalType,
+        "produceDate":deviceinfo.produceDate,
+        "simPhoneNumber":deviceinfo.sim.phoneNumber
       };
 
    //   console.log(operDeviceinfo);
@@ -124,9 +141,6 @@
       $uibModalInstance.dismiss('cancel');
     };
 
-
-
-    //
 
      vm.loadingItem = {type: 'loading'},
        vm.hasNextChunk = true,

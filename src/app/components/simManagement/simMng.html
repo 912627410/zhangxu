@@ -17,18 +17,18 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">SIM卡号:</label>
+      <label class="control-label">SIM卡号</label>
 
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
     </div>
 
 
     <div class="col-md-1">
-      <label class="control-label">所属组织:</label>
+      <label class="control-label">所属组织</label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
                ng-model="simMngCtrl.sim.deviceinfo.org.label" name="org" readonly required/>
@@ -47,9 +47,9 @@
       </p>
     </div>
     <div class="col-md-1">
-      <label class="control-label">状态:</label>
+      <label class="control-label">状态</label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <ui-select type="text" name="status" ng-required="true"  ng-model="simMngCtrl.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
         <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
         <ui-select-choices  repeat="simStatus.value as simStatus in simMngCtrl.sim.simStatusList | propsFilter: {desc: $select.search}" >
@@ -66,9 +66,9 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">激活开始时间:</label>
+      <label class="control-label">激活开始时间</label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text" name="activeTimeStart" class="form-control" uib-datepicker-popup="{{format}}"
                ng-model="simMngCtrl.sim.activeTimeStart"
@@ -83,9 +83,9 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">激活结束时间:</label>
+      <label class="control-label">激活结束时间</label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
 
         <p class="input-group">
           <input type="text" name="activeTimeEnd" class="form-control" uib-datepicker-popup="{{format}}"
@@ -99,7 +99,7 @@
               </span>
         </p>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-2"></div>
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"  ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
@@ -114,12 +114,12 @@
     </div>
     <div class="col-md-10">
 
-      <a class="btn btn-primary pull-right"
+      <a class="btn btn-default pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="simMngCtrl.newSim()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-primary pull-right"
+      <a class="btn btn-default pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入

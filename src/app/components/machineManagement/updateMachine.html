@@ -20,17 +20,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">车架号</label>
+        <label for="deviceNum" class="col-sm-2 control-label">绑定终端</label>
         <div class="col-sm-10">
-          <input type="text" id="identityId" class="form-control" placeholder="车架号"
-                 ng-model="updateMachineController.machine.identityId" name="identityId" typeahead-show-hint="false"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
-        <div class="col-sm-10">
-          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="终端号"
-                 ng-model="updateMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"/>
+          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
+                 ng-model="updateMachineController.machine.deviceinfo.deviceNum" ng-minlength='6' ng-maxlength='26'
+                 ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)"/>
+          <label class="text-blue" ng-if="updateMachineController.deviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.deviceNumContentFromScanner}}</label>
+          <span class="error text-danger" ng-show="updateMachineForm.deviceNum.$error.maxlength">最长26位</span>
+          <span class="error text-danger" ng-show="updateMachineForm.deviceNum.$error.minlength">最短6位</span>
         </div>
       </div>
 
