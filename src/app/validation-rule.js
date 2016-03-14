@@ -34,6 +34,7 @@
         error: '该字段不能为空',
         success: ''
       },
+
       url: {
         error: 'This should be Url',
         success: 'It\'s Url'

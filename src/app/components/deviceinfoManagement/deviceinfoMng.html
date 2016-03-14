@@ -21,7 +21,7 @@
       <label class="control-label">设备编号:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.deviceNum"
+      <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.queryDeviceinfo.deviceNum"
              placeholder="支持模糊查询"/>
     </div>
 
@@ -29,7 +29,7 @@
       <label class="control-label">SIM:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.deviceinfo.phoneNumber"
+      <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.queryDeviceinfo.phoneNumber"
              placeholder="支持模糊查询"/>
     </div>
 
@@ -37,7 +37,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.deviceinfo)">查询
+              ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.queryDeviceinfo)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
               ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
@@ -153,7 +153,7 @@
   </div>
   <div class="box-footer">
     <uib-pagination total-items="deviceinfoMngCtrl.page.totalElements"
-                    ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,null,null,deviceinfoMngCtrl.phoneNumber)"
+                    ng-change="deviceinfoMngCtrl.query(deviceinfoMngCtrl.pageNumber-1,null,null,deviceinfoMngCtrl.queryDeviceinfo)"
                     max-size="5" ng-model="deviceinfoMngCtrl.pageNumber" items-per-page="deviceinfoMngCtrl.page.size"
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>

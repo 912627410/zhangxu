@@ -102,14 +102,14 @@
             <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'车牌号'" sortable="'licenseId'"><a href ng-click="machineMngCtrl.updateMachine(machine.id)">{{machine.licenseId}}</a></td>
+          <td class="text-nowrap" data-title="'车牌号'" sortable="'licenseId'"><a href ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a></td>
           <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'车架号'" sortable="'identityId'">{{machine.identityId}}</td>
           <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
           <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs"
                     ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-                    ng-click="machineMngCtrl.updateMachine(machine.id)">修改
+                    ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
             <button type="button" class="btn btn-danger btn-xs"
                     ng-if="machineMngCtrl.hasRemoveDevice(machine)"

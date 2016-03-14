@@ -114,7 +114,7 @@
 
         if(data.code===0){
           Notification.success("修改车辆信息成功!");
-          $uibModalInstance.close();
+          $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
         }

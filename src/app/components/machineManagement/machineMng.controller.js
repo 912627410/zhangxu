@@ -107,17 +107,22 @@
         }
       });
 
-      modalInstance.result.then(function () {
+      modalInstance.result.then(function (result) {
         //刷新
-        vm.query();
+        //vm.query();
+        console.log(result);
+        vm.tableParams.data.splice(0, 0, result);
+
       }, function () {
         //取消
       });
     };
 
     //更新车辆
-    vm.updateMachine = function (id, size) {
-      var singlUrl = MACHINE_URL + "?id=" + id;
+    vm.updateMachine = function (machine, size) {
+      var sourceMachine = angular.copy(machine); //深度copy
+
+      var singlUrl = MACHINE_URL + "?id=" + machine.id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
         var operMachine = data.content;
@@ -133,10 +138,21 @@
             }
           }
         });
-        modalInstance.result.then(function (selectedItem) {
-          vm.query();
-        }, function () {
+
+        modalInstance.result.then(function(result) {
+          console.log(result);
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
         });
+
 
       }, function (reason) {
         Notification.error('获取车辆信息失败');
