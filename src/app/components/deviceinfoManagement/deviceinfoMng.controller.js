@@ -6,7 +6,7 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -255,27 +255,36 @@
     };
 
 
-    //激活设备
-    vm.activeDeviceinfo = function (deviceinfo, size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/deviceinfoManagement/activeDeviceinfo.html',
-        controller: 'activeDeviceinfoController as activeDeviceinfoController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          deviceinfo: function () {
-            return deviceinfo;
-          }
-        }
-      });
+    //读取最新设备信息
+    vm.currentDeviceinfo = function (deviceinfo, size) {
+      var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + deviceinfo.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+          vm.deviceinfoMonitor = data.content;
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+            controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+            size: size,
+            resolve: { //用来向controller传数据
+              deviceinfo: function () {
+                return vm.deviceinfoMonitor;
+              }
+            }
+          });
 
-      modalInstance.result.then(function (selectedItem) {
-        //  vm.selected = selectedItem;
-        //  vm.query();
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
-      });
+        }, function (reason) {
+          Notification.error('获取设备信息失败');
+        }
+      )
     };
+
+
+    vm.reset = function () {
+      vm.queryDeviceNum = null;
+      vm.queryMachineLicenseId = null;
+      vm.queryOrg = null;
+    }
   }
 })();

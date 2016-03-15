@@ -1,6 +1,8 @@
 
 <div class="modal-header">
-  <h3 class="modal-title">设备工作状态详情</h3>
+  <h3 class="modal-title">设备工作状态详情
+  <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">关闭</button>
+  </h3>
 </div>
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
   <uib-tabset justified="true">
@@ -536,10 +538,230 @@
         </div>
       </div>
     </uib-tab>
+
+    <!--远程控制-->
+    <uib-tab select="">
+      <uib-tab-heading>
+        远程控制
+      </uib-tab-heading>
+      <div class="modal-body">
+        <div class="box-body">
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">设备编号</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="deviceNum" class="form-control" placeholder="设备编号"
+                       ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum" name="deviceNum"/>
+              </div>
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定车牌号</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="licenseId" class="form-control" placeholder="绑定车牌号"
+                       ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.licenseId" name="licenseId"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">发动机通讯密码</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="enginePassCode" class="form-control" placeholder="发动机通讯密码"
+                       ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定SIM号</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="phoneNumber" class="form-control" placeholder="绑定SIM号"
+                       ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
+              </div>
+              <label ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" for="deviceNum" class="col-md-2 control-label text-nowrap">永久解锁密码</label>
+              <div ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" class="col-md-4">
+                <input type="text" readonly id="UnLockPass" ng-mouseover="deviceCurrentInfoCtrl.UnLockPass = deviceCurrentInfoCtrl.deviceUnLockFactor.unlockerPass" class="form-control text-red" placeholder="鼠标移动在输入框显示"
+                       ng-mouseleave="deviceCurrentInfoCtrl.UnLockPass = null" ng-model="deviceCurrentInfoCtrl.UnLockPass" name="licenseId"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">启动锁车</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="activeMsg" class="form-control" placeholder="短信内容"
+                       ng-model="deviceCurrentInfoCtrl.activeMsg" name="activeMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(1,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(1,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">取消锁车</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="短信内容"
+                       ng-model="deviceCurrentInfoCtrl.unActiveMsg" name="unActiveMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(2,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(2,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="serverHost" class="col-md-2 control-label text-nowrap">回传地址</label>
+              <div class="col-md-4">
+                <input type="text" id="serverHost" class="form-control" placeholder="回传地址"
+                       ng-model="deviceCurrentInfoCtrl.serverHost" name="serverHost"/>
+              </div>
+              <label for="serverPort" class="col-md-2 control-label text-nowrap">端口号</label>
+              <div class="col-md-4">
+                <input type="text" id="serverPort" class="form-control" placeholder="端口号"
+                       ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceCurrentInfoCtrl.serverPort" name="serverPort"/>
+                <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.maxlength">最长5位</span>
+                <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.minlength">最短4位</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">短信内容</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="setIpMsg" class="form-control" placeholder="设置回传地址短信"
+                       ng-model="deviceCurrentInfoCtrl.setIpMsg" name="setIpMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(5,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort,null,null,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(5,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort,null,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">启动次数</label>
+              <div class="col-md-4">
+                <input type="text" id="startTimes" class="form-control" placeholder="启动次数"
+                       validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">短信内容</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="setStartTimesMsg" class="form-control" placeholder="设置启动次数短信"
+                       ng-model="deviceCurrentInfoCtrl.setStartTImesMsg" name="setStartTimesMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(6,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,deviceCurrentInfoCtrl.startTimes,null,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(6,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,deviceCurrentInfoCtrl.startTimes,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">工作小时数</label>
+              <div class="col-md-4">
+                <input type="text" id="workHours" class="form-control" placeholder="工作小时数"
+                       ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">工作小时数</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="setWorkHoursMsg" class="form-control" placeholder="设置工作小时数短信内容"
+                       ng-model="deviceCurrentInfoCtrl.setWorkHoursMsg" name="setWorkHoursMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(7,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,deviceCurrentInfoCtrl.workHours,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(7,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,deviceCurrentInfoCtrl.workHours,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">外部供电(秒)</label>
+              <div class="col-md-2">
+                <input type="text" id="secOutPower" class="form-control" placeholder="外部供电(秒)"
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+              </div>
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">定位时间(秒)</label>
+              <div class="col-md-2">
+                <input type="text" id="secLocateInt" class="form-control" placeholder="定位时间(秒)"
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+              </div>
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">内部供电(分)</label>
+              <div class="col-md-2">
+                <input type="text" id="secInnerPower" class="form-control" placeholder="内部供电(分)"
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">各间隔时间</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="setWorkIntMsg" class="form-control" placeholder="设置各间隔时间短信内容"
+                       ng-model="deviceCurrentInfoCtrl.setWorkIntMsg" name="setWorkIntMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">锁车</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="lockMsg" class="form-control" placeholder="锁车短信内容"
+                       ng-model="deviceCurrentInfoCtrl.lockMsg" name="lockMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">查看</button>
+                <button class="btn btn-danger" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">解锁</label>
+              <div class="col-md-8">
+                <input type="text" readonly id="unLockMsg" class="form-control" placeholder="解锁短信内容"
+                       ng-model="deviceCurrentInfoCtrl.unLockMsg" name="unLockMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">发送</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
   </uib-tabset>
 
   <div class="modal-footer">
     <!--<button class="btn btn-primary" type="submit">OK</button>-->
-    <button class="btn btn-warning" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">关闭</button>
   </div>
 </form>

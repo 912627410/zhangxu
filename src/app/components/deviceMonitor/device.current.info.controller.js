@@ -9,9 +9,9 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$filter,$uibModalInstance,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
-                                       AMAP_GEO_CODER_URL,deviceinfo) {
+                                       AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -601,6 +601,144 @@
           Notification.error('获取该设备历史数据失败');
         }
       )
+    }
+
+
+    //******************远程控制tab**********************]
+    vm.serverHost = "iotserver2.nvr-china.com";
+    vm.serverPort = "09999";
+    vm.startTimes = vm.deviceinfo.startTimes;
+    vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
+    if (vm.workHours != null){
+      vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
+    }
+    //vm.secOutPower =
+    //secLocateInt
+    //secInnerPower
+    ////读取初始化设备时需要的信息
+    var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
+    var rspData = serviceResource.restCallService(restURL, "GET");
+    rspData.then(function (data) {
+      vm.deviceUnLockFactor = data.content;
+      var licenseId = vm.deviceUnLockFactor.licenseId;
+      //具体格式请参考短信激活文档
+    }, function (reason) {
+      Notification.error('获取信息失败');
+    })
+
+    //检查短信参数
+    vm.checkParam = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
+      if (type == null || devicenum == null){
+        return false;
+      }
+      //type == 5表示设置回传地址
+      if (type == 5 && (host == null || port==null)){
+        return false;
+      }
+      //type == 6表示设置启动次数
+      if (type == 6 && startTimes == null){
+        return false;
+      }
+      //type == 7表示设置工作小时数
+      if (type == 7 && workHours == null){
+        return false;
+      }
+      //type == 8表示设置各间隔时间
+      if (type == 8 && (secOutsidePower == null || secLocateInt==null || secInnerPower==null)){
+        return false;
+      }
+      return true;
+    }
+
+    //将短信赋值给相应的变量
+    vm.assginSMSContent = function(type, sms){
+      if(type==1){
+        vm.activeMsg = sms;
+      }
+      else if(type==2){
+        vm.unActiveMsg = sms;
+      }
+      else if(type==3){
+        vm.lockMsg = sms;
+      }
+      else if(type==4){
+        vm.unLockMsg = sms;
+      }
+      else if(type==5){
+        vm.setIpMsg = sms;
+      }
+      else if(type==6){
+        vm.setStartTImesMsg = sms;
+      }
+      else if(type==7){
+        vm.setWorkHoursMsg = sms;
+      }
+      else if(type==8){
+        vm.setWorkIntMsg = sms;
+      }
+    }
+
+    //得到短信内容
+    vm.viewSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
+      if (vm.checkParam(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) ==  false){
+        Notification.error("请提供要设置的参数");
+        return;
+      }
+      var restURL = VIEW_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+      if (type == 5){
+        restURL += "&host=" + host + "&port=" + port;
+      }
+      else if (type == 6){
+        restURL += "&startTimes=" + startTimes;
+      }
+      else if (type == 7){
+        restURL += "&workHours=" + workHours;
+      }
+      else if (type == 8){
+        restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
+      }
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        vm.assginSMSContent(type,data.content);
+      }, function (reason) {
+        Notification.error('获取短信内容失败,' + reason.data.message);
+      })
+    }
+
+    //发送短信
+    vm.sendSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) {
+      if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower) == false) {
+        Notification.error("请提供要设置的参数");
+        return;
+      }
+      var restURL = SEND_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+      if (type == 5) {
+        restURL += "&host=" + host + "&port=" + port;
+      }
+      else if (type == 6) {
+        restURL += "&startTimes=" + startTimes;
+      }
+      else if (type == 7) {
+        restURL += "&workHours=" + workHours;
+      }
+      else if (type == 8) {
+        restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
+      }
+      $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 1) {
+              vm.assginSMSContent(type,data.content.smsContent);
+              Notification.success("短信已发送成功");
+            }
+            else {
+              Notification.error("短信发送出错");
+            }
+          }, function (reason) {
+            Notification.error("短信发送出错");
+          })
+        });
     }
 
   }

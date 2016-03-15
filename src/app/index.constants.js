@@ -63,7 +63,8 @@
 
     .constant('DEIVCIE_UNLOCK_FACTOR_URL', SERVER_BASE_URL + 'device/deviceunlock')   //查询解锁url
 
-    .constant('SMS_URL', SERVER_BASE_URL + 'sms/sendsms')   //发送短消息
+    .constant('VIEW_SMS_URL', SERVER_BASE_URL + 'sms/getsms')   //得到短消息内容
+    .constant('SEND_SMS_URL', SERVER_BASE_URL + 'sms/sendsms')   //发送短消息
 
   ;
 
