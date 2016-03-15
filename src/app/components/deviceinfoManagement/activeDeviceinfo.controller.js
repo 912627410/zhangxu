@@ -9,7 +9,7 @@
     .controller('activeDeviceinfoController', activeDeviceinfoController);
 
   /** @ngInject */
-  function activeDeviceinfoController($rootScope, $scope, $uibModalInstance, DEIVCIE_UNLOCK_FACTOR_URL,SMS_URL, serviceResource, Notification, deviceinfo) {
+  function activeDeviceinfoController($rootScope, $scope,$confirm, $uibModalInstance, DEIVCIE_UNLOCK_FACTOR_URL,SMS_URL, serviceResource, Notification, deviceinfo) {
     var vm = this;
     vm.deviceinfo = deviceinfo;
     vm.operatorInfo = $rootScope.userInfo;
@@ -51,18 +51,24 @@
         Notification.warning("请确认SIM号码是否正确");
         return;
       }
-      var smsURL = SMS_URL + "?type=" + smsType + "&targetId=" + phone_num + "&content=" + content;
-      var rspData = serviceResource.restCallService(smsURL,"ADD",null);  //post请求
-      rspData.then(function(data){
-        if (data.code == 0 && data.content.smsStatus == 1){
-          Notification.success("短信已发送");
-        }
-        else{
-          Notification.$error("短信发送出错");
-        }
-      },function(reason){
-        Notification.$error("短信发送出错");
-      })
+
+      $confirm({text: '确定要发送短信吗?',title: '短信发送确认', ok: '确定', cancel: '取消'})
+        .then(function() {
+          var smsURL = SMS_URL + "?type=" + smsType + "&targetId=" + phone_num + "&content=" + content;
+          var rspData = serviceResource.restCallService(smsURL,"ADD",null);  //post请求
+          rspData.then(function(data){
+            if (data.code == 0 && data.content.smsStatus == 1){
+              Notification.success("短信已发送");
+            }
+            else{
+              Notification.$error("短信发送出错");
+            }
+          },function(reason){
+            Notification.$error("短信发送出错");
+          })
+        });
+
+
     };
 
     vm.cancel = function () {
