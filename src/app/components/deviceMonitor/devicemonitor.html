@@ -95,20 +95,21 @@
           </div>
         </div>
         <div class="box-body">
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              车辆类型:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
 
-            </div>
-          </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
               车牌号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.machineLicenseId}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+              工时:
+            </div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              {{deviceinfo.totalDuration}}
             </div>
           </div>
           <div class="row">
@@ -171,8 +172,8 @@
         <tr ng-repeat="deviceinfo in $data">
 
           <td data-title="'终端号'" sortable="'deviceNum'" ><a href ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a></td>
-          <td data-title="'车辆类型'" ></td>
           <td data-title="'车牌号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+          <td data-title="'工时'" >{{deviceinfo.totalDuration}}</td>
           <td data-title="'定位状态'" sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
             <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
