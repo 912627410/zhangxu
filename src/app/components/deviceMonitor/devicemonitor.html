@@ -59,8 +59,8 @@
     <div class="col-md-2">
           <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
         </div>
-    <div class="col-md-1">
-      <label class="control-label">车牌号:</label>
+    <div class="col-md-2">
+      <label class="control-label">整机编号/车号:</label>
     </div>
     <div class="col-md-2">
       <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
@@ -98,7 +98,7 @@
 
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              车牌号:
+              整机编号/车号:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.machineLicenseId}}
@@ -172,7 +172,7 @@
         <tr ng-repeat="deviceinfo in $data">
 
           <td data-title="'终端号'" sortable="'deviceNum'" ><a href ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a></td>
-          <td data-title="'车牌号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+          <td data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
           <td data-title="'工时'" >{{deviceinfo.totalDuration}}</td>
           <td data-title="'定位状态'" sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>

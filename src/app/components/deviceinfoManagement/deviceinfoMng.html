@@ -121,7 +121,7 @@
                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
               <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN'">{{deviceinfo.deviceNum}}</span>
             </td>
-            <td class="text-nowrap" data-title="'车牌号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
+            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
             </td>
             <td class="text-nowrap" data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}
             </td>
