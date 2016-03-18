@@ -65,7 +65,7 @@
         infoWindow.open(mapObj, marker.getPosition());
         var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
         var title = '';
-        var contentInfo = "终端编号：" + item.deviceNum + "</br>当前位置：" + item.address + "<br/>数据更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>坐标:<br/>工作时间:"+item.totalDuration+"<br/>";
+        var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
         //contentInfo += "<a href='../../Equipment/EquipmentDetail/" + item.TerminalEquipmentId + "' class='btn btn-xs btn-primary'>详细信息</a>";
         //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"showFence('" + item.TNum + "');\">查看围栏</a>";
         //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"setFence('" + item.TNum + "'," + item.G_Lng + "," + item.G_Lat + ");\">设置围栏</a>";
@@ -217,7 +217,15 @@
             else{
               deviceList.forEach(function(deviceInfo){
                 if (deviceInfo.locateStatus === 'A' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
-                  addMarkerModel(map,deviceInfo,"http://webapi.amap.com/images/marker_sprite.png");
+
+
+                  var marker="http://webapi.amap.com/images/marker_sprite.png";
+                  if(deviceInfo.accStatus=='01'){
+                    marker="";
+                  }
+
+
+                  addMarkerModel(map,deviceInfo,marker);
                 }
               })
             }
