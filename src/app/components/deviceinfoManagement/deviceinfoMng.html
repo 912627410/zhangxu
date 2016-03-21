@@ -95,6 +95,13 @@
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
+
+      <a class="btn btn-default pull-right"
+       title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}"
+         download="设备数据.csv">
+        <i class="glyphicon glyphicon-new-window"></i> 批量导出
+      </a>
+
     </div>
   </div>
   <div class="row">
@@ -110,7 +117,7 @@
       </script>
       <div class="table-responsive">
         <table ng-table="deviceinfoMngCtrl.tableParams"
-               class="table table-condensed table-bordered table-striped text-nowrap">
+               class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
           <tr ng-repeat="deviceinfo in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
               <input type="checkbox"
