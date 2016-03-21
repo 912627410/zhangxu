@@ -63,14 +63,29 @@
       // marker.setMap(mapObj);  //在地图上添加点
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
-        var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
-        var title = '';
-        var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
+      //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
+      //  var title = '';
+        var title = item.deviceNum;
+
+
+
+       // var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更 新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
+
+        var contentInfo="";
+        contentInfo += "终端编号：" + item.deviceNum +"<br/>";
+        contentInfo += "工时: "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
+        contentInfo += "维度: "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
+        contentInfo += "经度: "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
+        contentInfo += "当前位置：" +(item.address==null ?'':item.address) + "<br/>";
+        contentInfo += "更新时间：" +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
+
+
         //contentInfo += "<a href='../../Equipment/EquipmentDetail/" + item.TerminalEquipmentId + "' class='btn btn-xs btn-primary'>详细信息</a>";
         //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"showFence('" + item.TNum + "');\">查看围栏</a>";
         //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"setFence('" + item.TNum + "'," + item.G_Lng + "," + item.G_Lat + ");\">设置围栏</a>";
         //contentInfo += "<a style='display:none;' href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"endEddit();\" id='saveFence'>保存设置</a>";
         var info = createInfoWindow(title, contentInfo,mapObj);
+
         //设置窗体内容
         infoWindow.setContent(info);
       });
@@ -80,24 +95,29 @@
         var info = document.createElement("div");
         info.className = "info";
         //可以通过下面的方式修改自定义窗体的宽高
-        //info.style.width = "400px";
+        info.style.width = "220px";
+
         // 定义顶部标题
         var top = document.createElement("div");
-        top.className = "info-top";
         var titleD = document.createElement("div");
-        titleD.innerHTML = title;
         var closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
         closeX.src = "http://webapi.amap.com/images/close2.gif";
         closeX.onclick = closeInfoWindow;
+
+
         top.appendChild(titleD);
         top.appendChild(closeX);
-        info.appendChild(top);
+      //  info.appendChild(top);
+
         // 定义中部内容
         var middle = document.createElement("div");
         middle.className = "info-middle";
         middle.style.backgroundColor = 'white';
         middle.innerHTML = content;
         info.appendChild(middle);
+
         // 定义底部内容
         var bottom = document.createElement("div");
         bottom.className = "info-bottom";
