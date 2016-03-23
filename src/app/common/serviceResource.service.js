@@ -49,7 +49,7 @@
       //实例化信息窗体
       var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
-        offset: new AMap.Pixel(110, -22)//-113, -140
+        offset: new AMap.Pixel(15, -40)//-113, -140
       });
 
       var marker = new AMap.Marker({
@@ -109,7 +109,7 @@
 
         top.appendChild(titleD);
         top.appendChild(closeX);
-      //  info.appendChild(top);
+        info.appendChild(top);
 
         // 定义中部内容
         var middle = document.createElement("div");
