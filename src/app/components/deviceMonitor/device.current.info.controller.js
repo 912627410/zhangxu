@@ -11,7 +11,7 @@
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
-                                       AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
+                                       AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -739,6 +739,34 @@
             Notification.error("短信发送出错");
           })
         });
+    }
+
+    //将键盘信息赋值给相应的变量
+    vm.assginKeyboardContent = function(type, message){
+      if(type==10){
+        vm.bindKeyboardMsg = message;
+      }
+      else if(type==11){
+        vm.unbindKeyboardMsg = message;
+      }
+      else if(type==13){
+        vm.lockKeyboardMsg = message;
+      }
+      else if(type==14){
+        vm.unLockKeyboardMsg = message;
+      }
+    }
+
+
+    //得到键盘输入内容
+    vm.viewKeyboardMsg = function(type,devicenum){
+      var restURL = VIEW_KEYBOARD_MSG_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        vm.assginKeyboardContent(type,data.content);
+      }, function (reason) {
+        Notification.error('获取短信内容失败,' + reason.data.message);
+      })
     }
 
   }
