@@ -599,6 +599,18 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <div class="col-md-8">
+                <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="绑定时键盘输入数据内容"
+                       ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(10,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+              </div>
+            </div>
+          </div>
 
           <div class="row">
             <div class="form-group">
@@ -613,6 +625,19 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <div class="col-md-8">
+                <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="解除绑定时键盘输入数据内容"
+                       ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(11,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+              </div>
+            </div>
+          </div>
+
 
           <hr>
           <div class="row">
@@ -741,6 +766,19 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <div class="col-md-8">
+                <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="锁车时键盘输入数据内容"
+                       ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+              </div>
+            </div>
+          </div>
+
 
           <div class="row">
             <div class="form-group">
@@ -755,6 +793,19 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <div class="col-md-8">
+                <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="解锁时键盘输入数据内容"
+                       ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </uib-tab>

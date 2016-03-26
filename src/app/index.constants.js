@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://127.0.0.1:8080/rest/';
+  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -65,6 +65,8 @@
 
     .constant('VIEW_SMS_URL', SERVER_BASE_URL + 'sms/getsms')   //得到短消息内容
     .constant('SEND_SMS_URL', SERVER_BASE_URL + 'sms/sendsms')   //发送短消息
+
+    .constant('VIEW_KEYBOARD_MSG_URL', SERVER_BASE_URL + 'device/keyboard')   //得到键盘输入数据
 
   ;
 
