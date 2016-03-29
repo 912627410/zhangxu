@@ -749,15 +749,22 @@
       else if(type==11){
         vm.unbindKeyboardMsg = message;
       }
-      else if(type==13){
+      else if(type==12){
         vm.lockKeyboardMsg = message;
       }
-      else if(type==14){
+      else if(type==13){
         vm.unLockKeyboardMsg = message;
+      }
+      else if(type==14){
+        vm.cancelLockKeyboardMsg = message;
+        if (message){
+          vm.cancelLockTimes = message.substr(3,1) + message.substr(8,1);
+        }
       }
     }
 
 
+    vm.cancelLockTimes = "";
     //得到键盘输入内容
     vm.viewKeyboardMsg = function(type,devicenum){
       var restURL = VIEW_KEYBOARD_MSG_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
