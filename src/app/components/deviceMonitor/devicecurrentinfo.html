@@ -774,7 +774,7 @@
                        ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(12,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
               </div>
             </div>
           </div>
@@ -799,6 +799,23 @@
               <div class="col-md-8">
                 <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="解锁时键盘输入数据内容"
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+          <div class="row">
+            <div class="form-group">
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">取消自动锁车</label>
+              <div class="col-md-7">
+                <input type="text" readonly id="cancelLockKeyboardMsg" class="form-control" placeholder="取消自动锁车时键盘输入数据内容"
+                       ng-model="deviceCurrentInfoCtrl.cancelLockKeyboardMsg" name="cancelLockKeyboardMsg"/>
+              </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap">第 {{deviceCurrentInfoCtrl.cancelLockTimes}} 组</label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
