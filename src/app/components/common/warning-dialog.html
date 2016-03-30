@@ -1,8 +1,8 @@
 <div class="modal-header">
-  <h3>您已经长时间没有操作了!</h3>
+  <h3>{{'timeout'|translate}}!</h3>
 </div>
 <div idle-countdown="countdown" ng-init="countdown=60" class="modal-body">
   <uib-progressbar max="60" value="countdown" animate="true" class="progress-striped active">
-    你将在 {{countdown}} 秒后退出.
+    {{'timeoutperfix'|translate}} {{countdown}}  {{'timeoutsuffix'|translate}}.
   </uib-progressbar>
 </div>

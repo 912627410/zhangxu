@@ -1,11 +1,11 @@
 <section class="content-header">
   <h1>
-    设备监控
+    {{'equipmentMonitoring'|translate}}
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">设备监控</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active"> {{'equipmentMonitoring'|translate}}</li>
   </ol>
 </section>
 
@@ -20,10 +20,10 @@
         <div class="box-header">
           <!-- tools box -->
           <div class="pull-right box-tools">
-            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="monitorCtrl.refreshMainMap()" title="刷新"><i class="fa fa-refresh"></i></button>
+            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="monitorCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
           </div><!-- /. tools -->
           <i class="fa fa-cloud"></i>
-          <h3 class="box-title">机器分布</h3>
+          <h3 class="box-title">{{'distributionOfTheMachine'|translate}}</h3>
         </div><!-- /.box-header -->
         <div class="box-body" style="min-height: 400px" id="monitorMap">
         </div>
@@ -34,11 +34,11 @@
   <div class="row">
     <hr>
     <div class="col-md-1">
-      <label class="control-label">所属组织:</label>
+      <label class="control-label">{{'organisation'|translate}}</label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="monitorCtrl.openOrgTree()"><i
@@ -54,30 +54,30 @@
       </p>
     </div>
     <div class="col-md-1">
-          <label class="control-label">终端号:</label>
+          <label class="control-label">{{'terminalno'|translate}}</label>
         </div>
     <div class="col-md-2">
-          <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+          <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
     <div class="col-md-2">
-      <label class="control-label">整机编号/车号:</label>
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="支持模糊查询"/>
+      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">查询</button>
-      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
   <div class="row">
     <hr>
     <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>列表</label>
-      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>列块</label>
+      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>{{'list'|translate}}</label>
+      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>{{'columnBlock'|translate}}</label>
     </div>
     <div class="btn-group col-md-2">
-      <span>记录总数 {{monitorCtrl.page.totalElements}}</span>
+      <span>{{'totalNumberOfRecords'|translate}} {{monitorCtrl.page.totalElements}}</span>
     </div>
   </div>
   <div class="row" style="padding: 10px">
@@ -86,7 +86,7 @@
       <div class="box box-success">
         <div class="box-header">
           <h5 class="box-title" ng-if="deviceinfo.machineLicenseId">{{deviceinfo.machineLicenseId}}</h5>
-          <h5 class="box-title text-gray" ng-if="deviceinfo.machineLicenseId==null">未定义</h5>
+          <h5 class="box-title text-gray" ng-if="deviceinfo.machineLicenseId==null">{{'undefined'|translate}}</h5>
           <div class="box-tools pull-right">
             <div class="text-gray" ng-if="deviceinfo.status == 0"> <i class="fa fa-exclamation-triangle"></i> </div>
             <div class="text-green" ng-if="deviceinfo.status == 1"> <i class="fa fa-check-square"></i> </div>
@@ -98,7 +98,7 @@
 
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              整机编号/车号:
+              {{'machineNumberAndCarNumber'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.machineLicenseId}}
@@ -106,7 +106,7 @@
           </div>
           <div class="row">
             <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              工时:
+              {{'workingHours'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.totalDuration |number:2}}
@@ -114,7 +114,7 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              GPS终端号:
+              {{'terminalno'|translate}}
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.deviceNum}}
@@ -122,18 +122,18 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              定位状态:
+              {{'positioningState'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               <span ng-class="deviceinfo.locateStatus == 'A'? 'text-green':'text-red'" >
-                <div ng-if="deviceinfo.locateStatus=='A'">已定位</div>
-                <div ng-if="deviceinfo.locateStatus=='V'">未定位</div>
+                <div ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</div>
+                <div ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</div>
               </span>
             </div>
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              协议类型:
+              {{'protocolType'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.protocalTypeDesc}}
@@ -141,7 +141,7 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              最后更新时间:
+              {{'lastUpdateTime'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
@@ -149,7 +149,7 @@
           </div>
           <div class="row">
             <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              当前位置:
+              {{'currentPosition'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
               {{deviceinfo.address}}
@@ -158,7 +158,7 @@
         </div>
         <div class="box-footer">
             <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">设备监控</button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
             </div>
         </div>
       </div>
@@ -171,20 +171,20 @@
       <table ng-table="monitorCtrl.tableParams" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="deviceinfo in $data">
 
-          <td data-title="'终端号'" sortable="'deviceNum'" ><a href ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a></td>
-          <td data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
-          <td data-title="'工时'" >{{deviceinfo.totalDuration | number:2}}</td>
-          <td data-title="'定位状态'" sortable="'locateStatus'">
-            <span ng-if="deviceinfo.locateStatus=='A'">已定位</span>
-            <span ng-if="deviceinfo.locateStatus=='V'">未定位</span>
+          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" ><a href ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a></td>
+          <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+          <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
+          <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
+            <span ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</span>
+            <span ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</span>
           </td>
-          <td data-title="'当前位置'" style="width: 300px" ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
-          <td data-title="'当前位置'" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
-          <td data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}</td>
-          <td data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-          <td data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td data-title="'操作'">
-            <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">设备监控</button>
+          <td  data-title="'currentPosition'|translate" style="width: 300px" ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
+          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
+          <td  data-title="'protocolType'|translate" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}</td>
+          <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
+          <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td  data-title="'operation'|translate" >
+            <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
 
           </td>
         </tr>
@@ -195,7 +195,7 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
   </div>
   <!-- Main row -->
 </section><!-- /.content -->

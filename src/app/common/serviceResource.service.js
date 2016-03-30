@@ -9,7 +9,7 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,Notification,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
@@ -72,12 +72,12 @@
        // var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更 新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
 
         var contentInfo="";
-        contentInfo += "终端编号：" + item.deviceNum +"<br/>";
-        contentInfo += "工时: "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
-        contentInfo += "维度: "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
-        contentInfo += "经度: "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
-        contentInfo += "当前位置：" +(item.address==null ?'':item.address) + "<br/>";
-        contentInfo += "更新时间：" +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
+        contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
+        contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
+        contentInfo += languages.findKey('longitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
+        contentInfo += languages.findKey('latitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
+        contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
+        contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
 
 
         //contentInfo += "<a href='../../Equipment/EquipmentDetail/" + item.TerminalEquipmentId + "' class='btn btn-xs btn-primary'>详细信息</a>";
@@ -231,7 +231,7 @@
                 }
               }, function (reason) {
                 map.clearMap();
-                Notification.error('获取设备信息失败');
+                Notification.error(languages.findKey('failedToGetDeviceInformation'));
               })
             }
             else{

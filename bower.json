@@ -30,17 +30,20 @@
     "underscore": "~1.8.3",
     "ng-idle": "~1.1.1",
     "angular-w5c-validator": "^2.4.11",
-    "angular-ui-select":"^0.14.2",
-    "angular-sanitize":"1.4.9",
-    "angular-validation":"1.4.1",
-    "ng-file-upload":"12.0.1",
-    "ng-table":"1.0.0-beta.9",
-    "ui-select-infinity":"0.1.6",
-    "angular-confirm-modal":"1.2.3"
-
+    "angular-ui-select": "^0.14.2",
+    "angular-sanitize": "1.4.9",
+    "angular-validation": "1.4.1",
+    "ng-file-upload": "12.0.1",
+    "ng-table": "1.0.0-beta.9",
+    "ui-select-infinity": "0.1.6",
+    "angular-confirm-modal": "1.2.3",
+    "angular-translate": "^2.11.0",
+    "angular-translate-loader-url": "^2.11.0",
+    "angular-translate-loader-static-files": "^2.11.0"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.2"
+    "angular-mocks": "^1.4.2",
+    "angular-translate": "^2.11.0"
   },
   "overrides": {
     "bootstrap": {

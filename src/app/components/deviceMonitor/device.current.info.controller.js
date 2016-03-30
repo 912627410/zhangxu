@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
@@ -33,7 +33,7 @@
           type: 'solidgauge'
         },
 
-        title: '气压',
+        title: languages.findKey('barometricPressure')+'',
         exporting: { enabled: false },
 
         pane: {
@@ -66,7 +66,7 @@
           tickWidth: 0,
           title: {
             y: 0,
-            text: '气压'
+            text: languages.findKey('barometricPressure')+''
           },
           labels: {
             y: 16
@@ -88,9 +88,9 @@
           }
         }
       },
-      title: '气压',
+      title: languages.findKey('barometricPressure')+'',
       series: [{
-        name: '气压',
+        name: languages.findKey('barometricPressure')+'',
         data: [vm.deviceinfo.pressureMeter],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
@@ -180,7 +180,7 @@
             rotation: 'auto'
           },
           title: {
-            text: '转速(r/min)'
+            text: languages.findKey('rotatingSpeed')+'(r/min)'
           },
           plotBands: [{
             from: 0,
@@ -215,10 +215,10 @@
         text: null
       },
       series: [{
-        name: '转速',
+        name: languages.findKey('rotatingSpeed')+'',
         data: [vm.deviceinfo.enginRotate],
         tooltip: {
-          valueSuffix: ' 转'
+          valueSuffix: languages.findKey('turn')+''
         }
       }],
 
@@ -240,7 +240,7 @@
           type: 'solidgauge'
         },
         exporting: { enabled: false },
-        title: '油位',
+        title: languages.findKey('Oil')+'',
 
         pane: {
           center: ['50%', '75%'],
@@ -272,7 +272,7 @@
           tickWidth: 0,
           title: {
             y: 0,
-            text: '油位'
+            text: languages.findKey('Oil')+''
           },
           labels: {
             y: 16
@@ -294,9 +294,9 @@
           }
         }
       },
-      title: '油位',
+      title: languages.findKey('Oil')+'',
       series: [{
-        name: '油位',
+        name: languages.findKey('Oil')+'',
         data: [vm.deviceinfo.oilLevel],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
@@ -366,7 +366,7 @@
     vm.setDefaultAddress = function(){
       if (vm.deviceDataList != null){
         vm.deviceDataList.forEach(function (deviceData) {
-          if (deviceData.address === '正在请求定位数据...'){
+          if (deviceData.address === languages.findKey('requestingLocationData')+'...'){
             deviceData.address = '--';
           }
         })
@@ -404,10 +404,10 @@
           vm.deviceDataPageNumber = data.page.number + 1;
           vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
           if (vm.deviceDataList.length == 0){
-            Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
+            Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
           }
         }, function (reason) {
-          Notification.error('获取该设备历史数据失败');
+          Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
         }
       )
       //vm.refreshDOM();
@@ -464,7 +464,7 @@
           vm.deviceWarningDataPageNumber = data.page.number + 1;
           vm.deviceWarningDataBasePath = DEVCE_WARNING_DATA_PAGED_QUERY;
           if (vm.deviceWarningDataList.length == 0){
-            Notification.warning('没有该设备此时间段内的报警信息,请重新选择');
+            Notification.warning(languages.findKey('theDeviceDoesNotAlarmThisTimePeriodPleaseReselect'));
           }
           else{
             vm.deviceWarningDataList.forEach(function (deviceWarningData) {
@@ -472,7 +472,7 @@
             })
           }
         }, function (reason) {
-          Notification.error('获取该设备报警信息失败');
+          Notification.error(languages.findKey('getTheEquipmentFailureAlarmInformation'));
         }
       )
     }
@@ -588,7 +588,7 @@
       deviceDataPromis.then(function (data) {
           var deviceMapDataList = data.content;
           if (deviceMapDataList.length == 0){
-            Notification.warning('没有该设备此时间段内的历史数据信息,请重新选择');
+            Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
           }
           else{
             vm.deviceMapDataList = _.sortBy(deviceMapDataList,"locateDateTime");
@@ -598,7 +598,7 @@
             vm.refreshMapTab(lineArr);
           }
         }, function (reason) {
-          Notification.error('获取该设备历史数据失败');
+          Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
         }
       )
     }
@@ -623,7 +623,7 @@
       var licenseId = vm.deviceUnLockFactor.licenseId;
       //具体格式请参考短信激活文档
     }, function (reason) {
-      Notification.error('获取信息失败');
+      Notification.error(languages.findKey('getInformationFailed'));
     })
 
     //检查短信参数
@@ -681,7 +681,7 @@
     //得到短信内容
     vm.viewSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
       if (vm.checkParam(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) ==  false){
-        Notification.error("请提供要设置的参数");
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
       var restURL = VIEW_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
@@ -701,14 +701,14 @@
       rspData.then(function (data) {
         vm.assginSMSContent(type,data.content);
       }, function (reason) {
-        Notification.error('获取短信内容失败,' + reason.data.message);
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
 
     //发送短信
     vm.sendSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) {
       if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower) == false) {
-        Notification.error("请提供要设置的参数");
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
       var restURL = SEND_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
@@ -724,19 +724,19 @@
       else if (type == 8) {
         restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
       }
-      $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
             if (data.code == 0 && data.content.smsStatus == 1) {
               vm.assginSMSContent(type,data.content.smsContent);
-              Notification.success("短信已发送成功");
+              Notification.success(languages.findKey('messageSentSuccessfully'));
             }
             else {
-              Notification.error("短信发送出错");
+              Notification.error(languages.findKey('messageSendFiled'));
             }
           }, function (reason) {
-            Notification.error("短信发送出错");
+            Notification.error(languages.findKey('messageSendFiled'));
           })
         });
     }
@@ -772,7 +772,7 @@
       rspData.then(function (data) {
         vm.assginKeyboardContent(type,data.content);
       }, function (reason) {
-        Notification.error('获取短信内容失败,' + reason.data.message);
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
 

@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $window,$http,$uibModal,Notification,Idle, Keepalive) {
+  function MainController($rootScope, $scope,$window,$http,$uibModal,Notification,Idle, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
     vm.logout = function(){
@@ -28,7 +28,7 @@
       Idle.unwatch();
 
       $rootScope.$state.go('home.login');
-      Notification.success('成功退出');
+      Notification.success(languages.findKey('successfulExit'));
 
     }
 
@@ -88,5 +88,11 @@
         $rootScope.currentOpenModal = null;
       }
     }
+
+     $scope.changeLanguage = function (langKey) {
+       $translate.use(langKey);
+      };
+
   }
+
 })();

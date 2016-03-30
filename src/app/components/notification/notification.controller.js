@@ -9,7 +9,7 @@
     .controller('NotificationController', NotificationController);
 
   /** @ngInject */
-  function NotificationController($rootScope,$window,$timeout,serviceResource,Notification,NOTIFICATION_PAGED_URL) {
+  function NotificationController($rootScope,$window,$timeout,serviceResource,Notification,NOTIFICATION_PAGED_URL,languages) {
     var vm = this;
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -46,7 +46,7 @@
           $rootScope.notificationNumber = vm.noProcessNumber;
           $window.sessionStorage["notificationNumber"] = $rootScope.notificationNumber;
         }, function (reason) {
-          Notification.error('获取提醒信息数量失败');
+          Notification.error(languages.findKey('getInformationToRemindTheNumberOfFailed'));
         }
       )
     };
@@ -72,7 +72,7 @@
           vm.pagenumber = data.page.number + 1;
           vm.basePath = NOTIFICATION_PAGED_URL;
         }, function (reason) {
-          Notification.error('获取提醒信息失败');
+          Notification.error(languages.findKey('获取提醒信息失败'));
         }
       )
     };
@@ -107,11 +107,11 @@
           else{
             notification.processStatus = 0;
           }
-          Notification.error('设置处理状态失败');
+          Notification.error(languages.findKey('setTheProcessingStateOfFailure'));
         })
       }
       else{
-        Notification.error('设置处理状态失败');
+        Notification.error(languages.findKey('setTheProcessingStateOfFailure'));
       }
     };
 
@@ -126,7 +126,7 @@
         });
         $timeout(function(){
           vm.queryNotificationStatistics();
-          Notification.success("批量设置为已处理成功!");
+          Notification.success(languages.findKey('batchSetToHaveTreatmentSuccess')+'!');
         })
       }
     };
