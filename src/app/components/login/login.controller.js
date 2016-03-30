@@ -11,7 +11,7 @@
 
 
   /** @ngInject */
-  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle) {
+  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle,languages) {
     var vm = this;
     var userInfo;
     var rootParent={id:0}; //默认根节点为0
@@ -71,7 +71,7 @@
 
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-        Notification.success('登录成功');
+        Notification.success(languages.findKey('loginSuccess'));
         //监控用户登录超时
         Idle.watch();
         //读取组织结构信息
@@ -102,7 +102,7 @@
 
           $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
         },function(reason){
-          Notification.error('获取组织机构信息失败');
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
         });
         //读取未处理的提醒消息
         var notificationPromis = serviceResource.queryNotification(0, null,null,"processStatus=0");
@@ -110,7 +110,7 @@
             $rootScope.notificationNumber = data.page.totalElements;
             $window.sessionStorage["notificationNumber"] = $rootScope.notificationNumber;
           }, function (reason) {
-            Notification.error('获取提醒信息失败');
+            Notification.error(languages.findKey('failedToGetRemindInformation'));
           }
         );
 
@@ -118,7 +118,7 @@
       },function(reason){
         $rootScope.userInfo = null;
         $window.sessionStorage["userInfo"] = null;
-        Notification.error('用户名或密码错误');
+        Notification.error(languages.findKey('loginFailure'));
       });
     };
 

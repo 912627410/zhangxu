@@ -1,12 +1,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      提醒
-      <small>{{notificationCtrl.page.totalElements}} 条消息</small>
+      {{'remind'|translate}}
+      <small>{{notificationCtrl.page.totalElements}} {{'message'|translate}}</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">提醒</li>
+      <li class="active">{{'remindlower'|translate}}</li>
     </ol>
   </section>
 
@@ -16,17 +16,17 @@
       <div class="col-md-3">
         <div class="box box-solid">
           <div class="box-header with-border">
-            <h3 class="box-title">类型</h3>
+            <h3 class="box-title">{{'type'|translate}}</h3>
           </div>
           <div class="box-body no-padding">
             <ul class="nav nav-pills nav-stacked">
-              <li ng-class="notificationCtrl.classNoProcessedMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoProcessedNotification(0,null,null,notificationCtrl.filterTerm)" ><i class="fa fa-envelope-o"></i> 全部未处理消息
+              <li ng-class="notificationCtrl.classNoProcessedMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoProcessedNotification(0,null,null,notificationCtrl.filterTerm)" ><i class="fa fa-envelope-o"></i> {{'allpendingmessages'|translate}}
                 <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span></a></li>
-              <li ng-class="notificationCtrl.classNoConnectMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoConnectNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-unlink"></i>长时间未连接设备
+              <li ng-class="notificationCtrl.classNoConnectMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryNoConnectNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-unlink"></i>{{'longTimeNotConnectedDevices'|translate}}
                 <span class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span></a></li>
-              <li ng-class="notificationCtrl.classMaintainMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryMaintainNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-cog"></i> 保养提醒
+              <li ng-class="notificationCtrl.classMaintainMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryMaintainNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-cog"></i> {{'maintenanceToRemind'|translate}}
                 <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span></a></li>
-              <li ng-class="notificationCtrl.classAllMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryAllNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-check-square-o"></i> 全部消息
+              <li ng-class="notificationCtrl.classAllMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryAllNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-check-square-o"></i> {{'allMessages'|translate}}
                 <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span></a>
               </li>
             </ul>
@@ -38,9 +38,9 @@
       <div class="col-md-9">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">内容</h3>
+            <h3 class="box-title">{{'content'|translate}}</h3>
             <div class="box-tools pull-right">
-                <input type="text" class="input-sm" ng-model="notificationCtrl.filterTerm" placeholder="提醒内容">
+                <input type="text" class="input-sm" ng-model="notificationCtrl.filterTerm" placeholder="{{'reminderContent'|translate}}">
                 <button type="button" class="btn btn-default btn-sm" ng-click="notificationCtrl.queryNotificationInfo(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-search"></i></button>
             </div>
             <!-- /.box-tools -->
@@ -49,20 +49,20 @@
           <div class="box-body no-padding">
             <div class="mailbox-controls">
               <!-- Check all button -->
-              <button type="button" class="btn btn-default btn-sm" ng-click="notificationCtrl.checkAll()">全选
+              <button type="button" class="btn btn-default btn-sm" ng-click="notificationCtrl.checkAll()">{{'checkAll'|translate}}
               </button>
               <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm" ng-click="notificationCtrl.batchUpdateProcessStatus()">标记为已处理</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="notificationCtrl.batchUpdateProcessStatus()">{{'markedAsAlreadyProcessed'|translate}}</button>
               </div>
               <!-- /.pull-right -->
             </div>
             <div class="table-responsive mailbox-messages">
               <table class="table table-hover table-striped">
                 <tbody>
-                <th>选择</th>
-                <th>内容</th>
-                <th>生成时间</th>
-                <th>操作</th>
+                <th>{{'select'|translate}}</th>
+                <th>{{'content'|translate}}</th>
+                <th>{{'generateTime'|translate}}</th>
+                <th>{{'operation'|translate}}</th>
                 <tr ng-repeat="notification in notificationCtrl.notificationList">
                   <td><input type="checkbox" ng-model="notification.checked"></td>
                   <td class="mailbox-subject">
@@ -72,8 +72,8 @@
                   <td class="mailbox-date">{{notification.recordTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td>
                     <button type="button" class="btn btn-default btn-xs" ng-click="notificationCtrl.updateProcessStatus(notification,true)">
-                      <span ng-if="notification.processStatus == 0">标记为已处理</span>
-                      <span ng-if="notification.processStatus == 1">标记为未处理</span>
+                      <span ng-if="notification.processStatus == 0">{{'markedAsAlreadyProcessed'|translate}}</span>
+                      <span ng-if="notification.processStatus == 1">{{'markAsUntreated'|translate}}</span>
                     </button>
                   </td>
                 </tr>

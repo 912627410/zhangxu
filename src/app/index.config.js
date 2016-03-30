@@ -1,9 +1,10 @@
 (function() {
   'use strict';
 
-  angular
-    .module('GPSCloud')
-    .config(config);
+  var GPSCloudConfig = angular.module('GPSCloud');
+
+
+    GPSCloudConfig.config(config);
 
   /** @ngInject */
   function config($logProvider, $httpProvider,toastrConfig,IdleProvider, KeepaliveProvider) {
@@ -76,7 +77,16 @@
 
   }
 
-
-
+  GPSCloudConfig.config(['$translateProvider', function ($translateProvider) {
+  
+  // configures staticFilesLoader
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'locale-',
+      suffix: '.json'
+    });
+	  var lang = window.localStorage.lang || 'zh';
+  // load 'en' table on startup
+    $translateProvider.preferredLanguage(lang);
+  }]);
 
 })();

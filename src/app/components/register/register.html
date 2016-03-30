@@ -5,24 +5,24 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">注册</p>
+    <p class="login-box-msg">{{ 'register' |translate}}</p>
     <form name="registerForm" ng-submit="registerCtrl.registerMe()">
       <div class="body bg-gray">
         <div class="form-group">
-          <input type="text" id="username" class="form-control" placeholder="用户名" ng-model="registerCtrl.registerInfo.username" name="username" required/>
+          <input type="text" id="username" class="form-control" placeholder="{{'userName'|translate}}" ng-model="registerCtrl.registerInfo.username" name="username" required/>
         </div>
         <div class="form-group">
-          <input type="password" id="password" class="form-control" placeholder="密码" ng-model="registerCtrl.registerInfo.password" name="password" required/>
+          <input type="password" id="password" class="form-control" placeholder="{{'password'|translate}}" ng-model="registerCtrl.registerInfo.password" name="password" required/>
         </div>
         <div class="form-group">
-          <input type="password" id="confirmPassword" class="form-control" placeholder="重复密码" ng-model="registerCtrl.registerInfo.confirmPassword" name="confirmPassword" pw-check="password" required/>
-          <span class="text-red" ng-show="registerForm.confirmPassword.$error.pwmatch">密码两次输入不匹配</span>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="{{'repeatPassword'|translate}}" ng-model="registerCtrl.registerInfo.confirmPassword" name="confirmPassword" pw-check="password" required/>
+          <span class="text-red" ng-show="registerForm.confirmPassword.$error.pwmatch">{{'mismatching'|translate}}</span>
         </div>
         <div class="form-group">
-          <input type="mobile" name="mobile" class="form-control" placeholder="手机号码" ng-model="registerCtrl.registerInfo.mobile" name="mobile" required/>
+          <input type="mobile" name="mobile" class="form-control" placeholder="{{'cell-phoneNumber'|translate}}" ng-model="registerCtrl.registerInfo.mobile" name="mobile" required/>
         </div>
         <div class="form-group">
-          <input type="email" name="email" class="form-control" placeholder="电子邮件" ng-model="registerCtrl.registerInfo.email" name="email" required/>
+          <input type="email" name="email" class="form-control" placeholder="{{'email'|translate}}" ng-model="registerCtrl.registerInfo.email" name="email" required/>
         </div>
       </div>
       <div class="footer text-center">
@@ -35,7 +35,7 @@
             </div>
           </div><!-- /.col -->
           <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary" ng-class="{disabled: registerForm.confirmPassword.$error.pwmatch}">注册</button>
+            <button type="submit" class="btn btn-primary" ng-class="{disabled: registerForm.confirmPassword.$error.pwmatch}">{{'register'|translate}}</button>
           </div><!-- /.col -->
         </div>
       </div>

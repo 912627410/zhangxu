@@ -2,7 +2,7 @@
   <a ui-sref="home" class="logo navbar-fixed-top">
     <img src="assets/images/logo.png" width="33" height="30">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
-    山东临工
+    {{ 'SDLG' | translate}}
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
@@ -13,13 +13,21 @@
       <i class="fa fa-home"></i>
     </a>
 
+    <a  class="sidebar-toggle" role="button" ng-click="changeLanguage('zh')">
+      简体中文
+    </a>
+
+    <a  class="sidebar-toggle" role="button" ng-click="changeLanguage('en')">
+      English
+    </a>
+
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
         <li class="user user-menu" ng-if="userInfo == null">
           <a ui-sref="home.login">
             <i class="glyphicon glyphicon-user"></i>
-            <span>登录</span>
+            <span>{{ 'login' | translate }}</span>
           </a>
         </li>
 
@@ -34,14 +42,14 @@
           <a>
             <i class="glyphicon glyphicon-user" >
               <span>{{userInfo.userdto.ssn}}
-                <small ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">系统管理员</small>
-                <small ng-if="userInfo.userdto.role == 'ROLE_ADMIN'">管理员</small>
-                <small ng-if="userInfo.userdto.role == 'ROLE_USER'">普通用户</small>
+                <small ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">{{'sysadmin'|translate}}</small>
+                <small ng-if="userInfo.userdto.role == 'ROLE_ADMIN'">{{'administrator'|translate}}</small>
+                <small ng-if="userInfo.userdto.role == 'ROLE_USER'">{{'commonUser'|translate}}</small>
               </span>
             </i>
           </a>
         </li>
-        <li ui-sref="#" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">退出</a></li>
+        <li ui-sref="#" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
       </ul>
     </div>
   </nav>

@@ -9,7 +9,7 @@
     .controller('RegisterController', RegisterController);
 
   /** @ngInject */
-  function RegisterController($rootScope, $window,USER_REGISTER_URL,Notification,serviceResource) {
+  function RegisterController($rootScope, $window,USER_REGISTER_URL,Notification,serviceResource,languages) {
     var vm = this;
     var userInfo;
     var registerProcess = function(registerInfo, callback){
@@ -37,11 +37,11 @@
     vm.registerMe = function() {
       registerProcess(vm.registerInfo, function(){
         if (userInfo){
-          Notification.success('注册成功');
+          Notification.success(languages.findKey('registeredSuccessfully'));
           $rootScope.$state.go('home');
         }
         else{
-          Notification.error('注册失败');
+          Notification.error(languages.findKey('registrationFailed'));
         }
       })
     }

@@ -4,9 +4,8 @@
 (function() {
   'use strict';
 
-  angular
-    .module('GPSCloud')
-    .factory('DataDemo', DataDemo);
+  var GPSCloudFactory =angular.module('GPSCloud')
+  GPSCloudFactory.factory('DataDemo', DataDemo);
 
   /** @ngInject */
     function DataDemo() {
@@ -144,5 +143,20 @@
           }];
       }}
     }
+
+  GPSCloudFactory.factory('languages',languages);
+
+  function languages($translate){
+    var languages = {
+      findKey:function(key) {
+        if(key){
+          return $translate.instant(key);
+        }
+        return key;
+      }
+    }
+    return languages;
+  }
+  
 
 })();

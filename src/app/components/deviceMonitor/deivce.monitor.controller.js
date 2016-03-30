@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
+  function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, $translate,languages,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
     var vm = this;
 
    // vm.org = {label: ""};
@@ -50,7 +50,7 @@
     vm.setDefaultAddress = function () {
       if (vm.deviceInfoList != null) {
         vm.deviceInfoList.forEach(function (deviceInfo) {
-          if (deviceInfo.address === '正在请求定位数据...') {
+          if (deviceInfo.address === languages.findKey('requestingLocationData')+'...') {
             deviceInfo.address = '--';
           }
         })
@@ -95,7 +95,7 @@
           //地图数据
           vm.refreshMainMap(vm.deviceInfoList);
         }, function (reason) {
-          Notification.error('获取设备信息失败');
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
       //vm.refreshDOM();  改为直接从后台返回
@@ -128,7 +128,7 @@
           });
 
         }, function (reason) {
-          Notification.error('获取设备信息失败');
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
     };
