@@ -210,8 +210,8 @@
   "messageSentSuccessfully":"短信已发送成功",
   "messageSendFiled":"短信发送出错",
   "cancelTheAutomaticKeyboardLockCarDataContent":"取消自动锁车时键盘输入数据内容",
-  "the":"第",
-  "group":"组",
+  "UnboundContent":"解除绑定时键盘输入数据内容",
+  "BoundContent":"绑定时键盘输入数据内容",
 
 	"remind":"提醒",
 	"remindlower":"提醒",
