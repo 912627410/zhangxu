@@ -78,15 +78,28 @@
   }
 
   GPSCloudConfig.config(['$translateProvider', function ($translateProvider) {
-  
+
   // configures staticFilesLoader
     $translateProvider.useStaticFilesLoader({
       prefix: 'locale-',
       suffix: '.json'
     });
-	  var lang = window.localStorage.lang || 'zh';
-  // load 'en' table on startup
-    $translateProvider.preferredLanguage(lang);
+    var language_en_us = "en-us";  
+		var language_zh_cn = "zh-cn";
+	  var currentLang;
+	  var current_lang_map; 
+	  currentLang = navigator.language;  
+	  if(!currentLang){
+	  	 currentLang = navigator.browserLanguage;
+	  }
+	  if(currentLang.toLowerCase() == language_zh_cn)  {  
+		    current_lang_map = 'zh';       
+		}else {  
+		    current_lang_map = 'en';  
+		}   
+   // load 'en' table on startup
+    $translateProvider.preferredLanguage(current_lang_map);
+
   }]);
 
 })();

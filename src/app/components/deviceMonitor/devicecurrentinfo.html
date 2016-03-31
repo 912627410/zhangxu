@@ -497,7 +497,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-1">
-            <label class="control-label text-nowrap">{{'startAnimation'|translate}}:</label>
+            <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
           </div>
           <div class="col-md-3">
             <p class="input-group">
@@ -603,11 +603,11 @@
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-8">
-                <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="绑定时键盘输入数据内容"
+                <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(10,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(10,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
@@ -629,11 +629,11 @@
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-8">
-                <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="解除绑定时键盘输入数据内容"
+                <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(11,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(11,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
@@ -770,11 +770,11 @@
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-8">
-                <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="锁车时键盘输入数据内容"
+                <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(12,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">查看</button>
+                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(12,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
@@ -797,7 +797,7 @@
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-8">
-                <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="解锁时键盘输入数据内容"
+                <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
               </div>
               <div class="col-md-2">
@@ -815,7 +815,7 @@
                        ng-model="deviceCurrentInfoCtrl.cancelLockKeyboardMsg" name="cancelLockKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'the'|translate}} {{deviceCurrentInfoCtrl.cancelLockTimes}} {{'group'|translate}}</label>
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
