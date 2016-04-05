@@ -212,11 +212,11 @@
                     <td>{{'CANCommunicationStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">{{'noData'|translate}}</td>
                     <td>{{'powerSupplyMode'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
                     <td>{{'GPSSignalQuality'|translate}}</td>
@@ -233,26 +233,26 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
                     <td>{{'generatorState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>
                     <td>{{'openCoverState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
                     <td>{{'analogOne'|translate}}</td>
@@ -364,11 +364,11 @@
                     <!--串口通信状态-->
                     <td ng-if="deviceData.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
                     <td ng-if="deviceData.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
-                    <td ng-if="deviceData.commStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.commStatus==null">{{'noData'|translate}}</td>
                     <!--供电方式-->
                     <td ng-if="deviceData.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceData.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
-                    <td ng-if="deviceData.powerType==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.powerType==null">{{'noData'|translate}}</td>
 
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
@@ -386,21 +386,21 @@
                     <!--ACC状态-->
                     <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceData.accStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceData.accStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.accStatus==null">{{'noData'|translate}}</td>
                     <!--发电机状态-->
                     <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceData.elecStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.elecStatus==null">{{'noData'|translate}}</td>
 
                     <!--GPS电源检测-->
                     <td ng-if="deviceData.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>
                     <td ng-if="deviceData.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>
-                    <td ng-if="deviceData.gpsPowerStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.gpsPowerStatus==null">{{'noData'|translate}}</td>
                     <!--开盖状态-->
                     <td ng-if="deviceData.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus=='11'">{{'open'|translate}}</td>
-                    <td ng-if="deviceData.lockerStatus==null">{{'noDate'|translate}}</td>
+                    <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
                     <!--模拟量1-->
                     <td ng-cloak>{{deviceData.imitate1}}</td>
                     <!--模拟量2-->
