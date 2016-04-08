@@ -568,24 +568,15 @@
                 <input type="text" readonly id="enginePassCode" class="form-control" placeholder="{{'engineCommunicationCode'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
               </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'bindSIMNumber'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" readonly id="phoneNumber" class="form-control" placeholder="{{'bindSIMNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
               </div>
-              <label ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" for="deviceNum" class="col-md-2 control-label text-nowrap">{{'permanentUnlockPassword'|translate}}</label>
-              <div ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" class="col-md-4">
-                <input type="text" readonly id="UnLockPass" ng-mouseover="deviceCurrentInfoCtrl.UnLockPass = deviceCurrentInfoCtrl.deviceUnLockFactor.unlockerPass" class="form-control text-red" placeholder="{{'mouseMovementInputDisplay'|translate}}"
-                       ng-mouseleave="deviceCurrentInfoCtrl.UnLockPass = null" ng-model="deviceCurrentInfoCtrl.UnLockPass" name="licenseId"/>
-              </div>
+
             </div>
           </div>
-
+          
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
