@@ -129,8 +129,8 @@
   "lockedCarStatus":"Locked",
   "one-level":"One-level",
   "two-level":"Two-level",
-  "work":"on",
-  "notWork":"off",
+  "work":"ON",
+  "notWork":"OFF",
   "generatorState":"Alternator State",
   "GPSPowerDetection":"GPS Power Detection",
 
