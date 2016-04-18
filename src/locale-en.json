@@ -35,6 +35,8 @@
   "failedToGetRemindInformation":"Failed to get remind information",
   "failedToGetOrganizationInformation":"Failed to get organization information",
   "failedToGetDeviceInformation":"Failed to get equipment information",
+  "moreInvalidLocationRemindInformation":"More than 1 device in invalid location, please take a look",
+
 
    "terminalNumber": "Terminal ID",
    "longitude":"Longitude",
@@ -222,7 +224,8 @@
 	 "type":"Type",
 	 "allpendingmessages":"All pending messages",
 	 "longTimeNotConnectedDevices":"Long time not connected devices",
-	 "maintenanceToRemind":"Maintenance to remind",
+	 "maintenanceToRemind":"Maintenance alarm",
+    "locationToRemind":"Invalid location alarm",
 	 "allMessages":"All Messages",
 	 "content":"Content",
 	 "reminderContent":"Reminder Content",

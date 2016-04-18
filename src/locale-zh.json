@@ -35,6 +35,7 @@
   "failedToGetRemindInformation":"获取提醒信息失败",
   "failedToGetOrganizationInformation":"获取组织机构信息失败",
   "failedToGetDeviceInformation":"获取设备信息失败",
+  "moreInvalidLocationRemindInformation":"超过一个设备位置信息异常,请在通知中心查看",
 
   "terminalNumber": "终端编号",
   "longitude":"经度",
@@ -220,6 +221,7 @@
 	"allpendingmessages":"全部未处理消息",
 	"longTimeNotConnectedDevices":"长时间未连接设备",
 	"maintenanceToRemind":"保养提醒",
+  "locationToRemind":"位置信息警告",
 	"allMessages":"全部消息",
 	"content":"内容",
 	"reminderContent":"提醒内容",

@@ -19,6 +19,7 @@
     vm.allNotificationNumber = 0;   //所有的notification数量
     vm.noConnectionNotificationNumber = 0;   //所有的未连接notification数量
     vm.maintainNotificationNumber = 0;   //所有的保养notification数量
+    vm.locationNotificationNumber = 0;   //所有的车辆位置信息notification数量
 
     var userInfo = $rootScope.userInfo;
 
@@ -28,6 +29,7 @@
       vm.allNotificationNumber = 0;   //所有的notification数量
       vm.noConnectionNotificationNumber = 0;   //所有的未连接notification数量
       vm.maintainNotificationNumber = 0;   //所有的保养notification数量
+      vm.locationNotificationNumber = 0;   //所有的车辆位置信息notification数量
       var notificationStatisticsPromis = serviceResource.queryNotificationStatistics();
       notificationStatisticsPromis.then(function (data) {
           var notificationStatisticsList = data;
@@ -39,6 +41,9 @@
               }
               if(notification.type == '02'){
                 vm.noConnectionNotificationNumber += notification.totalCount;
+              }
+              if(notification.type == '03'){
+                vm.locationNotificationNumber += notification.totalCount;
               }
             }
             vm.allNotificationNumber += notification.totalCount;
@@ -152,6 +157,7 @@
       vm.classMaintainMsg = "active";
       vm.classNoProcessedMsg = "";
       vm.classNoConnectMsg = "";
+      vm.classLocationMsg = "";
       vm.classAllMsg = "";
       vm.queryNotificationInfo(page,size,sort,"processStatus=0&type=01");
     }
@@ -162,7 +168,18 @@
       vm.classNoConnectMsg = "active";
       vm.classMaintainMsg = "";
       vm.classNoProcessedMsg = "";
+      vm.classLocationMsg = "";
       vm.queryNotificationInfo(page,size,sort,"processStatus=0&type=02");
+    }
+
+    //查询设备位置报警
+    vm.queryLocationNotification=function(page,size,sort,queryCondition){
+      vm.classAllMsg = "";
+      vm.classNoConnectMsg = "";
+      vm.classMaintainMsg = "";
+      vm.classNoProcessedMsg = "";
+      vm.classLocationMsg = "active";
+      vm.queryNotificationInfo(page,size,sort,"processStatus=0&type=03");
     }
 
     //查询所有信息
@@ -171,6 +188,7 @@
       vm.classNoConnectMsg = "";
       vm.classMaintainMsg = "";
       vm.classNoProcessedMsg = "";
+      vm.classLocationMsg = "";
       vm.queryNotificationInfo(page,size,sort,null);
     }
 

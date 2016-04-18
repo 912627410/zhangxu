@@ -26,6 +26,8 @@
                 <span class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span></a></li>
               <li ng-class="notificationCtrl.classMaintainMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryMaintainNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-cog"></i> {{'maintenanceToRemind'|translate}}
                 <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span></a></li>
+              <li ng-class="notificationCtrl.classLocationMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryLocationNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-map"></i> {{'locationToRemind'|translate}}
+                <span class="label label-danger pull-right">{{notificationCtrl.locationNotificationNumber}}</span></a></li>
               <li ng-class="notificationCtrl.classAllMsg"><a style="cursor: hand;cursor: pointer;" ng-click="notificationCtrl.queryAllNotification(0,null,null,notificationCtrl.filterTerm)"><i class="fa fa-check-square-o"></i> {{'allMessages'|translate}}
                 <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span></a>
               </li>

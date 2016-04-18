@@ -114,6 +114,22 @@
           }
         );
 
+        //读取未处理的地理位置报警消息
+        var locationNotificationPromis = serviceResource.queryNotification(0, null,null,"processStatus=0&type=03");
+        locationNotificationPromis.then(function (data) {
+            vm.locationNotificationNumber = data.page.totalElements;
+            if (vm.locationNotificationNumber > 1){
+              Notification.error({message : languages.findKey('moreInvalidLocationRemindInformation'),delay: true});
+            }
+            if (vm.locationNotificationNumber == 1){
+              Notification.error({message : data.content[0].content,delay: true});
+            }
+            $window.sessionStorage["locationNotificationNumber"] = vm.locationNotificationNumber;
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetRemindInformation'));
+          }
+        );
+
         $rootScope.$state.go('home');
       },function(reason){
         $rootScope.userInfo = null;
