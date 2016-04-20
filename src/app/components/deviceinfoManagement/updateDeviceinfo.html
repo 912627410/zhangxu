@@ -17,7 +17,7 @@
         <label for="deviceNum" class="col-sm-2 control-label">SIM卡号</label>
         <div class="col-sm-10">
           <ui-select  name="phoneNumber" ng-model="updateDeviceinfoController.deviceinfo.sim" theme="bootstrap"
-                      ng-disabled="disabled" validator="required">
+                      ng-disabled="disabled" >
             <ui-select-match allow-clear="true"  placeholder="输入SIM卡号后4位">{{$select.selected.phoneNumber}}
             </ui-select-match>
             <ui-select-choices repeat="sim in updateDeviceinfoController.simList"

@@ -101,6 +101,10 @@
 
     vm.ok = function (deviceinfo) {
       vm.errorMsg=null;
+      vm.simNumber =null;
+      if(deviceinfo.sim!=null && deviceinfo.sim.phoneNumber!=null){
+        vm.simNumber = deviceinfo.sim.phoneNumber;
+      }
 
       //重新构造需要传输的数据
       var operDeviceinfo={
@@ -108,18 +112,22 @@
         "deviceNum":deviceinfo.deviceNum,
         "protocalType":deviceinfo.protocalType,
         "produceDate":deviceinfo.produceDate,
-        "simPhoneNumber":deviceinfo.sim.phoneNumber,
+        "simPhoneNumber": vm.simNumber,
         "orgId":deviceinfo.org.id
       };
 
 
 
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
-      deviceinfo.sim.deviceinfo={};
+      if(deviceinfo.sim!=null){
+        deviceinfo.sim.deviceinfo={};
 
-      if(null!=deviceinfo.machine){
-        deviceinfo.machine.deviceinfo={};
+        if(null!=deviceinfo.machine){
+          deviceinfo.machine.deviceinfo={};
+        }
       }
+
+
 
 
 
