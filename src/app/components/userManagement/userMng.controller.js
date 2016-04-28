@@ -22,7 +22,7 @@
           var userMngNumberByRole = {sysadminnumber:0,adminnumber:0,operatornumber:0,usernumber:0,producernumber:0};
           for(var i=0; i< data.length;i++)
           {
-            if (data[i].role == "ROLE_SYSADMIN")
+            if (data[i].role == "ROLE_SYSADMIN")  
             {
               userMngNumberByRole.sysadminnumber = data[i].number;
             }
