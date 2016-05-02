@@ -87,18 +87,6 @@
                     </div>
                 </div>
 
-              <div class="form-group">
-                <label class="col-sm-2 control-label">接收报警</label>
-                  <div class="form-group col-sm-2">
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="addUserCtrl.newUser.locationAlarmReceiver" ng-model="addUserCtrl.newUser.locationAlarmReceiver" id=options1""  value="1" >
-                        是
-                      </label>
-                    </div>
-                  </div>
-              </div>
-
                 <div class="form-group">
                     <label for="address" class="col-sm-2 control-label">地址</label>
                     <div class="col-sm-10">
@@ -118,6 +106,19 @@
                       <span class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">密码两次输入不匹配</span>
                     </div>
                 </div>
+
+              <div class="form-group">
+                <label for="email" class="col-sm-2 control-label"></label>
+                <div class="form-group col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="locationAlarmReceiver" ng-model="addUserCtrl.locationAlarmReceiverChk" id="locationAlarmReceiver">
+                      接收机器位置异常报警(勾选时会收到机器超出电子围栏报警信息)
+                    </label>
+                  </div>
+                </div>
+              </div>
+
 
             </div>
     </div>
