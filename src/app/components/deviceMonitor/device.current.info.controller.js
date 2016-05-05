@@ -767,13 +767,16 @@
     vm.cancelLockTimes = "";
     //得到键盘输入内容
     vm.viewKeyboardMsg = function(type,devicenum){
-      var restURL = VIEW_KEYBOARD_MSG_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        vm.assginKeyboardContent(type,data.content);
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
+      $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var restURL = VIEW_KEYBOARD_MSG_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.assginKeyboardContent(type, data.content);
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
     }
 
   }
