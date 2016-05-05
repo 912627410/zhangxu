@@ -43,7 +43,7 @@
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="updateSimController.sim.serviceBeginDate" is-open="updateSimController.serviceBeginDateOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+                     datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="updateSimController.serviceBeginDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
@@ -58,7 +58,7 @@
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
                      ng-model="updateSimController.sim.serviceEndDate" is-open="updateSimController.serviceEndDateOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" required close-text="Close"/>
+                     datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="updateSimController.serviceEndDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>

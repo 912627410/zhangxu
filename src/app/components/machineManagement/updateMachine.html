@@ -34,7 +34,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">发动机类型</label>
         <div class="col-sm-9">
-          <select validator="required" name="engineType" required class="form-control"
+          <select name="engineType" class="form-control"
                   ng-model="updateMachineController.machine.engineType.id"
                   ng-options="engineType.id as engineType.engineName for engineType in updateMachineController.engineTypeList">
             <option value="">请选择...</option>
