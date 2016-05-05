@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($scope,$http, $uibModalInstance, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($scope,$http, $uibModalInstance, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -47,6 +47,14 @@
      //   alert( vm.deviceinfoList.length);
       });
     };
+
+    //得到发动机类型集合
+    var engineTypeData = serviceResource.restCallService(ENGINE_TYPE_LIST_URL, "QUERY");
+    engineTypeData.then(function (data) {
+      vm.engineTypeList = data;
+    }, function (reason) {
+      Notification.error('获取发动机类型失败');
+    })
 
 
     //日期控件相关
@@ -108,6 +116,7 @@
         postInfo.deviceinfo=null;
       }
       postInfo.org={id:machine.org.id};
+      postInfo.engineType={id:machine.engineType};
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
       restPromise.then(function (data) {

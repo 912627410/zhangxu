@@ -63,7 +63,7 @@
     protocalTypeData.then(function (data) {
       vm.protocalTypeList = data;
     }, function (reason) {
-      Notification.error('获取设备类型失败');
+      Notification.error('获取协议类型失败');
     })
 
     //日期控件相关
