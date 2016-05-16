@@ -22,10 +22,14 @@
 
     vm.deviceinfo = deviceinfo;
     vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
-
-
-
-
+    vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
+    //判断当前设备是否是小挖
+    if (deviceinfo.machine == null || deviceinfo.machine.licenseId == null){
+      vm.DeviceType = serviceResource.getDeviceType(null);
+    }
+    else{
+      vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
+    }
     //气压图
     vm.highchartsAir = {
       options: {
@@ -92,6 +96,92 @@
       series: [{
         name: languages.findKey('barometricPressure')+'',
         data: [vm.deviceinfo.pressureMeter],
+        dataLabels: {
+          format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+          ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+          '<span style="font-size:12px;color:silver"></span></div>'
+        },
+        tooltip: {
+          valueSuffix: null
+        }
+      }],
+
+      loading: false,
+      func: function(chart) {
+        $timeout(function() {
+          chart.reflow();
+          //The below is an event that will trigger all instances of charts to reflow
+          //$scope.$broadcast('highchartsng.reflow');
+        }, 0);
+      }
+    };
+
+    //水温图
+    vm.highchartsWater = {
+      options: {
+        chart: {
+          type: 'solidgauge'
+        },
+
+        title: languages.findKey('waterTemperature')+'',
+        exporting: { enabled: false },
+
+        pane: {
+          center: ['50%', '75%'],
+          size: '140%',
+          startAngle: -90,
+          endAngle: 90,
+          background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+          }
+        },
+
+        tooltip: {
+          enabled: true
+        },
+
+        // the value axis
+        yAxis: {
+          stops: [
+            [0.2, '#55BF3B'], // green
+            [0.6, '#DDDF0D'], // yellow
+            [0.8, '#DF5353'] // red
+          ],
+          lineWidth: 0,
+          minorTickInterval: null,
+          tickPixelInterval: 400,
+          tickWidth: 0,
+          title: {
+            y: 0,
+            text: languages.findKey('waterTemperature')+''
+          },
+          labels: {
+            y: 16
+          },
+          min: 40,
+          max: 140,  //水温表最大140
+        },
+        credits: {
+          enabled: false
+        },
+
+        plotOptions: {
+          solidgauge: {
+            dataLabels: {
+              y: 5,
+              borderWidth: 0,
+              useHTML: true
+            }
+          }
+        }
+      },
+      title: languages.findKey('waterTemperature')+'',
+      series: [{
+        name: languages.findKey('waterTemperature')+'',
+        data: [vm.deviceinfo.engineTemperature],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -605,7 +695,7 @@
 
 
     //******************远程控制tab**********************]
-    vm.serverHost = "iotserver2.nvr-china.com";
+    vm.serverHost = "iotserver1.nvr-china.com";
     vm.serverPort = "09999";
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);

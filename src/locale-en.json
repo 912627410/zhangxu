@@ -111,7 +111,7 @@
   "positioningTime":"Located Time",
   "returnTime":"Return Time",
   "vehicleType":"Vehicle Type",
-  "GPSSignalPercentage":"GPS Signal Per ",
+  "GPSSignalPercentage":"GPRS Signal Per ",
   "totalRunningTimeHour":"Total Running Time(hour)",
   "fuelLevel":"Fuel Level ",
   "coolantTemperature":"Coolant Temperature",
@@ -134,7 +134,7 @@
   "work":"ON",
   "notWork":"OFF",
   "generatorState":"Alternator State",
-  "GPSPowerDetection":"GPS Power Detection",
+  "GPSPowerDetection":"Inner Power Detection",
 
   "non-transFormer":"Non-transformer",
   "noSignal":"No signal",
@@ -199,6 +199,7 @@
   "unlockMessageContent":"Unlock message content",
   "requestingLocationData":"Requesting location data",
   "barometricPressure":"Press",
+  "waterTemperature":"Degree",
   "rotatingSpeed":"Speed",
   "turn":"Turn",
   "Oil":"Oil",
@@ -252,5 +253,9 @@
    "pagingHomePage":"First page",
    "lastPage":"Last page",
    "nextPage":"Next page",
-   "previousPage":"Previous page"
+   "previousPage":"Previous page",
+    "failedToGetSmallExcavatorModel":"Get small excavator parameter failed",
+  "amaplatitudeNumber":"Latitude",
+  "amaplongitudeNumber":"Longitude"
+
 }
