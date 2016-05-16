@@ -365,6 +365,24 @@
         return restCallService(URL,"ADD",params);
       },
 
+      //根据车架号判断车型
+      //00 - 无特定类型
+      //01 - 小挖
+      getDeviceType:function(machineId){
+        if (machineId == null || machineId.len< 8){
+          return "00";
+        }
+        var modelName = machineId.substr(3,5);
+        var smallExModel = $rootScope.SMALL_EXCAVATOR_MODEL;
+
+        if (smallExModel.indexOf(modelName) != -1){
+          return "01";
+        }
+        else{
+          return "00";
+        }
+      },
+
       //TODO
       getWarningMsg:function(deviceWarningData){
         return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";

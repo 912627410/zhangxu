@@ -11,7 +11,7 @@
 
 
   /** @ngInject */
-  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle,languages) {
+  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,SYS_CONFIG_URL,Notification,serviceResource,Idle,languages) {
     var vm = this;
     var userInfo;
     var rootParent={id:0}; //默认根节点为0
@@ -127,6 +127,17 @@
             $window.sessionStorage["locationNotificationNumber"] = vm.locationNotificationNumber;
           }, function (reason) {
             Notification.error(languages.findKey('failedToGetRemindInformation'));
+          }
+        );
+
+        //读取小挖型号参数
+        var smallExcavatorURL = SYS_CONFIG_URL + "?name=SMALL_EXCAVATOR_MODEL";
+        var smallExcavatorPromis = serviceResource.restCallService(smallExcavatorURL,"GET");
+        smallExcavatorPromis.then(function (data) {
+            $window.sessionStorage["SMALL_EXCAVATOR_MODEL"] = data.value;
+            $rootScope.SMALL_EXCAVATOR_MODEL = data.value;
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetSmallExcavatorModel'));
           }
         );
 

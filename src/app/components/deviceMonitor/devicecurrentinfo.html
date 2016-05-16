@@ -14,7 +14,8 @@
         <div class="box-body">
           <div class="row">
             <div class="col-md-3" >
-              <highchart id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
             </div>
             <div class="col-md-6" >
               <highchart id="container-rpm" style="width: 400px; height: 200px; float:left" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
@@ -52,57 +53,59 @@
                       <div ng-switch-when="0" class="turnRightNormal" title="{{'turnRight'|translate}}"></div>
                       <div ng-switch-when="1" class="turnRightNormal" title="{{'turnRight'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
                       <div ng-switch-when="0" class="stopPressNormal" title="{{'brakepressure'| translate}}"></div>
                       <div ng-switch-when="1" class="stopPressWarning" title="{{'brakepressure'| translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
                       <div ng-switch-when="0" class="oilLevelNormal" title="{{'lowOilMark'|translate}}"></div>
                       <div ng-switch-when="1" class="oilLevelWarning" title="{{'lowOilMark'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
                       <div ng-switch-when="0" class="holdNormal" title="{{'parkingBrake'|translate}}"></div>
                       <div ng-switch-when="1" class="holdWarning" title="{{'parkingBrake'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
                       <div ng-switch-when="0" class="farLightNormal" title="{{'distanceLight'|translate}}"></div>
                       <div ng-switch-when="1" class="farLightWarning" title="{{'distanceLight'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:8">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:8">
                       <div ng-switch-when="0" class="fastSwitchNormal" title="{{'fastSwitching'|translate}}"></div>
                       <div ng-switch-when="1" class="fastSwitchWarning" title="{{'fastSwitching'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:9">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:9">
                       <div ng-switch-when="0" class="stabilizerNormal" title="{{'stabiliserModule' |translate}}"></div>
                       <div ng-switch-when="1" class="stabilizerWarning" title="{{'stabiliserModule'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:10">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:10">
                       <div ng-switch-when="0" class="differentialNormal" title="{{'differentialLock'|translate}}"></div>
                       <div ng-switch-when="1" class="differentialWarning" title="{{'differentialLock'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:11">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:11">
                       <div ng-switch-when="0" class="bridgeColderNormal" title="{{'bridgeCooling'|translate}}"></div>
                       <div ng-switch-when="1" class="bridgeColderWarning" title="{{'bridgeCooling'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
                       <div ng-switch-when="0" class="oilWaterNormal" title="{{'oil-waterSeparation'|translate}}"></div>
                       <div ng-switch-when="1" class="oilWaterWarning" title="{{'oil-waterSeparation'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
+
+                    <!--需要修改,等老李回复-->
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
                       <div ng-switch-when="0" class="oilFilter2Normal" title="{{'fuelFilter'|translate}}"></div>
                       <div ng-switch-when="1" class="oilFilter2Warning" title="{{'fuelFilter'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
                       <div ng-switch-when="0" class="oilTempratureNormal" title="{{'hydraulicOilTemperature'|translate}}"></div>
                       <div ng-switch-when="1" class="oilTempratureWarning" title="{{'hydraulicOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
                   <tr>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
                       <div ng-switch-when="0" class="safeLockNormal" title="{{'securityLock'|translate}}"></div>
                       <div ng-switch-when="1" class="safeLockWarning" title="{{'securityLock'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
                       <div ng-switch-when="0" class="colderOilLevelNormal" title="{{'coolantLevel'|translate}}"></div>
                       <div ng-switch-when="1" class="colderOilLevelWarning" title="{{'coolantLevel'|translate}}"></div>
                     </td>
@@ -110,19 +113,19 @@
                       <div ng-switch-when="0" class="preWarmNormal" title="{{'preheat'|translate}}"></div>
                       <div ng-switch-when="1" class="preWarmWarning" title="{{'preheat'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:18">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:18">
                       <div ng-switch-when="0" class="powerShutNormal" title="{{'powerShutoff'|translate}}"></div>
                       <div ng-switch-when="1" class="powerShutWarning" title="{{'powerShutoff'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
                       <div ng-switch-when="0" class="muteNormal" title="{{'loudspeakerMute'|translate}}"></div>
                       <div ng-switch-when="1" class="muteWarning" title="{{'loudspeakerMute'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
                       <div ng-switch-when="0" class="backCoverNormal" title="{{'backCoverOpen'|translate}}"></div>
                       <div ng-switch-when="1" class="backCoverWarning" title="{{'backCoverOpen'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
                       <div ng-switch-when="0" class="oilFilterNormal" title="{{'oilFilter'|translate}}"></div>
                       <div ng-switch-when="1" class="oilFilterWarning" title="{{'oilFilter'|translate}}"></div>
                     </td>
@@ -130,15 +133,15 @@
                       <div ng-switch-when="0" class="airFilterNormal" title="{{'airFilter'|translate}}"></div>
                       <div ng-switch-when="1" class="airFilterWarning" title="{{'airFilter'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
                       <div ng-switch-when="0" class="colderNormal" title="{{'coolingFailure'|translate}}"></div>
                       <div ng-switch-when="1" class="colderWarning" title="{{'coolingFailure'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
                       <div ng-switch-when="0" class="speedSwitchNormal" title="{{'lowTransmissionPressure'|translate}}"></div>
                       <div ng-switch-when="1" class="speedSwitchWarning" title="{{'lowTransmissionPressure'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
                       <div ng-switch-when="0" class="engineError1Normal" title="{{'engineFailureOne'|translate}}"></div>
                       <div ng-switch-when="1" class="engineError1Warning" title="{{'engineFailureOne'|translate}}"></div>
                     </td>
@@ -196,19 +199,19 @@
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.hostNo}}</td>
                     <td>{{'GPSSignalPercentage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>
                   </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | number:2}}</td>
                     <td>{{'fuelLevel'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
                     <td>{{'coolantTemperature'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C</td>
                   </tr>
                   <tr>
-                    <td>{{'torqueConverterOilTemperature'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'">{{'torqueConverterOilTemperature'|translate}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.DeviceType != '01'">{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}</td>
                     <td>{{'CANCommunicationStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
@@ -221,8 +224,8 @@
                   <tr>
                     <td>{{'GPSSignalQuality'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gsmSignal}}</td>
-                    <td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+                    <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | number:2}}</td>
                   </tr>
@@ -235,8 +238,8 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
                     <td>{{'ACCState'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">ON</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">OFF</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
@@ -245,28 +248,29 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
                     <td>{{'GPSPowerDetection'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000}} V</td>
+                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>-->
+                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>-->
+                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>-->
+                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>-->
                     <td>{{'openCoverState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
-                  <tr>
-                    <td>{{'analogOne'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>
-                    <td>{{'analogTwo'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate2}}</td>
-                    <td>{{'SIMCardNumber'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber}}</td>
-                  </tr>
+                  <!--<tr>-->
+                    <!--<td>{{'analogOne'|translate}}</td>-->
+                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>-->
+                    <!--<td>{{'analogTwo'|translate}}</td>-->
+                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate2}}</td>-->
+                    <!--<td>{{'SIMCardNumber'|translate}}</td>-->
+                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber}}</td>-->
+                  <!--</tr>-->
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
                     <td>{{'currentPosition'|translate}}</td>
-                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}</td>
+                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
                   </tr>
                 </table>
 
@@ -381,7 +385,7 @@
                     <!--锁车状态-->
                     <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
-                    <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'one-level'|translate}}</td>
+                    <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
                     <td ng-if="deviceData.lockStatus==null">{{deviceData.startTimes}}</td>
                     <!--ACC状态-->
                     <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
@@ -576,7 +580,7 @@
 
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>

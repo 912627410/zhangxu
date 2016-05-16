@@ -110,7 +110,7 @@
   "positioningTime":"定位时间",
   "returnTime":"回传时间",
   "vehicleType":"车辆类型",
-  "GPSSignalPercentage":"GPS信号百分比",
+  "GPSSignalPercentage":"GPRS信号百分比",
   "totalRunningTimeHour":"运行总时间(小时)",
   "fuelLevel":"燃油液位",
   "coolantTemperature":"冷却剂温度",
@@ -132,7 +132,7 @@
   "work":"工作",
   "notWork":"不工作",
   "generatorState":"发电机状态",
-  "GPSPowerDetection":"GPS电源检测",
+  "GPSPowerDetection":"内部电源检测",
   "non-transFormer":"无电源",
   "noSignal":"无信号",
   "openCoverState":"开盖状态",
@@ -195,6 +195,7 @@
   "unlockMessageContent":"解锁短信内容",
   "requestingLocationData":"正在请求定位数据",
   "barometricPressure":"气压",
+  "waterTemperature":"水温",
   "rotatingSpeed":"转速",
   "turn":"转",
   "Oil":"油位",
@@ -248,6 +249,10 @@
   "pagingHomePage":"首页",
   "lastPage":"最后一页",
   "nextPage":"下一页",
-  "previousPage":"前一页"
+  "previousPage":"前一页",
+  "failedToGetSmallExcavatorModel":"读取小挖设备型号参数失败",
+  "amaplatitudeNumber":"维度",
+  "amaplongitudeNumber":"经度"
+
 
 }
