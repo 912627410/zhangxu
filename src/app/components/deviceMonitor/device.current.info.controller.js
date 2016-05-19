@@ -702,6 +702,25 @@
     if (vm.workHours != null){
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
+
+    //设置ECU 锁车状态 描述
+    vm.ecuLockStatusDesc = "";
+    if (vm.deviceinfo.ecuLockStatus != null){
+      if (vm.deviceinfo.ecuLockStatus.length == 8){
+        if (vm.deviceinfo.ecuLockStatus.substr(7,1) == "0"){
+          vm.ecuLockStatusDesc += "未激活";
+        }
+        else{
+          vm.ecuLockStatusDesc += "已激活";
+        }
+        if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
+          vm.ecuLockStatusDesc += " 密码错误";
+        }
+        else{
+          vm.ecuLockStatusDesc += " 密码正确";
+        }
+      }
+    }
     //vm.secOutPower =
     //secLocateInt
     //secInnerPower

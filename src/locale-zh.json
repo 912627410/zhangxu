@@ -216,6 +216,9 @@
   "cancelTheAutomaticKeyboardLockCarDataContent":"取消自动锁车时键盘输入数据内容",
   "UnboundContent":"解除绑定时键盘输入数据内容",
   "BoundContent":"绑定时键盘输入数据内容",
+  "bindMachineId":"实际绑定车架号",
+  "ecuLockStatus":"ECU锁车状态",
+
 
 	"remind":"提醒",
 	"remindlower":"提醒",

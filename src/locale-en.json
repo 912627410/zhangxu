@@ -220,6 +220,8 @@
   "cancelTheAutomaticKeyboardLockCarDataContent":"Cancel the automatic keyboard lock car data content",
   "UnboundContent":"Unbound content",
   "BoundContent":"Bound content",
+  "bindMachineId":"Bind Machine ID",
+  "ecuLockStatus":"ECU Lock Status",
 
   "remind":"REMIND",
 	 "remindlower":"Remind",

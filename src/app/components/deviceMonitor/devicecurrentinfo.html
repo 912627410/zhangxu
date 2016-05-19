@@ -557,7 +557,7 @@
                 <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'equipmentNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum" name="deviceNum"/>
               </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>
+              <label for="licenseId" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" readonly id="licenseId" class="form-control" placeholder="{{'licensePlateNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.licenseId" name="licenseId"/>
@@ -567,12 +567,12 @@
 
           <div class="row">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'engineCommunicationCode'|translate}}</label>
+              <label for="enginePassCode" class="col-md-2 control-label text-nowrap">{{'engineCommunicationCode'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" readonly id="enginePassCode" class="form-control" placeholder="{{'engineCommunicationCode'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
               </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'bindSIMNumber'|translate}}</label>
+              <label for="phoneNumber" class="col-md-2 control-label text-nowrap">{{'bindSIMNumber'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" readonly id="phoneNumber" class="form-control" placeholder="{{'bindSIMNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
@@ -581,6 +581,27 @@
             </div>
           </div>
 
+          <!--gps上传上来的绑定设备信息和锁车状态-->
+          <div ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3' ">
+            <hr>
+            <div class="row">
+              <div class="form-group">
+                <label for="ecuLockStatus" class="col-md-2 control-label text-nowrap">{{'ecuLockStatus'|translate}}</label>
+                <div class="col-md-4">
+                  <input type="text" readonly id="ecuLockStatus" class="form-control"
+                         ng-model="deviceCurrentInfoCtrl.ecuLockStatusDesc" name="enginePassCode"/>
+                </div>
+                <label for="bindMachineId" class="col-md-2 control-label text-nowrap">{{'bindMachineId'|translate}}</label>
+                <div class="col-md-4">
+                  <input type="text" readonly id="bindMachineId" class="form-control"
+                         ng-model="deviceCurrentInfoCtrl.deviceinfo.bindMachineId" name="bindMachineId"/>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <hr>
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
