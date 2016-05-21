@@ -11,7 +11,7 @@
 
 
   /** @ngInject */
-  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle,languages) {
+  function LoginController($rootScope,$http, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle,languages) {
     var vm = this;
     var userInfo;
     var rootParent={id:0}; //默认根节点为0
@@ -63,11 +63,16 @@
 
     vm.loginMe = function(){
       var rspPromise = serviceResource.authenticate(vm.credentials);
-      rspPromise.then(function(data){
+      rspPromise.then(function(response){
+        var data=response.data;
         var userInfo = {
-          authtoken: data.authtoken,
+          authtoken: data.token,
           userdto: data.userinfo
         };
+
+        console.log("data.token==="+data.token);
+        console.log("data.userinfo==="+data.userinfo);
+        $http.defaults.headers.common['token'] = data.token;
 
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);

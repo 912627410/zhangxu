@@ -10,7 +10,7 @@
     .controller('orgController', orgController);
 
   /** @ngInject */
-  function orgController($rootScope,$scope) {
+  function orgController($rootScope,$scope,Notification) {
     var vm = this;
 
     vm.showOrgTree = false;

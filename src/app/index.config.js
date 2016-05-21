@@ -30,7 +30,7 @@
             var url = config.url;
 
             if (status == 401) {
-              $rootScope.$state.go( "/login" );
+              $rootScope.$state.go( "home.login" );
             } else {
               $rootScope.error = method + " on " + url + " failed with status " + status;
             }
@@ -49,7 +49,11 @@
           if (isRestCall && $rootScope.userInfo && $rootScope.userInfo.authtoken) {
             var authToken = $rootScope.userInfo.authtoken;
             config.headers['Authorization'] = authToken;
+
+            config.headers['token'] = $rootScope.userInfo.authtoken;
           }
+
+
           return config || $q.when(config);
         }
       };
@@ -84,19 +88,19 @@
       prefix: 'locale-',
       suffix: '.json'
     });
-    var language_en_us = "en-us";  
+    var language_en_us = "en-us";
 		var language_zh_cn = "zh-cn";
 	  var currentLang;
-	  var current_lang_map; 
-	  currentLang = navigator.language;  
+	  var current_lang_map;
+	  currentLang = navigator.language;
 	  if(!currentLang){
 	  	 currentLang = navigator.browserLanguage;
 	  }
-	  if(currentLang.toLowerCase() == language_zh_cn)  {  
-		    current_lang_map = 'zh';       
-		}else {  
-		    current_lang_map = 'en';  
-		}   
+	  if(currentLang.toLowerCase() == language_zh_cn)  {
+		    current_lang_map = 'zh';
+		}else {
+		    current_lang_map = 'en';
+		}
    // load 'en' table on startup
     $translateProvider.preferredLanguage(current_lang_map);
 

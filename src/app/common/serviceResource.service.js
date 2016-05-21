@@ -15,6 +15,7 @@
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
+
       var defer = $q.defer();
       var succCallback = function(data){
         defer.resolve(data);
@@ -39,6 +40,10 @@
         restUpdateCall.update(params,succCallback,failCallback);
 
       }
+      if (action == "POST"){
+        restCall
+      }
+
       return defer.promise
     };
 
@@ -248,7 +253,22 @@
         var cred = "Basic "+ btoa(credentials.username+":"+credentials.password);
         var headers = credentials?{authorization:cred}:{};
         $http.defaults.headers.common['Authorization'] = cred;
-        var rspPromise = restCallService(USER_LOGIN_URL,'GET');
+
+
+
+        var loginInfo={ssn:credentials.username,password:credentials.password};
+
+        console.log("loginInfo=="+loginInfo);
+        console.log(credentials.username);
+        console.log(credentials.password);
+
+        var rspPromise= $http.post(
+          USER_LOGIN_URL,
+           loginInfo
+        );
+
+      //  var rspPromise = restCallService(USER_LOGIN_URL,"ADD",loginInfo);
+      //  var rspPromise = restCallService(USER_LOGIN_URL,'GET');
         return rspPromise;
       },
       //分页查询设备信息(device info)
