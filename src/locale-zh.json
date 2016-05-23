@@ -255,7 +255,9 @@
   "previousPage":"前一页",
   "failedToGetSmallExcavatorModel":"读取小挖设备型号参数失败",
   "amaplatitudeNumber":"维度",
-  "amaplongitudeNumber":"经度"
+  "amaplongitudeNumber":"经度",
+  "hour":"小时",
+  "mins":"分钟"
 
 
 }

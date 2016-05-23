@@ -383,6 +383,20 @@
         }
       },
 
+      //将hh.hh翻译成hh时mm分
+      convertToMins: function(hours){
+        var hoursArray = hours.toString().split(".");
+        var hourMins;
+        if (hoursArray[0] != null){
+          hourMins = hoursArray[0] + languages.findKey('hour');
+        }
+        if (hoursArray[1] != null){
+          var mins = "0." + hoursArray[1]
+          hourMins = hourMins + " " + mins * 60 + languages.findKey('mins');
+        }
+        return hourMins;
+      },
+
       //TODO
       getWarningMsg:function(deviceWarningData){
         return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
