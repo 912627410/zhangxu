@@ -258,6 +258,9 @@
    "previousPage":"Previous page",
     "failedToGetSmallExcavatorModel":"Get small excavator parameter failed",
   "amaplatitudeNumber":"Latitude",
-  "amaplongitudeNumber":"Longitude"
+  "amaplongitudeNumber":"Longitude",
+  "hour":"Hour",
+  "mins":"Mins"
+
 
 }
