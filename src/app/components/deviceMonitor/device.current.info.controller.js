@@ -566,7 +566,7 @@
           }
           else{
             vm.deviceWarningDataList.forEach(function (deviceWarningData) {
-              deviceWarningData.warningMsg = serviceResource.getWarningMsg(deviceWarningData);
+              deviceWarningData.warningMsg = serviceResource.getWarningMsg(deviceWarningData,vm.DeviceType);
             })
           }
         }, function (reason) {
