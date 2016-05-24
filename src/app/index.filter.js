@@ -52,4 +52,19 @@
       };
     });
 
+
+  angular
+    .module('GPSCloud').filter('array2obj', function() {
+    return function(arr, val) {
+      var obj = {};
+      for (var x in arr) {
+   //     console.log("arr["+x+"]==="+arr[x].permission);
+        obj[arr[x][val]] = arr[x];
+      }
+
+  //    console.log("obj==="+obj);
+      return obj;
+    }
+  });
+
 })();

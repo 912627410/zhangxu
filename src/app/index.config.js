@@ -48,7 +48,7 @@
           var isRestCall = config.url.indexOf('rest') != 0;
           if (isRestCall && $rootScope.userInfo && $rootScope.userInfo.authtoken) {
             var authToken = $rootScope.userInfo.authtoken;
-            config.headers['Authorization'] = authToken;
+      //      config.headers['Authorization'] = authToken;
 
             config.headers['token'] = $rootScope.userInfo.authtoken;
           }

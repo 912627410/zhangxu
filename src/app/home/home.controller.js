@@ -17,6 +17,9 @@
       totalAbnormalDevices: 0
     };
 
+   // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
+  //  console.log("$rootScope.userInfo =="+$rootScope.userInfo );
+
     if ($rootScope.userInfo) {
       var rspdata = serviceResource.restCallService(HOME_STATISTICS_DATA_URL, "GET");
       rspdata.then(function (data) {
@@ -38,5 +41,7 @@
       })
     }
     vm.statisticInfo = statisticInfo;
+
+
   }
 })();

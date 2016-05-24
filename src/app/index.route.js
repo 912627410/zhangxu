@@ -41,6 +41,33 @@
           'footer@home':{
             templateUrl: 'app/main/footer.html'
           }
+        },
+        resolve: {
+          //'permission': ["permissions", "serviceResource", "$filter", function(permissions, serviceResource, $filter) {
+          //  return serviceResource.getPermission().then(function(data) {
+          //    permissions.setPermissions($filter("array2obj")(data.content, "permission"));
+          //  });
+          //}]
+
+
+          permission: function(permissions,serviceResource,$filter){
+            console.log("this is in index start");
+            var rspdata= serviceResource.getPermission();
+            console.log("33333==="+rspdata.data);
+            rspdata.then(function (data) {
+              console.log("data=="+data.content);
+
+              var permissionList=$filter("array2obj")(data.content, "permission");
+              console.log(permissionList['device:homegpsdata']);
+
+               permissions.setPermissions(permissionList);
+            }, function (reason) {
+              console.log("555");
+              Notification.error('获取设备信息失败');
+            })
+            console.log("this is in index start");
+          }
+
         }
       })
       .state('home.login', {

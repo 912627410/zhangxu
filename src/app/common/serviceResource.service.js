@@ -9,10 +9,10 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -147,6 +147,23 @@
         $rootScope.userInfo.authtoken ="Basic "+ btoa($rootScope.userInfo.userdto.ssn+":"+newpassword);
         $window.sessionStorage["userInfo"] = JSON.stringify($rootScope.userInfo);
       },
+
+      getPermission:function(){
+        console.log("getPermission start ");
+      if($rootScope.userInfo){
+        console.log("2222");
+
+
+        var rspdata= restCallService(PERMISSIONS_URL,"GET");
+
+        return rspdata;
+        console.log("444");
+      }
+        return null;
+        console.log("getPermission end ");
+
+      },
+
       //高德地图逆向地理编码(坐标->地址)
       getAddressFromXY: function(lnglatXY,callback){
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -253,14 +270,7 @@
         var cred = "Basic "+ btoa(credentials.username+":"+credentials.password);
         var headers = credentials?{authorization:cred}:{};
         $http.defaults.headers.common['Authorization'] = cred;
-
-
-
         var loginInfo={ssn:credentials.username,password:credentials.password};
-
-        console.log("loginInfo=="+loginInfo);
-        console.log(credentials.username);
-        console.log(credentials.password);
 
         var rspPromise= $http.post(
           USER_LOGIN_URL,

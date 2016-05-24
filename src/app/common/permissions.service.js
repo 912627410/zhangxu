@@ -9,31 +9,47 @@
     .factory('permissions', permissions);
 
   /** @ngInject */
-    function permissions() {
-    var permissionList;
+  function permissions($rootScope) {
+
+    var permissionList = {};
+    //var rspData = serviceResource.getPermission();
+    //rspData.then(function (data) {
+    // console.log(data.content);
+    //  permissionList=data.content;
+    //}, function (reason) {
+    // console.log("1111");
+    //});
+
+
     var unPermissionsMode = unPermissionsMode || false;
-    //alert(unPermissionsMode);
     return {
+      /*设置权限*/
       setPermissions: function(permissions) {
         permissionList = permissions;
-      },
-      getPermissions: function(arg) {
-        if (!permissionList) {
-          //api("postPermission").then(function(data) {
-          //  this.setPermissions($filter("array2obj")(data, "permission"));
-          //});
-          permissionList=[];
-       //   permissionList=[{1:{"action":"/machine/machine","permission":"machine:oper"}}];
-          permissionList["machine:oper"]="machine:oper";
-        }
+        // $rootScope.$broadcast('permissionsChanged')
+        console.log("==11111=="+permissionList['device:homegpsdata']['permission']);
 
-     //   alert("111="+permissionList[arg] ? true : false);
-        return unPermissionsMode || permissionList[arg] ? true : false;
       },
+      /*获取权限*/
+      getPermissions: function(arg) {
+
+        var permissions=$rootScope.permissions;
+
+        for(var x in permissions){
+          console.log("x==="+x);
+          console.log(permissions[x]);
+        }
+          console.log("arg==="+arg);
+          console.log("permissionList[arg]==="+permissionList['device:homegpsdata']);
+        if (unPermissionsMode) return true;
+        if (permissionList[arg]) return true;
+        return false;
+      },
+      /*获取全部权限*/
       getAll: function() {
         return permissionList;
       }
     };
-    }
+  }
 
 })();

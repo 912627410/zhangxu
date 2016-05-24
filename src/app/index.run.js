@@ -28,6 +28,11 @@
       $rootScope.notificationNumber = $window.sessionStorage["notificationNumber"];
     }
 
+    //权限列表
+    if ($window.sessionStorage["permissions"]) {
+      $rootScope.permissions = $window.sessionStorage["permissions"];
+    }
+
     //判断是否登录
     if ($rootScope.userInfo){
       //监控用户登录超时

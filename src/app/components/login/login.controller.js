@@ -11,7 +11,7 @@
 
 
   /** @ngInject */
-  function LoginController($rootScope,$http, $window,ORG_TREE_JSON_DATA_URL,Notification,serviceResource,Idle,languages) {
+  function LoginController($rootScope,$http, $filter,$window,ORG_TREE_JSON_DATA_URL,PERMISSIONS_URL,Notification,serviceResource,permissions,Idle,languages) {
     var vm = this;
     var userInfo;
     var rootParent={id:0}; //默认根节点为0
@@ -70,8 +70,8 @@
           userdto: data.userinfo
         };
 
-        console.log("data.token==="+data.token);
-        console.log("data.userinfo==="+data.userinfo);
+      //  console.log("data.token==="+data.token);
+      //  console.log("data.userinfo==="+data.userinfo);
         $http.defaults.headers.common['token'] = data.token;
 
         $rootScope.userInfo = userInfo;
@@ -134,6 +134,37 @@
             Notification.error(languages.findKey('failedToGetRemindInformation'));
           }
         );
+
+        //读取权限信息
+        var rspData = serviceResource.restCallService(PERMISSIONS_URL,"GET");
+        rspData.then(function(data){
+          //   console.log($filter("array2obj")(data.content, "permission"));
+
+          //var permissions=new Array();
+          //for(var i=0; i<data.content.length;i++){
+          //  permissions.push(data.content[i].permission);
+          //}
+          //
+          //console.log("permissions==="+permissions);
+       //   var permissions=$filter("array2obj")(data.content, "permission");
+         // permissions.setPermissions(permissions);
+
+       //   console.log("permissionList['device:homegpsdata']===="+permissionList['device:homegpsdata']);
+
+          $rootScope.permissions = permissions;
+          $window.sessionStorage["permissions"] = permissions;
+
+          //for(var x in permissionList){
+          //  console.log("x==="+x);
+          //  console.log(permissionList[x]);
+          //}
+
+
+
+
+        },function(reason){
+        });
+
 
         $rootScope.$state.go('home');
       },function(reason){
