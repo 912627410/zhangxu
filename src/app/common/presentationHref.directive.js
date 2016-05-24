@@ -12,10 +12,7 @@
       return {
          restrict:'A',
          link:function($scope,iElm,iAttrs){
-
            var hrefs = iAttrs.presentationHref;
-           console.log(hrefs);
-          console.log(permissions.getPermissions(hrefs));
            !permissions.getPermissions(hrefs)&&iElm.remove();
          }
       }

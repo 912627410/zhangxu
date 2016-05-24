@@ -129,7 +129,6 @@
         var rspData = serviceResource.getPermission();
         rspData.then(function(data){
           var permissionList=$filter("array2obj")(data.content, "permission");
-          console.log(permissionList);
           $rootScope.permissionList = permissionList;
           $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
 
