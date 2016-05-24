@@ -153,13 +153,12 @@
       if($rootScope.userInfo){
         console.log("2222");
 
-
         var rspdata= restCallService(PERMISSIONS_URL,"GET");
 
         return rspdata;
         console.log("444");
       }
-        return null;
+     //   return null;
         console.log("getPermission end ");
 
       },

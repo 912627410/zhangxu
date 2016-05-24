@@ -13,47 +13,9 @@
          restrict:'A',
          link:function($scope,iElm,iAttrs){
 
-          var permissiosList= $scope.$parent.permissions;
-
-           for(var x in permissiosList){
-             console.log("x222==="+x);
-             console.log(permissiosList[x]);
-           }
-        //
-        //   var hrefs = iAttrs.presentationHref.split(".");
-        //   console.log("hrefs=="+hrefs);
-        //
-        //
-        //   //console.log("$scope.permissionList.length= =="+$scope.permissionList.length );
-        //   //
-        //   for (var i=0;i<$rootScope.permissionList.length;i++)
-        //   {
-        //     console.log($rootScope.permissionList[i]);
-        //   }
-        //
-        //   if (hrefs[0] == "home"){
-        //     hrefs.splice(0, 1);
-        //   }
-        //   hrefs = hrefs.join(":");
-        ////   console.log("hrefs=="+hrefs);
-        //   var permissionList=$rootScope.permissionList;
-        //
-        //   console.log('222===permissionList==='+permissionList);
-        //
-        //   console.log(permissionList.indexOf(hrefs));
-        // //  if (permissions[arg]
-        //
-        //   console.log("permissionList['device:homegpsdata']===="+permissionList['device:homegpsdata']);
-        //
-        //   console.log('permissionList[hrefs]==='+permissionList[hrefs]);
-        //
-        //   !permissionList[hrefs]&&iElm.remove();
-
-
            var hrefs = iAttrs.presentationHref;
-         //  if (hrefs[0] == "home") hrefs.splice(0, 1);
-         //  hrefs = + hrefs.join(":");
-       //    console.log("hrefs==="+hrefs);
+           console.log(hrefs);
+          console.log(permissions.getPermissions(hrefs));
            !permissions.getPermissions(hrefs)&&iElm.remove();
          }
       }

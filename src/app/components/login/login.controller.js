@@ -20,16 +20,6 @@
     vm.unflatten=function( array, parent, tree ){
       tree = typeof tree !== 'undefined' ? tree : [];
       parent = typeof parent !== 'undefined' ? parent : { id: 0 };
-     // parent = typeof parent !== 'undefined' ? parent : rootParent;
-      //alert("parent.id==="+parent.id);
-      //    alert(root.id);
-
-      //alert("0.222=="+parent.id);
-
-      //if(parent.id==rootParent.id){
-      //  parent.id=0;
-      //}
-
 
       var children = _.filter( array, function(child) {
         return child.parentId == parent.id;
@@ -135,38 +125,21 @@
           }
         );
 
-        //读取权限信息
-        var rspData = serviceResource.restCallService(PERMISSIONS_URL,"GET");
+       // //读取权限信息
+        var rspData = serviceResource.getPermission();
         rspData.then(function(data){
-          //   console.log($filter("array2obj")(data.content, "permission"));
+          var permissionList=$filter("array2obj")(data.content, "permission");
+          console.log(permissionList);
+          $rootScope.permissionList = permissionList;
+          $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
 
-          //var permissions=new Array();
-          //for(var i=0; i<data.content.length;i++){
-          //  permissions.push(data.content[i].permission);
-          //}
-          //
-          //console.log("permissions==="+permissions);
-       //   var permissions=$filter("array2obj")(data.content, "permission");
-         // permissions.setPermissions(permissions);
-
-       //   console.log("permissionList['device:homegpsdata']===="+permissionList['device:homegpsdata']);
-
-          $rootScope.permissions = permissions;
-          $window.sessionStorage["permissions"] = permissions;
-
-          //for(var x in permissionList){
-          //  console.log("x==="+x);
-          //  console.log(permissionList[x]);
-          //}
-
-
-
+          $rootScope.$state.go('home');
 
         },function(reason){
         });
 
 
-        $rootScope.$state.go('home');
+
       },function(reason){
         $rootScope.userInfo = null;
         $window.sessionStorage["userInfo"] = null;

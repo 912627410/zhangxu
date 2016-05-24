@@ -29,8 +29,8 @@
     }
 
     //权限列表
-    if ($window.sessionStorage["permissions"]) {
-      $rootScope.permissions = $window.sessionStorage["permissions"];
+    if ($window.sessionStorage["permissionList"]) {
+      $rootScope.permissionList = JSON.parse($window.sessionStorage["permissionList"]);
     }
 
     //判断是否登录
