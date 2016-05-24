@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_REMOVE_ORG_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
@@ -270,7 +270,7 @@ machine.org.label=vm.org.label;
     vm.removeDevice = function (machine) {
       $confirm({text: '确定要解绑吗?',title: '解绑确认', ok: '确定', cancel: '取消'})
         .then(function() {
-          var restPromise = serviceResource.restUpdateRequest(MACHINE_REMOVE_ORG_URL, machine.id);
+          var restPromise = serviceResource.restUpdateRequest(MACHINE_UNBIND_DEVICE_URL, machine.id);
           restPromise.then(function (data) {
             Notification.success("解绑设备成功!");
             vm.query(null, null, null, null);
