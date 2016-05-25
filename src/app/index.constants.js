@@ -70,6 +70,11 @@
 
     .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
 
+    .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolepage')   //得到角色的分页信息
+    .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleoper')   //角色基本信息
+
+
+
   ;
 
 

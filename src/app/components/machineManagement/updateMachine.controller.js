@@ -134,6 +134,11 @@
       else{
         postInfo.deviceinfo=null;
       }
+
+      if(machine.org==null){
+        Notification.error("请先调拨车辆");
+        return;
+      }
       postInfo.org={id:machine.org.id};
 
       var restPromise = serviceResource.restUpdateRequest(MACHINE_URL,postInfo);

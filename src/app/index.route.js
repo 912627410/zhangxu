@@ -137,6 +137,16 @@
           }
         }
       })
+      .state('home.roleMng', {
+        url: '/roleMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/roleManagement/roleMng.html',
+            controller: 'roleMngController as roleMngCtrl'
+          }
+
+        }
+      })
 
     ;
 

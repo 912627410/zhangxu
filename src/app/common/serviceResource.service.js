@@ -149,18 +149,10 @@
       },
 
       getPermission:function(){
-        console.log("getPermission start ");
       if($rootScope.userInfo){
-        console.log("2222");
-
         var rspdata= restCallService(PERMISSIONS_URL,"GET");
-
         return rspdata;
-        console.log("444");
       }
-     //   return null;
-        console.log("getPermission end ");
-
       },
 
       //高德地图逆向地理编码(坐标->地址)
