@@ -258,9 +258,7 @@
       },
       //登录认证接口
       authenticate:function(credentials){
-        var cred = "Basic "+ btoa(credentials.username+":"+credentials.password);
-        var headers = credentials?{authorization:cred}:{};
-        $http.defaults.headers.common['Authorization'] = cred;
+
         var loginInfo={ssn:credentials.username,password:credentials.password};
 
         var rspPromise= $http.post(

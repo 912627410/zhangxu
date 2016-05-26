@@ -147,6 +147,16 @@
 
         }
       })
+      .state('home.privilageMng', {
+        url: '/privilageMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/privilgeManagement/privilgeMng.html',
+            controller: 'privilgeMngController as privilgeMngCtrl'
+          }
+
+        }
+      })
 
     ;
 

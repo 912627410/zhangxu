@@ -21,7 +21,7 @@
     //树状列表配置
     /* Register error provider that shows message on failed requests or redirects to login page on
      * unauthenticated requests */
-    $httpProvider.interceptors.push(function ($q, $rootScope) {
+    $httpProvider.interceptors.push(function ($q, $rootScope,$window) {
         return {
           'responseError': function(rejection) {
             var status = rejection.status;
@@ -30,6 +30,17 @@
             var url = config.url;
 
             if (status == 401) {
+              $rootScope.userInfo = null;
+              $rootScope.deviceGPSInfo = null;
+              $rootScope.statisticInfo = null;
+              $rootScope.permissionList = null;
+
+
+              $window.sessionStorage.removeItem("userInfo");
+              $window.sessionStorage.removeItem("deviceGPSInfo");
+              $window.sessionStorage.removeItem("statisticInfo");
+              $window.sessionStorage.removeItem("permissionList");
+
               $rootScope.$state.go( "home.login" );
             } else {
               $rootScope.error = method + " on " + url + " failed with status " + status;

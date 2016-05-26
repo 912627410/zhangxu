@@ -70,8 +70,12 @@
 
     .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
 
-    .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolepage')   //得到角色的分页信息
-    .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleoper')   //角色基本信息
+    .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolePage')   //角色的分页信息
+    .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleOper')   //角色基本CRUD信息
+
+    .constant('PRIVILAGE_PAGE_URL', SERVER_BASE_URL + 'privilge/privilgePage')   //权限的分页信息
+    .constant('PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'privilge/privilgeOper')   //权限基本CRUD信息
+    .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilge/statusList')   //权限状态信息
 
 
 
