@@ -6,15 +6,15 @@
 
   angular
     .module('GPSCloud')
-    .controller('updatePrivilgeController', updatePrivilgeController);
+    .controller('updatePriviligeController', updatePriviligeController);
 
   /** @ngInject */
-  function updatePrivilgeController($uibModalInstance,PRIVILAGE_OPER_URL,serviceResource, Notification,privilgeInfo) {
+  function updatePriviligeController($uibModalInstance,PRIVILAGE_OPER_URL,serviceResource, Notification,priviligeInfo) {
     var vm = this;
-    vm.privilgeInfo=privilgeInfo;
+    vm.priviligeInfo=priviligeInfo;
 
-    vm.ok = function (privilgeInfo) {
-      var restPromise = serviceResource.restUpdateRequest(PRIVILAGE_OPER_URL,privilgeInfo);
+    vm.ok = function (priviligeInfo) {
+      var restPromise = serviceResource.restUpdateRequest(PRIVILAGE_OPER_URL,priviligeInfo);
       restPromise.then(function (data){
 
         if(data.code===0){

@@ -6,24 +6,24 @@
 
   angular
     .module('GPSCloud')
-    .controller('newPrivilgeController', newPrivilgeController);
+    .controller('newPriviligeController', newPriviligeController);
 
   /** @ngInject */
-  function newPrivilgeController($scope, $uibModalInstance,PRIVILAGE_OPER_URL, serviceResource, Notification) {
+  function newPriviligeController($scope, $uibModalInstance,PRIVILAGE_OPER_URL, serviceResource, Notification) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
-    vm.privilgeInfo = {};
+    vm.priviligeInfo = {};
 
 
-    vm.ok = function (privilgeInfo) {
-     var restPromise = serviceResource.restAddRequest(PRIVILAGE_OPER_URL, privilgeInfo);
+    vm.ok = function (priviligeInfo) {
+     var restPromise = serviceResource.restAddRequest(PRIVILAGE_OPER_URL, priviligeInfo);
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("新建权限信息成功!");
           $uibModalInstance.close(data.content);
         }else{
-          vm.privilgeInfo = privilgeInfo;
+          vm.priviligeInfo = priviligeInfo;
           Notification.error(data.message);
         }
       }, function (reason) {

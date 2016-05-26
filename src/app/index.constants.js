@@ -73,9 +73,11 @@
     .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolePage')   //角色的分页信息
     .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleOper')   //角色基本CRUD信息
 
-    .constant('PRIVILAGE_PAGE_URL', SERVER_BASE_URL + 'privilge/privilgePage')   //权限的分页信息
-    .constant('PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'privilge/privilgeOper')   //权限基本CRUD信息
-    .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilge/statusList')   //权限状态信息
+    .constant('PRIVILAGE_PAGE_URL', SERVER_BASE_URL + 'privilige/priviligePage')   //权限的分页信息
+    .constant('PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'privilige/priviligeOper')   //权限基本CRUD信息
+    .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilige/statusList')   //权限状态信息
+    .constant('PRIVILAGE_STATUS_DISABLE_URL', SERVER_BASE_URL + 'privilige/statusDisable')   //权限禁止
+    .constant('PRIVILAGE_STATUS_ENABLE_URL', SERVER_BASE_URL + 'privilige/statusEnable')   //权限启用
 
 
 

@@ -1,0 +1,100 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">角色管理</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">角色名</label>
+
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="permission" class="form-control " ng-model="priviligeMngCtrl.priviligeInfo.permission" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">状态</label>
+    </div>
+    <div class="col-md-3">
+      <ui-select name="status" ng-model="priviligeMngCtrl.priviligeInfo.status" theme="bootstrap"
+                 ng-disabled="disabled">
+        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        </ui-select-match>
+        <ui-select-choices repeat="priviligeStatus in priviligeMngCtrl.priviligeStatusList">
+          <div ng-bind-html="priviligeStatus.desc | highlight: $select.search"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" presentation-href="privilige:priviligePage"  ng-click="priviligeMngCtrl.query(null,null,null,priviligeMngCtrl.priviligeInfo)">查询</button>
+      <button class="btn btn-primary" type="button"  ng-click="priviligeMngCtrl.reset()">重置</button>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">权限总数:  {{priviligeMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-10">
+
+      <a class="btn btn-default pull-right"
+         presentation-href="privilige:priviligeOper"
+         ng-click="priviligeMngCtrl.newPrivilige()">
+        <i class="fa fa-plus"></i> 增加
+      </a>
+    </div>
+  </div>
+  <div class="row " style="padding: 10px">
+      <div class="table-responsive">
+      <table ng-table="priviligeMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="priviligeInfo in $data">
+
+          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{priviligeInfo.id}}</td>
+          <td class="text-nowrap" data-title="'权限名'" sortable="'permission'">{{priviligeInfo.permission}}</td>
+          <td class="text-nowrap" data-title="'描述'" sortable="'remark'">{{priviligeInfo.remark}}</td>
+          <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{priviligeInfo.statusDesc}}</td>
+
+          <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{priviligeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{priviligeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap"  data-title="'操作'" >
+            <button type="button" class="btn btn-default btn-xs"
+                    presentation-href="privilige:priviligeOper"
+                    ng-click="priviligeMngCtrl.updatePrivilige(priviligeInfo)">修改
+            </button>
+            <button type="button" class="btn btn-success btn-xs"
+                    ng-if="priviligeInfo.status===0"
+                    ng-click="priviligeMngCtrl.statusEnable(priviligeInfo)">启用
+            </button>
+            <button type="button" class="btn btn-danger btn-xs"
+                    ng-if="priviligeInfo.status===1"
+                    ng-click="priviligeMngCtrl.statusDisable(priviligeInfo)">禁止
+            </button>
+          </td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="priviligeMngCtrl.page.totalElements" ng-change="priviligeMngCtrl.query(priviligeMngCtrl.pageNumber-1,null,null,priviligeMngCtrl.priviligeInfo)"
+                    max-size="5" ng-model="priviligeMngCtrl.pageNumber" items-per-page="priviligeMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+  </div>
+
+</section>
+
