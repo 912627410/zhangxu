@@ -49,7 +49,7 @@
       //实例化信息窗体
       var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
-        offset: new AMap.Pixel(15, -40)//-113, -140
+        offset: new AMap.Pixel(27, -40)//-113, -140
       });
 
       var marker = new AMap.Marker({
@@ -226,7 +226,12 @@
                     var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
                   }
                   if (latitude != null && longitude != null) {
-                    addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
+                    // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
+                    var marker="assets/images/orangeMarker.png";
+                    if(deviceGPSInfo[i].accStatus=='01'){
+                      marker="assets/images/greenMarker.png";
+                    }
+                    addMarkerModel(map,deviceGPSInfo[i],marker);
                   }
                 }
               }, function (reason) {
@@ -239,9 +244,10 @@
                 if (deviceInfo.locateStatus === 'A' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
 
 
-                  var marker="http://webapi.amap.com/images/marker_sprite.png";
+                  // var marker="http://webapi.amap.com/images/marker_sprite.png";
+                  var marker="assets/images/orangeMarker.png";
                   if(deviceInfo.accStatus=='01'){
-                    marker="";
+                    marker="assets/images/greenMarker.png";
                   }
 
 
