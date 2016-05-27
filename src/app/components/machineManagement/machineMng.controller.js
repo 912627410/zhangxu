@@ -84,7 +84,7 @@
     vm.hideOrgTree = function () {
       vm.showOrgTree = false;
     }
-
+    //TODO 11111
     $scope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
       vm.org = vm.selectedOrg;
@@ -232,7 +232,7 @@
       var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
       // alert(moveOrg.ids+"  "+moveOrg.orgId);
 
-
+      // TODO 222222
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
         //更新页面显示
@@ -240,7 +240,7 @@
           //循环table,更新选中的设备
           if(vm.selected.indexOf(machine.id)!=-1){
             machine.checked=false;
-machine.org.label=vm.org.label;
+            machine.org.label=vm.org.label;
             // console.log(deviceinfo.org.label);
           }
         })

@@ -21,11 +21,14 @@
 
     vm.my_tree_handler = function(branch) {
       $scope.$emit("OrgSelectedEvent",branch);
+      //取消选中
+      vm.select_branch();
     };
 
     vm.user_tree_handler = function(eventName,branch) {
       $scope.$emit(eventName,branch);
     };
+
 
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0){
       vm.my_data=[$rootScope.orgChart[0]];
