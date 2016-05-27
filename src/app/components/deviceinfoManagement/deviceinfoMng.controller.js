@@ -22,7 +22,7 @@
     vm.openOrgTree = function () {
       vm.showOrgTree = !vm.showOrgTree;
     }
-
+     // TODO 222222
     $scope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
       vm.org = vm.selectedOrg;
@@ -228,8 +228,7 @@
 
         return;
       }
-
-
+      // TODO 11111
       var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
       var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
@@ -242,7 +241,6 @@
             deviceinfo.org.label=vm.org.label;
           }
         })
-
         vm.org=null;
         vm.selected=[]; //把选中的设备设置为空
         Notification.success("调拨设备成功!");
