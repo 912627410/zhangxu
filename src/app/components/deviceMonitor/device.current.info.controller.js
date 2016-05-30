@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$http,$timeout,$confirm,$filter,$uibModalInstance,languages,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
@@ -525,12 +525,7 @@
       vm.endDateOpenStatusDeviceWarningData.opened = true;
     };
 
-    //加载故障代码描述对照表(小挖)
-    $http.get('warningDtc.json').success(function(data){
 
-      $rootScope.warningDataDtc=data;
-
-    });
     vm.getDeviceWarningData = function(page,size,sort,deviceNum,startDate,endDate){
       if (deviceNum){
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
