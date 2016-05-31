@@ -83,6 +83,9 @@
                     ng-if="priviligeInfo.status===1"
                     ng-click="priviligeMngCtrl.statusDisable(priviligeInfo)">禁止
             </button>
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-click="priviligeMngCtrl.priviligeRoleManage(priviligeInfo,'lg')">隶属角色
+            </button>
           </td>
         </tr>
       </table>

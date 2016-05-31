@@ -3,11 +3,11 @@
 
   angular
     .module('GPSCloud')
-    .controller('userRoleMngController', userRoleMngController);
+    .controller('priviligeRoleMngController', priviligeRoleMngController);
 
   /** @ngInject */
-  function userRoleMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
-                                 USER_ROLE_OPER_URL, USER_ROLE_LIST_URL, userinfo) {
+  function priviligeRoleMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
+                                      PRIVILAGE_ROLE_OPER_URL, PRIVILAGE_ROLE_LIST_URL, priviligeInfo) {
     var vm = this;
     vm.org = {label: ""};    //组织
     vm.operatorInfo = $rootScope.userInfo;
@@ -16,8 +16,8 @@
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    vm.userinfoRoleList = []; //存放用户角色集合
-    vm.userinfo = userinfo;
+    vm.priviligeRoleList = []; //存放用户角色集合
+    vm.priviligeInfo = priviligeInfo;
     vm.roleList;
     vm.deleteList = [];
     vm.addList = [];
@@ -25,9 +25,9 @@
 
 
 
-    vm.getUserRole = function () {
-      var roleUserUrl = USER_ROLE_LIST_URL;
-      roleUserUrl += "?userinfoId=" + vm.userinfo.id;
+    vm.getPriviligeRole = function () {
+      var roleUserUrl = PRIVILAGE_ROLE_LIST_URL;
+      roleUserUrl += "?priviligeId=" + vm.priviligeInfo.id;
       //得到设备类型集合
       var roleUserPromise = serviceResource.restCallService(roleUserUrl, "QUERY");
       roleUserPromise.then(function (data) {
@@ -38,7 +38,7 @@
 
           // vm.selected.push(data[i].userinfoId);
           if (null != data[i]) {
-            vm.userinfoRoleList.push(data[i].roleId);
+            vm.priviligeRoleList.push(data[i].roleId);
           }
 
         }
@@ -48,6 +48,9 @@
         Notification.error('获取权限状态失败');
       })
     }
+
+
+
 
 
     /**
@@ -75,7 +78,7 @@
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
 
-        vm.selected = angular.copy(vm.userinfoRoleList); //深度copy
+        vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
         vm.roleList = data.content;
         vm.tableParams = new NgTableParams({},
           {
@@ -90,7 +93,7 @@
 
     //首次查询
     vm.query(null, 10, null, null);
-    vm.getUserRole();
+    vm.getPriviligeRole();
 
     /**
      * 重置查询框
@@ -164,8 +167,8 @@
       })
 
       //判断原来是否已经选中,如果是的话,不再传输
-      for (var i = 0; i < vm.userinfoRoleList.length; i++) {
-        var id = vm.userinfoRoleList[i];
+      for (var i = 0; i < vm.priviligeRoleList.length; i++) {
+        var id = vm.priviligeRoleList[i];
         if (vm.addList.indexOf(id) != -1) {
           var idx = vm.addList.indexOf(id);
           vm.addList.splice(idx, 1);
@@ -178,8 +181,8 @@
 
       }
 
-      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "id": vm.userinfo.id};
-      var restPromise = serviceResource.restUpdateRequest(USER_ROLE_OPER_URL, roleUsers);
+      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "id": vm.priviligeInfo.id};
+      var restPromise = serviceResource.restUpdateRequest(PRIVILAGE_ROLE_OPER_URL, roleUsers);
       restPromise.then(function (data) {
 
         if(data.code==0){

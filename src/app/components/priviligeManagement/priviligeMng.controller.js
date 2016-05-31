@@ -165,5 +165,33 @@
         }
       }
     }
+
+    /**
+     * 隶属角色管理
+     * @param size
+     */
+    vm.priviligeRoleManage = function (priviligeInfo,size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/priviligeManagement/priviligeRoleMng.html',
+        controller: 'priviligeRoleMngController as priviligeRoleMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          priviligeInfo: function () {
+            return priviligeInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        // console.log(result);
+//        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    };
   }
 })();
