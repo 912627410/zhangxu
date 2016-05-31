@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h3 class="modal-title">隶属信息
+  </h3>
+</div>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+  <div class="col-md-1">
+    <label class="control-label">角色名</label>
+
+  </div>
+  <div class="col-md-3">
+    <input type="text" name="name" class="form-control " ng-model="userRoleMngController.roleInfo.name" placeholder="支持模糊查询"/>
+  </div>
+
+
+
+  <div class="col-md-2">
+    <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="userRoleMngController.query(null,10,null,userRoleMngController.roleInfo)">查询</button>
+    <button class="btn btn-primary" type="button"  ng-click="userRoleMngController.reset()">重置</button>
+  </div>
+
+
+</div>
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">用户总数:  {{userRoleMngController.page.totalElements}}</span>
+    </div>
+    <div class="col-md-10">
+      <button class="btn btn-warning pull-right" type="button" ng-click="userRoleMngController.cancel()">取消</button>
+      <button class="btn btn-primary pull-right" type="button"  ng-click="userRoleMngController.updateUserRole()">更新</button>
+
+    </div>
+  </div>
+  <div class="row " style="padding: 10px">
+      <div class="table-responsive">
+        <script id="selectAllHeader" type="text/ng-template">
+          <input type="checkbox" ng-click="userRoleMngController.updateAllSelection($event)"
+                 ng-model="userRoleMngController.checked">
+        </script>
+      <table ng-table="userRoleMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="roleInfo in $data">
+          <td class="text-nowrap" data-header="'selectAllHeader'">
+            <input type="checkbox" ng-checked="userRoleMngController.isSelected(roleInfo.id)"
+                   ng-click="userRoleMngController.updateSelection($event,roleInfo.id)" ng-model="roleInfo.checked" >
+          </td>
+          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{roleInfo.id}}</td>
+          <td class="text-nowrap" data-title="'角色名'" sortable="'name'">{{roleInfo.name}}</td>
+
+          <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+      </table>
+      </div>
+    </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="userRoleMngController.page.totalElements" ng-change="userRoleMngController.query(userRoleMngController.pageNumber-1,10,null,userRoleMngController.userinfo)"
+                    max-size="5" ng-model="userRoleMngController.pageNumber" items-per-page="userRoleMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+  </div>
+
+
+
+</section>
+

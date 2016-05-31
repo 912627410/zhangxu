@@ -202,5 +202,34 @@
         }
       }
     }
+
+
+    /**
+     * 隶属角色管理
+     * @param size
+     */
+    vm.userRoleManage = function (userinfo,size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/userManagement/userRoleMng.html',
+        controller: 'userRoleMngController as userRoleMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          userinfo: function () {
+            return userinfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        // console.log(result);
+//        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    };
   }
 })();
