@@ -50,13 +50,13 @@
       <div class="table-responsive">
         <script id="selectAllHeader" type="text/ng-template">
           <input type="checkbox" ng-click="rolePriviligeMngController.updateAllSelection($event)"
-                 ng-model="roleUserMngController.checked">
+                 ng-model="roleUserMngController.checked" ng-if="rolePriviligeMngController.roleInfo.id !=1">
         </script>
       <table ng-table="rolePriviligeMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="priviligeInfo in $data">
           <td class="text-nowrap" data-header="'selectAllHeader'">
             <input type="checkbox" ng-checked="rolePriviligeMngController.isSelected(priviligeInfo.id)"
-                   ng-click="rolePriviligeMngController.updateSelection($event,priviligeInfo.id)" ng-model="priviligeInfo.checked" >
+                   ng-click="rolePriviligeMngController.updateSelection($event,priviligeInfo.id)" ng-model="priviligeInfo.checked" ng-if="rolePriviligeMngController.roleInfo.id !=1">
           </td>
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{priviligeInfo.id}}</td>
           <td class="text-nowrap" data-title="'权限名'" sortable="'permission'">{{priviligeInfo.permission}}</td>

@@ -82,8 +82,8 @@
         url: '/userinfomng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/userManagement/userinfomng.html',
-            controller: 'userMngController as userMngCtrl'
+            templateUrl: 'app/components/userManagement/userMng.html',
+            controller: 'userMngController as userMngController'
           }
         }
       })

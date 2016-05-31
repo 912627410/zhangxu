@@ -87,7 +87,8 @@
     //用户相关
     .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')   //用户信息分页
     .constant('USER_STATUS_URL', SERVER_BASE_URL + 'user/statusList')   //权限状态信息
-
+    .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')   //权限禁止
+    .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
   ;
 
 
