@@ -19,8 +19,8 @@
     };
 
     //得到设备类型集合
-    var promise = serviceResource.restCallService(PRIVILAGE_STATUS_URL, "QUERY");
-    promise.then(function (data) {
+    var deviceTypeData = serviceResource.restCallService(PRIVILAGE_STATUS_URL, "QUERY");
+    deviceTypeData.then(function (data) {
       vm.priviligeStatusList = data;
     }, function (reason) {
       Notification.error('获取权限状态失败');

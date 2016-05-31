@@ -125,5 +125,34 @@
       });
     };
 
+
+    /**
+     * 包含用户管理
+     * @param size
+     */
+    vm.roleUserManage = function (roleInfo,size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/roleManagement/roleUserMng.html',
+        controller: 'roleUserMngController as roleUserMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          roleInfo: function () {
+            return roleInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        // console.log(result);
+        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    };
+
   }
 })();

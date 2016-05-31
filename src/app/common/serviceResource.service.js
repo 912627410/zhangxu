@@ -260,7 +260,7 @@
       authenticate:function(credentials){
 
         var loginInfo={ssn:credentials.username,password:credentials.password};
-
+  console.log(111);
         var rspPromise= $http.post(
           USER_LOGIN_URL,
            loginInfo
