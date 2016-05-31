@@ -62,8 +62,7 @@
       });
 
       modalInstance.result.then(function () {
-        vm.showUserMng(vm.operatorInfo.userdto.role,null,null,null);
-        vm.loadUsersStatistic();
+
       }, function () {
         //取消
       });
@@ -108,7 +107,7 @@
       });
 
       modalInstance.result.then(function (selectedItem) {
-        vm.showUserMng(vm.operatorInfo.userdto.role,null,null,null);
+
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });

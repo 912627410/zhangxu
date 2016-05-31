@@ -64,11 +64,7 @@
         Notification.error("获取设备数据失败");
       });
     };
-
-    //首次触发查询
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN") {
-      vm.query(null, null, null, null);
-    }
+    vm.query(null, null, null, null);
 
     //重置查询框
     vm.reset = function () {

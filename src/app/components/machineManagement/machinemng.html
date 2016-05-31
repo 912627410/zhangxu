@@ -35,7 +35,6 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
               ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
@@ -67,7 +66,6 @@
     </div>
     <div class="col-md-2">
       <button class="btn btn-warning" type="button" ng-click="machineMngCtrl.batchMoveOrg()"
-              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
         调拨
       </button>
     </div>
@@ -80,12 +78,10 @@
     <div class="col-md-9">
 
       <a presentation-href="machine.oper" class="btn btn-default pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
          ng-click="machineMngCtrl.newMachine()">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-default pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
@@ -104,20 +100,18 @@
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
           <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
-            <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
+            <a
                href ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
-            <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN' && userInfo.userdto.role != 'ROLE_ADMIN'&&userInfo.userdto.role != 'ROLE_OPERATOR' && userInfo.userdto.role != 'ROLE_PRODUCER'">
+            <span >
               {{machine.licenseId}}</span>
           </td>
           <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
           <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs"
-                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
                     ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
             <button type="button" class="btn btn-danger btn-xs"
-                    ng-if="machineMngCtrl.hasRemoveDevice(machine)"
                     ng-click="machineMngCtrl.removeDevice(machine)">解绑
             </button>
           </td>

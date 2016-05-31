@@ -112,9 +112,8 @@
          Notification.error("获取SIM数据失败");
        });
      }
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
-      vm.query();
-    }
+
+    vm.query();
 
     vm.newSim = function (size) {
       var modalInstance = $uibModal.open({

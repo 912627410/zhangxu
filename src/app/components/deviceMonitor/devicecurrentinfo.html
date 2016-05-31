@@ -221,8 +221,8 @@
                   <tr>
                     <td>{{'GPSSignalQuality'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gsmSignal}}</td>
-                    <td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+                    <td >{{'operationMonitoring'|translate}}</td>
+                    <td ng-cloak >{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | number:2}}</td>
                   </tr>
@@ -335,7 +335,7 @@
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <th class="text-nowrap">{{'GPSSignalQuality'|translate}}</th>
-                    <th class="text-nowrap" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" >{{'operationMonitoring'|translate}}</th>
                     <th class="text-nowrap">{{'LEDState'|translate}}</th>
 
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
@@ -373,7 +373,7 @@
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <td ng-cloak>{{deviceData.gsmSignal}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak >{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
                     <td ng-cloak>{{deviceData.realtimeDuration | number:2}}</td>
@@ -576,7 +576,7 @@
 
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
