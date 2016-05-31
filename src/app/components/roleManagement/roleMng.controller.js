@@ -153,6 +153,32 @@
         //取消
       });
     };
+ /**
+     * 包含用户管理
+     * @param size
+     */
+    vm.rolePriviligeManage = function (roleInfo,size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/roleManagement/rolePriviligeMng.html',
+        controller: 'rolePriviligeMngController as rolePriviligeMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          roleInfo: function () {
+            return roleInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    };
 
   }
 })();

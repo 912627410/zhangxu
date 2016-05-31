@@ -3,39 +3,85 @@
 
   angular
     .module('GPSCloud')
-    .controller('priviligeMngController', priviligeMngController);
+    .controller('rolePriviligeMngController', rolePriviligeMngController);
 
   /** @ngInject */
-  function priviligeMngController($rootScope,$confirm, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, PRIVILAGE_PAGE_URL,PRIVILAGE_STATUS_URL,PRIVILAGE_STATUS_DISABLE_URL,PRIVILAGE_STATUS_ENABLE_URL) {
+  function rolePriviligeMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, priviligeService, DEFAULT_SIZE_PER_PAGE, PRIVILAGE_PAGE_URL, ROLE_PRIVILAGE_OPER_URL, ROLE_PRIVILAGE_LIST_URL, roleInfo) {
     var vm = this;
+    vm.org = {label: ""};    //组织
     vm.operatorInfo = $rootScope.userInfo;
+    vm.checked = false;//是否全选标志
+    vm.selected = []; //选中的设备id
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
-    vm.priviligeStatusList;
+    vm.priviligeStatusList; //用户状态
+    vm.roleUserinfoList = []; //存放用户角色集合
+    vm.roleInfo = roleInfo;
+    vm.rolePriviligeList=[];
 
-    //初始化查询参数
-    vm.priviligeInfo = {
-      "name": ""
-    };
+    // console.log(vm.roleInfo);
 
-    //得到设备类型集合
-    var deviceTypeData = serviceResource.restCallService(PRIVILAGE_STATUS_URL, "QUERY");
-    deviceTypeData.then(function (data) {
+    var promise = priviligeService.queryStatusList();
+    promise.then(function (data) {
       vm.priviligeStatusList = data;
+      //    console.log(vm.userinfoStatusList);
     }, function (reason) {
       Notification.error('获取权限状态失败');
     })
 
 
+    vm.getRolePrivilige = function () {
+      var roleUserUrl = ROLE_PRIVILAGE_LIST_URL;
+      roleUserUrl += "?roleId=" + vm.roleInfo.id;
+
+      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "QUERY");
+      roleUserPromise.then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          if (null != data[i]) {
+            vm.rolePriviligeList.push(data[i].priviligeId);
+          }
+
+        }
+
+        //  console.log(vm.roleUserinfoList);
+      }, function (reason) {
+        Notification.error('获取权限状态失败');
+      })
+    }
+
+
+    //初始化查询参数
+    vm.uesrinfo = {
+      "ssn": ""
+    };
+
+    //查询条件相关
+
+    vm.openOrgTree = function () {
+      vm.showOrgTree = !vm.showOrgTree;
+    }
+
+
+    vm.hideOrgTree = function () {
+      vm.showOrgTree = false;
+    }
+
+    $scope.$on('OrgSelectedEvent', function (event, data) {
+      vm.selectedOrg = data;
+      vm.org = vm.selectedOrg;
+      vm.showOrgTree = false;
+    })
+
 
     /**
-     * 分页查询
+     * 分页查询用户信息
      * @param page
      * @param size
      * @param sort
-       * @param priviligeInfo
-       */
+     * @param priviligeInfo
+     */
     vm.query = function (page, size, sort, priviligeInfo) {
+
       //构造查询条件
       var restCallURL = PRIVILAGE_PAGE_URL;
       var pageUrl = page || 0;
@@ -56,6 +102,7 @@
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
 
+        vm.selected = angular.copy(vm.rolePriviligeList); //深度copy
         vm.tableParams = new NgTableParams({},
           {
             dataset: data.content
@@ -68,102 +115,119 @@
     }
 
     //首次查询
-    vm.query();
+    vm.query(null, 10, null, null);
+    vm.getRolePrivilige();
 
     /**
      * 重置查询框
      */
     vm.reset = function () {
-      vm.priviligeInfo = null;
+      vm.uesrinfo = null;
+      vm.org = null;
     }
 
 
-    /**
-     * 新建角色
-     * @param size
-       */
-    vm.newPrivilige = function (size) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/priviligeManagement/newPrivilige.html',
-        controller: 'newPriviligeController as newPriviligeController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (result) {
-        vm.tableParams.data.splice(0, 0, result);
-
-      }, function () {
-        //取消
-      });
-    };
-
-    //更新角色
-    vm.updatePrivilige = function (priviligeInfo, size) {
-
-      var sourcePriviligeInfo = angular.copy(priviligeInfo); //深度copy
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/priviligeManagement/updatePrivilige.html',
-        controller: 'updatePriviligeController as updatePriviligeController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          priviligeInfo: function () {
-            return priviligeInfo;
-          }
-        }
-      });
-
-      modalInstance.result.then(function(result) {
-        vm.updateTable(data.content);
-      }, function(reason) {
-        vm.updateTable(sourcePriviligeInfo);
-
-      });
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
     };
 
 
-    vm.statusDisable = function (priviligeInfo) {
-      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: '确定', cancel: '取消'})
-        .then(function() {
-          var restPromise = serviceResource.restUpdateRequest(PRIVILAGE_STATUS_DISABLE_URL, priviligeInfo.id);
-          restPromise.then(function (data) {
-            Notification.success("禁用成功!");
-            vm.updateTable(data.content);
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
 
-          }, function (reason) {
-            Notification.error("禁用出错!");
-          });
-        });
-    };
-
-    vm.statusEnable = function (priviligeInfo) {
-      $confirm({text: '确定要启用吗?',title: '启用确认', ok: '确定', cancel: '取消'})
-        .then(function() {
-          var restPromise = serviceResource.restUpdateRequest(PRIVILAGE_STATUS_ENABLE_URL, priviligeInfo.id);
-          restPromise.then(function (data) {
-            Notification.success("启用成功!");
-            vm.updateTable(data.content);
-          }, function (reason) {
-            Notification.error("启用出错!");
-          });
-        });
-    };
-
-    vm.updateTable=function(content){
-      for(var i=0;i<vm.tableParams.data.length;i++){
-        if(vm.tableParams.data[i].id==content.id){
-          vm.tableParams.data[i]=content;
-        }
       }
     }
+
+    vm.updateSelection = function ($event, id) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+
+      //如果有一个不选中,则全选为false
+      if (checkbox.checked == false && vm.checked) {
+        vm.checked = false;
+      }
+      updateSelected(action, id);
+    }
+
+
+    vm.updateAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      vm.checked = checkbox.checked;
+      // alert(action);
+      vm.tableParams.data.forEach(function (privilige) {
+        updateSelected(action, privilige.id);
+      })
+
+    }
+
+    vm.isSelected = function (id) {
+
+      //    console.log(vm.selected);
+      return vm.selected.indexOf(id) >= 0;
+    }
+
+    //批量设置为已处理
+    vm.updateRolePrivilige = function () {
+
+      vm.deleteList = [];
+      vm.addList = [];
+      vm.otherList = [];
+
+      //得到选中和未选中的记录id
+      vm.tableParams.data.forEach(function (privilige) {
+        if (vm.selected.indexOf(privilige.id) != -1) {
+          vm.addList.push(privilige.id);
+        } else {
+          vm.otherList.push(privilige.id);
+        }
+
+      })
+
+      console.log("vm.addList=="+vm.addList);
+      console.log("vm.otherList=="+vm.otherList);
+
+      //判断原来是否已经选中,如果是的话,不再传输
+      for (var i = 0; i < vm.rolePriviligeList.length; i++) {
+        var id = vm.rolePriviligeList[i];
+        if (vm.addList.indexOf(id) != -1) {
+          var idx = vm.addList.indexOf(id);
+          vm.addList.splice(idx, 1);
+          //    addList.push(vm.roleUserinfoList[j]);
+        }
+
+        if (vm.otherList.indexOf(id) != -1) {
+          vm.deleteList.push(id);
+        }
+
+      }
+
+      console.log("vm.addList=="+vm.addList);
+      console.log("vm.otherList=="+vm.otherList);
+      console.log("vm.deleteList=="+vm.deleteList);
+
+
+      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "roleId": vm.roleInfo.id};
+      var restPromise = serviceResource.restUpdateRequest(ROLE_PRIVILAGE_OPER_URL, roleUsers);
+      restPromise.then(function (data) {
+
+        if(data.code==0){
+          Notification.success("更新用户成功!");
+        }
+
+
+      }, function (reason) {
+        Notification.error(" 更新用户出错!");
+      });
+
+
+    };
+
   }
 })();
