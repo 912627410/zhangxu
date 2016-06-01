@@ -144,6 +144,7 @@
         //加载故障代码描述对照表(小挖)
         $http.get('warningDtc.json').success(function(data){
           $rootScope.warningDataDtc=data;
+          $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
 
         });
 
