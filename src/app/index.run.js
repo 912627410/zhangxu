@@ -31,7 +31,7 @@
     //小挖车辆编号规则
     if ($window.sessionStorage["SMALL_EXCAVATOR_MODEL"]) {
       $rootScope.SMALL_EXCAVATOR_MODEL = $window.sessionStorage["SMALL_EXCAVATOR_MODEL"];
-      console.log("indexrun1="+$window.sessionStorage["SMALL_EXCAVATOR_MODEL"]);
+    
     }
 
     ////加载故障代码描述对照表(小挖)
