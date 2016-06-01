@@ -391,8 +391,12 @@
 
       //将hh.hh翻译成hh时mm分
       convertToMins: function(hours){
-        var hoursArray = hours.toString().split(".");
+        var hoursArray;
         var hourMins;
+        if(hours!=null){
+          hoursArray=hours.toString().split(".");
+
+
         if (hoursArray[0] != null){
           hourMins = hoursArray[0] + languages.findKey('hour');
         }
@@ -401,11 +405,22 @@
           hourMins = hourMins + " " + mins * 60 + languages.findKey('mins');
         }
         return hourMins;
+        }
       },
 
       //TODO
-      getWarningMsg:function(deviceWarningData){
-        return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
+      getWarningMsg:function(deviceWarningData,deviceType){
+        //00 - 无特定类型
+        //01 - 小挖
+        if(deviceType!=null && deviceType=="01"){
+          var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
+          return dtcKey+$rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
+        }
+        else{
+          return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
+        }
+
+
       }
 
     }

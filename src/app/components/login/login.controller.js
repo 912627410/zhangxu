@@ -11,7 +11,7 @@
 
 
   /** @ngInject */
-  function LoginController($rootScope, $window,ORG_TREE_JSON_DATA_URL,SYS_CONFIG_URL,Notification,serviceResource,Idle,languages) {
+  function LoginController($rootScope,$http, $window,ORG_TREE_JSON_DATA_URL,SYS_CONFIG_URL,Notification,serviceResource,Idle,languages) {
     var vm = this;
     var userInfo;
     var rootParent={id:0}; //默认根节点为0
@@ -140,6 +140,14 @@
             Notification.error(languages.findKey('failedToGetSmallExcavatorModel'));
           }
         );
+
+        //加载故障代码描述对照表(小挖)
+        $http.get('warningDtc.json').success(function(data){
+          $rootScope.warningDataDtc=data;
+          $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
+
+        });
+
 
         $rootScope.$state.go('home');
       },function(reason){

@@ -525,6 +525,7 @@
       vm.endDateOpenStatusDeviceWarningData.opened = true;
     };
 
+
     vm.getDeviceWarningData = function(page,size,sort,deviceNum,startDate,endDate){
       if (deviceNum){
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
@@ -560,7 +561,7 @@
           }
           else{
             vm.deviceWarningDataList.forEach(function (deviceWarningData) {
-              deviceWarningData.warningMsg = serviceResource.getWarningMsg(deviceWarningData);
+              deviceWarningData.warningMsg = serviceResource.getWarningMsg(deviceWarningData,vm.DeviceType);
             })
           }
         }, function (reason) {
