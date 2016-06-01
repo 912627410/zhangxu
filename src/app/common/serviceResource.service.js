@@ -406,7 +406,7 @@
       getWarningMsg:function(deviceWarningData,deviceType){
         //00 - 无特定类型
         //01 - 小挖
-        if(deviceType!=null && deviceType=="01"){
+        if(deviceType!=null && deviceType=="00"){
           var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
           return dtcKey+$rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
         }
