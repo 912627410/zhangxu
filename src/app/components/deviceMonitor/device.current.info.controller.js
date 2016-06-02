@@ -22,8 +22,9 @@
 
     vm.deviceinfo = deviceinfo;
     vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
-    vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
-    vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
+    //改为过滤器
+    //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
+    //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
     vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
     //判断当前设备是否是小挖
     if (deviceinfo.machine == null || deviceinfo.machine.licenseId == null){
