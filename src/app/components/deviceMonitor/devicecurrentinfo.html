@@ -36,7 +36,7 @@
                 <!-- Default panel contents -->
                 <!-- Table -->
                 <table class="table">
-                  <tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType != '01' || deviceCurrentInfoCtrl.DeviceType == null">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
                       <div ng-switch-when="0" class="chargeNormal" title="{{'charging'|translate}}"></div>
                       <div ng-switch-when="1" class="chargeWarning" title="{{'charging'|translate}}"></div>
@@ -51,7 +51,7 @@
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:3">
                       <div ng-switch-when="0" class="turnRightNormal" title="{{'turnRight'|translate}}"></div>
-                      <div ng-switch-when="1" class="turnRightNormal" title="{{'turnRight'|translate}}"></div>
+                      <div ng-switch-when="1" class="turnRightWarning" title="{{'turnRight'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
                       <div ng-switch-when="0" class="stopPressNormal" title="{{'brakepressure'| translate}}"></div>
@@ -100,7 +100,7 @@
                       <div ng-switch-when="1" class="oilTempratureWarning" title="{{'hydraulicOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
-                  <tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType != '01' || deviceCurrentInfoCtrl.DeviceType == null">
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
                       <div ng-switch-when="0" class="safeLockNormal" title="{{'securityLock'|translate}}"></div>
                       <div ng-switch-when="1" class="safeLockWarning" title="{{'securityLock'|translate}}"></div>
@@ -151,11 +151,62 @@
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:27">
                       <div ng-switch-when="0" class="colderOilTempratureNormal" title="{{'coolantTemperatureHigh'|translate}}"></div>
-                      <div ng-switch-when="1" class="colderOilTempratureNormal" title="{{'coolantTemperatureHigh'|translate}}"></div>
+                      <div ng-switch-when="1" class="colderOilTempratureWarning" title="{{'coolantTemperatureHigh'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
                       <div ng-switch-when="0" class="engineOilPressureNormal" title="{{'lowOilPressure'|translate}}"></div>
                       <div ng-switch-when="1" class="engineOilPressureWarning" title="{{'lowOilPressure'|translate}}"></div>
+                    </td>
+                  </tr>
+                  <!--小挖-->
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '01'">
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:1">
+                      <div ng-switch-when="0" class="excTurnLeftNormal" title="{{'turnLeft'|translate}}"></div>
+                      <div ng-switch-when="1" class="excTurnLeftWarning" title="{{'turnLeft'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:2">
+                      <div ng-switch-when="0" class="excTriangleLightNormal" title="{{'centralAlarm'|translate}}"></div>
+                      <div ng-switch-when="1" class="excTriangleLightWarning" title="{{'centralAlarm'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:3">
+                      <div ng-switch-when="0" class="excTurnRightNormal" title="{{'turnRight'|translate}}"></div>
+                      <div ng-switch-when="1" class="excTurnRightWarning" title="{{'turnRight'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
+                      <div ng-switch-when="0" class="excEngineOilPressureNormal" title="{{'lowOilPressure'|translate}}"></div>
+                      <div ng-switch-when="1" class="excEngineOilPressureWarning" title="{{'lowOilPressure'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
+                      <div ng-switch-when="0" class="excChargeNormal" title="{{'charging'|translate}}"></div>
+                      <div ng-switch-when="1" class="excChargeWarning" title="{{'charging'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
+                      <div ng-switch-when="0" class="excAirFilterNormal" title="{{'airFilter'|translate}}"></div>
+                      <div ng-switch-when="1" class="excAirFilterWarning" title="{{'airFilter'|translate}}"></div>
+                    </td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '01'">
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:27">
+                      <div ng-switch-when="0" class="excColderOilTempNormal" title="{{'coolantTemperatureHigh'|translate}}"></div>
+                      <div ng-switch-when="1" class="excColderOilTempWarning" title="{{'coolantTemperatureHigh'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
+                      <div ng-switch-when="0" class="excEngineErrorNormal" title="{{'engineFailureOne'|translate}}"></div>
+                      <div ng-switch-when="1" class="excEngineErrorWarning" title="{{'engineFailureOne'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
+                      <div ng-switch-when="0" class="excOilWaterNormal" title="{{'oil-waterSeparation'|translate}}"></div>
+                      <div ng-switch-when="1" class="excOilWaterWarning" title="{{'oil-waterSeparation'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:29">
+                      <div ng-switch-when="0" class="excHighSpeedNormal" title="{{'highSpeed'|translate}}"></div>
+                      <div ng-switch-when="1" class="excHighSpeedWarning" title="{{'highSpeed'|translate}}"></div>
+                    </td>
+                    <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:17">
+                      <div ng-switch-when="0" class="excPreWarmNormal" title="{{'preheat'|translate}}"></div>
+                      <div ng-switch-when="1" class="excPreWarmWarning" title="{{'preheat'|translate}}"></div>
+                    </td>
+                    <td colspan="3">
                     </td>
                   </tr>
                 </table>

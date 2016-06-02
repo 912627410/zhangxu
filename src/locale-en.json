@@ -260,7 +260,8 @@
   "amaplatitudeNumber":"Latitude",
   "amaplongitudeNumber":"Longitude",
   "hour":"Hour",
-  "mins":"Mins"
+  "mins":"Mins",
+  "highSpeed":"High speed"
 
 
 }

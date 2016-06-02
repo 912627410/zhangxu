@@ -257,7 +257,8 @@
   "amaplatitudeNumber":"维度",
   "amaplongitudeNumber":"经度",
   "hour":"小时",
-  "mins":"分钟"
+  "mins":"分钟",
+  "highSpeed":"高速"
 
 
 }
