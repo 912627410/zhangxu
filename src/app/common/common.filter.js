@@ -12,7 +12,7 @@
       var hourMins;
       if(hours!=null){
         hoursArray=hours.toString().split(".");
-        
+
         if (hoursArray[0] != null){
           hourMins = hoursArray[0] + languages.findKey('hour');
         }
@@ -25,4 +25,4 @@
     };
   });
 
-})()
+})();
