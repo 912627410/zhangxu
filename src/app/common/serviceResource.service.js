@@ -402,7 +402,7 @@
         }
         if (hoursArray[1] != null){
           var mins = "0." + hoursArray[1]
-          hourMins = hourMins + " " + mins * 60 + languages.findKey('mins');
+          hourMins = hourMins + " " + Math.round(mins * 60) + languages.findKey('mins');
         }
         return hourMins;
         }

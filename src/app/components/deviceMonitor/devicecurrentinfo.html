@@ -254,7 +254,7 @@
                   </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
                     <td>{{'fuelLevel'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
                     <td>{{'coolantTemperature'|translate}}</td>
@@ -278,7 +278,7 @@
                     <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
                     <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
                     <td>{{'realTimeWorkH'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
                   </tr>
                   <tr>
                     <td>{{'numberOfStarts'|translate}}</td>
@@ -411,7 +411,7 @@
                     <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
-                    <td ng-cloak>{{deviceData.totalDuration | number:2}}</td>
+                    <td ng-cloak>{{deviceData.totalDuration | convertToMins }}</td>
 
                     <td ng-cloak>{{deviceData.oilLevel}}</td>
                     <td ng-cloak>{{deviceData.enginRotate | number:2}}</td>
@@ -431,7 +431,7 @@
                     <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
-                    <td ng-cloak>{{deviceData.realtimeDuration | number:2}}</td>
+                    <td ng-cloak>{{deviceData.realtimeDuration | convertToMins}}</td>
                     <td ng-cloak>{{deviceData.startTimes}}</td>
                     <!--锁车状态-->
                     <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
