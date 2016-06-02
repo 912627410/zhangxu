@@ -33,12 +33,12 @@
         </a>
         <ul class="treeview-menu" style="display: block">
           <li>
-            <a ui-sref="home.monitor" >
+            <a ui-sref="home.monitor" presentation-href="device:page">
               <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.deviceinfoMng"   >
+            <a ui-sref="home.deviceinfoMng"   presentation-href="device:page">
               <i class="fa fa-database"></i> <span>{{'equipmentManagement' | translate}}</span>
             </a>
           </li>
@@ -55,17 +55,17 @@
         </ul>
       </li>
       <li>
-        <a ui-sref="home.simMng" >
+        <a ui-sref="home.simMng" presentation-href="sim:page">
           <i class="fa fa-mobile"></i> <span>{{'SIMManagement' | translate}}</span>
         </a>
       </li>
       <li>
-        <a ui-sref="home.machinemng" >
+        <a ui-sref="home.machinemng" presentation-href="machine:page">
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
       <li class="treeview" >
-        <a ui-sref="home.userinfomng">
+        <a ui-sref="home.userinfomng" presentation-href="user:page">
           <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
         </a>
       </li>

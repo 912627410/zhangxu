@@ -540,7 +540,7 @@
     </uib-tab>
 
     <!--远程控制-->
-    <uib-tab select="">
+    <uib-tab select="" presentation-href="device:remoteControl">
       <uib-tab-heading>
         {{'telecontrol'|translate}}
       </uib-tab-heading>
@@ -737,8 +737,8 @@
                        ng-model="deviceCurrentInfoCtrl.setWorkIntMsg" name="setWorkIntMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -752,8 +752,8 @@
                        ng-model="deviceCurrentInfoCtrl.lockMsg" name="lockMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                <button class="btn btn-danger" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
+                <button class="btn btn-danger" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -779,8 +779,8 @@
                        ng-model="deviceCurrentInfoCtrl.unLockMsg" name="unLockMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -792,7 +792,7 @@
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
@@ -809,7 +809,7 @@
                 <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button"  presentation-href="device:unlock"ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>

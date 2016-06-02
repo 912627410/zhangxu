@@ -35,7 +35,7 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"
+      <button class="btn btn-primary" type="button" presentation-href="device:page"
               ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.queryDeviceinfo)">查询
       </button>
 
@@ -69,7 +69,7 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-warning" type="button"
+      <button class="btn btn-warning" type="button" presentation-href="device:moveOrg"
               ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
       </button>
     </div>
@@ -85,16 +85,16 @@
     </div>
     <div class="col-md-9">
 
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
 
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
        title="Export Table" ng-click='csv.generate(1,10)' ng-href="{{csv.link()}}"
          download="设备数据.csv">
         <i class="glyphicon glyphicon-new-window"></i> 批量导出

@@ -102,7 +102,7 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"   ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
+      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">重置</button>
     </div>
 
@@ -114,11 +114,11 @@
     </div>
     <div class="col-md-10">
 
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="sim:oper"
          ng-click="simMngCtrl.newSim()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="sim:oper"
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
@@ -140,7 +140,7 @@
           <td class="text-nowrap" data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'操作'">
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
                     ng-click="simMngCtrl.updateSim(sim)">修改
             </button>
           </td>

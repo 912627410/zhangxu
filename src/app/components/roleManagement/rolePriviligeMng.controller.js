@@ -213,7 +213,7 @@
       console.log("vm.deleteList=="+vm.deleteList);
 
 
-      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "roleId": vm.roleInfo.id};
+      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "id": vm.roleInfo.id};
       var restPromise = serviceResource.restUpdateRequest(ROLE_PRIVILAGE_OPER_URL, roleUsers);
       restPromise.then(function (data) {
 

@@ -34,7 +34,7 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"
+      <button class="btn btn-primary" type="button" presentation-href="machine:page"
               ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
@@ -51,7 +51,7 @@
         <input type="text" id="org" class="form-control" placeholder="所属组织"
                ng-model="machineMngCtrl.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()"><i
+                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()" presentation-href="machine:moveOrg"><i
                       class="fa fa-sitemap"></i></button>
                   </span>
       <div ng-controller="orgController as orgCtrl">
@@ -81,7 +81,7 @@
          ng-click="machineMngCtrl.newMachine()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-default pull-right"
+      <a class="btn btn-default pull-right" presentation-href="machine:oper"
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
@@ -100,18 +100,17 @@
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
           <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
-            <a
-               href ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
+
             <span >
               {{machine.licenseId}}</span>
           </td>
           <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
           <td class="text-nowrap" data-title="'操作'">
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.updateMachine(machine)">修改
             </button>
-            <button type="button" class="btn btn-danger btn-xs"
+            <button type="button" class="btn btn-danger btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.removeDevice(machine)">解绑
             </button>
           </td>
