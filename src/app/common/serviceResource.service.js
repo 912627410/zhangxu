@@ -49,14 +49,17 @@
       //实例化信息窗体
       var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
-        offset: new AMap.Pixel(27, -40)//-113, -140
+        offset: new AMap.Pixel(15, -43)//-113, -140
       });
 
       var marker = new AMap.Marker({
         map: mapObj,
         position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
-        icon: icon, //复杂图标
-        //offset: new AMap.Pixel(-108, 124), //相对于基点的偏移位置
+        icon:new AMap.Icon({
+          image: icon,
+          imageOffset: new AMap.Pixel(-15, -10)
+        })//复杂图标
+       // offset: new AMap.Pixel(-108, 124), //相对于基点的偏移位置
         // draggable: true,  //是否可拖动
         //  content: markerInfoLayer   //自定义点标记覆盖物内容
       });
