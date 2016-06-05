@@ -31,7 +31,7 @@
                     <button type="button" class="btn btn-default" ng-click="updateUserinfoCtrl.openOrgTree()"><i class="fa fa-sitemap"></i></button>
                   </span>
                   <div ng-controller="orgController as orgCtrl">
-                    <div style="background:#FFFFDF ;opacity:1;position: absolute; z-index: 110009; display: block; width: 90%; " ng-show="updateUserinfoCtrl.showOrgTree"  >
+                    <div  style="background:#FFFFDF;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 400px; height:400px;" ng-show="updateUserinfoCtrl.showOrgTree"  >
                       <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree" on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
                     </div>
                   </div>
