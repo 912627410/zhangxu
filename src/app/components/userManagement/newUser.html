@@ -19,14 +19,12 @@
                 <div class="col-sm-10">
                   <p class="input-group">
                     <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="addUserCtrl.newUser.organizationDto.label" name="org" readonly required/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="addUserCtrl.openOrgTree()"><i class="fa fa-sitemap"></i></button>
-                  </span>
-                  <div ng-controller="orgController as orgCtrl">
-                    <div  style="background:#FFFFDF;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 400px; height:400px;" ng-show="addUserCtrl.showOrgTree"  >
-                      <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree" on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-                    </div>
-                  </div>
+                    <span class="input-group-btn">
+                       <!--打开组织树-->
+                      <button type="button" class="btn btn-default" ng-click="addUserCtrl.openTreeInfo(machineMngCtrl.org)">
+                        <i class="fa fa-sitemap"></i>
+                      </button>
+                    </span>
                   </p>
                 </div>
               </div>

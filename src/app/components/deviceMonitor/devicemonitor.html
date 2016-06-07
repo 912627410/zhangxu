@@ -41,15 +41,11 @@
         <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="monitorCtrl.openOrgTree()"><i
-                      class="fa fa-sitemap"></i></button>
+                  <!--打开组织树-->
+                  <button type="button" class="btn btn-default" ng-click="monitorCtrl.openTreeInfo(machineMngCtrl.org)">
+                    <i class="fa fa-sitemap"></i>
+                  </button>
                   </span>
-      <div ng-controller="orgController as orgCtrl">
-        <div style="background:#FFFFDF;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 400px;  height:400px;" ng-show="monitorCtrl.showOrgTree">
-          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl"
-                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-        </div>
-      </div>
       </p>
     </div>
     <div class="col-md-1">

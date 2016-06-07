@@ -9,7 +9,7 @@
     .controller('updateUserinfoController', updateUserinfoController);
 
   /** @ngInject */
-  function updateUserinfoController($rootScope,$scope,$uibModalInstance,USERINFO_URL,serviceResource, Notification,usermnginfo) {
+  function updateUserinfoController($rootScope,$scope,$uibModal,$uibModalInstance,USERINFO_URL,serviceResource, Notification,usermnginfo) {
     var vm = this;
     vm.updatedUser = usermnginfo;
     vm.operatorInfo =$rootScope.userInfo;
@@ -38,21 +38,33 @@
         Notification.error("修改用户信息出错!");
       });
     };
+    //关闭更新页面
+   vm.cancel=function () {
+      $uibModalInstance.dismiss('cancel');
+   }
 
-
-    vm.showOrgTree = false;
-
-    vm.openOrgTree = function(){
-      vm.showOrgTree = !vm.showOrgTree;
+    //组织树的显示
+    var currentOpenModal;
+    vm.openTreeInfo=function(){
+      currentOpenModal= $uibModal.open({
+        animation: vm.animationsEnabled,
+        backdrop: false,
+        templateUrl: 'app/components/common/tree.html',
+        controller: 'treeController as treeController',
+        resolve: {
+          org: function () {
+            return $rootScope.orgChart[0];
+          }
+        }
+      });
     }
 
-    $scope.$on('OrgSelectedEvent',function(event,data){
+    //树的选中事件
+    $rootScope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
       vm.updatedUser.organizationDto = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-    vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
+    });
+
+
   }
 })();

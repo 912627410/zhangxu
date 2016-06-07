@@ -12,19 +12,6 @@
   function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, $translate,languages,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
     var vm = this;
 
-   // vm.org = {label: ""};
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.queryOrg = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-
-
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
@@ -110,6 +97,8 @@
 
 //监控
     vm.currentInfo = function (id, size) {
+
+      console.log(size);
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
@@ -139,6 +128,27 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
     }
+    //组织树的显示
+    var currentOpenModal;
+   vm.openTreeInfo=function () {
+     currentOpenModal= $uibModal.open({
+       animation: vm.animationsEnabled,
+       backdrop: false,
+       templateUrl: 'app/components/common/tree.html',
+       controller: 'treeController as treeController',
+       resolve: {
+         org: function () {
+           return $rootScope.orgChart[0];
+         }
+       }
+     });
+   }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.selectedOrg = data;
+      vm.queryOrg = vm.selectedOrg;
+    });
 
   }
 })();
