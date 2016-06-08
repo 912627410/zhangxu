@@ -111,6 +111,8 @@
   "positioningTime":"Located Time",
   "returnTime":"Return Time",
   "vehicleType":"Vehicle Type",
+  "productionSN":"Production Serial Number",
+  "engineModel":"Engine Model",
   "GPSSignalPercentage":"GPRS Signal Per ",
   "totalRunningTimeHour":"Total Running Time(hour)",
   "fuelLevel":"Fuel Level ",
