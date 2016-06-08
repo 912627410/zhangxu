@@ -42,8 +42,6 @@
         vm.my_data=vm.searched_array;
       }
 
-    console.log(vm.searched_array);
-
     }
 
     //搜索树

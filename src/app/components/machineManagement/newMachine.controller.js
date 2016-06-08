@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,$http, $uibModal,$uibModalInstance, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope,$scope,$http, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -75,16 +75,6 @@
       vm.buyTimeOpenStatus.opened = true;
     };
 
-
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.machine.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
 
 
     vm.ok = function (machine) {
@@ -162,28 +152,14 @@
       }
     }
 
-    //modal打开是否有动画效果
-    vm.animationsEnabled = true;
     //组织树的显示
-    var currentOpenModal;
-    vm.openTreeInfo=function(org){
-      currentOpenModal= $uibModal.open({
-        animation: vm.animationsEnabled,
-        backdrop: false,
-        templateUrl: 'app/components/common/tree.html',
-        controller: 'treeController as treeController',
-        resolve: {
-          org: function () {
-            return $rootScope.orgChart[0];
-          }
-        }
-      });
-    };
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
+    }
 
     //选中组织模型赋值
     $rootScope.$on('orgSelected', function (event, data) {
-      vm.selectedOrg = data;
-      vm.machine.org = vm.selectedOrg;
+       vm.machine.org = data;
     });
 
   }

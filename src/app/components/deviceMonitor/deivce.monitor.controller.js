@@ -9,7 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
-  function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, $translate,languages,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
+  function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, $translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
     var vm = this;
 
     //modal打开是否有动画效果
@@ -128,26 +128,15 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
     }
+
     //组织树的显示
-    var currentOpenModal;
-   vm.openTreeInfo=function () {
-     currentOpenModal= $uibModal.open({
-       animation: vm.animationsEnabled,
-       backdrop: false,
-       templateUrl: 'app/components/common/tree.html',
-       controller: 'treeController as treeController',
-       resolve: {
-         org: function () {
-           return $rootScope.orgChart[0];
-         }
-       }
-     });
+   vm.openTreeInfo=function() {
+     treeFactory.treeShow();
    }
 
     //选中组织模型赋值
     $rootScope.$on('orgSelected', function (event, data) {
-      vm.selectedOrg = data;
-      vm.queryOrg = vm.selectedOrg;
+      vm.queryOrg = data;
     });
 
   }

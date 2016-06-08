@@ -4,7 +4,7 @@
     .module('GPSCloud')
     .controller('treeController', treeController);
 
-  function treeController($rootScope, $scope, $timeout, $confirm, $filter, $uibModalInstance, languages, serviceResource, org) {
+  function treeController($rootScope, $scope, $timeout, $confirm, $filter, $uibModalInstance, languages, serviceResource) {
     var vm = this;
     vm.showOrgTree = true;    //默认显示树
     vm.org = {label: ""};    //调拨组织

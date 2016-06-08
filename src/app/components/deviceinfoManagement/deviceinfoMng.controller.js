@@ -6,28 +6,16 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, treeFactory,Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
     vm.org = {label: ""};    //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
-    vm.showOrgTree = false; //是否显示组织
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
-
-
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-     // TODO 222222
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
 
 
 
@@ -287,24 +275,12 @@
 
 
     //组织树的显示
-    var currentOpenModal;
-    vm.openTreeInfo=function () {
-      currentOpenModal= $uibModal.open({
-        animation: vm.animationsEnabled,
-        backdrop: false,
-        templateUrl: 'app/components/common/tree.html',
-        controller: 'treeController as treeController',
-        resolve: {
-          org: function () {
-            return $rootScope.orgChart[0];
-          }
-        }
-      });
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
     }
     //选中组织模型赋值
     $rootScope.$on('orgSelected', function (event, data) {
-      vm.selectedOrg = data;
-      vm.org = vm.selectedOrg;
+      vm.org = data;
     });
   }
 })();

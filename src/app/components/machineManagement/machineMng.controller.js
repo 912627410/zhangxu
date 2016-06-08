@@ -9,13 +9,12 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, treeFactory,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
-    vm.showOrgTree = false;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -253,29 +252,15 @@
         });
     };
 
-
-    //modal打开是否有动画效果
-    vm.animationsEnabled = true;
     //组织树的显示
-    var currentOpenModal;
-    vm.openTreeInfo=function(org){
-      currentOpenModal= $uibModal.open({
-          animation: vm.animationsEnabled,
-          backdrop: false,
-          templateUrl: 'app/components/common/tree.html',
-          controller: 'treeController as treeController',
-          resolve: {
-            org: function () {
-              return $rootScope.orgChart[0];
-            }
-          }
-        });
-    };
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
+    }
 
     //选中组织模型赋值
     $rootScope.$on('orgSelected', function (event, data) {
-      vm.selectedOrg = data;
-      vm.org = vm.selectedOrg;
+      vm.org = data;
     });
+
   }
 })();
