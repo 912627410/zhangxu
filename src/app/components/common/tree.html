@@ -10,9 +10,9 @@
       <div class="col-md-12" ng-controller="orgController as orgCtrl" >
           <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 580px;  height:420px;">
             <div class="input-group input-group-sm"  style="padding-top: 10px;padding-left: 25px;  width:60%">
-              <input type="text" class="form-control" ng-model="treeController.searchText" placeholder="Search" >
+              <input type="text" class="form-control" ng-model="orgCtrl.searchText" placeholder="Search" >
                <span class="input-group-btn">
-                   <button class="btn btn-default" type="button" ng-click="treeController.search(treeController.searchText)">搜索</button>
+                   <button class="btn btn-default" type="button" ng-click="orgCtrl.search(orgCtrl.searchText)">搜索</button>
                </span>
             </div>
             <div style="padding-top: 20px;padding-left: 20px; ">
