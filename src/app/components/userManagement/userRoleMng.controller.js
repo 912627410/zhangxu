@@ -45,7 +45,7 @@
 
         //  console.log(vm.roleUserinfoList);
       }, function (reason) {
-        Notification.error('获取权限状态失败');
+    //    Notification.error('获取失败');
       })
     }
 
