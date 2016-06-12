@@ -47,11 +47,34 @@
     //搜索树
     vm.returnSearch = function (orgTree, searchText) {
       if (orgTree.label.indexOf(searchText) != -1) {
-        vm.searched_array.push(orgTree);
+        //根据搜索到的节点，构建不带字节点的节点
+        vm.createTreeNode={
+          id:orgTree.id,
+          label: orgTree.label,
+          lastUpdateTime: orgTree.lastUpdateTime,
+          name: orgTree.name,
+          orgAddress: orgTree.orgAddress,
+          orgCompanyId: orgTree.orgCompanyId,
+          orgContent: orgTree.orgContent,
+          orgCreateTime: orgTree.orgCreateTime,
+          orgFax: orgTree.orgFax,
+          orgFullName: orgTree.orgFullName,
+          orgLgCode: orgTree.orgLgCode,
+          orgMailCode: orgTree.orgMailCode,
+          orgSimpleName: orgTree.orgSimpleName,
+          orgTellPhone: orgTree.orgTellPhone,
+          orgUpdateTime: orgTree.orgUpdateTime,
+          org_legalRepresentative: orgTree.org_legalRepresentative,
+          parentId: orgTree.parentId,
+          sccChannelId: orgTree.sccChannelId
+        }
+        //添加到搜索的节点数组中
+        vm.searched_array.push(vm.createTreeNode);
 
       }
-      
+
       if (orgTree.children.length != 0) {
+      //循环搜索
        angular.forEach(orgTree.children, function (node,index) {
           vm.returnSearch(node, searchText);
         });
