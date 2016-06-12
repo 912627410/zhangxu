@@ -9,7 +9,7 @@
     .controller('AddUserController', AddUserController);
 
   /** @ngInject */
-  function AddUserController($scope,$uibModalInstance,USERINFO_URL,serviceResource, Notification,operatorInfo) {
+  function AddUserController($rootScope,$scope, $uibModal ,$uibModalInstance,treeFactory,USERINFO_URL,serviceResource, Notification,operatorInfo) {
     var vm = this;
     vm.operatorInfo =operatorInfo;
     //default user role for new added user
@@ -17,7 +17,7 @@
 
     //默认不接收位置异常报警
     vm.locationAlarmReceiverChk = false;
-    
+
     vm.ok = function (newUserinfo) {
       if (vm.locationAlarmReceiverChk){
         vm.newUser.locationAlarmReceiver = 1;
@@ -35,21 +35,19 @@
       });
     };
 
-    vm.showOrgTree = false;
-
-    vm.openOrgTree = function(){
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent',function(event,data){
-      vm.selectedOrg = data;
-      vm.newUser.organizationDto = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.newUser.organizationDto=data;
+    });
 
   }
 })();

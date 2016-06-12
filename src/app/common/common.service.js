@@ -144,6 +144,7 @@
       }}
     }
 
+  //国际化的factory
   GPSCloudFactory.factory('languages',languages);
 
   function languages($translate){
@@ -157,6 +158,25 @@
     }
     return languages;
   }
-  
+
+  //组织树的factory
+  GPSCloudFactory.factory('treeFactory',treeFactory);
+
+  function treeFactory($rootScope,$uibModal){
+    var treeFactory={
+        treeShow:function () {
+          $uibModal.open({
+              animation: true,
+              backdrop: false,
+              templateUrl: 'app/components/common/tree.html',
+              controller: 'treeController as treeController'
+          })
+        }
+
+        
+    }
+    return treeFactory;
+  }
+
 
 })();

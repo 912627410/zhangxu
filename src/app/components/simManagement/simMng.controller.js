@@ -7,7 +7,7 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$timeout,$uibModal,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -50,17 +50,6 @@
     //}
 
     //查询条件相关
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.sim.deviceinfo.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-
 
     //日期控件相关
     //date picker
@@ -244,5 +233,16 @@
         //取消
       });
     };
+
+
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.sim.deviceinfo.org = data;
+    });
   }
 })();

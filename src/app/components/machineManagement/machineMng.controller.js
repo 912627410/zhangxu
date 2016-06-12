@@ -9,14 +9,12 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, treeFactory,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
-    vm.showOrgTree = false; //是否显示组织
-
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -46,8 +44,6 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        //vm.machineList = data.content;
-
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -74,24 +70,6 @@
     }
 
 
-    //查询条件相关
-
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-
-    vm.hideOrgTree = function () {
-      vm.showOrgTree = false;
-    }
-    //TODO 11111
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-
-
     vm.newMachine = function (size) {
 
       var modalInstance = $uibModal.open({
@@ -109,7 +87,6 @@
 
       modalInstance.result.then(function (result) {
         //刷新
-        //vm.query();
         console.log(result);
         vm.tableParams.data.splice(0, 0, result);
 
@@ -140,7 +117,7 @@
         });
 
         modalInstance.result.then(function(result) {
-          console.log(result);
+
           var tabList=vm.tableParams.data;
           //更新内容
           for(var i=0;i<tabList.length;i++){
@@ -184,7 +161,6 @@
     vm.updateAllSelection = function ($event) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      // alert(action);
       vm.tableParams.data.forEach(function (machine) {
         updateSelected(action, machine.id);
       })
@@ -192,7 +168,7 @@
     }
 
     vm.isSelected = function (id) {
-      //   alert(vm.selected);
+
       return vm.selected.indexOf(id) >= 0;
     }
     vm.checkAll = function () {
@@ -227,12 +203,8 @@
         return;
       }
 
-      //alert(vm.org.id+" "+vm.org.label);
-
       var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
-      // alert(moveOrg.ids+"  "+moveOrg.orgId);
 
-      // TODO 222222
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
         //更新页面显示
@@ -279,5 +251,16 @@
           });
         });
     };
+
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.org = data;
+    });
+
   }
 })();

@@ -49,35 +49,26 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="machineMngCtrl.org.label" name="org" readonly required/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openOrgTree()"><i
-                      class="fa fa-sitemap"></i></button>
-                  </span>
-      <div ng-controller="orgController as orgCtrl">
-        <div style="background:#FFFFDF;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 400px; height:400px;"
-          ng-show="machineMngCtrl.showOrgTree" ng-blur="machineMngCtrl.hideOrgTree()">
-          <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl"
-                    on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-        </div>
-      </div>
+        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="machineMngCtrl.org.label" name="org" readonly required/>
+          <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
       </p>
     </div>
     <div class="col-md-2">
       <button class="btn btn-warning" type="button" ng-click="machineMngCtrl.batchMoveOrg()"
-              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
-        调拨
+              ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">调拨
       </button>
     </div>
-
   </div>
   <div class="row">
     <div class="btn-group col-md-3">
       <span class="label label-info pull-left">车辆总数:{{machineMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
-
       <a presentation-href="machine.oper" class="btn btn-default pull-right"
          ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
          ng-click="machineMngCtrl.newMachine()">
@@ -96,34 +87,34 @@
                ng-model="machineMngCtrl.checked">
       </script>
       <div class="table-responsive">
-      <table ng-table="machineMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <tr ng-repeat="machine in $data">
-          <td class="text-nowrap" data-header="'selectAllHeader'">
-            <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
-                   ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
-          </td>
-          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
-            <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-               href ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
-            <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN' && userInfo.userdto.role != 'ROLE_ADMIN'&&userInfo.userdto.role != 'ROLE_OPERATOR' && userInfo.userdto.role != 'ROLE_PRODUCER'">
-              {{machine.licenseId}}</span>
-          </td>
-          <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-          <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
-          <td class="text-nowrap" data-title="'操作'">
-            <button type="button" class="btn btn-default btn-xs"
-                    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
-                    ng-click="machineMngCtrl.updateMachine(machine)">修改
-            </button>
-            <button type="button" class="btn btn-danger btn-xs"
-                    ng-if="machineMngCtrl.hasRemoveDevice(machine)"
-                    ng-click="machineMngCtrl.removeDevice(machine)">解绑
-            </button>
-          </td>
-        </tr>
-      </table>
-        </div>
+        <table ng-table="machineMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="machine in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
+                     ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+            </td>
+            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
+              <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
+                 href ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
+              <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN' && userInfo.userdto.role != 'ROLE_ADMIN'&&userInfo.userdto.role != 'ROLE_OPERATOR' && userInfo.userdto.role != 'ROLE_PRODUCER'">
+                {{machine.licenseId}}</span>
+            </td>
+            <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+            <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
+            <td class="text-nowrap" data-title="'操作'">
+              <button type="button" class="btn btn-default btn-xs"
+                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'"
+                      ng-click="machineMngCtrl.updateMachine(machine)">修改
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      ng-if="machineMngCtrl.hasRemoveDevice(machine)"
+                      ng-click="machineMngCtrl.removeDevice(machine)">解绑
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
 
   <div class="box-footer">
@@ -133,7 +124,6 @@
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
-
 
 </section>
 

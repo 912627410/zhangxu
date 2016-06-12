@@ -9,7 +9,7 @@
     .controller('updateDeviceinfoController', updateDeviceinfoController);
 
   /** @ngInject */
-  function updateDeviceinfoController($rootScope, $scope,$http, $uibModalInstance, SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo) {
+  function updateDeviceinfoController($rootScope, $scope,$http,$uibModal, $uibModalInstance, treeFactory,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo) {
     var vm = this;
     vm.deviceinfo = deviceinfo;
     vm.operatorInfo = $rootScope.userInfo;
@@ -149,17 +149,14 @@
     };
 
 
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow();
     }
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.deviceinfo.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
-    vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.deviceinfo.org= data;
+    });
   }
 })();

@@ -46,15 +46,10 @@
             <input type="text" id="org" class="form-control" placeholder="所属组织"
                    ng-model="newMachineController.machine.org.label" name="org" readonly validator="required"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="newMachineController.openOrgTree()"><i
-                      class="fa fa-sitemap"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="newMachineController.openTreeInfo()">
+                      <i class="fa fa-sitemap"></i>
+                    </button>
                   </span>
-          <div ng-controller="orgController as orgCtrl">
-            <div style="background:#FFFFDF;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 400px; height:400px;"
-              ng-show="newMachineController.showOrgTree">
-              <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree"
-                        on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
-            </div>
           </div>
           </p>
         </div>
