@@ -249,10 +249,8 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
-                    <!--GPRS信号百分比去掉，生产序号显示-->
-                    <!--<td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>-->
-                    <td>{{'productionSN'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.hostNo}}</td>
+                    <!--GPRS信号百分比去掉-->
+                    <td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
                   </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
@@ -301,10 +299,10 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
 
-                    <!--车载蓄电池电压显示去掉，增加发动机型号-->
+                    <!--增加车载蓄电池电压显示，屏蔽内部电源检测-->
                     <!--<td>{{'GPSPowerDetection'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000}} V</td>-->
-                    <td>{{'engineModel'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}} V</td>
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>-->

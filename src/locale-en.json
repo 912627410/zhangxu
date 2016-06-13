@@ -124,6 +124,7 @@
   "powerSupplyMode":"Power Supply",
 
   "vehicleMountedPowerSupply":"Vehicle",
+  "vehicleMountedBatteryVoltage":"Vehicle Battery Voltage",
   "internalBattery":"Internal Battery",
   "GPSSignalQuality":"GPS Signal Quality ",
   "operationMonitoring":"Operation Monitoring",
