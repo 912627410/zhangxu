@@ -445,35 +445,58 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
-
+                  </tr>
+                  <tr>
+                    <td>{{'visibleSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
+                      {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">
+                      {{'noData' |translate}}
+                    </td>
+                    <td>{{'usableSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">
+                      {{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">
+                      {{'noData' |translate}}
+                    </td>
+                    <td>{{'locateDuration'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null">
+                      {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">
+                      {{'noData' |translate}}
+                    </td>
                   </tr>
                   <!--车载电压,时速,气压表2,机油压力,累计里程,阶段工作时间,阶段里程，只有矿车的显示-->
-                    <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
-                        <td>车载电压</td>
-                        <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}}V</td>
-                        <td>时速</td>
-                        <td>{{deviceCurrentInfoCtrl.deviceinfo.mph}}km/H</td>
-                        <td>气压表2</td>
-                        <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter}}MPa</td>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
+                      <td>{{'batteryVol'|translate}}</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}}V</td>
+                      <td>{{'mph'|translate}}</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.mph}}km/H</td>
+                      <td>{{'pressureMeter'|translate}}</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter}}MPa</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
+                    <td>{{'totalMileage'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage}}/KM</td>
+                    <td>{{'momentWorkTime'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
+                    <td>{{'momentMileage'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage}}/KM</td>
+                  </tr>
 
-                    </tr>
-                    <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
-                      <td>累计里程</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage}}/KM</td>
-                      <td>阶段工作时间</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
-                      <td>阶段里程</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage}}/KM</td>
-                    </tr>
-                  <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
-                    <tr >
-                      <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">机油压力</td>
-                      <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
-                      <td>{{'ecuLockStatus'|translate}}</td>
-                      <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
-                      <td >{{'bindMachineId'|translate}}</td>
-                      <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
-                    </tr>
+                <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
+                  <tr >
+                    <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{'oilPress'|translate}}</td>
+                    <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
+                    <td>{{'ecuLockStatus'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
+                    <td >{{'bindMachineId'|translate}}</td>
+                    <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+                  </tr>
+
                   <!--<tr>-->
                     <!--<td>{{'analogOne'|translate}}</td>-->
                     <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>-->

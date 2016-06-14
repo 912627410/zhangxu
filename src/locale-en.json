@@ -292,7 +292,18 @@
   "harCarLifting":"CarLifting",
   "harFBrakePads":"FBrakePads",
   "harRBrakePads":"RBrakePads",
-  "harTransmissionOilTemperature":"TransmissionOilTemperature"
+  "harTransmissionOilTemperature":"TransmissionOilTemperature",
+  "visibleSatelliteNumber":"visibleSatelliteNumber",
+  "usableSatelliteNumber":"usableSatelliteNumber",
+  "locateDuration":"locateDuration",
+  "batteryVol":"batteryVol",
+  "mph":"Per hour",
+  "sec":"sec",
+  "pressureMeter":"pressureMeter",
+  "totalMileage":"totalMileage",
+  "momentWorkTime":"momentWorkTime",
+  "momentMileage":"momentMileage",
+  "oilPress":"oilPress"
 
 
 }

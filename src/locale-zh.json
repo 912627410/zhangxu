@@ -289,7 +289,18 @@
   "harCarLifting":"车厢举升指示",
   "harFBrakePads":"前刹车片指示",
   "harRBrakePads":"后刹车片指示",
-  "harTransmissionOilTemperature":"变速箱油温高指示"
+  "harTransmissionOilTemperature":"变速箱油温高指示",
+  "visibleSatelliteNumber":"可见卫星数",
+  "usableSatelliteNumber":"可用卫星数",
+  "locateDuration":"定位所用时间",
+  "batteryVol":"车载电压",
+  "mph":"时速",
+  "sec":"秒",
+  "pressureMeter":"气压表2",
+  "totalMileage":"累计里程",
+  "momentWorkTime":"阶段工作时间",
+  "momentMileage":"阶段里程",
+  "oilPress":"机油压力"
 
 
 }
