@@ -15,11 +15,6 @@
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
-
-
-
-    console.log(deviceinfo);
-
     vm.deviceinfo = deviceinfo;
     vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
     //改为过滤器
@@ -28,8 +23,10 @@
     vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
     //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据deviceNum来判断当前设备是否是小挖,装载机，矿车
     //如果车架号不为空就根据车架号来判断车辆类型,判断出来不为小挖返回null，再根据vserionNum判断
-    if (deviceinfo.machine != null || deviceinfo.machine.licenseId != null){
-      vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
+    if (deviceinfo.machine == null || null ==deviceinfo.machine.licenseId){
+        vm.DeviceType=null;
+    }else{
+        vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
     }
     //如果上面没有判断出来，versionNum也不为空，就根据deviceNum来判断车辆类型
     if (vm.DeviceType==null){
