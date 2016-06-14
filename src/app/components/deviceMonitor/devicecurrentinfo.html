@@ -275,6 +275,10 @@
                       <div ng-switch-when="0" class="harWIFNormal" title="{{'harWIF'|translate}}"></div>
                       <div ng-switch-when="1" class="harWFIWarning" title="{{'harWIF'|translate}}"></div>
                     </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:30">
+                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
+                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
+                    </td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
@@ -339,12 +343,6 @@
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:29">
                       <div ng-switch-when="0" class="harRBrakePadsNormal" title="{{'harRBrakePads'|translate}}"></div>
                       <div ng-switch-when="1" class="harRBrakePadsWarning" title="{{'harRBrakePads'|translate}}"></div>
-                    </td>
-                  </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:30">
-                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
-                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
                   <!--矿机end-->
@@ -449,8 +447,28 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
 
                   </tr>
+                  <!--车载电压,时速,气压表2,机油压力,累计里程,阶段工作时间,阶段里程，只有矿车的显示-->
+                    <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
+                        <td>车载电压</td>
+                        <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}}V</td>
+                        <td>时速</td>
+                        <td>{{deviceCurrentInfoCtrl.deviceinfo.mph}}km/H</td>
+                        <td>气压表2</td>
+                        <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter}}MPa</td>
+
+                    </tr>
+                    <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
+                      <td>累计里程</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage}}/KM</td>
+                      <td>阶段工作时间</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
+                      <td>阶段里程</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage}}/KM</td>
+                    </tr>
                   <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
                     <tr >
+                      <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">机油压力</td>
+                      <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
                       <td>{{'ecuLockStatus'|translate}}</td>
                       <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
                       <td >{{'bindMachineId'|translate}}</td>
