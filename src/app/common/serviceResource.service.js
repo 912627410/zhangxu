@@ -378,20 +378,35 @@
       //00 - 无特定类型
       //01 - 小挖
       getDeviceType:function(machineId){
-        if (machineId == null || machineId.len< 8){
+
+        if (machineId == null){
           return "00";
         }
+        
         var modelName = machineId.substr(3,5);
         var smallExModel = $rootScope.SMALL_EXCAVATOR_MODEL;
 
         if (smallExModel.indexOf(modelName) != -1){
           return "01";
         }
-        else{
-          return "00";
-        }
+        return null;
       },
 
+      //TODO 先根据device_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车
+      //00 - 无特定类型
+      //01 - 小挖
+      //02 - 矿车
+      getDeviceTypeForVersionNum:function(device_num){
+        if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
+            return '00';
+        }
+        if(device_num=='A1'){
+            return '01';
+        }
+        if(device_num=='30'){
+            return '02';
+        }
+      },
       //将hh.hh翻译成hh时mm分
       convertToMins: function(hours){
         var hoursArray;
