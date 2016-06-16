@@ -555,6 +555,7 @@
             </div>
             <div class="col-md-2">
               <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,20,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
+              <a class="btn btn-default pull-right"  title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'export'|translate}}</a>
             </div>
 
           </div>
@@ -563,7 +564,7 @@
               <div class="table-responsive">
                 <!-- Default panel contents -->
                 <!-- Table -->
-                <table class="table">
+                <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv='csv'>
                   <tr>
                     <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
                     <th class="text-nowrap">{{'positioningTime'|translate}}</th>
