@@ -124,7 +124,7 @@
   "vehicleMountedPowerSupply":"车载电源",
   "vehicleMountedBatteryVoltage":"车载蓄电池电压",
   "internalBattery":"内部电池",
-  "GPSSignalQuality":"GPS信号质量",
+  "GPRSSignalQuality":"GPRS信号质量",
   "operationMonitoring":"运行监控",
   "realTimeWorkH":"实时工时(H)",
   "realTimeWork":"实时工时",
