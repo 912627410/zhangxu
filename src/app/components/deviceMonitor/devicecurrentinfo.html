@@ -387,8 +387,8 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
-                    <td>{{'GPSSignalPercentage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>
+                    <!--GPRS信号百分比去掉-->
+                    <td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
                   </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
@@ -417,6 +417,9 @@
                     <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
+                    <!--增加车载蓄电池电压显示-->
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}} V</td>
                   </tr>
                   <tr>
                     <td>{{'numberOfStarts'|translate}}</td>
@@ -436,8 +439,11 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
+
+
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000}} V</td>
+
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>-->
