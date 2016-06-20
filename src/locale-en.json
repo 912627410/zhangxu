@@ -126,7 +126,7 @@
   "vehicleMountedPowerSupply":"Vehicle",
   "vehicleMountedBatteryVoltage":"Vehicle Battery Voltage",
   "internalBattery":"Internal Battery",
-  "GPSSignalQuality":"GPS Signal Quality ",
+  "GPRSSignalQuality":"GPRS Signal Quality ",
   "operationMonitoring":"Operation Monitoring",
   "realTimeWorkH":"Real Work (H)",
   "realTimeWork":"Real Work",
