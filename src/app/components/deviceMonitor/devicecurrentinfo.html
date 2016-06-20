@@ -1,7 +1,8 @@
 
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
-  <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
+    <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
+    <button class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
   </h3>
 </div>
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
@@ -65,7 +66,7 @@
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
                       <div ng-switch-when="0" class="holdNormal" title="{{'parkingBrake'|translate}}"></div>
-                      <div ng-switch-when="1" class="holdWarning" title="{{'parkingBrake'|translate}}"></div>
+                      <div ng-switch-when="1" class="holdWarning" title="{{'parkideviceCurrentInfoCtrl.deviceinfo.ngBrake'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
                       <div ng-switch-when="0" class="farLightNormal" title="{{'distanceLight'|translate}}"></div>
@@ -388,7 +389,8 @@
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <!--GPRS信号百分比去掉-->
-                    <td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
+                    <!--作用与“锁车状态”重复，删除GPRS信号百分比-->
+                    <!--<td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>-->
                   </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
@@ -427,7 +429,9 @@
                     <td>{{'lockedCarStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
+                    <!--锁车时候显示“二级”更改为“锁车”
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'lockYourCar'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">ON</td>
@@ -504,7 +508,6 @@
                     <td >{{'bindMachineId'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
                   </tr>
-
                   <!--<tr>-->
                     <!--<td>{{'analogOne'|translate}}</td>-->
                     <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>-->
