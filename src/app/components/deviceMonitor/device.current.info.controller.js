@@ -15,27 +15,45 @@
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
-    vm.deviceinfo = deviceinfo;
-    vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
-    //改为过滤器
-    //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
-    //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
-    vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
-    //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据deviceNum来判断当前设备是否是小挖,装载机，矿车
-    //如果车架号不为空就根据车架号来判断车辆类型,判断出来不为小挖返回null，再根据vserionNum判断
-    if (deviceinfo.machine == null || null ==deviceinfo.machine.licenseId){
-        vm.DeviceType=null;
-    }else{
-        vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
+    //刷新当前页面
+    vm.refreshCurrentDeviceInfo = function (id){
+      var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+           vm.controllerInitialization(data.content);
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        }
+      )
     }
-    //如果上面没有判断出来，versionNum也不为空，就根据deviceNum来判断车辆类型
-    if (vm.DeviceType==null){
-      if(deviceinfo.versionNum!=null){
-        vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum);
-      }else {
-        vm.DeviceType = serviceResource.getDeviceType(null);
+
+    //初始化controller
+    vm.controllerInitialization = function (deviceinfo){
+      vm.deviceinfo = deviceinfo;
+      vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
+      //改为过滤器
+      //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
+      //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
+      vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
+      //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据deviceNum来判断当前设备是否是小挖,装载机，矿车
+      //如果车架号不为空就根据车架号来判断车辆类型,判断出来不为小挖返回null，再根据vserionNum判断
+      if (deviceinfo.machine == null || null ==deviceinfo.machine.licenseId){
+        vm.DeviceType=null;
+      }else{
+        vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
+      }
+      //如果上面没有判断出来，versionNum也不为空，就根据deviceNum来判断车辆类型
+      if (vm.DeviceType==null){
+        if(deviceinfo.versionNum!=null){
+          vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum);
+        }else {
+          vm.DeviceType = serviceResource.getDeviceType(null);
+        }
       }
     }
+
+    vm.controllerInitialization(deviceinfo);
+
     //气压图
     vm.highchartsAir = {
       options: {
