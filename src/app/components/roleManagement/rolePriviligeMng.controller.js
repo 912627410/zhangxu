@@ -91,7 +91,8 @@
 
       if (null != priviligeInfo) {
         if (null != priviligeInfo.permission && priviligeInfo.permission != "") {
-          restCallURL += "&search_LIKE_permission=" + priviligeInfo.permission;
+          //这里包含了特殊字符: 所有需要转移才可以 by riqian.ma 20160614
+          restCallURL += "&search_LIKE_permission=" + encodeURIComponent(priviligeInfo.permission);
         }
 
         if (null != priviligeInfo.status ) {

@@ -40,9 +40,7 @@
         restUpdateCall.update(params,succCallback,failCallback);
 
       }
-      if (action == "POST"){
-        restCall
-      }
+
 
       return defer.promise
     };
@@ -260,14 +258,11 @@
       authenticate:function(credentials){
 
         var loginInfo={ssn:credentials.username,password:credentials.password};
-  console.log(111);
         var rspPromise= $http.post(
           USER_LOGIN_URL,
            loginInfo
         );
 
-      //  var rspPromise = restCallService(USER_LOGIN_URL,"ADD",loginInfo);
-      //  var rspPromise = restCallService(USER_LOGIN_URL,'GET');
         return rspPromise;
       },
       //分页查询设备信息(device info)

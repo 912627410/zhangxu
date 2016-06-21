@@ -13,7 +13,7 @@
     var vm = this;
     vm.operatorInfo =operatorInfo;
     //default user role for new added user
-    vm.newUser = {role:"ROLE_USER"};
+    vm.newUser = {};
     vm.ok = function (newUserinfo) {
       var restPromise = serviceResource.restAddRequest(USERINFO_URL,newUserinfo);
       restPromise.then(function (data){

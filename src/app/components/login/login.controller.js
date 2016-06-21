@@ -160,9 +160,7 @@
         }
       );
 
-      vm.getPermission = function () {
 
-      }
     }
 
   }
