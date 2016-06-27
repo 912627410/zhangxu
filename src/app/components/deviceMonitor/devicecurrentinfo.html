@@ -421,7 +421,7 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
                     <!--增加车载蓄电池电压显示-->
                     <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}} V</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
                   </tr>
                   <tr>
                     <td>{{'numberOfStarts'|translate}}</td>
