@@ -402,7 +402,7 @@
                   </tr>
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{'torqueConverterOilTemperature'|translate}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}°C</td>
                     <td>{{'CANCommunicationStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
