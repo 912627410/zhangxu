@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h3 class="modal-title">修改系统参数</h3>
+</div>
+<!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
+<!--<div >{{updateUserinfoCtrl.dynamicPopover.content}}</div>-->
+<!--<div class="form-group">-->
+<!--<abn-tree tree-data="orgCtrl1.my_data" tree-control="orgCtrl1.my_tree" on-select="orgCtrl1.my_tree_handler(branch)" expand-level="2"></abn-tree>-->
+<!--</div>-->
+<!--</script>-->
+
+<form  name="updateSysconfigForm"  class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">参数名称</label>
+        <div class="col-sm-9">
+          <input type="text" id="name" class="form-control" placeholder="参数名称"
+                 ng-model="updateSysconfigController.sysconfig.name" name="name" typeahead-show-hint="true"
+                 validator="required"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="value" class="col-sm-3 control-label">参数值</label>
+        <div class="col-sm-9">
+          <input type="text" id="value" class="form-control" placeholder="参数值"
+                 ng-model="updateSysconfigController.sysconfig.value" name="value" typeahead-show-hint="true"
+                 validator="required"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="col-sm-3 control-label">参数描述</label>
+        <div class="col-sm-9">
+          <input type="text" id="description" class="form-control" placeholder="参数描述"
+                 ng-model="updateSysconfigController.sysconfig.description" name="description" typeahead-show-hint="true"
+                 validator="required"/>
+        </div>
+      </div>
+
+      <i style="color: red" ng-if="null!=updateSysconfigController.errorMsg">
+        {{updateSysconfigController.errorMsg}}<br/>
+      </i>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="updateSysconfigForm" ng-click="updateSysconfigController.ok(updateSysconfigController.sysconfig)">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="updateSysconfigController.cancel()">取消</button>
+  </div>
+</form>

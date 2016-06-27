@@ -96,6 +96,15 @@
           }
         }
       })
+      .state('home.sysconfigmng', {
+        url: '/sysconfigmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/sysconfigManagement/sysconfigmng.html',
+            controller: 'sysconfigMngController as sysconfigMngCtrl'
+          }
+        }
+      })
       .state('home.simMng', {
         url: '/simMng',
         views: {
