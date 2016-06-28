@@ -304,7 +304,14 @@
   "totalMileage":"累计里程",
   "momentWorkTime":"阶段工作时间",
   "momentMileage":"阶段里程",
-  "oilPress":"机油压力"
-
+  "oilPress":"机油压力",
+  "alertStatus":"报警状态",
+  "flyWheelTeeth":"飞轮齿数",
+  "proportionalValve":"比例阀电流",
+  "coolantAlarmValue":"冷却液温度高报警值",
+  "voltageHigthAlarmValue":"电压高报警设置值",
+  "voltageLowAlarmValue":"电压低报警设置值",
+  "oilLowAlarmValue":"油位低报警设置值",
+  "oilPressAlarmValue":"机油压力报警值"
 
 }

@@ -307,7 +307,14 @@
   "totalMileage":"totalMileage",
   "momentWorkTime":"momentWorkTime",
   "momentMileage":"momentMileage",
-  "oilPress":"oilPress"
-
+  "oilPress":"oilPress",
+  "alertStatus":"Alert Status",
+  "flyWheelTeeth":"FlyWheel Teeth",
+  "proportionalValve":"proportionalValve Current",
+  "coolantAlarmValue":"Coolant AlarmValue",
+  "voltageHigthAlarmValue":"High voltage alarm setting value",
+  "voltageLowAlarmValue":"Low voltage alarm setting value",
+  "oilLowAlarmValue":"Oil low alarm setting value",
+  "oilPressAlarmValue":"oilpress alarm setting value"
 
 }

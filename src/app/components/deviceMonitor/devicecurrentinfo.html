@@ -348,6 +348,9 @@
                     </td>
                   </tr>
                   <!--矿机end-->
+                  <!--中挖begin-->
+
+                  <!--中挖end-->
                 </table>
               </div>
             </div>
@@ -516,6 +519,31 @@
                     <!--<td>{{'SIMCardNumber'|translate}}</td>-->
                     <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber}}</td>-->
                   <!--</tr>-->
+                  <!--中挖测试-->
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'alertStatus'|translate}}</td>
+                    <td>0x{{deviceCurrentInfoCtrl.deviceinfo.alertStatus}}</td>
+                    <td>{{'flyWheelTeeth'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.flyWheelTeeth}}</td>
+                    <td>{{'proportionalValve'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'proportionalValve'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
+                    <td>{{'coolantAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue}}</td>
+                    <td>{{'voltageHigthAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageHigthAlarmValue}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'voltageLowAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageLowAlarmValue}}</td>
+                    <td>{{'oilLowAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue}}</td>
+                    <td>{{'oilPressAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.oilPressAlarmValue}}</td>
+                  </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>

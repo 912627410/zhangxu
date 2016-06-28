@@ -31,6 +31,9 @@
     vm.controllerInitialization = function (deviceinfo){
       vm.deviceinfo = deviceinfo;
       vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
+      //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
+      vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
+      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
       //改为过滤器
       //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
       //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
