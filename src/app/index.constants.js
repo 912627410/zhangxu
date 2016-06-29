@@ -19,7 +19,7 @@
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder')
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
-    .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
+
     .constant('USER_LOGIN_URL', SERVER_BASE_URL + 'user/gettoken')
     .constant('USER_REGISTER_URL', SERVER_BASE_URL + 'user/register')
     .constant('HOME_GPSDATA_URL', SERVER_BASE_URL + 'device/homegpsdata?search_EQ_locateStatus=A&page=0&size=100&sort=lastDataUploadTime,desc')       //主页中地图数据,默认前100条
@@ -47,6 +47,9 @@
     .constant('MACHINE_MOVE_ORG_URL', SERVER_BASE_URL + 'machine/moveOrg')   //车辆调拨
     .constant('MACHINE_UNBIND_DEVICE_URL', SERVER_BASE_URL + 'machine/unbindDevice')   //设备解绑
 
+    //系统参数相关
+    .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
+    .constant('SYS_CONFIG_PAGE_URL',SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
 
     //sim卡管理相关
     .constant('SIM_PAGE_URL',SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页

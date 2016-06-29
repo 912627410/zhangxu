@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建参数</h3>
+</div>
+<form name="newSysconfigForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">参数名称</label>
+        <div class="col-sm-9">
+          <input type="text" id="name" class="form-control" placeholder="参数名称"
+                 ng-model="newSysconfigController.sysconfig.name" name="name" typeahead-show-hint="true"
+                 validator="required"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="value" class="col-sm-3 control-label">参数值</label>
+        <div class="col-sm-9">
+          <input type="text" id="value" class="form-control" placeholder="参数值"
+                 ng-model="newSysconfigController.sysconfig.value" name="value" typeahead-show-hint="true"
+                 validator="required"  />
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="col-sm-3 control-label">参数描述</label>
+        <div class="col-sm-9">
+          <input type="text" id="description" class="form-control" placeholder="参数描述"
+                 ng-model="newSysconfigController.sysconfig.description" name="description" typeahead-show-hint="true"
+                 validator="required"  />
+
+        </div>
+      </div>
+
+  </div>
+  <i style="color: red" ng-if="null!=newSysconfigController.errorMsg">
+    {{newSysconfigController.errorMsg}}<br/>
+  </i>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="newSysconfigForm" ng-click="newSysconfigController.ok(newSysconfigController.sysconfig)">提交</button>
+    <button class="btn btn-warning" type="button" ng-click="newSysconfigController.cancel()">取消</button>
+  </div>
+</form>

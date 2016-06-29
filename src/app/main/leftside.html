@@ -64,6 +64,11 @@
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
+      <li>
+        <a ui-sref="home.sysconfigmng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
+          <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+        </a>
+      </li>
       <li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'">
         <a ui-sref="home.userinfomng">
           <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
