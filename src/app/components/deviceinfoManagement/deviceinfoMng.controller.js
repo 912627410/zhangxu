@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,treeFactory, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -268,8 +268,8 @@
 
 
     vm.reset = function () {
-      vm.queryDeviceNum = null;
-      vm.queryMachineLicenseId = null;
+      vm.queryDeviceinfo = null;
+    //  vm.queryDeviceinfo.phoneNumber = null;
       vm.queryOrg = null;
     }
 
@@ -284,5 +284,9 @@
       vm.org = data;
     });
 
+
+    vm.validateOperPermission=function(){
+      return permissions.getPermissions("device:oper");
+    }
   }
 })();

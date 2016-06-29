@@ -56,7 +56,7 @@
       var rspPromise = serviceResource.authenticate(vm.credentials);
       rspPromise.then(function (response) {
         var data = response.data;
-        var userInfo = {
+         userInfo = {
           authtoken: data.token,
           userdto: data.userinfo
         };
@@ -77,7 +77,7 @@
           $rootScope.permissionList = permissionList;
           $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
 
-          if (permissions.getPermissions("org:list")) {
+          if (permissions.getPermissions("config:organazitionPage")) {
             vm.getOrg();
           }
           if (permissions.getPermissions("user:notification")) {

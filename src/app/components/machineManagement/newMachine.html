@@ -5,19 +5,14 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-<<<<<<< HEAD
         <label for="licenseId" class="col-sm-3 control-label">整机编号/车号</label>
         <div class="col-sm-9">
-=======
-        <label for="licenseId" class="col-sm-2 control-label">整机编号/车号</label>
-        <div class="col-sm-10">
->>>>>>> role
+
           <input type="text" id="licenseId" class="form-control" placeholder="整机编号/车号"
                  ng-model="newMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
                  validator="required" message-id="requireSubmit"/>
           <span id="requireSubmit">23423423424</span>
         </div>
-<<<<<<< HEAD
       </div>
 
       <div class="form-group">
@@ -43,23 +38,6 @@
         </div>
       </div>
 
-
-=======
-      </div>
-
-      <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
-        <div class="col-sm-10">
-          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
-                 ng-model="newMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
-                 ng-minlength='6' ng-maxlength='26' ng-change="newMachineController.deviceNumInputChanged(newMachineController.machine.deviceinfo.deviceNum)"/>
-          <label class="text-blue" ng-if="newMachineController.deviceNumFromScanner == true">扫码输入终端号:{{newMachineController.deviceNumContentFromScanner}}</label>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">最长26位</span>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">最短6位</span>
-        </div>
-      </div>
-
->>>>>>> role
       </div>
       <div class="form-group">
         <label for="org" class="col-sm-3 control-label">所属组织</label>

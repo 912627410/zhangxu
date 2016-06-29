@@ -9,7 +9,7 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
@@ -159,5 +159,13 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    //得到发动机类型集合
+    var engineTypeData = serviceResource.restCallService(ENGINE_TYPE_LIST_URL, "QUERY");
+    engineTypeData.then(function (data) {
+      vm.engineTypeList = data;
+    }, function (reason) {
+      Notification.error('获取发动机类型失败');
+    })
   }
 })();
