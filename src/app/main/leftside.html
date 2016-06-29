@@ -31,44 +31,65 @@
         <a ui-sref="home">
           <i class="fa fa-dashboard"></i> <span>{{'dashboard' | translate}}</span>
         </a>
-        <ul class="treeview-menu" style="display: block">
+
           <li>
-            <a ui-sref="home.monitor" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
+
+            <a ui-sref="home.monitor" presentation-href="device:page">
               <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.deviceinfoMng"   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+
+            <a ui-sref="home.deviceinfoMng"   presentation-href="device:page">
               <i class="fa fa-database"></i> <span>{{'equipmentManagement' | translate}}</span>
             </a>
           </li>
+          <!--
           <li>
+
             <a   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+
               <i class="fa fa-warning"></i> <span>{{'alarmEquipment' | translate}}</span>
             </a>
           </li>
           <li>
+
             <a    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+
               <i class="fa fa-bar-chart-o"></i> <span>{{'statisticalCharts' | translate}}</span>
             </a>
           </li>
-        </ul>
+          -->
+
       </li>
       <li>
-        <a ui-sref="home.simMng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">
+
+        <a ui-sref="home.simMng" presentation-href="sim:page">
           <i class="fa fa-mobile"></i> <span>{{'SIMManagement' | translate}}</span>
         </a>
       </li>
       <li>
-        <a ui-sref="home.machinemng" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR' ||userInfo.userdto.role == 'ROLE_PRODUCER'">
+
+        <a ui-sref="home.machinemng" presentation-href="machine:page">
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
-      <li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'">
-        <a ui-sref="home.userinfomng">
+      <li class="treeview" >
+        <a ui-sref="home.userinfomng" presentation-href="user:page">
           <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
         </a>
-      </li><li class="treeview" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'">
+      </li>
+      <li >
+        <a ui-sref="home.roleMng" presentation-href="role:rolePage">
+          <i class="fa fa-user"></i> <span>角色管理</span>
+          </a>
+      </li> <li >
+        <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
+          <i class="fa fa-user"></i> <span>权限管理</span>
+          </a>
+      </li>
+
+      <li class="treeview" >
         <a href="http://releasenotegpscloud.mydoc.io/" target="_blank">
           <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>
         </a>

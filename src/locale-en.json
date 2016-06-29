@@ -114,6 +114,7 @@
   "productionSN":"Production Serial Number",
   "engineModel":"Engine Model",
   "GPSSignalPercentage":"GPRS Signal Per ",
+
   "totalRunningTimeHour":"Total Running Time(hour)",
   "fuelLevel":"Fuel Level ",
   "coolantTemperature":"Coolant Temperature",
@@ -124,9 +125,11 @@
   "powerSupplyMode":"Power Supply",
 
   "vehicleMountedPowerSupply":"Vehicle",
+
   "vehicleMountedBatteryVoltage":"Vehicle Battery Voltage",
   "internalBattery":"Internal Battery",
   "GPRSSignalQuality":"GPRS Signal Quality ",
+
   "operationMonitoring":"Operation Monitoring",
   "realTimeWorkH":"Real Work (H)",
   "realTimeWork":"Real Work",
@@ -138,6 +141,7 @@
   "notWork":"OFF",
   "generatorState":"Alternator State",
   "GPSPowerDetection":"Inner Power Detection",
+
 
   "non-transFormer":"Non-transformer",
   "noSignal":"No signal",
@@ -154,6 +158,7 @@
   "endDate":"End Date",
   "confirm":"Confirm",
   "export":"Export",
+
   "dataReturnTime":"Data Back Time",
   "position":"Lacation",
   "speed":"Speed",
@@ -203,7 +208,9 @@
   "unlockMessageContent":"Unlock message content",
   "requestingLocationData":"Requesting location data",
   "barometricPressure":"Press",
+
   "waterTemperature":"Degree",
+
   "rotatingSpeed":"Speed",
   "turn":"Turn",
   "Oil":"Oil",
@@ -215,9 +222,11 @@
   "pleaseProvideTheParametersToBeSet":"Please provide the parameters to be set",
   "getTheMessageContentFailed":"Get the message content failed",
   "youSureYouWantToSendThisMessage":"You sure you want to send this message?",
+
   "ConfirmMsgViewKeyInput":"This action will consume one password set (total 50), are you sure for this?",
   "SMSConfirmation":"SMS Confirmation",
   "ViewKeyInputConfirmation":"View key input confirmation",
+
   "cancel":"Cancel",
   "messageSentSuccessfully":"Message sent successfully",
   "messageSendFiled":"Send error",
@@ -226,6 +235,7 @@
   "BoundContent":"Bound content",
   "bindMachineId":"Bind Machine ID",
   "ecuLockStatus":"ECU Lock Status",
+
 
   "remind":"REMIND",
 	 "remindlower":"Remind",
@@ -259,6 +269,7 @@
    "pagingHomePage":"First page",
    "lastPage":"Last page",
    "nextPage":"Next page",
+
    "previousPage":"Previous page",
     "failedToGetSmallExcavatorModel":"Get small excavator parameter failed",
   "amaplatitudeNumber":"Latitude",
@@ -308,6 +319,7 @@
   "momentWorkTime":"momentWorkTime",
   "momentMileage":"momentMileage",
   "oilPress":"oilPress"
+
 
 
 }

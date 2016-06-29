@@ -10,7 +10,8 @@
     .controller('orgController', orgController);
 
   /** @ngInject */
-  function orgController($rootScope, $scope) {
+
+  function orgController($rootScope,$scope,Notification) {
     var vm = this;
     vm.selectedOrg;
     vm.searchText = '';     //搜索的数据

@@ -9,13 +9,13 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
 
 
-   // vm.deviceinfoList=[];
+    // vm.deviceinfoList=[];
 
     //如果设备号不存在,则设置设备为空
     //if(vm.machine.deviceinfo==null){
@@ -27,7 +27,7 @@
     }
 
     //vm.deviceinfoList=[];
-   // vm.deviceinfoList.push(vm.machine.deviceinfo);
+    // vm.deviceinfoList.push(vm.machine.deviceinfo);
 
     //动态查询未使用的本组织的设备
     vm.refreshDeviceList = function(value) {
@@ -45,18 +45,10 @@
         vm.deviceinfoList=response.data;
 
         if(null!=vm.machine.deviceinfo)
-        vm.deviceinfoList.push(vm.oldMachine);
+          vm.deviceinfoList.push(vm.oldMachine);
 
       });
     };
-
-    //得到发动机类型集合
-    var engineTypeData = serviceResource.restCallService(ENGINE_TYPE_LIST_URL, "QUERY");
-    engineTypeData.then(function (data) {
-      vm.engineTypeList = data;
-    }, function (reason) {
-      Notification.error('获取发动机类型失败');
-    })
 
     //日期控件相关
     //date picker
@@ -110,30 +102,7 @@
       }
     }
 
-    //更换GPS的号码
-    vm.newDeviceNumFromScanner = false;
-    vm.newDeviceNumContentFromScanner = '';
-
-    //用于判断设备号输入的数据是否是通过扫码输入
-    //扫码格式是 ".LG4130002690.43985.C202B5"
-    vm.newDeviceNumInputChanged = function(deviceNum){
-      if (deviceNum.length == 26){
-        if (deviceNum.substring(0,1) == '.' && deviceNum.substring(13,14) == '.' && deviceNum.substring(19,20) == '.'){
-          vm.newDeviceNumFromScanner = true;
-          vm.newDeviceNumContentFromScanner = deviceNum.substring(20);
-        }
-        else{
-          vm.newDeviceNumFromScanner = false;
-          vm.newDeviceNumContentFromScanner = '';
-        }
-      }
-      else{
-        vm.newDeviceNumFromScanner = false;
-        vm.newDeviceNumContentFromScanner = '';
-      }
-    }
-
-    vm.ok = function (machine,newDeviceNum) {
+    vm.ok = function (machine) {
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
       //if(null!=machine.deviceinfo) {
       //
@@ -165,23 +134,18 @@
       else{
         postInfo.deviceinfo=null;
       }
-      postInfo.org={id:machine.org.id};
-      postInfo.engineType={id:machine.engineType.id};
-      //更换GPS
-      if (newDeviceNum != null){
-        postInfo.newDeviceNum=newDeviceNum;
+
+      if(machine.org==null){
+        Notification.error("请先调拨车辆");
+        return;
       }
+      postInfo.org={id:machine.org.id};
 
       var restPromise = serviceResource.restUpdateRequest(MACHINE_URL,postInfo);
       restPromise.then(function (data){
-        if(data.code===0){
-          if (newDeviceNum != null){
-            Notification.success("更新GPS信息成功,请到新绑定GPS远程控制页面重新下发绑定命令!");
-          }
-          else{
-            Notification.success("修改车辆信息成功!");
-          }
 
+        if(data.code===0){
+          Notification.success("修改车辆信息成功!");
           $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
@@ -192,23 +156,6 @@
       });
     };
 
-
-    vm.changeGPS = function(machine,newDeviceNum){
-      if (machine.deviceinfo.deviceNum == null || machine.deviceinfo.deviceNum == ''){
-        Notification.warning({message: '原GPS终端号码不能为空', positionX: 'center'});
-        return;
-      }
-
-      if (newDeviceNum == null){
-        Notification.warning({message: '请输入要更换的GPS终端号码', positionX: 'center'});
-      }
-      else{
-        $confirm({text: '更换GPS信息时原GPS的一次性固定秘钥将被同步至新GPS,新GPS的秘钥会被覆盖,此操作不能回退,确定要更换吗?', title: '更换GPS信息', ok: '确认', cancel: '取消'})
-          .then(function () {
-            vm.ok(machine,newDeviceNum);
-          })
-      }
-    }
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };

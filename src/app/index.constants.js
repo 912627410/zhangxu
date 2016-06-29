@@ -71,6 +71,35 @@
 
     .constant('VIEW_KEYBOARD_MSG_URL', SERVER_BASE_URL + 'device/keyboard')   //得到键盘输入数据
 
+
+    .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
+
+    //角色相关
+    .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolePage')   //角色的分页信息
+    .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleOper')   //角色基本CRUD信息
+    .constant('ROLE_USER_LIST_URL', SERVER_BASE_URL + 'role/roleUserinfoList')   //角色用户信息
+    .constant('ROLE_USER_OPER_URL', SERVER_BASE_URL + 'role/roleUserinfoOper')   //角色用户更新
+    .constant('ROLE_PRIVILAGE_LIST_URL', SERVER_BASE_URL + 'role/rolePriviligeList')   //角色权限信息
+    .constant('ROLE_PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'role/rolePriviligeOper')   //角色权限更新
+
+    .constant('USER_ROLE_LIST_URL', SERVER_BASE_URL + 'role/userinfoRoleList')   //角色用户信息
+    .constant('USER_ROLE_OPER_URL', SERVER_BASE_URL + 'role/userinfoRoleOper')   //角色用户更新
+    .constant('PRIVILAGE_ROLE_LIST_URL', SERVER_BASE_URL + 'role/priviligeRoleList')   //角色权限信息
+    .constant('PRIVILAGE_ROLE_OPER_URL', SERVER_BASE_URL + 'role/priviligeRoleOper')   //角色权限更新
+
+    //权限相关
+    .constant('PRIVILAGE_PAGE_URL', SERVER_BASE_URL + 'privilige/priviligePage')   //权限的分页信息
+    .constant('PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'privilige/priviligeOper')   //权限基本CRUD信息
+    .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilige/statusList')   //权限状态信息
+    .constant('PRIVILAGE_STATUS_DISABLE_URL', SERVER_BASE_URL + 'privilige/statusDisable')   //权限禁止
+    .constant('PRIVILAGE_STATUS_ENABLE_URL', SERVER_BASE_URL + 'privilige/statusEnable')   //权限启用
+
+    //用户相关
+    .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')   //用户信息分页
+    .constant('USER_STATUS_URL', SERVER_BASE_URL + 'user/statusList')   //权限状态信息
+    .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')   //权限禁止
+    .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
+
   ;
 
 

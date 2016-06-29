@@ -82,8 +82,8 @@
         url: '/userinfomng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/userManagement/userinfomng.html',
-            controller: 'userMngController as userMngCtrl'
+            templateUrl: 'app/components/userManagement/userMng.html',
+            controller: 'userMngController as userMngController'
           }
         }
       })
@@ -135,6 +135,27 @@
             controller: 'DeviceMonitorController',
             controllerAs: 'monitorCtrl'
           }
+        }
+      })
+      .state('home.roleMng', {
+        url: '/roleMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/roleManagement/roleMng.html',
+            controller: 'roleMngController as roleMngCtrl'
+          }
+
+        }
+      })
+      .state('home.priviligeMng', {
+        url: '/priviligeMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/priviligeManagement/priviligeMng.html',
+            controller: 'priviligeMngController as priviligeMngCtrl'
+          }
+
+
         }
       })
 

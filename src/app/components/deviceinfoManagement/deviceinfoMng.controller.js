@@ -6,7 +6,8 @@
     .controller('deviceinfoMngController', deviceinfoMngController);
 
   /** @ngInject */
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter, treeFactory,Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,treeFactory, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -14,10 +15,9 @@
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
+
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
-
-
 
     vm.query = function (page, size, sort, deviceinfo) {
       var restCallURL = DEVCE_PAGED_QUERY;
@@ -53,10 +53,8 @@
       });
     };
 
-    //首次触发查询
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN") {
-      vm.query(null, null, null, null);
-    }
+    vm.query(null, null, null, null);
+
 
     //重置查询框
     vm.reset = function () {
@@ -216,7 +214,8 @@
 
         return;
       }
-      // TODO 11111
+
+
       var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
       var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
@@ -229,6 +228,7 @@
             deviceinfo.org.label=vm.org.label;
           }
         })
+
         vm.org=null;
         vm.selected=[]; //把选中的设备设置为空
         Notification.success("调拨设备成功!");
@@ -274,6 +274,7 @@
     }
 
 
+
     //组织树的显示
     vm.openTreeInfo=function() {
       treeFactory.treeShow();
@@ -282,5 +283,6 @@
     $rootScope.$on('orgSelected', function (event, data) {
       vm.org = data;
     });
+
   }
 })();

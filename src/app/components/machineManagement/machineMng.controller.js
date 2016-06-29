@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams, treeFactory,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_UNBIND_DEVICE_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_REMOVE_ORG_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
@@ -58,9 +58,7 @@
       });
     };
 
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN") {
-      vm.query();
-    }
+    vm.query();
 
     //重置查询框
     vm.reset = function () {
@@ -86,8 +84,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        //刷新
-        console.log(result);
+        //console.log(result);
         vm.tableParams.data.splice(0, 0, result);
 
       }, function () {
@@ -227,17 +224,8 @@
 
     };
 
-    vm.hasRemoveDevice = function (machine) {
-      //用户权限
-      var role = vm.operatorInfo.userdto.role;
-      var rolePermission = (role == 'ROLE_SYSADMIN' || role == 'ROLE_ADMIN' || role == 'ROLE_OPERATOR' || role == 'ROLE_PRODUCER');
 
-      //设备是否已绑定
-      var devicePermission = machine.deviceinfo == null ? false : true;
-      // alert(rolePermission&&devicePermission);
-      return rolePermission && devicePermission;
 
-    };
 
     vm.removeDevice = function (machine) {
       $confirm({text: '确定要解绑吗?',title: '解绑确认', ok: '确定', cancel: '取消'})

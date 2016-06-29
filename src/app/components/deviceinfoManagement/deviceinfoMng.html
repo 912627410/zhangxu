@@ -35,7 +35,9 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"
+
+      <button class="btn btn-primary" type="button" presentation-href="device:page"
+
               ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.queryDeviceinfo)">查询
       </button>
 
@@ -62,7 +64,9 @@
       </p>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-warning" type="button" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+
+      <button class="btn btn-warning" type="button" presentation-href="device:moveOrg"
+
               ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
       </button>
     </div>
@@ -78,18 +82,19 @@
     </div>
     <div class="col-md-9">
 
-      <a class="btn btn-default pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
         <i class="fa fa-plus"></i> 增加
       </a>
-      <a class="btn btn-default pull-right"
-         ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
+
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
 
-      <a class="btn btn-default pull-right"
+
+      <a class="btn btn-default pull-right" presentation-href="device:oper"
        title="Export Table" ng-click='csv.generate(1,10)' ng-href="{{csv.link()}}"
          download="设备数据.csv">
         <i class="glyphicon glyphicon-new-window"></i> 批量导出
@@ -117,9 +122,10 @@
                      ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)"
                      ng-model="deviceinfo.checked"></td>
             <td class=" text-nowrap" data-title="'设备号'" sortable="'deviceNum'">
-              <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'" href
+
+              <a  href
                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
-              <span ng-if="userInfo.userdto.role != 'ROLE_SYSADMIN'">{{deviceinfo.deviceNum}}</span>
+              <span >{{deviceinfo.deviceNum}}</span>
             </td>
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
             </td>
@@ -137,12 +143,11 @@
               {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
             </td>
             <td class="text-nowrap" data-title="'操作'">
+
               <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                       ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">修改
               </button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
                       ng-click="deviceinfoMngCtrl.currentDeviceinfo(deviceinfo,'lg')">状态
               </button>
 

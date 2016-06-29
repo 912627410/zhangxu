@@ -8,6 +8,7 @@
 
   /** @ngInject */
   function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -101,9 +102,8 @@
          Notification.error("获取SIM数据失败");
        });
      }
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
-      vm.query();
-    }
+
+    vm.query();
 
     vm.newSim = function (size) {
       var modalInstance = $uibModal.open({

@@ -28,6 +28,7 @@
       $rootScope.notificationNumber = $window.sessionStorage["notificationNumber"];
     }
 
+
     //小挖车辆编号规则
     if ($window.sessionStorage["SMALL_EXCAVATOR_MODEL"]) {
       $rootScope.SMALL_EXCAVATOR_MODEL = $window.sessionStorage["SMALL_EXCAVATOR_MODEL"];
@@ -38,6 +39,13 @@
     if ($window.sessionStorage["warningDataDtc"]){
       $rootScope.warningDataDtc=JSON.parse($window.sessionStorage["warningDataDtc"]);
     }
+
+    //权限列表
+    if ($window.sessionStorage["permissionList"]) {
+      $rootScope.permissionList = JSON.parse($window.sessionStorage["permissionList"]);
+    }
+
+
     //判断是否登录
     if ($rootScope.userInfo){
       //监控用户登录超时

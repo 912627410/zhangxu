@@ -9,8 +9,10 @@
     .controller('HomeMapController', HomeMapController);
 
   /** @ngInject */
-  function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource) {
+  function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource,permissions) {
     var vm = this;
-    serviceResource.refreshMapWithDeviceInfo("homeMap",null,4);
+    if(permissions.getPermissions("device:homegpsdata")) {
+      serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
+    }
   }
 })();

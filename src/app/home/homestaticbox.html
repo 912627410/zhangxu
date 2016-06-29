@@ -1,7 +1,7 @@
 <div>
-  <div class="col-lg-3 col-xs-6">
+  <div class="col-lg-3 col-xs-6" presentation-href="device:homegpsdata">
     <!-- small box -->
-    <div class="small-box bg-aqua" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+    <div class="small-box bg-aqua" >
       <div class="inner">
         <h3 >{{homeCtrl.statisticInfo.totalDevices}}</h3>
         <p>{{'equipmentMonitoring'|translate}}</p>
@@ -14,9 +14,9 @@
       </a>
     </div>
   </div><!-- ./col -->
-  <div  class="col-lg-3 col-xs-6" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+  <div  class="col-lg-3 col-xs-6" presentation-href="device:homegpsdata">
     <!-- small box -->
-    <div class="small-box bg-green">
+    <div class="small-box bg-green" >
       <div class="inner">
         <h3>{{homeCtrl.statisticInfo.totalDevices}}</h3>
         <p>{{'equipmentManagement'|translate}}</p>
@@ -31,7 +31,7 @@
   </div><!-- ./col -->
   <div class="col-lg-3 col-xs-6">
     <!-- small box -->
-    <div class="small-box bg-yellow" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+    <div class="small-box bg-yellow">
       <div class="inner">
         <h3>{{homeCtrl.statisticInfo.totalWarningDevices}}</h3>
         <p>{{'alarmEquipment'|translate}}</p>
@@ -44,7 +44,7 @@
       </a>
     </div>
   </div><!-- ./col -->
-  <div class="col-lg-3 col-xs-6" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
+  <div class="col-lg-3 col-xs-6" >
     <!-- small box -->
     <div class="small-box bg-red">
       <div class="inner">

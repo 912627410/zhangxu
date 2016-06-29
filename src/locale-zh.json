@@ -125,6 +125,7 @@
   "vehicleMountedBatteryVoltage":"车载蓄电池电压",
   "internalBattery":"内部电池",
   "GPRSSignalQuality":"GPRS信号质量",
+
   "operationMonitoring":"运行监控",
   "realTimeWorkH":"实时工时(H)",
   "realTimeWork":"实时工时",
@@ -136,6 +137,7 @@
   "notWork":"不工作",
   "generatorState":"发电机状态",
   "GPSPowerDetection":"内部电源检测",
+
   "non-transFormer":"无电源",
   "noSignal":"无信号",
   "openCoverState":"开盖状态",
@@ -151,6 +153,7 @@
   "endDate":"结束日期",
   "confirm":"确定",
   "export":"导出",
+
   "dataReturnTime":"数据回传时间",
   "position":"位置",
   "speed":"速度",
@@ -211,6 +214,7 @@
   "pleaseProvideTheParametersToBeSet":"请提供要设置的参数",
   "getTheMessageContentFailed":"获取短信内容失败,",
   "youSureYouWantToSendThisMessage":"确定要发送此短信吗?",
+
   "ConfirmMsgViewKeyInput":"这个将消耗一组密码,总共密码为50组,你确定要查看吗?",
   "SMSConfirmation":"短信发送确认",
   "ViewKeyInputConfirmation":"查看密码确认",
@@ -220,6 +224,7 @@
   "cancelTheAutomaticKeyboardLockCarDataContent":"取消自动锁车时键盘输入数据内容",
   "UnboundContent":"解除绑定时键盘输入数据内容",
   "BoundContent":"绑定时键盘输入数据内容",
+
   "bindMachineId":"实际绑定车架号",
   "ecuLockStatus":"ECU锁车状态",
 
@@ -256,6 +261,7 @@
   "pagingHomePage":"首页",
   "lastPage":"最后一页",
   "nextPage":"下一页",
+
   "previousPage":"前一页",
   "failedToGetSmallExcavatorModel":"读取小挖设备型号参数失败",
   "amaplatitudeNumber":"纬度",

@@ -720,13 +720,16 @@
 
 
     //******************远程控制tab**********************]
+
     vm.serverHost = "iotserver1.nvr-china.com";
+
     vm.serverPort = "09999";
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
     if (vm.workHours != null){
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
+
 
     //设置ECU 锁车状态 描述
     vm.ecuLockStatusDesc = "";
@@ -746,6 +749,7 @@
         }
       }
     }
+
     //vm.secOutPower =
     //secLocateInt
     //secInnerPower
@@ -911,6 +915,7 @@
             Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
           })
         })
+
     }
 
   }

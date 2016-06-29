@@ -9,12 +9,14 @@
     .factory('serviceResource', serviceResource);
 
   /** @ngInject */
-  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+
+  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
+
       var defer = $q.defer();
       var succCallback = function(data){
         defer.resolve(data);
@@ -39,6 +41,8 @@
         restUpdateCall.update(params,succCallback,failCallback);
 
       }
+
+
       return defer.promise
     };
 
@@ -50,6 +54,7 @@
       var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
         offset: new AMap.Pixel(15, -43)//-113, -140
+
       });
 
       var marker = new AMap.Marker({
@@ -66,6 +71,11 @@
       // marker.setMap(mapObj);  //在地图上添加点
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
+
+        var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
+        var title = '';
+        var contentInfo = "终端编号：" + item.deviceNum + "</br>当前位置：" + item.address + "<br/>数据更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>坐标:<br/>工作时间:"+item.totalDuration+"<br/>";
+
       //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
       //  var title = '';
         var title = item.deviceNum;
@@ -77,8 +87,10 @@
         var contentInfo="";
         contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
+
         contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
+
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
 
@@ -146,6 +158,14 @@
         $rootScope.userInfo.authtoken ="Basic "+ btoa($rootScope.userInfo.userdto.ssn+":"+newpassword);
         $window.sessionStorage["userInfo"] = JSON.stringify($rootScope.userInfo);
       },
+
+      getPermission:function(){
+      if($rootScope.userInfo){
+        var rspdata= restCallService(PERMISSIONS_URL,"GET");
+        return rspdata;
+      }
+      },
+
       //高德地图逆向地理编码(坐标->地址)
       getAddressFromXY: function(lnglatXY,callback){
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -263,10 +283,13 @@
       },
       //登录认证接口
       authenticate:function(credentials){
-        var cred = "Basic "+ btoa(credentials.username+":"+credentials.password);
-        var headers = credentials?{authorization:cred}:{};
-        $http.defaults.headers.common['Authorization'] = cred;
-        var rspPromise = restCallService(USER_LOGIN_URL,'GET');
+
+        var loginInfo={ssn:credentials.username,password:credentials.password};
+        var rspPromise= $http.post(
+          USER_LOGIN_URL,
+           loginInfo
+        );
+
         return rspPromise;
       },
       //分页查询设备信息(device info)
@@ -382,7 +405,7 @@
         if (machineId == null){
           return "00";
         }
-        
+
         var modelName = machineId.substr(3,5);
         var smallExModel = $rootScope.SMALL_EXCAVATOR_MODEL;
 

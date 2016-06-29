@@ -9,13 +9,21 @@
     .controller('HomeController', HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope, serviceResource,HOME_STATISTICS_DATA_URL,Notification) {
+  function HomeController($rootScope, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification) {
     var vm = this;
     var statisticInfo = {
       totalDevices: 0,
       totalWarningDevices: 0,
       totalAbnormalDevices: 0
     };
+
+   // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
+  //  console.log("$rootScope.userInfo =="+$rootScope.userInfo );
+
+
+
+
+    if(permissions.getPermissions("device:homegpsdata")){
 
     if ($rootScope.userInfo) {
       var rspdata = serviceResource.restCallService(HOME_STATISTICS_DATA_URL, "GET");
@@ -38,5 +46,8 @@
       })
     }
     vm.statisticInfo = statisticInfo;
+
+
+  }
   }
 })();

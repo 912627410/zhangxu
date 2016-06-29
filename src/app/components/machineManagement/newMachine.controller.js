@@ -108,6 +108,7 @@
       postInfo.org={id:machine.org.id};
       postInfo.engineType={id:machine.engineType};
 
+
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
       restPromise.then(function (data) {
         if(data.code===0){
@@ -152,6 +153,7 @@
       }
     }
 
+
     //组织树的显示
     vm.openTreeInfo=function() {
       treeFactory.treeShow();
@@ -161,6 +163,7 @@
     $rootScope.$on('orgSelected', function (event, data) {
        vm.machine.org = data;
     });
+
 
   }
 })();

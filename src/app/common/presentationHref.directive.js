@@ -11,22 +11,14 @@
     function presentationHref(permissions) {
       return {
          restrict:'A',
-         link:function($scope,iElm,iAttrs,controller){
-           var hrefs=iAttrs.presentationHref.split(".");
-           if (hrefs[0]=="home"){
-             hrefs.splice(0,1);
-           }
-           hrefs=hrefs.join(":");
-
-          // alert(hrefs);
-
-         //  alert("22"+permissions.getPermissions(hrefs));
-        //   alert(permissions.getAll());
+         link:function($scope,iElm,iAttrs){
+           var hrefs = iAttrs.presentationHref;
            !permissions.getPermissions(hrefs)&&iElm.remove();
-
          }
       }
+
     }
+
 
  /**自定义列导出*/
   GPSCloudModule.config(['$compileProvider', function($compileProvider) {
@@ -71,7 +63,7 @@
                         angular.forEach(tds, function(td, i) {
                             if(csv.contains(i,args)){
                                 rowData += csv.stringify(angular.element(td).text()) + ';';
-                            } 
+                            }
                         });
                         rowData = rowData.slice(0, rowData.length -1); //remove last semicolon
                         data += rowData + "\n";

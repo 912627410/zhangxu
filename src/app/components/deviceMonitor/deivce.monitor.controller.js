@@ -9,6 +9,7 @@
     .controller('DeviceMonitorController', DeviceMonitorController);
 
   /** @ngInject */
+
   function DeviceMonitorController($rootScope, $scope, $uibModal, $timeout, $filter, $translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification) {
     var vm = this;
 
@@ -59,7 +60,6 @@
         restCallURL += "&search_EQ_organization.id=" +vm.queryOrg.id;
       }
 
-
       if (null !=vm.queryDeviceNum&&vm.queryDeviceNum!="") {
           restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
         }
@@ -98,7 +98,6 @@
 //监控
     vm.currentInfo = function (id, size) {
 
-      console.log(size);
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {

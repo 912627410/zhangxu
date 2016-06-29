@@ -13,10 +13,12 @@
     var vm = this;
     vm.operatorInfo =operatorInfo;
     //default user role for new added user
-    vm.newUser = {role:"ROLE_USER"};
+
 
     //默认不接收位置异常报警
     vm.locationAlarmReceiverChk = false;
+
+    vm.newUser = {};
 
     vm.ok = function (newUserinfo) {
       if (vm.locationAlarmReceiverChk){

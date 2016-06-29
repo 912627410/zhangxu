@@ -144,6 +144,7 @@
       }}
     }
 
+
   //国际化的factory
   GPSCloudFactory.factory('languages',languages);
 
@@ -159,6 +160,7 @@
     return languages;
   }
 
+
   //组织树的factory
   GPSCloudFactory.factory('treeFactory',treeFactory);
 
@@ -173,7 +175,7 @@
           })
         }
 
-        
+
     }
     return treeFactory;
   }

@@ -20,7 +20,9 @@
         <div class="box-header">
           <!-- tools box -->
           <div class="pull-right box-tools">
-            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="monitorCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
+
+            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" presentation-href="device:page" ng-click="monitorCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
+
           </div><!-- /. tools -->
           <i class="fa fa-cloud"></i>
           <h3 class="box-title">{{'distributionOfTheMachine'|translate}}</h3>
@@ -36,6 +38,7 @@
     <div class="col-md-1">
       <label class="control-label">{{'organisation'|translate}}</label>
     </div>
+
     <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
@@ -48,12 +51,14 @@
                   </span>
       </p>
     </div>
+
     <div class="col-md-1">
           <label class="control-label">{{'terminalno'|translate}}</label>
         </div>
     <div class="col-md-2">
           <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
+
     <div class="col-md-2">
       <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
     </div>
@@ -61,7 +66,8 @@
       <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
+
+      <button class="btn btn-primary" type="button" presentation-href="device:page" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
       <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
@@ -104,7 +110,9 @@
               {{'workingHours'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+
               {{deviceinfo.totalDuration |number:2}}
+
             </div>
           </div>
           <div class="row">

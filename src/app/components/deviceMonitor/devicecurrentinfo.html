@@ -3,6 +3,7 @@
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
     <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
     <button class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
+
   </h3>
 </div>
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
@@ -99,16 +100,19 @@
                       <div ng-switch-when="1" class="oilFilter2Warning" title="{{'fuelFilter'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
+
                       <div ng-switch-when="0" class="oilTempratureNormal" title="{{'hydraulicOilTemperature'|translate}}"></div>
                       <div ng-switch-when="1" class="oilTempratureWarning" title="{{'hydraulicOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
+
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '00' || deviceCurrentInfoCtrl.DeviceType == null">
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
                       <div ng-switch-when="0" class="safeLockNormal" title="{{'securityLock'|translate}}"></div>
                       <div ng-switch-when="1" class="safeLockWarning" title="{{'securityLock'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
+
                       <div ng-switch-when="0" class="colderOilLevelNormal" title="{{'coolantLevel'|translate}}"></div>
                       <div ng-switch-when="1" class="colderOilLevelWarning" title="{{'coolantLevel'|translate}}"></div>
                     </td>
@@ -116,6 +120,7 @@
                       <div ng-switch-when="0" class="preWarmNormal" title="{{'preheat'|translate}}"></div>
                       <div ng-switch-when="1" class="preWarmWarning" title="{{'preheat'|translate}}"></div>
                     </td>
+
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:18">
                       <div ng-switch-when="0" class="powerShutNormal" title="{{'powerShutoff'|translate}}"></div>
                       <div ng-switch-when="1" class="powerShutWarning" title="{{'powerShutoff'|translate}}"></div>
@@ -129,6 +134,7 @@
                       <div ng-switch-when="1" class="backCoverWarning" title="{{'backCoverOpen'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
+
                       <div ng-switch-when="0" class="oilFilterNormal" title="{{'oilFilter'|translate}}"></div>
                       <div ng-switch-when="1" class="oilFilterWarning" title="{{'oilFilter'|translate}}"></div>
                     </td>
@@ -145,6 +151,7 @@
                       <div ng-switch-when="1" class="speedSwitchWarning" title="{{'lowTransmissionPressure'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
+
                       <div ng-switch-when="0" class="engineError1Normal" title="{{'engineFailureOne'|translate}}"></div>
                       <div ng-switch-when="1" class="engineError1Warning" title="{{'engineFailureOne'|translate}}"></div>
                     </td>
@@ -369,6 +376,7 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <td>{{'GPSProtocolVersion'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
                   </tr>
@@ -403,6 +411,7 @@
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{'torqueConverterOilTemperature'|translate}}</td>
                     <td ng-cloak ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:2}}°C</td>
+
                     <td>{{'CANCommunicationStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
@@ -443,8 +452,6 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
-
-
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000}} V</td>
 
@@ -452,13 +459,13 @@
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>-->
                     <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>-->
+
                     <td>{{'openCoverState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
-
                     <td>{{'visibleSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
                       {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
@@ -497,6 +504,7 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
                     <td>{{'momentMileage'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage}}/KM</td>
+
                   </tr>
 
                 <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
@@ -521,6 +529,7 @@
                   <tr>
                     <td>{{'currentPosition'|translate}}</td>
                     <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+
                   </tr>
                 </table>
 
@@ -591,6 +600,7 @@
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <th class="text-nowrap" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</th>
+
                     <th class="text-nowrap">{{'LEDState'|translate}}</th>
 
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
@@ -609,6 +619,7 @@
                     <th  class="text-nowrap">{{'locateDuration'|translate}}</th>
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
                     <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
+
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList">
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -634,7 +645,7 @@
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <td ng-cloak>{{deviceData.gsmSignal}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak >{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
                     <td ng-cloak class="text-nowrap">{{deviceData.realtimeDuration | convertToMins}}</td>
@@ -643,6 +654,7 @@
                     <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
+
                     <td ng-if="deviceData.lockStatus==null">{{deviceData.startTimes}}</td>
                     <!--ACC状态-->
                     <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
@@ -807,7 +819,8 @@
     </uib-tab>
 
     <!--远程控制-->
-    <uib-tab select="">
+
+    <uib-tab select="" presentation-href="device:remoteControl">
       <uib-tab-heading>
         {{'telecontrol'|translate}}
       </uib-tab-heading>
@@ -821,6 +834,7 @@
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum" name="deviceNum"/>
               </div>
               <label for="licenseId" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>
+
               <div class="col-md-4">
                 <input type="text" readonly id="licenseId" class="form-control" placeholder="{{'licensePlateNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.licenseId" name="licenseId"/>
@@ -831,11 +845,13 @@
           <div class="row">
             <div class="form-group">
               <label for="enginePassCode" class="col-md-2 control-label text-nowrap">{{'engineCommunicationCode'|translate}}</label>
+
               <div class="col-md-4">
                 <input type="text" readonly id="enginePassCode" class="form-control" placeholder="{{'engineCommunicationCode'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
               </div>
               <label for="phoneNumber" class="col-md-2 control-label text-nowrap">{{'bindSIMNumber'|translate}}</label>
+
               <div class="col-md-4">
                 <input type="text" readonly id="phoneNumber" class="form-control" placeholder="{{'bindSIMNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
@@ -1025,8 +1041,8 @@
                        ng-model="deviceCurrentInfoCtrl.setWorkIntMsg" name="setWorkIntMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(8,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -1040,8 +1056,8 @@
                        ng-model="deviceCurrentInfoCtrl.lockMsg" name="lockMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                <button class="btn btn-danger" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
+                <button class="btn btn-danger" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(3,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -1067,8 +1083,8 @@
                        ng-model="deviceCurrentInfoCtrl.unLockMsg" name="unLockMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.sendSMS(4,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
               </div>
             </div>
           </div>
@@ -1080,7 +1096,7 @@
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
@@ -1097,7 +1113,7 @@
                 <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                <button class="btn btn-default" type="button"  presentation-href="device:unlock"ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(14,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
             </div>
           </div>
