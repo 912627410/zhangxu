@@ -909,10 +909,14 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
               </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.bindKeyboardMsgIdx}} </label>
+              </div>
+
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(10,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
@@ -935,10 +939,14 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
               </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unbindKeyboardMsgIdx}} </label>
+              </div>
+
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(11,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
@@ -1076,9 +1084,12 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
+              </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.lockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(12,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
@@ -1103,9 +1114,12 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
+              </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unLockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
