@@ -20,7 +20,28 @@
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
-           vm.controllerInitialization(data.content);
+
+        vm.controllerInitialization(data.content);
+
+        if(vm.highchartsAir !=null){
+
+          vm.highchartsAir.series[0].data=[vm.deviceinfo.pressureMeter];
+        }
+        if(vm.highchartsWater !=null){
+
+          vm.highchartsWater.series[0].data=[vm.deviceinfo.engineTemperature];
+        }
+        if(vm.highchartsRpm !=null){
+
+          vm.highchartsRpm.series[0].data=[vm.deviceinfo.enginRotate];
+        }
+        if(vm.highchartsOil !=null){
+
+          vm.highchartsOil.series[0].data=[vm.deviceinfo.oilLevel];
+        }
+
+
+
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
@@ -53,9 +74,11 @@
           vm.DeviceType = serviceResource.getDeviceType(null);
         }
       }
+
     }
 
     vm.controllerInitialization(deviceinfo);
+
 
     //气压图
     vm.highchartsAir = {
@@ -434,6 +457,8 @@
         }, 0);
       }
     };
+
+
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
