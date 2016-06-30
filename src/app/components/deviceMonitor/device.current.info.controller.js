@@ -34,6 +34,14 @@
       //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
       vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
+      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16).toUpperCase();
+      //根据中挖协议修改
+      if(vm.deviceinfo.voltageHigthAlarmValue != 0){
+        vm.deviceinfo.voltageHigthAlarmValue = vm.deviceinfo.voltageHigthAlarmValue*0.1 +10;
+      }
+      if(vm.deviceinfo.voltageLowAlarmValue != 0){
+        vm.deviceinfo.voltageLowAlarmValue = vm.deviceinfo.voltageLowAlarmValue*0.1 +10;
+      }
       //改为过滤器
       //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
       //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
@@ -520,6 +528,18 @@
           vm.deviceDataPage = data.page;
           vm.deviceDataPageNumber = data.page.number + 1;
           vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
+          angular.forEach(vm.deviceDataList,function (data) {
+            //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
+            data.alertStatus = parseInt(data.alertStatus,2);
+            data.alertStatus = data.alertStatus.toString(16).toUpperCase();
+            //
+            if(data.voltageHigthAlarmValue != 0){
+              data.voltageHigthAlarmValue = data.voltageHigthAlarmValue*0.1 +10;
+            }
+            if(data.voltageLowAlarmValue != 0){
+              data.voltageLowAlarmValue = data.voltageLowAlarmValue*0.1 +10;
+            }
+          });
           if (vm.deviceDataList.length == 0){
             Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
           }
