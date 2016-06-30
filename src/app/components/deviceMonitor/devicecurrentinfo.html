@@ -537,20 +537,22 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
-                    <td>{{'proportionalValve'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
                     <td>{{'coolantAlarmValue'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue==null"></td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue!=null">{{deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue-40}}℃</td>
                     <td>{{'voltageHigthAlarmValue'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageHigthAlarmValue}}</td>
-                  </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
                     <td>{{'voltageLowAlarmValue'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageLowAlarmValue}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
                     <td>{{'oilLowAlarmValue'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue == null"></td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue != null">{{deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue}}%</td>
                     <td>{{'oilPressAlarmValue'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.oilPressAlarmValue}}</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
@@ -647,6 +649,15 @@
                     <th  class="text-nowrap">{{'locateDuration'|translate}}</th>
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
                     <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
+                    <!-- 中挖新增字段-->
+                    <th class="text-nowrap">{{'alertStatus'|translate}}</th>
+                    <th class="text-nowrap">{{'flyWheelTeeth'|translate}}</th>
+                    <th class="text-nowrap">{{'proportionalValve'|translate}}</th>
+                    <th class="text-nowrap">{{'coolantAlarmValue'|translate}}</th>
+                    <th class="text-nowrap">{{'voltageHigthAlarmValue'|translate}}</th>
+                    <th class="text-nowrap">{{'voltageLowAlarmValue'|translate}}</th>
+                    <th class="text-nowrap">{{'oilLowAlarmValue'|translate}}</th>
+                    <th class="text-nowrap">{{'oilPressAlarmValue'|translate}}</th>
 
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList">
@@ -713,6 +724,16 @@
                     <th  ng-cloak>{{deviceData.ecuLockStatusDesc}}</th>
                     <th  ng-cloak>{{deviceData.bindMachineId}}</th>
                     <!--总里程 消息结构中没有数据-->
+
+                    <!-- 中挖新增字段-->
+                    <td>0x{{deviceData.alertStatus}}</td>
+                    <td>{{deviceData.flyWheelTeeth}}</td>
+                    <td>{{deviceData.proportionalValve}}</td>
+                    <td>{{deviceData.coolantAlarmValue-40}}℃</td>
+                    <td>{{deviceData.voltageHigthAlarmValue}}</td>
+                    <td>{{deviceData.voltageLowAlarmValue}}</td>
+                    <td>{{deviceData.oilLowAlarmValue}}%</td>
+                    <td>{{deviceData.oilPressAlarmValue}}</td>
                   </tr>
 
                 </table>
