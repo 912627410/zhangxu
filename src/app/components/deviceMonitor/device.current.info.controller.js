@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,languages,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
@@ -753,17 +753,20 @@
     //vm.secOutPower =
     //secLocateInt
     //secInnerPower
-    ////读取初始化设备时需要的信息
-    var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
-    var rspData = serviceResource.restCallService(restURL, "GET");
-    rspData.then(function (data) {
-      vm.deviceUnLockFactor = data.content;
-      var licenseId = vm.deviceUnLockFactor.licenseId;
-      //具体格式请参考短信激活文档
-    }, function (reason) {
-      Notification.error(languages.findKey('getInformationFailed'));
-    })
 
+    if(permissions.getPermissions("device:remoteControl")) {
+
+      ////读取初始化设备时需要的信息
+      var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        vm.deviceUnLockFactor = data.content;
+        var licenseId = vm.deviceUnLockFactor.licenseId;
+        //具体格式请参考短信激活文档
+      }, function (reason) {
+        Notification.error(languages.findKey('getInformationFailed'));
+      })
+    }
     //检查短信参数
     vm.checkParam = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
       if (type == null || devicenum == null){

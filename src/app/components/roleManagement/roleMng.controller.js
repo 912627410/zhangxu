@@ -6,16 +6,27 @@
     .controller('roleMngController', roleMngController);
 
   /** @ngInject */
-  function roleMngController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL) {
+  function roleMngController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource,roleService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
+    vm.orgTypeList;
+
     //初始化查询参数
     vm.roleInfo = {
       "name": ""
     };
+
+
+    var promise = roleService.queryOrgTypeList();
+    promise.then(function (data) {
+      vm.orgTypeList = data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取组织类型失败');
+    })
 
     /**
      * 分页查询

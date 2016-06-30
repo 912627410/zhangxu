@@ -9,14 +9,25 @@
     .controller('newRoleController', newRoleController);
 
   /** @ngInject */
-  function newRoleController($scope, $uibModalInstance,ROLE_OPER_URL, serviceResource, Notification) {
+  function newRoleController($scope, $uibModalInstance,ROLE_OPER_URL, serviceResource,roleService, Notification) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
     vm.roleInfo = {};
+      vm.orgTypeList;
+
+      var promise = roleService.queryOrgTypeList();
+      promise.then(function (data) {
+          vm.orgTypeList = data;
+          //    console.log(vm.userinfoStatusList);
+      }, function (reason) {
+          Notification.error('获取组织类型失败');
+      })
 
 
     vm.ok = function (roleInfo) {
+
+        roleInfo.type=roleInfo.type.value;
      var restPromise = serviceResource.restAddRequest(ROLE_OPER_URL, roleInfo);
       restPromise.then(function (data) {
         if(data.code===0){
