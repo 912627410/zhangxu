@@ -191,8 +191,6 @@
 
       })
 
-      console.log("vm.addList=="+vm.addList);
-      console.log("vm.otherList=="+vm.otherList);
 
       //判断原来是否已经选中,如果是的话,不再传输
       for (var i = 0; i < vm.rolePriviligeList.length; i++) {
@@ -209,9 +207,6 @@
 
       }
 
-      console.log("vm.addList=="+vm.addList);
-      console.log("vm.otherList=="+vm.otherList);
-      console.log("vm.deleteList=="+vm.deleteList);
 
 
       var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "id": vm.roleInfo.id};

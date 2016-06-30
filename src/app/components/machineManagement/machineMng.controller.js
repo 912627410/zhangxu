@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //调拨组织
@@ -249,6 +249,10 @@
     $rootScope.$on('orgSelected', function (event, data) {
       vm.org = data;
     });
+
+    vm.validateOperPermission=function(){
+      return permissions.getPermissions("machine:oper");
+    }
 
   }
 })();

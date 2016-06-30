@@ -97,9 +97,10 @@
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
           <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
+            <a ng-if="machineMngCtrl.validateOperPermission()" href
+               ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
+            <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
 
-            <span >
-              {{machine.licenseId}}</span>
           </td>
           <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
