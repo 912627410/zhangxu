@@ -882,15 +882,29 @@
     vm.assginKeyboardContent = function(type, message){
       if(type==10){
         vm.bindKeyboardMsg = message;
+        if (message) {
+          vm.bindKeyboardMsgIdx = message.substr(17, 1) + message.substr(22, 1);
+        }
       }
       else if(type==11){
         vm.unbindKeyboardMsg = message;
+        //解绑从50往后倒数,因为GPS设备程序bug
+        if (message) {
+          var idxTmp = message.substr(5, 1) + message.substr(10, 1);
+          vm.unbindKeyboardMsgIdx = 50 - idxTmp;
+        }
       }
       else if(type==12){
         vm.lockKeyboardMsg = message;
+        if (message) {
+          vm.lockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
+        }
       }
       else if(type==13){
         vm.unLockKeyboardMsg = message;
+        if (message) {
+          vm.unLockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
+        }
       }
       else if(type==14){
         vm.cancelLockKeyboardMsg = message;
