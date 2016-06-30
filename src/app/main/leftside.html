@@ -74,8 +74,13 @@
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
-      <li class="treeview" >
-        <a ui-sref="home.userinfomng" presentation-href="user:page">
+      <li>
+        <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
+          <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+        </a>
+      </li>
+      <li class="treeview" presentation-href="user:page">
+        <a ui-sref="home.userinfomng">
           <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
         </a>
       </li>

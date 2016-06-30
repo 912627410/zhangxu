@@ -158,5 +158,10 @@
     $rootScope.$on('orgSelected', function (event, data) {
       vm.deviceinfo.org= data;
     });
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
+
   }
 })();

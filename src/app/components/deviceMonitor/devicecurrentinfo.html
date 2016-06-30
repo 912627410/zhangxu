@@ -355,6 +355,9 @@
                     </td>
                   </tr>
                   <!--矿机end-->
+                  <!--中挖begin-->
+
+                  <!--中挖end-->
                 </table>
               </div>
             </div>
@@ -524,6 +527,31 @@
                     <!--<td>{{'SIMCardNumber'|translate}}</td>-->
                     <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber}}</td>-->
                   <!--</tr>-->
+                  <!--中挖测试-->
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'alertStatus'|translate}}</td>
+                    <td>0x{{deviceCurrentInfoCtrl.deviceinfo.alertStatus}}</td>
+                    <td>{{'flyWheelTeeth'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.flyWheelTeeth}}</td>
+                    <td>{{'proportionalValve'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'proportionalValve'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.proportionalValve}}</td>
+                    <td>{{'coolantAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.coolantAlarmValue}}</td>
+                    <td>{{'voltageHigthAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageHigthAlarmValue}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
+                    <td>{{'voltageLowAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.voltageLowAlarmValue}}</td>
+                    <td>{{'oilLowAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.oilLowAlarmValue}}</td>
+                    <td>{{'oilPressAlarmValue'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.oilPressAlarmValue}}</td>
+                  </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
@@ -599,7 +627,7 @@
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
-                    <th class="text-nowrap" ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
 
                     <th class="text-nowrap">{{'LEDState'|translate}}</th>
 
@@ -645,7 +673,7 @@
                     <td ng-cloak>{{deviceData.oilTemperature}}</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <td ng-cloak>{{deviceData.gsmSignal}}</td>
-                    <td ng-cloak >{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
                     <td ng-cloak class="text-nowrap">{{deviceData.realtimeDuration | convertToMins}}</td>
@@ -897,10 +925,14 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
               </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.bindKeyboardMsgIdx}} </label>
+              </div>
+
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(10,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
@@ -923,10 +955,14 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
               </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unbindKeyboardMsgIdx}} </label>
+              </div>
+
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(11,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
               </div>
@@ -1064,9 +1100,12 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
+              </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.lockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(12,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
@@ -1091,9 +1130,12 @@
           <div class="row">
             <div class="form-group">
               <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-8">
+              <div class="col-md-7">
                 <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
+              </div>
+              <div class="col-md-1">
+                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unLockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="device:unlock" ng-click="deviceCurrentInfoCtrl.viewKeyboardMsg(13,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>

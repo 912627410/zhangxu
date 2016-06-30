@@ -31,6 +31,9 @@
     vm.controllerInitialization = function (deviceinfo){
       vm.deviceinfo = deviceinfo;
       vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
+      //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
+      vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
+      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
       //改为过滤器
       //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
       //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
@@ -886,15 +889,29 @@
     vm.assginKeyboardContent = function(type, message){
       if(type==10){
         vm.bindKeyboardMsg = message;
+        if (message) {
+          vm.bindKeyboardMsgIdx = message.substr(17, 1) + message.substr(22, 1);
+        }
       }
       else if(type==11){
         vm.unbindKeyboardMsg = message;
+        //解绑从50往后倒数,因为GPS设备程序bug
+        if (message) {
+          var idxTmp = message.substr(5, 1) + message.substr(10, 1);
+          vm.unbindKeyboardMsgIdx = 50 - idxTmp;
+        }
       }
       else if(type==12){
         vm.lockKeyboardMsg = message;
+        if (message) {
+          vm.lockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
+        }
       }
       else if(type==13){
         vm.unLockKeyboardMsg = message;
+        if (message) {
+          vm.unLockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
+        }
       }
       else if(type==14){
         vm.cancelLockKeyboardMsg = message;
@@ -919,6 +936,10 @@
           })
         })
 
+    }
+
+    vm.validateMonitorShowPermission=function(){
+      return permissions.getPermissions("device:monitorShow");
     }
 
   }

@@ -415,10 +415,11 @@
         return null;
       },
 
-      //TODO 先根据device_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车
+      //TODO 先根据device_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
       //00 - 无特定类型
       //01 - 小挖
       //02 - 矿车
+      //03 - 中挖
       getDeviceTypeForVersionNum:function(device_num){
         if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
             return '00';
@@ -428,6 +429,9 @@
         }
         if(device_num=='30'){
             return '02';
+        }
+        if(device_num=='40'){
+            return '03'
         }
       },
       //将hh.hh翻译成hh时mm分

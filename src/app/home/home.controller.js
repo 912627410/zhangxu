@@ -19,13 +19,14 @@
 
    // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
   //  console.log("$rootScope.userInfo =="+$rootScope.userInfo );
-
-
-
+    if ($rootScope.userInfo==null) {
+      $rootScope.$state.go( "home.login" );
+      return;
+    }
 
     if(permissions.getPermissions("device:homegpsdata")){
 
-    if ($rootScope.userInfo) {
+
       var rspdata = serviceResource.restCallService(HOME_STATISTICS_DATA_URL, "GET");
       rspdata.then(function (data) {
         var deviceStatisticsList = data.deviceStatics;
@@ -48,6 +49,6 @@
     vm.statisticInfo = statisticInfo;
 
 
-  }
+
   }
 })();
