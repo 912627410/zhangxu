@@ -1,0 +1,26 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    {{'dashboard'|translate}}
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active"> 车辆调拨</li>
+  </ol>
+</section>
+<div class="col-xs-12 connectedSortable">
+  <div class="box box-danger">
+    <div class="box-header">
+      <!-- tools box -->
+      <div class="pull-right box-tools">
+        <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="homeMapCtrl.refreshMap()" title="刷新"><i class="fa fa-refresh"></i></button>
+      </div><!-- /. tools -->
+      <i class="fa fa-cloud"></i>
+      <h3 class="box-title">{{'distributionOfTheMachine' | translate}}</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body" style="min-height: 500px" id="fleetMap">
+    </div>
+  </div>
+</div><!-- /.col -->

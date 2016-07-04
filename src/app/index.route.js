@@ -167,7 +167,19 @@
 
         }
       })
-
+      .state('home.machineMove', {
+        url: '/machineMove',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleet/machineMove.html',
+            controller: 'machineMoveController',
+            controllerAs: 'machineMoveCtrl'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');
