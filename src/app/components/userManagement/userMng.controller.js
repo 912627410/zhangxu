@@ -9,7 +9,7 @@
     .controller('userMngController', userMngController);
 
   /** @ngInject */
-  function userMngController($rootScope,$scope,$confirm,$uibModal,Notification,NgTableParams,ngTableDefaults,serviceResource,
+  function userMngController($rootScope,$scope,$confirm,$uibModal,Notification,treeFactory,NgTableParams,ngTableDefaults,serviceResource,
                              USERINFO_URL,userService,
                              DEFAULT_SIZE_PER_PAGE,USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL ) {
     var vm = this;
@@ -28,19 +28,15 @@
       Notification.error('获取权限状态失败');
     })
 
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow();
     }
 
-    vm.hideOrgTree = function () {
-      vm.showOrgTree = false;
-    }
-
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.org = data;
+    });
 
     vm.animationsEnabled = true;
     vm.toggleAnimation = function () {
