@@ -327,7 +327,8 @@
   "voltageHigthAlarmValue":"High voltage alarm setting value",
   "voltageLowAlarmValue":"Low voltage alarm setting value",
   "oilLowAlarmValue":"Oil low alarm setting value",
-  "oilPressAlarmValue":"oilpress alarm setting value"
+  "oilPressAlarmValue":"oilpress alarm setting value",
+  "idleDeviceReport": "Idle Device Report"
 
 
 }

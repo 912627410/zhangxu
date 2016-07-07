@@ -319,6 +319,7 @@
   "voltageHigthAlarmValue":"电压高报警设置值",
   "voltageLowAlarmValue":"电压低报警设置值",
   "oilLowAlarmValue":"油位低报警设置值",
-  "oilPressAlarmValue":"机油压力报警值"
+  "oilPressAlarmValue":"机油压力报警值",
+  "idleDeviceReport": "长时间未回传设备"
 
 }
