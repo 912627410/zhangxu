@@ -28,6 +28,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu ">
       <li class="treeview">
+        <hr>
         <a ui-sref="home" presentation-href="home:dashboard">
           <i class="fa fa-dashboard"></i> <span>{{'dashboard' | translate}}</span>
         </a>
@@ -74,6 +75,15 @@
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
+
+      <hr>
+      <li>
+        <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+          <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
+        </a>
+      </li>
+
+      <hr>
       <li>
         <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
           <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
@@ -93,7 +103,7 @@
           <i class="fa fa-user"></i> <span>权限管理</span>
           </a>
       </li>
-
+      <hr>
       <li class="treeview" >
         <a href="http://releasenotegpscloud.mydoc.io/" target="_blank">
           <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>

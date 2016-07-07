@@ -18,7 +18,7 @@ function isNull(str){
 	}
 }
 
-//去除字符串左边的空格 
+//去除字符串左边的空格
 function lTrim(str)
 {
     var whitespace = new String(" \t\n\r");
@@ -75,7 +75,7 @@ String.prototype.Trim = function(){
 function checkLength(str,minLength,maxLength)
 {
 	len = 0;
-	for (i = 0; i < str.length; i++){ 
+	for (i = 0; i < str.length; i++){
 		if (((str.charCodeAt(i) >= 0x3400) && (str.charCodeAt(i) < 0x9FFF)) || (str.charCodeAt(i) >= 0xF900))
     	{
       		len = len + 2;
@@ -87,17 +87,17 @@ function checkLength(str,minLength,maxLength)
 	}
 	if(len > maxLength || len < minLength){
 		return false
-	}	
+	}
 	else{
 		return true;
-	}		
+	}
 }
 
 //
 function getLength(str,maxLength)
 {
 	len = 0;
-	for (i = 0; i < str.length; i++){ 
+	for (i = 0; i < str.length; i++){
 		if (((str.charCodeAt(i) >= 0x3400) && (str.charCodeAt(i) < 0x9FFF)) || (str.charCodeAt(i) >= 0xF900))
     	{
       		len = len + 2;
@@ -107,23 +107,23 @@ function getLength(str,maxLength)
 			len++;
 		}
 	}
-	return maxLength-len;		
+	return maxLength-len;
 }
 
 function getString(str,maxLength)
 {
 	var string="";
 	len = 0;
-	for (i = 0; i < str.length; i++){ 
+	for (i = 0; i < str.length; i++){
 		if (((str.charCodeAt(i) >= 0x3400) && (str.charCodeAt(i) < 0x9FFF)) || (str.charCodeAt(i) >= 0xF900))
     	{
     	len = len + 2;
-      		
+
     	}
 		else
 		{
 		len++;
-			
+
 		}
 		if(len>maxLength){
 			len=i;
@@ -131,7 +131,7 @@ function getString(str,maxLength)
 		}
 	}
 	string=str.substring(0,len);
-	return string;		
+	return string;
 }
 
 //检查字符串是否全部是数字
@@ -142,7 +142,7 @@ function onlyNumber(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 //检查字符串是否全部是数字和英文
 function onlyNumberAndChar(str)
@@ -152,7 +152,7 @@ function onlyNumberAndChar(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 //检查字符串是否全部是英文
 function onlyChar(str)
@@ -162,7 +162,7 @@ function onlyChar(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 
 //检查字符串是否是ip地址格式
@@ -173,7 +173,7 @@ function onlyIPAddress(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 
 /*检测URL*/
@@ -181,7 +181,7 @@ function checkURL(str)
 {
     //var reg = /^(http:\/\/)[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+(\/.*)*$/;
 	//var reg = /^[h|H][t|T]{2}[p|P]:\/\/.+$/;
-	
+
 	var reg =/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 	reg.IgnoreCase = false;
 	if (!reg.test(str)) {
@@ -195,7 +195,7 @@ function checkURL(str)
 function checkURLContent(str)
 {
 	//var reg = /^[h|H][t|T]{2}[p|P]:\/\/.+$/;
-	
+
 	var reg=/^(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 
 	reg.IgnoreCase = false;
@@ -214,7 +214,7 @@ function onlyDate(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 //检查字符串是否符合日期格式yyyy-MM-dd hh:mm
 function onlyFullDate(str)
@@ -224,7 +224,7 @@ function onlyFullDate(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 
 //检查字符串是否符合日期格式yyyy-MM-dd hh:mm:ss
@@ -235,14 +235,14 @@ function onlyDateYMS(str)
 	    return false;
 	}else{
 		return true;
-	}		
+	}
 }
 //比较字符串相等
-function isSame(str1,str2){   
-    if(str1.length==str2.length && str1.search(str2)==0)   
+function isSame(str1,str2){
+    if(str1.length==str2.length && str1.search(str2)==0)
     	//相等
         return true;
-    else   
+    else
     	//不相等
         return false;
 }
@@ -268,7 +268,7 @@ function numerro(erroId,showId,erroNum){
  */
 function subtractNumber(firstNumber,secondNumber)
 {
-	return secondNumber-firstNumber;		
+	return secondNumber-firstNumber;
 }
 
 
@@ -279,7 +279,7 @@ function subtractNumber(firstNumber,secondNumber)
  */
 function getStrLength(str){
 	len = 0;
-	for (i = 0; i < str.length; i++){ 
+	for (i = 0; i < str.length; i++){
 		if (((str.charCodeAt(i) >= 0x3400) && (str.charCodeAt(i) < 0x9FFF)) || (str.charCodeAt(i) >= 0xF900))
     	{
       		len = len + 2;
@@ -301,31 +301,31 @@ function getStrLength(str){
  */
 function getSubString(str,maxLength)
 {
-	
+
 	var newString=str;
-	
+
 	//得到字符串的长度
 	var stringLength=getStrLength(str);
-	
+
 	//如果小于0，表示超过指定长度，则截字符串
 	if(subtractNumber(stringLength,maxLength)<0){
 		len = 0;
-		for (i = 0; i < str.length; i++){ 
+		for (i = 0; i < str.length; i++){
 			if (((str.charCodeAt(i) >= 0x3400) && (str.charCodeAt(i) < 0x9FFF)) || (str.charCodeAt(i) >= 0xF900)){
     			len = len + 2;
 		    }
 			else{
 				len++;
 			}
-			
-			//得到要截取字符的位置	
+
+			//得到要截取字符的位置
 			if(len>maxLength){
 				len=i;
 				break;
 			}
 		}
 		newString=newString.substring(0,len);
-		return newString;		
+		return newString;
 	}else{
 		return newString;
 	}
@@ -339,10 +339,10 @@ function getSubString(str,maxLength)
  */
 function checkStringLength(str,maxLength){
 	var newString=str;
-	
+
 	//得到字符串的长度
 	var stringLength=getStrLength(str);
-	
+
 	//如果小于0，表示超过指定长度
 	if(subtractNumber(stringLength,maxLength)<0){
 		return false;
@@ -382,4 +382,13 @@ function showHighLight(id,times){
     obj.css("background-color","#F6CECE");
     times=times-1;
     setTimeout("hideHighLight('"+id+"',"+times+")",600);
+}
+
+/**
+ * 前补0操作
+ * @param number String 待操作字符串
+ * @param length int 目标长度
+ */
+function addZero(str,length){
+  return new Array(length - str.toString().length + 1).join("0") + str;
 }

@@ -96,6 +96,15 @@
           }
         }
       })
+      .state('home.idleDeviceReport', {
+        url: '/idleDeviceReport',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/idle.device.html',
+            controller: 'idleDeviceController as idleDeviceCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {

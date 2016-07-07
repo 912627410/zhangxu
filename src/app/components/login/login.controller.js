@@ -109,6 +109,8 @@
         }, function (reason) {
         });
 
+      }, function (reason) {
+        Notification.error(languages.findKey('loginFailure'));
       });
     }
 
