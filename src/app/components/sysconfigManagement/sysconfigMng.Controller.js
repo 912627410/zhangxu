@@ -57,9 +57,9 @@
       });
     };
 
-    if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" ) {
-      vm.query();
-    }
+
+    vm.query();
+
 
     //重置查询框
     vm.reset = function () {
