@@ -32,7 +32,7 @@
     .constant('DEVCE_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimpledata')   //分页查询设备简化数据URL
     //按车队查询GPSdata
     .constant('DEVCE_GPSDATA_BYORG', SERVER_BASE_URL + 'device/gpsdataGroupByOrg')
-    .constant('DEVCE_DISTANCE_TOORG', SERVER_BASE_URL + 'device/distanceToOrg')
+    .constant('DEVCE_DISTANCE_TOORG_PAGE', SERVER_BASE_URL + 'device/distanceToOrgPage')
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码

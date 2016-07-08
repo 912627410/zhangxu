@@ -9,15 +9,10 @@
     .controller('machineMoveController', machineMoveController);
 
   /** @ngInject */
-  function machineMoveController($rootScope, $scope, $uibModal,$filter, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG) {
+  function machineMoveController($rootScope, $scope, $uibModal,$filter, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.org = {label: ""};    //调拨组织
-    vm.selectAll = false;//是否全选标志
-    vm.selected = []; //选中的设备id
-    vm.moveOrg = function (device) {
-      console.log(123);
-    }
+
     //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
     vm.refreshMapWithDeviceInfo= function (mapId,deviceList,zoomsize,centeraddr) {
       $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -30,16 +25,16 @@
         if (zoomsize){
           localZoomSize = zoomsize;
         }
-        var localCenterAddr = [103.39,36.9];//设置中心点大概在兰州附近
+        var localCenterAddr = [118.439,34.995];//设置中心点大概在临工附近
         if (centeraddr){
           localCenterAddr = centeraddr;
         }
         var map = new AMap.Map(mapId, {
           resizeEnable: true,
           center: localCenterAddr,
-          zooms: [localZoomSize, 18]
+          zooms: [4, 18]
         });
-        map.setZoom(1);
+        map.setZoom(localZoomSize);
         map.plugin(['AMap.ToolBar'], function () {
           map.addControl(new AMap.ToolBar());
         });
@@ -73,20 +68,19 @@
 
         //按org=9 读取 machine信息  ,fleet map使用
         if ($rootScope.userInfo ) {
-          var rspdata = serviceResource.restCallService(DEVCE_GPSDATA_BYORG, "GET");
+          var rspdata = serviceResource.restCallService(DEVCE_GPSDATA_BYORG, "QUERY");
           rspdata.then(function (data) {
-            var deviceGPSMap =data;  //返回的Map
-            for(var key in deviceGPSMap){
-              var deviceGPSList = deviceGPSMap[key];
-              for (var i = 0; i < deviceGPSList.length; i++) {
-                var longitude = deviceGPSList[i].amaplongitudeNum;   //经度
-                var latitude = deviceGPSList[i].amaplatitudeNum;     //纬度
-                if (latitude != null && longitude != null) {
-                  // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
-                  var marker="assets/images/orangeMarker.png";
-                  if(deviceGPSList[i].accStatus=='01'){
-                    marker="assets/images/greenMarker.png";
-                  }
+            var fleetList =data;  //返回的Map
+            var icons = [];
+            icons[0] = "assets/images/orangeMarker.png";
+            icons[1] = "assets/images/greenMarker.png";
+            icons[2] = "assets/images/grayMarker.png";
+            for(var index = 0;index < fleetList.length; index++){
+              var deviceGPSList = fleetList[index];
+              var marker = icons[index];
+
+              for (var i in  deviceGPSList) {
+                if(deviceGPSList[i].amaplongitudeNum != null && deviceGPSList[i].amaplongitudeNum != null){
                   addMarkerModel(map,deviceGPSList[i],marker);
                 }
               }
@@ -119,12 +113,10 @@
       // marker.setMap(mapObj);  //在地图上添加点
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
-        var title = item.organization.label;
+        var title = item.deviceNum;
         var contentInfo="";
-        contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
+        contentInfo += "所属车队：" + item.organization.label +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
-        contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
-        contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
         contentInfo += "<div class='box-footer'></div>"
@@ -133,142 +125,12 @@
         //设置窗体内容
         infoWindow.setContent(info);
 
-        var fleetMap = document.getElementById("fleetMap");
-        var panel = document.createElement("div");
-        panel.className = "info";
-        panel.style.width = "260px";
-        panel.position ='absolute';
-        panel.style.left = '80px';
-        panel.border= 'solid 1px silver';
-
-        // 定义顶部标题
-        var top = document.createElement("div");
-        var titleD = document.createElement("div");
-        var closeX = document.createElement("img");
-        top.className = "info-top";
-        titleD.innerHTML = '车队列表';
-        closeX.src = "http://webapi.amap.com/images/close2.gif";
-        closeX.onclick = closeInfoWindow;
-        top.appendChild(titleD);
-        top.appendChild(closeX);
-        panel.appendChild(top);
-
-        // 定义中部内容
-        var middle = document.createElement("div");
-        middle.className = "info-middle";
-        middle.style.backgroundColor = 'white';
-        var row = document.createElement("div");
-        row.className='row';
-        row.style.margin='5px';
-        var input = document.createElement("INPUT");
-        input.style.marginRight='8px';
-        input.placeholder='可根据编号或名称查询';
-        row.appendChild(input);
-        var btn = document.createElement("BUTTON");
-        btn.onclick=function queryOrg() {
-          console.log(input.value);
-          var rowNum=table.rows.length;
-          for (var i=0;i<rowNum;i++)
-          {
-            table.deleteRow(i);
-            rowNum=rowNum-1;
-            i=i-1;
-          }
-
-          if(null != input.value){
-            DEVCE_DISTANCE_TOORG +="?orgNoOrLabel=" +input.value;
-          }
-          var rspdata = serviceResource.restCallService(DEVCE_DISTANCE_TOORG, "GET");
-          rspdata.then(function (data) {
-            var orgList = data;
-            angular.forEach(orgList,function (data) {
-              var tr = document.createElement("TR");
-              tr.style.height='35px';
-              var td1 = document.createElement("TD");
-              td1.appendChild(document.createTextNode(data.label));
-
-              var td2 = document.createElement("TD");
-              td2.appendChild(document.createTextNode("距离："+data.id+" 米"));
-
-              var btn = document.createElement("BUTTON");
-              btn.className='btn btn-warning btn-xs';
-              btn.style.float='right';
-              btn.onclick=function moveOrg(device,org) {
-                //弹出调拨panel
-                console.log("moveOrg");
-              };
-              var t = document.createTextNode("调拨");
-              btn.appendChild(t);
-
-              var td3 = document.createElement("TD");
-              td3.appendChild(btn);
-
-              tr.appendChild(td1);
-              tr.appendChild(td2);
-              tr.appendChild(td3);
-              table.appendChild(tr)
-            });
-          },function (reason) {
-
-          })
-
-        };
-        var t = document.createTextNode("搜索");
-        btn.appendChild(t);
-        row.appendChild(btn);
-        middle.appendChild(row);
-
-        //默认查询5个最近的车队
-        var table= document.createElement("TABLE");
-        if(null != input.value){
-          DEVCE_DISTANCE_TOORG +="?orgLabel=" +input.value;
-        }
-        var rspdata = serviceResource.restCallService(DEVCE_DISTANCE_TOORG, "QUERY");
-        rspdata.then(function (data) {
-          console.log(12345);
-          var orgList = data;
-          angular.forEach(orgList,function (data) {
-            var tr = document.createElement("TR");
-            tr.style.height='35px';
-            var td1 = document.createElement("TD");
-            td1.appendChild(document.createTextNode(data.label));
-
-            var td2 = document.createElement("TD");
-            td2.appendChild(document.createTextNode("距离："+data.id+" 米"));
-
-            var btn = document.createElement("BUTTON");
-            btn.className='btn btn-warning btn-xs';
-            btn.style.float='right';
-            btn.onclick=function moveOrg(device,org) {
-              //弹出调拨panel
-              console.log("moveOrg");
-            };
-            var t = document.createTextNode("调拨");
-            btn.appendChild(t);
-
-            var td3 = document.createElement("TD");
-            td3.appendChild(btn);
-
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            table.appendChild(tr)
-          });
-        },function (reason) {
-
-        })
-
-        middle.appendChild(table);
-
-        panel.appendChild(middle);
-
-        fleetMap.appendChild(panel);
-
       });
 
       //构建自定义信息窗体
       function createInfoWindow(AMap,title, content,mapObj) {
 
+        var fleetMap = document.getElementById("fleetMap");
         var info = document.createElement("div");
         info.className = "info";
         //可以通过下面的方式修改自定义窗体的宽高
@@ -282,8 +144,6 @@
         titleD.innerHTML = title;
         closeX.src = "http://webapi.amap.com/images/close2.gif";
         closeX.onclick = closeInfoWindow;
-
-
         top.appendChild(titleD);
         top.appendChild(closeX);
         info.appendChild(top);
@@ -297,13 +157,194 @@
         var btn = document.createElement("BUTTON");
         btn.className='btn btn-warning btn-xs';
         btn.style.float='right';
-        btn.onclick=function moveOrg(mapObj) {
-          //弹出调拨panel
-          console.log(123);
-        };
-        var t = document.createTextNode("调拨");
-        btn.appendChild(t);
+        btn.appendChild(document.createTextNode("调拨"));
         middle.appendChild(btn);
+        btn.onclick=function moveOrg() {
+          //弹出调拨panel
+          //车队列表panel begin
+          var pageIndex = 0;
+          function queryDistanceToOrg(page,size,sort,orgLabel,item,tbody,table) {
+            var defaultUrl = DEVCE_DISTANCE_TOORG_PAGE;
+            var pageUrl = page||0;
+            var sizeUrl = size||5;
+            var sortUrl = sort||'id,desc';
+            defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+            defaultUrl += '&deviceNum='+item.deviceNum;
+            defaultUrl += '&search_NEQ_id='+item.organization.id;
+
+            if(null !=orgLabel && orgLabel!=''){
+              defaultUrl += "&search_LIKE_label=" +orgLabel;
+            }
+
+            var rspdata = serviceResource.restCallService(defaultUrl, "GET");
+            rspdata.then(function (data) {
+
+              var rowNum=table.rows.length;
+              for (var i=1;i<rowNum;i++)
+              {
+                table.deleteRow(i);
+                rowNum=rowNum-1;
+                i=i-1;
+              }
+              pageIndex = data.page.number;
+              var orgList = data.content;
+              angular.forEach(orgList,function (data) {
+                var tr = document.createElement("TR");
+                tr.style.height='35px';
+                tr.onclick= function () {
+                  var oObj = window.event.srcElement;
+                  if(oObj.tagName.toLowerCase() == "td"){
+                    var oTr = oObj.parentNode;
+                    for(var i=0; i<table.rows.length; i++)   {
+                      table.rows[i].style.backgroundColor   =   "";
+                      table.rows[i].selected = false;
+                    }
+                    oTr.style.backgroundColor = "#CCCCFF";
+                    oTr.selected = true;
+                    input.value=oTr.firstChild.innerHTML;
+                  }
+                }
+                var td1 = document.createElement("TD");
+                //td1.className="text-nowrap";
+                td1.appendChild(document.createTextNode(data.label));
+
+                var td2 = document.createElement("TD");
+                td2.className="text-nowrap";
+                td2.appendChild(document.createTextNode(Math.round(data.distance*100)/100+" 米"));
+
+                var td3 = document.createElement("TD");
+                td3.style.display = 'none';
+                td3.appendChild(document.createTextNode(data.id));
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tbody.appendChild(tr);
+              });
+            },function (reason) {
+
+            })
+          }
+
+          if(!document.getElementById("panel")){
+            var panel = document.createElement("div");
+            panel.className = "info";
+            panel.style.width = "300px";
+            panel.position ='absolute';
+            panel.style.left = '80px';
+            panel.border= 'solid 1px silver';
+
+            // 定义顶部标题
+            var top = document.createElement("div");
+            var titleD = document.createElement("div");
+            var closeX = document.createElement("img");
+            top.className = "info-top";
+            titleD.innerHTML = '车队列表';
+            closeX.src = "http://webapi.amap.com/images/close2.gif";
+            closeX.onclick = function () {
+              panel.style.display='none';
+            };
+            top.appendChild(titleD);
+            top.appendChild(closeX);
+            panel.appendChild(top);
+
+            // 定义中部内容
+            var middle = document.createElement("div");
+            middle.className = "info-middle";
+            middle.style.backgroundColor = 'white';
+            var row = document.createElement("div");
+            row.className='row';
+            row.style.margin='5px';
+            middle.appendChild(row);
+
+            var input = document.createElement("INPUT");
+            input.style.marginRight='8px';
+            input.placeholder='支持模糊查询';
+            row.appendChild(input);
+            //搜索fleet
+            var btn = document.createElement("BUTTON");
+            btn.appendChild(document.createTextNode("搜索"));
+            btn.className='btn btn-default btn-sm';
+            btn.style.marginRight='8px';
+            row.appendChild(btn);
+
+            btn.onclick = function queryOrg() {
+
+              queryDistanceToOrg(null,null,null,input.value,item,tbody,table);
+
+            };
+
+            var mBtn = document.createElement("BUTTON");
+            mBtn.appendChild(document.createTextNode("调拨"));
+            mBtn.className = 'btn btn-warning btn-sm';
+            row.appendChild(mBtn);
+            mBtn.onclick =function () {
+              var moveOrg = {};
+              for(var i = 0;i < table.rows.length;i++){
+                if(table.rows[i].selected == true){
+                  moveOrg ={ids: [item.id], "orgId": table.rows[i].lastChild.innerHTML}
+                }
+
+              }
+              console.log(moveOrg);
+              var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
+              restPromise.then(function (data) {
+                //刷新页面
+                vm.refreshMapWithDeviceInfo("fleetMap",null,15);
+                Notification.success("调拨设备成功!");
+              }, function (reason) {
+                Notification.error("调拨设备出错!");
+              });
+            }
+
+            //默认查询所有车队
+            var table= document.createElement("TABLE");
+            table.className='table';
+            var thead  =document.createElement("THEAD");
+            var thtr = document.createElement("TR");
+            var th1 = document.createElement("TH");
+            var th2 = document.createElement("TH");
+            th1.appendChild(document.createTextNode("车队名称"));
+            th2.appendChild(document.createTextNode("距离当前车辆"));
+            thtr.appendChild(th1);
+            thtr.appendChild(th2);
+            thead.appendChild(thtr);
+            table.appendChild(thead);
+
+            var tbody = document.createElement("TBODY");
+            table.appendChild(tbody);
+            middle.appendChild(table);
+            panel.appendChild(middle);
+
+            queryDistanceToOrg(null,null,null,null,item,tbody,table);
+
+
+            var footer = document.createElement("div");
+            footer.className = 'box-footer';
+            //var uib = document.createElement("uib-pagination");
+            var btRow = document.createElement("div");
+            btRow.className='row';
+            btRow.style.margin='5px';
+            var bt1 = document.createElement("BUTTON");
+            bt1.appendChild(document.createTextNode("上一页"));
+            bt1.style.marginRight = '80xp';
+            bt1.onclick = function(){
+              queryDistanceToOrg(pageIndex-1,null,null,null,item,tbody,table);
+            };
+            var bt2 = document.createElement("BUTTON");
+            bt2.appendChild(document.createTextNode("下一页"));
+            bt2.onclick = function(){
+              queryDistanceToOrg(pageIndex+1,null,null,null,item,tbody,table);
+            };
+            btRow.appendChild(bt1)
+            btRow.appendChild(bt2);
+            footer.appendChild(btRow);
+            panel.appendChild(footer);
+            fleetMap.appendChild(panel);
+
+
+          }
+        };
+
 
         // 定义底部内容
         var bottom = document.createElement("div");
@@ -318,6 +359,7 @@
         return info;
       };
 
+
       function closeInfoWindow() {
         mapObj.clearInfoWindow();
 
@@ -325,7 +367,7 @@
 
     };
 
-    vm.refreshMapWithDeviceInfo("fleetMap",null,4);
+    vm.refreshMapWithDeviceInfo("fleetMap",null,15);
 
   }
 })();
