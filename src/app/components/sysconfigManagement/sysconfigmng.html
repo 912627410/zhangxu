@@ -69,8 +69,7 @@
       <table ng-table="sysconfigMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="sysconfig in $data">
           <td class="text-nowrap" data-title="'参数名称'" sortable="'name'">
-            <a ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'"
-               href ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{sysconfig.name}}</a>
+            <a href ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{sysconfig.name}}</a>
           </td>
           <td class="text-nowrap" data-title="'参数值'" sortable="'value'">{{sysconfig.value}}</td>
           <td class="text-nowrap" data-title="'参数描述'" sortable="'description'">{{sysconfig.description}}</td>
