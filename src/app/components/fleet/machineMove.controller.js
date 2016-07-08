@@ -74,7 +74,16 @@
             var icons = [];
             icons[0] = "assets/images/orangeMarker.png";
             icons[1] = "assets/images/greenMarker.png";
-            icons[2] = "assets/images/grayMarker.png";
+            icons[2] = "assets/images/lightgreenMarker.png";
+            icons[3] = "assets/images/highgreenMarker.png";
+            icons[4] = "assets/images/yellowMarker.png";
+            icons[5] = "assets/images/redMarker.png";
+            icons[6] = "assets/images/lightblueMarker.png";
+            icons[7] = "assets/images/pinkMarker.png";
+            icons[8] = "assets/images/purpleMarker.png";
+            icons[9] = "assets/images/highblueMarker.png";
+            icons[10] = "assets/images/blueMarker.png";
+            icons[11] = "assets/images/grayMarker.png";
             for(var index = 0;index < fleetList.length; index++){
               var deviceGPSList = fleetList[index];
               var marker = icons[index];
@@ -278,22 +287,24 @@
             mBtn.className = 'btn btn-warning btn-sm';
             row.appendChild(mBtn);
             mBtn.onclick =function () {
-              var moveOrg = {};
               for(var i = 0;i < table.rows.length;i++){
                 if(table.rows[i].selected == true){
-                  moveOrg ={ids: [item.id], "orgId": table.rows[i].lastChild.innerHTML}
+                  var moveOrg ={ids: [item.id], "orgId": table.rows[i].lastChild.innerHTML}
                 }
-
               }
-              console.log(moveOrg);
-              var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
-              restPromise.then(function (data) {
-                //刷新页面
-                vm.refreshMapWithDeviceInfo("fleetMap",null,15);
-                Notification.success("调拨设备成功!");
-              }, function (reason) {
-                Notification.error("调拨设备出错!");
-              });
+              if(moveOrg != null){
+                var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
+                restPromise.then(function (data) {
+                  //刷新页面
+                  vm.refreshMapWithDeviceInfo("fleetMap",null,15);
+                  Notification.success("调拨设备成功!");
+                }, function (reason) {
+                  Notification.error("调拨设备出错!");
+                });
+              }else{
+                Notification.error("请在列表中选择车队!");
+              }
+
             }
 
             //默认查询所有车队
