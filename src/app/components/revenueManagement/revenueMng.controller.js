@@ -7,57 +7,19 @@
     .controller('revenueMngController', revenueMngController);
 
   /** @ngInject */
-  function revenueMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,REVENUE_URL, FLEET_PAGE_URL) {
+  function revenueMngController($rootScope,$scope,$timeout,$uibModal,$filter ,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,REVENUE_URL, FLEET_PAGE_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     //初始化查询参数
-    vm.sim={
-      "phoneNumber":"",
-      "deviceinfo":{},
+    vm.fleetRecord={
 
     };
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-
-    vm.query = function(page,size,sort,fleetRecord){
-      var restCallURL = FLEET_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
-      if (null != fleetRecord) {
-        if (null != deviceinfo.deviceNum&&deviceinfo.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
-        }
-        if (null != deviceinfo.phoneNumber&&deviceinfo.phoneNumber!="") {
-          restCallURL += "&search_LIKE_sim.phoneNumber=" + deviceinfo.phoneNumber;
-        }
-      }
-
-      if (null != vm.org&&null != vm.org.id) {
-        restCallURL += "&search_EQ_organization.id=" + vm.org.id;
-      }
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.tableParams = new NgTableParams({
-        }, {
-          dataset: data.content
-        });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
-      }, function (reason) {
-        Notification.error("获取车队记录数据失败");
-      });
-    };
-
-
-      vm.query(0,10,null,null);
 
 
     //查询条件相关
@@ -81,10 +43,14 @@
     };
 
 
-    var date = new Date();
-    date.setDate(date.getDate()-30);  //默认查询最近一个月的异常数据
-    vm.startDate=date;
-    vm.endDate=new Date();
+    vm.initDate=function(){
+      var date = new Date();
+      date.setDate(date.getDate()-30);  //默认查询最近一个月的异常数据
+      vm.startDate=date;
+      vm.endDate=new Date();
+    }
+
+
 
     // 日期控件相关
     // date picker
@@ -105,34 +71,6 @@
     };
 
 
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
-    }, function (reason) {
-      Notification.error('获取SIM卡状态集合失败');
-    })
-
-
-
-    vm.query=function(page,size,sort,queryPhoneNumber){
-       var rspData=simService.queryPage(page,size,sort,queryPhoneNumber);
-       rspData.then(function(data){
-         vm.simList = data.content;
-
-         vm.tableParams = new NgTableParams({},
-           {
-           dataset: data.content
-         });
-         vm.page = data.page;
-         vm.pageNumber = data.page.number + 1;
-       },function(reason){
-         vm.macheineList = null;
-         Notification.error("获取SIM数据失败");
-       });
-     }
-
-   // vm.query();
 
 
 
@@ -144,8 +82,60 @@
 
     //选中组织模型赋值
     $rootScope.$on('orgSelected', function (event, data) {
-      vm.sim.deviceinfo.org = data;
+      vm.org = data;
     });
+
+
+    vm.query = function(page,size,sort,fleetRecord){
+      var restCallURL = FLEET_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      if (null != fleetRecord) {
+        if (null != fleetRecord.deviceNum&&fleetRecord.deviceNum!="") {
+          restCallURL += "&search_LIKE_fleetRecord.machineEntity.deviceinfo.deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
+        }
+        if (null != fleetRecord.licenseId&&fleetRecord.licenseId!="") {
+          restCallURL += "&search_LIKE_machineEntity.licenseId=" + fleetRecord.licenseId;
+        }
+      }
+
+      if (null != vm.org&&null != vm.org.id) {
+        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      console.log(vm.startDate);
+      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
+      console.log(vm.endDate);
+      restCallURL+="&search_DGTE_endDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
+      restCallURL+="&search_DLTE_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.tableParams = new NgTableParams({
+        }, {
+          dataset: data.content
+        });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
+      }, function (reason) {
+        Notification.error("获取车队记录数据失败");
+      });
+    };
+
+    vm.initDate();
+    vm.query(0,10,null,null);
+
+    //重置查询框
+    vm.reset = function () {
+      vm.fleetRecord = null;
+      vm.org=null;
+      vm.initDate();
+
+    }
+
 
     //得到收入
     vm.queryRevenue = function() {
@@ -180,13 +170,61 @@
         //   }
 
 
-        var rnd = []
-        for (var i = 0; i < 10; i++) {
-          rnd.push(Math.floor(Math.random() * 20) + 1)
-        }
-        vm.revenueLineChart.series.push({
-          data: rnd
-        })
+        vm.revenueLineChart = {
+          // $('#revenueLineChart').highcharts({
+          options: {
+            chart: {
+              type: 'line',
+              height: 300
+            },
+            plotOptions: {
+              line: {
+                //dataLabels: {
+                //    enabled: true
+                //},
+                enableMouseTracking: true
+              },
+              series: {
+                cursor: 'pointer',
+                events: {
+                  click: function(e) {
+
+                    // console.log(e.point.category);
+                    //  vm.getCustomers();
+                    vm.$apply();
+                  }
+
+                  //click: function (e) {
+                  //    alert('Category: ' + e.point.category);
+                  //}
+                }
+              }
+            }
+          },
+          title: {
+            text: '最近12个月'
+          },
+          subtitle: {
+            text: '收入汇总'
+          },
+          xAxis: {
+             categories:monthes
+            //categories:[]
+          },
+          yAxis: {
+            title: {
+              text: '收入(W)'
+            }
+
+          },
+          series: [{
+             name: '收入',
+           // data: []
+            //     data: [100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23]
+            data:amounts
+          }]
+          //    });
+        };
 
       }, function(reason) {
         Notification.error("获取数据失败");
@@ -201,61 +239,7 @@
 
     vm.queryRevenue();
 
-    vm.revenueLineChart = {
-      // $('#revenueLineChart').highcharts({
-      options: {
-        chart: {
-          type: 'line',
-          height: 300
-        },
-        plotOptions: {
-          line: {
-            //dataLabels: {
-            //    enabled: true
-            //},
-            enableMouseTracking: true
-          },
-          series: {
-            cursor: 'pointer',
-            events: {
-              click: function(e) {
 
-                console.log(e.point.category);
-              //  vm.getCustomers();
-                vm.$apply();
-              }
-
-              //click: function (e) {
-              //    alert('Category: ' + e.point.category);
-              //}
-            }
-          }
-        }
-      },
-      title: {
-        text: '最近12个月'
-      },
-      subtitle: {
-        text: '收入汇总'
-      },
-      xAxis: {
-      //  categories:monthes
-        categories:[]
-      },
-      yAxis: {
-        title: {
-          text: '收入(W)'
-        }
-
-      },
-      series: [{
-        name: '收入',
-         //    data: []
-             data: [100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23]
-        //data:amounts
-      }]
-      //    });
-    };
 
   }
 })();
