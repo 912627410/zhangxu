@@ -9,7 +9,7 @@
     .controller('machineMoveController', machineMoveController);
 
   /** @ngInject */
-  function machineMoveController($rootScope, $scope, $uibModal,$filter, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL) {
+  function machineMoveController($rootScope, $scope, $uibModal,$filter, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL,WORKPLANE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -97,12 +97,35 @@
           }, function (reason) {
             map.clearMap();
             Notification.error(languages.findKey('failedToGetDeviceInformation'));
+          });
+
+          //workplane  读取所有 工作面信息 供map使用
+          var workplaneData = serviceResource.restCallService(WORKPLANE_URL, "QUERY");
+          workplaneData.then(function (data) {
+            console.log(data);
+            var workplaneList = data;
+            var startMarker = "assets/images/blueMarker.png";
+            var endMarker = "assets/images/grayMarker.png";
+            for(var i = 0; i <workplaneList.length; i++){
+              addStartMarker(map,workplaneList[i],startMarker);
+              addEndMarker(map,workplaneList[i],endMarker);
+              var path = [];
+              path.push([workplaneList[i].startLongitude,workplaneList[i].startLatitude]);
+              path.push([workplaneList[i].endLongitude,workplaneList[i].endLatitude]);
+              map.plugin("AMap.DragRoute", function() {
+                var route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类
+                route.search(); //查询导航路径并开启拖拽导航
+              });
+
+            }
+          },function (reason) {
+
           })
         }
       })
     }
 
-    //添加带文本的点标记覆盖物
+    //添加车辆marker
     var addMarkerModel = function(mapObj,item, icon) {
       var mapObj = mapObj;
       //实例化信息窗体
@@ -378,7 +401,170 @@
 
     };
 
-    vm.refreshMapWithDeviceInfo("fleetMap",null,15);
+    //添加起点marker
+    var addStartMarker = function(mapObj,workplane, icon) {
+      var mapObj = mapObj;
+      //实例化信息窗体
+      var infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        offset: new AMap.Pixel(15, -43)//-113, -140
+      });
+      var marker = new AMap.Marker({
+        map: mapObj,
+        position: new AMap.LngLat(workplane.startLongitude, workplane.startLatitude), //基点位置
+        icon: new AMap.Icon({
+          image: icon,
+          imageOffset: new AMap.Pixel(-15, -10)
+        })
+      });
+
+      // marker.setMap(mapObj);  //在地图上添加点
+      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+        infoWindow.open(mapObj, marker.getPosition());
+        var title = workplane.startPoint;
+        var contentInfo = "";
+        contentInfo += languages.findKey('currentPosition')+":" +(workplane.startPoint==null ?'':workplane.startPoint) + "<br/>";
+        contentInfo += languages.findKey('longitude')+": "+(workplane.startLongitude==null ?'':$filter('number')(workplane.startLongitude,2))+"<br/>";
+        contentInfo += languages.findKey('latitude')+": "+(workplane.startLatitude==null ?'':$filter('number')(workplane.startLatitude,2))+"<br/>";
+
+        contentInfo += "<div class='box-footer'></div>"
+        var info = createInfoWindow(AMap, title, contentInfo, mapObj);
+
+        //设置窗体内容
+        infoWindow.setContent(info);
+
+      });
+
+      //构建自定义信息窗体
+      function createInfoWindow(title, content) {
+        var info = document.createElement("div");
+        info.className = "info";
+        //可以通过下面的方式修改自定义窗体的宽高
+        info.style.width = "220px";
+
+        // 定义顶部标题
+        var top = document.createElement("div");
+        var titleD = document.createElement("div");
+        var closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
+        closeX.src = "http://webapi.amap.com/images/close2.gif";
+        closeX.onclick = closeInfoWindow;
+
+
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
+
+        // 定义中部内容
+        var middle = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        middle.innerHTML = content;
+        info.appendChild(middle);
+
+        // 定义底部内容
+        var bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        var sharp = document.createElement("img");
+        sharp.src = "http://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+      };
+
+      function closeInfoWindow() {
+        mapObj.clearInfoWindow();
+      };
+    }
+
+    //添加终点marker
+    var addEndMarker = function(mapObj,workplane, icon) {
+      var mapObj = mapObj;
+      //实例化信息窗体
+      var infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        offset: new AMap.Pixel(15, -43)//-113, -140
+      });
+      var marker = new AMap.Marker({
+        map: mapObj,
+        position: new AMap.LngLat(workplane.endLongitude, workplane.endLatitude), //基点位置
+        icon: new AMap.Icon({
+          image: icon,
+          imageOffset: new AMap.Pixel(-15, -10)
+        })
+      });
+
+      // marker.setMap(mapObj);  //在地图上添加点
+      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+        infoWindow.open(mapObj, marker.getPosition());
+        var title = workplane.endPoint;
+        var contentInfo = "";
+        contentInfo += languages.findKey('currentPosition')+":" +(workplane.endPoint==null ?'':workplane.endPoint) + "<br/>";
+        contentInfo += languages.findKey('longitude')+": "+(workplane.endLongitude==null ?'':$filter('number')(workplane.endLongitude,2))+"<br/>";
+        contentInfo += languages.findKey('latitude')+": "+(workplane.endLatitude==null ?'':$filter('number')(workplane.endLatitude,2))+"<br/>";
+
+        contentInfo += "<div class='box-footer'></div>"
+        var info = createInfoWindow(AMap, title, contentInfo, mapObj);
+
+        //设置窗体内容
+        infoWindow.setContent(info);
+
+      });
+
+      //构建自定义信息窗体
+      function createInfoWindow(title, content) {
+        var info = document.createElement("div");
+        info.className = "info";
+        //可以通过下面的方式修改自定义窗体的宽高
+        info.style.width = "220px";
+
+        // 定义顶部标题
+        var top = document.createElement("div");
+        var titleD = document.createElement("div");
+        var closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
+        closeX.src = "http://webapi.amap.com/images/close2.gif";
+        closeX.onclick = closeInfoWindow;
+
+
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
+
+        // 定义中部内容
+        var middle = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        middle.innerHTML = content;
+        info.appendChild(middle);
+
+        // 定义底部内容
+        var bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        var sharp = document.createElement("img");
+        sharp.src = "http://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+      };
+
+      function closeInfoWindow() {
+        mapObj.clearInfoWindow();
+      };
+
+    }
+
+
+
+    vm.refreshMapWithDeviceInfo("fleetMap",null,13);
 
   }
 })();
