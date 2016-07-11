@@ -108,6 +108,12 @@
 
 
     .constant('ORG_TYPE_URL', SERVER_BASE_URL + 'config/orgTypeList')   //组织类型查询
+
+
+    //车队管理
+    .constant('REVENUE_URL', SERVER_BASE_URL + 'fleetRecord/revenue') //收入统计
+    .constant('COST_URL', SERVER_BASE_URL + 'fleetRecord/cost') //成本统计
+    .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleetRecord/fleetRecordPage') //分页查询
   ;
 
 

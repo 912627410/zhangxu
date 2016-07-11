@@ -180,6 +180,20 @@
           }
         }
       })
+
+      .state('home.revenue', {
+        url: '/revenue',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/revenueManagement/revenueMng.html',
+            controller: 'revenueMngController',
+            controllerAs: 'revenueMngController'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');
