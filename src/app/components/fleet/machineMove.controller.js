@@ -9,12 +9,23 @@
     .controller('machineMoveController', machineMoveController);
 
   /** @ngInject */
-  function machineMoveController($rootScope, $scope, $uibModal,$filter, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL,WORKPLANE_URL) {
+  function machineMoveController($rootScope, $scope, $uibModal,$filter,treeFactory, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL,WORKPLANE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.org = data;
+    });
+
+
     //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-    vm.refreshMapWithDeviceInfo= function (mapId,deviceList,zoomsize,centeraddr) {
+    vm.refreshMap= function (mapId,org,zoomsize,centeraddr) {
       $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
         //初始化地图对象
         if (!AMap) {
@@ -68,6 +79,9 @@
 
         //按org=9 读取 machine信息  ,fleet map使用
         if ($rootScope.userInfo ) {
+          if(org != null && org !=""){
+            DEVCE_GPSDATA_BYORG = DEVCE_GPSDATA_BYORG + "?orgLabel=" +org.label;
+          }
           var rspdata = serviceResource.restCallService(DEVCE_GPSDATA_BYORG, "QUERY");
           rspdata.then(function (data) {
             var fleetList =data;  //返回的Map
@@ -319,7 +333,7 @@
                 var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
                 restPromise.then(function (data) {
                   //刷新页面
-                  vm.refreshMapWithDeviceInfo("fleetMap",null,15);
+                  vm.refreshMap("fleetMap",null,13,null);
                   Notification.success("调拨设备成功!");
                 }, function (reason) {
                   Notification.error("调拨设备出错!");
@@ -563,9 +577,15 @@
     }
 
 
+    //默认查询一次
+    vm.refreshMap("fleetMap",null,13,null);
 
-    vm.refreshMapWithDeviceInfo("fleetMap",null,13);
-
+    //根据orgLabel 查询
+    vm.query = function () {
+      if(vm.org.label != null ){
+        vm.refreshMap("fleetMap",vm.org,13,null);
+      }
+    }
   }
 })();
 

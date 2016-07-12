@@ -2,7 +2,6 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    {{'dashboard'|translate}}
     <small></small>
   </h1>
   <ol class="breadcrumb">
@@ -10,18 +9,46 @@
     <li class="active"> 车辆调拨</li>
   </ol>
 </section>
+<uib-tabset justified="true">
+  <uib-tab heading="地图" select="machineMoveCtrl.refreshMap('fleetMap',null,13,null)">
+    <div class="box">
+    </div>
+    <div class="col-xs-12 connectedSortable">
 
-<div class="col-xs-12 connectedSortable">
-  <div class="box box-danger">
-    <div class="box-header">
-      <!-- tools box -->
-      <div class="pull-right box-tools">
-        <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="homeMapCtrl.refreshMap()" title="刷新"><i class="fa fa-refresh"></i></button>
-      </div><!-- /. tools -->
-      <i class="fa fa-cloud"></i>
-      <h3 class="box-title">{{'distributionOfTheMachine' | translate}}</h3>
-    </div><!-- /.box-header -->
+    <div class="row">
+      <div class="col-md-1">
+        <label class="control-label">车队名称</label>
+      </div>
+      <div class="col-md-4">
+        <p class="input-group">
+          <input type="text" id="org" class="form-control" placeholder="车队名称" ng-model="machineMoveCtrl.org.label" name="org" readonly required/>
+          <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="machineMoveCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-3 ">
+        <button class="btn btn-primary" type="button"  ng-click="machineMoveCtrl.query()">查询</button>
+        <button class="btn btn-primary" type="button"  ng-click="machineMoveCtrl.reset()">重置</button>
+      </div>
+      <div class="col-md-1 pull-right">
+        <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="machineMoveCtrl.refreshMap('fleetMap',null,13,null)" title="刷新">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box box-danger">
+    </div>
     <div class="box-body" style="min-height: 500px" id="fleetMap">
     </div>
-  </div>
-</div><!-- /.col -->
+    </div>
+  </uib-tab>
+
+  <uib-tab heading="图表">
+
+  </uib-tab>
+</uib-tabset>
+
