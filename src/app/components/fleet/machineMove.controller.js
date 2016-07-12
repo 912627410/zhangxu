@@ -131,6 +131,28 @@
                 route.search(); //查询导航路径并开启拖拽导航
               });
 
+              var startCircle = new AMap.Circle({
+                center: [workplaneList[i].startLongitude,workplaneList[i].startLatitude],// 圆心位置
+                radius: workplaneList[i].startRadius, //半径
+                strokeColor: "#6495ED", //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 3, //线粗细度
+                fillColor: "#A2B5CD", //填充颜色
+                fillOpacity: 0.35//填充透明度
+              });
+
+              var endCircle = new AMap.Circle({
+                center: [workplaneList[i].endLongitude,workplaneList[i].endLatitude],// 圆心位置
+                radius: workplaneList[i].endRadius, //半径
+                strokeColor: "#F33", //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 3, //线粗细度
+                fillColor: "#ee2200", //填充颜色
+                fillOpacity: 0.35//填充透明度
+              });
+
+              startCircle.setMap(map);
+              endCircle.setMap(map);
             }
           },function (reason) {
 
