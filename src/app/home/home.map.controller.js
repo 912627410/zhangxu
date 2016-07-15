@@ -12,7 +12,7 @@
   function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource,permissions) {
     var vm = this;
     if(permissions.getPermissions("device:homegpsdata")) {
-      serviceResource.refreshMapWithDeviceInfo("homeMap", null, 5);
+      serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
   }
 })();

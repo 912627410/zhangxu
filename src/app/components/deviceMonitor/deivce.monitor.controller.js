@@ -18,7 +18,7 @@
     var userInfo = $rootScope.userInfo;
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
-        serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList);
+        serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,4);
       })
     }
 
