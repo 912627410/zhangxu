@@ -190,7 +190,7 @@
             location.reload(false);
           }
           var amapRuler, amapScale, toolBar,overView;
-          var localZoomSize = 4;  //默认缩放级别
+          var localZoomSize = 5;  //默认缩放级别
           if (zoomsize){
             localZoomSize = zoomsize;
           }
