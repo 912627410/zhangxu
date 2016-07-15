@@ -917,12 +917,12 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 1) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
               vm.assginSMSContent(type,data.content.smsContent);
-              Notification.success(languages.findKey('messageSentSuccessfully'));
+              Notification.success(data.content.resultDescribe);
             }
             else {
-              Notification.error(languages.findKey('messageSendFiled'));
+              Notification.error(data.content.resultDescribe);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled'));
