@@ -650,7 +650,7 @@
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         var centerAddr = [deviceInfo.longitudeNum,deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,8,centerAddr);
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,4,centerAddr);
       })
     };
 
