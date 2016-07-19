@@ -138,7 +138,7 @@
   "notWork":"不工作",
   "generatorState":"发电机状态",
   "GPSPowerDetection":"内部电源检测",
-
+  "Built-inBatteryRealTime":"内置电池实时电压",
   "non-transFormer":"无电源",
   "noSignal":"无信号",
   "openCoverState":"开盖状态",
@@ -182,7 +182,7 @@
   "SMSContent":"短信内容",
   "look":"查看",
   "send":"发送",
-  "LockCar":"解绑",
+  "LockCar":"解除",
   "cancelTheAutomaticLockCar":"取消自动锁车",
   "returnAddress":"回传地址",
   "portNumber":"端口号",

@@ -790,10 +790,10 @@
           vm.ecuLockStatusDesc += "已激活";
         }
         if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
-          vm.ecuLockStatusDesc += " 密码错误";
+          vm.ecuLockStatusDesc += ".";
         }
         else{
-          vm.ecuLockStatusDesc += " 密码正确";
+          vm.ecuLockStatusDesc += ".";
         }
       }
     }
