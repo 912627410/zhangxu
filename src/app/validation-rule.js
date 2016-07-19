@@ -16,6 +16,7 @@
       number: /^\d+$/,
       numberAndChar: /^[a-zA-Z0-9]+$/,
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
+      numberAndDot: /^[0-9.]+$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
 
       minlength: function(value, scope, element, attrs, param) {
@@ -54,6 +55,10 @@
       },
       numberAndCharAndDot: {
         error: '输入内容只能为数字,字母和点',
+        success: ''
+      },
+      numberAndDot: {
+        error: '输入内容只能为数字和点',
         success: ''
       },
       minlength: {

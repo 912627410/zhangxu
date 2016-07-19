@@ -5,19 +5,17 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="licenseId" class="col-sm-3 control-label">整机编号/车号</label>
-        <div class="col-sm-9">
+        <label for="licenseId" class="col-sm-2 control-label">整机编号/车号</label>
+        <div class="col-sm-4">
 
           <input type="text" id="licenseId" class="form-control" placeholder="整机编号/车号"
                  ng-model="newMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
-                 validator="required" message-id="requireSubmit"/>
-          <span id="requireSubmit">23423423424</span>
-        </div>
-      </div>
+                 validator="required" />
 
-      <div class="form-group">
-        <label for="licenseId" class="col-sm-3 control-label">绑定终端</label>
-        <div class="col-sm-9">
+        </div>
+
+        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
+        <div class="col-sm-4">
           <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
                  ng-model="newMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
                  ng-minlength='6' ng-maxlength='26' ng-change="newMachineController.deviceNumInputChanged(newMachineController.machine.deviceinfo.deviceNum)"/>
@@ -27,21 +25,23 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">发动机类型</label>
-        <div class="col-sm-9">
-          <select name="engineType" class="form-control"
-                  ng-model="newMachineController.machine.engineType"
-                  ng-options="engineType.id as engineType.engineName for engineType in newMachineController.engineTypeList">
-            <option value="">请选择...</option>
-          </select>
-        </div>
-      </div>
 
-      </div>
       <div class="form-group">
-        <label for="org" class="col-sm-3 control-label">所属组织</label>
-        <div class="col-sm-9">
+        <label class="col-sm-2 control-label">发动机类型</label>
+        <div class="col-sm-4">
+
+
+          <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType" theme="bootstrap"
+                     ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
+            </ui-select-match>
+            <ui-select-choices  repeat="engineType.id as engineType in newMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
+              <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label for="org" class="col-sm-2 control-label">所属组织</label>
+        <div class="col-sm-4">
           <p class="input-group">
             <input type="text" id="org" class="form-control" placeholder="所属组织"
                    ng-model="newMachineController.machine.org.label" name="org" readonly validator="required"/>
@@ -50,10 +50,117 @@
                       <i class="fa fa-sitemap"></i>
                     </button>
                   </span>
-          </div>
           </p>
         </div>
       </div>
+
+      <div class="form-group">
+        <label for="licenseId" class="col-sm-2 control-label">购买价格</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
+                 ng-model="newMachineController.machine.buyPrice" name="buyPrice" typeahead-show-hint="true"
+                 validator="numberAndDot"/>
+
+        </div>
+
+        <label for="licenseId" class="col-sm-2 control-label">购买时间</label>
+        <div class="col-sm-4">
+          <p class="input-group">
+            <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{format}}"
+                   ng-model="newMachineController.machine.buyTime"
+                   is-open="newMachineController.buyTimeOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="newMachineController.buyTimeOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="upkeepPrice" class="col-sm-2 control-label">保养费用</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="upkeepPrice" class="form-control" placeholder="保养费用"
+                 ng-model="newMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"
+                 validator="numberAndDot"/>
+        </div>
+
+        <label for="upkeepPriceType" class="col-sm-2 control-label">保养费用类型</label>
+        <div class="col-sm-4">
+
+
+          <ui-select type="text" name="upkeepPriceType"  id="upkeepPriceType" ng-required="true"  ng-model="newMachineController.machine.upkeepPriceType"  on-remove="removed($item, $model)" theme="bootstrap" validator="required" >
+            <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+            <ui-select-choices  repeat="upkeepPriceType.value as upkeepPriceType in newMachineController.upkeepPriceTypeList | propsFilter: {desc: $select.search}" >
+              <div  ng-bind-html="upkeepPriceType.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="salary" class="col-sm-2 control-label">员工工资</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="salary" class="form-control" placeholder="员工工资"
+                 ng-model="newMachineController.machine.salary" name="salary" typeahead-show-hint="true"
+                 validator="numberAndDot" />
+        </div>
+
+        <label for="salaryType" class="col-sm-2 control-label">员工工资类型</label>
+        <div class="col-sm-4">
+          <ui-select type="text" id="salaryType" name="salaryType" ng-required="true"  ng-model="newMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap" validator="required" >
+            <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+            <ui-select-choices  repeat="salaryType.value as salaryType in newMachineController.salaryTypeList | propsFilter: {desc: $select.search}" >
+              <div  ng-bind-html="salaryType.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fuelTank" class="col-sm-2 control-label">油箱容量(升)</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="fuelTank" class="form-control" placeholder="油箱容量(升)"
+                 ng-model="newMachineController.machine.fuelTank" name="fuelTank" typeahead-show-hint="true"
+                 validator="numberAndDot"/>
+
+        </div>
+
+        <label for="fuelType" class="col-sm-2 control-label">燃油类型</label>
+        <div class="col-sm-4">
+
+          <ui-select id="fuelType" name="fuelType" ng-model="newMachineController.machine.fuelType" theme="bootstrap"
+                     ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="燃油类型">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices  repeat="fuelType.value as fuelType in newMachineController.fuelTypeList | propsFilter: {desc: $select.search}" >
+              <div  ng-bind-html="fuelType.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="revenue" class="col-sm-2 control-label">单次收入</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="revenue" class="form-control" placeholder="单次收入"
+                 ng-model="newMachineController.machine.revenue" name="revenue" typeahead-show-hint="true"
+                 validator="numberAndDot" />
+
+        </div>
+        <label for="depreciableLife" class="col-sm-2 control-label">折旧年限</label>
+        <div class="col-sm-4">
+          <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
+                 ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"
+                 validator="number" />
+        </div>
+      </div>
+
     <i style="color: red" ng-if="null!=newMachineController.errorMsg">
       {{newMachineController.errorMsg}}<br/>
     </i>

@@ -21,6 +21,55 @@
     ngTableDefaults.settings.counts = [];
 
 
+    vm.buildQueryUrl=function(URL,fleetRecord){
+      var restCallURL = URL+"?1=1";
+
+      if (null != fleetRecord) {
+        if (null != fleetRecord.deviceNum&&fleetRecord.deviceNum!="") {
+          restCallURL += "search_deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
+        }
+        if (null != fleetRecord.licenseId&&fleetRecord.licenseId!="") {
+          restCallURL += "&search_licenseId=" + fleetRecord.licenseId;
+        }
+      }
+
+      if (null != vm.org&&null != vm.org.id) {
+        restCallURL += "&search_orgId=" + vm.org.id;
+      }
+
+      console.log(vm.startDate);
+      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
+      console.log(vm.endDate);
+      restCallURL+="&search_startDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
+      restCallURL+="&search_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
+
+      return restCallURL;
+    }
+
+    vm.buildQueryUrl2=function(URL,fleetRecord){
+      var restCallURL = URL+"?1=1";
+
+      if (null != fleetRecord) {
+        if (null != fleetRecord.deviceNum&&fleetRecord.deviceNum!="") {
+          restCallURL += "search_LIKE_machineEntity.deviceinfo.deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
+        }
+        if (null != fleetRecord.licenseId&&fleetRecord.licenseId!="") {
+          restCallURL += "&search_LIKE_machineEntity.licenseId=" + fleetRecord.licenseId;
+        }
+      }
+
+      if (null != vm.org&&null != vm.org.id) {
+        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      console.log(vm.startDate);
+      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
+      console.log(vm.endDate);
+      restCallURL+="&search_DGTE_endDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
+      restCallURL+="&search_DLTE_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
+
+      return restCallURL;
+    }
 
     //查询条件相关
 
@@ -87,30 +136,14 @@
 
 
     vm.query = function(page,size,sort,fleetRecord){
-      var restCallURL = FLEET_PAGE_URL;
+
+      var restCallURL=vm.buildQueryUrl2(FLEET_PAGE_URL,fleetRecord);
+
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "&page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != fleetRecord) {
-        if (null != fleetRecord.deviceNum&&fleetRecord.deviceNum!="") {
-          restCallURL += "&search_LIKE_fleetRecord.machineEntity.deviceinfo.deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
-        }
-        if (null != fleetRecord.licenseId&&fleetRecord.licenseId!="") {
-          restCallURL += "&search_LIKE_machineEntity.licenseId=" + fleetRecord.licenseId;
-        }
-      }
-
-      if (null != vm.org&&null != vm.org.id) {
-        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
-      }
-
-      console.log(vm.startDate);
-      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
-      console.log(vm.endDate);
-      restCallURL+="&search_DGTE_endDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
-      restCallURL+="&search_DLTE_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -126,7 +159,7 @@
     };
 
     vm.initDate();
-    vm.query(0,10,null,null);
+
 
     //重置查询框
     vm.reset = function () {
@@ -138,9 +171,12 @@
 
 
     //得到收入
-    vm.queryRevenue = function() {
+    vm.queryRevenue = function(fleetRecord) {
 
-      var rspData = serviceResource.restCallService(REVENUE_URL, "GET");
+      var restCallURL=vm.buildQueryUrl(REVENUE_URL,fleetRecord);
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data) {
 
 
@@ -202,10 +238,10 @@
             }
           },
           title: {
-            text: '最近12个月'
+            text: '收入汇总'
           },
           subtitle: {
-            text: '收入汇总'
+            text: ''
           },
           xAxis: {
              categories:monthes
@@ -237,7 +273,13 @@
 
     };
 
-    vm.queryRevenue();
+    vm.selectQuery=function(fleetRecord){
+      vm.queryRevenue(fleetRecord);
+      vm.query(0,10,null,fleetRecord);
+    }
+
+
+    vm.selectQuery(null);
 
 
 

@@ -193,6 +193,18 @@
             controllerAs: 'revenueMngController'
           }
         }
+      }).state('home.cost', {
+        url: '/cost',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/costManagement/costMng.html',
+            controller: 'costMngController',
+            controllerAs: 'costMngController'
+          }
+        }
       })
     ;
 

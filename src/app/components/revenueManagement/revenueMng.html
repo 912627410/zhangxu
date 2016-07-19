@@ -91,7 +91,7 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="revenueMngController.query(null,null,null,revenueMngController.fleetRecord)">查询</button>
+      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="revenueMngController.selectQuery(revenueMngController.fleetRecord)">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="revenueMngController.reset()">重置</button>
     </div>
 
@@ -99,12 +99,10 @@
   </div>
 
   <div class="row" style="margin-bottom: 15px">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <highchart id="revenueLineChart" config="revenueMngController.revenueLineChart"></highchart>
     </div>
-    <div class="col-md-6">
-      <highchart config="revenueMngController.revenueBarChart"></highchart>
-    </div>
+
   </div>
 
   <div class="row " style="padding: 10px">
@@ -116,7 +114,6 @@
           <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'serialNumber'">{{fleetRecord.machine.licenseId}}</td>
           <td class="text-nowrap" data-title="'设备编号'" sortable="'price'">{{fleetRecord.machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'收入'" sortable="'price'">{{fleetRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'成本'" sortable="'price'">{{fleetRecord.cost}}</td>
           <td class="text-nowrap" data-title="'开始时间'" sortable="'serviceBeginDate'">{{fleetRecord.startDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'结束时间'" sortable="'serviceEndDate'">{{fleetRecord.endDate | date:'yyyy-MM-dd'}}</td>
             </button>
