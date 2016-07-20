@@ -9,13 +9,13 @@
     .controller('machineMoveController', machineMoveController);
 
   /** @ngInject */
-  function machineMoveController($rootScope, $scope, $uibModal,$filter,treeFactory, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL,WORKPLANE_URL) {
+  function machineMoveController($rootScope,$scope,$filter,$interval,$timeout,treeFactory, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_GPSDATA_BYORG,DEVCE_DISTANCE_TOORG_PAGE,DEIVCIE_MOVE_ORG_URL,WORKPLANE_URL,FLEET_GPSDATA,FLEET_CHARTDATA) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     //组织树的显示
-    vm.openTreeInfo= function() {
-      treeFactory.treeShow();
+    vm.openTreeInfo= function(type) {
+      treeFactory.treeShow(type);
     }
 
     //选中组织模型赋值
@@ -23,6 +23,148 @@
       vm.org = data;
     });
 
+    /*
+     * Map对象，实现Map功能
+     * size() 获取Map元素个数
+     * isEmpty() 判断Map是否为空
+     * clear() 删除Map所有元素
+     * put(key, value) 向Map中增加元素（key, value)
+     * remove(key) 删除指定key的元素，成功返回true，失败返回false
+     * get(key) 获取指定key的元素值value，失败返回null
+     * element(index) 获取指定索引的元素（使用element.key，element.value获取key和value），失败返回null
+     * containsKey(key) 判断Map中是否含有指定key的元素
+     * containsValue(value) 判断Map中是否含有指定value的元素
+     * keys() 获取Map中所有key的数组（array）
+     * values() 获取Map中所有value的数组（array）
+     *
+     */
+    function Map(){
+      this.elements = new Array();
+
+      //获取Map元素个数
+      this.size = function() {
+        return this.elements.length;
+      },
+
+        //判断Map是否为空
+        this.isEmpty = function() {
+          return (this.elements.length < 1);
+        },
+
+        //删除Map所有元素
+        this.clear = function() {
+          this.elements = new Array();
+        },
+
+        //向Map中增加元素（key, value)
+        this.put = function(_key, _value) {
+          if (this.containsKey(_key) == true) {
+            if(this.containsValue(_value)){
+              if(this.remove(_key) == true){
+                this.elements.push( {
+                  key : _key,
+                  value : _value
+                });
+              }
+            }else{
+              this.elements.push( {
+                key : _key,
+                value : _value
+              });
+            }
+          } else {
+            this.elements.push( {
+              key : _key,
+              value : _value
+            });
+          }
+        },
+
+        //删除指定key的元素，成功返回true，失败返回false
+        this.remove = function(_key) {
+          var bln = false;
+          try {
+            for (i = 0; i < this.elements.length; i++) {
+              if (this.elements[i].key == _key){
+                this.elements.splice(i, 1);
+                return true;
+              }
+            }
+          }catch(e){
+            bln = false;
+          }
+          return bln;
+        },
+
+        //获取指定key的元素值value，失败返回null
+        this.get = function(_key) {
+          try{
+            for (var i = 0; i < this.elements.length; i++) {
+              if (this.elements[i].key == _key) {
+                return this.elements[i].value;
+              }
+            }
+          }catch(e) {
+            return null;
+          }
+        },
+
+        //获取指定索引的元素（使用element.key，element.value获取key和value），失败返回null
+        this.element = function(_index) {
+          if (_index < 0 || _index >= this.elements.length){
+            return null;
+          }
+          return this.elements[_index];
+        },
+
+        //判断Map中是否含有指定key的元素
+        this.containsKey = function(_key) {
+          var bln = false;
+          try {
+            for (i = 0; i < this.elements.length; i++) {
+              if (this.elements[i].key == _key){
+                bln = true;
+              }
+            }
+          }catch(e) {
+            bln = false;
+          }
+          return bln;
+        },
+
+        //判断Map中是否含有指定value的元素
+        this.containsValue = function(_value) {
+          var bln = false;
+          try {
+            for (i = 0; i < this.elements.length; i++) {
+              if (this.elements[i].value == _value){
+                bln = true;
+              }
+            }
+          }catch(e) {
+            bln = false;
+          }
+          return bln;
+        },
+
+        //获取Map中所有key的数组（array）
+        this.keys = function() {
+          var arr = new Array();
+          for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].key);
+          }
+          return arr;
+        },
+
+        //获取Map中所有value的数组（array）
+        this.values = function() {
+          var arr = new Array();
+          for (i = 0; i < this.elements.length; i++) {
+            arr.push(this.elements[i].value);
+          }
+          return arr;
+        };
+    }
 
     //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
     vm.refreshMap= function (mapId,org,zoomsize,centeraddr) {
@@ -76,7 +218,27 @@
           });
           map.addControl(overView);
         });
+        $scope.$on("$destroy",function () {
+          console.log("--取消刷新--");
+          $interval.cancel(ajaxRequest);
+        })
+        var icons = [];
+        icons[0] = "assets/images/orangeMarker.png";
+        icons[1] = "assets/images/greenMarker.png";
+        icons[2] = "assets/images/lightgreenMarker.png";
+        icons[3] = "assets/images/highgreenMarker.png";
+        icons[4] = "assets/images/yellowMarker.png";
+        icons[5] = "assets/images/redMarker.png";
+        icons[6] = "assets/images/lightblueMarker.png";
+        icons[7] = "assets/images/pinkMarker.png";
+        icons[8] = "assets/images/purpleMarker.png";
+        icons[9] = "assets/images/highblueMarker.png";
+        icons[10] = "assets/images/blueMarker.png";
+        icons[11] = "assets/images/grayMarker.png";
 
+        var curMarkers = new AMap.Marker();
+        var markersMap=new Map();
+        /**
         //按org=9 读取 machine信息  ,fleet map使用
         if ($rootScope.userInfo ) {
           if(org != null && org !=""){
@@ -84,39 +246,56 @@
           }
           var rspdata = serviceResource.restCallService(DEVCE_GPSDATA_BYORG, "QUERY");
           rspdata.then(function (data) {
-            var fleetList =data;  //返回的Map
-            var icons = [];
-            icons[0] = "assets/images/orangeMarker.png";
-            icons[1] = "assets/images/greenMarker.png";
-            icons[2] = "assets/images/lightgreenMarker.png";
-            icons[3] = "assets/images/highgreenMarker.png";
-            icons[4] = "assets/images/yellowMarker.png";
-            icons[5] = "assets/images/redMarker.png";
-            icons[6] = "assets/images/lightblueMarker.png";
-            icons[7] = "assets/images/pinkMarker.png";
-            icons[8] = "assets/images/purpleMarker.png";
-            icons[9] = "assets/images/highblueMarker.png";
-            icons[10] = "assets/images/blueMarker.png";
-            icons[11] = "assets/images/grayMarker.png";
+            var fleetList =data;  //返回的List
             for(var index = 0;index < fleetList.length; index++){
               var deviceGPSList = fleetList[index];
-              var marker = icons[index];
-
+              //var marker = icons[index];
+              var marker = "assets/images/car_03.png";
               for (var i in  deviceGPSList) {
-                if(deviceGPSList[i].amaplongitudeNum != null && deviceGPSList[i].amaplongitudeNum != null){
-                  addMarkerModel(map,deviceGPSList[i],marker);
+                if(deviceGPSList[i].amaplongitudeNum != null && deviceGPSList[i].amaplatitudeNum != null){
+                  curMarkers = addMarkerModel(map,deviceGPSList[i],marker);
+                  markersMap.put(deviceGPSList[i].deviceNum,curMarkers);
+                  // var lineArr = new Array();
+                  // lineArr.push(deviceGPSList[i].lastAmap);
+                  // lineArr.push([deviceGPSList[i].amaplongitudeNum,deviceGPSList[i].amaplatitudeNum]);
+                  //
+                  // curMarkers.moveAlong(lineArr, 500);
                 }
               }
             }
           }, function (reason) {
             map.clearMap();
-            Notification.error(languages.findKey('failedToGetDeviceInformation'));
           });
+
+          //
+          var ajaxRequest= $interval(function () {
+            rspdata = serviceResource.restCallService(DEVCE_GPSDATA_BYORG, "QUERY");
+            rspdata.then(function (data) {
+              var fleetList =data;  //返回的List
+              for(var index = 0;index < fleetList.length; index++){
+                var deviceGPSList = fleetList[index];
+                //var marker = icons[index];
+                console.log(112);
+                for (var i in  deviceGPSList) {
+                  var marker = new AMap.Marker();
+                  marker = markersMap.get(deviceGPSList[i].deviceNum);
+                  // var lineArr = new Array();
+                  // lineArr.push(deviceGPSList[i].lastAmap);
+                  // lineArr.push([deviceGPSList[i].amaplongitudeNum,deviceGPSList[i].amaplatitudeNum]);
+                  // marker.moveAlong(lineArr, 500);
+                  var newPoint = new AMap.LngLat(deviceGPSList[i].amaplongitudeNum,deviceGPSList[i].amaplatitudeNum);
+                  marker.moveTo(newPoint,500);
+                }
+              }
+            }, function (reason) {
+              map.clearMap();
+            });
+          },10000);
+
 
           //workplane  读取所有 工作面信息 供map使用
           var workplaneData = serviceResource.restCallService(WORKPLANE_URL, "QUERY");
           workplaneData.then(function (data) {
-            console.log(data);
             var workplaneList = data;
             var startMarker = "assets/images/blueMarker.png";
             var endMarker = "assets/images/grayMarker.png";
@@ -158,6 +337,93 @@
 
           })
         }
+        **/
+
+        if ($rootScope.userInfo ){
+          if(org != null && org !=""){
+            FLEET_GPSDATA = FLEET_GPSDATA + "?orgLabel=" +org.label;
+          }
+          var rspdata = serviceResource.restCallService(FLEET_GPSDATA, "QUERY");
+          rspdata.then(function (data) {
+            var fleetList =data;  //返回的List
+            var marker = "assets/images/car_03.png";
+            for(var i = 0;i < fleetList.length; i++){
+              if(fleetList[i].amaplongitudeNum != null && fleetList[i].amaplatitudeNum != null){
+                curMarkers = addMarkerModel(map,fleetList[i],marker);
+                markersMap.put(fleetList[i].deviceNum,curMarkers);
+              }
+            }
+          }, function (reason) {
+            map.clearMap();
+          });
+
+          //10S 刷新一次
+          var ajaxRequest= $interval(function () {
+            if ($rootScope.userInfo ){
+              var rspdata = serviceResource.restCallService(FLEET_GPSDATA, "QUERY");
+              rspdata.then(function (data) {
+                var fleetList =data;  //返回的List
+                for(var i = 0;i < fleetList.length; i++){
+                  var marker = new AMap.Marker();
+                  marker = markersMap.get(fleetList[i].deviceNum);
+
+                  var newPoint = new AMap.LngLat(fleetList[i].amaplongitudeNum,fleetList[i].amaplatitudeNum);
+                  marker.moveTo(newPoint,500);
+
+                }
+              }, function (reason) {
+
+              });
+
+            }
+
+          },10000);
+
+          //workplane  读取所有 工作面信息 供map使用
+          var workplaneData = serviceResource.restCallService(WORKPLANE_URL, "QUERY");
+          workplaneData.then(function (data) {
+            var workplaneList = data;
+            var startMarker = "assets/images/blueMarker.png";
+            var endMarker = "assets/images/grayMarker.png";
+            for(var i = 0; i <workplaneList.length; i++){
+              addStartMarker(map,workplaneList[i],startMarker);
+              addEndMarker(map,workplaneList[i],endMarker);
+              var path = [];
+              path.push([workplaneList[i].startLongitude,workplaneList[i].startLatitude]);
+              path.push([workplaneList[i].endLongitude,workplaneList[i].endLatitude]);
+              map.plugin("AMap.DragRoute", function() {
+                var route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类
+                route.search(); //查询导航路径并开启拖拽导航
+              });
+
+              var startCircle = new AMap.Circle({
+                center: [workplaneList[i].startLongitude,workplaneList[i].startLatitude],// 圆心位置
+                radius: workplaneList[i].startRadius, //半径
+                strokeColor: "#6495ED", //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 3, //线粗细度
+                fillColor: "#A2B5CD", //填充颜色
+                fillOpacity: 0.35//填充透明度
+              });
+
+              var endCircle = new AMap.Circle({
+                center: [workplaneList[i].endLongitude,workplaneList[i].endLatitude],// 圆心位置
+                radius: workplaneList[i].endRadius, //半径
+                strokeColor: "#F33", //线颜色
+                strokeOpacity: 1, //线透明度
+                strokeWeight: 3, //线粗细度
+                fillColor: "#ee2200", //填充颜色
+                fillOpacity: 0.35//填充透明度
+              });
+
+              startCircle.setMap(map);
+              endCircle.setMap(map);
+            }
+          },function (reason) {
+
+          })
+        }
+
       })
     }
 
@@ -172,19 +438,25 @@
       var marker = new AMap.Marker({
         map: mapObj,
         position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
-        icon:new AMap.Icon({
-          image: icon,
-          imageOffset: new AMap.Pixel(-15, -10)
-        })
+        icon:icon,
+        offset: new AMap.Pixel(-26, -15),
+        autoRotation: true
+      });
+
+      // 设置label标签
+      marker.setLabel({
+        offset: new AMap.Pixel(10, -22),//修改label相对于maker的位置
+        content: item.orgLabel
       });
 
       // marker.setMap(mapObj);  //在地图上添加点
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
-        var title = item.deviceNum;
+        var title = item.licenseId;
         var contentInfo="";
-        contentInfo += "所属车队：" + item.organization.label +"<br/>";
-        contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
+        contentInfo += "所属车队：" + item.orgLabel +"<br/>";
+        contentInfo += "设备编号：" + item.deviceNum +"<br/>";
+        contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('convertToMins')(item.totalDuration))+ "<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
         contentInfo += "<div class='box-footer'></div>"
@@ -238,7 +510,7 @@
             var sortUrl = sort||'id,desc';
             defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
             defaultUrl += '&deviceNum='+item.deviceNum;
-            defaultUrl += '&search_NEQ_id='+item.organization.id;
+            defaultUrl += '&search_NEQ_id='+item.orgId;
 
             if(null !=orgLabel && orgLabel!=''){
               defaultUrl += "&search_LIKE_label=" +orgLabel;
@@ -348,7 +620,7 @@
             mBtn.onclick =function () {
               for(var i = 0;i < table.rows.length;i++){
                 if(table.rows[i].selected == true){
-                  var moveOrg ={ids: [item.id], "orgId": table.rows[i].lastChild.innerHTML}
+                  var moveOrg ={ids: [item.deviceId], "orgId": table.rows[i].lastChild.innerHTML}
                 }
               }
               if(moveOrg != null){
@@ -435,6 +707,7 @@
 
       };
 
+      return marker;
     };
 
     //添加起点marker
@@ -598,6 +871,172 @@
 
     }
 
+
+    vm.rightList = [];
+    vm.leftList=[];
+    vm.baseList =[];
+
+    vm.loadFleetChart = function () {
+      $scope.$emit("$destroy");
+      var workplaneMap = new Map();
+      var workplaneIndexMap = new Map();
+
+
+      //workplane  读取所有 工作面信息 供map使用
+      var workplaneData = serviceResource.restCallService(WORKPLANE_URL, "QUERY");
+      workplaneData.then(function (data) {
+        var workplaneList = data;
+        vm.plotLines = [];
+        vm.baseList.push([0,0]);
+        vm.baseList.push([1,workplaneList.length]);
+        for(var i = 0; i <workplaneList.length; i++){
+
+          var plotLine = {
+            color: '#FF0000',
+            width: 2,
+            value: i+1,
+            label:{
+              text:workplaneList[i].startPoint+",路程:" +workplaneList[i].totalLength+"KM",
+              align:'left'
+            }
+          };
+
+          workplaneIndexMap.put(workplaneList[i].id,i+1);
+          workplaneMap.put(workplaneList[i].id,workplaneList[i]);
+
+          vm.plotLines.push(plotLine);
+          vm.fleetChart.yAxis[0].plotLines = vm.plotLines;
+
+
+        }
+      },function (reason) {
+
+      })
+
+      //读取车队下的车辆信息，并关联工作面信息   计算当前位置
+      var fleetChartData = serviceResource.restCallService(FLEET_CHARTDATA,"QUERY");
+      fleetChartData.then(function (data) {
+        var deviceList = data;
+        for(var i =0;i< deviceList.length;i++) {
+          if (deviceList[i].duration != null) {
+            var workplaneId = deviceList[i].workplaneId;
+            var x = deviceList[i].duration / workplaneMap.get(workplaneId).totalLength / workplaneMap.get(workplaneId).averageSpeed;
+            var y = workplaneIndexMap.get(workplaneId);
+            var point = [x, y];
+            if (deviceList[i].direction == '前往卸料点途中') {
+              vm.rightList.push(point);
+
+            } else if (deviceList[i].direction == '前往装料点途中') {
+              vm.leftList.push(point);
+
+            }
+          }
+        }
+
+        vm.fleetChart.series[0].data =vm.rightList;
+        vm.fleetChart.series[1].data =vm.leftList;
+
+      },function (reason) {
+
+      })
+
+    }
+    vm.fleetChart = {
+      options: {
+        chart: {
+          type : 'scatter',
+          zoomType: 'xy',
+          width: 900,
+          height: 450
+        },
+        title :false,
+        exporting :false,
+        legend: {
+          enabled: false
+        },
+        plotOptions: {
+          scatter: {
+            marker: {
+              radius: 5,
+              states: {
+                hover: {
+                  enabled: true,
+                  lineColor: 'rgb(100,100,100)'
+                }
+              }
+            },
+            states: {
+              hover: {
+                marker: {
+                  enabled: false
+                }
+              }
+            },
+            tooltip: {
+              headerFormat: '<b>车号:</b><br>',
+              pointFormatter: function(){
+
+                return "所属车队:"+"<br>" +"设备编号:"+"<br>" +"剩余距离:" +"<br>"+"预计剩余时间:" + this.x.toFixed(2)+"小时<br>" ;
+              }
+            }
+          }
+        }
+      },
+      xAxis: {
+        title: {
+          enabled: false,
+        },
+        labels: {
+          enabled: false
+        }
+      },
+      yAxis: [{
+        title: {
+          text: '装料点',
+          margin: 30,
+          rotation: 0
+        },
+        offset: 70,
+        labels: {
+          enabled: false
+        },
+        plotLines: vm.plotLines
+      },{
+        title: {
+          text: '卸料点',
+          rotation: 0
+        },
+        offset: 70,
+        labels: {
+          enabled: false
+        },
+        opposite: true
+      }],
+      legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 100,
+        y: 70,
+        floating: true,
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1
+      },
+      series: [{
+          data: vm.rightList,
+          marker: {
+            symbol: 'url(assets/images/car_right4.png)'
+          }
+        },{
+          data: vm.leftListd,
+          marker: {
+            symbol: 'url(assets/images/car_left4.png)'
+          }
+        },{
+          data: vm.baseList
+        }
+      ]
+    }
 
     //默认查询一次
     vm.refreshMap("fleetMap",null,13,null);

@@ -121,6 +121,8 @@
     .constant('REVENUE_URL', SERVER_BASE_URL + 'fleetRecord/revenue') //收入统计
     .constant('COST_URL', SERVER_BASE_URL + 'cost/costpage') //成本统计
     .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleetRecord/fleetRecordPage') //分页查询
+    .constant('FLEET_GPSDATA', SERVER_BASE_URL + 'fleet/fleetGpsData') //地图调拨
+    .constant('FLEET_CHARTDATA', SERVER_BASE_URL + 'fleet/fleetChartData') //图表调拨
     //工作面
     .constant('WORKPLANE_URL', SERVER_BASE_URL + 'workplane/workplaneList')   //组织类型查询
 
