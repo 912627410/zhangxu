@@ -142,7 +142,7 @@
   "notWork":"OFF",
   "generatorState":"Alternator State",
   "GPSPowerDetection":"Inner Power Detection",
-
+  "Built-inBatteryRealTime":"Built-in Battery Voltage In Real Time",
 
   "non-transFormer":"Non-transformer",
   "noSignal":"No signal",
