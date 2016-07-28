@@ -193,7 +193,9 @@
             controllerAs: 'revenueMngController'
           }
         }
-      }).state('home.cost', {
+      })
+
+      .state('home.cost', {
         url: '/cost',
         views: {
           'footer@home':{
@@ -203,6 +205,20 @@
             templateUrl: 'app/components/costManagement/costMng.html',
             controller: 'costMngController',
             controllerAs: 'costMngController'
+          }
+        }
+      })
+
+      .state('home.fuelConfig', {
+        url: '/fuelConfig',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fuelConfigManagement/fuelConfigMng.html',
+            controller: 'fuelConfigMngController',
+            controllerAs: 'fuelConfigMngController'
           }
         }
       })

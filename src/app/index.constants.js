@@ -49,7 +49,6 @@
     .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //车辆基本信息
     .constant('MACHINE_MOVE_ORG_URL', SERVER_BASE_URL + 'machine/moveOrg')   //车辆调拨
     .constant('MACHINE_UNBIND_DEVICE_URL', SERVER_BASE_URL + 'machine/unbindDevice')   //设备解绑
-    .constant('MACHINE_FUEL_TYPE_URL', SERVER_BASE_URL + 'machine/fuelType')   //燃油类型
     .constant('MACHINE_SALARY_TYPE_URL', SERVER_BASE_URL + 'machine/salaryType')   //人工成本类型
     .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
 
@@ -120,6 +119,7 @@
     //工作面
     .constant('WORKPLANE_URL', SERVER_BASE_URL + 'workplane/workplaneList')   //组织类型查询
 
+    .constant('FUEL_TYPE_URL', SERVER_BASE_URL + 'fuelConfig/fuelType')   //燃油类型
 
   ;
 
