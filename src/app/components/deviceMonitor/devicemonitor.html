@@ -62,7 +62,7 @@
     </div>
     <div class="col-md-2">
 
-      <button class="btn btn-primary" type="button" presentation-href="device:page" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
       <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
@@ -154,7 +154,7 @@
         </div>
         <div class="box-footer">
             <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+              <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
             </div>
         </div>
       </div>
@@ -167,7 +167,10 @@
       <table ng-table="monitorCtrl.tableParams" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="deviceinfo in $data">
 
-          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" ><a href ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a></td>
+          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" >
+            <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
+
+          </td>
           <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
           <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
           <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
@@ -180,7 +183,7 @@
           <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
           <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td  data-title="'operation'|translate" >
-            <button type="button" class="btn btn-default btn-xs" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
 
           </td>
         </tr>

@@ -1,7 +1,7 @@
 <div>
-  <div class="col-lg-3 col-xs-6" presentation-href="device:homegpsdata">
+  <div class="col-lg-3 col-xs-6" >
     <!-- small box -->
-    <div class="small-box bg-aqua" >
+    <div class="small-box bg-aqua" presentation-href="device:homegpsdata">
       <div class="inner">
         <h3 >{{homeCtrl.statisticInfo.totalDevices}}</h3>
         <p>{{'equipmentMonitoring'|translate}}</p>
@@ -14,9 +14,9 @@
       </a>
     </div>
   </div><!-- ./col -->
-  <div  class="col-lg-3 col-xs-6" presentation-href="device:homegpsdata">
+  <div  class="col-lg-3 col-xs-6" >
     <!-- small box -->
-    <div class="small-box bg-green" >
+    <div class="small-box bg-green" presentation-href="device:homegpsdata">
       <div class="inner">
         <h3>{{homeCtrl.statisticInfo.totalDevices}}</h3>
         <p>{{'equipmentManagement'|translate}}</p>
@@ -24,9 +24,12 @@
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
-      <a ui-sref="home.deviceinfoMng" class="small-box-footer">
+      <a ui-sref="home.deviceinfoMng" class="small-box-footer" presentation-href="device:page" ng-if="homeCtrl.validateDeviceOperPermission()">
          {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
+
+
+      <span class="small-box-footer" ng-if="!homeCtrl.validateDeviceOperPermission()">{{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i></span>
     </div>
   </div><!-- ./col -->
   <div class="col-lg-3 col-xs-6">

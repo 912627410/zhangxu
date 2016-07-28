@@ -49,6 +49,9 @@
     vm.statisticInfo = statisticInfo;
 
 
+    vm.validateDeviceOperPermission=function(){
+      return permissions.getPermissions("device:page");
+    }
 
   }
 })();
