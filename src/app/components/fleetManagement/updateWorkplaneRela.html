@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h3 class="modal-title">关联作业面
+    <button class="btn btn-warning pull-right" type="button" ng-click="updateWorkplaneRelaCtrl.cancel()">取消</button>
+  </h3>
+</div>
+<section class="content">
+  <form class="form-horizontal">
+    <div class="modal-body">
+      <div class="box-body">
+        <div class="form-group">
+          <label class="col-xs-2 control-label">当前作业面</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.name"  typeahead-show-hint="true"/>
+
+          </div>
+          <label class="col-xs-2 control-label">描述</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.describe"  typeahead-show-hint="true"/>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 control-label">装料点名称</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.startPoint"  typeahead-show-hint="true"/>
+
+          </div>
+          <label class="col-xs-2 control-label">卸料点名称</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.endPoint"  typeahead-show-hint="true"/>
+
+          </div>
+          <label class="col-xs-2 control-label">路程</label>
+          <div class="col-sm-2">
+              <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.totalLength" typeahead-show-hint="true"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row " style=" padding-top: 30px;padding-left: 10px;padding-right: 10px;">
+    <div class="table-responsive">
+      <caption class="pull-left"><b>其它作业面</b></caption>
+      <table ng-table="updateWorkplaneRelaCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="workplane in $data">
+          <td class="text-nowrap" data-title="'作业面编号'" sortable="'workplane.id'">{{workplane.id}}</td>
+          <td class="text-nowrap" data-title="'名称'" sortable="'workplane.name'">{{workplane.name}}</td>
+          <td class="text-nowrap" data-title="'描述'" sortable="'workplane.describe'">{{workplane.describe}}</td>
+          <td class="text-nowrap" data-title="'装料点名称'" >{{workplane.startPoint}}</td>
+          <td class="text-nowrap" data-title="'卸料点名称'" >{{workplane.endPoint}}</td>
+          <td class="text-nowrap" data-title="'总长度(KM)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
+          <td class="text-nowrap" data-title="'操作'">
+            <button type="button" class="btn btn-danger btn-xs"
+                    ng-click="updateWorkplaneRelaCtrl.relaToFleet(workplane)">关联车队
+            </button>
+          </td>
+        </tr>
+      </table>
+      <div class="col-md-11">
+        <uib-pagination total-items="updateWorkplaneRelaCtrl.page.totalElements"
+                        ng-change="updateWorkplaneRelaCtrl.query(updateWorkplaneRelaCtrl.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="updateWorkplaneRelaCtrl.pageNumber" items-per-page="updateWorkplaneRelaCtrl.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+
+      </div>
+    </div>
+    <div class="box-footer">
+
+    </div>
+  </div>
+</section>

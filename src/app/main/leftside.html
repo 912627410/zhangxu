@@ -75,27 +75,48 @@
         </a>
       </li>
       <li>
-        <a ui-sref="home.machineMove" presentation-href="machine:page">
-          <i class="fa fa-car"></i> <span>车辆调拨</span>
+        <a ng-click="collapsed = !collapsed" href="">
+          <i class="fa fa-car"></i>
+          <span>车队管理</span>
+          <span class="glyphicon pull-right"
+                ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
         </a>
-      </li>
-
-      <li>
-        <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-          <i class="fa fa-car"></i> <span>燃油配置</span>
-        </a>
-      </li>
-
-      <li>
-        <a ui-sref="home.revenue" presentation-href="machine:page">
-          <i class="fa fa-car"></i> <span>收入统计</span>
-        </a>
-      </li>
-
-      <li>
-        <a ui-sref="home.cost" presentation-href="machine:page">
-          <i class="fa fa-car"></i> <span>成本统计</span>
-        </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: collapsed}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.machineMove" presentation-href="machine:page">
+                <i class="fa fa-car"></i> <span>车辆调拨</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.workplane" presentation-href="machine:page">
+                <i class="fa fa-flag"></i> <span>车队作业面</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.fleetMng" presentation-href="machine:page">
+                <i class="fa fa-flag"></i> <span>车队管理</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
+                <i class="fa fa-car"></i> <span>燃油配置</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.revenue" presentation-href="machine:page">
+                <i class="fa fa-dollar"></i> <span>收入统计</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.cost" presentation-href="machine:page">
+                <i class="fa ion-calculator"></i> <span>成本统计</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <li>
         <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
@@ -122,7 +143,7 @@
           <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>
         </a>
       </li>
-    </ul>
+    </div>
   </section>
   <!-- /.sidebar -->
 </aside>
