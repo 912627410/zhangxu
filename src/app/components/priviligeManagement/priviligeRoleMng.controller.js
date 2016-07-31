@@ -33,7 +33,7 @@
       roleUserPromise.then(function (data) {
         //  vm.roleUserinfoList = data;
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
+         // console.log(data[i]);
 
 
           // vm.selected.push(data[i].userinfoId);
@@ -77,8 +77,13 @@
       }
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
+       // alert(vm.priviligeRoleList.length);
+        if(vm.priviligeRoleList.length==0){
 
-        vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
+
+        }
+
+
         vm.roleList = data.content;
         vm.tableParams = new NgTableParams({},
           {
@@ -86,6 +91,8 @@
           });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        vm.getPriviligeRole();
+        vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
       }, function (reason) {
         Notification.error("获取角色数据失败");
       });
@@ -93,7 +100,6 @@
 
     //首次查询
     vm.query(null, 10, null, null);
-    vm.getPriviligeRole();
 
     /**
      * 重置查询框
@@ -144,7 +150,13 @@
     }
 
     vm.isSelected = function (id) {
+      //
+      //if(vm.priviligeRoleList.length==0){
+      //  vm.getPriviligeRole();
+      //
+      //}
 
+     // vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
       //    console.log(vm.selected);
       return vm.selected.indexOf(id) >= 0;
     }

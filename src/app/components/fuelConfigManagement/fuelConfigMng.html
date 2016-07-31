@@ -31,7 +31,7 @@
     <div class="col-md-3">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="fuelConfigMngController.fuelConfig.org.label" name="org" readonly required/>
+               ng-model="fuelConfigMngController.org.label" name="org" readonly required/>
             <span class="input-group-btn">
                <!--打开组织树-->
               <button type="button" class="btn btn-default" ng-click="fuelConfigMngController.openTreeInfo()">
@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.phoneNumber)">查询</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fuelConfig:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="fuelConfigMngController.reset()">重置</button>
     </div>
 
@@ -58,7 +58,7 @@
 
 
       <a class="btn btn-default pull-right" presentation-href="sim:oper"
-         ng-click="fuelConfigMngController.newSim()">
+         ng-click="fuelConfigMngController.newFuelConfig()">
         <i class="fa fa-plus"></i> 增加
       </a>
     </div>
@@ -69,14 +69,14 @@
         <tr ng-repeat="fuelConfig in $data">
 
           <td class="text-nowrap" data-title="'配置名'" sortable="'name'">{{fuelConfig.name}}</td>
-          <td class="text-nowrap" data-title="'类型'" sortable="'fuelTypeDesc'">{{fuelConfig.fuelTypeDesc}}</td>
-          <td class="text-nowrap" data-title="'所属组织'" sortable="'statusDesc'">{{fuelConfig.org.label}}</td>
+          <td class="text-nowrap" data-title="'燃油类型'" sortable="'fuelTypeDesc'">{{fuelConfig.fuelTypeDesc}}</td>
+          <td class="text-nowrap" data-title="'所属组织'" sortable="'statusDesc'">{{fuelConfig.orgEntity.label}}</td>
           <td class="text-nowrap" data-title="'创建时间'" sortable="'activeTime'">{{fuelConfig.createTime | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'更新时间'" sortable="'serviceBeginDate'">{{sim.updateTime | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'操作'">
 
             <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
-                    ng-click="fuelConfigMngController.updateFuelConfig(sim)">修改
+                    ng-click="fuelConfigMngController.updateFuelConfig(fuelConfig)">修改
             </button>
           </td>
         </tr>

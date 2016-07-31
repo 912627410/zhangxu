@@ -9,64 +9,28 @@
     .controller('updateFuelConfigController', updateFuelConfigController);
 
   /** @ngInject */
-  function updateFuelConfigController($scope,$uibModalInstance,$timeout,SIM_STATUS_URL,SIM_URL,simService,serviceResource, Notification,sim) {
+  function updateFuelConfigController($rootScope,$scope,$uibModalInstance,$timeout,treeFactory,FUEL_CONFIG_OPER_URL,fuelConfigService,serviceResource, Notification,fuelConfig) {
     var vm = this;
-    vm.sim = sim;
-    var sourceSim = angular.copy(sim); //深度copy
+    vm.fuelConfig = fuelConfig;
     vm.operatorInfo =$scope.userInfo;
 
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
+    var fuelTypePromise = fuelConfigService.getFuelTypeList();
+    fuelTypePromise.then(function (data) {
+      vm.fuelTypeList= data;
+      //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取SIM状态集合失败');
+      Notification.error('获取燃油类型失败');
     })
 
-    vm.changeStatus=function(){
-    //  alert(vm.sim.status);
-
-      for(var i=0; i< vm.sim.simStatusList.length;i++){
-        //alert(vm.sim.simStatusList[i].desc);
-        if(vm.sim.simStatusList[i].value==vm.sim.status){
-        //  alert(vm.sim.simStatusList[i].value);
-          vm.sim.statusDesc=vm.sim.simStatusList[i].desc;
-          break;
-        }
-      }
 
 
-    }
-
-    //日期控件相关
-    //date picker
-    vm.serviceBeginDateOpenStatus = {
-      opened: false
-    };
-    vm.serviceEndDateOpenStatus = {
-      opened: false
-    };
-
-    vm.serviceBeginDateOpen = function($event) {
-      vm.serviceBeginDateOpenStatus.opened = true;
-    };
-    vm.serviceEndDateOpen = function($event) {
-      vm.serviceEndDateOpenStatus.opened = true;
-    };
-
-    vm.maxDate = new Date();
-    vm.dateOptions = {
-      formatYear: 'yyyy',
-      startingDay: 1
-    };
-
-    vm.ok = function (sim) {
-      var restPromise = serviceResource.restUpdateRequest(SIM_URL,sim);
+    vm.ok = function (fuelConfig) {
+      var restPromise = serviceResource.restUpdateRequest(FUEL_CONFIG_OPER_URL,fuelConfig);
       restPromise.then(function (data){
 
         if(data.code===0){
-          Notification.success("修改SIM卡信息成功!");
-          $uibModalInstance.close();
+          Notification.success("修改燃油配置信息成功!");
+          $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
         }
@@ -78,23 +42,17 @@
     };
 
     vm.cancel = function () {
-   //   console.log(sourceSim);
-   // //  vm.sim=sourceSim;
-   ////
-   //
-   //   $timeout(function() {
-   //     vm.sim=sourceSim;
-   //     sim=sourceSim;
-   //     console.log(sim);
-   //     $scope.$apply();
-   //     $uibModalInstance.close(sourceSim);
-   //   });
-
-
-      //
       $uibModalInstance.dismiss('cancel');
-
-  //    $uibModalInstance.close();
     };
+
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.fuelConfig.orgEntity = data;
+    });
   }
 })();

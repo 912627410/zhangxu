@@ -9,16 +9,15 @@
     .controller('newFuelConfigController', newFuelConfigController);
 
   /** @ngInject */
-  function newFuelConfigController($scope, $uibModalInstance, SIM_STATUS_URL, SIM_URL, simService, serviceResource, Notification, operatorInfo) {
+  function newFuelConfigController($rootScope,$scope, $uibModalInstance, treeFactory,fuelConfigService,FUEL_CONFIG_OPER_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
-
     vm.fuelConfig = {};
 
     //alert(simService.getSimStatusList());
     ////alert(simService.name);
     //
-    var fuelTypePromise = machineService.getFuelTypeList();
+    var fuelTypePromise = fuelConfigService.getFuelTypeList();
     fuelTypePromise.then(function (data) {
       vm.fuelTypeList= data;
       //    console.log(vm.userinfoStatusList);
@@ -26,8 +25,8 @@
       Notification.error('获取燃油类型失败');
     })
 
-    vm.ok = function (sim) {
-      var restPromise = serviceResource.restAddRequest(SIM_URL, sim);
+    vm.ok = function (fuelConfig) {
+      var restPromise = serviceResource.restAddRequest(FUEL_CONFIG_OPER_URL, fuelConfig);
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("新建燃油类型成功!");
@@ -45,6 +44,16 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow();
+    }
+
+    //选中组织模型赋值
+    $rootScope.$on('orgSelected', function (event, data) {
+      vm.fuelConfig.orgEntity = data;
+    });
 
   }
 })();
