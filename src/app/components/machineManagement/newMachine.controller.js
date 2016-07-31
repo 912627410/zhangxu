@@ -37,8 +37,8 @@
 
     var fuelTypePromise = machineService.getFuelTypeList();
     fuelTypePromise.then(function (data) {
-      vm.fuelTypeList= data;
-      //    console.log(vm.userinfoStatusList);
+      vm.fuelConfigList= data.content;
+          console.log(vm.fuelConfigList);
     }, function (reason) {
       Notification.error('获取燃油类型失败');
     })
@@ -137,6 +137,7 @@
       }
       postInfo.org={id:machine.org.id};
       postInfo.engineType={id:machine.engineType};
+      postInfo.fuelConfig={id:machine.fuelConfig};
 
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);

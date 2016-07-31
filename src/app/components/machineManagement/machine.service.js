@@ -9,7 +9,7 @@
     .factory('machineService', machineService);
 
   /** @ngInject */
-  function machineService($rootScope, $resource, MACHINE_SALARY_TYPE_URL, MACHINE_FUEL_TYPE_URL, MACHINE_UPKEETP_PRICE_TYPE_URL,DEFAULT_SIZE_PER_PAGE, serviceResource, Notification) {
+  function machineService($rootScope, $resource, MACHINE_SALARY_TYPE_URL, MACHINE_UPKEETP_PRICE_TYPE_URL, serviceResource, FUEL_CONFIGT_LIST_URL) {
 
 
 
@@ -20,7 +20,7 @@
       },
 
       getFuelTypeList: function () {
-        return serviceResource.restCallService(MACHINE_FUEL_TYPE_URL, "QUERY");
+        return serviceResource.restCallService(FUEL_CONFIGT_LIST_URL, "GET");
       },
       getUpkeepPriceTypeList: function () {
         return serviceResource.restCallService(MACHINE_UPKEETP_PRICE_TYPE_URL, "QUERY");

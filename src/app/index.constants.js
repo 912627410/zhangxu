@@ -125,6 +125,7 @@
     .constant('WORKPLANE_URL', SERVER_BASE_URL + 'workplane/workplaneList')   //组织类型查询
 
     .constant('FUEL_TYPE_URL', SERVER_BASE_URL + 'fuelConfig/fuelType')   //燃油类型
+    .constant('FUEL_CONFIGT_LIST_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigList')   //燃油类型
 
   ;
 
