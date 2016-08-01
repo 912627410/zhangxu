@@ -11,7 +11,12 @@
         <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
         <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
         <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+          {{machine.fleet.label}}
+        </td>
+        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+          {{machine.org.label}}
+        </td>
       </tr>
     </table>
   </div>

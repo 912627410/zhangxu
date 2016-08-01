@@ -30,9 +30,15 @@
             <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.endPoint"  typeahead-show-hint="true"/>
 
           </div>
+        </div>
+        <div class="form-group">
           <label class="col-xs-2 control-label">路程</label>
           <div class="col-sm-2">
               <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.totalLength" typeahead-show-hint="true"/>
+          </div>
+          <label class="col-xs-2 control-label">收入</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.income" typeahead-show-hint="true"/>
           </div>
         </div>
       </div>
@@ -50,6 +56,7 @@
           <td class="text-nowrap" data-title="'装料点名称'" >{{workplane.startPoint}}</td>
           <td class="text-nowrap" data-title="'卸料点名称'" >{{workplane.endPoint}}</td>
           <td class="text-nowrap" data-title="'总长度(KM)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
+          <td class="text-nowrap" data-title="'收入(每吨矿)'" sortable="'workplane.income'">{{workplane.income}}</td>
           <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-danger btn-xs"
                     ng-click="updateWorkplaneRelaCtrl.relaToFleet(workplane)">关联车队

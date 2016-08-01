@@ -55,7 +55,7 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.workplane = null;
+      vm.fleet = null;
     }
 
     vm.queryMachineList = function (fleet,size) {

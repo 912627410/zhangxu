@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">调拨车辆
+  <h3 class="modal-title">借调车辆
     <button class="btn btn-warning pull-right" type="button" ng-click="updateMachineListCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
@@ -15,10 +15,15 @@
             <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
             <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
             <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+              {{machine.fleet.label}}
+            </td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+              {{machine.org.label}}
+            </td>
             <td class="text-nowrap" align="center" data-title="'操作'" >
               <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="updateMachineListCtrl.moveToOtherFleet(deviceinfo)">借调至其它车队
+                      ng-click="updateMachineListCtrl.moveToOtherFleet(machine)">借调至其它车队
               </button>
             </td>
           </tr>
@@ -26,7 +31,7 @@
       </div>
     </div>
     <div class="box-footer">
-      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.deviceData_pagenumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
     </div>
   </uib-tab>
 
@@ -82,8 +87,12 @@
               <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
               <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
               <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-              <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
-            </tr>
+              <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+                {{machine.fleet.label}}
+              </td>
+              <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+                {{machine.org.label}}
+              </td>            </tr>
           </table>
         </div>
 
@@ -95,7 +104,7 @@
                         max-size="5" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.machinePage.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
-        <button class="btn btn-primary pull-right" type="button" ng-click="updateMachineListCtrl.batchMoveOrg()">调拨选中车辆</button>
+        <button class="btn btn-primary pull-right" type="button" ng-click="updateMachineListCtrl.batchMoveOrg()">借调选中车辆</button>
       </div>
 
     </section>

@@ -16,6 +16,7 @@
 <section class="content">
 
   <div class="row">
+    <!--
     <div class="col-md-2">
       <label class="control-label">车队编号</label>
     </div>
@@ -23,11 +24,11 @@
       <input type="text" name="id" class="form-control " ng-model="fleetMngCtrl.org.id"
              placeholder="支持模糊查询"/>
     </div>
-
+    -->
     <div class="col-md-2">
       <label class="control-label">车队名称</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <input type="text" name="label" class="form-control " ng-model="fleetMngCtrl.org.label"
              placeholder="支持模糊查询"/>
     </div>
@@ -50,6 +51,10 @@
                ng-click="fleetMngCtrl.updateFleet(fleet,'lg','query')">{{fleet.label}}</a>
           </td>
           <td class="text-nowrap" align="center" data-title="'车辆数量'" sortable="'fleet.machineNum'">
+            <a href
+               ng-click="fleetMngCtrl.queryMachineList(fleet,'lg')">{{fleet.machineNum}}</a>
+          </td>
+          <td class="text-nowrap" align="center" data-title="'当前工作车辆'" sortable="'fleet.machineNum'">
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg')">{{fleet.machineNum}}</a>
           </td>

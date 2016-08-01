@@ -10,7 +10,7 @@
     .controller('updateMachineListController', updateMachineListController);
 
   /** @ngInject */
-  function updateMachineListController($rootScope,$scope,$http,$confirm,$filter,$uibModalInstance,NgTableParams,MACHINE_PAGE_URL,MACHINE_MOVE_FLEET_URL,serviceResource, Notification,fleet) {
+  function updateMachineListController($rootScope,$scope,$confirm,$uibModal,$filter,$uibModalInstance,NgTableParams,MACHINE_PAGE_URL,MACHINE_MOVE_FLEET_URL,serviceResource, Notification,fleet) {
     var vm = this;
     vm.fleet = fleet;
     vm.operatorInfo =$rootScope.userInfo;
@@ -178,5 +178,28 @@
 
 
     };
+
+    vm.moveToOtherFleet = function (machine) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/fleetManagement/moveToOtherFleet.html',
+        controller: 'moveToOtherFleetController as moveToOtherFleetCtrl',
+        size: 'xs',
+        backdrop: false,
+        resolve: {
+          machine: function () {
+            return machine;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+
+      }, function () {
+        //取消
+      });
+
+    }
   }
 })();

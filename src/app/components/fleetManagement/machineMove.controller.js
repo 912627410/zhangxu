@@ -813,7 +813,7 @@
                   menu.position = 'absolute';
                   //menu.style.left = rightedge +"px";
                   menu.style.left = evt.clientX - 300 + "px";
-                  menu.style.top = evt.clientY - 420 + "px";
+                  menu.style.top = evt.clientY - 320 + "px";
 
                   menu.border = 'solid 1px silver';
                   menu.style.visibility = "visible";
@@ -841,8 +841,8 @@
                   contentInfo += "所属车队：" + this.orgLabel +"<br/>";
                   contentInfo += "设备编号：" + this.deviceNum +"<br/>";
                   contentInfo += languages.findKey('workingHours')+": "+(this.totalDuration==null ?'':$filter('convertToMins')(this.totalDuration))+ "<br/>";
-                  contentInfo += languages.findKey('updateTime')+": " +(this.lastDataUploadTime==null ?'':$filter('date')(this.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
-                  contentInfo += "<div class='box-footer'></div>";
+                  //contentInfo += languages.findKey('updateTime')+": " +(this.lastDataUploadTime==null ?'':$filter('date')(this.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
+                  //contentInfo += "<div class='box-footer'></div>";
                   middle.innerHTML = contentInfo;
 
                   var btn = document.createElement("BUTTON");
@@ -999,6 +999,8 @@
                             //刷新页面
                             vm.loadFleetChart();
                             Notification.success("调拨设备成功!");
+                            //close plane
+                            panel.style.display='none';
                           }, function (reason) {
                             Notification.error("调拨设备出错!");
                           });

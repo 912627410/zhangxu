@@ -47,6 +47,16 @@
         </div>
 
       </div>
+      <div class="form-group">
+        <label for="income" class="col-xs-3 control-label">利润</label>
+
+        <div class="col-xs-4">
+          <input type="text" id="income" class="form-control" placeholder="运输每吨矿的收入"
+                 ng-model="newWorkplaneCtrl.workplane.income" name="income" typeahead-show-hint="true"
+                 validator="numberAndDot"/>
+        </div>
+
+      </div>
       <i style="color: red" ng-if="null!=newWorkplaneCtrl.errorMsg">
         {{newWorkplaneCtrl.errorMsg}}<br/>
       </i>
