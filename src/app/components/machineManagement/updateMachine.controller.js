@@ -192,7 +192,7 @@
       }
       postInfo.org={id:machine.org.id};
       postInfo.engineType={id:machine.engineType.id};
-      postInfo.fuelConfig={id:machine.fuelConfig};
+      postInfo.fuelConfig={id:machine.fuelConfig.id};
 
       //更换GPS
       if (newDeviceNum != null){
