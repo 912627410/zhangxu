@@ -96,7 +96,7 @@
       deviceinfoPromis.then(function (data) {
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
-            templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
+            templateUrl: 'app/components/deviceinfoManagement/updateMachineList.html',
             controller: 'updateDeviceinfoController as updateDeviceinfoController',
             size: size,
             backdrop: false,

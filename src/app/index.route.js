@@ -174,9 +174,37 @@
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/fleet/machineMove.html',
+            templateUrl: 'app/components/fleetManagement/machineMove.html',
             controller: 'machineMoveController',
             controllerAs: 'machineMoveCtrl'
+          }
+        }
+      })
+
+      .state('home.workplane', {
+        url: '/workplane',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleetManagement/workplaneMng.html',
+            controller: 'workplaneMngController',
+            controllerAs: 'workplaneMngCtrl'
+          }
+        }
+      })
+
+      .state('home.fleetMng', {
+        url: '/fleetMng',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleetManagement/fleetMng.html',
+            controller: 'fleetMngController',
+            controllerAs: 'fleetMngCtrl'
           }
         }
       })
@@ -224,7 +252,7 @@
       })
     ;
 
-    $urlRouterProvider.otherwise('/home');
+    //$urlRouterProvider.otherwise('/home');
   }
 
 })();

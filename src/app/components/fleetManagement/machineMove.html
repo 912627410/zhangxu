@@ -1,0 +1,57 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active"> 车辆调拨</li>
+  </ol>
+</section>
+<uib-tabset justified="true">
+  <uib-tab heading="地图" select="machineMoveCtrl.refreshMap('fleetMap',null,13,null)">
+    <div class="box">
+    </div>
+    <div class="col-xs-12 connectedSortable">
+      <div class="row">
+        <div class="col-md-1">
+          <label class="control-label">车队名称</label>
+        </div>
+        <div class="col-md-4">
+          <p class="input-group">
+            <input type="text" id="org" class="form-control" placeholder="车队名称" ng-model="machineMoveCtrl.org.label" name="org" readonly required/>
+            <span class="input-group-btn">
+              <!--打开组织树-->
+              <button type="button" class="btn btn-default" ng-click="machineMoveCtrl.openTreeInfo()">
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </span>
+          </p>
+        </div>
+        <div class="col-md-3 ">
+          <button class="btn btn-primary" type="button"  ng-click="machineMoveCtrl.query()">查询</button>
+          <button class="btn btn-primary" type="button"  ng-click="machineMoveCtrl.reset()">重置</button>
+        </div>
+        <div class="col-md-1 pull-right">
+          <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="machineMoveCtrl.refreshMap('fleetMap',null,13,null)" title="刷新">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+    </div>
+    <div class="box box-danger" style="min-height: 500px" id="fleetMap">
+    </div>
+    </div>
+  </uib-tab>
+
+  <uib-tab heading="图表" select="machineMoveCtrl.loadFleetChart()">
+    <div class="box"></div>
+    <di id="fleetChart">
+      <highchart  config="machineMoveCtrl.fleetChart" style="position:absolute;width: 100%;height:auto;">
+
+      </highchart>
+    </di>
+
+  </uib-tab>
+</uib-tabset>
+
