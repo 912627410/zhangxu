@@ -29,79 +29,105 @@
     <ul class="sidebar-menu ">
       <li class="treeview">
         <hr>
-        <a ui-sref="home" presentation-href="home:dashboard">
-          <i class="fa fa-dashboard"></i> <span>{{'dashboard' | translate}}</span>
+        <a ng-click="dashboard=!dashboard" ui-sref="home" presentation-href="home:dashboard">
+          <i class="fa fa-dashboard"></i>
+          <span>{{'dashboard' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="dashboard?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
         </a>
-
-          <li>
-
-            <a ui-sref="home.monitor" presentation-href="device:monitorPage">
-              <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
-            </a>
-          </li>
-          <li>
-
-            <a ui-sref="home.deviceinfoMng"   presentation-href="device:page">
-              <i class="fa fa-database"></i> <span>{{'equipmentManagement' | translate}}</span>
-            </a>
-          </li>
-          <!--
-          <li>
-
-            <a   ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
-
-              <i class="fa fa-warning"></i> <span>{{'alarmEquipment' | translate}}</span>
-            </a>
-          </li>
-          <li>
-
-            <a    ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ||userInfo.userdto.role == 'ROLE_ADMIN'||userInfo.userdto.role == 'ROLE_OPERATOR'">
-
-              <i class="fa fa-bar-chart-o"></i> <span>{{'statisticalCharts' | translate}}</span>
-            </a>
-          </li>
-          -->
-
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: dashboard}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.monitor" presentation-href="device:monitorPage">
+                <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <li>
-
-        <a ui-sref="home.simMng" presentation-href="sim:page">
-          <i class="fa fa-mobile"></i> <span>{{'SIMManagement' | translate}}</span>
+        <a ng-click="deviceMng=!deviceMng" href="">
+          <i class="fa ion-clipboard"></i>
+          <span>{{'equipmentManagement' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="deviceMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
         </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: deviceMng}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.deviceinfoMng"   presentation-href="device:page">
+                <i class="fa ion-ios-location"></i> <span>GPS设备管理</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.simMng" presentation-href="sim:page">
+                <i class="fa ion-social-rss"></i> <span>{{'SIMManagement' | translate}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <li>
-
         <a ui-sref="home.machinemng" presentation-href="machine:page">
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
-
-      <hr>
       <li>
-        <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
-          <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
+        <a ng-click="reportMng">
+          <i class="fa ion-stats-bars"></i>
+          <span>统计分析</span>
+          <span class="glyphicon pull-right"
+                ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
         </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: reportMng}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+                <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
-
-      <hr>
       <li>
-        <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
-          <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+        <a ng-click="sysMng =!sysMng" href="">
+          <i class="fa fa-home"></i>
+          <span>系统管理</span>
+          <span class="glyphicon pull-right"
+                ng-class="sysMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
         </a>
-      </li>
-      <li class="treeview" presentation-href="user:page">
-        <a ui-sref="home.userinfomng">
-          <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
-        </a>
-      </li>
-      <li >
-        <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-          <i class="fa fa-user"></i> <span>角色管理</span>
-          </a>
-      </li> <li >
-        <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
-          <i class="fa fa-user"></i> <span>权限管理</span>
-          </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
+                <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+              </a>
+            </li>
+            <li class="treeview" presentation-href="user:page">
+              <a ui-sref="home.userinfomng">
+                <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+              </a>
+            </li>
+            <li >
+              <a ui-sref="home.roleMng" presentation-href="role:rolePage">
+                <i class="fa fa-user"></i> <span>角色管理</span>
+              </a>
+            </li>
+            <li >
+            <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
+              <i class="fa fa-user"></i> <span>权限管理</span>
+            </a>
+            </li>
+          </ul>
+        </div>
       </li>
       <hr>
       <li class="treeview" >
