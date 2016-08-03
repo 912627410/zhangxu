@@ -707,21 +707,14 @@
                     <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceData.elecStatus==null">{{'noData'|translate}}</td>
-
-                    <!--GPS电源检测--><!--模拟量1是相同的-->
-
+                    <!--GPS电源检测和模拟量1是相同的-->
                     <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <!--模拟量2-->
                     <td ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
-                   <!-- <td ng-if="deviceData.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
-                    <td ng-if="deviceData.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>
-                    <td ng-if="deviceData.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>
-                    <td ng-if="deviceData.gpsPowerStatus==null">{{'noData'|translate}}</td>-->
                     <!--开盖状态-->
                     <td ng-if="deviceData.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
-
 
                     <td  ng-cloak>{{deviceData.visibleSatelliteNumber}}</td>
                     <td  ng-cloak>{{deviceData.usableSatelliteNumber}}</td>

@@ -137,7 +137,7 @@
   "work":"工作",
   "notWork":"不工作",
   "generatorState":"发电机状态",
-  "GPSPowerDetection":"内部电源检测",
+  "GPSPowerDetection":"内部电源电压",
   "Built-inBatteryRealTime":"内置电池实时电压",
   "non-transFormer":"无电源",
   "noSignal":"无信号",
