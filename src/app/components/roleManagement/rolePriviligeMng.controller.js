@@ -29,6 +29,17 @@
       Notification.error('获取权限状态失败');
     })
 
+    var getRolePriviligeState,queryState,queryResult;
+    function queryFn(){
+      vm.selected = angular.copy(vm.rolePriviligeList); //深度copy
+      vm.tableParams = new NgTableParams({},
+        {
+          dataset: queryResult.content
+        });
+      vm.page = queryResult.page;
+      vm.pageNumber = queryResult.page.number + 1;
+    }
+
 
     vm.getRolePrivilige = function () {
       var roleUserUrl = ROLE_PRIVILAGE_LIST_URL;
@@ -41,6 +52,12 @@
             vm.rolePriviligeList.push(data[i].priviligeId);
           }
 
+        }
+
+        if(queryState){
+          queryFn()
+        }else{
+          getRolePriviligeState=true;
         }
 
         //  console.log(vm.roleUserinfoList);
@@ -103,21 +120,30 @@
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
 
-        vm.selected = angular.copy(vm.rolePriviligeList); //深度copy
-        vm.tableParams = new NgTableParams({},
-          {
-            dataset: data.content
-          });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
+
+
+        queryResult=data;
+        if(getRolePriviligeState){
+          queryFn()
+        }else{
+          queryState=true;
+        }
       }, function (reason) {
         Notification.error("获取角色数据失败");
       });
     }
 
-    //首次查询
-    vm.query(null, 10, null, null);
-    vm.getRolePrivilige();
+    vm.init=function(){
+      $LAB.script().wait(function () {
+        vm.query(null, 10, null, null);
+        vm.getRolePrivilige();
+
+
+
+      })
+    }
+
+    vm.init();
 
     /**
      * 重置查询框

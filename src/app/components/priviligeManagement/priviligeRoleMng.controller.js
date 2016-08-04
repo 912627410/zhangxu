@@ -22,7 +22,19 @@
     vm.deleteList = [];
     vm.addList = [];
     vm.otherList = [];
-
+    /*tin atart*/
+    var getPriviligeRoleState,queryState,queryResult;
+    function queryFn(){
+       vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
+        vm.roleList = queryResult.content;
+        vm.tableParams = new NgTableParams({},
+          {
+            dataset: queryResult.content
+          });
+        vm.page = queryResult.page;
+        vm.pageNumber = queryResult.page.number + 1;
+    }
+    /*tin end*/
 
 
     vm.getPriviligeRole = function () {
@@ -33,7 +45,7 @@
       roleUserPromise.then(function (data) {
         //  vm.roleUserinfoList = data;
         for (var i = 0; i < data.length; i++) {
-          console.log(data[i]);
+       //   console.log(data[i]);
 
 
           // vm.selected.push(data[i].userinfoId);
@@ -41,6 +53,11 @@
             vm.priviligeRoleList.push(data[i].roleId);
           }
 
+        }
+        if(queryState){
+          queryFn()
+        }else{
+          getPriviligeRoleState=true;
         }
 
         //  console.log(vm.roleUserinfoList);
@@ -77,23 +94,30 @@
       }
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
-        vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
-        vm.roleList = data.content;
-        vm.tableParams = new NgTableParams({},
-          {
-            dataset: data.content
-          });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
+        queryResult=data;
+         if(getPriviligeRoleState){
+          queryFn()
+        }else{
+          queryState=true;
+        }
       }, function (reason) {
         Notification.error("获取角色数据失败");
       });
     }
 
+
+
     //首次查询
-    vm.query(null, 10, null, null);
-    vm.getPriviligeRole();
+    vm.init=function(){
+      $LAB.script().wait(function () {
+        vm.getPriviligeRole();
+        vm.query(null, 10, null, null);
+
+
+      })
+    }
+
+    vm.init();
 
     /**
      * 重置查询框
@@ -186,12 +210,12 @@
       restPromise.then(function (data) {
 
         if(data.code==0){
-          Notification.success("更新用户成功!");
+          Notification.success("更新权限隶属角色成功!");
         }
 
 
       }, function (reason) {
-        Notification.error(" 更新用户出错!");
+        Notification.error(" 更新权限隶属角色出错!");
       });
 
 
