@@ -400,10 +400,11 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
+                    <td>{{'ecuLockStatus'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
                     <!--GPRS信号百分比去掉-->
                     <!--作用与“锁车状态”重复，删除GPRS信号百分比-->
-                    <td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>
-                  </tr>
+                    <!--<td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>--> </tr>
                   <tr>
                     <td>{{'totalRunningTimeHour'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
@@ -427,7 +428,7 @@
                   </tr>
                   <tr>
                     <td>{{'GPRSSignalQuality'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gsmSignal}}%</td>
+                    <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                     <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
                     <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
                     <td>{{'realTimeWorkH'|translate}}</td>
@@ -485,8 +486,11 @@
                       {{'noData' |translate}}
                     </td>
                     <td>{{'locateDuration'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null">
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">
                       {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">
+                      --
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">
                       {{'noData' |translate}}
@@ -515,8 +519,7 @@
                   <tr >
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{'oilPress'|translate}}</td>
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
-                    <td>{{'ecuLockStatus'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
+
                     <td >{{'bindMachineId'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
                   </tr>
