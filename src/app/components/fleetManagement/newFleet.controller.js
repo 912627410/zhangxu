@@ -33,9 +33,11 @@
       vm.fleet.type=4;
       var rspdata = serviceResource.restAddRequest(FLEETINFO_URL,vm.fleet);
       rspdata.then(function (data) {
-        
-      },function (reason) {
+        Notification.success("新建车队成功!");
+        $uibModalInstance.close(data.content);
 
+      },function (reason) {
+        Notification.error(reason.data.message);
       })
     }
 

@@ -58,7 +58,7 @@
       vm.fleet = null;
     }
 
-    vm.queryMachineList = function (fleet,size) {
+    vm.queryMachineList = function (fleet,size,type) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -67,8 +67,8 @@
         size: size,
         backdrop: false,
         resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
+          type: function () {
+            return type;
           },
           fleet:function () {
             return fleet;
@@ -119,7 +119,7 @@
         resolve: {
           fleet: function () {
             return fleet;
-          },type :function () {
+          },type: function () {
             return type;
           }
         }

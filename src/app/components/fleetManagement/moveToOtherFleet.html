@@ -25,8 +25,9 @@
       <table ng-table="moveToOtherFleetCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="fleet in $data">
           <td class="text-nowrap" data-title="'车队名称'" sortable="'fleet.label'">{{fleet.label}}</td>
-          <td class="text-nowrap" align="center" data-title="'车辆数量'" sortable="'fleet.machineNum'">{{fleet.machineNum}}</td>
-          <td class="text-nowrap" data-title="'作业面名称'" >{{fleet.workplaneVo.name}}</td>
+          <td class="text-nowrap" align="center" data-title="'车辆数量'" sortable="'fleet.ownNum'">{{fleet.ownNum}}</td>
+          <td class="text-nowrap" align="center" data-title="'工作车辆'" sortable="'fleet.workNum'">{{fleet.workNum}}</td>
+          <td class="text-nowrap" data-title="'作业面'" >{{fleet.workplaneVo.name}}</td>
           <td class="text-nowrap" align="center" data-title="'操作'" >
             <button type="button" class="btn btn-danger btn-xs"
                     ng-click="moveToOtherFleetCtrl.moveToFleet(fleet)">借调到该车队

@@ -52,11 +52,11 @@
           </td>
           <td class="text-nowrap" align="center" data-title="'车辆数量'" sortable="'fleet.machineNum'">
             <a href
-               ng-click="fleetMngCtrl.queryMachineList(fleet,'lg')">{{fleet.machineNum}}</a>
+               ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','own')">{{fleet.ownNum}}</a>
           </td>
           <td class="text-nowrap" align="center" data-title="'当前工作车辆'" sortable="'fleet.machineNum'">
             <a href
-               ng-click="fleetMngCtrl.queryMachineList(fleet,'lg')">{{fleet.machineNum}}</a>
+               ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','work')">{{fleet.workNum}}</a>
           </td>
           <td class="text-nowrap" align="center" data-title="'作业面编号'" sortable="'fleet.workplaneVo.id'">{{fleet.workplaneVo.id}}</td>
           <td class="text-nowrap" data-title="'作业面名称'" >{{fleet.workplaneVo.name}}</td>

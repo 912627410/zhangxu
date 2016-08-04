@@ -10,9 +10,11 @@
 
   /** @ngInject */
 
-  function machineListController($rootScope, $scope, $uibModal,$uibModalInstance, $timeout, $filter, $translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, MACHINE_PAGE_URL,fleet, serviceResource, Notification) {
+  function machineListController($rootScope, $scope, $uibModal,$uibModalInstance, $timeout, $filter, $translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, MACHINE_PAGE_URL,fleet,type, serviceResource, Notification) {
     var vm = this;
     vm.fleet = fleet;
+    vm.type = type;
+    vm.operatorInfo =$rootScope.userInfo;
 
     vm.query = function (page, size, sort, fleet) {
 
@@ -22,8 +24,12 @@
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != fleet&&null!=fleet.id) {
+      if (vm.type=='own'&&null != fleet&&null!=fleet.id) {
         restCallURL += "&search_EQ_orgEntity.id=" +fleet.id;
+      }
+
+      if (vm.type=='work'&&null != fleet&&null!=fleet.id) {
+        restCallURL += "&search_EQ_fleetEntity.id=" +fleet.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");

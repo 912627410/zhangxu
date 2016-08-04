@@ -66,11 +66,6 @@
         controller: 'newWorkplaneController as newWorkplaneCtrl',
         size: size,
         backdrop: false,
-        resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
-          }
-        }
       });
 
       modalInstance.result.then(function (result) {

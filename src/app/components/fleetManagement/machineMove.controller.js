@@ -671,7 +671,7 @@
       fleetChartData.then(function (data) {
         var deviceList = data;
         for(var i =0;i< deviceList.length;i++) {
-          if (deviceList[i].duration != null) {
+          if (deviceList[i].duration != null && deviceList[i].workplaneId !=null) {
 
             var workplaneId = deviceList[i].workplaneId;
             if (deviceList[i].direction == '前往卸料点途中') {
@@ -726,7 +726,7 @@
             vm.leftList =[];
             var deviceList = data;
             for(var i =0;i< deviceList.length;i++) {
-              if (deviceList[i].duration != null) {
+              if (deviceList[i].duration != null  && deviceList[i].workplaneId !=null) {
                 var workplaneId = deviceList[i].workplaneId;
                 if (deviceList[i].direction == '前往卸料点途中') {
                   var x = deviceList[i].duration * workplaneMap.get(workplaneId).averageSpeed / workplaneMap.get(workplaneId).totalLength ;
@@ -839,7 +839,7 @@
                   middle.style.backgroundColor = 'white';
                   var contentInfo="";
                   contentInfo += "所属车队：" + this.orgLabel +"<br/>";
-                  contentInfo += "设备编号：" + this.deviceNum +"<br/>";
+                  contentInfo += "车号：" + this.deviceNum +"<br/>";
                   contentInfo += languages.findKey('workingHours')+": "+(this.totalDuration==null ?'':$filter('convertToMins')(this.totalDuration))+ "<br/>";
                   //contentInfo += languages.findKey('updateTime')+": " +(this.lastDataUploadTime==null ?'':$filter('date')(this.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
                   //contentInfo += "<div class='box-footer'></div>";

@@ -17,15 +17,19 @@
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
-    vm.query = function (page, size, sort, fleet) {
+    vm.query = function (page, size, sort, fleet,type) {
 
       var restCallURL = MACHINE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 8;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      if(null != fleet&&null != fleet.id){
+      if(type=='own'&&null != fleet&&null != fleet.id){
         restCallURL += "&search_EQ_orgEntity.id=" +fleet.id;
+      }
+
+      if(type=='work'&&null != fleet&&null != fleet.id){
+        restCallURL += "&search_EQ_fleetEntity.id=" +fleet.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -195,10 +199,28 @@
       });
 
       modalInstance.result.then(function (result) {
+        machine.fleet=result;
 
       }, function () {
         //取消
       });
+
+    }
+
+    vm.backToOrg = function (machine) {
+
+      var machineIds = [machine.id];
+      var moveOrg = {ids: machineIds, "orgId": machine.org.id};
+
+      var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
+      restPromise.then(function (data) {
+        //更新页面显示
+        Notification.success("归还车辆成功!");
+        machine.fleet =machine.org;
+      }, function (reason) {
+        Notification.error("归还车辆出错!");
+      });
+
 
     }
   }

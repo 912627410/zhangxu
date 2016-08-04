@@ -3,7 +3,7 @@
     <button ng-if="updateFleetCtrl.type=='query'" class="btn btn-warning pull-right" type="button" ng-click="updateFleetCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
-<form class="form-horizontal">
+<form class="form-horizontal" name="updateFleetForm">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
@@ -12,7 +12,7 @@
 
           <input type="text" id="fleetNum" class="form-control" placeholder="车队编号"
                  ng-model="updateFleetCtrl.fleet.id" name="licenseId" typeahead-show-hint="true"
-                 validator="required" />
+                 readonly validator="required" />
 
         </div>
       </div>
@@ -22,6 +22,29 @@
           <input type="text" id="name"  class="form-control" placeholder="车队名称"
                  ng-model="updateFleetCtrl.fleet.label" name="name" typeahead-show-hint="true"
                  validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车队简称</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="车队英文简称"
+                 ng-model="updateFleetCtrl.fleet.name" name="name" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上级组织</label>
+        <div class="col-md-5">
+          <p class="input-group">
+
+            <input type="text" id="org" class="form-control" placeholder="上级组织" ng-model="updateFleetCtrl.fleet.parentLabel" name="org" readonly required/>
+          <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="updateFleetCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </p>
         </div>
       </div>
     </div>

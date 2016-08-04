@@ -36,12 +36,12 @@
           <p class="input-group">
 
             <input type="text" id="org" class="form-control" placeholder="上级组织" ng-model="newFleetCtrl.org.label" name="org" readonly required/>
-              <span class="input-group-btn">
-              <!--打开组织树-->
-                <button type="button" class="btn btn-default" ng-click="newFleetCtrl.openTreeInfo()">
-                  <i class="fa fa-sitemap"></i>
-                </button>
-              </span>
+          <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newFleetCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
           </p>
         </div>
       </div>
@@ -49,6 +49,6 @@
   </div>
 </form>
 <div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="newFleetCtrl.ok()">提交</button>
   <button class="btn btn-warning" type="button" ng-click="newFleetCtrl.cancel()">取消</button>
-  <button class="btn btn-primary" type="button" ng-click="newFleetCtrl.ok()">提交</button>
 </div>

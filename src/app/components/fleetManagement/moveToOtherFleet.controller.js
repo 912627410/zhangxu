@@ -31,8 +31,8 @@
         }
       }
 
-      if(vm.machine.org !=null&&null != vm.machine.org.id){
-        restCallURL += "&search_NEQ_id=" + $filter('uppercase')(vm.machine.org.id);
+      if(vm.machine.fleet !=null&&null != vm.machine.fleet.id){
+        restCallURL += "&search_NEQ_id=" + $filter('uppercase')(vm.machine.fleet.id);
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
