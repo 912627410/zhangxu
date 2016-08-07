@@ -37,9 +37,9 @@
         restCallURL += "&search_orgId=" + vm.org.id;
       }
 
-      console.log(vm.startDate);
-      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
-      console.log(vm.endDate);
+      //console.log(vm.startDate);
+      //console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
+      //console.log(vm.endDate);
       restCallURL+="&search_startDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
       restCallURL+="&search_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
 
@@ -62,9 +62,9 @@
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
       }
 
-      console.log(vm.startDate);
-      console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
-      console.log(vm.endDate);
+      //console.log(vm.startDate);
+      //console.log($filter('date')(vm.startDate,'yyyy-MM-dd'));
+      //console.log(vm.endDate);
       restCallURL+="&search_DGTE_endDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
       restCallURL+="&search_DLTE_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
 

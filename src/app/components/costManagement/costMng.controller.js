@@ -26,10 +26,10 @@
 
       if (null != fleetRecord) {
         if (null != fleetRecord.deviceNum&&fleetRecord.deviceNum!="") {
-          restCallURL += "search_LIKE_machineEntity.deviceinfo.deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
+          restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(fleetRecord.deviceNum);
         }
         if (null != fleetRecord.licenseId&&fleetRecord.licenseId!="") {
-          restCallURL += "&search_LIKE_machineEntity.licenseId=" + fleetRecord.licenseId;
+          restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(fleetRecord.licenseId);
         }
       }
 
@@ -38,6 +38,10 @@
       }
 //      restCallURL+="&search_DGTE_endDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
  //     restCallURL+="&search_DLTE_endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
+
+      if(null!=vm.calcDate){
+        restCallURL+="&search_DEQ_calcDate="+$filter('date')(vm.calcDate,'yyyy-MM-dd');
+      }
 
       return restCallURL;
     }
@@ -63,30 +67,19 @@
 
 
     vm.initDate=function(){
-      var date = new Date();
-      date.setDate(date.getDate()-30);  //默认查询最近一个月的异常数据
-      vm.startDate=date;
-      vm.endDate=new Date();
+      vm.calcDate=null;
     }
 
 
 
     // 日期控件相关
     // date picker
-    vm.startDateOpenStatus = {
+    vm.calcDateOpenStatus = {
       opened: false
     };
 
-    vm.startDateOpen = function ($event) {
-      vm.startDateOpenStatus.opened = true;
-    };
-
-    vm.endDateOpenStatus = {
-      opened: false
-    };
-
-    vm.endDateOpen = function ($event) {
-      vm.endDateOpenStatus.opened = true;
+    vm.calcDateOpen = function ($event) {
+      vm.calcDateOpenStatus.opened = true;
     };
 
 
@@ -143,7 +136,7 @@
 
 
     vm.selectQuery=function(fleetRecord){
-      vm.query(0,10,null,fleetRecord);
+      vm.query(0,null,null,fleetRecord);
     }
 
 
