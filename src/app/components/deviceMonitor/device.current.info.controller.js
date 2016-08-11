@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
@@ -87,7 +87,21 @@
 
     vm.controllerInitialization(deviceinfo);
 
-
+    //保养提醒modal
+    vm.openNotification = function (deviceinfo,size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceMonitor/maintainNotice.html',
+        controller: 'maintainNoticeController as maintainNoticeCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          }
+        }
+      });
+    }
     //气压图
     vm.highchartsAir = {
       options: {

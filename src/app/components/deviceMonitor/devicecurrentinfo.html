@@ -1,8 +1,14 @@
 
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
-    <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
-    <button class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-if="deviceCurrentInfoCtrl.deviceinfo.maintainNoticeNum>0" ng-click="deviceCurrentInfoCtrl.openNotification(deviceCurrentInfoCtrl.deviceinfo,'sx')" >
+      <i class="fa fa-bell-o"></i><span class="label label-warning">{{deviceCurrentInfoCtrl.deviceinfo.maintainNoticeNum}}</span>
+    </button>
+    <button style="margin-left: 5px" class="btn btn-default pull-right" type="button" ng-if="deviceCurrentInfoCtrl.deviceinfo.maintainNoticeNum==null || deviceCurrentInfoCtrl.deviceinfo.maintainNoticeNum==0" disabled="disabled">
+      <i class="fa fa-bell-o"></i><span class="label">{{deviceCurrentInfoCtrl.deviceinfo.maintainNoticeNum}}</span>
+    </button>
 
   </h3>
 </div>
