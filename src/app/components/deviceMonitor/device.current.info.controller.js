@@ -9,11 +9,18 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$interval,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
+
+    $scope.myInterval = 5000;//轮播间隔
+    $scope.noWrapSlides = false;// 是否轮播 默认false
+    $scope.noTransition = false;// 是否有过场动画 默认false
+    $scope.notices = [];
+
+
 
     //刷新当前页面
     vm.refreshCurrentDeviceInfo = function (id){
@@ -51,6 +58,40 @@
     //初始化controller
     vm.controllerInitialization = function (deviceinfo){
       vm.deviceinfo = deviceinfo;
+
+      // 页面打开后根据初始化查询的结果判断是否写入消息
+      if(vm.deviceinfo.maintainNoticeNum!=null && vm.deviceinfo.maintainNoticeNum>0){
+        //存在保养提醒
+        var maintainNotice = {
+          title: '该设备需要保养',
+          url:"home.notification"
+        }
+        $scope.notices.push(maintainNotice);
+      }
+
+      // 查询系统参数中的设定值，deviceinfo中的时间减去当前时间大于设定值则生成提醒
+      if($rootScope.SYSCONFIG){
+        vm.sysconfig = $rootScope.SYSCONFIG;
+        for(var i=0;i<vm.sysconfig.length;i++){
+          if(vm.sysconfig[i].name=="LONG_TIME_NO_DATA"){
+            vm.longTimeNoData = vm.sysconfig[i].value;
+          }
+        }
+        var currentTime = new Date();
+        if(vm.deviceinfo.lastDataUploadTime!=null && (currentTime -vm.deviceinfo.lastDataUploadTime) > vm.longTimeNoData*24*3600*1000){
+          //存在长时间未上传数据提醒
+          var longTimeNoDataNotice = {
+            title: '该设备长时间未上传数据',
+            url:"home.idleDeviceReport"
+          }
+          $scope.notices.push(longTimeNoDataNotice);
+        }
+      }
+
+      $scope.notices.push(
+        {title: '该设备长时间', content: '222'});
+
+
       vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
       //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);

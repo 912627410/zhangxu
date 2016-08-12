@@ -36,6 +36,7 @@
   "failedToGetRemindInformation":"Failed to get remind information",
   "failedToGetOrganizationInformation":"Failed to get organization information",
   "failedToGetDeviceInformation":"Failed to get equipment information",
+  "failedToGetSysconfig":"Failed to get system config",
   "moreInvalidLocationRemindInformation":"More than 1 device in invalid location, please take a look",
 
 

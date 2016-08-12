@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $http, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,PERMISSIONS_URL, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope, $http, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -93,6 +93,17 @@
               $rootScope.SMALL_EXCAVATOR_MODEL = data.value;
             }, function (reason) {
               Notification.error(languages.findKey('failedToGetSmallExcavatorModel'));
+            }
+          );
+
+          //读取所有系统参数，放到rootscope中供其它controller使用
+          var sysconfigUrl = SYS_CONFIG_LIST_URL;
+          var sysconfigPromis = serviceResource.restCallService(sysconfigUrl,"QUERY");
+          sysconfigPromis.then(function (data) {
+              $window.sessionStorage["SYSCONFIG"] = data;
+              $rootScope.SYSCONFIG = data;
+            }, function (reason) {
+              Notification.error(languages.findKey('failedToGetSysconfig'));
             }
           );
 

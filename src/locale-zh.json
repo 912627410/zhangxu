@@ -36,6 +36,7 @@
   "failedToGetRemindInformation":"获取提醒信息失败",
   "failedToGetOrganizationInformation":"获取组织机构信息失败",
   "failedToGetDeviceInformation":"获取设备信息失败",
+  "failedToGetSysconfig":"获取系统参数失败",
   "moreInvalidLocationRemindInformation":"超过一个设备位置信息异常,请在通知中心查看",
 
   "terminalNumber": "终端编号",
