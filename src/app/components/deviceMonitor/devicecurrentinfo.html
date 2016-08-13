@@ -676,7 +676,7 @@
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <td ng-cloak class="text-nowrap">{{deviceData.totalDuration | convertToMins }}</td>
 
-                    <td ng-cloak>{{deviceData.oilLevel}}</td>
+                    <td ng-cloak>{{deviceData.oilLevel}}%</td>
                     <td ng-cloak>{{deviceData.enginRotate | number:2}}</td>
                     <td ng-cloak>{{deviceData.engineTemperature}}</td>
                     <!--串口通信状态-->
@@ -688,9 +688,9 @@
                     <td ng-if="deviceData.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceData.powerType==null">{{'noData'|translate}}</td>
 
-                    <td ng-cloak>{{deviceData.oilTemperature | number:0}}</td>
+                    <td ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
-                    <td ng-cloak>{{deviceData.gsmSignal}}</td>
+                    <td ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
 
@@ -850,13 +850,11 @@
           <div class="col-md-1">
             <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceMapData(0,1000,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
           </div>
-          <div class="col-md-3">
-            <button id="start" class="btn btn-default" type="button">{{'startAnimation'|translate}}</button>
-            <button id="stop" class="btn btn-default" type="button">{{'endAnimation'|translate}}</button>
+          <div class="col-md-3 btn-group " role="group" >
+            <button id="start"class="btn btn-sm" type="button">{{'startAnimation'|translate}}</button>
+            <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
+            <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
           </div>
-          <!--<div class="col-md-1">-->
-          <!--</div>-->
-
         </div>
 
 
