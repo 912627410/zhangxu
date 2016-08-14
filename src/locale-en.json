@@ -176,6 +176,7 @@
   "map":"Map",
   "startAnimation":"Start play",
   "endAnimation":"End play",
+  "moveAnimation":"Continue",
   "telecontrol":"Remote Control",
   "equipmentNumber":"Equipment ID",
   "licensePlateNumber":"License Plate ID",

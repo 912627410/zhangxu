@@ -557,7 +557,13 @@
             //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
             data.alertStatus = parseInt(data.alertStatus,2);
             data.alertStatus = data.alertStatus.toString(16).toUpperCase();
-            //
+            data.ecuLockStatusDesc='';
+            if (data.ecuLockStatus.substr(7,1) == "0"){
+              data.ecuLockStatusDesc += "未激活";
+            }
+            else{
+              data.ecuLockStatusDesc += "已激活";
+            }
             if(data.voltageHigthAlarmValue != 0){
               data.voltageHigthAlarmValue = data.voltageHigthAlarmValue*0.1 +10;
             }
@@ -671,6 +677,52 @@
     vm.endDateOpenMapData = function($event) {
       vm.endDateOpenStatusMapData.opened = true;
     };
+/*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
+    /**
+     * Marker移动控件
+     * @param {Map} map    地图对象
+     * @param {Marker} marker Marker对象
+     * @param {Array} path   移动的路径，以坐标数组表示
+     */
+    var MarkerMovingControl = function(map, marker, path) {
+      this._map = map;
+      this._marker = marker;
+      this._path = path;
+      this._currentIndex = 0;
+      marker.setMap(map);
+      marker.setPosition(path[0]);
+    }
+
+    /**
+     * 移动marker，会从当前位置开始向前移动
+     */
+    MarkerMovingControl.prototype.move = function() {
+      if (!this._listenToStepend) {
+        this._listenToStepend = AMap.event.addListener(this, 'stepend', function() {
+          this.step();
+        }, this);
+      }
+      this.step();
+    };
+
+    /**
+     * 向前移动一步
+     */
+    MarkerMovingControl.prototype.step = function(){
+      var nextIndex = this._currentIndex + 1;
+      if (nextIndex < this._path.length) {
+        if (!this._listenToMoveend) {
+          this._listenToMoveend = AMap.event.addListener(this._marker, 'moveend', function(){
+            this._currentIndex++;
+            AMap.event.trigger(this, 'stepend');
+          }, this);
+        }
+        // console.log(nextIndex);
+        this._marker.moveTo(this._path[nextIndex], 800);
+      }
+    };
+
+/*******************                        结束                          **/
 
     //参数: 地图轨迹gps 数据
     vm.refreshMapTab = function(lineAttr){
@@ -690,7 +742,15 @@
             marker.moveAlong(lineArr, 500);
           }, false);
           AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
-            marker.stopMove();
+           marker.stopMove();
+          }, false);
+          /*AMap.event.addDomListener(document.getElementById('pause'), 'click', function () {
+            console.log("暂停动画");
+            vm.markerMovingControl._marker.stopMove();
+          }, false);*/
+          AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
+            /**继续动画"*/
+            vm.markerMovingControl.move();
           }, false);
           var carPostion = [116.397428, 39.90923];   //默认地点
           if (lineArr.length > 0){
@@ -716,6 +776,8 @@
               strokeStyle: "solid"  //线样式
             });
             map.setFitView();
+            /********     创建移动控件       */
+            vm.markerMovingControl = new MarkerMovingControl(map, marker, lineArr);
           }
         })
       })
@@ -789,12 +851,12 @@
         else{
           vm.ecuLockStatusDesc += "已激活";
         }
-        if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
+       /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
           vm.ecuLockStatusDesc += ".";
         }
         else{
           vm.ecuLockStatusDesc += ".";
-        }
+        }*/
       }
     }
 
