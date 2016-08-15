@@ -53,5 +53,14 @@
     </di>
 
   </uib-tab>
+
+  <uib-tab heading="图表二" select="machineMoveCtrl.loadFleetDoubleChart()">
+    <div class="box"></div>
+    <di id="fleetDoubleChart">
+      <highchart  config="machineMoveCtrl.fleetDoubleChart" style="position:absolute;width: 100%;height:auto;">
+
+      </highchart>
+    </di>
+  </uib-tab>
 </uib-tabset>
 

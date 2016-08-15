@@ -125,6 +125,7 @@
 
     .constant('FLEET_MAPDATA', SERVER_BASE_URL + 'fleet/fleetMapData') //地图调拨
     .constant('FLEET_CHARTDATA', SERVER_BASE_URL + 'fleet/fleetChartData') //图表调拨
+    .constant('FLEET_DOUBLECHART_DATA', SERVER_BASE_URL + 'fleet/fleetDoubleChartData') //图表调拨
     .constant('FLEETINFO_PAGE_URL', SERVER_BASE_URL + 'fleet/fleetPage') //车队信息分页查询
     .constant('FLEETINFO_URL', SERVER_BASE_URL + 'fleet/fleetOper') //车队信息CRUD
     .constant('FLEET_WORKPLANE_RELA', SERVER_BASE_URL + 'fleet/fleetWorkplaneRela') //车队信息CRUD
