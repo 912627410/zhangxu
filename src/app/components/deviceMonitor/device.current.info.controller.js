@@ -87,11 +87,7 @@
           $scope.notices.push(longTimeNoDataNotice);
         }
       }
-
-      $scope.notices.push(
-        {title: '该设备长时间', content: '222'});
-
-
+      
       vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
       //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
