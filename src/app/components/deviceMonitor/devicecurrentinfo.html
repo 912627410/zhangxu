@@ -79,7 +79,7 @@
                       <div ng-switch-when="0" class="turnLeftNormal" title="{{'turnLeft'|translate}}"></div>
                       <div ng-switch-when="1" class="turnLeftWarning" title="{{'turnLeft'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:2">
+                    <td ng-switch on="deviceCurrentInfoCtrl.centerCode">
                       <div ng-switch-when="0" class="centerCodeNormal" title="{{'centralAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="centerCodeWarning" title="{{'centralAlarm'|translate}}"></div>
                     </td>

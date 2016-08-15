@@ -98,6 +98,32 @@
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
       vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
       vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16).toUpperCase();
+      /*
+        中央报警灯   指的就是三角报警灯
+         另：1、当转速小于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯也不亮
+         2、当转速大于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯亮
+         3、当转速小于1000转时，手制动指示灯亮时，三角报警灯也不亮
+         4、当转速大于1000转时，手制动指示灯亮时，三角报警灯亮
+       */
+      //转速
+      vm.enginRotate= vm.deviceinfo.enginRotate;
+      //充电指示灯
+      vm.charge = vm.deviceinfo.ledStatus.substring(0,1);
+      //中央报警
+      vm.centerCode='0';
+      //机油压力指示灯
+      vm.engineOilPressure=vm.deviceinfo.ledStatus.substring(28,29);
+      //制动指示灯
+      vm.parkingBrake= vm.deviceinfo.ledStatus.substring(6,7);
+
+      if(vm.enginRotate>500 && vm.charge =="1" && vm.engineOilPressure =="1"){
+        vm.centerCode='1';
+      }
+      if(vm.enginRotate>1000 && vm.parkingBrake=="1"){
+        vm.centerCode='1';
+      }
+
+      console.log( vm.centerCode);
       //根据中挖协议修改
       if(vm.deviceinfo.voltageHigthAlarmValue != 0){
         vm.deviceinfo.voltageHigthAlarmValue = vm.deviceinfo.voltageHigthAlarmValue*0.1 +10;
