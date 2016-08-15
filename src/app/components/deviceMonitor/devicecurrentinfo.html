@@ -1,9 +1,38 @@
 
+<style type="text/css">
+  /* 鼠标移入轮播组件时，显示导航 */
+  /* 继续隐藏导航下面的阴影*/
+  .carousel.slide:hover .carousel-control{
+    display: block;
+    background: none;
+  }
+
+  /* 默认隐藏指标,就是那几个小点 */
+  .carousel.slide .carousel-indicators{
+    display: none;
+  }
+
+  /* 默认隐藏左右导航*/
+  .carousel.slide .carousel-control{
+    display: none;
+  }
+
+</style>
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
-    <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
-    <button class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
-
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoCtrl.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="deviceCurrentInfoCtrl.refreshCurrentDeviceInfo(deviceCurrentInfoCtrl.deviceinfo.id)">{{'refresh'|translate}}</button>
+    <!--轮播-->
+    <span id="myCarousel" class="carousel slide pull-right" style="width: 250px">
+      <div>
+        <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides" no-transition="noTransition">
+          <uib-slide ng-repeat="item in notices" actual="false">
+            <a href="" ng-if="item.url!=null" ng-click="deviceCurrentInfoCtrl.openNotification(deviceCurrentInfoCtrl.deviceinfo,item,'sx')"><h5 class="text text-green">{{ item.title }}</h5></a>
+            <h5 ng-if="item.url==null" class="text text-green">{{ item.title }}</h5>
+          </uib-slide>
+        </uib-carousel>
+      </div>
+    </span>
   </h3>
 </div>
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">

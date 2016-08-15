@@ -142,6 +142,15 @@
           }
         }
       })
+      .state('home.maintainNotice', {
+        url: '/maintainNotice',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceMonitor/maintainNotice.html',
+            controller: 'maintainNoticeController as maintainNoticeCtrl'
+          }
+        }
+      })
       .state('home.monitor', {
         url: '/monitor',
         views: {

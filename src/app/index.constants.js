@@ -49,6 +49,7 @@
 
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
+    .constant('SYS_CONFIG_LIST_URL', SERVER_BASE_URL + 'config/sysconfigList')//系统参数List
     .constant('SYS_CONFIG_PAGE_URL',SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
 
     //sim卡管理相关
@@ -105,6 +106,7 @@
 
 
     .constant('ORG_TYPE_URL', SERVER_BASE_URL + 'config/orgTypeList')   //组织类型查询
+    .constant('NOTICE_PAGE_URL', SERVER_BASE_URL + 'notice/noticePage')   //保养提醒消息page
   ;
 
 
