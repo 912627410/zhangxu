@@ -17,7 +17,6 @@
     display: none;
   }
 
-
 </style>
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
@@ -28,9 +27,8 @@
       <div>
         <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides" no-transition="noTransition">
           <uib-slide ng-repeat="item in notices" actual="false">
-            <a ui-sref="{{item.url}}" ><h5 class="text text-green">{{ item.title }}</h5></a>
-            <!--这个地方是用modal还是连接?-->
-            <!--href="" ng-click="deviceCurrentInfoCtrl.openNotification(deviceCurrentInfoCtrl.deviceinfo,'sx')"-->
+            <a href="" ng-if="item.url!=null" ng-click="deviceCurrentInfoCtrl.openNotification(deviceCurrentInfoCtrl.deviceinfo,item,'sx')"><h5 class="text text-green">{{ item.title }}</h5></a>
+            <h5 ng-if="item.url==null" class="text text-green">{{ item.title }}</h5>
           </uib-slide>
         </uib-carousel>
       </div>

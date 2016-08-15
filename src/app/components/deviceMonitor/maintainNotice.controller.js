@@ -14,8 +14,6 @@
     //modal打开是否有动画效果
     vm.deviceinfo = deviceinfo;
     vm.animationsEnabled = true;
-    vm.classNoProcessedMsg = "active";
-    var userInfo = $rootScope.userInfo;
     vm.maintainNotificationNumber = 0;   //所有的保养notification数量
 
     var userInfo = $rootScope.userInfo;
@@ -27,11 +25,7 @@
 
     //查询保养提醒信息
     vm.queryMaintainNotification=function(page,size,sort,deviceinfo){
-      vm.classMaintainMsg = "active";
-      vm.classNoProcessedMsg = "";
-      vm.classNoConnectMsg = "";
-      vm.classLocationMsg = "";
-      vm.classAllMsg = "";
+
       var restCallURL = NOTICE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 5;
@@ -100,26 +94,6 @@
       }
     };
 
-    //批量设置为已处理
-    vm.batchUpdateProcessStatus = function(){
-      var notificationList = vm.noticeList;
-      if (notificationList){
-        notificationList.forEach(function(notification){
-          if (notification.checked && notification.processStatus == 0){
-            vm.updateProcessStatus(notification,false);
-          }
-        });
-        $timeout(function(){
-          Notification.success(languages.findKey('batchSetToHaveTreatmentSuccess')+'!');
-        })
-      }
-    };
-
-    vm.checkAll = function(){
-      vm.noticeList.forEach(function(notification){
-        notification.checked = true;
-      })
-    }
 
   }
 })();

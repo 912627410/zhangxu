@@ -64,7 +64,9 @@
         //存在保养提醒
         var maintainNotice = {
           title: '该设备需要保养',
-          url:"home.notification"
+          url:"app/components/deviceMonitor/maintainNotice.html",
+          controller: "maintainNoticeController as maintainNoticeCtrl"
+
         }
         $scope.notices.push(maintainNotice);
       }
@@ -79,15 +81,18 @@
         }
         var currentTime = new Date();
         if(vm.deviceinfo.lastDataUploadTime!=null && (currentTime -vm.deviceinfo.lastDataUploadTime) > vm.longTimeNoData*24*3600*1000){
+
+          var longTime = Math.floor((currentTime -vm.deviceinfo.lastDataUploadTime)/24/3600/1000);
           //存在长时间未上传数据提醒
           var longTimeNoDataNotice = {
-            title: '该设备长时间未上传数据',
-            url:"home.idleDeviceReport"
+            title: "该设备超过" + longTime +"天未上传数据",
+            url: null,
+            controller: null
           }
           $scope.notices.push(longTimeNoDataNotice);
         }
       }
-      
+
       vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
       //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus,2);
@@ -125,11 +130,11 @@
     vm.controllerInitialization(deviceinfo);
 
     //保养提醒modal
-    vm.openNotification = function (deviceinfo,size) {
+    vm.openNotification = function (deviceinfo,notice,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/deviceMonitor/maintainNotice.html',
-        controller: 'maintainNoticeController as maintainNoticeCtrl',
+        templateUrl: notice.url,
+        controller: notice.controller,
         size: size,
         backdrop: false,
         resolve: {
