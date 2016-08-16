@@ -30,7 +30,7 @@
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("新建燃油类型成功!");
-          $uibModalInstance.close();
+          $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
         }

@@ -77,8 +77,10 @@
         }
       });
 
-      modalInstance.result.then(function () {
-        vm.query();
+      modalInstance.result.then(function (result) {
+        //console.log(result);
+        vm.tableParams.data.splice(0, 0, result);
+
       }, function () {
         //取消
       });
