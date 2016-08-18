@@ -1,0 +1,56 @@
+<section class="content">
+
+  <div class="row">
+    <div class="col-sm-2">
+      <label class="control-label">车队名称</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="text" name="label" class="form-control " ng-model="moveToOtherFleetCtrl.org.label"
+             placeholder="支持模糊查询"/>
+    </div>
+
+    <div class="col-sm-4">
+      <button class="btn btn-primary" type="button"
+              ng-click="moveToOtherFleetCtrl.query(null,null,null,moveToOtherFleetCtrl.org)">查询
+      </button>
+      <button class="btn btn-primary" type="button" ng-click="moveToOtherFleetCtrl.reset()">重置</button>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning pull-right" type="button" ng-click="moveToOtherFleetCtrl.cancel()">{{'close'|translate}}</button>
+    </div>
+  </div>
+  <div class="row " style="padding-top: 30px;padding-left: 10px;padding-right: 10px;">
+    <div class="table-responsive">
+
+      <table ng-table="moveToOtherFleetCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="fleet in $data">
+          <td class="text-nowrap" data-title="'车队名称'" sortable="'fleet.label'">{{fleet.label}}</td>
+          <td class="text-nowrap" align="center" data-title="'车辆数量'" sortable="'fleet.ownNum'">{{fleet.ownNum}}</td>
+          <td class="text-nowrap" align="center" data-title="'工作车辆'" sortable="'fleet.workNum'">{{fleet.workNum}}</td>
+          <td class="text-nowrap" data-title="'作业面'" >{{fleet.workplaneVo.name}}</td>
+          <td class="text-nowrap" align="center" data-title="'操作'" >
+            <button type="button" class="btn btn-danger btn-xs"
+                    ng-click="moveToOtherFleetCtrl.moveToFleet(fleet)">借调到该车队
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box-footer">
+    <div class="row">
+      <div class="col-md-10">
+        <uib-pagination total-items="moveToOtherFleetCtrl.page.totalElements"
+                        ng-change="moveToOtherFleetCtrl.query(moveToOtherFleetCtrl.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="moveToOtherFleetCtrl.pageNumber" items-per-page="moveToOtherFleetCtrl.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>

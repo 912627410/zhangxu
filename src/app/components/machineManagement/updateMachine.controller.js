@@ -9,13 +9,38 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,machineService,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
 
 
-   // vm.deviceinfoList=[];
+    var salaryTypePromise = machineService.getSalaryTypeList();
+    salaryTypePromise.then(function (data) {
+      vm.salaryTypeList= data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取人工成本类型失败');
+    })
+
+    var upkeepPriceTypePromise = machineService.getUpkeepPriceTypeList();
+    upkeepPriceTypePromise.then(function (data) {
+      vm.upkeepPriceTypeList= data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取保养费用类型失败');
+    })
+
+    var fuelTypePromise = machineService.getFuelTypeList();
+    fuelTypePromise.then(function (data) {
+      vm.fuelConfigList= data.content;
+      console.log(vm.fuelConfigList);
+    }, function (reason) {
+      Notification.error('获取燃油类型失败');
+    })
+
+
+    // vm.deviceinfoList=[];
 
     //如果设备号不存在,则设置设备为空
     //if(vm.machine.deviceinfo==null){
@@ -167,6 +192,8 @@
       }
       postInfo.org={id:machine.org.id};
       postInfo.engineType={id:machine.engineType.id};
+      postInfo.fuelConfig={id:machine.fuelConfig.id};
+
       //更换GPS
       if (newDeviceNum != null){
         postInfo.newDeviceNum=newDeviceNum;

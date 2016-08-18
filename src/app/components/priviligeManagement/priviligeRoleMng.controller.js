@@ -45,10 +45,6 @@
       roleUserPromise.then(function (data) {
         //  vm.roleUserinfoList = data;
         for (var i = 0; i < data.length; i++) {
-       //   console.log(data[i]);
-
-
-          // vm.selected.push(data[i].userinfoId);
           if (null != data[i]) {
             vm.priviligeRoleList.push(data[i].roleId);
           }
@@ -94,12 +90,14 @@
       }
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
+
         queryResult=data;
          if(getPriviligeRoleState){
           queryFn()
         }else{
           queryState=true;
         }
+
       }, function (reason) {
         Notification.error("获取角色数据失败");
       });
@@ -118,6 +116,7 @@
     }
 
     vm.init();
+
 
     /**
      * 重置查询框
@@ -168,7 +167,13 @@
     }
 
     vm.isSelected = function (id) {
+      //
+      //if(vm.priviligeRoleList.length==0){
+      //  vm.getPriviligeRole();
+      //
+      //}
 
+     // vm.selected = angular.copy(vm.priviligeRoleList); //深度copy
       //    console.log(vm.selected);
       return vm.selected.indexOf(id) >= 0;
     }

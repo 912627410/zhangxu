@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3 class="modal-title">车辆列表
+      <button class="btn btn-warning pull-right" type="button" ng-click="machineListCtrl.cancel()">{{'close'|translate}}</button>
+  </h3>
+</div>
+<div>
+  <div class="table-responsive">
+    <table ng-table="machineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+      <tr ng-repeat="machine in $data">
+        <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+        <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
+        <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+        <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
+        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+          {{machine.fleet.label}}
+        </td>
+        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+          {{machine.org.label}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="box-footer">
+  <uib-pagination total-items="machineListCtrl.page.totalElements" ng-change="machineListCtrl.query(machineListCtrl.machine_pagenumber-1,null,null,machineListCtrl.fleet)" max-size="15" ng-model="machineListCtrl.machine_pagenumber" items-per-page="machineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+</div>

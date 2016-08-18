@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建车队</h3>
+</div>
+<form name="newFleetForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <!--
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车队编号</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="车队编号"
+                 ng-model="newFleetCtrl.fleet.fleetNum" name="fleetNum" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车队名称</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="车队名称"
+                 ng-model="newFleetCtrl.fleet.label" name="label" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车队简称</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="车队英文简称"
+                 ng-model="newFleetCtrl.fleet.name" name="name" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">上级组织</label>
+        <div class="col-md-5">
+          <p class="input-group">
+
+            <input type="text" id="org" class="form-control" placeholder="上级组织" ng-model="newFleetCtrl.org.label" name="org" readonly required/>
+          <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newFleetCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="newFleetCtrl.ok()">提交</button>
+  <button class="btn btn-warning" type="button" ng-click="newFleetCtrl.cancel()">取消</button>
+</div>

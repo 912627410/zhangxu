@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,$http, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -18,16 +18,46 @@
       buyTime:new Date()
 
     };
-    //vm.machine.installTime=new Date();
-   // vm.machine.buyTime=new Date();
 
-    //查询未激活的设备集合
-    //var deviceinfoData = serviceResource.restCallService(DEIVCIE_NOT_REGISTER_LIST_URL, "QUERY");
-    //deviceinfoData.then(function (data) {
-    //  vm.deviceinfoList = data;
-    //}, function (reason) {
-    //  Notification.error('获取Sim状态集合失败');
-    //})
+    var salaryTypePromise = machineService.getSalaryTypeList();
+    salaryTypePromise.then(function (data) {
+      vm.salaryTypeList= data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取人工成本类型失败');
+    })
+
+    var upkeepPriceTypePromise = machineService.getUpkeepPriceTypeList();
+    upkeepPriceTypePromise.then(function (data) {
+      vm.upkeepPriceTypeList= data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取保养费用类型失败');
+    })
+
+    var fuelTypePromise = machineService.getFuelTypeList();
+    fuelTypePromise.then(function (data) {
+      vm.fuelConfigList= data.content;
+          console.log(vm.fuelConfigList);
+    }, function (reason) {
+      Notification.error('获取燃油类型失败');
+    })
+
+
+
+
+
+
+
+    // 日期控件相关
+    // date picker
+    vm.buyTimeOpenStatus = {
+      opened: false
+    };
+
+    vm.buyTimeOpen = function ($event) {
+      vm.buyTimeOpenStatus.opened = true;
+    };
 
 
     //动态查询未使用的本组织的设备
@@ -107,6 +137,7 @@
       }
       postInfo.org={id:machine.org.id};
       postInfo.engineType={id:machine.engineType};
+      postInfo.fuelConfig={id:machine.fuelConfig};
 
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);

@@ -45,7 +45,10 @@
     .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
     .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //车辆基本信息
     .constant('MACHINE_MOVE_ORG_URL', SERVER_BASE_URL + 'machine/moveOrg')   //车辆调拨
+    .constant('MACHINE_MOVE_FLEET_URL', SERVER_BASE_URL + 'machine/moveFleet')   //车辆借调
     .constant('MACHINE_UNBIND_DEVICE_URL', SERVER_BASE_URL + 'machine/unbindDevice')   //设备解绑
+    .constant('MACHINE_SALARY_TYPE_URL', SERVER_BASE_URL + 'machine/salaryType')   //人工成本类型
+    .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
 
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
@@ -104,9 +107,40 @@
     .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')   //权限禁止
     .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
 
+    // 燃油配置相关
+    .constant('FUEL_CONFIG_PAGE_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigpage')   //燃油配置查询
+    .constant('FUEL_CONFIG_OPER_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfig')   //燃油配置CRUD
+
+
 
     .constant('ORG_TYPE_URL', SERVER_BASE_URL + 'config/orgTypeList')   //组织类型查询
+
     .constant('NOTICE_PAGE_URL', SERVER_BASE_URL + 'notice/noticePage')   //保养提醒消息page
+
+
+    //车队管理
+    .constant('REVENUE_URL', SERVER_BASE_URL + 'fleetRecord/revenue') //收入统计
+    .constant('COST_URL', SERVER_BASE_URL + 'cost/costpage') //成本统计
+    .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleetRecord/fleetRecordPage') //分页查询
+
+    //按车队查询distance
+    .constant('DEVCE_DISTANCE_TOFLEET_PAGE', SERVER_BASE_URL + 'fleet/distanceToFleetPage')
+
+    .constant('FLEET_MAPDATA', SERVER_BASE_URL + 'fleet/fleetMapData') //地图调拨
+    .constant('FLEET_CHARTDATA', SERVER_BASE_URL + 'fleet/fleetChartData') //图表调拨
+    .constant('FLEET_DOUBLECHART_DATA', SERVER_BASE_URL + 'fleet/fleetDoubleChartData') //图表调拨
+    .constant('FLEETINFO_PAGE_URL', SERVER_BASE_URL + 'fleet/fleetPage') //车队信息分页查询
+    .constant('FLEETINFO_URL', SERVER_BASE_URL + 'fleet/fleetOper') //车队信息CRUD
+    .constant('FLEET_WORKPLANE_RELA', SERVER_BASE_URL + 'fleet/fleetWorkplaneRela') //车队信息CRUD
+
+    //作业面
+    .constant('WORKPLANE_URL', SERVER_BASE_URL + 'workplane/workplane')   //作业面CRUD
+    .constant('WORKPLANE_LIST', SERVER_BASE_URL + 'workplane/workplaneList')   //作业面List
+    .constant('WORKPLANE_PAGE', SERVER_BASE_URL + 'workplane/workplanePage')   //作业面page
+
+    .constant('FUEL_TYPE_URL', SERVER_BASE_URL + 'fuelConfig/fuelType')   //燃油类型
+    .constant('FUEL_CONFIGT_LIST_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigList')   //燃油类型
+
   ;
 
 

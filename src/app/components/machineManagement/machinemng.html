@@ -73,7 +73,7 @@
 
 
       <a presentation-href="machine:oper" class="btn btn-default pull-right"
-         ng-click="machineMngCtrl.newMachine()">
+         ng-click="machineMngCtrl.newMachine('lg')">
         <i class="fa fa-plus"></i> 增加
       </a>
       <a class="btn btn-default pull-right" presentation-href="machine:oper"
@@ -107,7 +107,7 @@
           <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
           <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
-                    ng-click="machineMngCtrl.updateMachine(machine)">修改
+                    ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
             </button>
             <button type="button" class="btn btn-danger btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.removeDevice(machine)">解绑

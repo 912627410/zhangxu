@@ -1,0 +1,146 @@
+<div class="modal-header">
+  <h3 class="modal-title">借调车辆
+    <button class="btn btn-warning pull-right" type="button" ng-click="updateMachineListCtrl.cancel()">{{'close'|translate}}</button>
+  </h3>
+</div>
+<uib-tabset justified="true">
+  <uib-tab heading="当前车队车辆" select="updateMachineListCtrl.query(null, null, null, updateMachineListCtrl.fleet,'own')">
+    <div class="box">
+    </div>
+    <div class="col-xs-12 connectedSortable">
+      <div class="table-responsive">
+        <table ng-table="updateMachineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+          <tr ng-repeat="machine in $data">
+            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+            <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+            <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+              {{machine.fleet.label}}
+            </td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+              {{machine.org.label}}
+            </td>
+            <td class="text-nowrap" align="center" data-title="'操作'" >
+              <button type="button" class="btn btn-danger btn-xs"
+                      ng-click="updateMachineListCtrl.moveToOtherFleet(machine)">借调至其它车队
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="box-footer">
+      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    </div>
+  </uib-tab>
+
+  <uib-tab heading="当前工作车辆" select="updateMachineListCtrl.query(null, null, null, updateMachineListCtrl.fleet,'work')">
+    <div class="box">
+    </div>
+    <div class="col-xs-12 connectedSortable">
+      <div class="table-responsive">
+        <table ng-table="updateMachineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+          <tr ng-repeat="machine in $data">
+            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+            <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+            <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+              {{machine.fleet.label}}
+            </td>
+            <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+              {{machine.org.label}}
+            </td>
+            <td class="text-nowrap" align="center" data-title="'操作'" >
+              <button type="button" class="btn btn-danger btn-xs"
+                      ng-click="updateMachineListCtrl.moveToOtherFleet(machine)">借调至其它车队
+              </button>
+              <button type="button" class="btn btn-danger btn-xs" ng-if="machine.org.id!=machine.fleet.id"
+                      ng-click="updateMachineListCtrl.backToOrg(machine)">归还车辆
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="box-footer">
+      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    </div>
+  </uib-tab>
+
+  <uib-tab heading="其它车辆" select="updateMachineListCtrl.queryMachine()">
+    <div class="box"></div>
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-2">
+          <label class="control-label">整机编号/车号</label>
+        </div>
+        <div class="col-md-3">
+          <input type="text" name="licenseId" class="form-control " ng-model="updateMachineListCtrl.machine.licenseId"
+                 placeholder="支持模糊查询"/>
+        </div>
+
+        <div class="col-md-2">
+          <label class="control-label">设备编号</label>
+        </div>
+        <div class="col-md-3">
+          <input type="text" name="deviceNum" class="form-control " ng-model="updateMachineListCtrl.machine.deviceNum"
+                 placeholder="支持模糊查询"/>
+        </div>
+
+
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                  ng-click="updateMachineListCtrl.queryMachine(null,null,null,updateMachineListCtrl.machine)">查询
+          </button>
+          <button class="btn btn-primary" type="button" ng-click="updateMachineListCtrl.reset()">重置</button>
+        </div>
+      </div>
+
+      <div class="row " style="padding: 10px">
+        <script id="selectAllHeader" type="text/ng-template">
+          <input type="checkbox" ng-click="updateMachineListCtrl.updateAllSelection($event)"
+                 ng-model="updateMachineListCtrl.checked">
+        </script>
+        <div class="table-responsive">
+
+          <table ng-table="updateMachineListCtrl.machineTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="machine in $data">
+              <td class="text-nowrap" data-header="'selectAllHeader'">
+                <input type="checkbox" ng-checked="updateMachineListCtrl.isSelected(machine.id)"
+                       ng-click="updateMachineListCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+              </td>
+              <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
+                <a ng-if="updateMachineListCtrl.validateOperPermission()" href
+                   ng-click="updateMachineListCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
+                <span ng-if="!updateMachineListCtrl.validateOperPermission()">{{machine.licenseId}}</span>
+
+              </td>
+              <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+              <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+              <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
+              <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label!=null">
+                {{machine.fleet.label}}
+              </td>
+              <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'" ng-if="machine.fleet.label==null">
+                {{machine.org.label}}
+              </td>            </tr>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="box-footer">
+        <uib-pagination total-items="updateMachineListCtrl.machinePage.totalElements"
+                        ng-change="updateMachineListCtrl.queryMachine(updateMachineListCtrl.machinePageNumber-1,null,null,null)"
+                        max-size="5" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.machinePage.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+        <button class="btn btn-primary pull-right" type="button" ng-click="updateMachineListCtrl.batchMoveOrg()">借调选中车辆</button>
+      </div>
+
+    </section>
+  </uib-tab>
+</uib-tabset>
