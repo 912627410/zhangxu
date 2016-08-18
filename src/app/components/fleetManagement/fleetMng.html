@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"
+      <button class="btn btn-primary" type="button" presentation-href="fleet:page"
               ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">重置</button>
@@ -61,13 +61,13 @@
           <td class="text-nowrap" align="center" data-title="'作业面编号'" sortable="'fleet.workplaneVo.id'">{{fleet.workplaneVo.id}}</td>
           <td class="text-nowrap" data-title="'作业面名称'" >{{fleet.workplaneVo.name}}</td>
           <td class="text-nowrap" align="center" data-title="'操作'" >
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
                     ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">修改信息
             </button>
-            <button type="button" class="btn btn-danger btn-xs"
+            <button type="button" class="btn btn-danger btn-xs" presentation-href="fleet:oper"
                     ng-click="fleetMngCtrl.updateMachineList(fleet,'lg')">车辆借调
             </button>
-            <button type="button" class="btn btn-danger btn-xs"
+            <button type="button" class="btn btn-danger btn-xs" presentation-href="fleet:oper"
                     ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">修改作业面
             </button>
           </td>

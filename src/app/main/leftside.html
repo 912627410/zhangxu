@@ -97,12 +97,12 @@
         <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: collapsed}">
           <ul class="sidebar-menu">
             <li>
-              <a ui-sref="home.workplane" presentation-href="machine:page">
+              <a ui-sref="home.workplane" presentation-href="workplane:page">
                 <i class="fa fa-flag"></i> <span>车队作业面</span>
               </a>
             </li>
             <li>
-              <a ui-sref="home.fleetMng" presentation-href="machine:page">
+              <a ui-sref="home.fleetMng" presentation-href="fleet:page">
                 <i class="fa fa-flag"></i> <span>车队管理</span>
               </a>
             </li>
@@ -117,28 +117,13 @@
               </a>
             </li>
             <li>
-              <a ui-sref="home.revenue" presentation-href="machine:page">
+              <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
                 <i class="fa fa-dollar"></i> <span>收入统计</span>
               </a>
             </li>
             <li>
-              <a ui-sref="home.cost" presentation-href="machine:page">
+              <a ui-sref="home.cost" presentation-href="cost:page">
                 <i class="fa ion-calculator"></i> <span>成本统计</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      <li>
-        <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
-          <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
-
-        </a>
-        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: reportMng}">
-          <ul class="sidebar-menu">
-            <li>
-              <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
-                <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
               </a>
             </li>
           </ul>
