@@ -183,7 +183,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
+        refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -238,9 +238,9 @@
           //读取所有设备的gps信息，home map使用
           if ($rootScope.userInfo ) {
             if(deviceList == null){
-              var rspdata = restCallService(HOME_GPSDATA_URL, "QUERY");
+              var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
               rspdata.then(function (data) {
-                var deviceGPSInfo = data;  //返回的数组列表
+                var deviceGPSInfo = data.content;  //返回的数组列表
                 for (var i = 0; i < deviceGPSInfo.length; i++) {
                   if (deviceGPSInfo[i].amaplatitudeNum != null) {
                     var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
