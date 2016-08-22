@@ -31,7 +31,7 @@
         <div class="col-sm-4">
 
 
-          <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType" theme="bootstrap"
+          <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType.id" theme="bootstrap"
                      ng-disabled="disabled" validator="required">
             <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
             </ui-select-match>
@@ -59,8 +59,7 @@
         <div class="col-sm-4">
 
           <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
-                 ng-model="newMachineController.machine.buyPrice" name="buyPrice" typeahead-show-hint="true"
-                 validator="numberAndDot"/>
+                 ng-model="newMachineController.machine.buyPrice" name="buyPrice" typeahead-show-hint="true"/>
 
         </div>
 
@@ -84,15 +83,14 @@
         <div class="col-sm-4">
 
           <input type="text" id="upkeepPrice" class="form-control" placeholder="保养费用"
-                 ng-model="newMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"
-                 validator="numberAndDot"/>
+                 ng-model="newMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"/>
         </div>
 
         <label for="upkeepPriceType" class="col-sm-2 control-label">保养费用类型</label>
         <div class="col-sm-4">
 
 
-          <ui-select type="text" name="upkeepPriceType"  id="upkeepPriceType" ng-required="true"  ng-model="newMachineController.machine.upkeepPriceType"  on-remove="removed($item, $model)" theme="bootstrap" validator="required" >
+          <ui-select type="text" name="upkeepPriceType"  id="upkeepPriceType"   ng-model="newMachineController.machine.upkeepPriceType"  on-remove="removed($item, $model)" theme="bootstrap" >
             <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
             <ui-select-choices  repeat="upkeepPriceType.value as upkeepPriceType in newMachineController.upkeepPriceTypeList | propsFilter: {desc: $select.search}" >
               <div  ng-bind-html="upkeepPriceType.desc | highlight: $select.search"></div>
@@ -105,13 +103,12 @@
         <div class="col-sm-4">
 
           <input type="text" id="salary" class="form-control" placeholder="员工工资"
-                 ng-model="newMachineController.machine.salary" name="salary" typeahead-show-hint="true"
-                 validator="numberAndDot" />
+                 ng-model="newMachineController.machine.salary" name="salary" typeahead-show-hint="true"/>
         </div>
 
         <label for="salaryType" class="col-sm-2 control-label">员工工资类型</label>
         <div class="col-sm-4">
-          <ui-select type="text" id="salaryType" name="salaryType" ng-required="true"  ng-model="newMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap" validator="required" >
+          <ui-select type="text" id="salaryType" name="salaryType"  ng-model="newMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap">
             <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
             <ui-select-choices  repeat="salaryType.value as salaryType in newMachineController.salaryTypeList | propsFilter: {desc: $select.search}" >
               <div  ng-bind-html="salaryType.desc | highlight: $select.search"></div>
@@ -126,16 +123,15 @@
         <div class="col-sm-4">
 
           <input type="text" id="fuelTank" class="form-control" placeholder="油箱容量(升)"
-                 ng-model="newMachineController.machine.fuelTank" name="fuelTank" typeahead-show-hint="true"
-                 validator="numberAndDot"/>
+                 ng-model="newMachineController.machine.fuelTank" name="fuelTank" typeahead-show-hint="true"/>
 
         </div>
 
         <label for="fuelConfig" class="col-sm-2 control-label">燃油类型</label>
         <div class="col-sm-4">
 
-          <ui-select id="fuelConfig" name="fuelConfig" ng-model="newMachineController.machine.fuelConfig" theme="bootstrap"
-                     ng-disabled="disabled" validator="required">
+          <ui-select id="fuelConfig" name="fuelConfig" ng-model="newMachineController.machine.fuelConfig.id" theme="bootstrap"
+                     ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="燃油类型">{{$select.selected.name + ' ( '+$select.selected.fuelTypeDesc +' ) '}}
             </ui-select-match>
             <ui-select-choices  repeat="fuelConfig.id as fuelConfig in newMachineController.fuelConfigList | propsFilter: {name: $select.search}" >
@@ -151,8 +147,7 @@
         <label for="depreciableLife" class="col-sm-2 control-label">折旧年限</label>
         <div class="col-sm-4">
           <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
-                 ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"
-                 validator="number" />
+                 ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
         </div>
       </div>
 

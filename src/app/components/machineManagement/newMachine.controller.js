@@ -16,7 +16,6 @@
     vm.machine = {
       installTime:new Date(),
       buyTime:new Date()
-
     };
 
     var salaryTypePromise = machineService.getSalaryTypeList();
@@ -124,6 +123,8 @@
     //  alert(vm.machine.deviceinfoId+"   "+vm.machine.orgId);
    //   alert(vm.machine.deviceinfo.deviceNum);
 
+      console.log(machine.engineType);
+
       var postInfo=machine;
       if (machine.deviceinfo){
         //条码输入
@@ -136,8 +137,8 @@
         postInfo.deviceinfo=null;
       }
       postInfo.org={id:machine.org.id};
-      postInfo.engineType={id:machine.engineType};
-      postInfo.fuelConfig={id:machine.fuelConfig};
+     // postInfo.engineType={id:machine.engineType};
+     // postInfo.fuelConfig={id:machine.fuelConfig};
 
 
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);

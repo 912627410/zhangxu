@@ -160,24 +160,8 @@
 
     vm.ok = function (machine,newDeviceNum) {
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
-      //if(null!=machine.deviceinfo) {
-      //
-      //
-      //  machine.deviceinfo.machine = {};
-      //
-      //  if(null!=machine.deviceinfo.sim){
-      //    machine.deviceinfo.sim.deviceinfo = {};
-      //  }
-      //
-      //}
 
-
-      //如果设备没有输入,则给出提示信息,
-      //if(vm.machine.deviceinfo==null || vm.machine.deviceinfo.deviceNum==""){
-      //  if(!confirm("设备号没有输入,请注意")){
-      //    return;
-      //  }
-      //}
+      console.log(machine.engineType);
 
       var postInfo=machine;
       if (machine.deviceinfo){
@@ -191,8 +175,17 @@
         postInfo.deviceinfo=null;
       }
       postInfo.org={id:machine.org.id};
-      postInfo.engineType={id:machine.engineType.id};
-      postInfo.fuelConfig={id:machine.fuelConfig.id};
+    //  postInfo.engineType={id:machine.engineType};
+
+      console.log(machine.engineType.id);
+      console.log(machine.engineType);
+
+      //if(null!=machine.fuelConfig){
+      //  postInfo.fuelConfig={id:machine.fuelConfig};
+      //}else{
+      //  postInfo.fuelConfig=null;
+      //}
+
 
       //更换GPS
       if (newDeviceNum != null){
