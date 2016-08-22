@@ -77,15 +77,24 @@
         </a>
       </li>
       <li>
-
         <a ng-click="reportMng=!reportMng" href="">
           <i class="fa ion-stats-bars"></i>
           <span>统计分析</span>
-          <span class="glyphicon pull-right"
-                ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
-                &nbsp;&nbsp;
+          <span class="glyphicon pull-right" ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;
           </span>
+        </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: reportMng}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.dataAnalysis" >
+                <i class="fa ion-stats-bars"></i> <span>数据统计</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
+      <li>
         <a ng-click="collapsed = !collapsed" href="">
           <i class="fa fa-car"></i>
           <span>车队管理</span>
@@ -169,7 +178,7 @@
           <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>
         </a>
       </li>
-    </div>
+    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>

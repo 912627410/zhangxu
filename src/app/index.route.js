@@ -254,7 +254,6 @@
           }
         }
       })
-
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {
@@ -265,6 +264,18 @@
             templateUrl: 'app/components/fuelConfigManagement/fuelConfigMng.html',
             controller: 'fuelConfigMngController',
             controllerAs: 'fuelConfigMngController'
+          }
+        }
+      })
+      .state('home.dataAnalysis', {
+        url: '/dataAnalysis',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/dataAnalysis/dataAnalysis.html',
+            controller: 'dataAnalysisController'
           }
         }
       })
