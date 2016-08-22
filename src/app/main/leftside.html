@@ -77,18 +77,27 @@
         </a>
       </li>
       <li>
-
-        <a ng-click="reportMng=!reportMng" href="">
+        <a ng-click="reportMng=!reportMng" ui-sref="" presentation-href="report:idleDeviceReport">
           <i class="fa ion-stats-bars"></i>
           <span>统计分析</span>
           <span class="glyphicon pull-right"
                 ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
-                &nbsp;&nbsp;
-          </span>
-    </a>
-        </li>
+
+              &nbsp;&nbsp;
+        </span>
+        </a>
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: reportMng}">
+          <ul class="sidebar-menu">
+            <li>
+              <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+                <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
       <li>
-        <a ng-click="collapsed = !collapsed" ui-sref="" presentation-href="workplane:page">
+        <a ng-click="fleetMng = !fleetMng" ui-sref="" presentation-href="workplane:page">
           <i class="fa fa-car"></i>
           <span>车队管理</span>
           <span class="glyphicon pull-right"
@@ -96,7 +105,7 @@
                 &nbsp;&nbsp;
           </span>
         </a>
-        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: collapsed}">
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: fleetMng}">
           <ul class="sidebar-menu">
             <li>
               <a ui-sref="home.workplane" presentation-href="workplane:page">
@@ -172,7 +181,7 @@
         </a>
       </li>
     </div>
-      </ul>
+    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
