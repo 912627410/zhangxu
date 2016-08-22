@@ -48,7 +48,7 @@
         </div>
       </li>
       <li>
-        <a ng-click="deviceMng=!deviceMng" href="">
+        <a ng-click="deviceMng=!deviceMng" ui-sref="" presentation-href="device:page">
           <i class="fa ion-clipboard"></i>
           <span>{{'equipmentManagement' | translate}}</span>
           <span class="glyphicon pull-right"
@@ -85,8 +85,10 @@
                 ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
                 &nbsp;&nbsp;
           </span>
-
-        <a ng-click="collapsed = !collapsed" href="">
+    </a>
+        </li>
+      <li>
+        <a ng-click="collapsed = !collapsed" ui-sref="" presentation-href="workplane:page">
           <i class="fa fa-car"></i>
           <span>车队管理</span>
           <span class="glyphicon pull-right"
@@ -112,7 +114,7 @@
               </a>
             </li>
             <li>
-              <a ui-sref="home.machineMove" presentation-href="machine:page">
+              <a ui-sref="home.machineMove" presentation-href="fleet:page">
                 <i class="fa fa-car"></i> <span>车辆调拨</span>
               </a>
             </li>
@@ -130,7 +132,7 @@
         </div>
       </li>
       <li>
-        <a ng-click="sysMng =!sysMng" href="">
+        <a ng-click="sysMng =!sysMng" ui-sref="" presentation-href="config:sysconfigPage">
           <i class="fa fa-home"></i>
           <span>系统管理</span>
           <span class="glyphicon pull-right"
@@ -138,7 +140,7 @@
                 &nbsp;&nbsp;
           </span>
         </a>
-        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}">
+        <div class="panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}" >
           <ul class="sidebar-menu">
             <li>
               <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
@@ -170,6 +172,7 @@
         </a>
       </li>
     </div>
+      </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
