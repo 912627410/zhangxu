@@ -26,24 +26,38 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       if(type=='own'&&null != fleet&&null != fleet.id){
         restCallURL += "&search_EQ_orgEntity.id=" +fleet.id;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          vm.ownTableParams = new NgTableParams({},
+            {
+              dataset: data.content
+            });
+          vm.ownPage = data.page;
+          vm.ownpagenumber = data.page.number + 1;
+
+        },function (reason) {
+
+        });
+
       }
 
       if(type=='work'&&null != fleet&&null != fleet.id){
         restCallURL += "&search_EQ_fleetEntity.id=" +fleet.id;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          vm.workTableParams = new NgTableParams({},
+            {
+              dataset: data.content
+            });
+          vm.workPage = data.page;
+          vm.workpagenumber = data.page.number + 1;
+
+        },function (reason) {
+
+        });
       }
 
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.tableParams = new NgTableParams({},
-          {
-            dataset: data.content
-          });
-        vm.page = data.page;
-        vm.machine_pagenumber = data.page.number + 1;
 
-      },function (reason) {
-
-      });
     };
 
     vm.query(null, null, null, vm.fleet);

@@ -9,7 +9,7 @@
     </div>
     <div class="col-xs-12 connectedSortable">
       <div class="table-responsive">
-        <table ng-table="updateMachineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+        <table ng-table="updateMachineListCtrl.ownTableParams" class="table table-condensed table-bordered table-striped">
           <tr ng-repeat="machine in $data">
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
             <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="box-footer">
-      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+      <uib-pagination total-items="updateMachineListCtrl.ownPage.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.ownPagenumber-1,null,null,updateMachineListCtrl.fleet,'own')" max-size="15" ng-model="updateMachineListCtrl.ownPageNumber" items-per-page="updateMachineListCtrl.ownPage.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
     </div>
   </uib-tab>
 
@@ -40,7 +40,7 @@
     </div>
     <div class="col-xs-12 connectedSortable">
       <div class="table-responsive">
-        <table ng-table="updateMachineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+        <table ng-table="updateMachineListCtrl.workTableParams" class="table table-condensed table-bordered table-striped">
           <tr ng-repeat="machine in $data">
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
             <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="box-footer">
-      <uib-pagination total-items="updateMachineListCtrl.page.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.deviceData_pagenumber-1,null,null,updateMachineListCtrl.fleet)" max-size="15" ng-model="updateMachineListCtrl.machinePageNumber" items-per-page="updateMachineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+      <uib-pagination total-items="updateMachineListCtrl.workPage.totalElements" ng-change="updateMachineListCtrl.query(updateMachineListCtrl.workpagenumber-1,null,null,updateMachineListCtrl.fleet,'work')" max-size="15" ng-model="updateMachineListCtrl.workPageNumber" items-per-page="updateMachineListCtrl.workPage.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
     </div>
   </uib-tab>
 
