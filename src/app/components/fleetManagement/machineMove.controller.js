@@ -320,7 +320,7 @@
 
             }
 
-          },10000);
+          },600000);
 
           $scope.$on("$destroy",function () {
             console.log("--取消刷新map--");
@@ -951,7 +951,7 @@
 
         }
 
-      },10000);
+      },600000);
 
       $scope.$on("$destroy",function () {
         console.log("--取消刷新chart--");
