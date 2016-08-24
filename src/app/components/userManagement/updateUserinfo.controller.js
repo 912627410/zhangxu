@@ -45,13 +45,12 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow();
+      treeFactory.treeShow(vm);
     }
-    //树的选中事件
-    $rootScope.$on('OrgSelectedEvent', function (event,data) {
-      vm.updatedUser.organizationDto = data;
-    });
-
+    vm.selectedCallback=function (selectedItem) {
+      console.log(selectedItem)
+      vm.updatedUser.organizationDto=selectedItem;
+    }
 
   }
 })();

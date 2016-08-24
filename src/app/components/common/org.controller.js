@@ -28,7 +28,6 @@
     } else {
       Notification.error('获取组织机构信息失败');
     }
-    //TODO 搜索树
 
     vm.search = function (searchText) {
       //存储被搜索到的组织
@@ -75,7 +74,7 @@
       }
 
       if (orgTree.children.length != 0) {
-      //循环搜索
+       //循环搜索
        angular.forEach(orgTree.children, function (node,index) {
           vm.returnSearch(node, searchText);
         });
