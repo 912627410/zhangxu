@@ -320,8 +320,12 @@
 
             }
 
-          },10000);
+          },600000);
 
+          $scope.$on("$destroy",function () {
+            console.log("--取消刷新map--");
+            $interval.cancel(mapRequest);
+          });
 
         }
 
@@ -637,10 +641,6 @@
 
       $scope.$emit("$destroy");
 
-      $scope.$on("$destroy",function () {
-        console.log("--取消刷新map--");
-        $interval.cancel(mapRequest);
-      });
 
       vm.goList=[];
       vm.backList=[];
@@ -951,8 +951,12 @@
 
         }
 
-      },10000);
+      },600000);
 
+      $scope.$on("$destroy",function () {
+        console.log("--取消刷新chart--");
+        $interval.cancel(chartRequest);
+      });
 
     }
 

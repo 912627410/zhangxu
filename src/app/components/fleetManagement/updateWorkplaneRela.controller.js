@@ -59,8 +59,10 @@
         var rspdata = serviceResource.restUpdateRequest(FLEET_WORKPLANE_RELA,vm.fleet);
         rspdata.then(function (data) {
           if(data.code===0){
+            vm.fleet = data.content;
+            vm.query();
             Notification.success("更新作业面成功!");
-            $uibModalInstance.close(data.content);
+            //$uibModalInstance.close(data.content);
           }else{
             Notification.error(data.message);
           }
@@ -73,6 +75,7 @@
     vm.query();
 
     vm.cancel = function () {
+      $uibModalInstance.close(vm.fleet);
       $uibModalInstance.dismiss('cancel');
     };
   }
