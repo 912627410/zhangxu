@@ -74,7 +74,7 @@
       </li>
 
       <li>
-        <a ng-click="reportMng=!reportMng" href="#">
+        <a ng-click="reportMng=!reportMng" href="#" presentation-href="report:idleDeviceReport">
           <i class="fa ion-stats-bars"></i>
           <span style="width:200px">统计分析</span>
           <span class="glyphicon pull-right"
@@ -303,7 +303,7 @@
               </a>
             </li>
             <li>
-              <a ui-sref="home.machineMove" presentation-href="machine:page">
+              <a ui-sref="home.machineMove" presentation-href="fleet:page">
                 <i class="fa fa-car"></i> <span>车辆调拨</span>
               </a>
             </li>
@@ -321,7 +321,7 @@
       </li>
 
       <li>
-        <a ng-click="sysMng =!sysMng" href="">
+        <a ng-click="sysMng =!sysMng" ui-sref="" presentation-href="config:sysconfigPage">
           <i class="fa fa-home"></i>
           <span>系统管理</span>
           <span class="glyphicon pull-right"

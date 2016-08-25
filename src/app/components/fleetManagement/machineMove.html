@@ -38,23 +38,13 @@
             <i class="fa fa-refresh"></i>
           </button>
         </div>
-    </div>
-    <div class="box box-danger" style="min-height: 500px" id="fleetMap">
-    </div>
+      </div>
+      <div class="box box-danger" style="min-height: 500px" id="fleetMap">
+      </div>
     </div>
   </uib-tab>
 
-  <uib-tab heading="图表" select="machineMoveCtrl.loadFleetChart()">
-    <div class="box"></div>
-    <di id="fleetChart">
-      <highchart  config="machineMoveCtrl.fleetChart" style="position:absolute;width: 100%;height:auto;">
-
-      </highchart>
-    </di>
-
-  </uib-tab>
-
-  <uib-tab heading="图表二" select="machineMoveCtrl.loadFleetDoubleChart()">
+  <uib-tab heading="图表" select="machineMoveCtrl.loadFleetDoubleChart()">
     <div class="box"></div>
     <di id="fleetDoubleChart">
       <highchart  config="machineMoveCtrl.fleetDoubleChart" style="position:absolute;width: 100%;height:auto;">
@@ -63,4 +53,3 @@
     </di>
   </uib-tab>
 </uib-tabset>
-

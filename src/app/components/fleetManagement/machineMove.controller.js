@@ -9,7 +9,7 @@
     .controller('machineMoveController', machineMoveController);
 
   /** @ngInject */
-  function machineMoveController($rootScope,$scope,$filter,$interval,$timeout,treeFactory, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_DISTANCE_TOFLEET_PAGE,FLEET_DOUBLECHART_DATA,DEIVCIE_MOVE_ORG_URL,WORKPLANE_LIST,FLEET_MAPDATA,FLEET_CHARTDATA) {
+  function machineMoveController($rootScope,$scope,$filter,$interval,treeFactory, Notification,serviceResource,languages,AMAP_GEO_CODER_URL,DEVCE_DISTANCE_TOFLEET_PAGE,FLEET_DOUBLECHART_DATA,MACHINE_MOVE_FLEET_URL,FLEET_MAPDATA) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -221,23 +221,6 @@
           });
           map.addControl(overView);
         });
-        $scope.$on("$destroy",function () {
-          console.log("--取消刷新--");
-          $interval.cancel(ajaxRequest);
-        })
-        var icons = [];
-        icons[0] = "assets/images/orangeMarker.png";
-        icons[1] = "assets/images/greenMarker.png";
-        icons[2] = "assets/images/lightgreenMarker.png";
-        icons[3] = "assets/images/highgreenMarker.png";
-        icons[4] = "assets/images/yellowMarker.png";
-        icons[5] = "assets/images/redMarker.png";
-        icons[6] = "assets/images/lightblueMarker.png";
-        icons[7] = "assets/images/pinkMarker.png";
-        icons[8] = "assets/images/purpleMarker.png";
-        icons[9] = "assets/images/highblueMarker.png";
-        icons[10] = "assets/images/blueMarker.png";
-        icons[11] = "assets/images/grayMarker.png";
 
         var curMarkers = new AMap.Marker();
         var markersMap=new Map();
@@ -250,81 +233,100 @@
           rspdata.then(function (data) {
             var fleetList =data;  //返回的List
             var marker = "assets/images/car_03.png";
-            for(var i = 0;i < fleetList.length; i++){
-              if(fleetList[i].amaplongitudeNum != null && fleetList[i].amaplatitudeNum != null){
-                curMarkers = addMarkerModel(map,fleetList[i],marker);
-                markersMap.put(fleetList[i].deviceNum,curMarkers);
+
+            for(var i = 0;i < fleetList.length; i++) {
+              var fleet = fleetList[i];
+              if (fleet.workplaneVo != null && fleet.workMachine != null && fleet.workMachine.length > 0) {
+                var workplane = fleet.workplaneVo;
+                if(workplane.startLongitude!=null && workplane.startLatitude!=null && workplane.endLongitude !=null
+                  && workplane.endLatitude!=null && workplane.startRadius!=null && workplane.endRadius!=null){
+                  var path = [];
+                  path.push([workplane.startLongitude,workplane.startLatitude]);
+                  path.push([workplane.endLongitude,workplane.endLatitude]);
+                  map.plugin("AMap.DragRoute", function() {
+                    var route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类
+                    route.search(); //查询导航路径并开启拖拽导航
+                  });
+
+                  var startCircle = new AMap.Circle({
+                    center: [workplane.startLongitude,workplane.startLatitude],// 圆心位置
+                    radius: workplane.startRadius, //半径
+                    strokeColor: "#6495ED", //线颜色
+                    strokeOpacity: 1, //线透明度
+                    strokeWeight: 3, //线粗细度
+                    fillColor: "#A2B5CD", //填充颜色
+                    fillOpacity: 0.35//填充透明度
+                  });
+
+                  var endCircle = new AMap.Circle({
+                    center: [workplane.endLongitude,workplane.endLatitude],// 圆心位置
+                    radius: workplane.endRadius, //半径
+                    strokeColor: "#F33", //线颜色
+                    strokeOpacity: 1, //线透明度
+                    strokeWeight: 3, //线粗细度
+                    fillColor: "#ee2200", //填充颜色
+                    fillOpacity: 0.35//填充透明度
+                  });
+
+                  startCircle.setMap(map);
+                  endCircle.setMap(map);
+                }
+
+                var machineList = fleet.workMachine;
+
+                for(var n =0; n <machineList.length;n++) {
+                  var machine = machineList[n];
+                  if(machine.deviceinfo!=null && machine.deviceinfo.amaplongitudeNum!=null && machine.deviceinfo.amaplatitudeNum!=null && machine.deviceinfo.fleet!=null){
+                    curMarkers = addMarkerModel(map,machine.deviceinfo,marker);
+                    markersMap.put(machine.licenseId,curMarkers);
+                  }
+
+                }
               }
             }
+
           }, function (reason) {
             map.clearMap();
           });
 
           //10S 刷新一次
-          var ajaxRequest= $interval(function () {
+          var mapRequest= $interval(function () {
             if ($rootScope.userInfo ){
               var rspdata = serviceResource.restCallService(FLEET_MAPDATA, "QUERY");
               rspdata.then(function (data) {
                 var fleetList =data;  //返回的List
-                for(var i = 0;i < fleetList.length; i++){
-                  var marker = new AMap.Marker();
-                  marker = markersMap.get(fleetList[i].deviceNum);
+                for(var i = 0;i < fleetList.length; i++) {
+                  var fleet = fleetList[i];
+                  if (fleet.workplaneVo != null && fleet.workMachine != null && fleet.workMachine.length > 0) {
+                    var machineList = fleet.workMachine;
+                    for(var n =0; n <machineList.length;n++) {
+                      var machine = machineList[n];
+                      if(machine.deviceinfo!=null && machine.deviceinfo.amaplongitudeNum!=null && machine.deviceinfo.amaplatitudeNum!=null && machine.deviceinfo.fleet!=null){
 
-                  var newPoint = new AMap.LngLat(fleetList[i].amaplongitudeNum,fleetList[i].amaplatitudeNum);
-                  marker.moveTo(newPoint,500);
+                        var marker = new AMap.Marker();
+                        var newPoint = new AMap.LngLat(machine.deviceinfo.amaplongitudeNum,machine.deviceinfo.amaplatitudeNum);
+                        marker = markersMap.get(machine.licenseId);
+                        marker.moveTo(newPoint,500);
 
+                      }
+
+                    }
+                  }
                 }
+
               }, function (reason) {
 
               });
 
             }
 
-          },10000);
+          },600000);
 
-          //workplane  读取所有 工作面信息 供map使用
-          var workplaneData = serviceResource.restCallService(WORKPLANE_LIST, "QUERY");
-          workplaneData.then(function (data) {
-            var workplaneList = data;
-            var startMarker = "assets/images/blueMarker.png";
-            var endMarker = "assets/images/grayMarker.png";
-            for(var i = 0; i <workplaneList.length; i++){
-              if(workplaneList[i].startLongitude!=null&&workplaneList[i].endLatitude!=null){
-                var path = [];
-                path.push([workplaneList[i].startLongitude,workplaneList[i].startLatitude]);
-                path.push([workplaneList[i].endLongitude,workplaneList[i].endLatitude]);
-                map.plugin("AMap.DragRoute", function() {
-                  var route = new AMap.DragRoute(map, path, AMap.DrivingPolicy.LEAST_FEE); //构造拖拽导航类
-                  route.search(); //查询导航路径并开启拖拽导航
-                });
+          $scope.$on("$destroy",function () {
+            console.log("--取消刷新map--");
+            $interval.cancel(mapRequest);
+          });
 
-                var startCircle = new AMap.Circle({
-                  center: [workplaneList[i].startLongitude,workplaneList[i].startLatitude],// 圆心位置
-                  radius: workplaneList[i].startRadius, //半径
-                  strokeColor: "#6495ED", //线颜色
-                  strokeOpacity: 1, //线透明度
-                  strokeWeight: 3, //线粗细度
-                  fillColor: "#A2B5CD", //填充颜色
-                  fillOpacity: 0.35//填充透明度
-                });
-
-                var endCircle = new AMap.Circle({
-                  center: [workplaneList[i].endLongitude,workplaneList[i].endLatitude],// 圆心位置
-                  radius: workplaneList[i].endRadius, //半径
-                  strokeColor: "#F33", //线颜色
-                  strokeOpacity: 1, //线透明度
-                  strokeWeight: 3, //线粗细度
-                  fillColor: "#ee2200", //填充颜色
-                  fillOpacity: 0.35//填充透明度
-                });
-
-                startCircle.setMap(map);
-                endCircle.setMap(map);
-              }
-            }
-          },function (reason) {
-
-          })
         }
 
       })
@@ -349,15 +351,15 @@
       // 设置label标签
       marker.setLabel({
         offset: new AMap.Pixel(10, -22),//修改label相对于maker的位置
-        content: item.orgLabel
+        content: item.fleet.label
       });
 
       // marker.setMap(mapObj);  //在地图上添加点
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
-        var title = item.licenseId;
+        var title = item.machine.licenseId;
         var contentInfo="";
-        contentInfo += "所属车队：" + item.orgLabel +"<br/>";
+        contentInfo += "所属车队：" + item.fleet.label +"<br/>";
         contentInfo += "设备编号：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('convertToMins')(item.totalDuration))+ "<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
@@ -529,17 +531,17 @@
             mBtn.onclick =function () {
               for(var i = 0;i < table.rows.length;i++){
                 if(table.rows[i].selected == true){
-                  var moveOrg ={ids: [item.deviceId], "orgId": table.rows[i].lastChild.innerHTML}
+                  var moveOrg ={ids: [item.machine.id], "orgId": table.rows[i].lastChild.innerHTML}
                 }
               }
               if(moveOrg != null){
-                var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
+                var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
                 restPromise.then(function (data) {
                   //刷新页面
                   vm.refreshMap("fleetMap",null,13,null);
-                  Notification.success("调拨设备成功!");
+                  Notification.success("借调设备成功!");
                 }, function (reason) {
-                  Notification.error("调拨设备出错!");
+                  Notification.error("借调设备出错!");
                 });
               }else{
                 Notification.error("请在列表中选择车队!");
@@ -619,585 +621,13 @@
       return marker;
     };
 
-    vm.rightList = [];
-    vm.leftList=[];
-    vm.baseList =[];
-
-    vm.loadFleetChart = function () {
-      $scope.$emit("$destroy");
-
-      $scope.$on("$destroy",function () {
-        console.log("--取消刷新chart--");
-        $interval.cancel(ajaxRequest);
-      })
-      var workplaneMap = new Map();
-      var workplaneIndexMap = new Map();
-
-
-      //workplane  读取所有 工作面信息 供map使用
-      var workplaneData = serviceResource.restCallService(WORKPLANE_LIST, "QUERY");
-      workplaneData.then(function (data) {
-        var workplaneList = data;
-        vm.plotLines = [];
-        vm.baseList.push([0,0]);
-        vm.baseList.push([1,workplaneList.length+1]);
-        for(var i = 0; i <workplaneList.length; i++){
-
-          var plotLine = {
-            color: '#FF0000',
-            width: 2,
-            value: i+1,
-            label:{
-              text:workplaneList[i].startPoint+",路程:" +workplaneList[i].totalLength+"KM",
-              align:'left',
-              y: 16
-            }
-          };
-
-          workplaneIndexMap.put(workplaneList[i].id,i+1);
-          workplaneMap.put(workplaneList[i].id,workplaneList[i]);
-
-          vm.plotLines.push(plotLine);
-          vm.fleetChart.yAxis[0].plotLines = vm.plotLines;
-
-
-        }
-      },function (reason) {
-
-      })
-
-      //读取车队下的车辆信息，并关联工作面信息   计算当前位置
-      var fleetChartData = serviceResource.restCallService(FLEET_CHARTDATA,"QUERY");
-      fleetChartData.then(function (data) {
-        var deviceList = data;
-        for(var i =0;i< deviceList.length;i++) {
-          if (deviceList[i].duration != null && deviceList[i].workplaneId !=null) {
-
-            var workplaneId = deviceList[i].workplaneId;
-            if (deviceList[i].direction == '前往卸料点途中') {
-              var x = deviceList[i].duration * workplaneMap.get(workplaneId).averageSpeed / workplaneMap.get(workplaneId).totalLength ;
-
-            } else if (deviceList[i].direction == '前往装料点途中') {
-              var x = 1 -deviceList[i].duration * workplaneMap.get(workplaneId).averageSpeed / workplaneMap.get(workplaneId).totalLength ;
-            }
-
-            var y = workplaneIndexMap.get(workplaneId);
-            var ramainTime = workplaneMap.get(workplaneId).totalLength / workplaneMap.get(workplaneId).averageSpeed -deviceList[i].duration;
-            var ramainDistance = workplaneMap.get(workplaneId).totalLength - workplaneMap.get(workplaneId).averageSpeed *deviceList[i].duration;
-            var data = {
-              x:x,
-              y:y,
-              deviceNum:deviceList[i].deviceNum,
-              orgLabel:deviceList[i].orgLabel,
-              orgId:deviceList[i].orgId,
-              address:deviceList[i].address,
-              deviceId:deviceList[i].deviceId,
-              totalDuration:deviceList[i].totalDuration,
-              lastDataUploadTime:deviceList[i].lastDataUploadTime,
-              remainDistance: ramainDistance,
-              remainTime: ramainTime
-            };
-
-            if (deviceList[i].direction == '前往卸料点途中') {
-              vm.rightList.push(data);
-
-            } else if (deviceList[i].direction == '前往装料点途中') {
-              vm.leftList.push(data);
-
-            }
-          }
-        }
-
-        vm.fleetChart.series[0].data =vm.rightList;
-        vm.fleetChart.series[1].data =vm.leftList;
-
-      },function (reason) {
-
-      })
-
-
-
-      //10S 刷新一次
-      var ajaxRequest= $interval(function () {
-        if ($rootScope.userInfo ){
-          var fleetChartData = serviceResource.restCallService(FLEET_CHARTDATA,"QUERY");
-          fleetChartData.then(function (data) {
-            vm.rightList =[];
-            vm.leftList =[];
-            var deviceList = data;
-            for(var i =0;i< deviceList.length;i++) {
-              if (deviceList[i].duration != null  && deviceList[i].workplaneId !=null) {
-                var workplaneId = deviceList[i].workplaneId;
-                if (deviceList[i].direction == '前往卸料点途中') {
-                  var x = deviceList[i].duration * workplaneMap.get(workplaneId).averageSpeed / workplaneMap.get(workplaneId).totalLength ;
-
-                } else if (deviceList[i].direction == '前往装料点途中') {
-                  var x = 1 -deviceList[i].duration * workplaneMap.get(workplaneId).averageSpeed / workplaneMap.get(workplaneId).totalLength ;
-                }
-                var y = workplaneIndexMap.get(workplaneId);
-                var ramainTime = workplaneMap.get(workplaneId).totalLength / workplaneMap.get(workplaneId).averageSpeed -deviceList[i].duration;
-                var ramainDistance = workplaneMap.get(workplaneId).totalLength - workplaneMap.get(workplaneId).averageSpeed *deviceList[i].duration;
-                var data = {
-                  x:x,
-                  y:y,
-                  deviceNum:deviceList[i].deviceNum,
-                  orgLabel:deviceList[i].orgLabel,
-                  orgId:deviceList[i].orgId,
-                  address:deviceList[i].address,
-                  deviceId:deviceList[i].deviceId,
-                  totalDuration:deviceList[i].totalDuration,
-                  lastDataUploadTime:deviceList[i].lastDataUploadTime,
-                  remainDistance: ramainDistance,
-                  remainTime: ramainTime
-                };
-
-                if (deviceList[i].direction == '前往卸料点途中') {
-                  vm.rightList.push(data);
-
-                } else if (deviceList[i].direction == '前往装料点途中') {
-                  vm.leftList.push(data);
-
-                }
-              }
-            }
-
-            vm.fleetChart.series[0].data =vm.rightList;
-            vm.fleetChart.series[1].data =vm.leftList;
-
-          },function (reason) {
-
-          });
-
-        }
-
-      },5000);
-    }
-    vm.fleetChart = {
-      options: {
-        chart: {
-          type : 'scatter',
-          zoomType: 'xy',
-          width: 1120
-        },
-        title :false,
-        exporting :false,
-        legend: {
-          enabled: false
-        },
-        tooltip :{
-          enabled: false
-        },
-        plotOptions: {
-          series: {
-            cursor: 'pointer',
-            point:{
-              events: {
-                click:function () {
-                  if(document.getElementById("menu")){
-                    var menu =document.getElementById("menu");
-                    menu.parentNode.removeChild(menu);
-                  }
-
-                  var fleetChart = document.getElementById('fleetChart');
-
-                  var evt = window.event || arguments[0];
-
-                  /*获取当前鼠标右键按下后的位置，据此定义菜单显示的位置*/
-                  var rightedge = fleetChart.clientWidth - evt.clientX;
-                  var bottomedge = fleetChart.clientHeight - evt.clientY;
-
-                  var menu = document.createElement("div");
-                  menu.id = "menu";
-                  menu.className = "info";
-                  menu.style.width = "180px";
-                  menu.position = 'absolute';
-                  //menu.style.left = rightedge +"px";
-                  menu.style.left = evt.clientX - 300 + "px";
-                  menu.style.top = evt.clientY - 320 + "px";
-
-                  menu.border = 'solid 1px silver';
-                  menu.style.visibility = "visible";
-
-
-                  // 定义顶部标题
-                  var top = document.createElement("div");
-                  var titleD = document.createElement("div");
-                  var closeX = document.createElement("img");
-                  top.className = "info-top";
-                  titleD.innerHTML = '车辆信息';
-                  closeX.src = "http://webapi.amap.com/images/close2.gif";
-                  closeX.onclick = function () {
-                    menu.style.display = 'none';
-                  };
-                  top.appendChild(titleD);
-                  top.appendChild(closeX);
-                  menu.appendChild(top);
-
-                  // 定义中部内容
-                  var middle = document.createElement("div");
-                  middle.className = "info-middle";
-                  middle.style.backgroundColor = 'white';
-                  var contentInfo="";
-                  contentInfo += "所属车队：" + this.orgLabel +"<br/>";
-                  contentInfo += "车号：" + this.deviceNum +"<br/>";
-                  contentInfo += languages.findKey('workingHours')+": "+(this.totalDuration==null ?'':$filter('convertToMins')(this.totalDuration))+ "<br/>";
-                  //contentInfo += languages.findKey('updateTime')+": " +(this.lastDataUploadTime==null ?'':$filter('date')(this.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
-                  //contentInfo += "<div class='box-footer'></div>";
-                  middle.innerHTML = contentInfo;
-
-                  var btn = document.createElement("BUTTON");
-                  btn.className='btn btn-warning btn-xs';
-                  //btn.style.float='right';
-                  btn.appendChild(document.createTextNode("调拨"));
-                  var item = {
-                    x:this.x,
-                    y:this.y,
-                    deviceNum:this.deviceNum,
-                    orgLabel:this.orgLabel,
-                    orgId:this.orgId,
-                    address:this.address,
-                    deviceId:this.deviceId,
-                    totalDuration:this.totalDuration,
-                    lastDataUploadTime:this.lastDataUploadTime,
-                    remainDistance: this.ramainDistance,
-                    remainTime: this.ramainTime
-                  };
-
-                  btn.onclick=function moveOrg() {
-                    //弹出调拨panel
-                    //车队列表panel begin
-                    if(document.getElementById("panel")){
-                      var panel =document.getElementById("panel");
-                      panel.parentNode.removeChild(panel);
-                    }
-
-                    var pageIndex = 0;
-                    function queryDistanceToOrg(page,size,sort,orgLabel,item,tbody,table) {
-                      var defaultUrl = DEVCE_DISTANCE_TOFLEET_PAGE;
-                      var pageUrl = page||0;
-                      var sizeUrl = size||5;
-                      var sortUrl = sort||'id,desc';
-                      defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-                      defaultUrl += '&deviceNum='+item.deviceNum;
-                      defaultUrl += '&search_NEQ_id='+item.orgId;
-
-                      if(null !=orgLabel && orgLabel!=''){
-                        defaultUrl += "&search_LIKE_label=" +orgLabel;
-                      }
-
-                      var rspdata = serviceResource.restCallService(defaultUrl, "GET");
-                      rspdata.then(function (data) {
-
-                        var rowNum=table.rows.length;
-                        for (var i=1;i<rowNum;i++)
-                        {
-                          table.deleteRow(i);
-                          rowNum=rowNum-1;
-                          i=i-1;
-                        }
-                        pageIndex = data.page.number;
-                        var orgList = data.content;
-                        angular.forEach(orgList,function (data) {
-                          var tr = document.createElement("TR");
-                          tr.style.height='35px';
-                          tr.onclick= function () {
-                            var oObj = window.event.srcElement;
-                            if(oObj.tagName.toLowerCase() == "td"){
-                              var oTr = oObj.parentNode;
-                              for(var i=0; i<table.rows.length; i++)   {
-                                table.rows[i].style.backgroundColor   =   "";
-                                table.rows[i].selected = false;
-                              }
-                              oTr.style.backgroundColor = "#CCCCFF";
-                              oTr.selected = true;
-                              input.value=oTr.firstChild.innerHTML;
-                            }
-                          }
-                          var td1 = document.createElement("TD");
-                          //td1.className="text-nowrap";
-                          td1.appendChild(document.createTextNode(data.label));
-
-                          var td2 = document.createElement("TD");
-                          td2.className="text-nowrap";
-                          td2.appendChild(document.createTextNode(Math.round(data.distance*100)/100+" 米"));
-
-                          var td3 = document.createElement("TD");
-                          td3.style.display = 'none';
-                          td3.appendChild(document.createTextNode(data.id));
-                          tr.appendChild(td1);
-                          tr.appendChild(td2);
-                          tr.appendChild(td3);
-                          tbody.appendChild(tr);
-                        });
-                      },function (reason) {
-
-                      })
-                    }
-
-                    if(!document.getElementById("panel")){
-                      var panel = document.createElement("div");
-                      panel.id ="panel";
-                      panel.className = "info";
-                      panel.style.width = "300px";
-                      panel.position ='absolute';
-                      panel.style.left = '80px';
-                      panel.border= 'solid 1px silver';
-
-                      // 定义顶部标题
-                      var top = document.createElement("div");
-                      var titleD = document.createElement("div");
-                      var closeX = document.createElement("img");
-                      top.className = "info-top";
-                      titleD.innerHTML = '车队列表';
-                      closeX.src = "http://webapi.amap.com/images/close2.gif";
-                      closeX.onclick = function () {
-                        panel.style.display='none';
-                      };
-                      top.appendChild(titleD);
-                      top.appendChild(closeX);
-                      panel.appendChild(top);
-
-                      // 定义中部内容
-                      var middle = document.createElement("div");
-                      middle.className = "info-middle";
-                      middle.style.backgroundColor = 'white';
-                      var row = document.createElement("div");
-                      row.className='row';
-                      row.style.margin='5px';
-                      middle.appendChild(row);
-
-                      var input = document.createElement("INPUT");
-                      input.style.marginRight='8px';
-                      input.placeholder='支持模糊查询';
-                      row.appendChild(input);
-                      //搜索fleet
-                      var btn = document.createElement("BUTTON");
-                      btn.appendChild(document.createTextNode("搜索"));
-                      btn.className='btn btn-default btn-sm';
-                      btn.style.marginRight='8px';
-                      row.appendChild(btn);
-
-                      btn.onclick = function queryOrg() {
-
-                        queryDistanceToOrg(null,null,null,input.value,item,tbody,table);
-
-                      };
-
-                      var mBtn = document.createElement("BUTTON");
-                      mBtn.appendChild(document.createTextNode("调拨"));
-                      mBtn.className = 'btn btn-warning btn-sm';
-                      row.appendChild(mBtn);
-                      mBtn.onclick =function () {
-                        for(var i = 0;i < table.rows.length;i++){
-                          if(table.rows[i].selected == true){
-                            var moveOrg ={ids: [item.deviceId], "orgId": table.rows[i].lastChild.innerHTML}
-                          }
-                        }
-                        if(moveOrg != null){
-                          var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
-                          restPromise.then(function (data) {
-                            //刷新页面
-                            vm.loadFleetChart();
-                            Notification.success("调拨设备成功!");
-                            //close plane
-                            panel.style.display='none';
-                          }, function (reason) {
-                            Notification.error("调拨设备出错!");
-                          });
-                        }else{
-                          Notification.error("请在列表中选择车队!");
-                        }
-
-                      }
-
-                      //默认查询所有车队
-                      var table= document.createElement("TABLE");
-                      table.className='table';
-                      var thead  =document.createElement("THEAD");
-                      var thtr = document.createElement("TR");
-                      var th1 = document.createElement("TH");
-                      var th2 = document.createElement("TH");
-                      th1.appendChild(document.createTextNode("车队名称"));
-                      th2.appendChild(document.createTextNode("距离当前车辆"));
-                      thtr.appendChild(th1);
-                      thtr.appendChild(th2);
-                      thead.appendChild(thtr);
-                      table.appendChild(thead);
-
-                      var tbody = document.createElement("TBODY");
-                      table.appendChild(tbody);
-                      middle.appendChild(table);
-                      panel.appendChild(middle);
-
-                      queryDistanceToOrg(null,null,null,null,item,tbody,table);
-
-
-                      var footer = document.createElement("div");
-                      footer.className = 'box-footer';
-                      //var uib = document.createElement("uib-pagination");
-                      var btRow = document.createElement("div");
-                      btRow.className='row';
-                      btRow.style.margin='5px';
-                      var bt1 = document.createElement("BUTTON");
-                      bt1.appendChild(document.createTextNode("上一页"));
-                      bt1.style.marginRight = '80xp';
-                      bt1.onclick = function(){
-                        queryDistanceToOrg(pageIndex-1,null,null,null,item,tbody,table);
-                      };
-                      var bt2 = document.createElement("BUTTON");
-                      bt2.appendChild(document.createTextNode("下一页"));
-                      bt2.onclick = function(){
-                        queryDistanceToOrg(pageIndex+1,null,null,null,item,tbody,table);
-                      };
-                      btRow.appendChild(bt1)
-                      btRow.appendChild(bt2);
-                      footer.appendChild(btRow);
-                      panel.appendChild(footer);
-                      fleetChart.appendChild(panel);
-
-
-                    }
-                  };
-
-                  middle.appendChild(btn);
-
-                  menu.appendChild(middle);
-
-                  // 定义底部内容
-                  var bottom = document.createElement("div");
-                  bottom.className = "info-bottom";
-                  bottom.style.position = 'relative';
-                  bottom.style.top = '0px';
-                  bottom.style.margin = '0 auto';
-                  var sharp = document.createElement("img");
-                  sharp.src = "http://webapi.amap.com/images/sharp.png";
-                  bottom.appendChild(sharp);
-                  menu.appendChild(bottom);
-
-
-                  fleetChart.appendChild(menu);
-
-                }
-              }
-            }
-          },
-          scatter: {
-            marker: {
-              radius: 5,
-              states: {
-                hover: {
-                  enabled: true,
-                  lineColor: 'rgb(100,100,100)'
-                }
-              },
-              label: 11
-            },
-            states: {
-              hover: {
-                marker: {
-                  enabled: false
-                }
-              }
-            },
-            tooltip: {
-              enabled: false
-              // headerFormat: '<b>车号:</b><br>',
-              // pointFormatter: function(){
-              //
-              //   return "所属车队:"+"<br>" +"设备编号:"+"<br>" +"剩余距离:" +"<br>"+"预计剩余时间:" + this.x.toFixed(2)+"小时<br>" ;
-              // }
-            }
-          }
-        }
-      },
-      xAxis: {
-        title: {
-          enabled: false
-        },
-        labels: {
-          enabled: false
-        }
-      },
-      yAxis: [{
-        title: {
-          text: '装料点',
-          margin: 30,
-          rotation: 0
-        },
-        offset: 70,
-        labels: {
-          enabled: false
-        },
-        plotLines: vm.plotLines
-      },{
-        title: {
-          text: '卸料点',
-          rotation: 0
-        },
-        offset: 70,
-        labels: {
-          enabled: false
-        },
-        opposite: true
-      }],
-      legend: {
-        layout: 'vertical',
-        align: 'left',
-        verticalAlign: 'top',
-        x: 100,
-        y: 70,
-        floating: true,
-        backgroundColor: '#FFFFFF',
-        borderWidth: 1
-      },
-      series: [{
-          data: vm.rightList,
-          marker: {
-            symbol: 'url(assets/images/car_right5_2.png)'
-          },
-          dataLabels: {
-            enabled: true,
-            borderRadius: 5,
-            backgroundColor: 'rgba(252, 255, 197, 0.7)',
-            borderWidth: 1,
-            borderColor: '#AAA',
-            y: -35,
-            formatter: function () {
-              return "所属车队:"+ this.point.orgLabel+"<br>" +"设备编号:"+this.point.deviceNum+"<br>";
-            }
-          }
-
-        },{
-          data: vm.leftListd,
-          marker: {
-            symbol: 'url(assets/images/car_left5.png)'
-          },
-          dataLabels: {
-            enabled: true,
-            borderRadius: 5,
-            backgroundColor: 'rgba(252, 255, 197, 0.7)',
-            borderWidth: 1,
-            borderColor: '#AAA',
-            y: -35,
-            formatter: function () {
-              return "所属车队:"+ this.point.orgLabel+"<br>" +"设备编号:"+this.point.deviceNum+"<br>"+"剩余路程:"+this.point.remainDistance.toFixed(2)+"KM<br>"+"剩余时间:"+this.point.remainTime.toFixed(2)+"H<br>";
-            }
-          }
-        },{
-          data: vm.baseList,
-          marker:{
-            enabled:false
-          }
-        }
-      ]
-    }
 
     //默认查询一次
     vm.refreshMap("fleetMap",null,13,null);
 
     //根据orgLabel 查询
     vm.query = function () {
-      if(vm.org.label != null ){
+      if(vm.org!=null && vm.org.label != null ){
         vm.refreshMap("fleetMap",vm.org,13,null);
       }
     }
@@ -1211,9 +641,6 @@
 
       $scope.$emit("$destroy");
 
-      $scope.$on("$destroy",function () {
-        console.log("--取消刷新chart--");
-      })
 
       vm.goList=[];
       vm.backList=[];
@@ -1226,13 +653,13 @@
       var fleetChartData = serviceResource.restCallService(FLEET_DOUBLECHART_DATA,"QUERY");
       fleetChartData.then(function (data) {
         var fleetList = data;
-        var h = 0;
+        var h = -2;
         for(var i =0;i< fleetList.length;i++) {
           var fleet = fleetList[i];
 
-          //作业面和工作车辆都为空的车队
+          //作业面和工作车辆都不为空的车队
           if(fleet.workplaneVo!=null && fleet.workMachine!=null&&fleet.workMachine.length>0){
-            h = h+2;
+            h = h+3;
 
             var workplane = fleet.workplaneVo;
             var plotLine = {
@@ -1251,8 +678,7 @@
             var exc = {
               x:0.55,
               y:h,
-              //licenseId:machine.licenseId,
-              orgLabel:fleet.label,
+              fleetLabel:fleet.label,
             }
 
             vm.excList.push(exc);
@@ -1267,8 +693,11 @@
                   var unload = {
                     x:1.15,
                     y:h,
-                    licenseId:machine.deviceinfo.deviceNum,
-                    orgLabel:fleet.label,
+                    licenseId:machine.licenseId,
+                    deviceNum:machine.deviceinfo.deviceNum,
+                    deviceId:machine.deviceinfo.id,
+                    fleetLabel:fleet.label,
+                    fleetId:fleet.id
                   }
 
                   vm.unloadList.push(unload);
@@ -1280,8 +709,11 @@
                   var load = {
                     x:0.45,
                     y:h,
-                    licenseId:machine.deviceinfo.deviceNum,
-                    orgLabel:fleet.label,
+                    licenseId:machine.licenseId,
+                    deviceNum:machine.deviceinfo.deviceNum,
+                    fleetLabel:fleet.label,
+                    fleetId:fleet.id,
+                    deviceId:machine.deviceinfo.id
                   }
 
                   vm.loadList.push(load);
@@ -1290,19 +722,25 @@
 
                 if (machine.direction == '前往卸料点途中') {
                   var x = 0.6+(machine.duration * workplane.averageSpeed / workplane.totalLength)*0.4 ;
-
+                  //上传时间不准导致的距离显示异常
+                  if(x > 1){
+                    x=1;
+                  }else if(x<0.6){
+                    x=0.6;
+                  }
                   var y = h;
                   var ramainTime = workplane.totalLength / workplane.averageSpeed -machine.duration;
                   var ramainDistance = workplane.totalLength - workplane.averageSpeed *machine.duration;
                   var data = {
                     x:x,
                     y:y,
-                    licenseId:machine.deviceinfo.deviceNum,
-                    orgLabel:fleet.label,
-                    orgId:fleet.id,
+                    licenseId:machine.licenseId,
+                    deviceNum:machine.deviceinfo.deviceNum,
+                    fleetLabel:fleet.label,
+                    fleetId:fleet.id,
                     deviceId:machine.deviceinfo.id,
                     totalDuration:machine.totalDuration,
-                    lastDataUploadTime:machine.lastDataUploadTime,
+                    lastDataUploadTime:machine.deviceinfo.lastDataUploadTime,
                     remainDistance: ramainDistance,
                     remainTime: ramainTime
                   };
@@ -1311,19 +749,26 @@
 
                 } else if (machine.direction == '前往装料点途中') {
                   var x = (machine.duration * workplane.averageSpeed / workplane.totalLength)*0.4 ;
-
+                  //上传时间不准导致的距离显示异常
+                  if(x > 0.4){
+                    x=0.4;
+                  }else if(x<0){
+                    x=0;
+                  }
                   var y = h;
                   var ramainTime = workplane.totalLength / workplane.averageSpeed -machine.duration;
                   var ramainDistance = workplane.totalLength - workplane.averageSpeed *machine.duration;
                   var data = {
                     x:x,
                     y:y,
-                    licenseId:machine.deviceinfo.deviceNum,
-                    orgLabel:fleet.label,
-                    orgId:fleet.id,
+                    machineId:machine.id,
+                    licenseId:machine.licenseId,
+                    deviceNum:machine.deviceinfo.deviceNum,
+                    fleetLabel:fleet.label,
+                    fleetId:fleet.id,
                     deviceId:machine.deviceinfo.id,
                     totalDuration:machine.totalDuration,
-                    lastDataUploadTime:machine.lastDataUploadTime,
+                    lastDataUploadTime:machine.deviceinfo.lastDataUploadTime,
                     remainDistance: ramainDistance,
                     remainTime: ramainTime
                   };
@@ -1347,7 +792,171 @@
 
       },function (reason) {
 
-      })
+      });
+
+      //10S 刷新一次
+      var chartRequest= $interval(function () {
+        if ($rootScope.userInfo ){
+          vm.goList=[];
+          vm.backList=[];
+          vm.doubleBaseList = [];
+          vm.plotLinesList = [];
+          vm.excList = [];
+          vm.unloadList = [];
+          vm.loadList = [];
+          //读取车队下的车辆信息，并关联工作面信息   计算当前位置
+          var fleetChartData = serviceResource.restCallService(FLEET_DOUBLECHART_DATA,"QUERY");
+          fleetChartData.then(function (data) {
+            var fleetList = data;
+            var h = -2;
+            for(var i =0;i< fleetList.length;i++) {
+              var fleet = fleetList[i];
+
+              //作业面和工作车辆都不为空的车队
+              if(fleet.workplaneVo!=null && fleet.workMachine!=null&&fleet.workMachine.length>0){
+                h = h+3;
+
+                var workplane = fleet.workplaneVo;
+                var plotLine = {
+                  color: '#FF0000',
+                  width: 2,
+                  value: h,
+                  label:{
+                    text:workplane.startPoint+",路程:" +workplane.totalLength+"KM",
+                    align:'left',
+                    y: 16
+                  }
+                };
+
+                vm.plotLinesList.push(plotLine);
+
+                var exc = {
+                  x:0.55,
+                  y:h,
+                  fleetLabel:fleet.label,
+                }
+
+                vm.excList.push(exc);
+
+
+
+                for(var n =0; n <fleet.workMachine.length;n++){
+                  var machine = fleet.workMachine[n];
+                  if(machine.duration != null){
+
+                    if(machine.direction == '卸料点卸料'){
+                      var unload = {
+                        x:1.15,
+                        y:h,
+                        licenseId:machine.licenseId,
+                        deviceNum:machine.deviceinfo.deviceNum,
+                        deviceId:machine.deviceinfo.id,
+                        fleetLabel:fleet.label,
+                        fleetId:fleet.id
+                      }
+
+                      vm.unloadList.push(unload);
+
+                    }
+
+
+                    if(machine.direction == '装料点装料'){
+                      var load = {
+                        x:0.45,
+                        y:h,
+                        licenseId:machine.licenseId,
+                        deviceNum:machine.deviceinfo.deviceNum,
+                        fleetLabel:fleet.label,
+                        fleetId:fleet.id,
+                        deviceId:machine.deviceinfo.id
+                      }
+
+                      vm.loadList.push(load);
+
+                    }
+
+                    if (machine.direction == '前往卸料点途中') {
+                      var x = 0.6+(machine.duration * workplane.averageSpeed / workplane.totalLength)*0.4 ;
+                      //上传时间不准导致的距离显示异常
+                      if(x > 1){
+                        x=1;
+                      }else if(x<0.6){
+                        x=0.6;
+                      }
+                      var y = h;
+                      var ramainTime = workplane.totalLength / workplane.averageSpeed -machine.duration;
+                      var ramainDistance = workplane.totalLength - workplane.averageSpeed *machine.duration;
+                      var data = {
+                        x:x,
+                        y:y,
+                        licenseId:machine.licenseId,
+                        deviceNum:machine.deviceinfo.deviceNum,
+                        fleetLabel:fleet.label,
+                        fleetId:fleet.id,
+                        deviceId:machine.deviceinfo.id,
+                        totalDuration:machine.totalDuration,
+                        lastDataUploadTime:machine.deviceinfo.lastDataUploadTime,
+                        remainDistance: ramainDistance,
+                        remainTime: ramainTime
+                      };
+
+                      vm.goList.push(data) ;
+
+                    } else if (machine.direction == '前往装料点途中') {
+                      var x = (machine.duration * workplane.averageSpeed / workplane.totalLength)*0.4 ;
+                      //上传时间不准导致的距离显示异常
+                      if(x > 0.4){
+                        x=0.4;
+                      }else if(x<0){
+                        x=0;
+                      }
+                      var y = h;
+                      var ramainTime = workplane.totalLength / workplane.averageSpeed -machine.duration;
+                      var ramainDistance = workplane.totalLength - workplane.averageSpeed *machine.duration;
+                      var data = {
+                        x:x,
+                        y:y,
+                        machineId:machine.id,
+                        licenseId:machine.licenseId,
+                        deviceNum:machine.deviceinfo.deviceNum,
+                        fleetLabel:fleet.label,
+                        fleetId:fleet.id,
+                        deviceId:machine.deviceinfo.id,
+                        totalDuration:machine.totalDuration,
+                        lastDataUploadTime:machine.deviceinfo.lastDataUploadTime,
+                        remainDistance: ramainDistance,
+                        remainTime: ramainTime
+                      };
+
+                      vm.backList.push(data) ;
+                    }
+
+
+                  }
+                }
+              }
+
+            }
+
+            vm.fleetDoubleChart.yAxis.plotLines =vm.plotLinesList;
+            vm.fleetDoubleChart.series[0].data =vm.goList;
+            vm.fleetDoubleChart.series[1].data =vm.backList;
+            vm.fleetDoubleChart.series[2].data =vm.excList;
+            vm.fleetDoubleChart.series[3].data =vm.unloadList;
+            vm.fleetDoubleChart.series[4].data =vm.loadList;
+
+          },function (reason) {
+
+          });
+
+        }
+
+      },600000);
+
+      $scope.$on("$destroy",function () {
+        console.log("--取消刷新chart--");
+        $interval.cancel(chartRequest);
+      });
 
     }
 
@@ -1421,7 +1030,7 @@
                   middle.className = "info-middle";
                   middle.style.backgroundColor = 'white';
                   var contentInfo="";
-                  contentInfo += "所属车队：" + this.orgLabel +"<br/>";
+                  contentInfo += "所属车队：" + this.fleetLabel +"<br/>";
                   contentInfo += "车号：" + this.deviceNum +"<br/>";
                   contentInfo += languages.findKey('workingHours')+": "+(this.totalDuration==null ?'':$filter('convertToMins')(this.totalDuration))+ "<br/>";
                   //contentInfo += languages.findKey('updateTime')+": " +(this.lastDataUploadTime==null ?'':$filter('date')(this.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
@@ -1435,9 +1044,10 @@
                   var item = {
                     x:this.x,
                     y:this.y,
+                    machineId:this.machineId,
                     deviceNum:this.deviceNum,
-                    orgLabel:this.orgLabel,
-                    orgId:this.orgId,
+                    fleetLabel:this.fleetLabel,
+                    fleetId:this.fleetId,
                     address:this.address,
                     deviceId:this.deviceId,
                     totalDuration:this.totalDuration,
@@ -1462,7 +1072,7 @@
                       var sortUrl = sort||'id,desc';
                       defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
                       defaultUrl += '&deviceNum='+item.deviceNum;
-                      defaultUrl += '&search_NEQ_id='+item.orgId;
+                      defaultUrl += '&search_NEQ_id='+item.fleetId;
 
                       if(null !=orgLabel && orgLabel!=''){
                         defaultUrl += "&search_LIKE_label=" +orgLabel;
@@ -1573,14 +1183,14 @@
                       mBtn.onclick =function () {
                         for(var i = 0;i < table.rows.length;i++){
                           if(table.rows[i].selected == true){
-                            var moveOrg ={ids: [item.deviceId], "orgId": table.rows[i].lastChild.innerHTML}
+                            var moveOrg ={ids: [item.machineId], "orgId": table.rows[i].lastChild.innerHTML}
                           }
                         }
                         if(moveOrg != null){
-                          var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
+                          var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
                           restPromise.then(function (data) {
                             //刷新页面
-                            vm.loadFleetChart();
+                            vm.loadFleetDoubleChart();
                             Notification.success("调拨设备成功!");
                             //close plane
                             panel.style.display='none';
@@ -1760,7 +1370,7 @@
           borderColor: '#AAA',
           y: -35,
           formatter: function () {
-            return this.point.licenseId+"<br>"
+            return this.point.deviceNum+"<br>"
               +"剩余路程:"+this.point.remainDistance.toFixed(2)+"KM<br>"+"剩余时间:"+this.point.remainTime.toFixed(2)+"H<br>";
 
           }
@@ -1779,14 +1389,14 @@
           borderColor: '#AAA',
           y: -35,
           formatter: function () {
-            return this.point.licenseId+"<br>"
+            return this.point.deviceNum+"<br>"
               +"剩余路程:"+this.point.remainDistance.toFixed(2)+"KM<br>"+"剩余时间:"+this.point.remainTime.toFixed(2)+"H<br>";
           }
         }
       },{
         data: vm.excList,
         marker: {
-          symbol: 'url(assets/images/wa4.png)'
+          symbol: 'url(assets/images/wa5.png)'
         },
         dataLabels: {
           enabled: true,
@@ -1794,9 +1404,10 @@
           backgroundColor: 'rgba(252, 255, 197, 0.7)',
           borderWidth: 1,
           borderColor: '#AAA',
-          y: -35,
+          y: -50,
+          x: 21,
           formatter: function () {
-            return this.point.orgLabel+"<br>";
+            return this.point.fleetLabel+"<br>";
           }
         }
 
@@ -1813,7 +1424,7 @@
           borderColor: '#AAA',
           y: -35,
           formatter: function () {
-            return this.point.licenseId+"<br>"+" 卸料中<br>";
+            return this.point.deviceNum+"<br>"+" 卸料中<br>";
           }
         }
 
@@ -1830,7 +1441,7 @@
           borderColor: '#AAA',
           y: -35,
           formatter: function () {
-            return this.point.licenseId+"<br>"+"装料中<br>";
+            return this.point.deviceNum+"<br>"+"装料中<br>";
           }
         }
       }
