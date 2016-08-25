@@ -268,7 +268,7 @@
         }
       })
       .state('home.dataAnalysis', {
-        url: '/dataAnalysis',
+        url: '/dataAnalysis/:role/:menuType',
         views: {
           'footer@home':{
             templateUrl: 'app/main/footer.html'
