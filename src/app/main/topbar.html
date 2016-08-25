@@ -1,24 +1,24 @@
 <header class="main-header" style="height:50px">
-  <a ui-sref="home" class="logo navbar-fixed-top">
+  <a ui-sref="home" class="logo navbar-static-top">
     <img src="assets/images/logo.png" width="33" height="30">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
     {{ 'SDLG' | translate}}
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-fixed-top" role="navigation">
+  <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
 
-    <a ui-sref="home" class="sidebar-toggle" role="button">
-      <i class="fa fa-home"></i>
+    <a  class="sidebar-toggle" role="button" toggels="true">
+      <i  class="glyphicon glyphicon-list" style="color: rgb(255, 255, 255); font-size: 17px;"></i>
     </a>
 
     <a  class="sidebar-toggle center" role="button" ng-click="changeLanguage('zh')">
-      <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -10px;">&nbsp;中文
+      <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
     </a>
 
     <a  class="sidebar-toggle center" role="button" ng-click="changeLanguage('en')">
-      <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -10px;">&nbsp;English
+      <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
     </a>
 
     <div class="navbar-custom-menu">
