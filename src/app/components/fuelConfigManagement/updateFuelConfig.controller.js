@@ -47,12 +47,12 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow();
+      treeFactory.treeShow(vm);
     }
 
-    //选中组织模型赋值
-    $rootScope.$on('orgSelected', function (event, data) {
-      vm.fuelConfig.orgEntity = data;
-    });
+    //选中树的回调
+    vm.selectedCallback=function (selectedItem) {
+      vm.fuelConfig.orgEntity=selectedItem;
+    }
   }
 })();

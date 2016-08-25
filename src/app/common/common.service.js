@@ -165,17 +165,22 @@
   GPSCloudFactory.factory('treeFactory',treeFactory);
 
   function treeFactory($rootScope,$uibModal){
-    var treeFactory={
-        treeShow:function () {
-          $uibModal.open({
-              animation: true,
-              backdrop: false,
-              templateUrl: 'app/components/common/tree.html',
-              controller: 'treeController as treeController'
-          })
-        }
 
+    var treeFactory={}
 
+    treeFactory.treeShow=function (obj) {
+      var modalInstance =  $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/common/tree.html',
+        controller: 'treeController as treeController'
+      })
+      modalInstance.result.then(function(selectedItem){
+        obj.selectedCallback(selectedItem);
+      },function(){
+        // 没有选中任何item
+        // console.log('Modal dismissed at: ' + new Date())
+      })
     }
     return treeFactory;
   }

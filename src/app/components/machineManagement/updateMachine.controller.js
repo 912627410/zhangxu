@@ -9,7 +9,7 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,machineService,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,treeFactory,machineService,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
@@ -101,17 +101,16 @@
       vm.buyTimeOpenStatus.opened = true;
     };
 
-
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow(vm);
     }
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.machine.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
 
+    //选中树的回调
+    vm.selectedCallback=function (selectedItem) {
+      vm.selectedOrg = selectedItem;
+      vm.machine.org = selectedItem;
+    }
     //默认不是通过扫码输入
     vm.deviceNumFromScanner = false;
     vm.deviceNumContentFromScanner = '';
