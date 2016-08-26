@@ -21,7 +21,7 @@
       return $sce.trustAsResourceUrl(src);
     }
 
-    var reqUrl = "http://211.154.7.134:16726/LinGongMachineProfile/lg/NvrUrl/simulationLogin?username=admin&password=admin&menuType="+vm.menuType+"&getToken="+vm.reqAuthtoken+"+&role="+vm.role;
+    var reqUrl = "http://218.56.128.30:16805/LinGongMachineProfile/lg/NvrUrl/simulationLogin?username=admin&password=admin&menuType="+vm.menuType+"&getToken="+vm.reqAuthtoken+"+&role="+vm.role;
     console.log(reqUrl);
     $scope.k2dataUrl={"src":reqUrl}
 
