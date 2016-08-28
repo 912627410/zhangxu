@@ -139,6 +139,40 @@
       });
     };
 
+    //更新 Workplane
+    vm.updateWorkplane = function (workplane, size) {
+      var sourceWorkplane = angular.copy(workplane); //深度copy
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/fleetManagement/updateWorkplane.html',
+        controller: 'updateWorkplaneController as updateWorkplaneController',
+        size: size,
+        backdrop: false,
+        scope:$scope,
+        resolve: {
+          workplane: function () {
+            return workplane;
+          }
+        }
+      });
+
+      modalInstance.result.then(function(result) {
+
+        var tabList=vm.tableParams.data;
+        //更新内容
+        for(var i=0;i<tabList.length;i++){
+          if(tabList[i].id==result.id){
+            tabList[i]=result;
+          }
+        }
+
+      }, function(reason) {
+
+      });
+
+    };
+
+
     //更新Machine
     vm.fleetMachineMng = function (fleet, size) {
 
