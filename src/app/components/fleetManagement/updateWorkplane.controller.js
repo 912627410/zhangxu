@@ -141,11 +141,8 @@
         AMap.event.addDomListener(document.getElementById('removeAllPoint'), 'click', function() {
           map.remove(startMarkers);
           map.remove(endMarkers);
-          document.getElementById("endLongitude").value = '';
-          document.getElementById("endLatitude").value = '';
-          document.getElementById("startLongitude").value = '';
-          document.getElementById("startLatitude").value = '';
 
+          vm.resetLocation();
         }, false);
       });
     };
@@ -213,6 +210,14 @@
 
 
     };
+
+
+    vm.resetLocation=function(){
+      vm.workplane.startLongitude=null;
+      vm.workplane.startLatitude=null;
+      vm.workplane.endLongitude=null;
+      vm.workplane.endLatitude=null;
+    }
 
 
   }
