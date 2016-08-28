@@ -10,10 +10,15 @@
     .controller('newWorkplaneController', newWorkplaneController);
 
   /** @ngInject */
-  function newWorkplaneController($rootScope,$scope,$http,$confirm,$uibModalInstance,WORKPLANE_URL,AMAP_GEO_CODER_URL,serviceResource, Notification) {
+  function newWorkplaneController($rootScope,$scope,$http,$confirm,$timeout,$uibModalInstance,WORKPLANE_URL,AMAP_GEO_CODER_URL,serviceResource, Notification) {
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     //serviceResource.refreshMapWithDeviceInfo("workplaneMap",null,8,null);
+
+    vm.workplane={
+      startRadius:200,
+      endRadius:200
+    }
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
@@ -22,10 +27,17 @@
 
     vm.ok = function (workplane) {
 
-      workplane.startLongitude = document.getElementById("startLongitude").value ;
-      workplane.startLatitude = document.getElementById("startLatitude").value ;
-      workplane.endLongitude = document.getElementById("endLongitude").value ;
-      workplane.endLatitude = document.getElementById("endLatitude").value ;
+      if(workplane.startLongitude==null||workplane.startLatitude==null){
+        Notification.error("请选择装料点");
+        return;
+      }
+
+      if(workplane.endLongitude==null||workplane.endLatitude==null){
+        Notification.error("请选择卸料点");
+        return;
+      }
+
+
 
 
 
@@ -52,7 +64,7 @@
           location.reload(false);
         }
         var amapScale, toolBar,overView;
-        var localZoomSize = 4;  //默认缩放级别
+        var localZoomSize = 1;  //默认缩放级别
         if (zoomsize){
           localZoomSize = zoomsize;
         }
@@ -65,9 +77,7 @@
           center: localCenterAddr,
           zooms: [4, 18]
         });
-
         map.setZoom(localZoomSize);
-
         map.plugin(['AMap.ToolBar'], function () {
           map.addControl(new AMap.ToolBar());
         });
@@ -107,8 +117,6 @@
         //地图click事件获取鼠标点击出的经纬度坐标
         AMap.event.addDomListener(document.getElementById('addStartPoint'), 'click', function() {
           map.remove(startMarkers);
-          document.getElementById("startLongitude").value = '';
-          document.getElementById("startLatitude").value = '';
           var startMarker = new AMap.Marker({
             icon: "assets/images/start_2.png",
             position: map.getCenter(),
@@ -118,17 +126,20 @@
           });
           startMarker.setMap(map);
           startMarkers.push(startMarker);
+
+          vm.updateStartLocationInfo(startMarker.getPosition());
+
+
           AMap.event.addListener(startMarker, 'dragend', function() {
-             document.getElementById("startLongitude").value = startMarker.getPosition().getLng();
-             document.getElementById("startLatitude").value = startMarker.getPosition().getLat();
+            vm.updateStartLocationInfo(startMarker.getPosition());
           }, false);
         }, false);
 
         //addEndPoint
         AMap.event.addDomListener(document.getElementById('addEndPoint'), 'click', function() {
           map.remove(endMarkers);
-          document.getElementById("endLongitude").value = '';
-          document.getElementById("endLatitude").value = '';
+          //document.getElementById("endLongitude").value = '';
+          //document.getElementById("endLatitude").value = '';
           var endMarker = new AMap.Marker({
             icon: "assets/images/end_2.png",
             position: map.getCenter(),
@@ -138,9 +149,14 @@
           });
           endMarker.setMap(map);
           endMarkers.push(endMarker);
+
+          vm.updateEndLocationInfo(endMarker.getPosition());
+
           AMap.event.addListener(endMarker, 'dragend', function() {
-            document.getElementById("endLongitude").value = endMarker.getPosition().getLng();
-            document.getElementById("endLatitude").value = endMarker.getPosition().getLat();
+            //document.getElementById("endLongitude").value = endMarker.getPosition().getLng();
+            //document.getElementById("endLatitude").value = endMarker.getPosition().getLat();
+
+            vm.updateEndLocationInfo(endMarker.getPosition());
           }, false);
         }, false);
 
@@ -148,16 +164,43 @@
         AMap.event.addDomListener(document.getElementById('removeAllPoint'), 'click', function() {
           map.remove(startMarkers);
           map.remove(endMarkers);
-          document.getElementById("endLongitude").value = '';
-          document.getElementById("endLatitude").value = '';
-          document.getElementById("startLongitude").value = '';
-          document.getElementById("startLatitude").value = '';
+
+          vm.resetLocation();
 
         }, false);
       });
     };
 
-    vm.refreshMap("workplaneMap",13,null);
+    $timeout(function(){
+      vm.refreshMap("workplaneMap",1,null);
+    },50);
+
+
+
+    vm.updateEndLocationInfo=function(location){
+      vm.workplane.endLongitude=location.getLng();//选中的经度
+      vm.workplane.endLatitude=location.getLat();//选中的维度
+
+      $scope.$apply();
+
+
+    };
+
+
+    vm.updateStartLocationInfo=function(location){
+      vm.workplane.startLongitude=location.getLng();//选中的经度
+      vm.workplane.startLatitude=location.getLat();//选中的维度
+
+      $scope.$apply();
+
+    };
+
+    vm.resetLocation=function(){
+      vm.workplane.startLongitude=null;
+      vm.workplane.startLatitude=null;
+      vm.workplane.endLongitude=null;
+      vm.workplane.endLatitude=null;
+    }
   }
 
 })();

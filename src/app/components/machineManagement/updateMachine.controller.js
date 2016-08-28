@@ -34,7 +34,6 @@
     var fuelTypePromise = machineService.getFuelTypeList();
     fuelTypePromise.then(function (data) {
       vm.fuelConfigList= data.content;
-      console.log(vm.fuelConfigList);
     }, function (reason) {
       Notification.error('获取燃油类型失败');
     })
@@ -161,6 +160,7 @@
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
 
       console.log(machine.engineType);
+      console.log(machine.fuelConfig);
 
       var postInfo=machine;
       if (machine.deviceinfo){
@@ -174,13 +174,9 @@
         postInfo.deviceinfo=null;
       }
       postInfo.org={id:machine.org.id};
-    //  postInfo.engineType={id:machine.engineType};
-
-      console.log(machine.engineType.id);
-      console.log(machine.engineType);
 
       //if(null!=machine.fuelConfig){
-      //  postInfo.fuelConfig={id:machine.fuelConfig};
+      //  postInfo.fuelConfig={id:machine.fuelConfig.id};
       //}else{
       //  postInfo.fuelConfig=null;
       //}
@@ -213,7 +209,7 @@
 
 
     vm.changeGPS = function(machine,newDeviceNum){
-      if (machine.deviceinfo.deviceNum == null || machine.deviceinfo.deviceNum == ''){
+      if (machine.deviceinfo==null||machine.deviceinfo.deviceNum == null || machine.deviceinfo.deviceNum == ''){
         Notification.warning({message: '原GPS终端号码不能为空', positionX: 'center'});
         return;
       }

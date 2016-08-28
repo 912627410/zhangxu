@@ -79,42 +79,34 @@
     //更新
     vm.updateWorkplane = function (workplane, size) {
       var sourceWorkplane = angular.copy(workplane); //深度copy
-
-      var singlUrl = WORKPLANE_URL + "?id=" + workplane.id;
-      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
-      deviceinfoPromis.then(function (data) {
-        var operWorkplane = data.content;
-        var modalInstance = $uibModal.open({
-          animation: vm.animationsEnabled,
-          templateUrl: 'app/components/fleetManagement/updateWorkplane.html',
-          controller: 'updateWorkplaneController as updateWorkplaneController',
-          size: size,
-          backdrop: false,
-          resolve: {
-            workplane: function () {
-              return operWorkplane;
-            }
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/fleetManagement/updateWorkplane.html',
+        controller: 'updateWorkplaneController as updateWorkplaneController',
+        size: size,
+        backdrop: false,
+        scope:$scope,
+        resolve: {
+          workplane: function () {
+            return workplane;
           }
-        });
-
-        modalInstance.result.then(function(result) {
-
-          var tabList=vm.tableParams.data;
-          //更新内容
-          for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.id){
-              tabList[i]=result;
-            }
-          }
-
-        }, function(reason) {
-
-        });
-
-
-      }, function (reason) {
-        Notification.error('获取作业面信息失败');
+        }
       });
+
+      modalInstance.result.then(function(result) {
+
+        var tabList=vm.tableParams.data;
+        //更新内容
+        for(var i=0;i<tabList.length;i++){
+          if(tabList[i].id==result.id){
+            tabList[i]=result;
+          }
+        }
+
+      }, function(reason) {
+
+      });
+
     };
 
 

@@ -31,6 +31,20 @@
       <button class="btn btn-primary" type="button" ng-click="workplaneMngCtrl.reset()">重置</button>
     </div>
   </div>
+  <div class="row">
+    <div class="btn-group col-md-3">
+      <span class="label label-info pull-left">作业面总数:{{workplaneMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-9">
+
+
+      <a presentation-href="machine:oper" class="btn btn-default pull-right"
+         ng-click="workplaneMngCtrl.newWorkplane('lg')">
+        <i class="fa fa-plus"></i> 增加
+      </a>
+
+    </div>
+  </div>
   <div class="row " style="padding-top: 30px;padding-left: 10px;padding-right: 10px;">
     <div class="table-responsive">
 
@@ -40,22 +54,21 @@
           <td class="text-nowrap" data-title="'描述'" sortable="'workplane.describe'">{{workplane.describe}}</td>
           <td class="text-nowrap" data-title="'装料点名称'" >{{workplane.startPoint}}</td>
           <td class="text-nowrap" data-title="'装料点经/纬度'" >{{workplane.startLongitude}}/{{workplane.startLatitude}}</td>
-          <td class="text-nowrap" data-title="'装料点半径(M)'" >{{workplane.startRadius}}</td>
+          <td class="text-nowrap" data-title="'装料点半径(米)'" >{{workplane.startRadius}}</td>
           <td class="text-nowrap" data-title="'卸料点名称'" >{{workplane.endPoint}}</td>
           <td class="text-nowrap" data-title="'卸料点经/纬度'" >{{workplane.endLongitude}}/{{workplane.endLatitude}}</td>
-          <td class="text-nowrap" data-title="'卸料点半径(M) '" >{{workplane.endRadius}}</td>
-          <td class="text-nowrap" data-title="'总长度(KM)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
+          <td class="text-nowrap" data-title="'卸料点半径(米) '" >{{workplane.endRadius}}</td>
+          <td class="text-nowrap" data-title="'总长度(米)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
           <td class="text-nowrap" data-title="'收入(每吨矿)'" sortable="'workplane.income'">{{workplane.income}}</td>
-          <!--
+
           <td class="text-nowrap" data-title="''">
             <button type="button" class="btn btn-default btn-xs"
-                    ng-click="machineMngCtrl.updateMachine(workplane)">修改
+                    ng-click="workplaneMngCtrl.updateWorkplane(workplane,'lg')">修改
             </button>
             <button type="button" class="btn btn-danger btn-xs"
-                    ng-click="machineMngCtrl.removeDevice(workplane)">解绑
+                    ng-click="workplaneMngCtrl.disableWorkPlane(workplane)">停用
             </button>
           </td>
-          -->
         </tr>
       </table>
     </div>
@@ -63,21 +76,11 @@
   </div>
 
   <div class="box-footer">
-    <div class="row">
-      <div class="col-md-11">
-        <uib-pagination total-items="workplaneMngCtrl.page.totalElements"
-                        ng-change="workplaneMngCtrl.query(workplaneMngCtrl.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="workplaneMngCtrl.pageNumber" items-per-page="workplaneMngCtrl.page.size"
-                        class="pagination-sm" boundary-links="true" rotate="false"
-                        first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
-
-      </div>
-      <div class="col-md-1">
-        <button class="btn btn-primary" type="button"
-                ng-click="workplaneMngCtrl.newWorkplane('lg')"> 增加
-        </button>
-      </div>
-    </div>
+    <uib-pagination total-items="workplaneMngCtrl.page.totalElements"
+                    ng-change="workplaneMngCtrl.query(workplaneMngCtrl.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="workplaneMngCtrl.pageNumber" items-per-page="workplaneMngCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
 
   </div>
 

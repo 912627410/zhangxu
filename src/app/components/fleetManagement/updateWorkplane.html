@@ -1,10 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<form name="newWorkplaneForm">
+  <div class="modal-header">
+    <h3 class="modal-title">新建作业面
+      <button class="btn btn-warning pull-right" type="button" ng-click="updateWorkplaneController.cancel()">取消</button>
+      <button class="btn btn-primary pull-right" type="button" validation-submit='newWorkplaneForm' ng-click="updateWorkplaneController.ok(updateWorkplaneController.workplane)">提交</button>
 
-</body>
-</html>
+      <button class="btn btn-primary  center" id ="addStartPoint">添加装料点</button>
+      <button class="btn btn-primary " id ="addEndPoint">添加卸料点</button>
+      <button class="btn btn-warning " id ="removeAllPoint">移除全部</button>
+      <button class="btn btn-danger  refresh-btn" data-toggle="tooltip" ng-click="updateWorkplaneController.refreshMap('workplaneMap',1,null)" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
+
+    </h3>
+  </div>
+
+
+  <div class="box-body">
+
+    <div class="row">
+      <div class="form-group">
+        <label for="name" class="col-sm-1 control-label">名称</label>
+        <div class="col-sm-2">
+          <input type="text" id="name" name="name"  class="form-control" placeholder="作业面名称"
+                 ng-model="updateWorkplaneController.workplane.name" typeahead-show-hint="true" validator="required"/>
+        </div>
+
+        <label class="col-sm-1 control-label">描述</label>
+        <div class="col-sm-2">
+          <input type="text" id="describe" name="describe"  class="form-control" placeholder="描述"
+                 ng-model="updateWorkplaneController.workplane.describe" typeahead-show-hint="true"/>
+        </div>
+
+        <label for="totalLength" class="col-sm-1 control-label">路程(米)</label>
+        <div class="col-sm-2">
+          <input type="text" id="totalLength" class="form-control" placeholder="路程(米)"
+                 ng-model="updateWorkplaneController.workplane.totalLength" name="totalLength" validator="numberAndDot" typeahead-show-hint="true"
+                 validator="numberAndDot" />
+        </div>
+
+        <label for="income" class="col-sm-1 control-label">收入</label>
+        <div class="col-sm-2">
+          <input type="text" id="income" class="form-control" placeholder="运输每吨矿的收入"
+                 ng-model="updateWorkplaneController.workplane.income" name="income" validator="numberAndDot" typeahead-show-hint="true"
+                 validator="numberAndDot" />
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="startPoint" class="col-sm-1 control-label">装料点名称</label>
+        <div class="col-sm-2">
+
+          <input type="text" id="startPoint" class="form-control" placeholder="装料点名称"
+                 ng-model="updateWorkplaneController.workplane.startPoint" name="startPoint" typeahead-show-hint="true" validator="required"/>
+        </div>
+
+        <label for="startRadius" class="col-sm-1 control-label">装料点半径(米)</label>
+        <div class="col-sm-2">
+
+          <input type="text" id="startRadius" class="form-control" placeholder="装料点半径(米)"
+                 ng-model="updateWorkplaneController.workplane.startRadius" name="startRadius" validator="numberAndDot" typeahead-show-hint="true" validator="required"/>
+        </div>
+
+        <label  class="col-sm-1 control-label">经度</label>
+        <div class="col-sm-2">
+          {{updateWorkplaneController.workplane.startLongitude}}
+        </div>
+
+        <label class="col-sm-1 control-label">维度</label>
+        <div class="col-sm-2">
+          {{updateWorkplaneController.workplane.startLatitude}}
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="startPoint" class="col-sm-1 control-label">卸料点名称</label>
+        <div class="col-sm-2">
+
+          <input type="text" id="endPoint" class="form-control" placeholder="卸料点名称"
+                 ng-model="updateWorkplaneController.workplane.endPoint" name="endPoint" typeahead-show-hint="true" validator="required"/>
+        </div>
+
+        <label for="endRadius" class="col-sm-1 control-label">卸料点半径(米)</label>
+        <div class="col-sm-2">
+
+          <input type="text" id="endRadius" class="form-control" placeholder="卸料点半径(米)"
+                 ng-model="updateWorkplaneController.workplane.endRadius" name="endRadius" validator="numberAndDot" typeahead-show-hint="true" />
+        </div>
+
+        <label class="col-sm-1 control-label">经度</label>
+        <div class="col-sm-2">
+          {{updateWorkplaneController.workplane.endLongitude}}
+        </div>
+
+        <label class="col-sm-1 control-label">维度</label>
+        <div class="col-sm-2">
+          {{updateWorkplaneController.workplane.endLatitude}}
+        </div>
+      </div>
+    </div>
+    <i style="color: red" ng-if="null!=updateWorkplaneController.errorMsg">
+      {{updateWorkplaneController.errorMsg}}<br/>
+    </i>
+
+    <div class="row ">
+      <div class="col-sm-12">
+
+        <div class="box box-danger" style="min-height: 530px;margin-center: 15px" id="workplaneMap">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</form>
