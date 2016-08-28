@@ -15,7 +15,6 @@
     vm.machine = machine;
     vm.operatorInfo = $rootScope.userInfo;
 
-    ngTableDefaults.params.count = 5;
     ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, fleet) {

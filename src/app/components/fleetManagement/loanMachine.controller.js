@@ -7,13 +7,12 @@
 
   angular
     .module('GPSCloud')
-    .controller('addMachineController', addMachineController);
+    .controller('loanMachineController', loanMachineController);
 
   /** @ngInject */
-  function addMachineController($rootScope, $scope, $uibModal, $uibModalInstance,$confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEETINFO_PAGE_URL,FLEETINFO_URL,MACHINE_MOVE_FLEET_URL,MACHINE_MOVE_ORG_URL,MACHINE_PAGE_URL,fleet,type) {
+  function loanMachineController($rootScope, $scope, $uibModal, permissions,ngTableDefaults,$uibModalInstance,$filter, NgTableParams, Notification, serviceResource,MACHINE_MOVE_FLEET_URL,MACHINE_MOVE_ORG_URL,MACHINE_PAGE_URL,fleet) {
     var vm = this;
     vm.fleet = fleet;
-    vm.type = type;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
@@ -21,6 +20,8 @@
       $uibModalInstance.close(vm.fleet);
       $uibModalInstance.dismiss('cancel');
     };
+
+    ngTableDefaults.settings.counts = [];
 
     vm.queryMachine = function (page, size, sort, machine) {
       var restCallURL = MACHINE_PAGE_URL;
@@ -40,12 +41,9 @@
 
       }
 
-      if (vm.type=='org'&&null != vm.fleet&&null != vm.fleet.id) {
-        restCallURL += "&search_NEQ_orgEntity.id=" + vm.fleet.id;
-      }else if(vm.type=='fleet'&&null != vm.fleet&&null != vm.fleet.id){
-        restCallURL += "&search_NEQ_fleetEntity.id=" + vm.fleet.id;
+      restCallURL += "&search_NEQ_fleetEntity.id=" + vm.fleet.id;
 
-      }
+
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -114,41 +112,25 @@
 
 
     //批量设置为已处理
-    vm.batchMoveOrg = function (type) {
-      var moveUrl = '';
-      if(type=='org'){
-        if (vm.selected.length == 0) {
-          Notification.warning({message: '请选择要添加的车辆', positionY: 'top', positionX: 'center'});
-          return;
-        }
+    vm.batchMoveOrg = function () {
+      var restCallURL = MACHINE_MOVE_FLEET_URL;
 
-        moveUrl = MACHINE_MOVE_ORG_URL;
-      }
-
-      if(type=='fleet'){
-        if (vm.selected.length == 0) {
+      if (vm.selected.length == 0) {
           Notification.warning({message: '请选择要借调的车辆', positionY: 'top', positionX: 'center'});
           return;
-        }
-
-        moveUrl = MACHINE_MOVE_FLEET_URL;
       }
 
       var moveOrg = {ids: vm.selected, "orgId": vm.fleet.id};
 
-      var restPromise = serviceResource.restUpdateRequest(moveUrl, moveOrg);
+      var restPromise = serviceResource.restUpdateRequest(restCallURL, moveOrg);
       restPromise.then(function (data) {
         //更新页面显示
         vm.machineTableParams.data.forEach(function (machine) {
           //循环table,更新选中的设备
           if(vm.selected.indexOf(machine.id)!=-1){
             machine.checked=false;
-            if(vm.type=='fleet'){
-              machine.fleet=vm.fleet;
-            }else if(vm.type=='org'){
-              machine.org=vm.fleet;
-            }
-            // console.log(deviceinfo.org.label);
+            machine.fleet=vm.fleet;
+
           }
         })
         vm.selected=[]; //把选中的设备设置为空
@@ -161,7 +143,6 @@
 
 
     };
-
 
   }
 })();

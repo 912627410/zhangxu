@@ -16,19 +16,11 @@
 <section class="content">
 
   <div class="row">
-    <!--
-    <div class="col-md-2">
-      <label class="control-label">车队编号</label>
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="id" class="form-control " ng-model="fleetMngCtrl.org.id"
-             placeholder="支持模糊查询"/>
-    </div>
-    -->
+
     <div class="col-md-2">
       <label class="control-label">车队名称</label>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <input type="text" name="label" class="form-control " ng-model="fleetMngCtrl.org.label"
              placeholder="支持模糊查询"/>
     </div>
@@ -38,6 +30,19 @@
               ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">重置</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-3">
+      <span class="label label-info pull-left">车队总数:{{fleetMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-9">
+
+      <a presentation-href="machine:oper" class="btn btn-default pull-right"
+         ng-click="fleetMngCtrl.newFleet('xs')">
+        <i class="fa fa-plus"></i> 增加
+      </a>
+
     </div>
   </div>
   <div class="row " style="padding-top: 30px;padding-left: 10px;padding-right: 10px;">
@@ -58,16 +63,18 @@
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','work')">{{fleet.workNum}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'作业面编号'" sortable="'fleet.workplaneVo.id'">{{fleet.workplaneVo.id}}</td>
-          <td class="text-nowrap" data-title="'作业面名称'" >{{fleet.workplaneVo.name}}</td>
+          <td class="text-nowrap" data-title="'作业面名称'" >
+            <a href
+               ng-click="fleetMngCtrl.updateFleet(fleet,'lg','query')">{{fleet.workplaneVo.name}}</a>
+          </td>
           <td class="text-nowrap" align="center" data-title="'操作'" >
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">修改信息
+                    ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">修改
             </button>
-            <button type="button" class="btn btn-danger btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateMachineList(fleet,'lg')">车辆维护
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
+                    ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">车辆调剂
             </button>
-            <button type="button" class="btn btn-danger btn-xs" presentation-href="fleet:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
                     ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">作业面维护
             </button>
           </td>
@@ -86,11 +93,6 @@
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
 
-      </div>
-      <div class="col-md-1">
-        <button class="btn btn-primary" type="button"
-                ng-click="fleetMngCtrl.newFleet('xs')"> 新增车队
-        </button>
       </div>
     </div>
 

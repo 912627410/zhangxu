@@ -10,7 +10,7 @@
     .controller('updateWorkplaneRelaController', updateWorkplaneRelaController);
 
   /** @ngInject */
-  function updateWorkplaneRelaController($rootScope,$scope,$http,$confirm,$filter,NgTableParams,$uibModalInstance,WORKPLANE_PAGE,FLEET_WORKPLANE_RELA,serviceResource, Notification,fleet) {
+  function updateWorkplaneRelaController($rootScope,$filter,NgTableParams,$uibModalInstance,WORKPLANE_PAGE,FLEET_WORKPLANE_RELA,serviceResource, Notification,fleet) {
     var vm = this;
     vm.fleet = fleet;
     vm.operatorInfo =$rootScope.userInfo;
@@ -33,9 +33,6 @@
 
       }
 
-      if(null != vm.fleet.workplaneVo && vm.fleet.workplaneVo.id!=null){
-        restCallURL += "&search_NEQ_id=" + $filter('uppercase')(vm.fleet.workplaneVo.id);
-      }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -60,7 +57,7 @@
         rspdata.then(function (data) {
           if(data.code===0){
             vm.fleet = data.content;
-            vm.query();
+            vm.query(vm.pageNumber-1, null, null, vm.workplane);
             Notification.success("更新作业面成功!");
             //$uibModalInstance.close(data.content);
           }else{
@@ -71,7 +68,26 @@
         })
       }
 
-    }
+    };
+
+    vm.cancelRelaToFleet = function () {
+      vm.fleet.workplaneDto=null;
+      var rspdata = serviceResource.restUpdateRequest(FLEET_WORKPLANE_RELA,vm.fleet);
+      rspdata.then(function (data) {
+        if(data.code===0){
+          vm.fleet = data.content;
+          vm.query(vm.pageNumber-1, null, null, vm.workplane);
+          Notification.success("取消关联成功!");
+          //$uibModalInstance.close(data.content);
+        }else{
+          Notification.error(data.message);
+        }
+      },function (reason) {
+        Notification.error(reason.data.message);
+      })
+
+    };
+
     vm.query();
 
     vm.cancel = function () {

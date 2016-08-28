@@ -1,0 +1,81 @@
+<div class="modal-header">
+  <h3 class="modal-title">车辆维护
+    <button class="btn btn-warning pull-right" type="button" ng-click="fleetMachineMngCtrl.cancel()">{{'close'|translate}}</button>
+  </h3>
+</div>
+<!-- Main content -->
+<section class="content">
+  <div class="table-responsive mailbox-messages">
+    <table ng-table="fleetMachineMngCtrl.ownTableParams" class="table table-condensed table-bordered table-striped">
+      <tbody>
+      <h4 class="text text-green">拥有车辆</h4>
+      <tr ng-repeat="machine in $data">
+        <td class="col-md-3" align="center" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+        <td class="col-md-2" align="center" data-title="'设备编号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+        <td class="col-md-2" align="center" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+        <td class="col-md-2" align="center" data-title="'所属车队'" sortable="'org.label'">{{machine.org.label}}</td>
+        <td class="col-md-2" align="center"
+            data-title="'当前工作车队'"
+            ng-class="{true: '', false: 'text-danger'}[machine.fleet.label==machine.org.label]"
+            sortable="'fleet.label'">
+          {{machine.fleet.label}}
+        </td>
+        <td class="col-md-2" align="center" data-title="'操作'">
+          <button type="button" class="btn btn-primary btn-xs" ng-if="machine.fleet.label==machine.org.label||machine.fleet.label==null"
+                  ng-click="fleetMachineMngCtrl.moveToOtherFleet(machine)">借调至其它车队
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <tr>
+      <uib-pagination total-items="fleetMachineMngCtrl.ownPage.totalElements"
+                      ng-change="fleetMachineMngCtrl.queryOwn(fleetMachineMngCtrl.ownPagenumber-1,null,null,fleetMachineMngCtrl.fleet)"
+                      max-size="5"
+                      ng-model="fleetMachineMngCtrl.ownPagenumber"
+                      items-per-page="fleetMachineMngCtrl.ownPage.size"
+                      class="pagination-sm"
+                      boundary-links="true" rotate="false"
+                      previous-text="&lsaquo;" next-text="&rsaquo;"
+                      first-text="&laquo;" last-text="&raquo;">
+
+      </uib-pagination>
+    </tr>
+    <table ng-table="fleetMachineMngCtrl.otherTableParams" class="table table-condensed table-bordered table-striped">
+      <tbody>
+      <h4 class="text text-green">借调车辆
+        <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="fleetMachineMngCtrl.loanMachine('fleet')">借调车辆</button>
+      </h4>
+      <tr ng-repeat="machine in $data" ng-class="{}">
+        <td class="col-md-3" align="center" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+        <td class="col-md-2" align="center" data-title="'设备编号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+        <td class="col-md-2" align="center" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+        <td class="col-md-2" align="center" data-title="'所属车队'" sortable="'org.label'"
+            ng-class="{true: '', false: 'text-danger'}[machine.fleet.label==machine.org.label]">
+          {{machine.org.label}}</td>
+        <td class="col-md-2" align="center" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+        <td class="col-md-2" align="center" data-title="'操作'">
+          <button type="button" class="btn btn-primary btn-xs" ng-if="machine.org.id!=machine.fleet.id"
+                  ng-click="fleetMachineMngCtrl .backToOrg(machine)">归还车辆
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="box-footer">
+      <uib-pagination total-items="fleetMachineMngCtrl.otherPage.totalElements"
+                      ng-change="fleetMachineMngCtrl.queryOther(fleetMachineMngCtrl.otherPagenumber-1,null,null,fleetMachineMngCtrl.fleet)"
+                      max-size="5"
+                      ng-model="fleetMachineMngCtrl.otherPagenumber"
+                      items-per-page="fleetMachineMngCtrl.otherPage.size"
+                      class="pagination-sm"
+                      boundary-links="true" rotate="false"
+                      previous-text="&lsaquo;" next-text="&rsaquo;"
+                      first-text="&laquo;" last-text="&raquo;">
+
+      </uib-pagination>
+    </div>
+    <!-- /.table -->
+    <!-- /.table -->
+  </div>
+</section>

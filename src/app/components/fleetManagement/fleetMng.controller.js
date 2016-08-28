@@ -14,13 +14,12 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    ngTableDefaults.params.count = 10;
     ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, fleet) {
       var restCallURL = FLEETINFO_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || 10;
+      var sizeUrl = size || 8;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
@@ -141,12 +140,12 @@
     };
 
     //更新Machine
-    vm.updateMachineList = function (fleet, size) {
+    vm.fleetMachineMng = function (fleet, size) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/fleetManagement/updateMachineList.html',
-        controller: 'updateMachineListController as updateMachineListCtrl',
+        templateUrl: 'app/components/fleetManagement/fleetMachineMng.html',
+        controller: 'fleetMachineMngController as fleetMachineMngCtrl',
         size: size,
         backdrop: false,
         resolve: {
@@ -165,6 +164,7 @@
       });
 
     };
+
 
     //updateWorkplaneRela
     vm.updateWorkplaneRela = function (fleet,size) {
