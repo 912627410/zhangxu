@@ -4,41 +4,42 @@
   </h3>
 </div>
 <section class="content">
-  <form class="form-horizontal">
+  <h5 ng-if="updateWorkplaneRelaCtrl.fleet.workplaneVo==null">车队未关联作业面，请在下方选择车队工作的作业面!</h5>
+  <form class="form-horizontal" ng-if="updateWorkplaneRelaCtrl.fleet.workplaneVo!=null">
     <div class="modal-body">
       <div class="box-body">
         <div class="form-group">
           <label class="col-xs-2 control-label">当前作业面</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.name"  typeahead-show-hint="true"/>
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.name"  typeahead-show-hint="true" readonly/>
 
           </div>
           <label class="col-xs-2 control-label">描述</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.describe"  typeahead-show-hint="true"/>
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.describe"  typeahead-show-hint="true" readonly/>
 
           </div>
         </div>
         <div class="form-group">
           <label class="col-xs-2 control-label">装料点名称</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.startPoint"  typeahead-show-hint="true"/>
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.startPoint"  typeahead-show-hint="true" readonly/>
 
           </div>
           <label class="col-xs-2 control-label">卸料点名称</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.endPoint"  typeahead-show-hint="true"/>
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.endPoint"  typeahead-show-hint="true" readonly/>
 
           </div>
         </div>
         <div class="form-group">
           <label class="col-xs-2 control-label">路程</label>
           <div class="col-sm-2">
-              <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.totalLength" typeahead-show-hint="true"/>
+              <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.totalLength" typeahead-show-hint="true" readonly/>
           </div>
           <label class="col-xs-2 control-label">收入</label>
           <div class="col-sm-2">
-            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.income" typeahead-show-hint="true"/>
+            <input type="text" class="form-control" ng-model="updateWorkplaneRelaCtrl.fleet.workplaneVo.income" typeahead-show-hint="true" readonly/>
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@
 
   <div class="row " style=" padding-top: 30px;padding-left: 10px;padding-right: 10px;">
     <div class="table-responsive">
-      <caption class="pull-left"><b>其它作业面</b></caption>
+      <!--<caption class="pull-left"><b>其它作业面</b></caption>-->
       <table ng-table="updateWorkplaneRelaCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="workplane in $data">
           <td class="text-nowrap" data-title="'作业面编号'" sortable="'workplane.id'">{{workplane.id}}</td>

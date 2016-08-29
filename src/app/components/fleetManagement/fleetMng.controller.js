@@ -156,6 +156,14 @@
         }
       });
 
+      modalInstance.result.then(function (result) {
+
+        vm.query(vm.pageNumber-1,null,null,null);
+
+      }, function () {
+        //取消
+      });
+
     };
 
     //updateWorkplaneRela

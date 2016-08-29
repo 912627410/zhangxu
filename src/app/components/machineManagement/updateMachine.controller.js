@@ -9,7 +9,7 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,machineService,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$confirm,$uibModalInstance,treeFactory,machineService,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
@@ -34,7 +34,6 @@
     var fuelTypePromise = machineService.getFuelTypeList();
     fuelTypePromise.then(function (data) {
       vm.fuelConfigList= data.content;
-      console.log(vm.fuelConfigList);
     }, function (reason) {
       Notification.error('获取燃油类型失败');
     })
@@ -101,17 +100,16 @@
       vm.buyTimeOpenStatus.opened = true;
     };
 
-
-    vm.showOrgTree = false;
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow(vm);
     }
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-      vm.machine.org = vm.selectedOrg;
-      vm.showOrgTree = false;
-    })
 
+    //选中树的回调
+    vm.selectedCallback=function (selectedItem) {
+      vm.selectedOrg = selectedItem;
+      vm.machine.org = selectedItem;
+    }
     //默认不是通过扫码输入
     vm.deviceNumFromScanner = false;
     vm.deviceNumContentFromScanner = '';
@@ -162,6 +160,7 @@
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
 
       console.log(machine.engineType);
+      console.log(machine.fuelConfig);
 
       var postInfo=machine;
       if (machine.deviceinfo){
@@ -175,13 +174,9 @@
         postInfo.deviceinfo=null;
       }
       postInfo.org={id:machine.org.id};
-    //  postInfo.engineType={id:machine.engineType};
-
-      console.log(machine.engineType.id);
-      console.log(machine.engineType);
 
       //if(null!=machine.fuelConfig){
-      //  postInfo.fuelConfig={id:machine.fuelConfig};
+      //  postInfo.fuelConfig={id:machine.fuelConfig.id};
       //}else{
       //  postInfo.fuelConfig=null;
       //}
@@ -214,7 +209,7 @@
 
 
     vm.changeGPS = function(machine,newDeviceNum){
-      if (machine.deviceinfo.deviceNum == null || machine.deviceinfo.deviceNum == ''){
+      if (machine.deviceinfo==null||machine.deviceinfo.deviceNum == null || machine.deviceinfo.deviceNum == ''){
         Notification.warning({message: '原GPS终端号码不能为空', positionX: 'center'});
         return;
       }

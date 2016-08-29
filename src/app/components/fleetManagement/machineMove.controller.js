@@ -14,14 +14,14 @@
     vm.operatorInfo = $rootScope.userInfo;
 
     //组织树的显示
-    vm.openTreeInfo= function(type) {
-      treeFactory.treeShow(type);
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow(vm);
     }
 
-    //选中组织模型赋值
-    $rootScope.$on('orgSelected', function (event, data) {
-      vm.org = data;
-    });
+    //选中树的回调
+    vm.selectedCallback=function (selectedItem) {
+      vm.org =selectedItem;
+    }
 
     /*
      * Map对象，实现Map功能
@@ -320,8 +320,12 @@
 
             }
 
-          },10000);
+          },600000);
 
+          $scope.$on("$destroy",function () {
+            console.log("--取消刷新map--");
+            $interval.cancel(mapRequest);
+          });
 
         }
 
@@ -637,10 +641,6 @@
 
       $scope.$emit("$destroy");
 
-      $scope.$on("$destroy",function () {
-        console.log("--取消刷新map--");
-        $interval.cancel(mapRequest);
-      });
 
       vm.goList=[];
       vm.backList=[];
@@ -951,8 +951,12 @@
 
         }
 
-      },10000);
+      },600000);
 
+      $scope.$on("$destroy",function () {
+        console.log("--取消刷新chart--");
+        $interval.cancel(chartRequest);
+      });
 
     }
 
