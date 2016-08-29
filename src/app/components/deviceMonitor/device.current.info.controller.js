@@ -145,7 +145,7 @@
       //如果上面没有判断出来，versionNum也不为空，就根据deviceNum来判断车辆类型
       if (vm.DeviceType==null){
         if(deviceinfo.versionNum!=null){
-          vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum);
+          vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum,deviceinfo.deviceType);
         }else {
           vm.DeviceType = serviceResource.getDeviceType(null);
         }
