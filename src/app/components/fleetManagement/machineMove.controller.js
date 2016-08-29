@@ -359,7 +359,8 @@
         infoWindow.open(mapObj, marker.getPosition());
         var title = item.machine.licenseId;
         var contentInfo="";
-        contentInfo += "所属车队：" + item.fleet.label +"<br/>";
+        contentInfo += "所属车队：" + item.org.label +"<br/>";
+        contentInfo += "工作车队：" + item.fleet.label +"<br/>";
         contentInfo += "设备编号：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('convertToMins')(item.totalDuration))+ "<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
@@ -399,204 +400,230 @@
         middle.style.backgroundColor = 'white';
         middle.innerHTML = content;
         info.appendChild(middle);
-        var btn = document.createElement("BUTTON");
-        btn.className='btn btn-warning btn-xs';
-        btn.style.float='right';
-        btn.appendChild(document.createTextNode("调拨"));
-        middle.appendChild(btn);
-        btn.onclick=function moveOrg() {
-          //弹出调拨panel
-          //车队列表panel begin
-          if(document.getElementById("panel")){
-            var panel =document.getElementById("panel");
-            panel.parentNode.removeChild(panel);
+
+        if(item.org.id!=item.fleet.id){
+          var backBtn = document.createElement("BUTTON");
+          backBtn.className='btn btn-warning btn-xs';
+          //btn.style.float='right';
+          backBtn.appendChild(document.createTextNode("归还车辆"));
+          backBtn.onclick = function () {
+            var machineIds = [item.machine.id];
+            var moveOrg = {ids: machineIds, "orgId": item.org.id};
+
+            var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
+            restPromise.then(function (data) {
+              //更新页面显示
+              Notification.success("归还车辆成功!");
+              //刷新页面
+              vm.refreshMap("fleetMap",null,13,null);
+            }, function (reason) {
+              Notification.error("归还车辆出错!");
+            });
           }
-
-          var pageIndex = 0;
-          function queryDistanceToOrg(page,size,sort,orgLabel,item,tbody,table) {
-            var defaultUrl = DEVCE_DISTANCE_TOFLEET_PAGE;
-            var pageUrl = page||0;
-            var sizeUrl = size||5;
-            var sortUrl = sort||'id,desc';
-            defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-            defaultUrl += '&deviceNum='+item.deviceNum;
-            defaultUrl += '&search_NEQ_id='+item.orgId;
-
-            if(null !=orgLabel && orgLabel!=''){
-              defaultUrl += "&search_LIKE_label=" +orgLabel;
+          middle.appendChild(backBtn);
+        }else if(item.org.id==item.fleet.id){
+          var btn = document.createElement("BUTTON");
+          btn.className='btn btn-warning btn-xs';
+          btn.style.float='right';
+          btn.appendChild(document.createTextNode("借调"));
+          middle.appendChild(btn);
+          btn.onclick=function moveOrg() {
+            //弹出调拨panel
+            //车队列表panel begin
+            if(document.getElementById("panel")){
+              var panel =document.getElementById("panel");
+              panel.parentNode.removeChild(panel);
             }
 
-            var rspdata = serviceResource.restCallService(defaultUrl, "GET");
-            rspdata.then(function (data) {
+            var pageIndex = 0;
+            function queryDistanceToOrg(page,size,sort,orgLabel,item,tbody,table) {
+              var defaultUrl = DEVCE_DISTANCE_TOFLEET_PAGE;
+              var pageUrl = page||0;
+              var sizeUrl = size||5;
+              var sortUrl = sort||'id,desc';
+              defaultUrl += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+              defaultUrl += '&deviceNum='+item.deviceNum;
+              defaultUrl += '&search_NEQ_id='+item.org.id;
 
-              var rowNum=table.rows.length;
-              for (var i=1;i<rowNum;i++)
-              {
-                table.deleteRow(i);
-                rowNum=rowNum-1;
-                i=i-1;
+              if(null !=orgLabel && orgLabel!=''){
+                defaultUrl += "&search_LIKE_label=" +orgLabel;
               }
-              pageIndex = data.page.number;
-              var orgList = data.content;
-              angular.forEach(orgList,function (data) {
-                var tr = document.createElement("TR");
-                tr.style.height='35px';
-                tr.onclick= function () {
-                  var oObj = window.event.srcElement;
-                  if(oObj.tagName.toLowerCase() == "td"){
-                    var oTr = oObj.parentNode;
-                    for(var i=0; i<table.rows.length; i++)   {
-                      table.rows[i].style.backgroundColor   =   "";
-                      table.rows[i].selected = false;
+
+              var rspdata = serviceResource.restCallService(defaultUrl, "GET");
+              rspdata.then(function (data) {
+
+                var rowNum=table.rows.length;
+                for (var i=1;i<rowNum;i++)
+                {
+                  table.deleteRow(i);
+                  rowNum=rowNum-1;
+                  i=i-1;
+                }
+                pageIndex = data.page.number;
+                var orgList = data.content;
+                angular.forEach(orgList,function (data) {
+                  var tr = document.createElement("TR");
+                  tr.style.height='35px';
+                  tr.onclick= function () {
+                    var oObj = window.event.srcElement;
+                    if(oObj.tagName.toLowerCase() == "td"){
+                      var oTr = oObj.parentNode;
+                      for(var i=0; i<table.rows.length; i++)   {
+                        table.rows[i].style.backgroundColor   =   "";
+                        table.rows[i].selected = false;
+                      }
+                      oTr.style.backgroundColor = "#CCCCFF";
+                      oTr.selected = true;
+                      input.value=oTr.firstChild.innerHTML;
                     }
-                    oTr.style.backgroundColor = "#CCCCFF";
-                    oTr.selected = true;
-                    input.value=oTr.firstChild.innerHTML;
+                  }
+                  var td1 = document.createElement("TD");
+                  //td1.className="text-nowrap";
+                  td1.appendChild(document.createTextNode(data.label));
+
+                  var td2 = document.createElement("TD");
+                  td2.className="text-nowrap";
+                  td2.appendChild(document.createTextNode(Math.round(data.distance*100)/100+" 米"));
+
+                  var td3 = document.createElement("TD");
+                  td3.style.display = 'none';
+                  td3.appendChild(document.createTextNode(data.id));
+                  tr.appendChild(td1);
+                  tr.appendChild(td2);
+                  tr.appendChild(td3);
+                  tbody.appendChild(tr);
+                });
+              },function (reason) {
+
+              })
+            }
+
+            if(!document.getElementById("panel")){
+              var panel = document.createElement("div");
+              panel.id="panel";
+              panel.className = "info";
+              panel.style.width = "300px";
+              panel.position ='absolute';
+              panel.style.left = '80px';
+              panel.border= 'solid 1px silver';
+
+              // 定义顶部标题
+              var top = document.createElement("div");
+              var titleD = document.createElement("div");
+              var closeX = document.createElement("img");
+              top.className = "info-top";
+              titleD.innerHTML = '车队列表';
+              closeX.src = "http://webapi.amap.com/images/close2.gif";
+              closeX.onclick = function () {
+                panel.style.display='none';
+              };
+              top.appendChild(titleD);
+              top.appendChild(closeX);
+              panel.appendChild(top);
+
+              // 定义中部内容
+              var middle = document.createElement("div");
+              middle.className = "info-middle";
+              middle.style.backgroundColor = 'white';
+              var row = document.createElement("div");
+              row.className='row';
+              row.style.margin='5px';
+              middle.appendChild(row);
+
+              var input = document.createElement("INPUT");
+              input.style.marginRight='8px';
+              input.placeholder='支持模糊查询';
+              row.appendChild(input);
+              //搜索fleet
+              var btn = document.createElement("BUTTON");
+              btn.appendChild(document.createTextNode("搜索"));
+              btn.className='btn btn-default btn-sm';
+              btn.style.marginRight='8px';
+              row.appendChild(btn);
+
+              btn.onclick = function queryOrg() {
+
+                queryDistanceToOrg(null,null,null,input.value,item,tbody,table);
+
+              };
+
+              var mBtn = document.createElement("BUTTON");
+              mBtn.appendChild(document.createTextNode("借调"));
+              mBtn.className = 'btn btn-warning btn-sm';
+              row.appendChild(mBtn);
+              mBtn.onclick =function () {
+                for(var i = 0;i < table.rows.length;i++){
+                  if(table.rows[i].selected == true){
+                    var moveOrg ={ids: [item.machine.id], "orgId": table.rows[i].lastChild.innerHTML}
                   }
                 }
-                var td1 = document.createElement("TD");
-                //td1.className="text-nowrap";
-                td1.appendChild(document.createTextNode(data.label));
-
-                var td2 = document.createElement("TD");
-                td2.className="text-nowrap";
-                td2.appendChild(document.createTextNode(Math.round(data.distance*100)/100+" 米"));
-
-                var td3 = document.createElement("TD");
-                td3.style.display = 'none';
-                td3.appendChild(document.createTextNode(data.id));
-                tr.appendChild(td1);
-                tr.appendChild(td2);
-                tr.appendChild(td3);
-                tbody.appendChild(tr);
-              });
-            },function (reason) {
-
-            })
-          }
-
-          if(!document.getElementById("panel")){
-            var panel = document.createElement("div");
-            panel.id="panel";
-            panel.className = "info";
-            panel.style.width = "300px";
-            panel.position ='absolute';
-            panel.style.left = '80px';
-            panel.border= 'solid 1px silver';
-
-            // 定义顶部标题
-            var top = document.createElement("div");
-            var titleD = document.createElement("div");
-            var closeX = document.createElement("img");
-            top.className = "info-top";
-            titleD.innerHTML = '车队列表';
-            closeX.src = "http://webapi.amap.com/images/close2.gif";
-            closeX.onclick = function () {
-              panel.style.display='none';
-            };
-            top.appendChild(titleD);
-            top.appendChild(closeX);
-            panel.appendChild(top);
-
-            // 定义中部内容
-            var middle = document.createElement("div");
-            middle.className = "info-middle";
-            middle.style.backgroundColor = 'white';
-            var row = document.createElement("div");
-            row.className='row';
-            row.style.margin='5px';
-            middle.appendChild(row);
-
-            var input = document.createElement("INPUT");
-            input.style.marginRight='8px';
-            input.placeholder='支持模糊查询';
-            row.appendChild(input);
-            //搜索fleet
-            var btn = document.createElement("BUTTON");
-            btn.appendChild(document.createTextNode("搜索"));
-            btn.className='btn btn-default btn-sm';
-            btn.style.marginRight='8px';
-            row.appendChild(btn);
-
-            btn.onclick = function queryOrg() {
-
-              queryDistanceToOrg(null,null,null,input.value,item,tbody,table);
-
-            };
-
-            var mBtn = document.createElement("BUTTON");
-            mBtn.appendChild(document.createTextNode("调拨"));
-            mBtn.className = 'btn btn-warning btn-sm';
-            row.appendChild(mBtn);
-            mBtn.onclick =function () {
-              for(var i = 0;i < table.rows.length;i++){
-                if(table.rows[i].selected == true){
-                  var moveOrg ={ids: [item.machine.id], "orgId": table.rows[i].lastChild.innerHTML}
+                if(moveOrg != null){
+                  var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
+                  restPromise.then(function (data) {
+                    //刷新页面
+                    vm.refreshMap("fleetMap",null,13,null);
+                    Notification.success("借调设备成功!");
+                  }, function (reason) {
+                    Notification.error("借调设备出错!");
+                  });
+                }else{
+                  Notification.error("请在列表中选择车队!");
                 }
+
               }
-              if(moveOrg != null){
-                var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
-                restPromise.then(function (data) {
-                  //刷新页面
-                  vm.refreshMap("fleetMap",null,13,null);
-                  Notification.success("借调设备成功!");
-                }, function (reason) {
-                  Notification.error("借调设备出错!");
-                });
-              }else{
-                Notification.error("请在列表中选择车队!");
-              }
+
+              //默认查询所有车队
+              var table= document.createElement("TABLE");
+              table.className='table';
+              var thead  =document.createElement("THEAD");
+              var thtr = document.createElement("TR");
+              var th1 = document.createElement("TH");
+              var th2 = document.createElement("TH");
+              th1.appendChild(document.createTextNode("车队名称"));
+              th2.appendChild(document.createTextNode("距离当前车辆"));
+              thtr.appendChild(th1);
+              thtr.appendChild(th2);
+              thead.appendChild(thtr);
+              table.appendChild(thead);
+
+              var tbody = document.createElement("TBODY");
+              table.appendChild(tbody);
+              middle.appendChild(table);
+              panel.appendChild(middle);
+
+              queryDistanceToOrg(null,null,null,null,item,tbody,table);
+
+
+              var footer = document.createElement("div");
+              footer.className = 'box-footer';
+              //var uib = document.createElement("uib-pagination");
+              var btRow = document.createElement("div");
+              btRow.className='row';
+              btRow.style.margin='5px';
+              var bt1 = document.createElement("BUTTON");
+              bt1.appendChild(document.createTextNode("上一页"));
+              bt1.style.marginRight = '80xp';
+              bt1.onclick = function(){
+                queryDistanceToOrg(pageIndex-1,null,null,null,item,tbody,table);
+              };
+              var bt2 = document.createElement("BUTTON");
+              bt2.appendChild(document.createTextNode("下一页"));
+              bt2.onclick = function(){
+                queryDistanceToOrg(pageIndex+1,null,null,null,item,tbody,table);
+              };
+              btRow.appendChild(bt1)
+              btRow.appendChild(bt2);
+              footer.appendChild(btRow);
+              panel.appendChild(footer);
+              fleetMap.appendChild(panel);
+
 
             }
+          };
 
-            //默认查询所有车队
-            var table= document.createElement("TABLE");
-            table.className='table';
-            var thead  =document.createElement("THEAD");
-            var thtr = document.createElement("TR");
-            var th1 = document.createElement("TH");
-            var th2 = document.createElement("TH");
-            th1.appendChild(document.createTextNode("车队名称"));
-            th2.appendChild(document.createTextNode("距离当前车辆"));
-            thtr.appendChild(th1);
-            thtr.appendChild(th2);
-            thead.appendChild(thtr);
-            table.appendChild(thead);
-
-            var tbody = document.createElement("TBODY");
-            table.appendChild(tbody);
-            middle.appendChild(table);
-            panel.appendChild(middle);
-
-            queryDistanceToOrg(null,null,null,null,item,tbody,table);
+        }
 
 
-            var footer = document.createElement("div");
-            footer.className = 'box-footer';
-            //var uib = document.createElement("uib-pagination");
-            var btRow = document.createElement("div");
-            btRow.className='row';
-            btRow.style.margin='5px';
-            var bt1 = document.createElement("BUTTON");
-            bt1.appendChild(document.createTextNode("上一页"));
-            bt1.style.marginRight = '80xp';
-            bt1.onclick = function(){
-              queryDistanceToOrg(pageIndex-1,null,null,null,item,tbody,table);
-            };
-            var bt2 = document.createElement("BUTTON");
-            bt2.appendChild(document.createTextNode("下一页"));
-            bt2.onclick = function(){
-              queryDistanceToOrg(pageIndex+1,null,null,null,item,tbody,table);
-            };
-            btRow.appendChild(bt1)
-            btRow.appendChild(bt2);
-            footer.appendChild(btRow);
-            panel.appendChild(footer);
-            fleetMap.appendChild(panel);
-
-
-          }
-        };
 
 
         // 定义底部内容
@@ -637,7 +664,7 @@
      *
      *
      **/
-    vm.loadFleetDoubleChart = function () {
+    vm.loadFleetDoubleChart = function (page, size, sort) {
 
       $scope.$emit("$destroy");
 
@@ -649,10 +676,23 @@
       vm.excList = [];
       vm.unloadList = [];
       vm.loadList = [];
+
+      var restCallURL = FLEET_DOUBLECHART_DATA;
+      var pageUrl = page || 0;
+      var sizeUrl = size || 3;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      restCallURL += "&search_EQ_type=4";
+
+
+
       //读取车队下的车辆信息，并关联工作面信息   计算当前位置
-      var fleetChartData = serviceResource.restCallService(FLEET_DOUBLECHART_DATA,"QUERY");
+      var fleetChartData = serviceResource.restCallService(restCallURL,"GET");
       fleetChartData.then(function (data) {
-        var fleetList = data;
+        var fleetList = data.content;
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
         var h = -2;
         for(var i =0;i< fleetList.length;i++) {
           var fleet = fleetList[i];

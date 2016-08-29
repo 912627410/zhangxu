@@ -45,11 +45,23 @@
   </uib-tab>
 
   <uib-tab heading="图表" select="machineMoveCtrl.loadFleetDoubleChart()">
-    <div class="box"></div>
-    <di id="fleetDoubleChart">
-      <highchart  config="machineMoveCtrl.fleetDoubleChart" style="position:absolute;width: 100%;height:auto;">
+    <div class="box" style="height: 380px">
+      <di id="fleetDoubleChart">
+        <highchart  config="machineMoveCtrl.fleetDoubleChart" style="position:absolute;width: 100%;height:auto;">
 
-      </highchart>
-    </di>
+        </highchart>
+      </di>
+
+    </div>
+    <div class="box-footer" style="margin-left: 25px">
+      <uib-pagination total-items="machineMoveCtrl.page.totalElements"
+                      ng-change="machineMoveCtrl.loadFleetDoubleChart(machineMoveCtrl.pageNumber-1,null,null)"
+                      max-size="5" ng-model="machineMoveCtrl.pageNumber" items-per-page="machineMoveCtrl.page.size"
+                      class="pagination-sm" boundary-links="true" rotate="false"
+                      first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+
+    </div>
+
+
   </uib-tab>
 </uib-tabset>
