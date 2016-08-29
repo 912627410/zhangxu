@@ -193,7 +193,7 @@
 
     //选中树的回调
     vm.selectedCallback=function (selectedItem) {
-      vm.org =selectedItem;
+      vm.machine.org =selectedItem;
     }
 
 
