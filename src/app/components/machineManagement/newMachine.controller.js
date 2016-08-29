@@ -15,7 +15,7 @@
 
     vm.machine = {
       installTime:new Date(),
-      buyTime:new Date()
+    //  buyTime:new Date()
     };
 
     var salaryTypePromise = machineService.getSalaryTypeList();
