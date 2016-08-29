@@ -420,19 +420,23 @@
       //01 - 小挖
       //02 - 矿车
       //03 - 中挖
-      getDeviceTypeForVersionNum:function(device_num){
+      //04 - 平地机T3   设备类型为 7
+      getDeviceTypeForVersionNum:function(device_num,deviceType){
         if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
             return '00';
         }
         if(device_num=='A1'){
             return '01';
         }
-        if(device_num=='30'){
-            return '02';
+        if(device_num=='30'&& deviceType=='7'){
+          return '04';
+        }else if(device_num=='30'){
+          return '02';
         }
         if(device_num=='40'){
             return '03'
         }
+
       },
       //将hh.hh翻译成hh时mm分
       convertToMins: function(hours){
