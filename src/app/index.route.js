@@ -267,6 +267,19 @@
           }
         }
       })
+      .state('home.weightData', {
+        url: '/weightData',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/revenueManagement/weightData.html',
+            controller: 'weightDataController',
+            controllerAs: 'weightDataCtrl'
+          }
+        }
+      })
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {
