@@ -87,6 +87,8 @@
   "stabiliserModule":"稳压模块",
   "differentialLock":"差速锁",
   "bridgeCooling":"桥散热",
+  "emergencySteering":"应急转向",
+  "securityUnlock":"安全解锁",
   "oil-waterSeparation":"油水分离",
   "fuelFilter":"油滤",
   "hydraulicOilTemperature":"液压油温",
