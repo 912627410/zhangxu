@@ -82,7 +82,7 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng}">
           <li>
-            <a ng-click="erecord=!erecord" style="">
+            <a ng-click="erecord=!erecord" href="#">
               <i class="fa ion-briefcase"></i>
               <span>机器电子档案</span>
               <span class="glyphicon pull-right" ng-class="erecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -110,7 +110,7 @@
           </li>
 
             <li>
-              <a ng-click="MachineManagement=!MachineManagement">
+              <a ng-click="MachineManagement=!MachineManagement" href="#">
                 <i class="fa ion-clipboard"></i>
                 <span>试验机管理</span>
                 <span class="glyphicon pull-right"
@@ -145,7 +145,7 @@
             </li>
 
             <li>
-              <a ng-click="trackRecord=!trackRecord">
+              <a ng-click="trackRecord=!trackRecord" href="#">
                 <i class="fa ion-document"></i>
                 <span>工作履历管理</span>
                 <span class="glyphicon pull-right"
@@ -186,7 +186,7 @@
             </li>
 
             <li>
-              <a ng-click="workstart=!workstart">
+              <a ng-click="workstart=!workstart" href="#">
                 <i class="fa ion-bonfire"></i>
                 <span>开工热度分析</span>
                 <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -227,7 +227,7 @@
 
 
             <li>
-              <a ng-click="omission=!omission">
+              <a ng-click="omission=!omission" href="#">
                 <i class="glyphicon glyphicon-minus-sign"></i>
                 <span>虚报漏报识别</span>
                 <span class="glyphicon pull-right" ng-class="omission?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -318,11 +318,16 @@
                 <i class="fa ion-calculator"></i> <span>成本统计</span>
               </a>
             </li>
+            <li>
+              <a ui-sref="home.weightData" presentation-href="weightData:page">
+                <i class="fa ion-calculator"></i> <span>称重数据</span>
+              </a>
+            </li>
           </ul>
       </li>
 
       <li>
-        <a ng-click="sysMng =!sysMng" ui-sref="" presentation-href="config:sysconfigPage">
+        <a ng-click="sysMng =!sysMng" href="" presentation-href="config:sysconfigPage">
           <i class="fa fa-home"></i>
           <span>系统管理</span>
           <span class="glyphicon pull-right"
