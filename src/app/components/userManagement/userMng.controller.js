@@ -19,6 +19,7 @@
     ngTableDefaults.settings.counts = [];
     vm.userinfoStatusList;
     vm.org = {label: ""};
+    vm.orgs = {label: ""};
 
     var promise = userService.queryStatusList();
     promise.then(function (data) {
@@ -30,13 +31,10 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function(selectedItem){
+        vm.org =selectedItem;
+      });
     }
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.org =selectedItem;
-    }
-
 
     vm.animationsEnabled = true;
     vm.toggleAnimation = function () {

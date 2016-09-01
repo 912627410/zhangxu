@@ -102,14 +102,11 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function (selectedItem) {
+        vm.machine.org = selectedItem;
+      });
     }
 
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.selectedOrg = selectedItem;
-      vm.machine.org = selectedItem;
-    }
     //默认不是通过扫码输入
     vm.deviceNumFromScanner = false;
     vm.deviceNumContentFromScanner = '';

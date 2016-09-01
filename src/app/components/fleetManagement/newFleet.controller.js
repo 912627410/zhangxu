@@ -19,14 +19,12 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function (selectedItem) {
+        vm.org =selectedItem;
+      });
     }
 
 
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.org =selectedItem;
-    }
 
     vm.ok = function () {
       vm.fleet.parentId=vm.org.id;
