@@ -11,7 +11,12 @@
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope,$scope,$timeout,$interval,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
-                                       AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL,VIEW_KEYBOARD_MSG_URL,VIEW_SMS_URL,SEND_SMS_URL,deviceinfo) {
+                                       AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL,SEND_ACTIVE_SMS_URL,
+                                       VIEW_BIND_INPUT_MSG_URL,VIEW_UN_BIND_INPUT_MSG_URL,VIEW_LOCK_INPUT_MSG_URL,VIEW_UN_LOCK_INPUT_MSG_URL,
+                                       VIEW_CANCEL_LOCK_INPUT_MSG_URL,GET_UN_ACTIVE_LOCK_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,
+                                       GET_LOCK_SMS_URL,SEND_LOCK_SMS_URL,GET_UN_LOCK_SMS_URL,SEND_UN_LOCK_SMS_URL,
+                                       GET_SET_IP_SMS_URL,SEND_SET_IP_SMS_URL,GET_SET_START_TIMES_SMS_URL,SEND_SET_START_TIMES_SMS_URL,
+                                       GET_SET_WORK_HOURS_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
 
@@ -123,7 +128,6 @@
         vm.centerCode='1';
       }
 
-      console.log( vm.centerCode);
       //根据中挖协议修改
       if(vm.deviceinfo.voltageHigthAlarmValue != 0){
         vm.deviceinfo.voltageHigthAlarmValue = vm.deviceinfo.voltageHigthAlarmValue*0.1 +10;
@@ -959,167 +963,249 @@
         Notification.error(languages.findKey('getInformationFailed'));
       })
     }
-    //检查短信参数
-    vm.checkParam = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
-      if (type == null || devicenum == null){
-        return false;
-      }
-      //type == 5表示设置回传地址
-      if (type == 5 && (host == null || port==null)){
-        return false;
-      }
-      //type == 6表示设置启动次数
-      if (type == 6 && startTimes == null){
-        return false;
-      }
-      //type == 7表示设置工作小时数
-      if (type == 7 && workHours == null){
-        return false;
-      }
-      //type == 8表示设置各间隔时间
-      if (type == 8 && (secOutsidePower == null || secLocateInt==null || secInnerPower==null)){
-        return false;
-      }
-      return true;
-    }
+    
 
-    //将短信赋值给相应的变量
-    vm.assginSMSContent = function(type, sms){
-      if(type==1){
-        vm.activeMsg = sms;
-      }
-      else if(type==2){
-        vm.unActiveMsg = sms;
-      }
-      else if(type==3){
-        vm.lockMsg = sms;
-      }
-      else if(type==4){
-        vm.unLockMsg = sms;
-      }
-      else if(type==5){
-        vm.setIpMsg = sms;
-      }
-      else if(type==6){
-        vm.setStartTImesMsg = sms;
-      }
-      else if(type==7){
-        vm.setWorkHoursMsg = sms;
-      }
-      else if(type==8){
-        vm.setWorkIntMsg = sms;
-      }
-    }
+    vm.cancelLockTimes = "";
 
-    //得到短信内容
-    vm.viewSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower){
-      if (vm.checkParam(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) ==  false){
+
+
+
+
+    //查询锁车的短信内容
+    vm.getActiveLockSMS = function(devicenum){
+
+      if (devicenum == null){
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
-      var restURL = VIEW_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
-      if (type == 5){
-        restURL += "&host=" + host + "&port=" + port;
-      }
-      else if (type == 6){
-        restURL += "&startTimes=" + startTimes;
-      }
-      else if (type == 7){
-        restURL += "&workHours=" + workHours;
-      }
-      else if (type == 8){
-        restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
-      }
+      var restURL = GET_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
       var rspData = serviceResource.restCallService(restURL, "GET");
       rspData.then(function (data) {
-        vm.assginSMSContent(type,data.content);
+        if(data.code===0){
+          vm.activeMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
       }, function (reason) {
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
 
-    //发送短信
-    vm.sendSMS = function(type,devicenum,host,port,startTimes,workHours,secOutsidePower,secLocateInt,secInnerPower) {
-      if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower) == false) {
+
+    //发送锁车短信
+    vm.sendActiveLockSMS = function(devicenum) {
+      if (devicenum == null){
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
-      var restURL = SEND_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
-      if (type == 5) {
-        restURL += "&host=" + host + "&port=" + port;
-      }
-      else if (type == 6) {
-        restURL += "&startTimes=" + startTimes;
-      }
-      else if (type == 7) {
-        restURL += "&workHours=" + workHours;
-      }
-      else if (type == 8) {
-        restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
-      }
+      var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
       $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
             if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.assginSMSContent(type,data.content.smsContent);
+              vm.activeMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
             }
             else {
-              Notification.error(data.content.resultDescribe);
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
             }
           }, function (reason) {
-            Notification.error(languages.findKey('messageSendFiled'));
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
           })
         });
     }
 
-    //将键盘信息赋值给相应的变量
-    vm.assginKeyboardContent = function(type, message){
-      if(type==10){
-        vm.bindKeyboardMsg = message;
-        if (message) {
-          vm.bindKeyboardMsgIdx = message.substr(17, 1) + message.substr(22, 1);
-        }
-      }
-      else if(type==11){
-        vm.unbindKeyboardMsg = message;
-        //解绑从50往后倒数,因为GPS设备程序bug
-        if (message) {
-          var idxTmp = message.substr(5, 1) + message.substr(10, 1);
-          vm.unbindKeyboardMsgIdx = 50 - idxTmp;
-        }
-      }
-      else if(type==12){
-        vm.lockKeyboardMsg = message;
-        if (message) {
-          vm.lockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
-        }
-      }
-      else if(type==13){
-        vm.unLockKeyboardMsg = message;
-        if (message) {
-          vm.unLockKeyboardMsgIdx = message.substr(5, 1) + message.substr(10, 1);
-        }
-      }
-      else if(type==14){
-        vm.cancelLockKeyboardMsg = message;
-        if (message){
-          vm.cancelLockTimes = message.substr(3,1) + message.substr(8,1);
-        }
-      }
+
+
+    vm.validateMonitorShowPermission=function(){
+      return permissions.getPermissions("device:monitorShow");
     }
 
 
-    vm.cancelLockTimes = "";
-    //得到键盘输入内容
-    vm.viewKeyboardMsg = function(type,devicenum){
+    //查询锁车的短信内容
+    vm.getUnActiveLockSMS = function(devicenum){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.unActiveMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送锁车短信
+    vm.sendUnActiveLockSMS = function(devicenum) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.unActiveMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+    //查询锁车的短信内容
+    vm.getLockSMS = function(devicenum){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.lockMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送锁车短信
+    vm.sendLockSMS = function(devicenum) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.lockMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+
+    //查询锁车的短信内容
+    vm.getUnLockSMS = function(devicenum){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.unLockMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送锁车短信
+    vm.sendUnLockSMS = function(devicenum) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.unLockMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+    vm.viewBindInputMsg = function(devicenum){
       $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
         .then(function () {
-          var restURL = VIEW_KEYBOARD_MSG_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+          var restURL = VIEW_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
-            vm.assginKeyboardContent(type, data.content);
+
+            vm.bindKeyboardMsg = data.content;
+            if (data.content) {
+              vm.bindKeyboardMsgIdx = data.content.substr(17, 1) + data.content.substr(22, 1);
+            }
           }, function (reason) {
             Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
           })
@@ -1127,9 +1213,301 @@
 
     }
 
-    vm.validateMonitorShowPermission=function(){
-      return permissions.getPermissions("device:monitorShow");
+    vm.viewUnBindInputMsg = function(devicenum){
+      $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var restURL = VIEW_UN_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+
+            vm.unbindKeyboardMsg = data.content;
+            if (data.content) {
+              var idxTmp = data.content.substr(5, 1) + data.content.substr(10, 1);
+              vm.unbindKeyboardMsgIdx = 50 - idxTmp;
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+
     }
+
+    vm.viewLockInputMsg = function(devicenum){
+      $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var restURL = VIEW_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+
+            vm.lockKeyboardMsg = data.content;
+            if (data.content) {
+              vm.lockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+
+    }
+
+    vm.viewUnLockInputMsg = function(devicenum){
+      $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var restURL = VIEW_UN_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+
+            vm.unLockKeyboardMsg = data.content;
+            if (data.content) {
+              vm.unLockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+
+    }
+
+    vm.viewCancelLockInputMsg = function(devicenum){
+      $confirm({text: languages.findKey('ConfirmMsgViewKeyInput')+'', title: languages.findKey('ViewKeyInputConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var restURL = VIEW_CANCEL_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+
+            vm.cancelLockKeyboardMsg = data.content;
+            if (data.content) {
+
+              vm.cancelLockTimes = data.content.substr(3,1) + data.content.substr(8,1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+
+    }
+
+
+    //查询回传地址
+    vm.getSetIpSMS = function(devicenum,host,port){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&host=" + host + "&port=" + port;;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.setIpMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送回传地址信息
+    vm.sendSetIpSMS = function(devicenum,host,port) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&host=" + host + "&port=" + port;;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.setIpMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+    //查询启动次数信息
+    vm.getSetStartTimesSMS = function(devicenum,startTimes){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&startTimes=" + startTimes;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.setStartTImesMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送启动次数信息
+    vm.sendSetStartTimesSMS = function(devicenum,startTimes) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&startTimes="+startTimes ;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.setStartTImesMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+
+
+    //查询工作小时信息
+    vm.getSetWorkHoursSMS = function(devicenum,workHours){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&workHours=" + workHours;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.setWorkHoursMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送回传地址信息
+    vm.sendSetWorkHoursSMS = function(devicenum,workHours) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&workHours=" + workHours;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.setWorkHoursMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
+    //查询间隔信息
+    vm.getSetInterSMS = function(devicenum,secOutsidePower, secLocateInt, secInnerPower){
+
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = GET_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&secOutsidePower="
+        + secOutsidePower+"&secLocateInt=" + secLocateInt+"&secInnerPower=" + secInnerPower;
+
+      var rspData = serviceResource.restCallService(restURL, "GET");
+      rspData.then(function (data) {
+        if(data.code===0){
+          vm.setWorkIntMsg = data.content;
+        }else{
+          Notification.error(data.message);
+        }
+
+      }, function (reason) {
+        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+      })
+    }
+
+
+    //发送间隔信息
+    vm.sendSetInterSMS = function(devicenum,secOutsidePower, secLocateInt, secInnerPower) {
+      if (devicenum == null){
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum+"&secOutsidePower="
+      + secOutsidePower+"&secLocateInt=" + secLocateInt+"&secInnerPower=" + secInnerPower;
+
+      $confirm({text: languages.findKey('youSureYouWantToSendThisMessage')+'', title: languages.findKey('SMSConfirmation')+'', ok: languages.findKey('confirm')+'', cancel: languages.findKey('cancel')+''})
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.setWorkIntMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+            }
+            else {
+
+              if(data.code == 0){
+                Notification.error(data.content.resultDescribe);
+              }else{
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled')+": "+reason.data.message);
+          })
+        });
+    }
+
 
   }
 })();
