@@ -1,8 +1,20 @@
-@device-har-image-width: 36px;
+@device-har-image-width: 40px;
 @device-har-image-height: 37px;
 @device-har-normal-icon-image-path: 'assets/images/harvesters-normal.png';
 @device-har-warning-icon-image-path: "assets/images/harvesters-warning.png";
 
+.engineWaterHigNormal{
+  width: @device-har-image-width;
+  height: @device-har-image-height;
+  background: url("@{base-url}/@{device-har-normal-icon-image-path}") no-repeat;
+  background-position: -480px -244px;
+}
+.engineWaterHigWarning{
+  width: @device-har-image-width;
+  height: @device-har-image-height;
+  background: url("@{base-url}/@{device-har-warning-icon-image-path}") no-repeat;
+  background-position:  -499px -264px;
+}
 
 .emergencySteeringNormal{
   width: @device-har-image-width;

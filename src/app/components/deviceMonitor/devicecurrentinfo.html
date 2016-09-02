@@ -433,6 +433,9 @@
                       <div ng-switch-when="0" class="centerCodeNormal" title="{{'centralAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="centerCodeWarning" title="{{'centralAlarm'|translate}}"></div>
                     </td>
+                  </tr>
+
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '04'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
                       <div ng-switch-when="0" class="harHighBeamNormal" title="{{'harHighBeam'|translate}}"></div>
                       <div ng-switch-when="1" class="harHighBeamWarning" title="{{'harHighBeam'|translate}}"></div>
@@ -446,8 +449,6 @@
                       <div ng-switch-when="1" class="oilWaterWarning" title="{{'oil-waterSeparation'|translate}}"></div>
                     </td>
 
-                  </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '04'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
                       <div ng-switch-when="0" class="engineOilPressureNormal" title="{{'lowOilPressure'|translate}}"></div>
                       <div ng-switch-when="1" class="engineOilPressureWarning" title="{{'lowOilPressure'|translate}}"></div>
@@ -461,8 +462,8 @@
                       <div ng-switch-when="1" class="colderWarning" title="{{'coolingFailure'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
-                      <div ng-switch-when="0" class="harEngineTemperatureNormal" title="{{'harEngineTemperature'|translate}}"></div>
-                      <div ng-switch-when="1" class="harEngineTemperatureWarning" title="{{'harEngineTemperature'|translate}}"></div>
+                      <div ng-switch-when="0" class="engineWaterHigNormal" title="{{'engineWaterHig'|translate}}"></div>
+                      <div ng-switch-when="1" class="engineWaterHigWarning" title="{{'engineWaterHig'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
                       <div ng-switch-when="0" class="harFuelOilLevelNormal" title="{{'harFuelOilLevel'|translate}}"></div>
