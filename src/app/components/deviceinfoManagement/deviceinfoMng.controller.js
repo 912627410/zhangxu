@@ -277,11 +277,9 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(vm);
-    }
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.org =selectedItem;
+      treeFactory.treeShow(function(selectedItem){
+        vm.org =selectedItem;
+      });
     }
 
 

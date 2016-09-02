@@ -15,13 +15,11 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function (selectedItem) {
+        vm.org =selectedItem;
+      });
     }
 
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.org =selectedItem;
-    }
 
     /*
      * Map对象，实现Map功能
@@ -84,7 +82,7 @@
         this.remove = function(_key) {
           var bln = false;
           try {
-            for (i = 0; i < this.elements.length; i++) {
+            for (var i = 0; i < this.elements.length; i++) {
               if (this.elements[i].key == _key){
                 this.elements.splice(i, 1);
                 return true;
@@ -121,7 +119,7 @@
         this.containsKey = function(_key) {
           var bln = false;
           try {
-            for (i = 0; i < this.elements.length; i++) {
+            for (var i = 0; i < this.elements.length; i++) {
               if (this.elements[i].key == _key){
                 bln = true;
               }
@@ -136,7 +134,7 @@
         this.containsValue = function(_value) {
           var bln = false;
           try {
-            for (i = 0; i < this.elements.length; i++) {
+            for (var i = 0; i < this.elements.length; i++) {
               if (this.elements[i].value == _value){
                 bln = true;
               }
@@ -150,7 +148,7 @@
         //获取Map中所有key的数组（array）
         this.keys = function() {
           var arr = new Array();
-          for (i = 0; i < this.elements.length; i++) {
+          for (var i = 0; i < this.elements.length; i++) {
             arr.push(this.elements[i].key);
           }
           return arr;
@@ -159,7 +157,7 @@
         //获取Map中所有value的数组（array）
         this.values = function() {
           var arr = new Array();
-          for (i = 0; i < this.elements.length; i++) {
+          for (var i = 0; i < this.elements.length; i++) {
             arr.push(this.elements[i].value);
           }
           return arr;

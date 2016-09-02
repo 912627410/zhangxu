@@ -168,7 +168,7 @@
 
     var treeFactory={}
 
-    treeFactory.treeShow=function (obj) {
+    treeFactory.treeShow=function (selectedCallback) {
       var modalInstance =  $uibModal.open({
         animation: true,
         backdrop: false,
@@ -176,7 +176,7 @@
         controller: 'treeController as treeController'
       })
       modalInstance.result.then(function(selectedItem){
-        obj.selectedCallback(selectedItem);
+        selectedCallback(selectedItem);
       },function(){
         // 没有选中任何item
         // console.log('Modal dismissed at: ' + new Date())

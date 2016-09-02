@@ -45,11 +45,9 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(vm);
-    }
-    vm.selectedCallback=function (selectedItem) {
-      console.log(selectedItem)
-      vm.updatedUser.organizationDto=selectedItem;
+      treeFactory.treeShow(function (selectedItem) {
+        vm.updatedUser.organizationDto=selectedItem;
+      });
     }
 
   }

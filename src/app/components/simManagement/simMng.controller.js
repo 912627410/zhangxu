@@ -237,13 +237,10 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function (selectedItem) {
+        vm.sim.deviceinfo.org =selectedItem;
+      });
     }
 
-
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.sim.deviceinfo.org =selectedItem;
-    }
   }
 })();

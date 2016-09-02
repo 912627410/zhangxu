@@ -21,14 +21,12 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(vm);
+      treeFactory.treeShow(function (selectedItem) {
+        vm.fleet.parentId = selectedItem.id;
+        vm.fleet.parentLabel=selectedItem.label;
+      });
     }
-    
-    //选中树的回调
-    vm.selectedCallback=function (selectedItem) {
-      vm.fleet.parentId = selectedItem.id;
-      vm.fleet.parentLabel=selectedItem.label;
-    }
+
 
     vm.ok = function (fleet) {
       var rspdata = serviceResource.restUpdateRequest(FLEETINFO_URL,fleet);
