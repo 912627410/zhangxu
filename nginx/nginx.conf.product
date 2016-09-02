@@ -36,7 +36,7 @@ http {
     server {
         listen       8000;
         server_name  139.196.190.56;
-	return 301 https://$server_name$request_uri;
+	      return 301 https://$server_name$request_uri;
 
         #charset koi8-r;
         charset utf-8;
@@ -106,7 +106,7 @@ http {
     server {
         listen       443 ssl;
         server_name  139.196.190.56;
-	ssl on;
+	      ssl on;
 
         ssl_certificate      /etc/nginx/ssl/ssl.crt;
         ssl_certificate_key  /etc/nginx/ssl/ssl.key;
@@ -114,25 +114,36 @@ http {
         ssl_session_cache    shared:SSL:20m;
         ssl_session_timeout  60m;
         ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-	charset utf-8;
-	location / {
-    		include       /usr/local/openresty/nginx/conf/mime.types;
-    		root   /usr/local/openresty/nginx/www;
-    		index  index.html index.htm;
-	}
-	location ^~ /rest/ {
-   		proxy_pass   http://localhost:8080;
-                proxy_redirect http://localhost:8080 https://139.196.190.56;
-		proxy_set_header Host $host;
-		proxy_set_header        X-Real-IP $remote_addr;
-		proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header        X-Forwarded-Proto $scheme;
-		proxy_read_timeout  90;
-	}
-	error_page   500 502 503 504  /50x.html;
-	location = /50x.html {
-    		root   html;
-	}
+
+        charset utf-8;
+
+        location / {
+            include  /usr/local/openresty/nginx/conf/mime.types;
+            root    /usr/local/openresty/nginx/www;
+            index   index.html index.htm;
+        }
+
+        location ^~ /LinGongMachineProfile/ {
+	          proxy_set_header Host 211.154.7.134:18726;
+            proxy_pass       https://211.154.7.134:18726/LinGongMachineProfile/;
+
+	      }
+
+        location ^~ /rest/ {
+            proxy_pass           http://localhost:8080;
+            proxy_redirect       http://localhost:8080 https://139.196.190.56;
+            proxy_set_header     Host $host;
+            proxy_set_header     X-Real-IP $remote_addr;
+            proxy_set_header     X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header     X-Forwarded-Proto $scheme;
+            proxy_read_timeout   90;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+              root   html;
+	      }
     }
     #    ssl_ciphers  HIGH:!aNULL:!MD5;
     #    ssl_prefer_server_ciphers  on;

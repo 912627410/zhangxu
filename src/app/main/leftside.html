@@ -74,7 +74,7 @@
       </li>
 
       <li>
-        <a ng-click="reportMng=!reportMng" href="#" presentation-href="report:idleDeviceReport">
+        <a ng-click="reportMng=!reportMng" presentation-href="report:topIdleDeviceReport">
           <i class="fa ion-stats-bars"></i>
           <span style="width:200px">统计分析</span>
           <span class="glyphicon pull-right"
@@ -82,7 +82,7 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng}">
           <li>
-            <a ng-click="erecord=!erecord" href="#">
+            <a ng-click="erecord=!erecord" presentation-href="dataAnalysis:tope-record">
               <i class="fa ion-briefcase"></i>
               <span>机器电子档案</span>
               <span class="glyphicon pull-right" ng-class="erecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -110,7 +110,7 @@
           </li>
 
             <li>
-              <a ng-click="MachineManagement=!MachineManagement" href="#">
+              <a ng-click="MachineManagement=!MachineManagement"  presentation-href="dataAnalysis:testmachinemanager">
                 <i class="fa ion-clipboard"></i>
                 <span>试验机管理</span>
                 <span class="glyphicon pull-right"
@@ -145,7 +145,7 @@
             </li>
 
             <li>
-              <a ng-click="trackRecord=!trackRecord" href="#">
+              <a ng-click="trackRecord=!trackRecord" presentation-href="dataAnalysis:toptrackrecord">
                 <i class="fa ion-document"></i>
                 <span>工作履历管理</span>
                 <span class="glyphicon pull-right"
@@ -186,7 +186,7 @@
             </li>
 
             <li>
-              <a ng-click="workstart=!workstart" href="#">
+              <a ng-click="workstart=!workstart" presentation-href="dataAnalysis:topworkstart">
                 <i class="fa ion-bonfire"></i>
                 <span>开工热度分析</span>
                 <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -227,7 +227,7 @@
 
 
             <li>
-              <a ng-click="omission=!omission" href="#">
+              <a ng-click="omission=!omission" presentation-href="dataAnalysis:topomissionstatistic">
                 <i class="glyphicon glyphicon-minus-sign"></i>
                 <span>虚报漏报识别</span>
                 <span class="glyphicon pull-right" ng-class="omission?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
