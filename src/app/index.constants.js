@@ -67,17 +67,41 @@
     .constant('ENGINE_TYPE_LIST_URL', SERVER_BASE_URL + 'config/enginetype')   //发动机类型集合
 
     .constant('DEIVCIE_TYPE_LIST_URL', SERVER_BASE_URL + 'deviceType/deviceTypeList')   //设备类型集合
-    .constant('DEIVCIE_PROTOCAL_TYPE_LIST_URL', SERVER_BASE_URL + 'device/protocalTypeList')   //设备协议类型集合
+    .constant('DEI`VCIE_PROTOCAL_TYPE_LIST_URL', SERVER_BASE_URL + 'device/protocalTypeList')   //设备协议类型集合
     .constant('DEIVCIE_NOT_REGISTER_LIST_URL', SERVER_BASE_URL + 'device/notRegisterList')   //设备协议类型集合
     .constant('DEIVCIE_MOVE_ORG_URL', SERVER_BASE_URL + 'device/moveOrg')   //设备调拨
     .constant('DEIVCIE_FETCH_UNUSED_URL', SERVER_BASE_URL + 'device/fetchUnused')   //动态查询未使用的
 
     .constant('DEIVCIE_UNLOCK_FACTOR_URL', SERVER_BASE_URL + 'device/deviceunlock')   //查询解锁url
 
-    .constant('VIEW_SMS_URL', SERVER_BASE_URL + 'sms/getsms')   //得到短消息内容
-    .constant('SEND_SMS_URL', SERVER_BASE_URL + 'sms/sendsms')   //发送短消息
+    //短信相关URL
+    .constant('GET_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/getActiveSms')   //得到短消息内容
+    .constant('SEND_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/sendActiveSms')   //发送短消息
+    .constant('GET_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getUnActiveLockSMS')   //得到短消息内容
+    .constant('SEND_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnActiveLockSMS')   //发送短消息
+    .constant('GET_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getLockSMS')   //得到短消息内容
+    .constant('SEND_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendLockSMS')   //发送短消息
+    .constant('GET_UN_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getUnLockSMS')   //得到短消息内容
+    .constant('SEND_UN_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnLockSMS')   //发送短消息
+    .constant('GET_SET_IP_SMS_URL', SERVER_BASE_URL + 'sms/getSetIpSMS')   //得到短消息内容
+    .constant('SEND_SET_IP_SMS_URL', SERVER_BASE_URL + 'sms/sendSetIpSMS')   //发送短消息
+    .constant('GET_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/getSetStartTimesSMS')   //得到短消息内容
+    .constant('SEND_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/sendSetStartTimesSMS')   //发送短消息
+    .constant('GET_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/getSetWorkHoursSMS')   //得到短消息内容
+    .constant('SEND_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/sendSetWorkHoursSMS')   //发送短消息
+    .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
+    .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
+
+    //键盘数据相关
+    .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')
+    .constant('VIEW_UN_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getUnBindInputMsg')
+    .constant('VIEW_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getLockInputMsg')
+    .constant('VIEW_UN_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getUnLockInputMsg')
+    .constant('VIEW_CANCEL_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getCancelLockInputMsg')
+
 
     .constant('VIEW_KEYBOARD_MSG_URL', SERVER_BASE_URL + 'device/keyboard')   //得到键盘输入数据
+
 
 
     .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
