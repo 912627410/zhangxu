@@ -12,6 +12,7 @@
   "dashboard":"Dashboard",
   "emergencySteering":"emergencySteering",
   "securityUnlock":"securityUnlock",
+  "engineWaterHig":"engineWaterHig",
   "equipmentMonitoring":"Monitoring",
   "equipmentManagement":"Equipment",
   "alarmEquipment":"Alarm",
