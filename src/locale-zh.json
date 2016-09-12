@@ -65,7 +65,7 @@
   "positioningState":"定位状态",
   "hasBeenpositioning":"已定位",
   "notLocate":"未定位",
-  "protocolType":"协议类型",
+  "protocolType":"机器类型",
 	"lastUpdateTime":"最后更新时间",
 	"currentPosition":"当前位置",
 	"operation":"操作",
