@@ -37,8 +37,7 @@
 
     var beginDate = new Date();
     var endDate = new Date();
-    beginDate.setDate(beginDate.getDate()-5);  //默认查询5 day数据
-    endDate.setDate(endDate.getDate()+1);  //默认查询5 day数据
+    beginDate.setDate(beginDate.getDate()-1);  //默认查询1 day数据
     vm.weightData.recordTimeStart=beginDate;
     vm.weightData.recordTimeEnd=endDate;
 
@@ -59,7 +58,7 @@
 
       if(weightData !=null && weightData.recordTimeStart!=null){
         var recordTimeStartMonth = weightData.recordTimeStart.getMonth() +1;  //getMonth返回的是0-11
-        var recordTimeStartDateFormated = weightData.recordTimeStart.getFullYear() + '-' + addZero(recordTimeStartMonth,2) + '-' + addZero(weightData.recordTimeStart.getDate(),2);
+        var recordTimeStartDateFormated = weightData.recordTimeStart.getFullYear() + '-' + addZero(recordTimeStartMonth,2) + '-' + addZero(weightData.recordTimeStart.getDate()+1,2);
         restCallURL += "&search_DGTE_recordTime=" + recordTimeStartDateFormated;
       }
 
@@ -85,7 +84,7 @@
       });
     };
 
-    vm.query();
+    vm.query(null,null,null,vm.weightData);
 
     //重置查询框
     vm.reset = function () {

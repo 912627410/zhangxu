@@ -87,17 +87,15 @@
 
       <table ng-table="weightDataCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="weightData in $data">
-          <td class="text-nowrap" data-title="'编号'" sortable="'weightData.id'">{{weightData.id}}</td>
+          <td class="text-nowrap" data-title="'挖机设备号'" sortable="'weightData.deviceNum'">{{weightData.deviceNum}}</td>
           <td class="text-nowrap" data-title="'版本号'" sortable="'weightData.versionNum'">{{weightData.versionNum}}</td>
           <td class="text-nowrap" data-title="'功能码'" sortable="'weightData.functionCode'">{{weightData.functionCode}}</td>
           <td class="text-nowrap" data-title="'设备类型'" sortable="'weightData.deviceType'">000{{weightData.deviceType}}</td>
-          <td class="text-nowrap" data-title="'挖机设备号'" sortable="'weightData.deviceNum'">{{weightData.deviceNum}}</td>
           <td class="text-nowrap" data-title="'纪录生成时间'" sortable="'weightData.recordTime'">{{weightData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'CRC'" sortable="'weightData.crcCode'">{{weightData.crcCode}}</td>
           <td class="text-nowrap" data-title="'流水号'" sortable="'weightData.serialNum'">{{weightData.serialNum}}</td>
           <td class="text-nowrap" data-title="'矿车设备号'" sortable="'weightData.rfNum'">{{weightData.rfNum}}</td>
-          <td class="text-nowrap" data-title="'连接时间'" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'断开时间'" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'装料开始时间'" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'装料完成时间'" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'斗数'" sortable="'weightData.hopperNum'">{{weightData.hopperNum}}</td>
           <td class="text-nowrap" data-title="'总重量(t)'" sortable="'weightData.totalWeight'">{{weightData.totalWeight/100}}</td>
         </tr>
@@ -108,7 +106,7 @@
 
   <div class="box-footer">
     <uib-pagination total-items="weightDataCtrl.page.totalElements"
-                    ng-change="weightDataCtrl.query(weightDataCtrl.pageNumber-1,null,null,null)"
+                    ng-change="weightDataCtrl.query(weightDataCtrl.pageNumber-1,null,null,weightDataCtrl.weightData)"
                     max-size="5" ng-model="weightDataCtrl.pageNumber" items-per-page="weightDataCtrl.page.size"
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
