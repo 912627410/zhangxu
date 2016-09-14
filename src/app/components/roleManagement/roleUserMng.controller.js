@@ -6,7 +6,7 @@
     .controller('roleUserMngController', roleUserMngController);
 
   /** @ngInject */
-  function roleUserMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, USER_PAGE_URL, ROLE_USER_OPER_URL, ROLE_USER_LIST_URL, roleInfo) {
+  function roleUserMngController($rootScope, $scope, $confirm, $uibModalInstance,treeFactory, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, USER_PAGE_URL, ROLE_USER_OPER_URL, ROLE_USER_LIST_URL, roleInfo) {
     var vm = this;
     vm.org = {label: ""};    //组织
     vm.operatorInfo = $rootScope.userInfo;
@@ -80,14 +80,20 @@
 
     //查询条件相关
 
-    vm.openOrgTree = function () {
-      vm.showOrgTree = !vm.showOrgTree;
+    // vm.openOrgTree = function () {
+    //   vm.showOrgTree = !vm.showOrgTree;
+    // }
+
+    vm.openOrgTree=function() {
+      treeFactory.treeShow(function(selectedItem){
+        vm.org =selectedItem;
+      });
     }
 
 
-    vm.hideOrgTree = function () {
-      vm.showOrgTree = false;
-    }
+    // vm.hideOrgTree = function () {
+    //   vm.showOrgTree = false;
+    // }
 
     $scope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
