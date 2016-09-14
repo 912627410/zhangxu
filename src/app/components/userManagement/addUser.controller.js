@@ -31,7 +31,7 @@
       var restPromise = serviceResource.restAddRequest(USERINFO_URL,newUserinfo);
       restPromise.then(function (data){
         Notification.success("新建用户信息成功!");
-        $uibModalInstance.close();
+        $uibModalInstance.close(data.content);
       },function(reason){
         Notification.error("新建用户信息出错!");
       });
