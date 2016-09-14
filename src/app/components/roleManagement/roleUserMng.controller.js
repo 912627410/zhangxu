@@ -80,20 +80,11 @@
 
     //查询条件相关
 
-    // vm.openOrgTree = function () {
-    //   vm.showOrgTree = !vm.showOrgTree;
-    // }
-
     vm.openOrgTree=function() {
       treeFactory.treeShow(function(selectedItem){
         vm.org =selectedItem;
       });
     }
-
-
-    // vm.hideOrgTree = function () {
-    //   vm.showOrgTree = false;
-    // }
 
     $scope.$on('OrgSelectedEvent', function (event, data) {
       vm.selectedOrg = data;
