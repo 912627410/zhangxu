@@ -1,0 +1,177 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
+    <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoDetailsCtrl.cancel()">{{'close'|translate}}</button>
+    <!--轮播-->
+    <span id="myCarousel" class="carousel slide pull-right" style="width: 250px">
+      <div>
+        <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides" no-transition="noTransition">
+          <uib-slide ng-repeat="item in notices" actual="false">
+            <a href="" ng-if="item.url!=null" ng-click="deviceCurrentInfoDetailsCtrl.openNotification(deviceCurrentInfoDetailsCtrl.deviceinfo,item,'sx')"><h5 class="text text-green">{{ item.title }}</h5></a>
+            <h5 ng-if="item.url==null" class="text text-green">{{ item.title }}</h5>
+          </uib-slide>
+        </uib-carousel>
+      </div>
+    </span>
+  </h3>
+</div>
+<form name="" class="form-horizontal" ng-submit="">
+
+  <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+    <div class="box-body">
+      <!-- 内容 -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row detailMargin">
+            <table class="table table-striped" ng-init="rowInx=0">
+              <tr>
+                <th>{{'name'|translate}}</th>
+                <th>{{'state'|translate}}</th>
+                <th>{{'name'|translate}}</th>
+                <th>{{'state'|translate}}</th>
+                <th>{{'name'|translate}}</th>
+                <th>{{'state'|translate}}</th>
+              </tr>
+              <tr>
+              	<td>ID</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.id}}</td>
+              	<td>{{'dataReturnTime'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              	<td>{{'positioningTime'|translate}}</td>
+              	<td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A'" class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='V' || deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus==null" class="text-nowrap">--</td>
+              </tr>
+              <tr>
+              	<td>{{'speed'|translate}}</td>
+			<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+              	<td>{{'totalProductiveHours'|translate}}</td>	
+              	<td ng-cloak class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.totalDuration | convertToMins }}</td>
+              	<td>{{'locateDuration'|translate}}</td>
+                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDuration}}</td>
+              </tr>
+              <tr>
+              	<td>{{'fuelLevel'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.oilLevel}}%</td>
+              	<td>{{'engineSpeed'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.enginRotate | number:2}}</td>
+              	<td>{{'waterTemperature'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.engineTemperature}}</td>
+              </tr>
+              <tr>
+              	<td>{{'CANCommunicationStatus'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.commStatus==null">{{'noData'|translate}}</td>
+              	<td>{{'powerSupplyMode'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
+              	<td>{{'torqueConverterOilTemperature'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.oilTemperature | number:0}}°C</td>
+              </tr>
+              <tr>
+              	<td>{{'brakePressure'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.pressureMeter}}</td>
+              	<td>{{'GPRSSignalQuality'|translate}}</td>
+              	<td ng-cloak>{{(deviceCurrentInfoDetailsCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</td>
+              	<td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.validateMonitorShowPermission()">{{deviceCurrentInfoDetailsCtrl.deviceinfo.workMonitor}}</td>
+              	<!-- <td>{{'operationMonitoring'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.workMonitor}}</td> -->
+              </tr>
+              <tr>
+              	<td>{{'realTimeWork'|translate}}</td>
+              	<td ng-cloak class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
+              	<td>{{'numberOfStarts'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.startTimes}}</td>
+              	<td>{{'alertStatus'|translate}}</td>
+                <td>0x{{deviceCurrentInfoDetailsCtrl.deviceinfo.alertStatus}}</td>
+              </tr>
+              <tr>
+              	<td>{{'lockedCarStatus'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockStatus==null">{{deviceCurrentInfoDetailsCtrl.deviceinfo.startTimes}}</td>
+              	<td>{{'ACCState'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">ON</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">OFF</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.accStatus==null">{{'noData'|translate}}</td>
+              	<td>{{'generatorState'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
+                <td ng-if="(deviceCurrentInfoDetailsCtrl.deviceinfo.elecStatus!=='01'&&deviceCurrentInfoDetailsCtrl.deviceinfo.elecStatus!=='10')||deviceCurrentInfoDetailsCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
+              </tr>
+              <tr>
+              	<td>{{'GPSPowerDetection'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.imitate1/1000 | number:1}}V</td>
+              	<td>{{'Built-inBatteryRealTime'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.imitate2/1000 | number:1}}V</td>
+              	<td>{{'openCoverState'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
+              </tr>
+              <tr>
+              	<td>{{'visibleSatelliteNumber'|translate}}</td>
+			<td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber}}</td>
+              	<td>{{'usableSatelliteNumber'|translate}}</td>
+                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.usableSatelliteNumber}}</td>
+              	<td>{{'flyWheelTeeth'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.flyWheelTeeth}}</td>
+              </tr>
+              <tr>
+              	<td>{{'ecuLockStatus'|translate}}</td>
+              	<td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.ecuLockStatusDesc}}</td>
+              	<td>{{'bindMachineId'|translate}}</td>
+                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.bindMachineId}}</td>
+              	<td>{{'proportionalValve'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.proportionalValve}}</td>
+              </tr>
+              <tr>
+              	<td>{{'coolantAlarmValue'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.coolantAlarmValue-40}}℃</td>
+                <td>{{'voltageHigthAlarmValue'|translate}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.voltageHigthAlarmValue}}</td>
+              	<td>{{'voltageLowAlarmValue'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.voltageLowAlarmValue}}</td>
+              </tr>
+              <tr>
+              	<td>{{'oilLowAlarmValue'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.oilLowAlarmValue}}%</td>
+                <td>{{'oilPressAlarmValue'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.oilPressAlarmValue}}</td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <!-- 位置 -->
+              <tr>
+              	<td>{{'position'|translate}}</td>
+              	<td ng-cloak colspan="5" ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoDetailsCtrl.deviceinfo.address!=null">{{deviceCurrentInfoDetailsCtrl.deviceinfo.address}}</td>
+                <td ng-cloak colspan="5" ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='V' || deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus==null || deviceCurrentInfoDetailsCtrl.deviceinfo.address==null">--</td>
+              </tr>
+
+              <!-- LED状态 -->
+              <tr>
+              	<td>{{'LEDState'|translate}}</td>
+			<td ng-cloak colspan="5">{{deviceCurrentInfoDetailsCtrl.deviceinfo.ledStatus}}</td>
+              </tr>
+            </table>
+            <table class="table table-striped" ng-init="rowInx=0">
+              <tr>
+                <td>{{'currentPosition'|translate}}</td>
+                <td class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.address}}  {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoDetailsCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoDetailsCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+
+              </tr>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!--<button class="btn btn-primary" type="submit">OK</button>-->
+  </div>
+</form>
