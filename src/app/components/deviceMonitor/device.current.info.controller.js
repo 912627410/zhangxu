@@ -828,7 +828,7 @@
             marker.moveAlong(lineArr, 500);
           }, false);
           AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
-           marker.stopMove();
+            vm.markerMovingControl._marker.stopMove();
           }, false);
           /*AMap.event.addDomListener(document.getElementById('pause'), 'click', function () {
             console.log("暂停动画");
@@ -963,7 +963,7 @@
         Notification.error(languages.findKey('getInformationFailed'));
       })
     }
-    
+
 
     vm.cancelLockTimes = "";
 

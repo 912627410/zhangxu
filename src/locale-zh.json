@@ -174,7 +174,7 @@
   "faultContent":"故障内容",
   "startAnimation":"开始/重置",
   "map":"地图",
-  "endAnimation":"结束/暂停",
+  "endAnimation":"暂停",
   "moveAnimation":"继续",
   "telecontrol":"远程控制",
   "equipmentNumber":"设备编号",
