@@ -1,17 +1,6 @@
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
     <button class="btn btn-warning pull-right" type="button" ng-click="deviceCurrentInfoDetailsCtrl.cancel()">{{'close'|translate}}</button>
-    <!--轮播-->
-    <span id="myCarousel" class="carousel slide pull-right" style="width: 250px">
-      <div>
-        <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides" no-transition="noTransition">
-          <uib-slide ng-repeat="item in notices" actual="false">
-            <a href="" ng-if="item.url!=null" ng-click="deviceCurrentInfoDetailsCtrl.openNotification(deviceCurrentInfoDetailsCtrl.deviceinfo,item,'sx')"><h5 class="text text-green">{{ item.title }}</h5></a>
-            <h5 ng-if="item.url==null" class="text text-green">{{ item.title }}</h5>
-          </uib-slide>
-        </uib-carousel>
-      </div>
-    </span>
   </h3>
 </div>
 <form name="" class="form-horizontal" ng-submit="">
@@ -42,7 +31,7 @@
               </tr>
               <tr>
               	<td>{{'speed'|translate}}</td>
-			<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+			          <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.gpsSpeed | number:2}}</td>
               	<td>{{'totalProductiveHours'|translate}}</td>
               	<td ng-cloak class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.totalDuration | convertToMins }}</td>
               	<td>{{'locateDuration'|translate}}</td>
