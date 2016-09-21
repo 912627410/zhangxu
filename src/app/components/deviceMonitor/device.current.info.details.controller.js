@@ -1,5 +1,5 @@
 /**
- * Created by shuangshan on 16/1/10.
+ * Created by yalong on 16/9/20.
  */
 (function() {
   'use strict';
