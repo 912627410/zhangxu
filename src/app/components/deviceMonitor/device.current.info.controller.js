@@ -763,110 +763,121 @@
     vm.endDateOpenMapData = function($event) {
       vm.endDateOpenStatusMapData.opened = true;
     };
-/*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
-    /**
-     * Marker移动控件
-     * @param {Map} map    地图对象
-     * @param {Marker} marker Marker对象
-     * @param {Array} path   移动的路径，以坐标数组表示
-     */
-    var MarkerMovingControl = function(map, marker, path) {
-      this._map = map;
-      this._marker = marker;
-      this._path = path;
-      this._currentIndex = 0;
-      marker.setMap(map);
-      marker.setPosition(path[0]);
-    }
 
-    /**
-     * 移动marker，会从当前位置开始向前移动
-     */
-    MarkerMovingControl.prototype.move = function() {
-      if (!this._listenToStepend) {
-        this._listenToStepend = AMap.event.addListener(this, 'stepend', function() {
-          this.step();
-        }, this);
-      }
-      this.step();
-    };
-
-    /**
-     * 向前移动一步
-     */
-    MarkerMovingControl.prototype.step = function(){
-      var nextIndex = this._currentIndex + 1;
-      if (nextIndex < this._path.length) {
-        if (!this._listenToMoveend) {
-          this._listenToMoveend = AMap.event.addListener(this._marker, 'moveend', function(){
-            this._currentIndex++;
-            AMap.event.trigger(this, 'stepend');
-          }, this);
-        }
-        // console.log(nextIndex);
-        this._marker.moveTo(this._path[nextIndex], 800);
-      }
-    };
-
-/*******************                        结束                          **/
 
     //参数: 地图轨迹gps 数据
     vm.refreshMapTab = function(lineAttr){
-      $timeout(function(){
-        $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
-          var marker, lineArr = [];
-          if (lineAttr){
-            lineArr = lineAttr;
+          /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
+            /**
+             * Marker移动控件
+             * @param {Map} map    地图对象
+             * @param {Marker} marker Marker对象
+             * @param {Array} path   移动的路径，以坐标数组表示
+             */
+            var MarkerMovingControl = function(map, marker, path) {
+              this._map = map;
+              this._marker = marker;
+              this._path = path;
+              this._currentIndex = 0;
+              marker.setMap(map);
+              marker.setPosition(path[0]);
+            }
+          /**************************************结束 ***********************************************************/
+          var marker;
+          var carPostion = [116.397428, 39.90923];   //默认地点
+          if (lineAttr.length > 0){
+            carPostion = lineAttr[0];
           }
+
           var map = new AMap.Map("deviceDetailMap", {
             resizeEnable: true,
-            //center: [116.397428, 39.90923],
             zoom: 17
           });
-          map.on("complete", completeEventHandler);
+
+          /*工具条，比例尺，预览插件*/
+          AMap.plugin(['AMap.Scale','AMap.OverView'],
+            function(){
+              map.addControl(new AMap.ToolBar());
+              map.addControl(new AMap.Scale());
+              map.addControl(new AMap.OverView({isOpen:true}));
+          });
+
+          AMap.plugin(["AMap.RangingTool"], function() {
+          });
+          //小车
+          marker = new AMap.Marker({
+            map: map,
+            position: carPostion,
+            icon: "assets/images/car_03.png",
+            offset: new AMap.Pixel(-26, -13),
+            autoRotation: true
+          });
+          marker.setLabel({
+            offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
+            content: "行使了 0 米"
+          });
+          // 绘制轨迹
+          var polyline = new AMap.Polyline({
+            map: map,
+            path: lineAttr,
+            strokeColor: "#00A",  //线颜色
+            strokeOpacity: 1,     //线透明度
+            strokeWeight: 3,      //线宽
+            strokeStyle: "solid"  //线样式
+          });
+
+          map.setFitView();
+
+          var markerMovingControl = new MarkerMovingControl(map, marker, lineAttr);
+          var startLat = new AMap.LngLat(markerMovingControl._path[0].lng,markerMovingControl._path[0].lat);
+          var lastDistabce=0;
+          /*移动完成触发事件*/
+          AMap.event.addListener(marker,"movealong",function () {
+            markerMovingControl._currentIndex=0;
+          })
+          /*每一步移动完成触发事件*/
+          AMap.event.addListener(marker,"moveend",function () {
+            markerMovingControl._currentIndex++;
+            var distances =parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
+            lastDistabce+=distances;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: "+lastDistabce+"&nbsp&nbsp"+"米"
+            });
+            startLat=new AMap.LngLat(marker.getPosition().lng,marker.getPosition().lat);
+          })
+          /*小车每一移动一部就会触发事件*/
+          AMap.event.addListener(marker,"moving",function () {
+
+          })
+          /*开始事件*/
           AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
-            marker.moveAlong(lineArr, 500);
+            lastDistabce=0;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: "+lastDistabce+"&nbsp&nbsp"+"米"
+            });
+            startLat = new AMap.LngLat(markerMovingControl._path[0].lng,markerMovingControl._path[0].lat);
+            markerMovingControl._currentIndex=0;
+            markerMovingControl._marker.moveAlong(lineAttr, 500);
           }, false);
+          /*暂停事件*/
           AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
-            vm.markerMovingControl._marker.stopMove();
+            markerMovingControl._marker.stopMove();
+            var distabcess2=lastDistabce;
+            var distances =parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
+            distabcess2+=distances;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content:"行使了: "+distabcess2+"&nbsp&nbsp"+"米"
+            });
           }, false);
-          /*AMap.event.addDomListener(document.getElementById('pause'), 'click', function () {
-            console.log("暂停动画");
-            vm.markerMovingControl._marker.stopMove();
-          }, false);*/
+          /*继续移动事件*/
           AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-            /**继续动画"*/
-            vm.markerMovingControl.move();
+            var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex+1)
+            lineArr2.unshift(marker.getPosition());
+            markerMovingControl._marker.moveAlong(lineArr2, 500);
           }, false);
-          var carPostion = [116.397428, 39.90923];   //默认地点
-          if (lineArr.length > 0){
-            carPostion = lineArr[0];
-          }
-          // 地图图块加载完毕后执行函数
-          function completeEventHandler() {
-            marker = new AMap.Marker({
-              map: map,
-              position: carPostion,
-              //icon: "http://code.mapabc.com/images/car_03.png",
-              icon: "assets/images/car_03.png",
-              offset: new AMap.Pixel(-26, -13),
-              autoRotation: true
-            });
-            // 绘制轨迹
-            var polyline = new AMap.Polyline({
-              map: map,
-              path: lineArr,
-              strokeColor: "#00A",  //线颜色
-              strokeOpacity: 1,     //线透明度
-              strokeWeight: 3,      //线宽
-              strokeStyle: "solid"  //线样式
-            });
-            map.setFitView();
-            /********     创建移动控件       */
-            vm.markerMovingControl = new MarkerMovingControl(map, marker, lineArr);
-          }
-        })
-      })
     };
 
 
@@ -895,6 +906,7 @@
         }
       }
       var lineArr = [];
+      var lineArr2=[];
       var deviceDataPromis = serviceResource.queryDeviceSimpleData(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           var deviceMapDataList = data.content;
@@ -904,9 +916,18 @@
           else{
             vm.deviceMapDataList = _.sortBy(deviceMapDataList,"locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
-              lineArr.push([deviceData.amaplongitudeNum,deviceData.amaplatitudeNum]);
+                lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum,deviceData.amaplatitudeNum));
             })
-            vm.refreshMapTab(lineArr);
+            for(var i =0;i<lineArr.length;i++){
+              if(i==lineArr.length-1){
+                break;
+              }
+              if(lineArr[i].lat==lineArr[i+1].lat && lineArr[i].lng==lineArr[i+1].lng ){
+              }else{
+                lineArr2.push(lineArr[i])
+              }
+            }
+            vm.refreshMapTab(lineArr2);
           }
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
