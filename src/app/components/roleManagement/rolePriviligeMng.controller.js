@@ -127,6 +127,7 @@
           queryFn()
         }else{
           queryState=true;
+          vm.getRolePrivilige();
         }
       }, function (reason) {
         Notification.error("获取角色数据失败");
