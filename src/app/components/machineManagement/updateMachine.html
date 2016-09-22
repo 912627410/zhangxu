@@ -95,7 +95,7 @@
         <label for="licenseId" class="col-sm-2 control-label">购买时间</label>
         <div class="col-sm-4">
           <p class="input-group">
-            <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="yyyy-M!-d!"
+            <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                    ng-model="updateMachineController.machine.buyTime"
                    is-open="updateMachineController.buyTimeOpenStatus.opened"
                    datepicker-options="dateOptions" ng-readonly="true"  close-text="Close"/>

@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="yyyy-M!-d!" ng-model="idleDeviceCtrl.dataUploadDate" is-open="idleDeviceCtrl.dataUploadDateOpenStatus.opened" datepicker-options="idleDeviceCtrl.dateOptions" min-date="idleDeviceCtrl.minDate" max-date="idleDeviceCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="idleDeviceCtrl.dataUploadDate" is-open="idleDeviceCtrl.dataUploadDateOpenStatus.opened" datepicker-options="idleDeviceCtrl.dateOptions" min-date="idleDeviceCtrl.minDate" max-date="idleDeviceCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="idleDeviceCtrl.dataUploadDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>

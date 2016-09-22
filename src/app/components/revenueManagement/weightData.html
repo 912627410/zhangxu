@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" name="recordTimeStart" class="form-control" uib-datepicker-popup="yyyy-M!-d!"
+        <input type="text" name="recordTimeStart" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                ng-model="weightDataCtrl.weightData.recordTimeStart"
                is-open="weightDataCtrl.recordTimeStartOpenStatus.opened"
                datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
@@ -59,7 +59,7 @@
     <div class="col-md-3">
 
       <p class="input-group">
-        <input type="text" name="recordTimeEnd" class="form-control" uib-datepicker-popup="yyyy-M!-d!"
+        <input type="text" name="recordTimeEnd" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                ng-model="weightDataCtrl.weightData.recordTimeEnd"
                is-open="weightDataCtrl.recordTimeEndOpenStatus.opened"
                datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>

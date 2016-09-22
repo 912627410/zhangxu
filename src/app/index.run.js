@@ -61,6 +61,9 @@
     });
 
     $log.debug('runBlock end');
+    
+    //定义全局日期格式
+    $rootScope.formatCustom = "yyyy-M!-d!";
 
 
   }
