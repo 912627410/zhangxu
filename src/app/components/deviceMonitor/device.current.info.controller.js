@@ -668,6 +668,24 @@
     }
 
 
+    //监控
+    vm.currentInfo = function (data, size) {
+      vm.deviceinfoMonitor=data;
+      $rootScope.currentOpenModal = $uibModal.open({
+        animation: vm.animationsEnabled,
+        backdrop: false,
+        templateUrl: 'app/components/deviceMonitor/devicecurrentinfodetails.html',
+        controller: 'DeviceCurrentInfoDetailsController as deviceCurrentInfoDetailsCtrl',
+        size: size,
+        resolve: { //用来向controller传数据
+          deviceinfo: function () {
+            return vm.deviceinfoMonitor;
+          }
+        }
+      });
+    };
+
+
     //报警数据tab
     vm.startDateDeviceWarningData = startDate;
     vm.endDateDeviceWarningData = new Date();

@@ -584,7 +584,7 @@
                     <td>{{'generatorState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
+                    <td ng-if="(deviceCurrentInfoCtrl.deviceinfo.elecStatus!=='01'&&deviceCurrentInfoCtrl.deviceinfo.elecStatus!=='10')||deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
 
@@ -614,7 +614,7 @@
                       {{'noData' |translate}}
                     </td>
                     <td>{{'locateDuration'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">
                       {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">
@@ -746,6 +746,7 @@
                 <!-- Table -->
                 <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv='csv'>
                   <tr>
+                    <th class="text-nowrap">ID</th>
                     <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
                     <th class="text-nowrap">{{'positioningTime'|translate}}</th>
                     <th class="text-nowrap">{{'position'|translate}}</th>
@@ -796,6 +797,7 @@
 
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
+                    <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')">{{deviceData.id}}</a></td>
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
@@ -837,7 +839,7 @@
                     <!--发电机状态-->
                     <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceData.elecStatus==null">{{'noData'|translate}}</td>
+                    <td ng-if="(deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null">{{'noData'|translate}}</td>
                     <!--GPS电源检测和模拟量1是相同的-->
                     <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <!--模拟量2-->
