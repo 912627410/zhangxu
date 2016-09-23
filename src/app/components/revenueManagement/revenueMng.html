@@ -59,7 +59,7 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{format}}"
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                ng-model="revenueMngController.startDate"
                is-open="revenueMngController.startDateOpenStatus.opened"
                datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
@@ -77,7 +77,7 @@
     <div class="col-md-3">
 
         <p class="input-group">
-          <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{format}}"
+          <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                  ng-model="revenueMngController.endDate"
                  is-open="revenueMngController.endDateOpenStatus.opened"
                  datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>

@@ -41,7 +41,7 @@
           <label class="col-sm-2 control-label">开通时间</label>
           <div class="col-sm-10">
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                      ng-model="updateSimController.sim.serviceBeginDate" is-open="updateSimController.serviceBeginDateOpenStatus.opened"
                      datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
               <span class="input-group-btn">
@@ -56,7 +56,7 @@
           <label class="col-sm-2 control-label">服务结束时间</label>
           <div class="col-sm-10">
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                      ng-model="updateSimController.sim.serviceEndDate" is-open="updateSimController.serviceEndDateOpenStatus.opened"
                      datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
               <span class="input-group-btn">

@@ -40,7 +40,7 @@
           <label class="col-sm-2 control-label">开通时间</label>
           <div class="col-sm-10">
             <p class="input-group">
-              <input validator="required" type="text" name="serviceBeginDate" class="form-control" uib-datepicker-popup="{{format}}"
+              <input validator="required" type="text" name="serviceBeginDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                      ng-model="newSimController.sim.serviceBeginDate" is-open="newSimController.serviceBeginDateOpenStatus.opened"
                      datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
               <span class="input-group-btn">
@@ -55,7 +55,7 @@
           <label class="col-sm-2 control-label">服务结束时间</label>
           <div class="col-sm-10">
             <p class="input-group">
-              <input validator="required" type="text" name="serviceEndDate" class="form-control" uib-datepicker-popup="{{format}}"
+              <input validator="required" type="text" name="serviceEndDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                      ng-model="newSimController.sim.serviceEndDate" is-open="newSimController.serviceEndDateOpenStatus.opened"
                      datepicker-options="dateOptions" ng-readonly="true" required close-text="Close"/>
               <span class="input-group-btn">
