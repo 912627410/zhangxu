@@ -150,8 +150,9 @@
      * 重置查询框
      */
     vm.reset = function () {
-      vm.uesrinfo = null;
-      vm.org = null;
+      //vm.uesrinfo = null;
+      //vm.org = null;
+      vm.priviligeInfo = null;
     }
 
 
