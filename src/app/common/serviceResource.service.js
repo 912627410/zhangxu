@@ -50,52 +50,51 @@
     var mapDeviceType = function (id) {
       if (id == null) {
         return null;
-      } else {
-        var machineLicenseId = id;
-        var title = '';
+      }
+      var machineLicenseId = id;
+      var title = '';
 
-        /*截取整机编号字符串*/
-        var substrNum = function (start, number) {
-          return machineLicenseId.substr(start, number);
-        };
+      /*截取整机编号字符串*/
+      var substrNum = function (start, number) {
+        return machineLicenseId.substr(start, number);
+      };
 
-        var machineLicenseType = substrNum(3, 1).toUpperCase();/*整机编号第4位*/
-        if (machineLicenseType == 'L') {
-          if (substrNum(7, 1) == '0') {
-            title = '装载机' + substrNum(3, 4);
-          } else {
-            title = '装载机' + substrNum(3, 5);
-          }
-        } else if (machineLicenseType == 'G') {
-          title = '平地机' + substrNum(3, 5);
-        } else if (machineLicenseType == 'R') {
-          title = '压路机' + substrNum(3, 5);
-        } else if (machineLicenseType == 'E') {
-          title = '挖掘机' + substrNum(3, 5);
-        } else if (machineLicenseType == '0') {
-          if (substrNum(7, 1).toUpperCase() == 'E') {
-            title = '挖掘机' + substrNum(7, 1) + substrNum(4, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'L') {
-            title = '装载机' + substrNum(7, 1) + substrNum(4, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'G') {
-            title = '平地机' + substrNum(7, 1) + substrNum(4, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'R') {
-            title = '压路机' + substrNum(7, 1) + substrNum(4, 3);
-          } else {
-            title = '装载机';
-          }
-        } else if (!isNaN(machineLicenseType) && machineLicenseType != '0') {
-          if (substrNum(7, 1).toUpperCase() == 'E') {
-            title = '挖掘机' + substrNum(7, 1) + substrNum(3, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'L') {
-            title = '装载机' + substrNum(7, 1) + substrNum(3, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'G') {
-            title = '平地机' + substrNum(7, 1) + substrNum(3, 3);
-          } else if (substrNum(7, 1).toUpperCase() == 'R') {
-            title = '压路机' + substrNum(7, 1) + substrNum(3, 3);
-          } else {
-            title = '装载机';
-          }
+      var machineLicenseType = substrNum(3, 1).toUpperCase();/*整机编号第4位*/
+      if (machineLicenseType == 'L') {
+        if (substrNum(7, 1) == '0') {
+          title = '装载机' + substrNum(3, 4);
+        } else {
+          title = '装载机' + substrNum(3, 5);
+        }
+      } else if (machineLicenseType == 'G') {
+        title = '平地机' + substrNum(3, 5);
+      } else if (machineLicenseType == 'R') {
+        title = '压路机' + substrNum(3, 5);
+      } else if (machineLicenseType == 'E') {
+        title = '挖掘机' + substrNum(3, 5);
+      } else if (machineLicenseType == '0') {
+        if (substrNum(7, 1).toUpperCase() == 'E') {
+          title = '挖掘机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'L') {
+          title = '装载机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'G') {
+          title = '平地机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'R') {
+          title = '压路机' + substrNum(7, 1) + substrNum(4, 3);
+        } else {
+          title = '装载机';
+        }
+      } else if (!isNaN(machineLicenseType) && machineLicenseType != '0') {
+        if (substrNum(7, 1).toUpperCase() == 'E') {
+          title = '挖掘机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'L') {
+          title = '装载机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'G') {
+          title = '平地机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'R') {
+          title = '压路机' + substrNum(7, 1) + substrNum(3, 3);
+        } else {
+          title = '装载机';
         }
       }
       return title;
