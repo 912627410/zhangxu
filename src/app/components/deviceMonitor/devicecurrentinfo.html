@@ -406,8 +406,8 @@
                       <div ng-switch-when="1" class="preWarmWarning" title="{{'preheat'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
-                      <div ng-switch-when="0" class="harEngineCoolingLiquidLevelNormal" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
-                      <div ng-switch-when="1" class="harEngineCoolingLiquidLevelWarning" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
+                      <div ng-switch-when="0" class="engineWaterLowNormal" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
+                      <div ng-switch-when="1" class="engineWaterLowWarning" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
                     </td>
                     <td  ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
                       <div ng-switch-when="0" class="powerShutNormal" title="{{'powerShutoff'|translate}}"></div>
@@ -462,8 +462,8 @@
                       <div ng-switch-when="1" class="colderWarning" title="{{'coolingFailure'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
-                      <div ng-switch-when="0" class="engineWaterHigNormal" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
-                      <div ng-switch-when="1" class="engineWaterHigWarning" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
+                      <div ng-switch-when="0" class="colderOilTempratureNormal" title="{{'coolantTemperatureHigh'|translate}}"></div>
+                      <div ng-switch-when="1" class="colderOilTempratureWarning" title="{{'coolantTemperatureHigh'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
                       <div ng-switch-when="0" class="harFuelOilLevelNormal" title="{{'harFuelOilLevel'|translate}}"></div>
