@@ -1,8 +1,9 @@
 <header class="main-header" style="height:50px">
-  <a ui-sref="home" class="logo navbar-static-top">
-    <img src="assets/images/logo.png" width="33" height="30">
+  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl">
+    <img ng-src={{userInfo.userdto.organizationDto.logo}} width="33" height="30" ng-if="userInfo">
+    <img src="assets/images/logo.png" width="33" height="30" ng-if="!userInfo">
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
-    {{ 'SDLG' | translate}}
+    {{ 'userInfo.userdto.organizationDto.label' | translate}}
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
