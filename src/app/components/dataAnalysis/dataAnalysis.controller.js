@@ -14,7 +14,7 @@
     vm.operatorInfo = $rootScope.userInfo;
 
     //生产环境
-    var reqUrl ="https://iotserver2.nvr-china.com/LinGongMachineProfile/lg/NvrUrl/simulationLogin?username=beigu&password=beigukey&menuType="+$stateParams.menuType+"&getToken="+vm.operatorInfo.authtoken+"&role="+$stateParams.role;
+    var reqUrl ="https://iotserver2.nvr-china.com/lgbigdata/lg/NvrUrl/simulationLogin?username=beigu&password=beigukey&menuType="+$stateParams.menuType+"&getToken="+vm.operatorInfo.authtoken+"&role="+$stateParams.role;
     $scope.k2dataUrl={"src":reqUrl}
 
     $scope.trustSrc = function(src) {
