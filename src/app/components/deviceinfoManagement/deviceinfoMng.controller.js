@@ -11,7 +11,8 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
-    vm.org = {label: ""};    //调拨组织
+    vm.org = {label: ""};    //所属组织
+    vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
@@ -63,6 +64,7 @@
       vm.queryDeviceinfo.phoneNumber = null;
       vm.selectAll = false;//是否全选标志
       vm.selected = []; //选中的设备id
+      vm.allot = null;
     }
 
 
@@ -209,14 +211,14 @@
       }
 
 
-      if (vm.org== null||vm.org.id=="") {
+      if (vm.allot== null||vm.allot.label=="") {
         Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
 
         return;
       }
 
 
-      var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
+      var moveOrg = {ids: vm.selected, "orgId": vm.allot.id};
       var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
 
@@ -225,11 +227,12 @@
           //循环table,更新选中的设备
           if(vm.selected.indexOf(deviceinfo.id)!=-1){
             deviceinfo.checked=false;
-            deviceinfo.org.label=vm.org.label;
+            deviceinfo.org.label=vm.allot.label;
+            var moveTime = new Date();
+            deviceinfo.moveTime=moveTime.getTime();
           }
         })
-
-        vm.org=null;
+        vm.allot=null;
         vm.selected=[]; //把选中的设备设置为空
         Notification.success("调拨设备成功!");
       //  vm.query(null, null, null, null);
@@ -267,11 +270,6 @@
     };
 
 
-    vm.reset = function () {
-      vm.queryDeviceinfo = null;
-    //  vm.queryDeviceinfo.phoneNumber = null;
-      vm.queryOrg = null;
-    }
 
 
 
@@ -281,6 +279,12 @@
         vm.org =selectedItem;
       });
     }
+    //调拨组织组织树的显示
+    vm.openTreeInfoAllot=function () {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.allot =selectedItem;
+      });
+    };
 
 
     vm.validateOperPermission=function(){

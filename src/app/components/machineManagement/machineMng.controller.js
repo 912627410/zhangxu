@@ -12,7 +12,8 @@
   function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.org = {label: ""};    //调拨组织
+    vm.org = {label: ""};    //所属组织
+    vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
 
@@ -65,6 +66,7 @@
       vm.machine = null;
       vm.org=null;
       vm.selected=[]; //把选中的设备设置为空
+      vm.allot=null;
     }
 
 
@@ -194,13 +196,13 @@
       }
 
 
-      if (null==vm.org||vm.org.label == "") {
+      if (null==vm.allot||vm.allot.label == "") {
         Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
 
         return;
       }
 
-      var moveOrg = {ids: vm.selected, "orgId": vm.org.id};
+      var moveOrg = {ids: vm.selected, "orgId": vm.allot.id};
 
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
       restPromise.then(function (data) {
@@ -209,11 +211,10 @@
           //循环table,更新选中的设备
           if(vm.selected.indexOf(machine.id)!=-1){
             machine.checked=false;
-            machine.org.label=vm.org.label;
-            // console.log(deviceinfo.org.label);
+            machine.org.label=vm.allot.label;
           }
         })
-        vm.org=null;
+        vm.allot=null;
         vm.selected=[]; //把选中的设备设置为空
         Notification.success("调拨车辆成功!");
 
@@ -246,6 +247,12 @@
         vm.org =selectedItem;
       });
     }
+    //调拨组织组织树的显示
+    vm.openTreeInfoAllot=function () {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.allot =selectedItem;
+      });
+    };
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
