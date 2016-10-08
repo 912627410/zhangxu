@@ -290,5 +290,6 @@
     vm.validateOperPermission=function(){
       return permissions.getPermissions("device:oper");
     }
+
   }
 })();
