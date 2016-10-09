@@ -9,12 +9,16 @@
   function MainController($rootScope, $scope,$window,$http,$uibModal,Notification,Idle, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
+    $rootScope.logo="assets/images/logo.png";
+    
     vm.logout = function(){
+
+      $rootScope.logo="assets/images/logo.png";
+
       $rootScope.userInfo = null;
       $rootScope.deviceGPSInfo = null;
       $rootScope.statisticInfo = null;
       $rootScope.permissionList = null;
-
 
       $window.sessionStorage.removeItem("userInfo");
       $window.sessionStorage.removeItem("deviceGPSInfo");

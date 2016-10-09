@@ -66,6 +66,13 @@
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
 
+        if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
+          $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+
+        }else{
+          $rootScope.logo="assets/images/logo.png";
+        }
+
         Notification.success(languages.findKey('loginSuccess'));
 
         //监控用户登录超时
