@@ -97,7 +97,7 @@
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
                       <div ng-switch-when="0" class="holdNormal" title="{{'parkingBrake'|translate}}"></div>
-                      <div ng-switch-when="1" class="holdWarning" title="{{'parkideviceCurrentInfoCtrl.deviceinfo.ngBrake'|translate}}"></div>
+                      <div ng-switch-when="1" class="holdWarning" title="{{'parkingBrake'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
                       <div ng-switch-when="0" class="farLightNormal" title="{{'distanceLight'|translate}}"></div>
@@ -267,32 +267,32 @@
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
                       <div ng-switch-when="0" class="harSlowMachineNormalOne" title="{{'harSlowMachineOne'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningOne" title="{{'harSlowMachineOne'|translate}}"></div>
-
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
+                    </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
                       <div ng-switch-when="0" class="harCaTaillightNormal" title="{{'harCaTaillight'|translate}}"></div>
                       <div ng-switch-when="1" class="harCabTaillightWarning" title="{{'harCaTaillight'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
                       <div ng-switch-when="0" class="harAxialDifferentialLockNormal" title="{{'harAxialDifferentialLock'|translate}}"></div>
                       <div ng-switch-when="1" class="harAxialDifferentialLockWarning" title="{{'harAxialDifferentialLock'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
                       <div ng-switch-when="0" class="harTakePowerNormal" title="{{'harTakePower'|translate}}"></div>
                       <div ng-switch-when="1" class="harTakePowerWarning" title="{{'harTakePower'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
                       <div ng-switch-when="0" class="harOilPressureAlarmNormal" title="{{'harOilPressureAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="harOilPressureAlarmWarning" title="{{'harOilPressureAlarm'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
                       <div ng-switch-when="0" class="harEngineFailureNormal" title="{{'harEngineFailure'|translate}}"></div>
                       <div ng-switch-when="1" class="harEngineFailureWarning" title="{{'harEngineFailure'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
                       <div ng-switch-when="0" class="harGearboxFaultNormal" title="{{'harGearboxFault'|translate}}"></div>
                       <div ng-switch-when="1" class="harGearboxFaultWarning" title="{{'harGearboxFault'|translate}}"></div>
                     </td>
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:26">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:26">
                       <div ng-switch-when="0" class="harBatteryNormal" title="{{'harBattery'|translate}}"></div>
                       <div ng-switch-when="1" class="harBatteryWarning" title="{{'harBattery'|translate}}"></div>
                     </td>
@@ -385,10 +385,10 @@
                   </tr>
                   <!--矿机end -->
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '04'">
-                    </td> <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
-                    <div ng-switch-when="0" class="harBatteryNormal" title="{{'harBattery'|translate}}"></div>
-                    <div ng-switch-when="1" class="harBatteryWarning" title="{{'harBattery'|translate}}"></div>
-                  </td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
+                      <div ng-switch-when="0" class="harBatteryNormal" title="{{'harBattery'|translate}}"></div>
+                      <div ng-switch-when="1" class="harBatteryWarning" title="{{'harBattery'|translate}}"></div>
+                    </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
                       <div ng-switch-when="0" class="turnLeftNormal" title="{{'turnLeft'|translate}}"></div>
                       <div ng-switch-when="1" class="turnLeftWarning" title="{{'turnLeft'|translate}}"></div>
@@ -497,7 +497,7 @@
                       <div ng-switch-when="0" class="turnLeftNormal" title="{{'turnLeft'|translate}}"></div>
                       <div ng-switch-when="1" class="turnLeftWarning" title="{{'turnLeft'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.centerCode">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:2">
                       <div ng-switch-when="0" class="centerCodeNormal" title="{{'centralAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="centerCodeWarning" title="{{'centralAlarm'|translate}}"></div>
                     </td>
@@ -515,7 +515,7 @@
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
                       <div ng-switch-when="0" class="holdNormal" title="{{'parkingBrake'|translate}}"></div>
-                      <div ng-switch-when="1" class="holdWarning" title="{{'parkideviceCurrentInfoCtrl.deviceinfo.ngBrake'|translate}}"></div>
+                      <div ng-switch-when="1" class="holdWarning" title="{{'parkingBrake'|translate}}"></div>
                     </td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
                       <div ng-switch-when="0" class="farLightNormal" title="{{'distanceLight'|translate}}"></div>
@@ -531,7 +531,7 @@
                     </td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '05'">
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
                       <div ng-switch-when="0" class="oilWaterNormal" title="{{'oil-waterSeparation'|translate}}"></div>
                       <div ng-switch-when="1" class="oilWaterWarning" title="{{'oil-waterSeparation'|translate}}"></div>
                     </td>
