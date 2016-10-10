@@ -65,7 +65,6 @@
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-
         if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
           $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 
