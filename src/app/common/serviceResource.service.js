@@ -481,9 +481,13 @@
       //02 - 矿车
       //03 - 中挖
       //04 - 平地机T3   设备类型为 7
+      //05 - 巴黎(T3)   设备类型为 5
       getDeviceTypeForVersionNum:function(device_num,deviceType){
         if(device_num=='3'&& deviceType=='7'){
           return '04';
+        }
+        if(device_num=='3'&& deviceType=='5'){
+          return '05';
         }
         if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
             return '00';
