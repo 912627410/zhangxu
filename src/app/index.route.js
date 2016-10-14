@@ -40,7 +40,12 @@
           },
           'footer@home':{
             templateUrl: 'app/main/footer.html'
-          }
+          },
+          'reportChart@home': {
+            templateUrl: 'app/home/reportChart.html',
+            controller: 'ReportChartController',
+            controllerAs: 'reportChartCtrl'
+          },
         }
       })
       .state('home.login', {

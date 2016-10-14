@@ -9,7 +9,7 @@
     .controller('HomeController', HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification) {
+  function HomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification) {
     var vm = this;
     var statisticInfo = {
       totalDevices: 0,
@@ -52,6 +52,8 @@
     vm.validateDeviceOperPermission=function(){
       return permissions.getPermissions("device:page");
     }
+
+
 
   }
 })();
