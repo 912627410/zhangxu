@@ -9,7 +9,7 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$interval,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
+  function DeviceCurrentInfoController($rootScope,$scope,$timeout,$interval,$http,$uibModal,$confirm,$filter,$uibModalInstance,permissions,languages,serviceResource,Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY,DEVCE_WARNING_DATA_PAGED_QUERY,AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL,DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL,SEND_ACTIVE_SMS_URL,
                                        VIEW_BIND_INPUT_MSG_URL,VIEW_UN_BIND_INPUT_MSG_URL,VIEW_LOCK_INPUT_MSG_URL,VIEW_UN_LOCK_INPUT_MSG_URL,
@@ -1547,6 +1547,55 @@
         });
     }
 
+
+    <!--数据分析-->
+    vm.viewReport=function (deviceNum) {
+      var url ="http://localhost:8080/rest/influx/getdata?deviceNum="+deviceNum;
+      var result = serviceResource.restCallService(url,"GET");
+      result.then(function (data) {
+        if (data.code == 0 && data.content!= null) {
+          var dataConent  = data.content;
+          vm.deviceConfig={
+            options: {
+              chart: {
+                type: 'line',
+                zoomType: 'xy',
+              }
+            },
+            title: {
+              text: '电压变化趋势',
+            },
+            //x轴坐标显示
+            xAxis: {
+              title: {
+                text: '日期'
+              },
+              categories:[],
+              labels: {
+                formatter: function () {
+                  return $filter('date')(new Date(this.value),'MM-dd HH:mm');
+                }
+              }
+            },
+            //y轴坐标显示
+            yAxis: {
+              title: {text: '电压 (mV)'},
+            },
+            series: [{
+              data: dataConent,
+              tooltip: {
+                headerFormat: '',
+                shared: true,
+                pointFormatter:function () {
+                  var time =$filter('date')(new Date(this.x),'yyyy-MM-dd HH:mm:ss');
+                  return '<b>日期: </b>'+time+'<br><b>电压: </b>'+this.y+' mV'+'<br>';
+                }
+              }
+            }]
+          }
+        }
+      })
+    }
 
   }
 })();

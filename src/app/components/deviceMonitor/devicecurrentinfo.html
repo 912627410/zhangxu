@@ -1408,6 +1408,16 @@
       </div>
     </uib-tab>
 
+    <!--数据分析-->
+    <uib-tab  ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
+      <uib-tab-heading>数据分析</uib-tab-heading>
+      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:600px;">
+        <div class="box-body">
+          <highchart id="simpleChart"  style="width: 853px;hight:500px"  config="deviceCurrentInfoCtrl.deviceConfig"></highchart>
+        </div>
+      </div>
+    </uib-tab>
+
   </uib-tabset>
 
   <div class="modal-footer">
