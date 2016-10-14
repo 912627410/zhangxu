@@ -169,6 +169,8 @@
     //称重数据
     .constant('WEIGHTDATA_PAGE_URL', SERVER_BASE_URL + 'weightData/weightDataPage')   //称重数据page
 
+    .constant('LOAD_RECENT_UPLOAD_PAGE_URL', SERVER_BASE_URL + 'deviceMonitor/deviceDataWeekly')   //最近一周上传数据
+    .constant('LOAD_TODAY_UPLOAD_PAGE_URL', SERVER_BASE_URL + 'deviceMonitor/deviceDataToday')   //当天数据上传
   ;
 
 

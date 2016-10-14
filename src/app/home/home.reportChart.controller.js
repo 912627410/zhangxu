@@ -9,7 +9,7 @@
     .controller('ReportChartController', ReportChartController);
 
   /** @ngInject */
-  function ReportChartController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification) {
+  function ReportChartController($rootScope,$filter, serviceResource,permissions,LOAD_RECENT_UPLOAD_PAGE_URL,LOAD_TODAY_UPLOAD_PAGE_URL,Notification) {
     var vm = this;
 
 
@@ -20,10 +20,7 @@
       var beginDate=$filter('date')(date,'yyyy-MM-dd');;
       var endDate=$filter('date')(new Date(),'yyyy-MM-dd');;
 
-
-
-      var url ="http://localhost:8080/rest/deviceMonitor/deviceDataWeekly";
-      var result = serviceResource.restCallService(url,"GET");
+      var result = serviceResource.restCallService(LOAD_RECENT_UPLOAD_PAGE_URL,"GET");
       result.then(function (data) {
         if (data.code == 0 && data.content!= null) {
           var dataContent  = data.content;
@@ -78,8 +75,7 @@
 
     vm.loadTodayUploadDevice=function () {
 
-      var url ="http://localhost:8080/rest/deviceMonitor/deviceDataToday";
-      var result = serviceResource.restCallService(url,"GET");
+      var result = serviceResource.restCallService(LOAD_TODAY_UPLOAD_PAGE_URL,"GET");
       result.then(function (data) {
         if (data.code == 0 && data.content!= null) {
           var dataContent  = data.content;
@@ -132,7 +128,95 @@
       series: [],
     }
 
+
+    vm.loadTodayUploadDeviceType=function () {
+      var date=$filter('date')(new Date(),'yyyy-MM-dd');;
+
+      //var url ="http://localhost:8080/rest/deviceMonitor/deviceDataTypeToday";
+      var result = serviceResource.restCallService(LOAD_TODAY_UPLOAD_PAGE_URL,"GET");
+      result.then(function (data) {
+        if (data.code == 0 && data.content!= null) {
+          var dataContent  = data.content;
+          //     vm.uploadDevice.series.data=[1,3,6,9];
+
+          //    vm.uploadDevice.series[0].remove(false);
+          //  vm.uploadDevice.splice(0, 1)
+          var rnd = [];
+          var reportDates=[];
+          for(var i=0;i<dataContent.length;i++){
+            rnd.push(dataContent[i].num);
+            reportDates.push(dataContent[i].statDesc);
+          }
+
+          vm.uploadTodayDevice.series.push({
+            name: '当天数据上传',
+            data: rnd
+          });
+
+          vm.uploadTodayDevice.xAxis.categories=reportDates;
+
+        }
+      })
+    }
+
+    vm.uploadTodayDeviceType={
+      options: {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie',
+         // zoomType: 'xy',
+        }
+      },
+      title: {
+        text: '当天设备类型'
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            style: {
+              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+            }
+          }
+        }
+      },
+      series: [{
+        name: '设备类型',
+        colorByPoint: true,
+        data: [{
+          name: 'Microsoft Internet Explorer',
+          y: 56.33
+        }, {
+          name: 'Chrome',
+          y: 24.03,
+          sliced: true,
+          selected: true
+        }, {
+          name: 'Firefox',
+          y: 10.38
+        }, {
+          name: 'Safari',
+          y: 4.77
+        }, {
+          name: 'Opera',
+          y: 0.91
+        }, {
+          name: 'Proprietary or Undetectable',
+          y: 0.2
+        }]
+      }]
+    }
+
     vm.loadRecentUploadDevice();
     vm.loadTodayUploadDevice();
+    vm.loadTodayUploadDeviceType();
   }
 })();
