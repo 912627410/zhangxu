@@ -34,8 +34,8 @@
 			          <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.gpsSpeed | number:2}}</td>
               	<td>{{'totalProductiveHours'|translate}}</td>
               	<td ng-cloak class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.totalDuration | convertToMins }}</td>
-              	<td>{{'locateDuration'|translate}}</td>
-                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDuration}}</td>
+                <td>{{'flyWheelTeeth'|translate}}</td>
+                <td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.flyWheelTeeth}}</td>
               </tr>
               <tr>
               	<td>{{'fuelLevel'|translate}}</td>
@@ -100,13 +100,13 @@
                 <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                 <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
               </tr>
-              <tr>
+              <tr ng-if="!(deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber==null))">
               	<td>{{'visibleSatelliteNumber'|translate}}</td>
-			<td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber}}</td>
+                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber}}</td>
               	<td>{{'usableSatelliteNumber'|translate}}</td>
                 <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.usableSatelliteNumber}}</td>
-              	<td>{{'flyWheelTeeth'|translate}}</td>
-              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.flyWheelTeeth}}</td>
+                <td>{{'locateDuration'|translate}}</td>
+                <td  ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDuration}}</td>
               </tr>
               <tr>
               	<td>{{'ecuLockStatus'|translate}}</td>
@@ -143,7 +143,7 @@
               <!-- LED状态 -->
               <tr>
               	<td>{{'LEDState'|translate}}</td>
-			<td ng-cloak colspan="5">{{deviceCurrentInfoDetailsCtrl.deviceinfo.ledStatus}}</td>
+                <td ng-cloak colspan="5">{{deviceCurrentInfoDetailsCtrl.deviceinfo.ledStatus}}</td>
               </tr>
             </table>
             <table class="table table-striped" ng-init="rowInx=0">
