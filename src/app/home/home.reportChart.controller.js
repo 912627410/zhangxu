@@ -39,6 +39,7 @@
           }
 
           vm.uploadDevice.series.push({
+            name: '最近6天数据上传',
             data: rnd
           });
 
@@ -94,6 +95,7 @@
           }
 
           vm.uploadTodayDevice.series.push({
+            name: '当天数据上传',
             data: rnd
           });
 
