@@ -1629,7 +1629,7 @@
     <!--数据分析-->
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
       if (vm.sensorItem == null || angular.equals({}, vm.sensorItem)) {
-        Notification.error("请选择传感器！");
+        Notification.error("请选择状态量！");
         return;
       }
       var sensor = {

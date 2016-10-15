@@ -6,7 +6,7 @@
 
   function sensorController($rootScope,$window, $scope, $timeout, $confirm, $filter, $uibModalInstance,item, serviceResource) {
     var vm = this;
-    vm.title="传感器列表";
+    vm.title="状态量列表";
     vm.records = JSON.parse($window.sessionStorage["sensor"]);
     vm.selected = [];
     vm.selectedTags = [];
