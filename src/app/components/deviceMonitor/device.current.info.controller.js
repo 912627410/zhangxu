@@ -1646,29 +1646,39 @@
           options: {
             chart: {
               type: 'line',
-              zoomType: 'xy',
+              zoomType: 'xy'
             }
           },
-          title: {
-            text: '设备运作状态',
-          },
+          title: {text: '设备运作状态'},
           //x轴坐标显示
           xAxis: {
             title: {
               text: '日期'
+            },
+            labels: {
+              formatter: function () {
+                return $filter('date')(new Date(this.value),'MM-dd HH:mm');
+              }
             }
           },
           //y轴坐标显示
-          yAxis: {
-            title: {text: '值'},
-          },
+          yAxis: {title: {text: ''}},
           series:[]
         }
         for(var i=0;i<sensorData.length;i++){
           vm.deviceConfig.series.push({
             name: vm.sensorItem[sensorData[i].name],
             data: sensorData[i].data,
-            id: sensorData[i].name
+            id: sensorData[i].name,
+            tooltip: {
+              headerFormat: '',
+              shared: true,
+              pointFormatter:function () {
+                var time =$filter('date')(new Date(this.x),'yyyy-MM-dd HH:mm:ss');
+                return '<b>日期: </b>'+time+'<br><b>'+this.series.name+': </b>'+this.y+''+'<br>';
+              }
+            }
+
           })
         }
 

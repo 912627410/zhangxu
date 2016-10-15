@@ -1,8 +1,7 @@
 {
-  "engineTemperature":"发动机温度",
-  "oilTemperature":"油温",
+  "engineTemperature":"发动机冷却剂温度",
+  "oilTemperature":"变矩器油温",
   "enginRotate":"引擎转速",
-  "gprsSignal":"GPRS信号百分比",
   "gpsSpeed":"gps速度",
   "gsmSignal":"GSM信号质量",
   "imitate1":"模拟量1",
@@ -10,5 +9,11 @@
   "oilLevel": "油位",
   "pressureMeter":"气压表",
   "fuelConsumption" : "平均油耗",
-  "batteryVol": "车载电压"
+  "batteryVol": "车载电压",
+  "realtimeDuration":"实时工时",
+  "startTimes":"启动次数",
+  "suspicious":"可疑状态",
+  "totalDuration":"车辆运行总时间",
+  "workMonitor":"运行监控",
+  "pressureMeter":"气压表1"
 }

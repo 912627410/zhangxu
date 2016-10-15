@@ -7,12 +7,8 @@
 
 </div>
 
-<section class="content" style="width: 600px;  height:320px; "  >
+<section class="content" style="width: 600px;"  >
   <div class="row">
-
-        <input type="checkbox" ng-click="sensorCon.updateAllSelection($event)"
-               ng-model="sensorCon.checked">
-    
     <div class="col-md-12" ng-repeat="(x,y) in sensorCon.records" >
         <input type="checkbox"  id={{x}} name="{{y}}"
                ng-checked="sensorCon.isSelected(x)" ng-click="sensorCon.updateSelection($event,x)"> {{y}}
