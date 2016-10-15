@@ -1642,7 +1642,11 @@
       var rspPromise = $http.post(INFLUXDB,sensor);
       rspPromise.then(function (data) {
         var sensorData=data.data;
-        vm.deviceConfig={
+        if(sensorData==null||sensorData.length==0){
+          Notification.error("暂无数据！");
+          return;
+        }
+        vm.chartConfig={
           options: {
             chart: {
               type: 'line',
@@ -1666,7 +1670,7 @@
           series:[]
         }
         for(var i=0;i<sensorData.length;i++){
-          vm.deviceConfig.series.push({
+          vm.chartConfig.series.push({
             name: vm.sensorItem[sensorData[i].name],
             data: sensorData[i].data,
             id: sensorData[i].name,
@@ -1687,11 +1691,11 @@
     }
 
     vm.swapChartType=function () {
-      if (vm.deviceConfig.options.chart.type === 'line') {
-        vm.deviceConfig.options.chart.type = 'bar'
+      if (vm.chartConfig.options.chart.type === 'line') {
+        vm.chartConfig.options.chart.type = 'bar'
       } else {
-        vm.deviceConfig.options.chart.type = 'line'
-        vm.deviceConfig.options.chart.zoomType = 'xy'
+        vm.chartConfig.options.chart.type = 'line'
+        vm.chartConfig.options.chart.zoomType = 'xy'
       }
     }
 
