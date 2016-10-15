@@ -1,0 +1,14 @@
+{
+  "engineTemperature":"发动机温度",
+  "oilTemperature":"油温",
+  "enginRotate":"引擎转速",
+  "gprsSignal":"GPRS信号百分比",
+  "gpsSpeed":"gps速度",
+  "gsmSignal":"GSM信号质量",
+  "imitate1":"模拟量1",
+  "imitate2":"模拟量2",
+  "oilLevel": "油位",
+  "pressureMeter":"气压表",
+  "fuelConsumption" : "平均油耗",
+  "batteryVol": "车载电压"
+}

@@ -1,0 +1,21 @@
+<div class="modal-header" >
+  <h4 class="modal-title">
+    {{sensorCon.title}}
+    <button class="btn btn-info btn-sm pull-right" type="button" ng-click="sensorCon.cancel()" >关闭</button>
+    <button class="btn btn-info btn-sm pull-right" type="button" ng-click="sensorCon.confirm()" style="margin-right: 10px;">确定</button>
+  </h4>
+
+</div>
+
+<section class="content" style="width: 600px;  height:320px; "  >
+  <div class="row">
+
+        <input type="checkbox" ng-click="sensorCon.updateAllSelection($event)"
+               ng-model="sensorCon.checked">
+    
+    <div class="col-md-12" ng-repeat="(x,y) in sensorCon.records" >
+        <input type="checkbox"  id={{x}} name="{{y}}"
+               ng-checked="sensorCon.isSelected(x)" ng-click="sensorCon.updateSelection($event,x)"> {{y}}
+    </div>
+  </div>
+</section>
