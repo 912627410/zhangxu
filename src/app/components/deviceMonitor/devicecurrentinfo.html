@@ -1409,11 +1409,57 @@
     </uib-tab>
 
     <!--数据分析-->
-    <uib-tab  ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
+    <uib-tab>
       <uib-tab-heading>数据分析</uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:600px;">
         <div class="box-body">
-          <highchart id="simpleChart"  style="width: 853px;hight:500px"  config="deviceCurrentInfoCtrl.deviceConfig"></highchart>
+          <div class="row">
+            <div class="col-md-1">
+              <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-1">
+              <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-default"
+                      ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">状态量
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </div>
+            <div class="col-md-1"  style="padding-left: 50px;">
+              <button class="btn btn-primary" type="button"
+                      ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum,
+                      deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
+            </div>
+            <div class="col-md-2" style="padding-left: 60px;">
+              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.swapChartType()">切换</button>
+            </div>
+          </div >
+          <div>
+             <span ng-repeat="(x,y) in deviceCurrentInfoCtrl.sensorItem" style="padding-left: 2px;">
+             {{y}}<i  class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="deviceCurrentInfoCtrl.removeItem(x)"></i>
+           </span>
+          </div>
+
+          <div>
+           <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
+          </div>
         </div>
       </div>
     </uib-tab>

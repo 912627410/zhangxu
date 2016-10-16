@@ -113,7 +113,11 @@
             $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
 
           });
-
+          //加载sensor列表
+          $http.get('sensor.json').success(function(data){
+            $rootScope.sensor=data;
+            $window.sessionStorage["sensor"]=JSON.stringify(data);
+          });
 
           $rootScope.$state.go('home');
 
