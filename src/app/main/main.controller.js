@@ -12,9 +12,13 @@
     //$rootScope.logo="assets/images/logo.png";
 
     var userInfo=$rootScope.userInfo;
-    if(null!=userInfo.userdto.organizationDto.logo){
-      $rootScope.logo=userInfo.userdto.organizationDto.logo;
-    }else{
+    if(null!=userInfo&&null!=userInfo.userdto&&null!=userInfo.userdto.organizationDto&&
+      null!=userInfo.userdto.organizationDto.logo&& userInfo.userdto.organizationDto.logo!=""){
+        // $rootScope.logo=userInfo.userdto.organizationDto.logo;
+        $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+
+    }
+    else{
       $rootScope.logo="assets/images/logo.png";
     }
 
