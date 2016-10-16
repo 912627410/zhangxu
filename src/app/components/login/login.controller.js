@@ -159,6 +159,8 @@
         // alert("orgParent.id==="+orgParent.id);
         $rootScope.orgChart = vm.unflatten(list);
 
+
+
         $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetOrganizationInformation'));

@@ -9,8 +9,15 @@
   function MainController($rootScope, $scope,$window,$http,$uibModal,Notification,Idle, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
-    $rootScope.logo="assets/images/logo.png";
-    
+    //$rootScope.logo="assets/images/logo.png";
+
+    var userInfo=$rootScope.userInfo;
+    if(null!=userInfo.userdto.organizationDto.logo){
+      $rootScope.logo=userInfo.userdto.organizationDto.logo;
+    }else{
+      $rootScope.logo="assets/images/logo.png";
+    }
+
     vm.logout = function(){
 
       $rootScope.logo="assets/images/logo.png";

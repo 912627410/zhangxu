@@ -14,7 +14,16 @@
       <div class="pull-left info" ng-if="userInfo == null">
         <a ui-sref="home.login"> {{'pleaseLogin'|translate }} {{rand}}</a>
       </div>
+
     </div>
+    <ul class="sidebar-menu">
+
+      <li class="treeview">
+      <a ui-sref="home">
+         <span> {{userInfo.userdto.organizationDto.label | translate}}</span>
+      </a>
+    </li>
+   </ul>
     <!-- search form -->
     <!--<form action="#" method="get" class="sidebar-form">-->
     <!--<div class="input-group">-->
