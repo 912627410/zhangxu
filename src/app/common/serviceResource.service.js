@@ -46,6 +46,60 @@
       return defer.promise
     };
 
+    /*判断机器设备类型*/
+    var mapDeviceType = function (id) {
+      if (id == null) {
+        return null;
+      }
+      var machineLicenseId = id;
+      var title = '';
+
+      /*截取整机编号字符串*/
+      var substrNum = function (start, number) {
+        return machineLicenseId.substr(start, number);
+      };
+
+      var machineLicenseType = substrNum(3, 1).toUpperCase();/*整机编号第4位*/
+      if (machineLicenseType == 'L') {
+        if (substrNum(7, 1) == '0') {
+          title = '装载机' + substrNum(3, 4);
+        } else {
+          title = '装载机' + substrNum(3, 5);
+        }
+      } else if (machineLicenseType == 'G') {
+        title = '平地机' + substrNum(3, 5);
+      } else if (machineLicenseType == 'R') {
+        title = '压路机' + substrNum(3, 5);
+      } else if (machineLicenseType == 'E') {
+        title = '挖掘机' + substrNum(3, 5);
+      } else if (machineLicenseType == '0') {
+        if (substrNum(7, 1).toUpperCase() == 'E') {
+          title = '挖掘机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'L') {
+          title = '装载机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'G') {
+          title = '平地机' + substrNum(7, 1) + substrNum(4, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'R') {
+          title = '压路机' + substrNum(7, 1) + substrNum(4, 3);
+        } else {
+          title = '装载机';
+        }
+      } else if (!isNaN(machineLicenseType) && machineLicenseType != '0') {
+        if (substrNum(7, 1).toUpperCase() == 'E') {
+          title = '挖掘机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'L') {
+          title = '装载机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'G') {
+          title = '平地机' + substrNum(7, 1) + substrNum(3, 3);
+        } else if (substrNum(7, 1).toUpperCase() == 'R') {
+          title = '压路机' + substrNum(7, 1) + substrNum(3, 3);
+        } else {
+          title = '装载机';
+        }
+      }
+      return title;
+    };
+
 
 //添加带文本的点标记覆盖物
     var addMarkerModel = function(mapObj,item, icon) {
@@ -78,7 +132,13 @@
 
       //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
       //  var title = '';
-        var title = item.deviceNum;
+
+        title = mapDeviceType(item.machineLicenseId);
+        /*若整机编号为空，则显示终端编号*/
+        if(title == null){
+          title = item.deviceNum;
+        }
+
 
 
 
@@ -421,9 +481,13 @@
       //02 - 矿车
       //03 - 中挖
       //04 - 平地机T3   设备类型为 7
+      //05 - 巴黎(T3)   设备类型为 5
       getDeviceTypeForVersionNum:function(device_num,deviceType){
         if(device_num=='3'&& deviceType=='7'){
           return '04';
+        }
+        if(device_num=='3'&& deviceType=='5'){
+          return '05';
         }
         if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
             return '00';

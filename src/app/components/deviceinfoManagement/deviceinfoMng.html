@@ -49,8 +49,7 @@
 
 
     <div class="col-md-2">
-      <label class="control-label">组织</label>
-      <label class="text-blue text-sm">可做为查询条件</label>
+      <label class="control-label">所属组织</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -61,6 +60,20 @@
                 <i class="fa fa-sitemap"></i>
               </button>
            </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">调拨组织</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" id="allot" class="form-control" placeholder="调拨组织"
+               ng-model="deviceinfoMngCtrl.allot.label" name="allot" readonly required/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="deviceinfoMngCtrl.openTreeInfoAllot()">
+            <i class="fa fa-sitemap"></i>
+          </button>
+       </span>
       </p>
     </div>
     <div class="col-md-2">
@@ -139,8 +152,8 @@
             <td class="text-nowrap" data-title="'调拨时间'" sortable="'moveTime'">{{deviceinfo.moveTime | date:'yyyy-MM-dd
               HH:mm:ss'}}
             </td>
-            <td class="text-nowrap" data-title="'更新时间'" sortable="'lastUpdateTime'">
-              {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+            <td class="text-nowrap" data-title="'生产日期'" sortable="'produceDate'">
+              {{deviceinfo.produceDate | date:'yyyy-MM-dd'}}
             </td>
             <td class="text-nowrap" data-title="'操作'">
 

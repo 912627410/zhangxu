@@ -64,7 +64,7 @@
             <input type="text" name="produceDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                    ng-model="updateDeviceinfoController.deviceinfo.produceDate"
                    is-open="updateDeviceinfoController.produceDateOpenStatus.opened"
-                   datepicker-options="dateOptions" ng-readonly="true"  close-text="Close" validator="required"/>
+                   datepicker-options="updateDeviceinfoController.dateOptions" close-text="Close" ng-required="true"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="updateDeviceinfoController.produceDateOpen($event)">
