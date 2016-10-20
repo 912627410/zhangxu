@@ -9,14 +9,14 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, Notification,
+  function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $resource,$interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL,
                                        VIEW_BIND_INPUT_MSG_URL, VIEW_UN_BIND_INPUT_MSG_URL, VIEW_LOCK_INPUT_MSG_URL, VIEW_UN_LOCK_INPUT_MSG_URL,
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, INFLUXDB, deviceinfo) {
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES,ANALYSIS_INFLUX, deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -1603,6 +1603,13 @@
           })
         });
     }
+    /*初始化图表*/
+    vm.initConfig=function () {
+
+      vm.chartConfig={
+        title: {text: '设备工作分析'}
+      }
+    }
     /*slectItem*/
     vm.selectSensor = function (deviceNum) {
       var currentOpenModal = $uibModal.open({
@@ -1623,10 +1630,11 @@
         //没有选中任何传感器
       })
     }
+    /*移除选中的状态量*/
     vm.removeItem = function (key) {
       delete vm.sensorItem[key];
     }
-    <!--数据分析-->
+    /*数据分析*/
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
       if (vm.sensorItem == null || angular.equals({}, vm.sensorItem)) {
         Notification.error("请选择状态量！");
@@ -1634,14 +1642,75 @@
       }
       var sensor = {
         deviceNum: deviceNum,
-        versionNum: versionNum,
         startDate: startDate,
         endDate: endDate,
         sensors: Object.keys(vm.sensorItem)
       };
-      var rspPromise = $http.post(INFLUXDB,sensor);
-      rspPromise.then(function (data) {
-        var sensorData=data.data;
+      //ANALYSIS_INFLUX
+      var rspPromise = $resource(ANALYSIS_POSTGRES,{},{'analysisPostgres':{method:'POST',isArray:true}});
+      rspPromise.analysisPostgres(sensor,function (data) {
+        var sensorData=data;
+        if(sensorData==null||sensorData.length==0){
+          Notification.error("暂无数据！");
+          return;
+        }
+        var categoriesdata={};
+        for(var i=0;i<sensorData.length;i++){
+          if(sensorData[i].name=='locateDate'){
+            categoriesdata= (sensorData[i].data)
+          }
+        }
+        vm.chartConfig={
+          options: {
+            chart: {
+              type: 'line',
+              zoomType: 'xy'
+            },
+            tooltip: {
+                style: {
+                  padding: 10,
+                  fontWeight: 'bold'
+                },
+                formatter:function () {
+                  var time =$filter('date')(new Date(this.x),'yyyy-MM-dd HH:mm:ss');
+                  return '<b>日期: </b>'+time+'<br><b>'+this.series.name+': </b>'+this.y+''+'<br>';
+                }
+            }
+
+          },
+          title: {text: '设备工作分析'},
+          //x轴坐标显示
+          xAxis: {
+            title: {
+              text: '日期'
+            },
+            categories:categoriesdata,
+            labels: {
+              formatter: function () {
+                return $filter('date')(new Date(this.value),'MM-dd HH:mm');
+              }
+            }
+          },
+          //y轴坐标显示
+          yAxis: {title: {text: ''}},
+          series:[]
+        }
+
+        for(var i=0;i<sensorData.length;i++){
+          if(sensorData[i].name!='locateDate'){
+            vm.chartConfig.series.push({
+              name: vm.sensorItem[sensorData[i].name],
+              data: sensorData[i].data
+            })
+          }
+        }
+
+      })
+
+
+      /*var rspPromise = $resource(INFLUXDB,{},{'getdata':{method:'POST',isArray:true}});
+      rspPromise.getdata(sensor,function (data) {
+        var sensorData=data;
         if(sensorData==null||sensorData.length==0){
           Notification.error("暂无数据！");
           return;
@@ -1653,7 +1722,7 @@
               zoomType: 'xy'
             }
           },
-          title: {text: '设备运作状态'},
+          title: {text: '设备工作分析'},
           //x轴坐标显示
           xAxis: {
             title: {
@@ -1687,17 +1756,7 @@
         }
 
 
-      });
+      });*/
     }
-
-    vm.swapChartType=function () {
-      if (vm.chartConfig.options.chart.type === 'line') {
-        vm.chartConfig.options.chart.type = 'bar'
-      } else {
-        vm.chartConfig.options.chart.type = 'line'
-        vm.chartConfig.options.chart.zoomType = 'xy'
-      }
-    }
-
   }
 })();

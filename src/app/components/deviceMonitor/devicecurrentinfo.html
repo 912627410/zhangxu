@@ -1409,7 +1409,7 @@
     </uib-tab>
 
     <!--数据分析-->
-    <uib-tab>
+    <uib-tab ng-click="deviceCurrentInfoCtrl.initConfig()">
       <uib-tab-heading>数据分析</uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:600px;">
         <div class="box-body">
@@ -1436,20 +1436,20 @@
                         </span>
               </p>
             </div>
-            <div class="col-md-1">
+            <div class="col-md-2">
               <button type="button" class="btn btn-default"
                       ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">状态量
                 <i class="fa fa-sitemap"></i>
               </button>
             </div>
-            <div class="col-md-1"  style="padding-left: 50px;">
+            <div class="col-md-1">
               <button class="btn btn-primary" type="button"
                       ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum,
                       deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
             </div>
-            <div class="col-md-2" style="padding-left: 60px;">
+           <!-- <div class="col-md-1">
               <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.swapChartType()">切换</button>
-            </div>
+            </div>-->
           </div >
           <div>
              <span ng-repeat="(x,y) in deviceCurrentInfoCtrl.sensorItem" style="padding-left: 2px;">

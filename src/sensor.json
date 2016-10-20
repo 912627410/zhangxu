@@ -1,4 +1,5 @@
-{"engineTemperature":"发动机冷却剂温度",
+{
+  "engineTemperature":"发动机冷却剂温度",
   "oilTemperature":"变矩器油温",
   "enginRotate":"引擎转速",
   "gpsSpeed":"gps速度",
@@ -15,7 +16,6 @@
   "suspicious":"可疑状态",
   "totalDuration":"车辆运行总时间",
   "workMonitor":"运行监控",
-  "pressureMeter":"气压表1",
   "mph": "时速",
   "oilPress":"机油压力",
   "totalMileage":"累计里程",
