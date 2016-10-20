@@ -73,60 +73,7 @@
       series: [],
     }
 
-    vm.loadTodayUploadDevice=function () {
 
-      var result = serviceResource.restCallService(LOAD_TODAY_UPLOAD_PAGE_URL,"GET");
-      result.then(function (data) {
-        if (data.code == 0 && data.content!= null) {
-          var dataContent  = data.content;
-          //     vm.uploadDevice.series.data=[1,3,6,9];
-
-          //    vm.uploadDevice.series[0].remove(false);
-          //  vm.uploadDevice.splice(0, 1)
-          var rnd = [];
-          var reportDates=[];
-          for(var i=0;i<dataContent.length;i++){
-            rnd.push(dataContent[i].num);
-            reportDates.push(dataContent[i].statDesc);
-          }
-
-          vm.uploadTodayDevice.series.push({
-            name: '当天数据上传',
-            data: rnd
-          });
-
-          vm.uploadTodayDevice.xAxis.categories=reportDates;
-
-        }
-      })
-    }
-
-    vm.uploadTodayDevice={
-      options: {
-        chart: {
-          type: 'line',
-          zoomType: 'xy',
-        }
-      },
-      title: {
-        text: '当天数据上传情况',
-      },
-      //x轴坐标显示
-      xAxis: {
-        title: {
-          text: '时间'
-        },
-        categories:[],
-        labels: {
-
-        }
-      },
-      //y轴坐标显示
-      yAxis: {
-        title: {text: '次数'},
-      },
-      series: [],
-    }
 
 
     vm.loadTodayUploadDeviceType=function () {
@@ -148,13 +95,35 @@
             reportDates.push(dataContent[i].statDesc);
           }
 
-          vm.uploadTodayDevice.series.push({
-            name: '当天数据上传',
-            data: rnd
-          });
+          vm.uploadTodayDevice={
+            options: {
+              chart: {
+                type: 'line',
+                zoomType: 'xy',
+              }
+            },
+            title: {
+              text: '当天数据上传情况',
+            },
+            //x轴坐标显示
+            xAxis: {
+              title: {
+                text: '时间'
+              },
+              categories:reportDates,
+              labels: {
 
-          vm.uploadTodayDevice.xAxis.categories=reportDates;
-
+              }
+            },
+            //y轴坐标显示
+            yAxis: {
+              title: {text: '次数'},
+            },
+            series: [{
+              name: '当天数据上传',
+              data:rnd
+            }],
+          }
         }
       })
     }
@@ -216,7 +185,7 @@
     }
 
     vm.loadRecentUploadDevice();
-    vm.loadTodayUploadDevice();
-    vm.loadTodayUploadDeviceType();
+//    vm.loadTodayUploadDevice();
+   vm.loadTodayUploadDeviceType();
   }
 })();
