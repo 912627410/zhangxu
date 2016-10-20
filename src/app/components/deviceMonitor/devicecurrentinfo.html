@@ -46,9 +46,8 @@
         <div class="box-body" >
           <div class="row">
             <div class="col-md-3" >
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '02'" id="container-airs" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
             </div>
             <div class="col-md-6" >
               <highchart id="container-rpm" style="width: 400px; height: 200px; float:left" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
