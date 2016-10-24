@@ -16,7 +16,7 @@
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, INFLUXDB, deviceinfo) {
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, INFLUXDB, deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -745,7 +745,47 @@
         }
       )
     }
+    vm.getLockData=function (page, size, sort, phoneNumber, startDate, endDate) {
+      if (deviceNum) {
+        var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
+      }
+      if (startDate) {
+        var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        if (filterTerm) {
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else {
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      }
+      if (endDate) {
+        var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        if (filterTerm) {
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else {
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      }
+      var deviceLockDataPromis = serviceResource.queryDeviceLockData(page, size, sort, filterTerm);
+      deviceLockDataPromis.then(function (data) {
+          vm.deviceLockDataList = data.content;
+          vm.deviceLockDataPage = data.page;
+          vm.deviceLockDataPageNumber = data.page.number + 1;
+          vm.deviceLockDataBasePath = DEVCE_LOCK_DATA_PAGED_QUERY;
+          if (vm.deviceLockDataList.length == 0) {
+            Notification.warning('无下发短信');
+          }
+          else {
 
+          }
+        }, function (reason) {
+          Notification.error('获取锁车短信内容失败！');
+        }
+      )
+    }
 
     //地图tab,请求该设备一段时间内的数据用于绘制轨迹
 
