@@ -11,17 +11,6 @@
   /** @ngInject */
   function simService($rootScope, $resource, SIM_STATUS_URL, SIM_URL, SIM_PAGE_URL,DEFAULT_SIZE_PER_PAGE, serviceResource, Notification) {
 
-    this.getSimStatusList = function (list) {
-      var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-      simStatusData.then(function (data) {
-        alert(data);
-        //  return data;
-        list = data;
-      }, function (reason) {
-        Notification.error('获取SIM卡状态集合失败');
-        return {};
-      })
-    }
 
 
 

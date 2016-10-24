@@ -7,7 +7,7 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_URL, SIM_PAGE_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -76,13 +76,6 @@
     vm.sim.activeTimeStart=date;
     vm.sim.activeTimeEnd=new Date();
 
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
-    }, function (reason) {
-      Notification.error('获取SIM卡状态集合失败');
-    })
 
 
 

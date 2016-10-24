@@ -308,8 +308,11 @@
           }
         }
       })
-    ;
 
+
+
+
+    ;
     $urlRouterProvider.otherwise('/home');
   }
 
