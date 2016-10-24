@@ -4,14 +4,22 @@
     .module('GPSCloud')
     .controller('sensorController', sensorController);
 
-  function sensorController($rootScope,$window, $scope, $timeout, $confirm, $filter, $uibModalInstance,item, serviceResource) {
+  function sensorController($rootScope,$window, $scope, $timeout, $http,$confirm, $filter, $uibModalInstance,item, serviceResource) {
     var vm = this;
-    vm.title="状态量列表";
-    vm.records = JSON.parse($window.sessionStorage["sensor"]);
+    vm.title=item;
     vm.selected = [];
+    vm.records=[];
     vm.selectedTags = [];
     vm.jsons={}
-    vm.selectAll = false;//是否全选标志
+
+    //加载json
+    var loadLocaleJson=function (jsonLsitName) {
+      $http.get(jsonLsitName).success(function(data){
+        vm.records=JSON.parse(JSON.stringify(data));
+      });
+    }
+
+    loadLocaleJson('sensor.json')
 
     var updateSelected = function(action,id,name){
       if(action == 'add' && vm.selected.indexOf(id) == -1){
