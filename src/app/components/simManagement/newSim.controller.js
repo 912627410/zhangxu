@@ -15,17 +15,6 @@
 
     vm.sim = {};
 
-    //alert(simService.getSimStatusList());
-    ////alert(simService.name);
-    //
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
-    }, function (reason) {
-      Notification.error('获取SIM卡状态集合失败');
-    })
-
     //日期控件相关
     //date picker
     vm.serviceBeginDateOpenStatus = {

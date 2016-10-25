@@ -40,60 +40,6 @@
             </span>
       </p>
     </div>
-    <div class="col-md-1">
-      <label class="control-label">状态</label>
-    </div>
-    <div class="col-md-3">
-      <ui-select type="text" name="status" ng-required="true"  ng-model="simMngCtrl.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
-        <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
-        <ui-select-choices  repeat="simStatus.value as simStatus in simMngCtrl.sim.simStatusList | propsFilter: {desc: $select.search}" >
-          <div  ng-bind-html="simStatus.desc | highlight: $select.search"></div>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-    <div class="col-md-2">
-
-    </div>
-
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-1">
-      <label class="control-label">激活开始时间</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" name="activeTimeStart" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-               ng-model="simMngCtrl.sim.activeTimeStart"
-               is-open="simMngCtrl.activeTimeStartOpenStatus.opened"
-               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="simMngCtrl.activeTimeStartOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-      </p>
-    </div>
-
-    <div class="col-md-1">
-      <label class="control-label">激活结束时间</label>
-    </div>
-    <div class="col-md-3">
-
-        <p class="input-group">
-          <input type="text" name="activeTimeEnd" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                 ng-model="simMngCtrl.sim.activeTimeEnd"
-                 is-open="simMngCtrl.activeTimeEndOpenStatus.opened"
-                 datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="simMngCtrl.activeTimeEndOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-        </p>
-    </div>
-    <div class="col-md-2"></div>
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
@@ -102,6 +48,7 @@
 
 
   </div>
+
   <div class="row">
     <div class="btn-group col-md-2">
       <span class="label label-info pull-left">SIM卡总数:  {{simMngCtrl.page.totalElements}}</span>
@@ -117,6 +64,7 @@
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
+      
     </div>
   </div>
   <div class="row " style="padding: 10px">
