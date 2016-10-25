@@ -746,8 +746,11 @@
       )
     }
     vm.getLockData=function (page, size, sort, phoneNumber, startDate, endDate) {
-      if (deviceNum) {
+      if (phoneNumber&&!angular.isUndefined(phoneNumber)) {
         var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
+      }else {
+        Notification.warning('设备未绑定sim卡！');
+        return;
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -777,9 +780,6 @@
           vm.deviceLockDataBasePath = DEVCE_LOCK_DATA_PAGED_QUERY;
           if (vm.deviceLockDataList.length == 0) {
             Notification.warning('无下发短信');
-          }
-          else {
-
           }
         }, function (reason) {
           Notification.error('获取锁车短信内容失败！');
