@@ -333,7 +333,11 @@
   "voltageLowAlarmValue":"Low voltage alarm setting value",
   "oilLowAlarmValue":"Oil low alarm setting value",
   "oilPressAlarmValue":"oilpress alarm setting value",
-  "idleDeviceReport": "Idle Device Report"
-
+  "idleDeviceReport": "Idle Device Report",
+  "clientDownload": "App Download",
+  "viewDetails":  "View Details",
+  "download": "Download",
+  "scanQRcode":"Scan QR Download",
+  "comingSoon": "Coming Soon"
 
 }

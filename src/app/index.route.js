@@ -61,6 +61,17 @@
           }
         }
       })
+      .state('home.appDownloadPage', {
+        url: '/appDownloadPage',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/widefooter.html'
+          },
+          'main@home': {
+            templateUrl: 'app/components/appManagement/appDownloadPage.html'
+          }
+        }
+      })
       .state('home.register', {
         url: '/register',
         views: {
@@ -297,8 +308,11 @@
           }
         }
       })
-    ;
 
+
+
+
+    ;
     $urlRouterProvider.otherwise('/home');
   }
 

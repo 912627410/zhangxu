@@ -13,7 +13,7 @@
   function serviceResource($rootScope,$resource,$http,$q,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -416,6 +416,19 @@
         }
         return restCallService(restCallURL,"GET");
       },
+      //分页查询设备锁车短信
+      queryDeviceLockData:function(page,size,sort,queryCondition){
+        var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_DEVICE_LOCK_DATA_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
       //分页查询用户信息(user info)
       queryUserInfo:function(page,size,sort,queryCondition){
         var restCallURL = USER_PAGED_URL;
@@ -475,30 +488,30 @@
         return null;
       },
 
-      //TODO 先根据device_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
+      //TODO 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
       //00 - 无特定类型
       //01 - 小挖
       //02 - 矿车
       //03 - 中挖
       //04 - 平地机T3   设备类型为 7
       //05 - 巴黎(T3)   设备类型为 5
-      getDeviceTypeForVersionNum:function(device_num,deviceType){
-        if(device_num=='3'&& deviceType=='7'){
+      getDeviceTypeForVersionNum:function(version_num,deviceType){
+        if(version_num=='3'&& deviceType=='7'){
           return '04';
         }
-        if(device_num=='3'&& deviceType=='5'){
+        if(version_num=='3'&& deviceType=='5'){
           return '05';
         }
-        if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
+        if(version_num==null||version_num==''||version_num=='1'||version_num=='2'||version_num=='3'){
             return '00';
         }
-        if(device_num=='A1'){
+        if(version_num=='A1'){
             return '01';
         }
-        if(device_num=='30'){
+        if(version_num=='30'){
           return '02';
         }
-        if(device_num=='40'){
+        if(version_num=='40'){
             return '03';
         }
       },

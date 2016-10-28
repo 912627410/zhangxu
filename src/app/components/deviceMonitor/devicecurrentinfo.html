@@ -46,9 +46,8 @@
         <div class="box-body" >
           <div class="row">
             <div class="col-md-3" >
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '02'" id="container-airs" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
             </div>
             <div class="col-md-6" >
               <highchart id="container-rpm" style="width: 400px; height: 200px; float:left" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
@@ -610,7 +609,7 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">{{'noData'|translate}}</td>
                     <td>{{'positioningTime'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'">--</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">--</td>
                     <td>{{'returnTime'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
@@ -689,7 +688,7 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
-                  <tr>
+                  <tr ng-if="!(deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
                     <td>{{'visibleSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
                       {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
@@ -1408,6 +1407,64 @@
       </div>
     </uib-tab>
 
+    <!--锁车详情-->
+    <uib-tab>
+      <uib-tab-heading>操作日志</uib-tab-heading>
+      <div class="modal-body">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-2"><label class="control-label">{{'startDate'|translate}}:</label></div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2"><label class="control-label">{{'endDate'|translate}}:</label></div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getLockData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th class="text-nowrap">下发时间</th>
+                    <th class="text-nowrap">操作人</th>
+                    <th class="text-nowrap">操作类型</th>
+                    <th class="text-nowrap">操作结果</th>
+                    <th class="text-nowrap">终端ip</th>
+                  </tr>
+                  <tr ng-repeat="deviceLockDataList in deviceCurrentInfoCtrl.deviceLockDataList">
+                    <td ng-cloak class="text-nowrap">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceLockDataList.operator}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceLockDataList.smsType}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceLockDataList.smsStatus}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceLockDataList.clientIp}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceLockDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceLockDataPageNumber-1,8,null,deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceLockDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceLockDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage'|translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
     <!--数据分析-->
     <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>数据分析</uib-tab-heading>

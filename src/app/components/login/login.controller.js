@@ -65,6 +65,12 @@
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+        if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
+          $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+
+        }else{
+          $rootScope.logo="assets/images/logo.png";
+        }
 
         Notification.success(languages.findKey('loginSuccess'));
 
@@ -151,6 +157,8 @@
 
         // alert("orgParent.id==="+orgParent.id);
         $rootScope.orgChart = vm.unflatten(list);
+
+
 
         $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
       }, function (reason) {
