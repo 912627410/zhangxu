@@ -16,7 +16,7 @@
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES, ANALYSIS_INFLUX, deviceinfo) {
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES,DEVCE_LOCK_DATA_PAGED_QUERY, ANALYSIS_INFLUX, deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
