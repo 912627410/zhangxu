@@ -801,8 +801,8 @@
       <div class="modal-body" >
         <div class="box-body"  >
           <div class="row">
-            <div class="col-md-2">
-              <label class="control-label">{{'startDate'|translate}}:</label>
+            <div class="col-md-1">
+              <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
             </div>
             <div class="col-md-3">
               <p class="input-group">
@@ -812,8 +812,8 @@
                         </span>
               </p>
             </div>
-            <div class="col-md-2">
-              <label class="control-label">{{'endDate'|translate}}:</label>
+            <div class="col-md-1">
+              <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
             </div>
             <div class="col-md-3">
               <p class="input-group">
@@ -823,10 +823,16 @@
                         </span>
               </p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
-              <a class="btn btn-default pull-right"  presentation-href="device:monitorPage" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'export'|translate}}</a>
             </div>
+
+            <div class="col-md-3">
+              <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
+              <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
+            </div>
+
+
 
           </div>
           <div class="row">
