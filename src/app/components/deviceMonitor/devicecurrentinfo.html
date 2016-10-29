@@ -1304,17 +1304,17 @@
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secOutPower" class="form-control" placeholder="{{'externalPowerSupplySec'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
               </div>
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secLocateInt" class="form-control" placeholder="{{'positioningTimeSec'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
               </div>
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secInnerPower" class="form-control" placeholder="{{'internalPowerSupplyMinute'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
               </div>
             </div>
           </div>
@@ -1472,7 +1472,7 @@
       </div>
     </uib-tab>
     <!--数据分析-->
-    <uib-tab>
+    <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>数据分析</uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:600px;">
         <div class="box-body">
@@ -1499,29 +1499,62 @@
                         </span>
               </p>
             </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-default"
-                      ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">状态量
-                <i class="fa fa-sitemap"></i>
-              </button>
+            <div class="col-md-4" style="padding: 0px;">
+              <div style="float:left;margin-top: -5px;">
+                <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;综合分析</div>
+                <div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>
+              </div>
+              <button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
+                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>
+              <button class="btn btn-primary ng-binding" style="float:left;margin-left: 18px;" type="button" ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum, deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">确定</button>
             </div>
-            <div class="col-md-1"  style="padding-left: 50px;">
-              <button class="btn btn-primary" type="button"
-                      ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum,
-                      deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
-            </div>
-            <div class="col-md-2" style="padding-left: 60px;">
-              <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.swapChartType()">切换</button>
-            </div>
-          </div >
-          <div>
+          </div>
+          <div ng-show="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?false:true">
              <span ng-repeat="(x,y) in deviceCurrentInfoCtrl.sensorItem" style="padding-left: 2px;">
              {{y}}<i  class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="deviceCurrentInfoCtrl.removeItem(x)"></i>
            </span>
           </div>
-
-          <div>
-           <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
+          <div style="padding-top: 10px;">
+              <div ng-switch="deviceCurrentInfoCtrl.checkedRad">
+                <div ng-switch-when="DASHBOARD">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
+                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">切换</button>
+                        </label>
+                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
+                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.workTimeOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp;天</label>
+                        <highchart id="workTimeChart" title="平均工作时长"
+                                   style="height:250px;"
+                                   config="deviceCurrentInfoCtrl.workTimeChart">
+                        </highchart>
+                      </div>
+                      <div class="col-md-6">
+                        <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
+                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
+                        </label>
+                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
+                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.startTimesOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp; 天</label>
+                        <highchart id="startTimesChart" title="平均启动次数"
+                                     style="height: 250px"
+                                     config="deviceCurrentInfoCtrl.startTimesChart">
+                        </highchart>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                       <!-- <label style="position: absolute;top: 12px;right: 80px;z-index: 99;"><input ng-model="deviceCurrentInfoCtrl.realtimeOptModel"  style="width: 50px;display: inline-block;"/></label>
+                        <highchart id="realtimeChart" title="实时分析"
+                                   style="min-width:850px;height: 250px"
+                                   config="deviceCurrentInfoCtrl.realtimeChart">
+                        </highchart>-->
+                      </div>
+                    </div>
+                </div>
+                <div ng-switch-when="状态量">
+                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
+                </div>
+              </div>
           </div>
         </div>
       </div>

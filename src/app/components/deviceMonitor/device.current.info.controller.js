@@ -9,20 +9,23 @@
     .controller('DeviceCurrentInfoController', DeviceCurrentInfoController);
 
   /** @ngInject */
-  function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, Notification,
+  function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $resource, $interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL,
                                        VIEW_BIND_INPUT_MSG_URL, VIEW_UN_BIND_INPUT_MSG_URL, VIEW_LOCK_INPUT_MSG_URL, VIEW_UN_LOCK_INPUT_MSG_URL,
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, INFLUXDB,DEVCEDATA_EXCELEXPORT, deviceinfo) {
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT, deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
     $scope.myInterval = 5000;//轮播间隔
     $scope.noWrapSlides = false;// 是否轮播 默认false
     $scope.noTransition = false;// 是否有过场动画 默认false
+    vm.realtimeOptModel = 3;
+    vm.workTimeOptModel = 1;
+    vm.startTimesOptModel = 1;
     $scope.notices = [];
 
 
@@ -1635,7 +1638,10 @@
 
     //查询间隔信息
     vm.getSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
-
+      if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        return;
+      }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
@@ -1655,10 +1661,12 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
-
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
+      if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        return;
+      }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
@@ -1693,8 +1701,36 @@
           })
         });
     }
-    /*slectItem*/
-    vm.selectSensor = function (deviceNum) {
+
+    vm.checkedRad = 'DASHBOARD';
+    /*初始化图表*/
+    vm.initConfig = function (deviceNum) {
+      vm.chartConfig = {
+        title: {text: '设备工作分析'}
+      }
+      vm.workTimeChart={
+        title: {text: '工作时长分析'},
+       size: {
+         width: 416,
+           height: 250
+       }
+      }
+      vm.startTimesChart = {
+        title: {text: '启动次数分析'},
+       size: {
+         width: 416,
+           height: 250
+       }
+      }
+      //默认显示综合数据分析
+      loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+      loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+    }
+    /*状态量选择*/
+    vm.selectSensor = function (checkedRad) {
+      if (vm.checkedRad == 'DASHBOARD') {
+        return;
+      }
       var currentOpenModal = $uibModal.open({
         animation: true,
         backdrop: false,
@@ -1703,91 +1739,225 @@
         controller: 'sensorController as sensorCon',
         resolve: { //用来向controller传数据
           item: function () {
-            return deviceNum;
+            return checkedRad;
           }
         }
       })
       currentOpenModal.result.then(function (selectedItem) {
         vm.sensorItem = selectedItem
-      }, function () {
-        //没有选中任何传感器
       })
     }
+    /*移除选中的状态量*/
     vm.removeItem = function (key) {
       delete vm.sensorItem[key];
     }
-    <!--数据分析-->
+    /*数据分析*/
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
-      if (vm.sensorItem == null || angular.equals({}, vm.sensorItem)) {
-        Notification.error("请选择状态量！");
-        return;
+      if (vm.checkedRad == 'DASHBOARD') {
+        loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(startDate), dateFormat(endDate));
+        loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(startDate), dateFormat(endDate));
+      } else {
+        if (vm.checkedRad != 'DASHBOARD' && (vm.sensorItem == null || angular.equals({}, vm.sensorItem))) {
+          Notification.error("请选择条目！");
+          return;
+        }
+        var sensor = {
+          deviceNum: deviceNum,
+          startDate: startDate,
+          endDate: endDate,
+          sensors: Object.keys(vm.sensorItem)
+        };
+        loadDeviceMetadata(sensor);
       }
-      var sensor = {
-        deviceNum: deviceNum,
-        versionNum: versionNum,
-        startDate: startDate,
-        endDate: endDate,
-        sensors: Object.keys(vm.sensorItem)
-      };
-      var rspPromise = $http.post(INFLUXDB,sensor);
-      rspPromise.then(function (data) {
-        var sensorData=data.data;
-        if(sensorData==null||sensorData.length==0){
+    }
+    /*使用折线图展现设备的元数据*/
+    var loadDeviceMetadata = function (sensor) {
+      var rspPromise = $resource(ANALYSIS_POSTGRES, {}, {'analysisPostgres': {method: 'POST', isArray: true}});
+      rspPromise.analysisPostgres(sensor, function (sensorData) {
+        if (sensorData == null || sensorData.length == 0) {
           Notification.error("暂无数据！");
           return;
         }
-        vm.chartConfig={
+        var categoriesdata = {};
+        for (var i = sensorData.length - 1; i >= 0; i--) {
+          if (sensorData[i].name == 'locateDate') {
+            categoriesdata = (sensorData[i].data)
+            break;
+          }
+        }
+        vm.chartConfig = {
           options: {
             chart: {
               type: 'line',
               zoomType: 'xy'
+            },
+            tooltip: {
+              formatter: function () {
+                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss');
+                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + '' + '<br>';
+              }
             }
           },
-          title: {text: '设备运作状态'},
+          title: {text: '设备工作分析'},
           //x轴坐标显示
           xAxis: {
             title: {
               text: '日期'
             },
+            categories: categoriesdata,
             labels: {
               formatter: function () {
-                return $filter('date')(new Date(this.value),'MM-dd HH:mm');
+                return $filter('date')(new Date(this.value), 'MM-dd HH:mm');
               }
             }
           },
           //y轴坐标显示
           yAxis: {title: {text: ''}},
-          series:[]
+          series: []
         }
-        for(var i=0;i<sensorData.length;i++){
-          vm.chartConfig.series.push({
-            name: vm.sensorItem[sensorData[i].name],
+
+        for (var i = 0; i < sensorData.length; i++) {
+          if (sensorData[i].name != 'locateDate') {
+            vm.chartConfig.series.push({
+              name: vm.sensorItem[sensorData[i].name],
+              data: sensorData[i].data
+            })
+          }
+        }
+
+      })
+    }
+    /*加载个工作时间的图表*/
+    var loadWorkTimeChart = function (deviceNum, workTimeOptModel, startDate, endDate) {
+      var reqUrl=ANALYSIS_INFLUX+"getworktime?deviceNum=" + deviceNum + "&model=" + workTimeOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
+      var workTimePromis = serviceResource.restCallService(reqUrl, "QUERY", null);
+      workTimePromis.then(function (data) {
+        var sensorData = data;
+        if (sensorData == null || sensorData.length == 0) {
+          Notification.error("暂无数据！");
+          return;
+        }
+        vm.workTimeChart = {
+          options: {
+            chart: {
+              type: 'column',
+              zoomType: 'xy'
+            },
+            credits: {
+              enabled: false
+            },
+          },
+          series: [],
+          title: {text: '工作时长分析'},
+          //x轴坐标显示
+          xAxis: {
+            title: {text: '日期'},
+            tickInterval: 3600 * 1000 * 24 * workTimeOptModel,
+            labels: {
+              formatter: function () {
+                return $filter('date')(new Date(this.value), 'yy-MM-dd');
+              }
+            }
+          },
+          //y轴坐标显示
+          yAxis: {
+            title: {text: '单位(/h)'},
+          },
+          size: {
+            width: 416,
+            height: 250
+          }
+        }
+        for (var i = 0; i < sensorData.length; i++) {
+          vm.workTimeChart.series.push({
+            name: sensorData[i].name,
             data: sensorData[i].data,
             id: sensorData[i].name,
             tooltip: {
               headerFormat: '',
               shared: true,
-              pointFormatter:function () {
-                var time =$filter('date')(new Date(this.x),'yyyy-MM-dd HH:mm:ss');
-                return '<b>日期: </b>'+time+'<br><b>'+this.series.name+': </b>'+this.y+''+'<br>';
+              pointFormatter: function () {
+                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd');
+                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + 'H' + '<br>';
               }
             }
 
           })
         }
+      })
+    }
+    /*加载启动次数的图表*/
+    var loadStartTimesChart = function (deviceNum, startTimesOptModel, startDate, endDate) {
+      var reqUrl=ANALYSIS_INFLUX+"getstarttimes?deviceNum=" + deviceNum + "&model=" + startTimesOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
+      var startTimesPromis = serviceResource.restCallService(reqUrl, "QUERY", null);
+      startTimesPromis.then(function (data) {
+        var sensorData = data;
+        if (sensorData == null || sensorData.length == 0) {
+          Notification.error("暂无数据！");
+          return;
+        }
+        vm.startTimesChart = {
+          options: {
+            chart: {
+              type: 'column',
+              zoomType: 'xy'
+            },
+            credits: {
+              enabled: false
+            }
+          },
+          title: {text: '启动次数分析'},
+          //x轴坐标显示
+          xAxis: {
+            title: {
+              text: '日期'
+            },
+            tickInterval: 3600 * 1000 * 24 * startTimesOptModel,
+            labels: {
+              formatter: function () {
+                return $filter('date')(new Date(this.value), 'yy-MM-dd');
+              }
+            }
+          },
+          //y轴坐标显示
+          yAxis: {title: {text: '单位/次'}},
+          series: [],
+          size: {
+            width: 402,
+            height: 250
+          }
+        }
+        for (var i = 0; i < sensorData.length; i++) {
+          vm.startTimesChart.series.push({
+            name: sensorData[i].name,
+            data: sensorData[i].data,
+            id: sensorData[i].name,
+            tooltip: {
+              headerFormat: '',
+              shared: true,
+              pointFormatter: function () {
+                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd');
+                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + '次' + '<br>';
+              }
+            }
 
-
+          })
+        }
       });
     }
-
-    vm.swapChartType=function () {
-      if (vm.chartConfig.options.chart.type === 'line') {
-        vm.chartConfig.options.chart.type = 'bar'
+    /*格式化时间函数*/
+    var dateFormat = function (date) {
+      var startMonth = date.getMonth() + 1;  //getMonth返回的是0-11
+      return date.getFullYear() + '-' + startMonth + '-' + date.getDate();
+    }
+    /*图表样式切换*/
+    vm.changeChartType =function (chart) {
+      if (chart.options.chart.type === 'line') {
+        chart.options.chart.type = 'column'
       } else {
-        vm.chartConfig.options.chart.type = 'line'
-        vm.chartConfig.options.chart.zoomType = 'xy'
+        chart.options.chart.type = 'line'
+        chart.options.chart.zoomType = 'x'
       }
     }
-
   }
 })();
