@@ -184,8 +184,12 @@
       }]
     }
 
-    vm.loadRecentUploadDevice();
+
+    if(permissions.getPermissions("device:reportChart")){
+      vm.loadRecentUploadDevice();
 //    vm.loadTodayUploadDevice();
-   vm.loadTodayUploadDeviceType();
+      vm.loadTodayUploadDeviceType();
+    }
+
   }
 })();
