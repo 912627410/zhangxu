@@ -1588,7 +1588,10 @@
 
     //查询间隔信息
     vm.getSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
-
+      if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        return;
+      }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
@@ -1610,6 +1613,10 @@
     }
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
+      if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        return;
+      }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
