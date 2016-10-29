@@ -1298,17 +1298,17 @@
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secOutPower" class="form-control" placeholder="{{'externalPowerSupplySec'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
               </div>
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secLocateInt" class="form-control" placeholder="{{'positioningTimeSec'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
               </div>
               <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secInnerPower" class="form-control" placeholder="{{'internalPowerSupplyMinute'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                       validator="number" required ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
               </div>
             </div>
           </div>
