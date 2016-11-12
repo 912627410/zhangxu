@@ -870,6 +870,7 @@
 
                     <th class="text-nowrap">{{'GPSPowerDetection'|translate}}</th>
                     <th class="text-nowrap">{{'Built-inBatteryRealTime'|translate}}</th>
+                    <th class="text-nowrap">{{'vehicleMountedBatteryVoltage'|translate}}</th>
 
                     <th class="text-nowrap">{{'openCoverState'|translate}}</th>
                     <!--模拟量1改成系统电压，模拟量2改成实时内置电池电压
@@ -940,6 +941,7 @@
                     <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <!--模拟量2-->
                     <td ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
+                    <td ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
                     <!--开盖状态-->
                     <td ng-if="deviceData.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus=='11'">{{'open'|translate}}</td>
