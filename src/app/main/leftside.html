@@ -102,13 +102,12 @@
                   <i class="fa ion-document-text"></i> <span>装机关系对照</span>
                 </a>
               </li>
-              <li>
+              <!--<li>
                 <a ui-sref="home.dataAnalysis({role:'dataAnalysis:hostmodel',menuType:'c'})"
                    presentation-href="dataAnalysis:hostmodel">
                   <i class="fa ion-gear-b"></i> <span>主机型号配置</span>
                 </a>
-              </li>
-
+              </li>-->
             </ul>
           </li>
 
@@ -126,12 +125,7 @@
                       <i class="fa ion-ios-location-outline"></i> <span>试验机运行概览</span>
                     </a>
                   </li>
-                  <!--<li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:querymachinework',menuType:'e'})"
-                       presentation-href="dataAnalysis:querymachinework">
-                      <i class="glyphicon glyphicon-zoom-out"></i> <span>试验机工作查询</span>
-                    </a>
-                  </li>-->
+
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineduration',menuType:'f'})"
                        presentation-href="dataAnalysis:machineduration">
@@ -141,7 +135,7 @@
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:selectmachine',menuType:'g'})"
                        presentation-href="dataAnalysis:selectmachine">
-                      <i class="fa ion-model-s"></i> <span>试验机机器选取</span>
+                      <i class="fa ion-model-s"></i> <span>试验车选取管理</span>
                     </a>
                   </li>
                 </ul>
@@ -162,27 +156,33 @@
                     </a>
                   </li>
                   <li>
+                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:querymachinework',menuType:'e'})"
+                     presentation-href="dataAnalysis:querymachinework">
+                    <i class="glyphicon glyphicon-zoom-out"></i> <span>机器工作时长分布</span>
+                  </a>
+                </li>
+                  <!--<li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineportrait',menuType:'i'})"
                        presentation-href="dataAnalysis:machineportrait">
                       <i class="fa ion-image"></i> <span>机器画像</span>
                     </a>
-                  </li>
-                  <li>
+                  </li>-->
+                  <!--<li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineruntrend',menuType:'j'})"
                        presentation-href="dataAnalysis:machineruntrend">
                       <i class="fa ion-arrow-graph-up-right"></i> <span>机器运行趋势分析</span>
                     </a>
-                  </li>
+                  </li>-->
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dullmachine',menuType:'k'})"
                        presentation-href="dataAnalysis:dullmachine">
-                      <i class="fa ion-ionic"></i> <span>呆滞机分布</span>
+                      <i class="fa ion-ionic"></i> <span>待销车分布</span>
                     </a>
                   </li>
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:trackme',menuType:'l'})"
                        presentation-href="dataAnalysis:trackme">
-                      <i class="fa ion-ios-navigate-outline"></i> <span>在途车辆位置追踪</span>
+                      <i class="fa ion-ios-navigate-outline"></i> <span>在途车追踪</span>
                     </a>
                   </li>
                 </ul>
@@ -195,12 +195,12 @@
                 <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
               </a>
                 <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: workstart}">
-                  <li>
+                  <!--<li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:bootlive',menuType:'m'})"
                        presentation-href="dataAnalysis:bootlive">
                       <i class="fa ion-power"></i> <span>机器开机实况</span>
                     </a>
-                  </li>
+                  </li>-->
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:workstart',menuType:'n'})"
                        presentation-href="dataAnalysis:workstart">
@@ -210,7 +210,7 @@
                   <li>
                     <a ui-sref="home.dataAnalysis({role:'dataAnalysis:bardistribution',menuType:'o'})"
                        presentation-href="dataAnalysis:bardistribution">
-                      <i class="fa ion-stats-bars"></i> <span>开工柱图分布</span>
+                      <i class="fa ion-stats-bars"></i> <span>开工区域分布</span>
                     </a>
                   </li>
                   <li>
@@ -262,13 +262,13 @@
                   </li>
                 </ul>
             </li>
-
+          <!--
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clusterrunnmachine',menuType:'v'})"
                  presentation-href="dataAnalysis:clusterrunnmachine">
                 <i class="glyphicon glyphicon-transfer"></i> <span>机器聚类运行分布</span>
               </a>
-            </li>
+            </li>-->
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clustering',menuType:'w'})"
                  presentation-href="dataAnalysis:clustering">
