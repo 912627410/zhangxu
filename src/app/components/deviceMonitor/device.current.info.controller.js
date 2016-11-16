@@ -16,7 +16,8 @@
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT, deviceinfo) {
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
+                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -1959,5 +1960,572 @@
         chart.options.chart.zoomType = 'x'
       }
     }
+
+
+
+
+    // 用户画像
+    vm.initPortrait = function () {
+
+      vm.itemList = [];
+      var itemColorList = ['#63B8FF','#CD5B45','#7EC0EE','#EEB422','#66CDAA'];
+      var itemLeftList = ['-15%','5%','10%','1%','-10%'];
+      // 机器时间轴事件
+      var eventUrl =  PORTRAIT_MACHINEEVENT_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var eventPromis = serviceResource.restCallService(eventUrl, "QUERY");
+      eventPromis.then(function (data) {
+        var eventList = data;
+        for(var i =0;i<eventList.length;i++){
+          eventList[i].eventContent = eventList[i].eventContent.replace("[\\\"","");
+          eventList[i].eventContent = eventList[i].eventContent.replace("\\\"]","");
+          eventList[i].eventContent = eventList[i].eventContent.split("\\\",\\\"") ;
+          switch (parseInt(eventList[i].eventType)){
+            case 1 :
+              eventList[i].style = '#1f9eba';//-机器下线日期
+              break;
+            case 2:
+              eventList[i].style = '#5bc0de';//-运抵经销商处
+              break;
+            case 3:
+              eventList[i].style = '#59ba1f';//-销售日期
+              break;
+            case 7:
+              eventList[i].style = '#d1bd10';//-保养事件
+              break;
+            case 8:
+              eventList[i].style = '#ba1f1f';//-维修事件
+              break;
+            default:
+              eventList[i].style = '#1f9eba';//-维修事件
+          }
+        }
+        vm.eventList = eventList;
+      });
+
+      // 发动机评分画像
+      var engineScoreList = [];
+      var url =  PORTRAIT_ENGINEPERFORMS_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var restPromis = serviceResource.restCallService(url, "GET");
+      restPromis.then(function (data) {
+        vm.enginePerforms = data.content;
+        var oil,tem,torque,power,displacement,mtbf = 0;
+        vm.enginePerforms.avgOil >= 300 ? oil = 65 : oil = 88;
+        vm.enginePerforms.avgTemperature >= 87 ? tem = 82 : tem = 92;
+        vm.enginePerforms.maxTorque >= 680 ? torque = 92 : torque = 72;
+        vm.enginePerforms.avgPower >= 180 ? power = 89 : power = 75;
+        vm.enginePerforms.displacement >= 6.5 ? displacement = 95 : displacement = 85;
+        vm.enginePerforms.mtbf >= 100000 ? mtbf = 92 : mtbf = 81;
+
+        engineScoreList.push(oil);
+        engineScoreList.push(tem);
+        engineScoreList.push(torque);
+        engineScoreList.push(power);
+        engineScoreList.push(displacement);
+        engineScoreList.push(mtbf);
+
+        vm.engineScoreList = engineScoreList;
+        vm.enginePerformsChart.series[0].data = vm.engineScoreList;
+
+        var avg = 0;
+        for(var i=0 ;i <engineScoreList.length;i++){
+          avg += engineScoreList[i];
+        }
+        avg /= engineScoreList.length;
+
+        vm.engineScoreChart.series[0].data = [Math.round(avg)];
+
+      });
+
+      // 客户信息 index=0
+      var customerInfourl =  PORTRAIT_CUSTOMERINFO_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var customerInfoPromis = serviceResource.restCallService(customerInfourl, "GET");
+      customerInfoPromis.then(function (data) {
+        vm.customerInfo = data.content;
+        var customerAge = data.content.age.replace(/[^0-9]/ig,"");
+        var currentDate = new Date();
+        vm.customerAge =  (Math.floor((currentDate.getFullYear()-customerAge)%100/10) + "0后")||'90后';
+        vm.customerInfo.address = vm.deviceinfo.city || data.content.address;
+
+      });
+
+
+      //用户画像>> 工作时长、启动次数  index=1,2
+      var machineLabelUrl =  PORTRAIT_WORKTIMELABEL_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var machineLabelPromis = serviceResource.restCallService(machineLabelUrl, "QUERY");
+      machineLabelPromis.then(function (data) {
+        var worktimeList = [];
+        var startTimesList = [];
+        vm.tickPositionsList = [];
+        var machineLabelList = data;
+        for(var i =0;i <machineLabelList.length; i++){
+
+          var recordTime = moment(machineLabelList[i].recordTime, "YYYY-MM-DD").toDate();
+          var worktime = {x: recordTime,y:machineLabelList[i].totalDuration*5/100}
+          var startTimes = {x: recordTime,y:machineLabelList[i].startTimes }
+          vm.tickPositionsList.push(recordTime.getTime());
+          worktimeList.push(worktime);
+          startTimesList.push(startTimes);
+        }
+
+        // 工作时间
+        var avgWorkTime = 0;
+        for(var i=0 ;i <worktimeList.length;i++){
+          avgWorkTime += worktimeList[i].y*5/100;
+        }
+        avgWorkTime /= worktimeList.length;
+        avgWorkTime > 8 ? vm.workTimeLabelTitle = '工作时间长' :vm.workTimeLabelTitle = '工作时间较短';
+
+        // 启动次数
+        var avgStartTimes = 0;
+        for(var i=0 ;i <startTimesList.length;i++){
+          avgStartTimes += startTimesList[i].y;
+        }
+        avgStartTimes /= startTimesList.length;
+        avgStartTimes > 3 ? vm.startTimesLabelTitle = '使用频率高' : vm.startTimesLabelTitle = '使用频率低';
+
+        vm.worktimeList = worktimeList;
+        vm.startTimesList = startTimesList;
+
+      });
+
+      //用户画像>>驾驶习惯指数标签 index =3
+      var speedUrl =  PORTRAIT_RECENTLYSPEED_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var restPromis = serviceResource.restCallService(speedUrl, "QUERY");
+      restPromis.then(function (data) {
+        var speedList = [];
+        var deviceDataList = data;
+        var overSpeedList = [];
+        for(var i =0;i <deviceDataList.length; i++){
+          if(deviceDataList[i].gpsSpeed>30){
+            overSpeedList.push(deviceDataList[i].gpsSpeed);
+          }
+          var speedPoint = {x: new Date(deviceDataList[i].recordTime),y:deviceDataList[i].gpsSpeed }
+          speedList.push(speedPoint);
+        }
+
+        overSpeedList.length >5 ? vm.speedLabelTitle = '经常超速' : vm.speedLabelTitle = '驾驶习惯良好';
+
+        vm.speedList = speedList;
+
+      });
+
+      //用户画像>> 油耗标签 index =4
+      var machineLabelUrl =  PORTRAIT_RECENTLYOIL_URL + '?deviceNum=' + deviceinfo.deviceNum;
+      var machineLabelPromis = serviceResource.restCallService(machineLabelUrl, "QUERY");
+      machineLabelPromis.then(function (data) {
+        var oilWearList = [];
+        var machineLabelList = data;
+        for(var i =0;i <machineLabelList.length; i++){
+
+          var recordTime = moment(machineLabelList[i].recordTime, "YYYY-MM-DD HH").toDate();
+          var oilWear = {x: recordTime,y:machineLabelList[i].oilWear }
+          oilWearList.push(oilWear);
+        }
+
+        // 油耗
+        vm.avgOilWear = 0;
+        for(var i=0 ;i <oilWearList.length;i++){
+          vm.avgOilWear += oilWearList[i].y;
+        }
+        vm.avgOilWear /= oilWearList.length;
+        vm.avgOilWear > 5 ? vm.oilWearLabelTitle = '油耗较高' : vm.oilWearLabelTitle = '油耗较低';
+
+        vm.oilWearList = oilWearList;
+
+      });
+
+
+      // 因各请求返回时间不确定，目前没有好的写法，采用固定时间push
+      $timeout(function () {
+        vm.itemList.push({
+          title : vm.customerAge ,
+          isSelected : false,
+          backgroundColor: itemColorList[0],
+          marginLeft: itemLeftList[0],
+          chart: null
+        });
+      }, 200 );
+
+      $timeout(function () {
+        vm.itemList.push({
+          title: vm.workTimeLabelTitle,
+          isSelected:false,
+          backgroundColor: itemColorList[1],
+          marginLeft: itemLeftList[1],
+          chart: {
+            options: {
+              chart: {
+                type: 'line'
+              },
+              credits: {
+                enabled: false
+              },
+              exporting: {
+                enabled: false
+              },
+              legend: {
+                enabled: false
+              },
+              title: {
+                text: '工作时间'
+              },
+              tooltip: {
+                formatter: function () {
+                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' 小时';
+                }
+              },
+            },
+            xAxis: {
+              type: 'datetime',
+              tickPositions: vm.tickPositionsList,
+              labels: {
+                formatter: function () {
+                  return $filter('date')(new Date(this.value), 'MM-dd');
+                }
+              }
+            },
+            yAxis: {
+              title: {
+                text: '小时'
+              },
+              plotLines: [{ // mark the 90
+                color: 'red',
+                width: 2,
+                value: 8,
+                label: {
+                  text: "8小时",
+                  align: 'left'
+                }
+              }]
+            },
+            series: [{
+              name: '工作时长',
+              data: vm.worktimeList
+            }]
+          }
+        });
+      }, 400 );
+
+      $timeout(function () {
+        vm.itemList.push({
+          title : vm.startTimesLabelTitle ,
+          isSelected:false,
+          backgroundColor: itemColorList[2],
+          marginLeft: itemLeftList[2],
+          chart: {
+            options:{
+              chart: {
+                type: 'column'
+              },
+              title: {
+                text: '开机次数'
+              },
+              credits: {
+                enabled: false
+              },
+              exporting: {
+                enabled: false
+              },
+              legend: {
+                enabled: false
+              },
+              tooltip: {
+                formatter: function () {
+                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' 次';
+                }
+              },
+            },
+            xAxis: {
+              type: 'datetime',
+              tickPositions: vm.tickPositionsList,
+              labels: {
+                formatter: function () {
+                  return $filter('date')(this.value, 'MM-dd');
+                }
+              }
+            },
+            yAxis: {
+              title: {
+                text: '开机次数'
+              },
+              plotLines: [{ // mark the 90
+                color: 'red',
+                width: 2,
+                value: 3
+              }]
+            },
+            series: [{
+              name: '开机次数',
+              data: vm.startTimesList
+            }]
+          }
+        });
+      }, 600 );
+
+      $timeout(function () {
+        vm.itemList.push({
+          title : vm.speedLabelTitle ||'驾驶习惯良好' ,
+          isSelected:false,
+          backgroundColor: itemColorList[3],
+          marginLeft: itemLeftList[3],
+          chart: {
+            options: {
+              chart: {
+                zoomType: 'x'
+              },
+              credits: {
+                enabled: false
+              },
+              exporting: {
+                enabled: false
+              },
+              legend: {
+                enabled: false
+              },
+              title: {
+                text: '驾驶习惯指数'
+              },
+              tooltip: {
+                formatter: function () {
+                  return $filter('date')(this.x, 'MM-dd HH:mm:ss') + '<br>' + this.y.toFixed(2);
+                }
+              },
+            },
+            xAxis: {
+              type: 'datetime',
+              labels: {
+                formatter: function () {
+                  return $filter('date')(this.value, 'MM-dd') +'<br>' + $filter('date')(this.value, 'HH:mm:ss');
+                }
+              }
+            },
+            yAxis: {
+              title: false
+            },
+            series: [{
+              name: '驾驶习惯指数',
+              data: vm.speedList
+            }]
+          }
+        });
+      }, 900 );
+
+      $timeout(function () {
+        if(vm.avgOilWear>0){
+          vm.itemList.push({
+            title : vm.oilWearLabelTitle ,
+            isSelected:false,
+            backgroundColor: itemColorList[4],
+            marginLeft: itemLeftList[4],
+            chart: {
+              options:{
+                chart: {
+                  type: 'line'
+                },
+                credits: {
+                  enabled: false
+                },
+                exporting: {
+                  enabled: false
+                },
+                legend: {
+                  enabled: false
+                },
+                title: {
+                  text: '平均油耗'
+                },
+                tooltip: {
+                  formatter: function () {
+                    return $filter('date')(this.x, 'MM-dd') + '<br>' + this.y.toFixed(2);
+                  }
+                },
+              },
+              xAxis: {
+                type: 'datetime',
+                labels: {
+                  formatter: function () {
+                    return $filter('date')(new Date(this.value), 'MM-dd');
+                  }
+                }
+              },
+              yAxis: {
+                title: {
+                  text: '油耗 (L/H)'
+                },
+                min: 0,
+                max: 10,
+                alternateGridColor: null,
+                plotBands: [{ // Light
+                  from: 0.5,
+                  to: 2.5,
+                  color: 'rgba(68, 170, 213, 0.1)',
+                  label: {
+                    text: '低油耗',
+                    style: {
+                      color: '#606060'
+                    }
+                  }
+                },{ // Gentle breeze
+                  from: 5,
+                  to: 7.5,
+                  color: 'rgba(68, 170, 213, 0.1)',
+                  label: {
+                    text: '高油耗',
+                    style: {
+                      color: '#606060'
+                    }
+                  }
+                }]
+              },
+              series: [{
+                name: '油耗',
+                data: vm.oilWearList
+              }]
+            }
+          });
+        }
+      }, 1000 );
+
+    }
+
+    vm.chargeChart = function (chart) {
+      vm.portraitChart = chart;
+    }
+
+    vm.itemMousedown = function (item) {
+      item.isSelected = true;
+    }
+
+    vm.itemMouseup = function (item) {
+      item.isSelected = false;
+    }
+
+    //机器画像 发动机性能chart
+    vm.enginePerformsChart = {
+      options:{
+        chart: {
+          polar: true,
+          type: 'line'
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        },
+        legend: {
+          enabled: false
+        },
+      },
+      title: {
+        text: '发动机性能',
+        x: -80
+      },
+      pane: {
+        size: '80%'
+      },
+      xAxis: {
+        categories: ['油耗', '温度', '扭矩指数', '功率指数',
+          '转速指数', '平均故障时间间隔'],
+        tickmarkPlacement: 'on',
+        lineWidth: 0
+      },
+      yAxis: {
+        gridLineInterpolation: 'polygon',
+        lineWidth: 0,
+        min: 0,
+        max: 110
+      },
+      tooltip: {
+        shared: true,
+        pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+      },
+      series: [{
+        name: '评分',
+        data: [80, 97, 83, 72, 67, 95],
+        pointPlacement: 'on'
+      }]
+    }
+
+    //机器画像 发动机评分chart
+    vm.engineScoreChart = {
+      options:{
+        chart: {
+          type: 'solidgauge',
+          //backgroundColor: '#FCFFC5',
+          width: 400,
+          height: 200
+        },
+        credits: {
+          enabled: false
+        },
+        exporting: {
+          enabled: false
+        },
+        legend: {
+          enabled: false
+        },
+        title: {
+          text: '发动机评分'
+        },
+        pane: {
+          center: ['50%', '85%'],
+          size: '170%',
+          startAngle: -90,
+          endAngle: 90,
+          background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+          }
+        },
+        plotOptions: {
+          solidgauge: {
+            dataLabels: {
+              y: -50,
+              borderWidth: 0,
+              useHTML: true
+            }
+          }
+        }
+      },
+      tooltip: {
+        enabled: false
+      },
+      // the value axis
+      yAxis: {
+        min: 0,
+        max: 100,
+        stops: [
+          [0.1, '#55BF3B'], // green
+          [0.5, '#DDDF0D'], // yellow
+          [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickPixelInterval: 400,
+        tickWidth: 0,
+        // title: {
+        //   text: '发动机评分',
+        //   y: -70
+        // },
+        labels: {
+          y: 16
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        name: '发动机评分',
+        data: [80],
+        dataLabels: {
+          format: '<div style="text-align:center"><span style="font-size:25px;">{y}</span><br/>'
+        }
+      }]
+    }
+
+
   }
 })();

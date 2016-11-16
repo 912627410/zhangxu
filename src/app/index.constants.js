@@ -177,6 +177,14 @@
 
     .constant('LOAD_RECENT_UPLOAD_PAGE_URL', SERVER_BASE_URL + 'deviceMonitor/deviceDataWeekly')   //最近一周上传数据
     .constant('LOAD_TODAY_UPLOAD_PAGE_URL', SERVER_BASE_URL + 'deviceMonitor/deviceDataToday')   //当天数据上传
+
+    //用户画像部分
+    .constant('PORTRAIT_ENGINEPERFORMS_URL', SERVER_BASE_URL + 'portrait/getEnginePerforms')   //获取发动机评分
+    .constant('PORTRAIT_RECENTLYSPEED_URL', SERVER_BASE_URL + 'portrait/getRecentlySpeed')   //获取最近的速度
+    .constant('PORTRAIT_RECENTLYOIL_URL', SERVER_BASE_URL + 'portrait/getRecentlyOil')   //获取最近的oil
+    .constant('PORTRAIT_WORKTIMELABEL_URL', SERVER_BASE_URL + 'portrait/getWorktimeAndStartTimes')   //获取最近的速度
+    .constant('PORTRAIT_MACHINEEVENT_URL', SERVER_BASE_URL + 'portrait/getMachineEvent')   //获取事件List
+    .constant('PORTRAIT_CUSTOMERINFO_URL', SERVER_BASE_URL + 'portrait/getCustomerInfo')   //获取客户信息
   ;
 
 
