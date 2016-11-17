@@ -26,15 +26,18 @@
       };
       var restPromise = serviceResource.restUpdateRequest(SUPER_RESET_PASSWORD_URL,updatePasswordDto);
       restPromise.then(function (data){
-        if (data.result == "SUCCESS" && operatorInfo.userdto.ssn === usermnginfo.ssn)
-        {
-          //刷新用户当前的登录token
-          serviceResource.refreshUserAuthtoken(newpassword);
+
+
+        if(data.code===0){
+          Notification.success("修改密码成功!");
+        }else{
+          Notification.error(data.message);
         }
-        Notification.success("修改密码成功!");
+
         $uibModalInstance.close();
+
       },function(reason){
-        Notification.error("修改密码出错!");
+        Notification.error(reason.data.message);
       });
     };
 
