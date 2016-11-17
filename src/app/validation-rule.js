@@ -17,6 +17,8 @@
       numberAndChar: /^[a-zA-Z0-9]+$/,
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
       numberAndDot: /^[0-9.]+$/,
+      //numberAndCharForPass:/[a-zA-Z0-9_]{8,10}/,
+      numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
 
       minlength: function(value, scope, element, attrs, param) {
@@ -67,6 +69,10 @@
       },
       maxlength: {
         error: '超出最大允许长度',
+        success: ''
+      },
+      numberAndCharForPass: {
+        error: '密码只能为大小写字母和数字,长度为8-20',
         success: ''
       }
     };
@@ -128,6 +134,8 @@
     $validationProvider.setErrorHTML(function (msg) {
       return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
     });
+
+
 
   }
 

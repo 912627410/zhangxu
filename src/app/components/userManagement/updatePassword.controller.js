@@ -12,7 +12,14 @@
   function updatePasswordController($rootScope,$uibModalInstance,SUPER_RESET_PASSWORD_URL,serviceResource, Notification,usermnginfo) {
     var vm = this;
     var operatorInfo =$rootScope.userInfo;
+    vm.checkPassword=false;
     vm.ok = function (newpassword) {
+
+      // if(vm.updatePassword.confirmPassword!=vm.updatePassword.password){
+      //   vm.checkPassword=true;
+      //   return;
+      // }
+
       var updatePasswordDto = {
         ssn: usermnginfo.ssn,
         password: newpassword
@@ -33,6 +40,13 @@
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
+    };
+
+    // // Don't need include $validationProvider.validate() anymore
+    vm.form = {
+      abc: function () {
+       success:123
+      }
     };
   }
 })();
