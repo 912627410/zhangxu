@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $scope,$window,$http,$uibModal,Notification,Idle, Keepalive,$translate,languages) {
+  function MainController($rootScope, $scope,$window,$http,$uibModal,permissions,Notification,Idle, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
     //$rootScope.logo="assets/images/logo.png";
