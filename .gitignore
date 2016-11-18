@@ -6,4 +6,4 @@ coverage/
 .idea/
 .tmp/
 dist/
-.iml/
+.DS_Store

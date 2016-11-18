@@ -9,7 +9,7 @@
     .controller('updateRoleController', updateRoleController);
 
   /** @ngInject */
-  function updateRoleController($uibModalInstance,ROLE_OPER_URL,serviceResource, roleService,Notification,roleInfo) {
+  function updateRoleController($uibModalInstance,ROLE_OPER_URL,treeFactory,serviceResource, roleService,Notification,roleInfo) {
     var vm = this;
     vm.roleInfo=roleInfo;
 
@@ -26,7 +26,21 @@
     })
 
     vm.ok = function (roleInfo) {
-      roleInfo.type=roleInfo.type.value;
+      for(var i=0;i<vm.orgTypeList.length;i++){
+        if(vm.orgTypeList[i].desc==roleInfo.type.desc){
+          console.log("1111");
+          roleInfo.type=vm.orgTypeList[i].value;
+          break;
+        }
+      }
+
+
+      if(roleInfo.type==null){
+        Notification.error('类型为空');
+        return;
+      }
+
+
       var restPromise = serviceResource.restUpdateRequest(ROLE_OPER_URL,roleInfo);
       restPromise.then(function (data){
 
@@ -45,5 +59,12 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.roleInfo.organizationDto=selectedItem;
+      });
+    }
   }
 })();

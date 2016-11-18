@@ -548,6 +548,15 @@
         }
 
 
+      },
+
+      lineToUpper:function test(str){
+        var arr = str.split("-");//用split()函数来进行分割字符串arr里面包括【border，bottom，color】
+        for(var i=1;i<arr.length;i++){//从数组的第二项开始循环，charAt(0)找到第一个字母。substring(1)截掉第一个字母。
+          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substring(1);//循环之后把得到的字符赋给arr。【border，Bottom， Color】
+          alert(arr[i]);
+        }
+        return arr.join("");//用join方法来拼接，空拼接。就变成borderBottomColor
       }
 
     }
