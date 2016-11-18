@@ -135,6 +135,31 @@
       });
     };
 
+    //批量导入
+    vm.uploadMachine = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/machineManagement/uploadMachine.html',
+        controller: 'uploadMachineController as uploadMachineController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        for(var i=0; i <result.length;i++){
+          vm.tableParams.data.splice(0, 0, result[i]);
+
+        }
+
+      }, function () {
+        //取消
+      });
+    };
 
 
 

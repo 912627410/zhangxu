@@ -53,6 +53,8 @@
     .constant('MACHINE_UNBIND_DEVICE_URL', SERVER_BASE_URL + 'machine/unbindDevice')   //设备解绑
     .constant('MACHINE_SALARY_TYPE_URL', SERVER_BASE_URL + 'machine/salaryType')   //人工成本类型
     .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
+    .constant('MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL', SERVER_BASE_URL + 'machine/uploadTemplateDownload')   //车辆导入模板下载
+    .constant('MACHINE_UPLOAD_URL', SERVER_BASE_URL + 'machine/upload')   //车辆批量导入
 
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
