@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $http, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope, $http, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -61,6 +61,7 @@
           userdto: data.userinfo
         };
 
+        var passwordPattenStatus=data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
@@ -119,8 +120,23 @@
             $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
 
           });
-       
+
+          //加载sensor列表
+          $http.get('sensor.json').success(function(data){
+            $rootScope.sensor=data;
+            $window.sessionStorage["sensor"]=JSON.stringify(data);
+          });
+
+
+
+          //判断是否需要提示修改密码
+          if(passwordPattenStatus==false){
+            Notification.error({message: '密码过于简单,请修改', positionX: 'center'});
+
+          }
+
           $rootScope.$state.go('home');
+
 
         }, function (reason) {
         });
