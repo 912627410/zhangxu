@@ -308,6 +308,24 @@
           }
         }
       })
+      .state('home.deviceUpdate', {
+        url: '/deviceUpdate',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/deviceUpdate.html',
+            controller: 'deviceUpdateController as deviceUpdateCtrl'
+          }
+        }
+      })
+      .state('home.updateFileMng', {
+        url: '/updateFileMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/updateFileMng.html',
+            controller: 'updateFileMngController as updateFileMngCtrl'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');

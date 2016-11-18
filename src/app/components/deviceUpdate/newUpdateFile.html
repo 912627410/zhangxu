@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h3 class="modal-title">新增升级文件</h3>
+</div>
+<form name="newFileForm" class="form-horizontal" enctype="multipart/form-data">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label for="updateFile" class="col-sm-2 control-label">选择文件</label><!-- accept="application/octet-stream"-->
+        <div class="col-sm-10">
+          <input type="file" ngf-select id="updateFile" ng-model="newUpdateFileCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="updateFile" />
+          <!--<i ng-show="newFileForm.updateFile.$error.maxSize">File too large{{errorFiles[0].size / (1024 * 1024)|number: 1}}MB:max 2M</i>-->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="versionNum" class="col-sm-2 control-label">版本号</label>
+        <div class="col-sm-10">
+          <input type="text" id="versionNum" class="form-control" placeholder="版本号" ng-model="newUpdateFileCtrl.file.versionNum" name="versionNum" validator="required,numberAndChar"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="applicableProducts" class="col-sm-2 control-label">适用对象</label>
+        <div class="col-sm-10">
+          <input type="text" id="applicableProducts" class="form-control" placeholder="适用对象" ng-model="newUpdateFileCtrl.file.applicableProducts" name="applicableProducts"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="newUpdateFileCtrl.ok(newUpdateFileCtrl.file)">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="newUpdateFileCtrl.cancel()">取消</button>
+  </div>
+</form>
+
+
+
+

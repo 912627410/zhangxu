@@ -1,0 +1,65 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">升级文件管理</li>
+  </ol>
+</section>
+
+<section class="content form-horizontal">
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">版本号</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryVersionNum" class="form-control" ng-model="updateFileMngCtrl.queryVersionNum" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">文件名</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">适用对象</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryApplicableProducts" class="form-control" ng-model="updateFileMngCtrl.queryApplicableProducts" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-3 text-center">
+      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)">查询</button>
+      <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()" style="margin: 0 12px;">重置</button>
+      <button class="btn btn-default" type="button" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>新增</button>
+    </div>
+  </div>
+
+  <div class="row " style="padding-top: 10px">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table ng-table="updateFileMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="updateFile in $data">
+            <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{updateFile.id}}</td>
+            <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">{{updateFile.versionNum}}</td>
+            <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
+            <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'">{{updateFile.applicableProducts}}</td>
+            <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap text-center" data-title="'操作'">
+              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.update(updateFile)">修改</button><!-- presentation-href="update:oper"-->
+              <!--<button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.delete(updateFile.id)">删除</button>&lt;!&ndash; presentation-href="update:oper"&ndash;&gt;-->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="updateFileMngCtrl.page.totalElements" ng-change="updateFileMngCtrl.query(updateFileMngCtrl.pageNumber-1,null,null,updateFileMngCtrl.versionNum)" max-size="15" ng-model="updateFileMngCtrl.pageNumber" items-per-page="updateFileMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </div>
+</section>

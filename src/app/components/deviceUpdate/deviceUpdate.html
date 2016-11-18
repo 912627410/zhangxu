@@ -1,0 +1,85 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">设备升级</li>
+  </ol>
+</section>
+
+<section class="content form-horizontal">
+  <div class="row form-group">
+    <div class="col-md-2">
+      <label class="control-label">整机编号/车号</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="queryMachineLicenseId" class="form-control" ng-model="deviceUpdateCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">设备编号</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="queryDeviceNum" class="form-control" ng-model="deviceUpdateCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device)">查询</button>
+      <button class="btn btn-primary" type="button" style="margin-left: 10px;" ng-click="deviceUpdateCtrl.reset()">重置</button>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2">
+      <label class="control-label">所属组织</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织"
+               ng-model="deviceUpdateCtrl.queryOrg.label" name="org" readonly required/>
+        <span class="input-group-btn">
+           <!--打开组织树-->
+          <button type="button" class="btn btn-default" ng-click="deviceUpdateCtrl.openTreeInfo()">
+            <i class="fa fa-sitemap"></i>
+          </button>
+        </span>
+      </p>
+    </div>
+    <div class="col-md-offset-5 col-md-2">
+      <buttom class="btn btn-warning" type="button" ng-click="deviceUpdateCtrl.batchUpdate()">升级</buttom>
+    </div>
+  </div>
+
+  <div class="row " style="padding-top: 10px">
+    <div class="col-md-12">
+      <script id="selectAllHeader" type="text/ng-template">
+        <input type="checkbox" ng-click="deviceUpdateCtrl.updateAllSelection($event)" ng-model="deviceUpdateCtrl.checked"/>
+      </script>
+      <div class="table-responsive">
+        <table ng-table="deviceUpdateCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="deviceinfo in $data">
+            <td class="text-nowrap text-center" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="deviceUpdateCtrl.isSelected(deviceinfo.id)" ng-click="deviceUpdateCtrl.updateSelection($event,deviceinfo.id)" ng-model="deviceinfo.checked">
+            </td>
+            <td class="text-nowrap" data-title="'设备号'" sortable="'deviceNum'">{{deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+            <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
+            <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
+            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100}}</td>
+            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion==null"></td>
+            <td class="text-nowrap" data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap text-center" data-title="'操作'">
+              <button type="button" class="btn btn-default btn-xs" presentation-href="device:oper" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo.id)">升级</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="deviceUpdateCtrl.page.totalElements" ng-change="deviceUpdateCtrl.queryDeviceInfo(deviceUpdateCtrl.deviceData_pagenumber-1,null,null,deviceUpdateCtrl.deviceNum)" max-size="15" ng-model="deviceUpdateCtrl.deviceData_pagenumber" items-per-page="deviceUpdateCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </div>
+</section>
