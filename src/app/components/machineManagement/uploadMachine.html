@@ -9,11 +9,11 @@
         <div class="col-md-6">
           <input type="file" ngf-select ng-model="uploadMachineController.file" name="file"
                  accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ngf-max-size="2MB" required
-                 ngf-model-invalid="errorFiles">
+                 ngf-model-invalid="errorFiles" ng-click="uploadMachineController.clean()">
           <i ng-show="myForm.file.$error.required" class="text-danger">请选择要导入的车辆EXCEL</i><br>
           <i ng-show="myForm.file.$error.maxSize">上传文件太大
             {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
-          <button type="button" class="btn btn-warning btn-xs" ng-click="uploadMachineController.file = null" ng-show="uploadMachineController.file">移除</button>
+          <button type="button" class="btn btn-warning btn-xs" ng-click="uploadMachineController.clean()" ng-show="uploadMachineController.file">移除</button>
         </div>
 
       </div>
