@@ -2093,17 +2093,18 @@
       var restPromis = serviceResource.restCallService(speedUrl, "QUERY");
       restPromis.then(function (data) {
         var speedList = [];
-        var deviceDataList = data;
+        var machineLabelList = data;
         var overSpeedList = [];
-        for(var i =0;i <deviceDataList.length; i++){
-          if(deviceDataList[i].gpsSpeed>30){
-            overSpeedList.push(deviceDataList[i].gpsSpeed);
+        for(var i =0;i <machineLabelList.length; i++){
+          if(machineLabelList[i].speed>30){
+            overSpeedList.push(machineLabelList[i].speed);
           }
-          var speedPoint = {x: new Date(deviceDataList[i].recordTime),y:deviceDataList[i].gpsSpeed }
+          var recordTime = moment(machineLabelList[i].recordTime, "YYYY-MM-DD HH24:mm:SS").toDate();
+          var speedPoint = {x: recordTime,y:100-machineLabelList[i].speed }
           speedList.push(speedPoint);
         }
 
-        overSpeedList.length >5 ? vm.speedLabelTitle = '经常超速' : vm.speedLabelTitle = '驾驶习惯良好';
+        overSpeedList.length >3 ? vm.speedLabelTitle = '经常超速' : vm.speedLabelTitle = '驾驶习惯良好';
 
         vm.speedList = speedList;
 
@@ -2148,7 +2149,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title: vm.workTimeLabelTitle,
+          title: vm.workTimeLabelTitle || '工作时间较短',
           isSelected:false,
           backgroundColor: itemColorList[1],
           marginLeft: itemLeftList[1],
@@ -2204,11 +2205,11 @@
             }]
           }
         });
-      }, 400 );
+      }, 2000 );
 
       $timeout(function () {
         vm.itemList.push({
-          title : vm.startTimesLabelTitle ,
+          title : vm.startTimesLabelTitle || '使用频率低' ,
           isSelected:false,
           backgroundColor: itemColorList[2],
           marginLeft: itemLeftList[2],
@@ -2260,7 +2261,7 @@
             }]
           }
         });
-      }, 600 );
+      }, 2200 );
 
       $timeout(function () {
         vm.itemList.push({
@@ -2300,7 +2301,8 @@
               }
             },
             yAxis: {
-              title: false
+              title: false,
+              min:60
             },
             series: [{
               name: '驾驶习惯指数',
@@ -2308,7 +2310,7 @@
             }]
           }
         });
-      }, 900 );
+      }, 2500 );
 
       $timeout(function () {
         if(vm.avgOilWear>0){
@@ -2384,7 +2386,7 @@
             }
           });
         }
-      }, 1000 );
+      }, 3000 );
 
     }
 
