@@ -1819,7 +1819,7 @@
               <ul class="timeline timeline-horizontal">
                 <li class="timeline-item" ng-repeat="item in deviceCurrentInfoCtrl.eventList">
                   <div class="timeline-badge" ng-style="{'background-color':item.style}"><i class="glyphicon glyphicon-check"></i></div>
-                  <div class="timeline-panel" ng-style="{'border-color':item.style}" ng-mouseenter="deviceCurrentInfoCtrl.chargeStyle(item.eventType)">
+                  <div class="timeline-panel" ng-style="{'border-color':item.style}">
                     <div class="timeline-heading">
                       <h4 class="timeline-title">{{item.eventTitle}}</h4>
                       <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{item.recordTime | date:'yyyy-MM-dd' }}</small></p>
