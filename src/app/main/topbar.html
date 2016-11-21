@@ -44,7 +44,7 @@
           </a>
         </li>
 
-        <li ui-sref="home.profile" role="button">
+        <li ui-sref="home.profile" role="button" ng-if="userInfo">
           <a>
             <i class="glyphicon glyphicon-user" >
               <span>{{userInfo.userdto.ssn}}
@@ -52,7 +52,7 @@
             </i>
           </a>
         </li>
-        <li ui-sref="#" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
+        <li ui-sref="home.login" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
       </ul>
     </div>
   </nav>
