@@ -64,7 +64,7 @@
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
-      
+
     </div>
   </div>
   <div class="row " style="padding: 10px">
@@ -87,6 +87,12 @@
             <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
                     ng-click="simMngCtrl.updateSim(sim)">修改
             </button>
+
+            <button type="button" class="btn btn-default btn-xs" presentation-href="sim:statusQuery"
+                    ng-click="simMngCtrl.currentSim(sim,'lg')">状态
+            </button>
+
+
           </td>
         </tr>
       </table>
