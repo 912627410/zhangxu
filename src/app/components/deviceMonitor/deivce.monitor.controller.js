@@ -67,7 +67,7 @@
         restCallURL += "&search_LIKES_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
       }
       if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
-        restCallURL += "&search_IN_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+        restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
       }
 
 
