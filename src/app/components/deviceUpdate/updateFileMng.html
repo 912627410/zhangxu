@@ -44,7 +44,7 @@
         <table ng-table="updateFileMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="updateFile in $data">
             <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{updateFile.id}}</td>
-            <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">{{updateFile.versionNum}}</td>
+            <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
             <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
             <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'">{{updateFile.applicableProducts}}</td>

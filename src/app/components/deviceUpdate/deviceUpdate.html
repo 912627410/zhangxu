@@ -67,7 +67,7 @@
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
             <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
             <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100}}</td>
+            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion==null"></td>
             <td class="text-nowrap" data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">

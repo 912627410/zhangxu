@@ -29,7 +29,7 @@
       file.upload = Upload.upload({
         url: UPDATE_FILE_UPLOAD_URL,
         data: {
-          versionNum:file.versionNum,
+          versionNum:file.versionNum*100,
           applicableProducts:file.applicableProducts
         },
         file: file
