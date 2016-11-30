@@ -68,9 +68,9 @@
     .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //sim基本信息
     .constant('SIM_UNUSED_URL', SERVER_BASE_URL + 'sim/unused')   //批量返回未使用
     .constant('SIM_FETCH_UNUSED_URL', SERVER_BASE_URL + 'sim/fetchUnused')   //动态查询未使用的
-    .constant('SIM_LOCATION_URL', SERVER_BASE_URL + 'sim/simLocation')   //动态查询未使用的
-    .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //动态查询未使用的
-    .constant('SIM_GRPS_URL', SERVER_BASE_URL + 'sim/simGprs')   //动态查询未使用的
+    .constant('SIM_LOCATION_URL', SERVER_BASE_URL + 'sim/simLocation')   //查询sim卡定位信息
+    .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //查询sim卡状态
+    .constant('SIM_GRPS_URL', SERVER_BASE_URL + 'sim/simGprs')   //查询GPRS使用信息
 
     .constant('ENGINE_TYPE_LIST_URL', SERVER_BASE_URL + 'config/enginetype')   //发动机类型集合
 
