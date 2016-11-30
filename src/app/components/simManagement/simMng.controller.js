@@ -22,36 +22,6 @@
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-
-    //vm.query = function(page,size,sort,queryPhoneNumber){
-    //
-    //  var restCallURL = SIM_PAGE_URL;
-    //  var pageUrl = page || 0;
-    //  var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-    //  var sortUrl = sort || "id,desc";
-    //  restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
-    //  if (queryPhoneNumber){
-    //    restCallURL += "&search_LIKE_phoneNumber="+queryPhoneNumber;
-    //  }
-    //
-    //    var rspData = serviceResource.restCallService(restCallURL,"GET");
-    //    rspData.then(function(data){
-    //
-    //      vm.simList = data.content;
-    //      vm.page = data.page;
-    //      vm.pageNumber = data.page.number + 1;
-    //    },function(reason){
-    //      vm.macheineList = null;
-    //      Notification.error("获取SIM数据失败");
-    //    });
-    //};
-    //
-    //if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
-    //  vm.query(0,10,null,null);
-    //}
-
-    //查询条件相关
-
     //日期控件相关
     //date picker
     vm.activeTimeStartOpenStatus = {
@@ -120,32 +90,6 @@
       });
     };
 
-    //更新SIM卡
-    //vm.updateSim = function (id,size) {
-    //  var singleUrl = SIM_URL + "?id=" + id;
-    //  var promis = serviceResource.restCallService(singleUrl, "GET");
-    //  promis.then(function (data) {
-    //    var modalInstance = $uibModal.open({
-    //      animation: vm.animationsEnabled,
-    //      templateUrl: 'app/components/simManagement/updateSim.html',
-    //      controller: 'updateSimController as updateSimController',
-    //      size: size,
-    //      backdrop: false,
-    //      resolve: {
-    //        sim: function () {
-    //          return data.content;
-    //        }
-    //      }
-    //    });
-    //    modalInstance.result.then(function (selectedItem) {
-    //      vm.query();
-    //    }, function () {
-    //    });
-    //
-    //  }, function (reason) {
-    //    Notification.error('获取SIM卡信息失败');
-    //  });
-    //};
 
     vm.updateSim = function (abc,size) {
       var sourceSim = angular.copy(abc); //深度copy
@@ -169,31 +113,11 @@
         //});
 
       modalInstance.result.then(function(result) {
-        console.log('client: resolved: ' + result);
-        abc=angular.copy(sourceSim);
 
-    //    $scope.$apply(abc);
-
-        abc.phoneNumber=2;
-        console.log(abc);
-
-        //vm.tableParams.data.push(abc);//刷新的内容
-
-
-
-
-
-        //$timeout(function() {
-        //  abc=angular.copy(sourceSim);
-        //});
 
 
       }, function(reason) {
-        //console.log('client: rejected: ' + reason);
-        //console.log("aaa  ==");
-        //console.log(sourceSim);
-        // abc=sourceSim;
-        //console.log(abc);
+
         //恢复列表中的值
         for(var i=0;i<vm.tableParams.data.length;i++){
           if(vm.tableParams.data[i].id==sourceSim.id){
@@ -234,6 +158,27 @@
         vm.sim.deviceinfo.org =selectedItem;
       });
     }
+
+    vm.currentSim = function (sim, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/simManagement/currentSim.html',
+        controller: 'currentSimController as currentSimController',
+        size: size,
+        backdrop:false,
+        resolve: {
+          sim: function () {
+            return sim;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        //正常返回
+      }, function () {
+        //取消
+      });
+    };
 
   }
 })();
