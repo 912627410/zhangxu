@@ -87,18 +87,18 @@
 
           <td class="text-nowrap"  data-title="'操作'" >
             <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="privilige:priviligeOper"
+                    presentation-href="user:superResetPassword"
                     ng-click="userMngController.updatePassword(userinfo)">重置密码
             </button>
             <button type="button" class="btn  btn-success  btn-xs"
-                    ng-if="userinfo.status===0"
+                    ng-if="userinfo.status===0" presentation-href="user:oper"
                     ng-click="userMngController.statusEnable(userinfo,'lg')">启用
             </button>
             <button type="button" class="btn btn-danger btn-xs"
-                    ng-if="userinfo.status===1"
+                    ng-if="userinfo.status===1" presentation-href="user:oper"
                     ng-click="userMngController.statusDisable(userinfo)">禁止
             </button>
-            <button type="button" class="btn btn-default btn-xs"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
                     ng-click="userMngController.updateUserInfo(userinfo)">修改
             </button>
 
