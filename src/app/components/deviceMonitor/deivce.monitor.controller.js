@@ -61,11 +61,14 @@
       }
 
       if (null !=vm.queryDeviceNum&&vm.queryDeviceNum!="") {
-          restCallURL += "&search_LIKE_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
-        }
-        if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
-          restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
-        }
+        restCallURL += "&search_LIKES_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
+      }
+      if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
+        restCallURL += "&search_LIKES_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
+      }
+      if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
+        restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      }
 
 
       // var deviceDataPromis = serviceResource.queryDeviceMonitorInfo(page, size, sort, filterTerm);
@@ -126,6 +129,7 @@
       vm.queryDeviceNum = null;
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
+      vm.queryDeviceType = null;
     }
 
     //组织树的显示
