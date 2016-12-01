@@ -35,6 +35,9 @@
       if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
         restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
       }
+      // if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
+      //   restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      // }
 
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
       deviceDataPromis.then(function (data) {
@@ -160,6 +163,7 @@
       vm.queryMachineLicenseId = '';
       vm.queryDeviceNum = '';
       vm.queryOrg = '';
+      // vm.queryDeviceType = '';
     };
   }
 })();
