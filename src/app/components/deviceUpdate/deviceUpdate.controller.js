@@ -163,7 +163,7 @@
       vm.queryMachineLicenseId = '';
       vm.queryDeviceNum = '';
       vm.queryOrg = '';
-      // vm.queryDeviceType = '';
+      vm.queryDeviceType = '';
     };
   }
 })();

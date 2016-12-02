@@ -175,7 +175,7 @@
     .constant('LOAD_TODAY_UPLOAD_PAGE_URL', SERVER_BASE_URL + 'deviceMonitor/deviceDataToday')   //当天数据上传
 
     //设备升级
-    .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/deviceinfopage') //升级的设备信息
+    .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfo') //升级的设备信息
     .constant('UPDATE_FILE_UPLOAD_URL', SERVER_BASE_URL + 'update/upload') //升级文件上传
     .constant('UPDATE_FILE_UPLOAD_QUERY', SERVER_BASE_URL + 'update/updateFilePage') //分页查询升级文件URL
     .constant('UPDATE_URL', SERVER_BASE_URL + 'update/update') //升级
