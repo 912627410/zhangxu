@@ -23,7 +23,6 @@
           var simResposeDto =data.content;
           if(simResposeDto.code=="0"){
             vm.location=" 经度: "+simResposeDto.lat +"  纬度: "+simResposeDto.lng;
-            Notification.success("查询基站信息成功");
           }else{
             vm.location="code: "+simResposeDto.code+"  "+ simResposeDto.message;
             Notification.error(vm.location);
@@ -49,7 +48,6 @@
           var simResposeDto =data.content;
           if(simResposeDto.code=="0"){
             vm.status=simResposeDto.status;
-            Notification.success("查询状态信息成功");
           }else{
             vm.status="code: "+simResposeDto.code+"  "+ simResposeDto.message;
             Notification.error(vm.location);
@@ -74,8 +72,7 @@
         if(data.code===0){
           var simResposeDto =data.content;
           if(simResposeDto.code=="0"){
-            vm.gprs=simResposeDto.totalGprs;
-            Notification.success("查询流量信息成功");
+            vm.gprs=simResposeDto.totalGprs+" KB";
           }else{
             vm.gprs="code: "+simResposeDto.code+"  "+ simResposeDto.message;
             Notification.error(vm.location);
