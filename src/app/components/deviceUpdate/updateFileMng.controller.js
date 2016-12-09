@@ -21,15 +21,28 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if(null != vm.queryVersionNum&&null != ""){
-        restCallURL += "&search_LIKE_versionNum=" + (vm.queryVersionNum);/*$filter('uppercase')*/
+        var arr = vm.queryVersionNum.split(".");
+        var versionNumber;
+        if(arr.length == 2){
+          if(arr[1].length == 1){
+            versionNumber = vm.queryVersionNum*10;
+          }else if(arr[1].length == 2){
+            versionNumber = vm.queryVersionNum*100;
+          }else{
+            versionNumber = vm.queryVersionNum;
+          }
+        }else{
+          versionNumber = vm.queryVersionNum;
+        }
+        restCallURL += "&search_LIKE_versionNum=" + (versionNumber);
       }
 
       if(null != vm.queryFileName&&null != ""){
-        restCallURL += "&search_LIKE_fileName=" + (vm.queryFileName);/*$filter('uppercase')*/
+        restCallURL += "&search_LIKE_fileName=" + (vm.queryFileName);
       }
 
       if(null != vm.queryApplicableProducts&&null != ""){
-        restCallURL += "&search_LIKE_applicableProducts=" + (vm.queryApplicableProducts);/*$filter('uppercase')*/
+        restCallURL += "&search_LIKE_applicableProducts=" + (vm.queryApplicableProducts);
       }
 
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
@@ -70,14 +83,27 @@
       });
     };
 
-    //
-    vm.update = function(updateFile){
-      Notification.error("暂不支持该功能");
-    };
+    //修改升级文件
+    vm.modifyFile = function(updateFile, size){
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceUpdate/modifyFile.html',
+        controller: 'modifyFileController as modifyFileCtrl',
+        size: size,
+        backdrop:false,
+        scope:$scope,
+        resolve: {
+          updateFile: function () {
+            return updateFile;
+          }
+        }
+      });
 
-    //删除文件
-    vm.delete = function(id){
+      modalInstance.result.then(function () {
+        vm.query();
+      }, function () {
 
+      });
     };
 
     //重置查询框

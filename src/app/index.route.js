@@ -326,6 +326,15 @@
           }
         }
       })
+      .state('home.updateRecord', {
+        url: '/updateRecord',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/updateRecord.html',
+            controller: 'updateRecordController as updateRecordCtrl'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');

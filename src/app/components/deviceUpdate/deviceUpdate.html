@@ -26,7 +26,7 @@
       <input type="text" name="queryDeviceNum" class="form-control" ng-model="deviceUpdateCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device) : null" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device)" presentation-href="deviceUpdate:page">查询</button>
       <button class="btn btn-primary" type="button" style="margin-left: 10px;" ng-click="deviceUpdateCtrl.reset()">重置</button>
     </div>
   </div>
@@ -59,7 +59,7 @@
       </select>
     </div>
     <div class="col-md-2">
-      <buttom class="btn btn-warning" type="button" ng-click="deviceUpdateCtrl.batchUpdate()">升级</buttom>
+      <buttom class="btn btn-warning" type="button" ng-click="deviceUpdateCtrl.batchUpdate()" presentation-href="deviceUpdate:update">批量升级</buttom>
     </div>
   </div>
 
@@ -84,11 +84,19 @@
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
             <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
             <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100 | number: 2}}</td>
-            <td class="text-nowrap" data-title="'终端软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion==null"></td>
+            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion==null"></td>
+            <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.updatingVersion!=null">VER{{deviceinfo.deviceUpdate.updatingVersion/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.updatingVersion==null"></td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate==null"></td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==0&&deviceinfo.deviceUpdate.updateResult==1">升级成功</td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==0&&deviceinfo.deviceUpdate.updateResult==0">升级失败</td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1&&deviceinfo.deviceUpdate.functionCode!=null">正在升级</td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1&&deviceinfo.deviceUpdate.functionCode==null">等待设备响应</td>
             <td class="text-nowrap" data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
-              <button type="button" class="btn btn-default btn-xs" presentation-href="device:oper" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo.id)">升级</button>
+              <button type="button" class="btn btn-default btn-xs" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.whetherToUpdate==0" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo.id)" presentation-href="deviceUpdate:update">升级</button>
+              <button type="button" class="btn btn-default btn-xs btn-danger" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1" ng-click="deviceUpdateCtrl.cancelUpdate(deviceinfo.id)" presentation-href="deviceUpdate:cancelUpdate">取消升级</button>
             </td>
           </tr>
         </table>

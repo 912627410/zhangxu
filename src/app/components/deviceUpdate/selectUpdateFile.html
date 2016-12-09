@@ -10,7 +10,7 @@
             <input type="radio"
                    name="selectFile"
                    ng-checked
-                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id)"
+                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum)"
                    ng-model="updateFile.checked">
           </td>
           <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number:2}}</td>
@@ -29,7 +29,7 @@
 
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="selectUpdateFileCtrl.ok(selectUpdateFileCtrl.updateFile)">确定</button>
+    <button class="btn btn-primary" type="button" ng-click="selectUpdateFileCtrl.ok(selectUpdateFileCtrl.updateFile)" presentation-href="devicdUpdate:update">确定</button>
     <button class="btn btn-warning" type="button" ng-click="selectUpdateFileCtrl.cancel()">取消</button>
   </div>
 </form>

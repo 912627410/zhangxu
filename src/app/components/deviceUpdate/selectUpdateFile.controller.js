@@ -9,10 +9,11 @@
     .module('GPSCloud')
     .controller('selectUpdateFileController', selectUpdateFileController);
 
-  function selectUpdateFileController($rootScope, $scope, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDeviceId, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
+  function selectUpdateFileController($rootScope, $scope, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDeviceId, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
     var vm = this;
     vm.updateDeviceId = updateDeviceId;
     vm.checked = null; //选中的设备id
+    vm.updateVersionNum = null;
 
     vm.query=function(page, size, sort, updateFile){
       var restCallURL = UPDATE_FILE_UPLOAD_QUERY;
@@ -36,8 +37,9 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id) {
+    vm.fileSelection = function (id, versionNum) {
       vm.checked = id;
+      vm.updateVersionNum = versionNum;
     };
 
     vm.ok = function () {
@@ -51,18 +53,23 @@
         fileId : vm.checked
       };
 
-      var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
-      restPromise.then(function (data) {
-        if(data.code == 0){
-          Notification.success("升级指令已下发!");
-          $uibModalInstance.close();
-        }else{
-          Notification.error(data.message);
-        }
-      }, function (reason) {
-        Notification.error(reason.data.message);
-      });
+      $confirm({
+        title:"操作提示",
+        text:"您确定升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?"
+      }).then(function () {
+        var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
+        restPromise.then(function (data) {
+          if(data.code == 0){
+            Notification.success("升级指令已下发!");
+            $uibModalInstance.close();
+          }else{
+            Notification.error(data.message);
+          }
+        }, function (reason) {
+          Notification.error(reason.data.message);
+        });
 
+      })
 
     };
 

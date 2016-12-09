@@ -9,7 +9,7 @@
     .module('GPSCloud')
     .controller('deviceUpdateController', deviceUpdateController);
 
-  function deviceUpdateController($rootScope, $filter, $uibModal, $scope, languages, Notification, treeFactory, NgTableParams, ngTableDefaults, UPDATE_DEVICE_INFO_QUERY, DEFAULT_DEVICE_SORT_BY, serviceResource, DEFAULT_SIZE_PER_PAGE) {
+  function deviceUpdateController($rootScope, $filter, $uibModal, $scope, $confirm, languages, Notification, treeFactory, NgTableParams, ngTableDefaults, UPDATE_DEVICE_INFO_QUERY, DEFAULT_DEVICE_SORT_BY, serviceResource, DEFAULT_SIZE_PER_PAGE, CANCEL_UPDATE_URL) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.selectAll = false; //是否全选标志
@@ -149,6 +149,31 @@
       }, function () {
         //取消
       });
+    };
+
+    //取消升级
+    vm.cancelUpdate = function(id) {
+
+      var updateDataVo = {
+        deviceIds: [id]
+      };
+
+      $confirm({
+        title:"操作提示",
+        text:"您确定要取消升级?"
+      }).then(function () {
+        var restPromise = serviceResource.restAddRequest(CANCEL_UPDATE_URL, updateDataVo);
+        restPromise.then(function (data) {
+          if(data.code == 0){
+            Notification.success(data.content);
+            vm.queryDeviceInfo();
+          }else{
+            Notification.error(data.message);
+          }
+        }, function (reason) {
+          Notification.error(reason.data.message);
+        });
+      })
     };
 
     //组织树的显示

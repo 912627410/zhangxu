@@ -9,7 +9,7 @@
     .module('GPSCloud')
     .controller('newUpdateFileController', newUpdateFileController);
 
-  function newUpdateFileController($rootScope, $scope, $timeout, Upload, $uibModalInstance, serviceResource, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
+  function newUpdateFileController($rootScope, $scope, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -23,6 +23,11 @@
 
       if(null == file.versionNum){
         Notification.error("请输入版本号!");
+        return;
+      }
+
+      if(null == file.applicableProducts){
+        Notification.error("请选择适用对象!");
         return;
       }
 
@@ -49,8 +54,7 @@
         Notification.error("新增升级文件失败!");
         Notification.error(vm.errorMsg);
       },function(evt){
-        console.log(evt);
-        // file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        
       });
     };
 
