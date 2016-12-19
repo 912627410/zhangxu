@@ -262,6 +262,33 @@
                   </li>
                 </ul>
             </li>
+            <li>
+              <a ng-click="datacenter=!datacenter" presentation-href="dataAnalysis:datacenter">
+                <i class="glyphicon glyphicon-minus-sign"></i>
+                <span>数据中心</span>
+                <span class="glyphicon pull-right" ng-class="datacenter?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+              </a>
+              <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: datacenter}">
+                <li>
+                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:abnormaldata',menuType:'a1'})"
+                     presentation-href="dataAnalysis:abnormaldata">
+                    <i class="glyphicon glyphicon-cog"></i> <span>数据异常概览</span>
+                  </a>
+                </li>
+                <li>
+                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:interfacedata',menuType:'b1'})"
+                     presentation-href="dataAnalysis:interfacedata">
+                    <i class="fa ion-compose"></i> <span>接口数据监控</span>
+                  </a>
+                </li>
+                <li>
+                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dataquality',menuType:'c1'})"
+                     presentation-href="dataAnalysis:dataquality">
+                    <i class="fa ion-compose"></i> <span>数据质量核查</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
           <!--
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clusterrunnmachine',menuType:'v'})"
