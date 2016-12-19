@@ -534,20 +534,15 @@
         }
       },
 
-      //TODO
       getWarningMsg:function(deviceWarningData,deviceType){
-        //00 - 无特定类型
-        //01 - 小挖
-        //如果需要别的设备的报警信息则deviceType可以判断
-        if( deviceType=="01" || deviceType=="02"||deviceType=="03"||deviceType=="00"){
-          var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
-          return dtcKey+$rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
+        if(deviceType){
+          var warningMsg = $rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
+          if(warningMsg!=null||!angular.isUndefined(warningMsg)){
+            var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
+            return dtcKey+warningMsg
+          }
         }
-        else{
-          return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
-        }
-
-
+        return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
       },
 
       lineToUpper:function test(str){
