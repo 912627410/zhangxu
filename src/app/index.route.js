@@ -121,6 +121,15 @@
           }
         }
       })
+      .state('home.attendance', {
+        url: '/attendance',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/attendance.html',
+            controller: 'attendanceController as attendanceCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {

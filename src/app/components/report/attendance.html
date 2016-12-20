@@ -1,0 +1,102 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 统计分析</a></li>
+    <li class="active">车辆出勤率</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">所属组织</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+
+        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="queryOrg.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="attendanceCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">开始时间: </label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustom}}"
+               ng-model="queryDate.startDate"
+               is-open="startDateOpenStatus"
+               datepicker-options="dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="startDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">结束时间: </label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustom}}"
+               ng-model="queryDate.endDate"
+               is-open="endDateOpenStatus"
+               datepicker-options="dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="endDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary" type="button" presentation-href="machine:page"
+              ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询
+      </button>
+
+      <button class="btn btn-warning" type="button" ng-click="attendanceCtrl.reset()">重置
+      </button>
+
+      <!--<button class="btn btn-primary" type="button" presentation-href="machine:page"-->
+              <!--ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出历史记录-->
+      <!--</button>-->
+    </div>
+  </div>
+
+  <highchart id="container" style="min-width:400px;height:600px" config="attendanceCtrl.attendanceChart"></highchart>
+
+
+
+</section>
+
