@@ -82,19 +82,20 @@
 
     <div class="col-md-3">
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询出勤率
+              ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询
       </button>
 
-      <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出历史记录
+      <button class="btn btn-warning" type="button" ng-click="attendanceCtrl.reset()">重置
       </button>
+
+      <!--<button class="btn btn-primary" type="button" presentation-href="machine:page"-->
+              <!--ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出历史记录-->
+      <!--</button>-->
     </div>
   </div>
 
-  <div class="row " style="padding: 10px">
+  <highchart id="container" style="min-width:400px;height:600px" config="attendanceCtrl.attendanceChart"></highchart>
 
-
-  </div>
 
 
 </section>
