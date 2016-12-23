@@ -325,6 +325,7 @@
   "voltageLowAlarmValue":"电压低报警设置值",
   "oilLowAlarmValue":"油位低报警设置值",
   "oilPressAlarmValue":"机油压力报警值",
+  "simCardSerialNum":"手机串号",
   "idleDeviceReport": "长时间未回传设备",
   "clientDownload": "客户端下载",
   "viewDetails":  "查看详情",

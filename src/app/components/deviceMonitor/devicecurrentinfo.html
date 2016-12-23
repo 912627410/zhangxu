@@ -896,6 +896,10 @@
                     <td></td>
                     <td></td>
                   </tr>
+                  <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
+                    <td>{{'simCardSerialNum'|translate}}</td>
+                    <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
+                  </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
