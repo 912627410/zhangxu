@@ -1139,6 +1139,9 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.activeMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              $window.sessionStorage["sendBtnStatus"] = true;
+              $window.sessionStorage["sendBtnTime"] = 60000;
+              vm.sendBtnShow = true;
             }
             else {
 
@@ -1204,6 +1207,9 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.unActiveMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              $window.sessionStorage["sendBtnStatus"] = true;
+              $window.sessionStorage["sendBtnTime"] = 60000;
+              vm.sendBtnShow = true;
             }
             else {
 
@@ -1263,6 +1269,9 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.lockMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              $window.sessionStorage["sendBtnStatus"] = true;
+              $window.sessionStorage["sendBtnTime"] = 60000;
+              vm.sendBtnShow = true;
             }
             else {
 
@@ -1323,6 +1332,9 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.unLockMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              $window.sessionStorage["sendBtnStatus"] = true;
+              $window.sessionStorage["sendBtnTime"] = 60000;
+              vm.sendBtnShow = true;
             }
             else {
 
