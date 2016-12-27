@@ -17,42 +17,49 @@
      scope: {
        sendBtnShow: '=',
        sendBtnStatus: '=',
-       sendBtnTime: '='
+       sendBtnTime: '=',
+       sendDeviceNum: '='
      },
 
      link: function(scope, element, attrs){
 
        scope.$watch("sendBtnShow", function (newValue, oldValue) {
 
-         scope.sendBtnStatus = $window.sessionStorage.getItem('sendBtnStatus') == "true";
-         scope.sendBtnTime = $window.sessionStorage.getItem('sendBtnTime');
+         if(scope.sendDeviceNum == $window.sessionStorage.getItem('sendDeviceNum')){
 
-         if(scope.sendBtnStatus && scope.sendBtnTime>0 ){
+           scope.sendBtnStatus = $window.sessionStorage.getItem('sendBtnStatus') == "true";
+           scope.sendBtnTime = $window.sessionStorage.getItem('sendBtnTime');
 
-           scope.timerCount = scope.sendBtnTime / 1000;
+           if(scope.sendBtnStatus && scope.sendBtnTime>0 ){
+             scope.timerCount = scope.sendBtnTime / 1000;
 
-           var counter = $interval(function(){
-             scope.timerCount = scope.timerCount - 1;
-             $window.sessionStorage["sendBtnTime"] = scope.timerCount*1000;
+             var counter = $interval(function(){
+               scope.timerCount = scope.timerCount - 1;
+               $window.sessionStorage["sendBtnTime"] = scope.timerCount*1000;
 
-           }, 1000);
+             }, 1000);
 
-           $timeout(function(){
+             $timeout(function(){
 
-             $interval.cancel(counter);
+               $interval.cancel(counter);
+
+               $window.sessionStorage["sendBtnStatus"] = false;
+               $window.sessionStorage["sendBtnTime"] = 0;
+               scope.sendBtnShow = false;
+
+             }, scope.sendBtnTime);
+           }else {
 
              $window.sessionStorage["sendBtnStatus"] = false;
              $window.sessionStorage["sendBtnTime"] = 0;
              scope.sendBtnShow = false;
 
-           }, scope.sendBtnTime);
-         }else {
-
-           $window.sessionStorage["sendBtnStatus"] = false;
-           $window.sessionStorage["sendBtnTime"] = 0;
-           scope.sendBtnShow = false;
+           }
 
          }
+
+
+
 
        });
 
