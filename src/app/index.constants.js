@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var SERVER_BASE_URL = 'http://192.168.8.190:8084/rest/';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -32,7 +32,7 @@
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
     .constant('DEVCE_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimpledata')   //分页查询设备简化数据URL
     .constant('DEVCEDATA_EXCELEXPORT', SERVER_BASE_URL + 'device/excelExport')   //分页查询设备简化数据URL
-    .constant('DEVICE_ATTENDANCE_URL', SERVER_BASE_URL + 'deviceReport/getMachineAttendance')   //车辆出勤率
+    .constant('DEVCEMONITOR_EXCELEXPORT', SERVER_BASE_URL + 'deviceMonitor/excelExport')   //数据导出简化URL
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
     .constant('DEVCE_LOCK_DATA_PAGED_QUERY',SERVER_BASE_URL+'device/locksms')//分页查询设备锁车数据url

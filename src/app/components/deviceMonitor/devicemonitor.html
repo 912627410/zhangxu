@@ -90,7 +90,7 @@
       <span>{{'totalNumberOfRecords'|translate}} {{monitorCtrl.page.totalElements}}</span>
     </div>
     <div class="btn-group col-md-8 right">
-      <a class="btn btn-default pull-right"  title="Export Table" ng-click='csv.generate(4,9)' ng-href="{{csv.link()}}" download="data.csv">{{'export'|translate}}</a>
+      <a class="btn btn-default pull-right"  ng-click="monitorCtrl.excelExport(monitorCtrl.queryOrg)">{{'export'|translate}}</a>
     </div>
   </div>
 
