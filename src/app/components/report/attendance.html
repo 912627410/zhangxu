@@ -81,17 +81,19 @@
     </div>
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page"
+      <button class="btn btn-primary" type="button" presentation-href="report:machineAttendance"
               ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询
       </button>
 
-      <button class="btn btn-warning" type="button" ng-click="attendanceCtrl.reset()">重置
+      <button class="btn btn-warning" type="button" presentation-href="deviceReport:excelExport"
+              ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出
       </button>
 
-      <!--<button class="btn btn-primary" type="button" presentation-href="machine:page"-->
-              <!--ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出历史记录-->
-      <!--</button>-->
+      <button class="btn btn-default" type="button" ng-click="attendanceCtrl.reset()">重置</button>
+
+
     </div>
+
   </div>
 
   <highchart id="container" style="min-width:400px;height:600px" config="attendanceCtrl.attendanceChart"></highchart>
