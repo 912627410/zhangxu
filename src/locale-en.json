@@ -333,6 +333,7 @@
   "voltageLowAlarmValue":"Low voltage alarm setting value",
   "oilLowAlarmValue":"Oil low alarm setting value",
   "oilPressAlarmValue":"oilpress alarm setting value",
+  "simCardSerialNum":"sim card serial number",
   "idleDeviceReport": "Idle Device Report",
   "clientDownload": "App Download",
   "viewDetails":  "View Details",
