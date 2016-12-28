@@ -891,10 +891,8 @@
       }
       /**************************************结束 ***********************************************************/
       var marker;
-      var carPostion = [116.397428, 39.90923];   //默认地点
-      if (lineAttr.length > 0) {
-        carPostion = lineAttr[0];
-      }
+
+      var carPostion = lineAttr[0];
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
