@@ -29,6 +29,13 @@
     vm.startTimesOptModel = 1;
     $scope.notices = [];
 
+    // 短信发送成功后的初始化button
+    vm.initSmsSendBtn = function () {
+      $window.sessionStorage["sendBtnStatus"] = true;
+      $window.sessionStorage["sendBtnTime"] = 60000;
+      $window.sessionStorage["sendDeviceNum"] = vm.deviceinfo.deviceNum;
+      vm.sendBtnShow = true;
+    }
 
     //刷新当前页面
     vm.refreshCurrentDeviceInfo = function (id) {
@@ -1139,6 +1146,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.activeMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1204,6 +1212,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.unActiveMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1263,6 +1272,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.lockMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1323,6 +1333,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.unLockMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1502,6 +1513,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.setIpMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1561,6 +1573,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.setStartTImesMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1621,6 +1634,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.setWorkHoursMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 
@@ -1687,6 +1701,7 @@
             if (data.code == 0 && data.content.smsStatus == 0) {
               vm.setWorkIntMsg = data.content.smsContent;
               Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
             }
             else {
 

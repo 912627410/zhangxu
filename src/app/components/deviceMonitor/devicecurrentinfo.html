@@ -1293,7 +1293,7 @@
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(1,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
                 -->
                 <button class="btn btn-default" type="button" presentation-href="sms:activeLockSms" ng-click="deviceCurrentInfoCtrl.getActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" presentation-href="sms:activeLockSms" ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:activeLockSms" ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1323,7 +1323,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="sms:unActiveLockSMS" ng-click="deviceCurrentInfoCtrl.getUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" presentation-href="sms:unActiveLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:unActiveLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1371,7 +1371,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.getSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1395,7 +1395,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.sendSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1419,7 +1419,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.sendSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1453,7 +1453,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.sendSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1468,7 +1468,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="sms:lockSMS" ng-click="deviceCurrentInfoCtrl.getLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <button class="btn btn-danger" type="button" presentation-href="sms:lockSMS" ng-click="deviceCurrentInfoCtrl.sendLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-danger"  presentation-href="sms:lockSMS" ng-click="deviceCurrentInfoCtrl.sendLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>
@@ -1498,7 +1498,7 @@
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="sms:unLockSMS" ng-click="deviceCurrentInfoCtrl.getUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <button class="btn btn-default" type="button" presentation-href="sms:unLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</button>
+                <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"  send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:unLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
               </div>
             </div>
           </div>

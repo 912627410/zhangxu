@@ -9,7 +9,7 @@
     .controller('attendanceController', attendanceController);
 
   /** @ngInject */
-  function attendanceController($rootScope, $scope ,$filter, treeFactory,  Notification, serviceResource, DEVICE_ATTENDANCE_URL) {
+  function attendanceController($rootScope, $scope ,$filter, $http, treeFactory,  Notification, serviceResource, DEVICEREPORT_ATTENDANCE_URL, DEVICEREPORT_EXPORT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -104,7 +104,7 @@
 
     vm.query = function (queryOrg,queryDate) {
 
-      var restCallURL = DEVICE_ATTENDANCE_URL;
+      var restCallURL = DEVICEREPORT_ATTENDANCE_URL;
       var dateLength = 0;
 
       if (null != queryOrg && null != queryOrg.id) {
@@ -148,7 +148,43 @@
         vm.attendanceChart.series[0].data = dataList;
 
       }, function (reason) {
-        Notification.error("获取数据失败");
+        Notification.error(reason.data.message);
+      });
+
+    }
+
+    vm.exportHistory = function (queryOrg,queryDate) {
+
+      var restCallURL = DEVICEREPORT_EXPORT_URL;
+
+      if (null != queryOrg && null != queryOrg.id) {
+        restCallURL += "?orgId=" + queryOrg.id;
+
+      }
+
+      if (null != queryDate && null != queryDate.startDate && null != queryDate.endDate ) {
+        restCallURL += "&startDate=" + $filter('date')(queryDate.startDate, 'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(queryDate.endDate, 'yyyy-MM-dd');
+
+      }
+
+      $http({
+        url: restCallURL,
+        method: "GET",
+        responseType: 'arraybuffer'
+      }).success(function (data, status, headers, config) {
+        var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+        var objectUrl = window.URL.createObjectURL(blob);
+
+        var anchor = angular.element('<a/>');
+        anchor.attr({
+          href: objectUrl,
+          target: '_blank',
+          download: queryOrg.label +'.xls'
+        })[0].click();
+
+      }).error(function (data, status, headers, config) {
+        Notification.error("下载失败!");
       });
 
     }
