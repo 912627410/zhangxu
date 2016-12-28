@@ -130,6 +130,15 @@
           }
         }
       })
+      .state('home.smsSendReport', {
+        url: '/smsSendReport',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/smsSendReport.html',
+            controller: 'smsSendReportController as smsSendReportCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {
