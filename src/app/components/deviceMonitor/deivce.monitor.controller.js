@@ -17,7 +17,6 @@
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
 
-    vm.queryOrg = userInfo.userdto.organizationDto;
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
@@ -149,34 +148,38 @@
 
     //导出至Excel
     vm.excelExport=function (queryOrg) {
+
       if (queryOrg) {
         var filterTerm = "id=" + queryOrg.id;
+        var restCallURL = DEVCEMONITOR_EXCELEXPORT;
+        if (filterTerm){
+          restCallURL += "?";
+          restCallURL += filterTerm;
+        }
+        // console.log(label);
+
+        $http({
+          url: restCallURL,
+          method: "GET",
+          responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+          var objectUrl = window.URL.createObjectURL(blob);
+
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: objectUrl,
+            target: '_blank',
+            download: queryOrg.label +'.xls'
+          })[0].click();
+
+        }).error(function (data, status, headers, config) {
+          Notification.error("下载失败!");
+        });
+      }else {
+          Notification.error("请选择需要导出的组织!");
       }
-      var restCallURL = DEVCEMONITOR_EXCELEXPORT;
-      if (filterTerm){
-        restCallURL += "?";
-        restCallURL += filterTerm;
-      }
-     // console.log(label);
 
-      $http({
-        url: restCallURL,
-        method: "GET",
-        responseType: 'arraybuffer'
-      }).success(function (data, status, headers, config) {
-        var blob = new Blob([data], { type: "application/vnd.ms-excel" });
-        var objectUrl = window.URL.createObjectURL(blob);
-
-        var anchor = angular.element('<a/>');
-        anchor.attr({
-          href: objectUrl,
-          target: '_blank',
-          download: queryOrg.label +'.xls'
-        })[0].click();
-
-      }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
-      });
     }
   }
 })();
