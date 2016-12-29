@@ -34,7 +34,7 @@
   <div class="row form-group">
     <hr>
     <div class="col-md-2">
-      <label class="control-label">{{'organisation'|translate}}</label>
+      <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -49,7 +49,7 @@
       </p>
     </div>
     <div class="col-md-2">
-          <label class="control-label">{{'terminalno'|translate}}</label>
+          <label class="control-label">{{'terminalno'|translate}}:</label>
         </div>
     <div class="col-md-3">
           <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
@@ -63,7 +63,7 @@
       <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-2">
-      <label class="control-label">设备类型</label>
+      <label class="control-label">设备类型:</label>
     </div>
     <div class="col-md-3">
       <select class="form-control" ng-model="monitorCtrl.queryDeviceType">
@@ -76,7 +76,7 @@
     <div class="col-md-2">
 
       <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
-      <button class="btn btn-primary" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
