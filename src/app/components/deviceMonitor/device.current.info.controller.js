@@ -1101,7 +1101,7 @@
     vm.cancelLockTimes = "";
 
 
-    //查询锁车的短信内容
+    //查询绑定短信的短信内容
     vm.getActiveLockSMS = function (devicenum) {
 
       if (devicenum == null) {
@@ -1124,7 +1124,7 @@
     }
 
 
-    //发送锁车短信
+    //发送绑定短信
     vm.sendActiveLockSMS = function (devicenum) {
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
@@ -1132,8 +1132,14 @@
       }
       var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
+      // 如果是中挖，并且当前已经绑定（“已激活”），则提示是否继续发送绑定短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "已激活"){
+        vm.confirmText = '当前设备已经绑定，继续绑定可能会产生异常，你确定继续发送绑定短信吗？';
+      }else{
+        vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
+      }
       $confirm({
-        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        text: vm.confirmText,
         title: languages.findKey('SMSConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
@@ -1167,7 +1173,7 @@
     }
 
 
-    //查询锁车的短信内容
+    //查询解绑短信的短信内容
     vm.getUnActiveLockSMS = function (devicenum) {
 
       if (devicenum == null) {
@@ -1190,7 +1196,7 @@
     }
 
 
-    //发送锁车短信
+    //发送解绑短信
     vm.sendUnActiveLockSMS = function (devicenum) {
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
@@ -1198,8 +1204,15 @@
       }
       var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
+      // 如果是中挖，并且当前未绑定（“未激活”），则提示是否继续发送解绑短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "未激活"){
+        vm.confirmText = '当前设备未绑定，解绑短信无效，你确定继续发送解绑短信吗？';
+      }else{
+        vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
+      }
+
       $confirm({
-        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        text: vm.confirmText,
         title: languages.findKey('SMSConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
@@ -1258,8 +1271,15 @@
       }
       var restURL = SEND_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
+      // 如果是中挖，并且当前已经锁车，则提示是否继续发送锁车短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.deviceinfo.gprsSignal == "90"){
+        vm.confirmText = '当前设备已经锁车，继续锁车可能会导致异常，你确定继续发送锁车短信吗？';
+      }else{
+        vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
+      }
+
       $confirm({
-        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        text: vm.confirmText,
         title: languages.findKey('SMSConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
@@ -1288,7 +1308,7 @@
     }
 
 
-    //查询锁车的短信内容
+    //查询解锁短信的短信内容
     vm.getUnLockSMS = function (devicenum) {
 
       if (devicenum == null) {
@@ -1311,7 +1331,7 @@
     }
 
 
-    //发送锁车短信
+    //发送解锁短信
     vm.sendUnLockSMS = function (devicenum) {
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
@@ -1319,8 +1339,15 @@
       }
       var restURL = SEND_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
+      // 如果是中挖，并且当前未锁车，则提示是否继续发送解锁短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.deviceinfo.gprsSignal != "90"){
+        vm.confirmText = '当前设备未锁车,解锁短信无效，你确定继续发送解锁短信吗？';
+      }else{
+        vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
+      }
+
       $confirm({
-        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        text: vm.confirmText,
         title: languages.findKey('SMSConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
