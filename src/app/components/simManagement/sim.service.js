@@ -17,15 +17,31 @@
 
     //return {"name":"abc"};
     return {
-      queryPage: function (page, size, sort, queryPhoneNumber) {
+      queryPage: function (page, size, sort, sim,org) {
         var restCallURL = SIM_PAGE_URL;
         var pageUrl = page || 0;
         var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
         var sortUrl = sort || "id,desc";
         restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-        if (queryPhoneNumber) {
-          restCallURL += "&search_LIKE_phoneNumber=" + queryPhoneNumber;
+
+       console.log(sim);
+
+        if(sim){
+
+          if (sim.phoneNumber) {
+            restCallURL += "&search_LIKE_phoneNumber=" + sim.phoneNumber;
+          }
+          if (sim.provider) {
+            restCallURL += "&search_EQ_provider=" + sim.provider.value;
+          }
+
         }
+
+        if (org) {
+          restCallURL += "&search_EQ_deviceinfo.organization.id=" + org.id;
+        }
+
+
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         return rspData;
 

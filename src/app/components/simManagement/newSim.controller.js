@@ -9,11 +9,20 @@
     .controller('newSimController', newSimController);
 
   /** @ngInject */
-  function newSimController($scope, $uibModalInstance, SIM_STATUS_URL, SIM_URL, simService, serviceResource, Notification, operatorInfo) {
+  function newSimController($scope, $uibModalInstance, SIM_PROVIDER_URL, SIM_URL, simService, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
     vm.sim = {};
+
+    //查询sim卡的供应商集合
+    var simProviderData = serviceResource.restCallService(SIM_PROVIDER_URL, "QUERY");
+    simProviderData.then(function (data) {
+      vm.sim.simProviderList = data;
+    }, function (reason) {
+      Notification.error('获取SIM卡供应商集合失败');
+    })
+
 
     //日期控件相关
     //date picker

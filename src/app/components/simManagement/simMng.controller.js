@@ -7,7 +7,8 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,
+                            SIM_PROVIDER_URL,DEFAULT_SIZE_PER_PAGE,SIM_URL, SIM_PAGE_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -16,8 +17,30 @@
     vm.sim={
       "phoneNumber":"",
       "deviceinfo":{},
+      "provider":"",
+    //  "org":{},
+
 
     };
+
+    // vm.initQueryCondition=function(){
+    //   vm.sim={
+    //     "phoneNumber":"",
+    //     "deviceinfo":{},
+    //
+    //   };
+    // }
+    //
+    // vm.initQueryCondition();
+
+    //查询sim卡的供应商集合
+    var simProviderData = serviceResource.restCallService(SIM_PROVIDER_URL, "QUERY");
+    simProviderData.then(function (data) {
+      vm.sim.simProviderList = data;
+    }, function (reason) {
+      Notification.error('获取SIM卡供应商集合失败');
+    })
+
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -49,8 +72,8 @@
 
 
 
-    vm.query=function(page,size,sort,queryPhoneNumber){
-       var rspData=simService.queryPage(page,size,sort,queryPhoneNumber);
+    vm.query=function(page,size,sort,sim){
+       var rspData=simService.queryPage(page,size,sort,sim,vm.org);
        rspData.then(function(data){
          vm.simList = data.content;
 
@@ -65,6 +88,7 @@
          Notification.error("获取SIM数据失败");
        });
      }
+
 
     vm.query();
 
@@ -90,6 +114,13 @@
       });
     };
 
+    vm.reset = function () {
+      vm.sim.phoneNumber="";
+      vm.sim.provider="";
+
+      vm.org = null;
+    }
+
 
     vm.updateSim = function (abc,size) {
       var sourceSim = angular.copy(abc); //深度copy
@@ -107,13 +138,17 @@
             }
           }
         });
-        //modalInstance.result.then(function (selectedItem) {
-        ////  vm.query();
-        //}, function () {
-        //});
+
 
       modalInstance.result.then(function(result) {
-
+       console.log("111");
+        var tabList=vm.tableParams.data;
+        //恢复列表中的值
+        for(var i=0;i<tabList.length;i++){
+          if(tabList[i].id==result.id){
+            tabList[i]=result;
+          }
+        }
 
 
       }, function(reason) {
@@ -155,7 +190,7 @@
     //组织树的显示
     vm.openTreeInfo= function() {
       treeFactory.treeShow(function (selectedItem) {
-        vm.sim.deviceinfo.org =selectedItem;
+        vm.org =selectedItem;
       });
     }
 
