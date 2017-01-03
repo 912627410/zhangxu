@@ -11,11 +11,11 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $http, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookieStore,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
-
+    vm.rememberMe = true;
     //通过后台返回的结构生成json tree
     vm.unflatten = function (array, parent, tree) {
       tree = typeof tree !== 'undefined' ? tree : [];
@@ -51,10 +51,29 @@
       return tree;
     };
 
+    $scope.$on('$viewContentLoaded', function(){
+      var person = $cookieStore.get("user") ;
+      vm.credentials = person;
+    });
+    vm.reset= function () {
+      vm.credentials.password = null;
+    }
 
     vm.loginMe = function () {
       var rspPromise = serviceResource.authenticate(vm.credentials);
       rspPromise.then(function (response) {
+      if(vm.rememberMe){
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 5);
+        $cookieStore.put("user",
+          {username:vm.credentials.username,
+            password:vm.credentials.password,
+            expires:expireDate
+          }
+        );
+        var person = $cookieStore.get("user") ;
+      }
+
         var data = response.data;
          userInfo = {
           authtoken: data.token,
@@ -74,6 +93,8 @@
         }
 
         Notification.success(languages.findKey('loginSuccess'));
+
+
 
         //监控用户登录超时
         Idle.watch();
@@ -211,6 +232,10 @@
 
 
     }
+
+
+
+
 
   }
 })();

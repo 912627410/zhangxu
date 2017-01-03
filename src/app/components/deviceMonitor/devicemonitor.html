@@ -36,11 +36,11 @@
     <div class="col-md-2">
       <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
-                  <span class="input-group-btn">
+        <span class="input-group-btn">
                   <!--打开组织树-->
                   <button type="button" class="btn btn-default" ng-click="monitorCtrl.openTreeInfo()">
                     <i class="fa fa-sitemap"></i>
@@ -49,23 +49,30 @@
       </p>
     </div>
     <div class="col-md-2">
-          <label class="control-label">{{'terminalno'|translate}}:</label>
-        </div>
-    <div class="col-md-3">
-          <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-        </div>
+      <label class="control-label">包含下级组织:</label>
+      <input type="checkbox" checked="checked" ng-model="monitorCtrl.querySubOrg"/>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'terminalno'|translate}}:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
   </div>
   <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-2">
+    </div>
+    <div class="col-md-1">
       <label class="control-label">设备类型:</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <select class="form-control" ng-model="monitorCtrl.queryDeviceType">
         <option value="A1">小挖</option>
         <option value="30">矿机</option>
@@ -173,39 +180,37 @@
           </div>
         </div>
         <div class="box-footer">
-            <div class="pull-right">
-              <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
-            </div>
+          <div class="pull-right">
+            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+          </div>
         </div>
       </div>
     </div>
     <!--列表模式-->
     <div class="table-responsive">
-    <table ng-table="monitorCtrl.tableParams"  class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
-      <tr ng-repeat="deviceinfo in $data">
+      <table ng-table="monitorCtrl.tableParams"  class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
+        <tr ng-repeat="deviceinfo in $data">
 
-        <td  data-title="'terminalno'|translate" sortable="'deviceNum'" >
-          <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
-
-        </td>
-        <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
-        <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
-        <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
-          <span ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</span>
-          <span ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</span>
-        </td>
-        <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
-        <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
-        <td  data-title="'protocolType'|translate" sortable="'machineType'">{{deviceinfo.machineType}}</td>
-        <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-        <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        <td  data-title="'operation'|translate" >
-          <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
-
-        </td>
-      </tr>
-    </table>
-      </div>
+          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" >
+            <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
+          </td>
+          <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+          <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
+          <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
+            <span ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</span>
+            <span ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</span>
+          </td>
+          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
+          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
+          <td  data-title="'protocolType'|translate" sortable="'machineType'">{{deviceinfo.machineType}}</td>
+          <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
+          <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td  data-title="'operation'|translate" >
+            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
   <div class="row">
   </div>
