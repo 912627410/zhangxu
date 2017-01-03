@@ -16,7 +16,7 @@
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
-
+    vm.querySubOrg = true;
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
@@ -57,11 +57,9 @@
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || DEFAULT_DEVICE_SORT_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
-      if (null != vm.queryOrg&&null!=vm.queryOrg.id) {
+      if (null != vm.queryOrg&&null!=vm.queryOrg.id&&!vm.querySubOrg) {
         restCallURL += "&search_EQ_organization.id=" +vm.queryOrg.id;
       }
-
       if (null !=vm.queryDeviceNum&&vm.queryDeviceNum!="") {
         restCallURL += "&search_LIKES_deviceNum=" + $filter('uppercase')(vm.queryDeviceNum);
       }
@@ -70,6 +68,9 @@
       }
       if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      }
+      if(null != vm.queryOrg&&vm.querySubOrg){
+        restCallURL += "&parentOrgId=" +vm.queryOrg.id;
       }
 
 
@@ -132,6 +133,7 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
       vm.queryDeviceType = null;
+      vm.querySubOrg = true;
     }
 
     //组织树的显示
@@ -156,7 +158,9 @@
           restCallURL += "?";
           restCallURL += filterTerm;
         }
-        // console.log(label);
+        if(vm.querySubOrg) {
+          restCallURL += "&parentOrgId="+ queryOrg.id;
+        }
 
         $http({
           url: restCallURL,
