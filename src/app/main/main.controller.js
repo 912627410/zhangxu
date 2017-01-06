@@ -36,7 +36,14 @@
       $window.sessionStorage.removeItem("statisticInfo");
       $window.sessionStorage.removeItem("permissionList");
 
-      $cookies.put("outstate", 1);
+      var cookieDate = {};
+      cookieDate.value = 1;
+      $cookies.putObject("outstate", cookieDate);
+      var expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() + 10);//设置cookie保存10天
+      $cookies.putObject("outstate", cookieDate, {'expires': expireDate});
+
+
       //如果http header里面有auth信息的话好像是每次都验证的
       $http.defaults.headers.common['token'] = null;
 
