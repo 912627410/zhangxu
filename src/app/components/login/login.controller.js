@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookieStore,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -52,26 +52,39 @@
     };
 
     $scope.$on('$viewContentLoaded', function(){
-      var person = $cookieStore.get("user") ;
-      vm.credentials = person;
+      if(null!=$cookies.getObject("user")){
+        var userobj = {};
+        userobj.username = $cookies.getObject("user").username;
+        userobj.password = $cookies.getObject("user").password;
+        vm.credentials = userobj;
+       if(null==$cookies.getObject("outstate")){
+         vm.loginMe();
+       }
+
+      }
+
+
     });
     vm.reset= function () {
       vm.credentials.password = null;
     }
 
     vm.loginMe = function () {
+      $cookies.remove("outstate");
       var rspPromise = serviceResource.authenticate(vm.credentials);
       rspPromise.then(function (response) {
       if(vm.rememberMe){
+        //检测是否存在cookie   user
+        $cookies.remove("user");
+        //记录登录时间
+        $scope.loginTime = new Date().getTime();
+        var cookieDate = {};
+        cookieDate.username = vm.credentials.username;
+        cookieDate.password = vm.credentials.password;
+        $cookies.putObject("user", cookieDate);
         var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 5);
-        $cookieStore.put("user",
-          {username:vm.credentials.username,
-            password:vm.credentials.password,
-            expires:expireDate
-          }
-        );
-        var person = $cookieStore.get("user") ;
+        expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
+        $cookies.putObject("user", cookieDate, {'expires': expireDate});
       }
 
         var data = response.data;

@@ -10,7 +10,7 @@
 
   /** @ngInject */
 
-  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
@@ -145,7 +145,7 @@
        // var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更 新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
 
         var contentInfo="";
-        contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
+        //contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
 
         contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
@@ -188,9 +188,16 @@
 
         // 定义中部内容
         var middle = document.createElement("div");
+        var titleA = document.createElement("a");
+        var mcont = document.createElement("div");
         middle.className = "info-middle";
         middle.style.backgroundColor = 'white';
-        middle.innerHTML = content;
+        mcont.innerHTML = content;
+        titleA.innerHTML="终端编号:"+item.deviceNum;
+        titleA.onclick =  Viewdetails;
+
+        middle.appendChild(titleA);
+        middle.appendChild(mcont);
         info.appendChild(middle);
 
         // 定义底部内容
@@ -209,6 +216,30 @@
       function closeInfoWindow() {
         mapObj.clearInfoWindow();
       };
+
+      function Viewdetails(id,size) {
+        var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + item.id;
+        var deviceinfoPromis = restCallService(singlUrl, "GET");
+        deviceinfoPromis.then(function (data) {
+            $rootScope.deviceinfoMonitor = data.content;
+            $rootScope.currentOpenModal = $uibModal.open({
+              animation: true,
+              backdrop: false,
+              templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+              controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+              size: 'lg',
+              resolve: { //用来向controller传数据
+                deviceinfo: function () {
+                  return $rootScope.deviceinfoMonitor;
+                }
+              }
+            });
+
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetDeviceInformation'));
+          }
+        )
+      }
 
     };
 
