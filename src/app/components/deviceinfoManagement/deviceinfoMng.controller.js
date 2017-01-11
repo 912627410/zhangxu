@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -15,6 +15,8 @@
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+    vm.querySubOrg = true;
+
 
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
@@ -26,7 +28,6 @@
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
       if (null != deviceinfo) {
         if (null != deviceinfo.deviceNum&&deviceinfo.deviceNum!="") {
           restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
@@ -65,6 +66,7 @@
       vm.selectAll = false;//是否全选标志
       vm.selected = []; //选中的设备id
       vm.allot = null;
+      vm.querySubOrg = true;
     }
 
 
@@ -290,6 +292,45 @@
     vm.validateOperPermission=function(){
       return permissions.getPermissions("device:oper");
     }
+
+    //导出至Excel
+    vm.excelExport=function (org) {
+
+      if (org) {
+        var filterTerm = "id=" + vm.org.id;
+        var restCallURL = DEVCEDINFO_EXCELEXPORT;
+        if (filterTerm){
+          restCallURL += "?";
+          restCallURL += filterTerm;
+        }
+        if(vm.querySubOrg) {
+          restCallURL += "&parentOrgId="+ vm.org.id;
+        }
+
+        $http({
+          url: restCallURL,
+          method: "GET",
+          responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+          var objectUrl = window.URL.createObjectURL(blob);
+
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: objectUrl,
+            target: '_blank',
+            download: vm.org.label +'.xls'
+          })[0].click();
+
+        }).error(function (data, status, headers, config) {
+          Notification.error("下载失败!");
+        });
+      }else {
+        Notification.error("请选择需要导出的组织!");
+      }
+
+    }
+
 
   }
 })();
