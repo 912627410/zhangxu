@@ -17,15 +17,16 @@
 
 
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">设备编号</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.queryDeviceinfo.deviceNum"
              placeholder="支持模糊查询"/>
     </div>
+    <div class="col-md-2"></div>
 
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">SIM</label>
     </div>
     <div class="col-md-3">
@@ -48,7 +49,7 @@
   <div class="row">
 
 
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">所属组织</label>
     </div>
     <div class="col-md-3">
@@ -63,6 +64,11 @@
       </p>
     </div>
     <div class="col-md-2">
+      <label class="control-label">包含下级组织:</label>
+      <input type="checkbox" checked="checked" ng-model="deviceinfoMngCtrl.querySubOrg"/>
+    </div>
+
+    <div class="col-md-1">
       <label class="control-label">调拨组织</label>
     </div>
     <div class="col-md-3">
@@ -107,10 +113,9 @@
       </a>
 
 
-      <a class="btn btn-default pull-right" presentation-href="device:oper"
-       title="Export Table" ng-click='csv.generate(1,10)' ng-href="{{csv.link()}}"
-         download="设备数据.csv">
-        <i class="glyphicon glyphicon-new-window"></i> 批量导出
+      <a class="btn btn-default pull-right"
+       title="Export Table" ng-click="deviceinfoMngCtrl.excelExport(deviceinfoMngCtrl.allot)" >
+        <i class="glyphicon glyphicon-new-window" ></i> 批量导出
       </a>
 
     </div>
