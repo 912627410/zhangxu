@@ -89,7 +89,7 @@
                     });
                 },
                 link: function() {
-                    return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+                    return 'data:text/csv;charset=UTF-8,\ufeff'+encodeURIComponent(data);
                 }
             };
             $parse(attrs.exportCsv).assign(scope.$parent, csv);
