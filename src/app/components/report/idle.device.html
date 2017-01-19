@@ -66,7 +66,7 @@
         <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='01'" data-title="'锁车状态'" sortable="'lockStatus'">一级</td>
         <!--锁车时候显示“二级”更改为“锁车”-->
         <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='10'" data-title="'锁车状态'" sortable="'lockStatus'">锁车</td>
-        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus==null" data-title="'锁车状态'" sortable="'lockStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus!='00' && device.lockStatus!='01' && device.lockStatus!='10'" data-title="'锁车状态'" sortable="'lockStatus'">-</td>
         <!--中挖的锁车状态要根据GPRS信号百分比确定，90为锁车，其它为未锁车  by 薛庆鹏 2017-1-3&ndash;&gt;-->
         <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal=='90'" data-title="'锁车状态'" sortable="'gprsSignal'">锁车</td>
         <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal!='90'" data-title="'锁车状态'" sortable="'gprsSignal'">正常</td>
