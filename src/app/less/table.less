@@ -75,3 +75,29 @@ table.text-center {
   max-width:878px;
   overflow-x:scroll;
 }
+
+/* userMngPage*/
+.userTableBox{
+  position: relative;
+  overflow: hidden;
+  table td{
+    height: 34px;
+  }
+  .userTableBoxLeft{
+    position:absolute;
+    left: 0;
+    top: 0;
+    width: 150px;
+    z-index:99;
+    background: #fff;
+  }
+  .userTableBoxRight{
+    overflow-x: auto;
+    table thead tr th:first-child{
+      width: 150px;
+    }
+    thead tr th:first-child div{
+      width: 138px;
+    }
+  }
+}
