@@ -52,8 +52,9 @@
         <td class="text-nowrap" data-title="'SIM卡号'" sortable="'sim.phoneNumber'">{{device.sim.phoneNumber}}</td>
         <td class="text-nowrap" data-title="'运行总时间'" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
 
-        <td class="text-nowrap" ng-if="device.ecuLockStatus.substr(7,1)=='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">未激活</td>
-        <td class="text-nowrap" ng-if="device.ecuLockStatus.substr(7,1)!='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">已激活</td>
+        <td class="text-nowrap" ng-if="device.ecuLockStatus != null && device.ecuLockStatus.substr(7,1)=='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">未激活</td>
+        <td class="text-nowrap" ng-if="device.ecuLockStatus != null && device.ecuLockStatus.substr(7,1)!='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">已激活</td>
+        <td class="text-nowrap" ng-if="device.ecuLockStatus == null" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">-</td>
 
         <td class="text-nowrap" ng-if="device.commStatus=='10'" data-title="'CAN通信状态'" sortable="'commStatus'">不工作</td>
         <td class="text-nowrap" ng-if="device.commStatus=='01'" data-title="'CAN通信状态'" sortable="'commStatus'">工作</td>
