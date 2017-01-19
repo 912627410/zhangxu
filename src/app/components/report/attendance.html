@@ -13,28 +13,12 @@
 
 
 <!-- Main content -->
-<section class="content">
+<section class="content form-horizontal">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">所属组织</label>
-    </div>
-    <div class="col-md-2">
-      <p class="input-group">
-
-        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="queryOrg.label" name="org" readonly required/>
-        <span class="input-group-btn">
-            <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="attendanceCtrl.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-      </p>
-    </div>
-
-    <div class="col-md-1">
-      <label class="control-label text-nowrap">开始时间: </label>
-    </div>
+      <label class="control-label text-nowrap">开始时间:</label>
+    </div >
     <div class="col-md-2">
       <p class="input-group">
         <input type="text"
@@ -55,7 +39,6 @@
         </span>
       </p>
     </div>
-
     <div class="col-md-1">
       <label class="control-label text-nowrap">结束时间: </label>
     </div>
@@ -79,21 +62,29 @@
         </span>
       </p>
     </div>
-
-    <div class="col-md-3">
-      <button class="btn btn-primary" type="button" presentation-href="report:machineAttendance"
-              ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询
-      </button>
-
-      <button class="btn btn-warning" type="button" presentation-href="deviceReport:excelExport"
-              ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出
-      </button>
-
-      <button class="btn btn-default" type="button" ng-click="attendanceCtrl.reset()">重置</button>
-
-
+    <div class="col-md-1">
+      <label class="control-label">所属组织:</label>
     </div>
-
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="queryOrg.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="attendanceCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+    <div class="col-md-2" style="width: 110px;">
+      <label class="control-label" style="font-size: 8px;">包含子组织</label>
+      <input type="checkbox" ng-model="attendanceCtrl.querySubOrg">
+    </div>
+    <div class="col-md-1" style="width: 170px;">
+      <a  class="btn"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询</a>
+&nbsp;&nbsp;
+      <a  class="btn"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出</a>
+    </div>
   </div>
 
   <highchart id="container" style="min-width:400px;height:600px" config="attendanceCtrl.attendanceChart"></highchart>

@@ -12,6 +12,7 @@
   function attendanceController($rootScope, $scope ,$filter, $http, treeFactory,  Notification, serviceResource, DEVICEREPORT_ATTENDANCE_URL, DEVICEREPORT_EXPORT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.querySubOrg = true;
 
     // 默认查询7天
     var startDate = new Date();
@@ -155,6 +156,7 @@
 
     vm.exportHistory = function (queryOrg,queryDate) {
 
+
       var restCallURL = DEVICEREPORT_EXPORT_URL;
 
       if (null != queryOrg && null != queryOrg.id) {
@@ -166,6 +168,10 @@
         restCallURL += "&startDate=" + $filter('date')(queryDate.startDate, 'yyyy-MM-dd');
         restCallURL += "&endDate=" + $filter('date')(queryDate.endDate, 'yyyy-MM-dd');
 
+      }
+
+      if(vm.querySubOrg){
+        restCallURL += "&parentOrgId=" + queryOrg.id;
       }
 
       $http({
@@ -196,6 +202,7 @@
         endDate: new Date()
       };
       $scope.queryOrg = vm.operatorInfo.userdto.organizationDto;
+      vm.SubOrg = true;
     }
 
     vm.query($scope.queryOrg,$scope.queryDate);
