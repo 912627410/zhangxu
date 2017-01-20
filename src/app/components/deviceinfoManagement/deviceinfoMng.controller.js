@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -219,6 +219,12 @@
         return;
       }
 
+      if (vm.allot.label== vm.org.label) {
+        Notification.warning({message: '相同组织不可以进行调拨', positionY: 'top', positionX: 'center'});
+
+        return;
+      }
+
 
       var moveOrg = {ids: vm.selected, "orgId": vm.allot.id};
       var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
@@ -329,6 +335,41 @@
         Notification.error("请选择需要导出的组织!");
       }
 
+    }
+
+    vm.allocationlog = function (deviceinfo,size) {
+
+
+
+      var singlUrl = DEVCE_ALLOCATION + "?deviceId=" + deviceinfo.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "QUERY");
+
+      deviceinfoPromis.then(function (data) {
+        var allocationlog = data;
+        var deviceinfodeviceNum =  deviceinfo.deviceNum;
+
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/deviceinfoManagement/deviceAllocation.html',
+          controller: 'deviceAllocationController as deviceAllocationController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            deviceinfodeviceNum:function () {
+              return deviceinfodeviceNum;
+            },
+            allocationlog:function () {
+              return allocationlog;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+
+        });
+      }, function (reason) {
+        Notification.error('获取调拨日志失败');
+      });
     }
 
 

@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h3 class="modal-title">设备调拨日志</h3>
+
+</div>
+
+<section class="content">
+  <div class="table-responsive">
+    <p><strong>设备号:</strong><span>{{deviceinfodeviceNum}}</span></p>
+    <table ng-table="machineAllocationController.tableParams" class="table table-bordered table-striped ">
+      <tr ng-repeat="allocationlog in allocationlog">
+        <td  data-title="'原所属组织'"  >{{allocationlog.originValue}}</td>
+        <td  data-title="'现所属组织'"  >{{allocationlog.targetValue}}</td>
+        <td  data-title="'操作员'"  >{{allocationlog.operationStaff}}</td>
+        <td  data-title="'操作时间'"  >{{allocationlog.recordTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+      </tr>
+    </table>
+  </div>
+</section>
+<form name="myForm" class="form-horizontal ">
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="deviceAllocationController.cancel()">关闭</button>
+  </div>
+</form>
