@@ -17,7 +17,7 @@
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
-                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo) {
+                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo, ngTableDefaults, NgTableParams) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -806,41 +806,30 @@
         }
       )
     }
-    vm.getLockData=function (page, size, sort, phoneNumber, startDate, endDate) {
+    vm.getLockData=function (phoneNumber) {
+      var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
+
       if (phoneNumber&&!angular.isUndefined(phoneNumber)) {
         var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
       }else {
         Notification.warning('设备未绑定sim卡！');
         return;
       }
-      if (startDate) {
-        var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-        if (filterTerm) {
-          filterTerm += "&startDate=" + startDateFormated
-        }
-        else {
-          filterTerm += "startDate=" + startDateFormated;
-        }
+      if(filterTerm) {
+        restCallURL += "?" + filterTerm;
       }
-      if (endDate) {
-        var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-        if (filterTerm) {
-          filterTerm += "&endDate=" + endDateFormated;
-        }
-        else {
-          filterTerm += "endDate=" + endDateFormated;
-        }
-      }
-      var deviceLockDataPromis = serviceResource.queryDeviceLockData(page, size, sort, filterTerm);
+      var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {
-          vm.deviceLockDataList = data.content;
-          vm.deviceLockDataPage = data.page;
-          vm.deviceLockDataPageNumber = data.page.number + 1;
-          vm.deviceLockDataBasePath = DEVCE_LOCK_DATA_PAGED_QUERY;
-          if (vm.deviceLockDataList.length == 0) {
+          if (data.length == 0) {
             Notification.warning('无下发短信');
+          } else {
+            ngTableDefaults.settings.counts = [];
+            vm.lockDataTable = new NgTableParams({
+              count: 8,
+              sorting: {sendTime: 'desc'}
+            }, {
+              dataset: data
+            });
           }
         }, function (reason) {
           Notification.error('获取锁车短信内容失败！');
