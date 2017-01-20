@@ -816,8 +816,7 @@
         return;
       }
       if(filterTerm) {
-        restCallURL += "?";
-        restCallURL += filterTerm;
+        restCallURL += "?" + filterTerm;
       }
       var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {
