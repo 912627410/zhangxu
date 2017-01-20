@@ -9,18 +9,20 @@
     .controller('idleDeviceController', idleDeviceController);
 
   /** @ngInject */
-  function idleDeviceController($rootScope, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_PAGED_QUERY) {
+  function idleDeviceController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_PAGED_QUERY, DEVCE_NOUPLOAD_DATA_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.queryTime = null;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    var dataUploadDate = new Date();
-    dataUploadDate.setDate(dataUploadDate.getDate()-5);
-    vm.dataUploadDate = dataUploadDate;
-
-
+    //重置查询框
+    vm.reset = function () {
+      var dataUploadDate = new Date();
+      dataUploadDate.setDate(dataUploadDate.getDate()-3);
+      vm.dataUploadDate = dataUploadDate;
+    };
     //date picker
     vm.dataUploadDateOpenStatus = {
       opened: false
@@ -61,17 +63,47 @@
         });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        vm.queryTime = new Date();
       }, function (reason) {
         //vm.machineList = null;
         Notification.error("获取数据失败");
       });
     };
 
+    vm.init = function () {
+      vm.reset();
+      var date = new Date();
+      date.setDate(date.getDate() - 3);
+      vm.query(null,null,null,date);
+    };
+    vm.init();
 
-    //重置查询框
-    vm.reset = function () {
-      vm.DataUploadDate = null;
-    }
+    vm.excelExport = function (DataUploadDate) {
+      var restCallURL = DEVCE_NOUPLOAD_DATA_EXCELEXPORT;
+      if (DataUploadDate) {
+        var DataUploadMonth = DataUploadDate.getMonth() +1;  //getMonth返回的是0-11
+        var DataUploadDateFormated = DataUploadDate.getFullYear() + '-' + addZero(DataUploadMonth,2) + '-' + addZero(DataUploadDate.getDate(),2);
+        restCallURL += "?lastDataUploadTime=" + DataUploadDateFormated;
+      }
 
+      $http({
+        url: restCallURL,
+        method: "GET",
+        responseType: 'arraybuffer'
+      }).success(function (data, status, headers, config) {
+        var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+        var objectUrl = window.URL.createObjectURL(blob);
+
+        var anchor = angular.element('<a/>');
+        anchor.attr({
+          href: objectUrl,
+          target: '_blank',
+          download: '长时间未连接设备.xls'
+        })[0].click();
+
+      }).error(function (data, status, headers, config) {
+        Notification.error("下载失败!");
+      });
+    };
   }
 })();
