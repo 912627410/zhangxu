@@ -34,6 +34,8 @@
     .constant('DEVCEMONITOR_EXCELEXPORT', SERVER_BASE_URL + 'deviceMonitor/excelExport')   //数据导出简化URL
     .constant('DEVCEDATA_EXCELEXPORT', SERVER_BASE_URL + 'device/excelExport')   //devicedata导出
     .constant('DEVCE_NOUPLOAD_DATA_EXCELEXPORT', SERVER_BASE_URL + 'device/noUploadExcelExport')  //长时间未连接数据导出
+    .constant('DEVCE_ECU_NOTACTIVE_QUERY', SERVER_BASE_URL + 'device/ecuNotActivePage')   //分页查询ecu未激活数据URL
+    .constant('DEVCE_ECU_NOTACTIVE_EXCELEXPORT', SERVER_BASE_URL + 'device/ecuNotActiveExport')   //ecu未激活数据导出
 
     .constant('DEVCEDINFO_EXCELEXPORT', SERVER_BASE_URL + 'device/deviceinfoexport')   //deviceInfoMng导出
 

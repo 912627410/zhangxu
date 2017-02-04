@@ -139,6 +139,15 @@
           }
         }
       })
+      .state('home.ecuNotActive', {
+        url: '/ecuNotActive',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/ecuNotActive.html',
+            controller: 'ecuNotActiveController as ecuNotActiveCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {
