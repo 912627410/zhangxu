@@ -34,7 +34,7 @@
               ng-click="idleDeviceCtrl.query(null,null,null,idleDeviceCtrl.dataUploadDate)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="idleDeviceCtrl.reset()">重置</button>
-      <a class="btn btn-default"  title="Export Table" ng-click='idleDeviceCtrl.excelExport(idleDeviceCtrl.dataUploadDate)'>{{'export'|translate}}</a>
+      <a class="btn btn-default"  title="Export Table" ng-click='idleDeviceCtrl.excelExport(idleDeviceCtrl.dataUploadDate)' presentation-href="report:idleDeviceReport">{{'export'|translate}}</a>
     </div>
   </div>
 
