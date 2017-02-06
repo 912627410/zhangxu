@@ -296,6 +296,37 @@
                 <i class="glyphicon glyphicon-transfer"></i> <span>机器聚类运行分布</span>
               </a>
             </li>-->
+
+          <li>
+            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="dataAnalysis:vehicleStatistics">
+              <i class="fa fa-car"></i>
+              <span>车辆统计</span>
+              <span class="glyphicon pull-right" ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: vehicleStatistics}">
+              <li>
+                <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+                  <i class="fa fa-unlink"></i> <span>{{'idleDeviceReport' | translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.attendance" presentation-href="report:machineAttendance">
+                  <i class="fa fa-bookmark"></i> <span>车辆出勤率</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.ecuNotActive" presentation-href="report:ecuNotActive">
+                  <i class="fa fa-eye-slash"></i> <span>ECU未激活车辆</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.normalUnbound" presentation-href="report:normalUnbound">
+                  <i class="fa fa-scissors"></i> <span>正常解绑的车辆</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clustering',menuType:'w'})"
                  presentation-href="dataAnalysis:clustering">
@@ -305,25 +336,8 @@
 
 
             <li>
-              <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
-                <i class="fa fa-bookmark"></i> <span>{{'idleDeviceReport' | translate}}</span>
-              </a>
-            </li>
-
-            <li>
-              <a ui-sref="home.attendance" presentation-href="report:machineAttendance">
-                <i class="fa fa-bookmark"></i> <span>车辆出勤率</span>
-              </a>
-            </li>
-
-            <li>
               <a ui-sref="home.smsSendReport" presentation-href="report:smsSendReport">
                 <i class="fa fa-bookmark"></i> <span>短信发送统计</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.ecuNotActive" presentation-href="report:ecuNotActive">
-                <i class="fa fa-bookmark"></i> <span>ECU未激活车辆</span>
               </a>
             </li>
           </ul>

@@ -148,6 +148,15 @@
           }
         }
       })
+      .state('home.normalUnbound', {
+        url: '/normalUnbound',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/normalUnbound.html',
+            controller: 'normalUnboundController as normalUnboundCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {
