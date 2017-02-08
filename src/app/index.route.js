@@ -157,6 +157,15 @@
           }
         }
       })
+      .state('home.sysconfiglog', {
+        url: '/sysconfiglog',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/sysconfigManagement/sysconfigLog.html',
+            controller: 'sysconfigLogController as sysconfigLogCtrl'
+          }
+        }
+      })
       .state('home.simMng', {
         url: '/simMng',
         views: {
