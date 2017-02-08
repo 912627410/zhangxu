@@ -1,7 +1,8 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  //var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var SERVER_BASE_URL = 'http://192.168.8.190:8085/rest/';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -49,6 +50,13 @@
     .constant('NOTIFICATION_PAGED_URL', SERVER_BASE_URL + 'user/notification')   //用户提醒信息分页
     .constant('NOTIFICATION_STATISTICS_URL', SERVER_BASE_URL + 'user/notificationStatistics')   //用户提醒数量统计数据
     .constant('ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'config/organazition')   //组织机构信息,返回树状json代码
+
+
+    .constant('GET_VERIFYCODE_URL', SERVER_BASE_URL + 'user/getverifyCode')   //获取验证码
+    .constant('JUDGE_VERIFYCODE_URL', SERVER_BASE_URL + 'user/judgeverifyCode')   //验证码判断
+
+
+
 
     //车辆管理相关
     .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页

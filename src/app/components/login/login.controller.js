@@ -11,11 +11,20 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
     vm.rememberMe = true;
+    var count = 0;
+    $scope.isShow = false;
+
+    var verifyCodeInfo ={
+      token:'',
+      value:''
+    }
+
+
     //通过后台返回的结构生成json tree
     vm.unflatten = function (array, parent, tree) {
       tree = typeof tree !== 'undefined' ? tree : [];
@@ -54,41 +63,81 @@
     $scope.$on('$viewContentLoaded', function(){
       if(null!=$cookies.getObject("user")){
         var userobj = {};
-        userobj.username = $cookies.getObject("user").username;
-        userobj.password = $cookies.getObject("user").password;
+        var base = new Base64();
+        var password = base.decode($cookies.getObject("user").password);
+        userobj.username = base.decode($cookies.getObject("user").username);
+        userobj.password = password.substring(0,password.length-4);
+
         vm.credentials = userobj;
        if(null==$cookies.getObject("outstate")){
          vm.loginMe();
        }
-
       }
-
-
     });
     vm.reset= function () {
       vm.credentials.password = null;
     }
 
+    var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+    rspdata.then(function (data) {
+      verifyCodeInfo ={
+        token:data.token,
+        value:data.verifyCode
+      }
+      vm.verifyCode = verifyCodeInfo.value;
+    })
+
+
+
+
     vm.loginMe = function () {
       $cookies.remove("outstate");
-      var rspPromise = serviceResource.authenticate(vm.credentials);
-      rspPromise.then(function (response) {
-      if(vm.rememberMe){
-        //检测是否存在cookie   user
-        $cookies.remove("user");
-        //记录登录时间
-        $scope.loginTime = new Date().getTime();
-        var cookieDate = {};
-        cookieDate.username = vm.credentials.username;
-        cookieDate.password = vm.credentials.password;
-        $cookies.putObject("user", cookieDate);
-        var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
-        $cookies.putObject("user", cookieDate, {'expires': expireDate});
+      var code = vm.code ;
+      if(null!=code&&""!=code){
+        var restCallURL = JUDGE_VERIFYCODE_URL;
+        restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          if(data.code==0){
+            Notification.error("验证码输入错误！请重新输入！!");
+          }
+          if(data.code==1){
+            Notification.success("验证码输入正确!");
+            vm.userverify();
+          }
+        })
+      }else{
+        vm.userverify();
       }
 
+    }
+
+    vm.userverify = function () {
+      var rspPromise = serviceResource.authenticate(vm.credentials);
+      rspPromise.then(function (response) {
+        if(vm.rememberMe){
+          //检测是否存在cookie   user
+          $cookies.remove("user");
+          //记录登录时间
+          $scope.loginTime = new Date().getTime();
+
+          var codeSuffix="";
+          for(var i=0;i<4;i++)
+          {
+            codeSuffix+=Math.floor(Math.random()*10);
+          }
+
+          var base = new Base64();
+          var cookieDate = {};
+          cookieDate.username = base.encode(vm.credentials.username);
+          cookieDate.password = base.encode(vm.credentials.password+codeSuffix);
+          $cookies.putObject("user", cookieDate);
+          var expireDate = new Date();
+          expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
+          $cookies.putObject("user", cookieDate, {'expires': expireDate});
+        }
         var data = response.data;
-         userInfo = {
+        userInfo = {
           authtoken: data.token,
           userdto: data.userinfo
         };
@@ -171,16 +220,17 @@
 
           $rootScope.$state.go('home');
 
-
         }, function (reason) {
         });
 
       }, function (reason) {
         Notification.error(languages.findKey('loginFailure'));
+        count = count + 1;
+        if(count == 2){
+          $scope.isShow = true;
+        }
       });
     }
-
-
     //读取组织结构信息
     vm.getOrg = function () {
       var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
@@ -246,9 +296,46 @@
 
     }
 
+    vm.changeVerifyCode = function () {
+      var yzmImg = document.getElementById("yzmImg");
+      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+      rspdata.then(function (data) {
+        verifyCodeInfo ={
+          token:data.token,
+          value:data.verifyCode
+        }
+        vm.verifyCode = verifyCodeInfo.value;
+      })
 
+      document.getElementById("verifyCode").value="";
 
+    }
 
+    vm.validate =  function () {
+      var code = vm.code ;
+      if(null!=code&&""!=code){
+        var restCallURL = JUDGE_VERIFYCODE_URL;
+        restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          if(data.code==0){
+            Notification.error("验证码输入错误！请重新输入！!");
+            $scope.disabled = true;
+          }
+          if(data.code==1){
+            Notification.success("验证码输入正确!");
 
+          }
+        })
+      }
+
+    }
+    var codebox = document.getElementsByClassName("login-box-body")
+    if (typeof(codebox.onselectstart) != "undefined") {
+      codebox.onselectstart = new Function("return false");
+    } else {
+      codebox.onmousedown = new Function("return false");
+      codebox.onmouseup = new Function("return true");
+    }
   }
 })();
