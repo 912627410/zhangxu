@@ -229,6 +229,30 @@
       });
     };
 
+    /**
+     * 操作日志查询
+     * @param size
+     */
+    vm.logQuery = function (userinfo,size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/userManagement/operationLog.html',
+        controller: 'operationLogController as operationLogCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          userinfo: function () {
+            return userinfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+
+      }, function () {
+        //取消
+      });
+    };
     //
 
     vm.selectAll = false;//是否全选标志
