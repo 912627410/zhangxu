@@ -717,7 +717,8 @@
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <td>{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
