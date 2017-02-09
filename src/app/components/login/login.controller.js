@@ -102,7 +102,7 @@
             Notification.error("验证码输入错误！请重新输入！!");
           }
           if(data.code==1){
-            Notification.success("验证码输入正确!");
+            //Notification.success("验证码输入正确!");
             vm.userverify();
           }
         })
@@ -229,6 +229,7 @@
         if(count == 2){
           $scope.isShow = true;
         }
+        vm.changeVerifyCode();
       });
     }
     //读取组织结构信息
