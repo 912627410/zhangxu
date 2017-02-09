@@ -36,6 +36,8 @@
     .constant('DEVCE_NOUPLOAD_DATA_EXCELEXPORT', SERVER_BASE_URL + 'device/noUploadExcelExport')  //长时间未连接数据导出
     .constant('DEVCE_ECU_NOTACTIVE_QUERY', SERVER_BASE_URL + 'device/ecuNotActivePage')   //分页查询ecu未激活数据URL
     .constant('DEVCE_ECU_NOTACTIVE_EXCELEXPORT', SERVER_BASE_URL + 'device/ecuNotActiveExport')   //ecu未激活数据导出
+    .constant('DEVCE_NORMAL_UNBOUND_QUERY', SERVER_BASE_URL + 'device/normalUnboundPage')   //分页查询正常解绑的车辆数据URL
+    .constant('DEVCE_NORMAL_UNBOUND_EXPORT', SERVER_BASE_URL + 'device/normalUnboundExport')   //正常解绑的车辆导出
 
     .constant('DEVCEDINFO_EXCELEXPORT', SERVER_BASE_URL + 'device/deviceinfoexport')   //deviceInfoMng导出
 
@@ -52,6 +54,13 @@
     .constant('NOTIFICATION_PAGED_URL', SERVER_BASE_URL + 'user/notification')   //用户提醒信息分页
     .constant('NOTIFICATION_STATISTICS_URL', SERVER_BASE_URL + 'user/notificationStatistics')   //用户提醒数量统计数据
     .constant('ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'config/organazition')   //组织机构信息,返回树状json代码
+
+
+    .constant('GET_VERIFYCODE_URL', SERVER_BASE_URL + 'user/getverifyCode')   //获取验证码
+    .constant('JUDGE_VERIFYCODE_URL', SERVER_BASE_URL + 'user/judgeverifyCode')   //验证码判断
+
+
+
 
     //车辆管理相关
     .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
@@ -146,6 +155,7 @@
     .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilige/statusList')   //权限状态信息
     .constant('PRIVILAGE_STATUS_DISABLE_URL', SERVER_BASE_URL + 'privilige/statusDisable')   //权限禁止
     .constant('PRIVILAGE_STATUS_ENABLE_URL', SERVER_BASE_URL + 'privilige/statusEnable')   //权限启用
+    .constant('USER_PRIV_EXPORT_URL', SERVER_BASE_URL + 'privilige/userPrivExport')   //用户权限导出
 
     //用户相关
     .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')   //用户信息分页
