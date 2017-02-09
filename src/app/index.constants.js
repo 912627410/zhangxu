@@ -208,7 +208,7 @@
     .constant('MACHINE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询车辆调拨日志
     .constant('DEVCE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询设备调拨日志
 
-    .constant('SYSCONFIG_LOG_QUERY', SERVER_BASE_URL + 'audit/sysconfigLogQuery')   //系统日志查询
+    .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
 
   ;
 

@@ -6,11 +6,12 @@
 
   angular
     .module('GPSCloud')
-    .controller('sysconfigLogController', sysconfigLogController);
+    .controller('operationLogController', operationLogController);
 
   /** @ngInject */
-  function sysconfigLogController($rootScope, $filter, NgTableParams, Notification, ngTableDefaults, serviceResource, DEFAULT_SIZE_PER_PAGE, SYSCONFIG_LOG_QUERY) {
+  function operationLogController($rootScope, $uibModalInstance, NgTableParams, Notification, ngTableDefaults, serviceResource, userinfo, DEFAULT_SIZE_PER_PAGE, OPERATION_LOG_QUERY) {
     var vm = this;
+    vm.userinfo = userinfo;
     vm.operatorInfo = $rootScope.userInfo;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -45,15 +46,15 @@
     };
 
     vm.query = function (page, size, sort, startDate, endDate) {
-      var restCallURL = SYSCONFIG_LOG_QUERY;
+      var restCallURL = OPERATION_LOG_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "recordTime,desc";
       restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "&search_EQ_operator.id=" + userinfo.id;
       if(startDate > vm.maxDate || endDate > vm.maxDate) {
         Notification.error("您已穿越，请重新选择日期！");
         return;
-
       }
       if (startDate) {
         startDate = new Date(startDate.getTime() + 1000*3600*24);
@@ -68,6 +69,9 @@
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
+        if (data.content.length == 0) {
+          Notification.warning('无操作日志');
+        }
         vm.tableParams = new NgTableParams({
         }, {
           dataset: data.content
@@ -79,7 +83,11 @@
       });
     };
 
-    vm.query(null,null,null,vm.startDateDeviceData,vm.endDateDeviceData);
+    vm.query(null,8,null,vm.startDateDeviceData,vm.endDateDeviceData);
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    }
 
   }
 })();
