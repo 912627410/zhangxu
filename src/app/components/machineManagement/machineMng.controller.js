@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL) {
+  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //所属组织
@@ -135,6 +135,31 @@
       });
     };
 
+    //批量导入
+    vm.uploadMachine = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/machineManagement/uploadMachine.html',
+        controller: 'uploadMachineController as uploadMachineController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        for(var i=0; i <result.length;i++){
+          vm.tableParams.data.splice(0, 0, result[i]);
+
+        }
+
+      }, function () {
+        //取消
+      });
+    };
 
 
 
@@ -202,6 +227,12 @@
         return;
       }
 
+      if(vm.allot.label==vm.org.label){
+        Notification.warning({message: '相同组织不可以进行调拨', positionY: 'top', positionX: 'center'});
+
+        return;
+      }
+
       var moveOrg = {ids: vm.selected, "orgId": vm.allot.id};
 
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_ORG_URL, moveOrg);
@@ -258,5 +289,39 @@
       return permissions.getPermissions("machine:oper");
     }
 
+    vm.allocationlog = function (machine,size) {
+
+
+
+      var singlUrl = MACHINE_ALLOCATION + "?machineId=" + machine.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "QUERY");
+
+      deviceinfoPromis.then(function (data) {
+        var allocationlog = data;
+        var machinelicenseId =  machine.licenseId;
+
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/machineManagement/machineAllocation.html',
+          controller: 'machineAllocationController as machineAllocationController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            machinelicenseId:function () {
+              return machinelicenseId;
+            },
+            allocationlog:function () {
+              return allocationlog;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+
+        });
+      }, function (reason) {
+        Notification.error('获取调拨日志失败');
+      });
+    }
   }
 })();

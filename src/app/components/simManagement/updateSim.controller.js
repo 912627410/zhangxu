@@ -9,34 +9,20 @@
     .controller('updateSimController', updateSimController);
 
   /** @ngInject */
-  function updateSimController($scope,$uibModalInstance,$timeout,SIM_STATUS_URL,SIM_URL,simService,serviceResource, Notification,sim) {
+  function updateSimController($scope,$uibModalInstance,$timeout,SIM_URL,SIM_PROVIDER_URL,serviceResource, Notification,sim) {
     var vm = this;
     vm.sim = sim;
     var sourceSim = angular.copy(sim); //深度copy
     vm.operatorInfo =$scope.userInfo;
 
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
+  //查询sim卡的供应商集合
+    var simProviderData = serviceResource.restCallService(SIM_PROVIDER_URL, "QUERY");
+    simProviderData.then(function (data) {
+      vm.sim.simProviderList = data;
     }, function (reason) {
-      Notification.error('获取SIM状态集合失败');
+      Notification.error('获取SIM卡供应商集合失败');
     })
 
-    vm.changeStatus=function(){
-    //  alert(vm.sim.status);
-
-      for(var i=0; i< vm.sim.simStatusList.length;i++){
-        //alert(vm.sim.simStatusList[i].desc);
-        if(vm.sim.simStatusList[i].value==vm.sim.status){
-        //  alert(vm.sim.simStatusList[i].value);
-          vm.sim.statusDesc=vm.sim.simStatusList[i].desc;
-          break;
-        }
-      }
-
-
-    }
 
     //日期控件相关
     //date picker
@@ -66,7 +52,7 @@
 
         if(data.code===0){
           Notification.success("修改SIM卡信息成功!");
-          $uibModalInstance.close();
+          $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
         }

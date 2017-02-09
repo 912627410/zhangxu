@@ -20,18 +20,18 @@
       <label class="control-label">SIM卡号</label>
 
     </div>
-    <div class="col-md-3">
-      <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.phoneNumber" placeholder="支持模糊查询"/>
+    <div class="col-md-2">
+      <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.sim.phoneNumber" placeholder="支持模糊查询"/>
     </div>
 
 
     <div class="col-md-1">
       <label class="control-label">所属组织</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织"
-               ng-model="simMngCtrl.sim.deviceinfo.org.label" name="org" readonly required/>
+               ng-model="simMngCtrl.org.label" name="org" readonly required/>
             <span class="input-group-btn">
                <!--打开组织树-->
               <button type="button" class="btn btn-default" ng-click="simMngCtrl.openTreeInfo()">
@@ -40,68 +40,30 @@
             </span>
       </p>
     </div>
+
     <div class="col-md-1">
-      <label class="control-label">状态</label>
+      <label class="control-label">供应商</label>
     </div>
-    <div class="col-md-3">
-      <ui-select type="text" name="status" ng-required="true"  ng-model="simMngCtrl.sim.status"  on-remove="removed($item, $model)" theme="bootstrap"  >
-        <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
-        <ui-select-choices  repeat="simStatus.value as simStatus in simMngCtrl.sim.simStatusList | propsFilter: {desc: $select.search}" >
-          <div  ng-bind-html="simStatus.desc | highlight: $select.search"></div>
+    <div class="col-md-2">
+      <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
+                 ng-disabled="disabled">
+        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        </ui-select-match>
+        <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
+          <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
         </ui-select-choices>
       </ui-select>
     </div>
-    <div class="col-md-2">
 
-    </div>
-
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-1">
-      <label class="control-label">激活开始时间</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" name="activeTimeStart" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-               ng-model="simMngCtrl.sim.activeTimeStart"
-               is-open="simMngCtrl.activeTimeStartOpenStatus.opened"
-               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="simMngCtrl.activeTimeStartOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-      </p>
-    </div>
-
-    <div class="col-md-1">
-      <label class="control-label">激活结束时间</label>
-    </div>
-    <div class="col-md-3">
-
-        <p class="input-group">
-          <input type="text" name="activeTimeEnd" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                 ng-model="simMngCtrl.sim.activeTimeEnd"
-                 is-open="simMngCtrl.activeTimeEndOpenStatus.opened"
-                 datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="simMngCtrl.activeTimeEndOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-        </p>
-    </div>
-    <div class="col-md-2"></div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.phoneNumber)">查询</button>
+      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">重置</button>
     </div>
 
 
   </div>
+
   <div class="row">
     <div class="btn-group col-md-2">
       <span class="label label-info pull-left">SIM卡总数:  {{simMngCtrl.page.totalElements}}</span>
@@ -117,6 +79,7 @@
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> 批量导入
       </a>
+
     </div>
   </div>
   <div class="row " style="padding: 10px">
@@ -126,12 +89,13 @@
 
           <td class="text-nowrap" data-title="'SIM卡号'" sortable="'phoneNumber'"><a href ng-click="simMngCtrl.updateSim(sim)">{{sim.phoneNumber}}</a></td>
           <td class="text-nowrap" data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
-          <td class="text-nowrap" data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
+
           <td class="text-nowrap" data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{sim.statusDesc}}</td>
-          <td class="text-nowrap" data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'所属组织'" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
+          <td class="text-nowrap" data-title="'供应商'" sortable="'statusDesc'">{{sim.providerDesc}}</td>
           <td class="text-nowrap" data-title="'备注'" sortable="'description'">{{sim.description}}</td>
+          <td class="text-nowrap" data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
+          <td class="text-nowrap" data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'操作'">
@@ -139,6 +103,12 @@
             <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
                     ng-click="simMngCtrl.updateSim(sim)">修改
             </button>
+
+            <button type="button" class="btn btn-default btn-xs" presentation-href="sim:statusQuery"
+                    ng-click="simMngCtrl.currentSim(sim,'lg')">状态
+            </button>
+
+
           </td>
         </tr>
       </table>
@@ -147,7 +117,7 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,null,null,simMngCtrl.phoneNumber)"
+    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,null,null,simMngCtrl.sim)"
                     max-size="5" ng-model="simMngCtrl.pageNumber" items-per-page="simMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>

@@ -6,21 +6,42 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $scope,$window,$http,$uibModal,Notification,Idle, Keepalive,$translate,languages) {
+  function MainController($rootScope, $cookies,$scope,$window,$http,$uibModal,permissions,Notification,Idle, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
+    //$rootScope.logo="assets/images/logo.png";
+
+    var userInfo=$rootScope.userInfo;
+    if(null!=userInfo&&null!=userInfo.userdto&&null!=userInfo.userdto.organizationDto&&
+      null!=userInfo.userdto.organizationDto.logo&& userInfo.userdto.organizationDto.logo!=""){
+        // $rootScope.logo=userInfo.userdto.organizationDto.logo;
+        $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+
+    }
+    else{
+      $rootScope.logo="assets/images/logo.png";
+    }
+
     vm.logout = function(){
+
+      $rootScope.logo="assets/images/logo.png";
+
       $rootScope.userInfo = null;
       $rootScope.deviceGPSInfo = null;
       $rootScope.statisticInfo = null;
       $rootScope.permissionList = null;
-
 
       $window.sessionStorage.removeItem("userInfo");
       $window.sessionStorage.removeItem("deviceGPSInfo");
       $window.sessionStorage.removeItem("statisticInfo");
       $window.sessionStorage.removeItem("permissionList");
 
+      var cookieDate = {};
+      cookieDate.value = 1;
+      $cookies.putObject("outstate", cookieDate);
+      var expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() + 10);//设置cookie保存10天
+      $cookies.putObject("outstate", cookieDate, {'expires': expireDate});
 
 
       //如果http header里面有auth信息的话好像是每次都验证的

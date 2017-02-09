@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h3 class="modal-title">SIM卡状态(查询的数据来自运营商)</h3>
+</div>
+<form name="myForm" class="form-horizontal ">
+  <div class="modal-body">
+    <div class="box-body">
+     <!--
+      <div class="row">
+        <div class="form-group">
+          <label for="location" class="col-md-2 control-label text-nowrap">基站定位信息</label>
+          <div class="col-md-8">
+            <input type="text" readonly id="location" class="form-control" placeholder="基站定位信息"
+                   ng-model="currentSimController.location" name="unActiveMsg"/>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-default" type="button" presentation-href="sim:statusQuery"
+                    ng-click="currentSimController.queryLocation(currentSimController.sim)">
+              {{'look'|translate}}
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+
+      <hr/>
+      -->
+      <div class="row">
+        <div class="form-group">
+          <label for="status" class="col-md-2 control-label text-nowrap">状态</label>
+          <div class="col-md-8">
+            <input type="text" readonly id="status" class="form-control" placeholder="状态"
+                   ng-model="currentSimController.status" name="status"/>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-default" type="button" presentation-href="sim:statusQuery"
+                    ng-click="currentSimController.queryStatus(currentSimController.sim)">
+              {{'look'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="form-group">
+          <label for="gprs" class="col-md-2 control-label text-nowrap">GPRS流量</label>
+          <div class="col-md-8">
+            <input type="text" readonly id="gprs" class="form-control" placeholder="GPRS流量"
+                   ng-model="currentSimController.gprs" name="unActiveMsg"/>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-default" type="button" presentation-href="sim:statusQuery"
+                    ng-click="currentSimController.queryGprs(currentSimController.sim)">
+              {{'look'|translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="modal-footer">
+
+    <button class="btn btn-warning" type="button" ng-click="currentSimController.cancel()">关闭</button>
+  </div>
+</form>
+
+

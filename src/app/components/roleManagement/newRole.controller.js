@@ -9,7 +9,7 @@
     .controller('newRoleController', newRoleController);
 
   /** @ngInject */
-  function newRoleController($scope, $uibModalInstance,ROLE_OPER_URL, serviceResource,roleService, Notification) {
+  function newRoleController($scope, $uibModalInstance,ROLE_OPER_URL,treeFactory, serviceResource,roleService, Notification) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
@@ -28,6 +28,7 @@
     vm.ok = function (roleInfo) {
 
         roleInfo.type=roleInfo.type.value;
+
      var restPromise = serviceResource.restAddRequest(ROLE_OPER_URL, roleInfo);
       restPromise.then(function (data) {
         if(data.code===0){
@@ -49,5 +50,11 @@
       $uibModalInstance.dismiss('cancel');
     };
 
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.roleInfo.organizationDto=selectedItem;
+      });
+    }
   }
 })();

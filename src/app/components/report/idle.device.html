@@ -13,56 +13,74 @@
 
 
 <!-- Main content -->
-<section class="content">
+<section class="content form-horizontal">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">设备最后连接日期</label>
+      <label class="control-label">设备最后连接截止日期</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="idleDeviceCtrl.dataUploadDate" is-open="idleDeviceCtrl.dataUploadDateOpenStatus.opened" datepicker-options="idleDeviceCtrl.dateOptions" min-date="idleDeviceCtrl.minDate" max-date="idleDeviceCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="idleDeviceCtrl.dataUploadDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="idleDeviceCtrl.dataUploadDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
       </p>
     </div>
 
-    <div class="col-md-5">
-    </div>
-
-
-    <div class="col-md-2">
+    <div class="col-md-offset-4 col-md-3 text-right">
       <button class="btn btn-primary" type="button"
-              presentation-href="config:sysconfigPage"
+              presentation-href="report:idleDeviceReport"
               ng-click="idleDeviceCtrl.query(null,null,null,idleDeviceCtrl.dataUploadDate)">查询
       </button>
       <button class="btn btn-primary" type="button" ng-click="idleDeviceCtrl.reset()">重置</button>
+      <a class="btn btn-default"  title="Export Table" ng-click='idleDeviceCtrl.excelExport(idleDeviceCtrl.dataUploadDate)' presentation-href="report:idleDeviceReport">{{'export'|translate}}</a>
     </div>
   </div>
 
-
-  <div class="row">
+  <div class="row form-group">
     <div class="btn-group col-md-3">
       <span class="label label-info pull-left">总数:{{idleDeviceCtrl.page.totalElements}}</span>
-    </div>
-    <div class="col-md-6">
-    </div>
-    <div class="col-md-2">
-      <a class="btn btn-default pull-right"  title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="长时间未连接设备.csv">{{'export'|translate}}</a>
     </div>
   </div>
 
   <div class="table-responsive">
-    <table ng-table="idleDeviceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
+    <table ng-table="idleDeviceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="device in $data">
         <td class="text-nowrap" data-title="'设备编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
         <td class="text-nowrap" data-title="'车辆编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
         <td class="text-nowrap" data-title="'SIM卡号'" sortable="'sim.phoneNumber'">{{device.sim.phoneNumber}}</td>
+        <td class="text-nowrap" data-title="'运行总时间'" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
+
+        <td class="text-nowrap" ng-if="device.ecuLockStatus != null && device.ecuLockStatus.substr(7,1)=='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">未激活</td>
+        <td class="text-nowrap" ng-if="device.ecuLockStatus != null && device.ecuLockStatus.substr(7,1)!='0'" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">已激活</td>
+        <td class="text-nowrap" ng-if="device.ecuLockStatus == null" data-title="'ECU锁车状态'" sortable="'ecuLockStatus'">-</td>
+
+        <td class="text-nowrap" ng-if="device.commStatus=='10'" data-title="'CAN通信状态'" sortable="'commStatus'">不工作</td>
+        <td class="text-nowrap" ng-if="device.commStatus=='01'" data-title="'CAN通信状态'" sortable="'commStatus'">工作</td>
+        <td class="text-nowrap" ng-if="device.commStatus=='00' || device.commStatus==null" data-title="'CAN通信状态'" sortable="'commStatus'">-</td>
+
+        <td class="text-nowrap" data-title="'GPRS信号质量'" sortable="'gsmSignal'">{{(device.gsmSignal*100/31) | number:0}}%</td>
+        <td class="text-nowrap" data-title="'启动次数'" sortable="'startTimes'">{{device.startTimes}}</td>
+
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='00'" data-title="'锁车状态'" sortable="'lockStatus'">正常</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='01'" data-title="'锁车状态'" sortable="'lockStatus'">一级</td>
+        <!--锁车时候显示“二级”更改为“锁车”-->
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='10'" data-title="'锁车状态'" sortable="'lockStatus'">锁车</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus!='00' && device.lockStatus!='01' && device.lockStatus!='10'" data-title="'锁车状态'" sortable="'lockStatus'">-</td>
+        <!--中挖的锁车状态要根据GPRS信号百分比确定，90为锁车，其它为未锁车  by 薛庆鹏 2017-1-3&ndash;&gt;-->
+        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal=='90'" data-title="'锁车状态'" sortable="'gprsSignal'">锁车</td>
+        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal!='90'" data-title="'锁车状态'" sortable="'gprsSignal'">正常</td>
+
+        <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'开盖状态'" sortable="'lockerStatus'">未开盖</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'开盖状态'" sortable="'lockerStatus'">开盖</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'开盖状态'" sortable="'lockerStatus'">-</td>
+
+        <td class="text-nowrap" data-title="'实际绑定车架号'" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
         <td class="text-nowrap" data-title="'最后上传时间'" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" data-title="'无信号时长'" sortable="'lastDataUploadTime'">{{(idleDeviceCtrl.queryTime - device.lastDataUploadTime)/3600000 | convertToMins}}</td>
       </tr>
     </table>
-  </div>
   </div>
 
   <div class="box-footer">

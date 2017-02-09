@@ -75,14 +75,14 @@
                 <div class="form-group">
                     <label for="password" class="col-sm-2 control-label">密码</label>
                     <div class="col-sm-10">
-                        <input type="password" id="password" class="form-control" placeholder="密码" ng-model="addUserCtrl.newUser.password" name="password" required/>
+                        <input type="password" id="password" class="form-control" placeholder="密码" ng-model="addUserCtrl.newUser.password" name="password" validator="numberAndCharForPass"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword" class="col-sm-2 control-label">重复密码</label>
                     <div class="col-sm-10">
-                        <input type="password" id="confirmPassword" class="form-control" placeholder="重复密码" ng-model="addUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="addUserCtrl.newUser.password" required/>
-                      <span class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">密码两次输入不匹配</span>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="重复密码" ng-model="addUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="addUserCtrl.newUser.password" validator="numberAndCharForPass"/>
+                      <div class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">密码两次输入不匹配</div>
                     </div>
                 </div>
 

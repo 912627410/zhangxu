@@ -5,7 +5,7 @@
   'use strict';
 
   var GPSCloudModule = angular.module('GPSCloud');
-    GPSCloudModule.directive('presentationHref',presentationHref);
+  GPSCloudModule.directive('presentationHref',presentationHref);
 
   /** @ngInject */
     function presentationHref(permissions) {
@@ -19,27 +19,26 @@
 
     }
 
+
   /**隐藏左侧栏*/
   GPSCloudModule.directive('toggels', function () {
-    return {
-      restrict:'A',
-      scope: false,
-      link:function (scope,element,attrs) {
-        element.bind("click", function () {
-          var bodyDom =angular.element(document.body);
-          if(attrs.toggels=="true"){
-            bodyDom.addClass("sidebar-collapse");
-            attrs.$set('toggels','false');
-          }else{
-            bodyDom.removeClass("sidebar-collapse");
-            attrs.$set('toggels','true');
-          }
-        });
+      return {
+        restrict:'A',
+        scope: false,
+        link:function (scope,element,attrs) {
+          element.bind("click", function () {
+            var bodyDom =angular.element(document.body);
+            if(attrs.toggels=="true"){
+              bodyDom.addClass("sidebar-collapse");
+              attrs.$set('toggels','false');
+            }else{
+              bodyDom.removeClass("sidebar-collapse");
+              attrs.$set('toggels','true');
+            }
+          });
+        }
       }
-    }
-  }
-)
-
+    })
  /**自定义列导出*/
   GPSCloudModule.config(['$compileProvider', function($compileProvider) {
     // allow data links
@@ -90,7 +89,7 @@
                     });
                 },
                 link: function() {
-                    return 'data:text/csv;charset=UTF-8,' + encodeURIComponent(data);
+                    return 'data:text/csv;charset=UTF-8,\ufeff'+encodeURIComponent(data);
                 }
             };
             $parse(attrs.exportCsv).assign(scope.$parent, csv);

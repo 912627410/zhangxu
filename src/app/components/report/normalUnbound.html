@@ -1,0 +1,41 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">正常解绑的车辆</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+  <div class="row form-group">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">总数:{{normalUnboundCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-offset-8 col-md-2 text-right">
+      <a class="btn btn-default" title="Export Table" ng-click='normalUnboundCtrl.excelExport()' presentation-href="report:normalUnbound">{{'export'|translate}}</a>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table ng-table="normalUnboundCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <tr ng-repeat="device in $data">
+        <td class="text-nowrap" data-title="'终端编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
+        <td class="text-nowrap" data-title="'整机编号'" sortable="'licenseId'">{{device.licenseId}}</td>
+        <td class="text-nowrap" data-title="'操作人'" sortable="'operator'">{{device.operator}}</td>
+        <td class="text-nowrap" data-title="'操作时间'" sortable="'sendTime'">{{device.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="normalUnboundCtrl.page.totalElements"
+                    ng-change="normalUnboundCtrl.query(normalUnboundCtrl.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="normalUnboundCtrl.pageNumber" items-per-page="normalUnboundCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页">
+    </uib-pagination>
+  </div>
+</section>

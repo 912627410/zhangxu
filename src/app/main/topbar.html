@@ -1,8 +1,10 @@
 <header class="main-header" style="height:50px">
-  <a ui-sref="home" class="logo navbar-static-top">
-    <img src="assets/images/logo.png" width="33" height="30">
+  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl">
+    <!--<img ng-src={{'assets/images/'+userInfo.userdto.organizationDto.logo}} width="33" height="30" ng-if="userInfo && userInfo.userdto.organizationDto.logo">-->
+    <!--<img src={{logo}} width="33" height="30" ng-if="!userInfo ||!userInfo.userdto.organizationDto.logo">-->
     <!-- Add the class icon to your logo image or logo icon to add the margining -->
-    {{ 'SDLG' | translate}}
+    <img ng-src='{{logo}}' alt= '{{userInfo.userdto.organizationDto.label | translate}}'  height="30" >
+
   </a>
 
   <!-- Header Navbar: style can be found in header.less -->
@@ -46,14 +48,11 @@
           <a>
             <i class="glyphicon glyphicon-user" >
               <span>{{userInfo.userdto.ssn}}
-                <small ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN'">{{'sysadmin'|translate}}</small>
-                <small ng-if="userInfo.userdto.role == 'ROLE_ADMIN'">{{'administrator'|translate}}</small>
-                <small ng-if="userInfo.userdto.role == 'ROLE_USER'">{{'commonUser'|translate}}</small>
               </span>
             </i>
           </a>
         </li>
-        <li ui-sref="#" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
+        <li ui-sref="home.login" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
       </ul>
     </div>
   </nav>

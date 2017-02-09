@@ -11,32 +11,37 @@
   /** @ngInject */
   function simService($rootScope, $resource, SIM_STATUS_URL, SIM_URL, SIM_PAGE_URL,DEFAULT_SIZE_PER_PAGE, serviceResource, Notification) {
 
-    this.getSimStatusList = function (list) {
-      var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-      simStatusData.then(function (data) {
-        alert(data);
-        //  return data;
-        list = data;
-      }, function (reason) {
-        Notification.error('获取SIM卡状态集合失败');
-        return {};
-      })
-    }
 
 
 
 
     //return {"name":"abc"};
     return {
-      queryPage: function (page, size, sort, queryPhoneNumber) {
+      queryPage: function (page, size, sort, sim,org) {
         var restCallURL = SIM_PAGE_URL;
         var pageUrl = page || 0;
         var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
         var sortUrl = sort || "id,desc";
         restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-        if (queryPhoneNumber) {
-          restCallURL += "&search_LIKE_phoneNumber=" + queryPhoneNumber;
+
+       console.log(sim);
+
+        if(sim){
+
+          if (sim.phoneNumber) {
+            restCallURL += "&search_LIKE_phoneNumber=" + sim.phoneNumber;
+          }
+          if (sim.provider) {
+            restCallURL += "&search_EQ_provider=" + sim.provider.value;
+          }
+
         }
+
+        if (org) {
+          restCallURL += "&search_EQ_deviceinfo.organization.id=" + org.id;
+        }
+
+
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         return rspData;
 

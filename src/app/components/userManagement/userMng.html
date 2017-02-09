@@ -9,9 +9,9 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section class="content form-horizontal">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">用户名</label>
     </div>
@@ -43,9 +43,9 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">调拨组织</label>
+      <label class="control-label">所属组织</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -53,63 +53,99 @@
           <span class="input-group-btn">
              <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="userMngController.openTreeInfo()">
-            <i class="fa fa-sitemap"></i>
+              <i class="fa fa-sitemap"></i>
             </button>
           </span>
       </p>
     </div>
   </div>
   <div class="row">
-    <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">用户总数:  {{userMngController.page.totalElements}}</span>
+    <div class="btn-group col-md-1">
+      <span class="label label-info pull-left" style="margin-top: 6px;">用户总数:  {{userMngController.page.totalElements}}</span>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-6">
+      <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
+                      max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                      first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页" style="margin: 0;"></uib-pagination>
+    </div>
+    <div class="col-md-5 button-group">
+
       <a class="btn btn-default pull-right"
          presentation-href="privilige:priviligeOper"
          ng-click="userMngController.addUser()">
         <i class="fa fa-plus"></i> 增加
       </a>
 
+      <a class="btn btn-default pull-right"
+         presentation-href="privilige:export"
+         ng-click="userMngController.privExport()">
+        <i class="glyphicon glyphicon-new-window"></i> 导出用户权限
+      </a>
+
+
+
     </div>
   </div>
   <div class="row " style="padding: 10px">
-      <div class="table-responsive">
-      <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <tr ng-repeat="userinfo in $data">
+    <div class="table-responsive userTableBox">
+      <script id="selectAllHeader"  type="text/ng-template">
+        <input type="checkbox" style="height: 11px;" ng-click="userMngController.updateAllSelection($event)"
+               ng-model="userMngController.checked">
+      </script>
+      <div class="userTableBoxLeft">
+        <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="userinfo in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="userMngController.isSelected(userinfo.id)"
+                     ng-click="userMngController.updateSelection($event,userinfo.id)" ng-model="userinfo.checked">
+            </td>
+            <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
+          </tr>
+        </table>
+      </div>
 
-          <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
-          <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{userinfo.organizationDto.label}}</td>
-          <td class="text-nowrap" data-title="'手机号'" sortable="'mobile'">{{userinfo.mobile}}</td>
-          <td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>
-          <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
-          <td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      <div class="userTableBoxRight">
 
-          <td class="text-nowrap"  data-title="'操作'" >
-            <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="privilige:priviligeOper"
-                    ng-click="userMngController.updatePassword(userinfo)">重置密码
-            </button>
-            <button type="button" class="btn  btn-success  btn-xs"
-                    ng-if="userinfo.status===0"
-                    ng-click="userMngController.statusEnable(userinfo,'lg')">启用
-            </button>
-            <button type="button" class="btn btn-danger btn-xs"
-                    ng-if="userinfo.status===1"
-                    ng-click="userMngController.statusDisable(userinfo)">禁止
-            </button>
-            <button type="button" class="btn btn-default btn-xs"
-                    ng-click="userMngController.updateUserInfo(userinfo)">修改
-            </button>
+        <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="userinfo in $data">
+            <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
+            <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{userinfo.organizationDto.label}}</td>
+            <td class="text-nowrap" data-title="'手机号'" sortable="'mobile'">{{userinfo.mobile}}</td>
+            <td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>
+            <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
+            <td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <!--<td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
 
-            <button type="button" class="btn btn-default btn-xs"  presentation-href="role:roleUserOper"
-                    ng-click="userMngController.userRoleManage(userinfo,'lg')">隶属角色
-            </button>
-          </td>
-        </tr>
-      </table>
+            <td class="text-nowrap text-center"  data-title="'操作'" >
+              <button type="button" class="btn btn-default btn-xs"
+                      presentation-href="user:superResetPassword"
+                      ng-click="userMngController.updatePassword(userinfo)">重置密码
+              </button>
+              <button type="button" class="btn  btn-success  btn-xs"
+                      ng-if="userinfo.status===0" presentation-href="user:oper"
+                      ng-click="userMngController.statusEnable(userinfo,'lg')">启用
+              </button>
+              <button type="button" class="btn btn-danger btn-xs"
+                      ng-if="userinfo.status===1" presentation-href="user:oper"
+                      ng-click="userMngController.statusDisable(userinfo)">禁止
+              </button>
+              <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
+                      ng-click="userMngController.updateUserInfo(userinfo)">修改
+              </button>
+
+              <button type="button" class="btn btn-default btn-xs"  presentation-href="role:roleUserList"
+                      ng-click="userMngController.userRoleManage(userinfo,'lg')">隶属角色
+              </button>
+
+              <button type="button" class="btn btn-default btn-xs" presentation-href="operationLog:page"
+                      ng-click="userMngController.logQuery(userinfo,'lg')">操作日志
+              </button>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
+  </div>
   <div class="row">
   </div>
   <div class="box-footer">

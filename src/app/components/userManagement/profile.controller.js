@@ -16,6 +16,7 @@
 //update userinfo
     vm.updateUserInfo = function () {
       var rspData = serviceResource.restUpdateRequest(USERINFO_URL,vm.currentUserInfo.userdto);
+
       rspData.then(function(data){
         Notification.success("修改用户信息成功");
       },function(reason){

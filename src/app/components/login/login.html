@@ -1,5 +1,5 @@
-<body class="hold-transition login-page">
-<div class="login-box">
+<body class="hold-transition login-page" >
+<div class="login-box" >
   <div class="login-logo">
     <a><b>{{'SDLG'|translate}}</b></a>
   </div>
@@ -11,22 +11,34 @@
       <!--<div class="alert alert-danger" ng-show="error">用户名或密码错误！</div>-->
 
       <div class="form-group has-feedback">
-        <input type="text" name="userid" class="form-control" placeholder="{{'userName'|translate}}" ng-model="loginCtrl.credentials.username" name="username" required/>
+        <input type="text" name="userid" class="form-control" placeholder="{{'userName'|translate}}" ng-change = "loginCtrl.reset()" ng-model="loginCtrl.credentials.username" name="username" required/>
+
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="{{'password'|translate}}" ng-model="loginCtrl.credentials.password" name="password" required>
+        <input type="password" name="password" class="form-control" placeholder="{{'password'|translate}}" ng-model="loginCtrl.credentials.password"  required>
       </div>
+
+      <div class="form-group" ng-show="isShow">
+        <input type="text" id="verifyCode" class="codeInputbox"  name="verificationcode"  placeholder="请输入验证码" ng-blur="loginCtrl.validate()" ng-model="loginCtrl.code">
+        <span >
+          <!--<img src="yzmImg.png" ng-click="loginCtrl.changeVerifyCode()" id="yzmImg" style="cursor: pointer;">-->
+          <i class="codebox"  ng-model="loginCtrl.verifyCode" onselectstart="return false;">{{loginCtrl.verifyCode}}</i>
+        </span>
+        <a   ng-click="loginCtrl.changeVerifyCode()" style="cursor: pointer;">看不清，换一张</a>
+      </div>
+
+
       <div class="row">
         <div class="col-xs-8" style="margin-left: 20px">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> {{'rememberMe'|translate}}
+              <input type="checkbox" ng-model="loginCtrl.rememberMe"> {{'rememberMe'|translate}}
             </label>
           </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-3">
-          <button type="submit" class="btn btn-primary right">{{'login'|translate}}</button>
+          <button id="loginButton" type="submit" class="btn btn-primary right" ng-disabled="!loginCtrl.credentials.username||!loginCtrl.credentials.password">{{'login'|translate}}</button>
         </div>
         <!-- /.col -->
       </div>

@@ -14,5 +14,9 @@
     if(permissions.getPermissions("device:homegpsdata")) {
       serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
+
+    vm.refreshMap = function () {
+      serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);
+    }
   }
 })();

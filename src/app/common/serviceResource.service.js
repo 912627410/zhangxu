@@ -10,10 +10,10 @@
 
   /** @ngInject */
 
-  function serviceResource($rootScope,$resource,$http,$q,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,
+  function serviceResource($rootScope,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -145,7 +145,7 @@
        // var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更 新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
 
         var contentInfo="";
-        contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
+        //contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
 
         contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
@@ -188,9 +188,16 @@
 
         // 定义中部内容
         var middle = document.createElement("div");
+        var titleA = document.createElement("a");
+        var mcont = document.createElement("div");
         middle.className = "info-middle";
         middle.style.backgroundColor = 'white';
-        middle.innerHTML = content;
+        mcont.innerHTML = content;
+        titleA.innerHTML="终端编号:"+item.deviceNum;
+        titleA.onclick =  Viewdetails;
+
+        middle.appendChild(titleA);
+        middle.appendChild(mcont);
         info.appendChild(middle);
 
         // 定义底部内容
@@ -209,6 +216,30 @@
       function closeInfoWindow() {
         mapObj.clearInfoWindow();
       };
+
+      function Viewdetails(id,size) {
+        var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + item.id;
+        var deviceinfoPromis = restCallService(singlUrl, "GET");
+        deviceinfoPromis.then(function (data) {
+            $rootScope.deviceinfoMonitor = data.content;
+            $rootScope.currentOpenModal = $uibModal.open({
+              animation: true,
+              backdrop: false,
+              templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+              controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+              size: 'lg',
+              resolve: { //用来向controller传数据
+                deviceinfo: function () {
+                  return $rootScope.deviceinfoMonitor;
+                }
+              }
+            });
+
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetDeviceInformation'));
+          }
+        )
+      }
 
     };
 
@@ -416,6 +447,19 @@
         }
         return restCallService(restCallURL,"GET");
       },
+      //分页查询设备锁车短信
+      queryDeviceLockData:function(page,size,sort,queryCondition){
+        var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_DEVICE_LOCK_DATA_SORT_BY;
+        restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition){
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL,"GET");
+      },
       //分页查询用户信息(user info)
       queryUserInfo:function(page,size,sort,queryCondition){
         var restCallURL = USER_PAGED_URL;
@@ -475,30 +519,30 @@
         return null;
       },
 
-      //TODO 先根据device_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
+      //TODO 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
       //00 - 无特定类型
       //01 - 小挖
       //02 - 矿车
       //03 - 中挖
       //04 - 平地机T3   设备类型为 7
       //05 - 巴黎(T3)   设备类型为 5
-      getDeviceTypeForVersionNum:function(device_num,deviceType){
-        if(device_num=='3'&& deviceType=='7'){
+      getDeviceTypeForVersionNum:function(version_num,deviceType){
+        if(version_num=='3'&& deviceType=='7'){
           return '04';
         }
-        if(device_num=='3'&& deviceType=='5'){
+        if(version_num=='3'&& deviceType=='5'){
           return '05';
         }
-        if(device_num==null||device_num==''||device_num=='1'||device_num=='2'||device_num=='3'){
+        if(version_num==null||version_num==''||version_num=='1'||version_num=='2'||version_num=='3'){
             return '00';
         }
-        if(device_num=='A1'){
+        if(version_num=='A1'){
             return '01';
         }
-        if(device_num=='30'){
+        if(version_num=='30'){
           return '02';
         }
-        if(device_num=='40'){
+        if(version_num=='40'){
             return '03';
         }
       },
@@ -521,20 +565,24 @@
         }
       },
 
-      //TODO
       getWarningMsg:function(deviceWarningData,deviceType){
-        //00 - 无特定类型
-        //01 - 小挖
-        //如果需要别的设备的报警信息则deviceType可以判断
-        if( deviceType=="01" || deviceType=="02"||deviceType=="03"||deviceType=="00"){
-          var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
-          return dtcKey+$rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
+        if(deviceType){
+          var warningMsg = $rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
+          if(warningMsg!=null||!angular.isUndefined(warningMsg)){
+            var dtcKey="["+ deviceWarningData.spn + ":"+ deviceWarningData.fmi +":"+ deviceWarningData.cm + ":"+ deviceWarningData.oc +"]";
+            return dtcKey+warningMsg
+          }
         }
-        else{
-          return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
+        return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
+      },
+
+      lineToUpper:function test(str){
+        var arr = str.split("-");//用split()函数来进行分割字符串arr里面包括【border，bottom，color】
+        for(var i=1;i<arr.length;i++){//从数组的第二项开始循环，charAt(0)找到第一个字母。substring(1)截掉第一个字母。
+          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substring(1);//循环之后把得到的字符赋给arr。【border，Bottom， Color】
+          alert(arr[i]);
         }
-
-
+        return arr.join("");//用join方法来拼接，空拼接。就变成borderBottomColor
       }
 
     }

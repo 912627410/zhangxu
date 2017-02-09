@@ -7,7 +7,8 @@
     .controller('simMngController', simMngController);
 
   /** @ngInject */
-  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+  function simMngController($rootScope,$scope,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,
+                            SIM_PROVIDER_URL,DEFAULT_SIZE_PER_PAGE,SIM_URL, SIM_PAGE_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -16,41 +17,33 @@
     vm.sim={
       "phoneNumber":"",
       "deviceinfo":{},
+      "provider":"",
+    //  "org":{},
+
 
     };
 
+    // vm.initQueryCondition=function(){
+    //   vm.sim={
+    //     "phoneNumber":"",
+    //     "deviceinfo":{},
+    //
+    //   };
+    // }
+    //
+    // vm.initQueryCondition();
+
+    //查询sim卡的供应商集合
+    var simProviderData = serviceResource.restCallService(SIM_PROVIDER_URL, "QUERY");
+    simProviderData.then(function (data) {
+      vm.sim.simProviderList = data;
+    }, function (reason) {
+      Notification.error('获取SIM卡供应商集合失败');
+    })
+
+
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
-
-
-    //vm.query = function(page,size,sort,queryPhoneNumber){
-    //
-    //  var restCallURL = SIM_PAGE_URL;
-    //  var pageUrl = page || 0;
-    //  var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-    //  var sortUrl = sort || "id,desc";
-    //  restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
-    //  if (queryPhoneNumber){
-    //    restCallURL += "&search_LIKE_phoneNumber="+queryPhoneNumber;
-    //  }
-    //
-    //    var rspData = serviceResource.restCallService(restCallURL,"GET");
-    //    rspData.then(function(data){
-    //
-    //      vm.simList = data.content;
-    //      vm.page = data.page;
-    //      vm.pageNumber = data.page.number + 1;
-    //    },function(reason){
-    //      vm.macheineList = null;
-    //      Notification.error("获取SIM数据失败");
-    //    });
-    //};
-    //
-    //if (vm.operatorInfo.userdto.role == "ROLE_SYSADMIN" || vm.operatorInfo.userdto.role == "ROLE_ADMIN"){
-    //  vm.query(0,10,null,null);
-    //}
-
-    //查询条件相关
 
     //日期控件相关
     //date picker
@@ -76,18 +69,11 @@
     vm.sim.activeTimeStart=date;
     vm.sim.activeTimeEnd=new Date();
 
-    //查询sim卡的状态集合
-    var simStatusData = serviceResource.restCallService(SIM_STATUS_URL, "QUERY");
-    simStatusData.then(function (data) {
-      vm.sim.simStatusList = data;
-    }, function (reason) {
-      Notification.error('获取SIM卡状态集合失败');
-    })
 
 
 
-    vm.query=function(page,size,sort,queryPhoneNumber){
-       var rspData=simService.queryPage(page,size,sort,queryPhoneNumber);
+    vm.query=function(page,size,sort,sim){
+       var rspData=simService.queryPage(page,size,sort,sim,vm.org);
        rspData.then(function(data){
          vm.simList = data.content;
 
@@ -102,6 +88,7 @@
          Notification.error("获取SIM数据失败");
        });
      }
+
 
     vm.query();
 
@@ -127,32 +114,13 @@
       });
     };
 
-    //更新SIM卡
-    //vm.updateSim = function (id,size) {
-    //  var singleUrl = SIM_URL + "?id=" + id;
-    //  var promis = serviceResource.restCallService(singleUrl, "GET");
-    //  promis.then(function (data) {
-    //    var modalInstance = $uibModal.open({
-    //      animation: vm.animationsEnabled,
-    //      templateUrl: 'app/components/simManagement/updateSim.html',
-    //      controller: 'updateSimController as updateSimController',
-    //      size: size,
-    //      backdrop: false,
-    //      resolve: {
-    //        sim: function () {
-    //          return data.content;
-    //        }
-    //      }
-    //    });
-    //    modalInstance.result.then(function (selectedItem) {
-    //      vm.query();
-    //    }, function () {
-    //    });
-    //
-    //  }, function (reason) {
-    //    Notification.error('获取SIM卡信息失败');
-    //  });
-    //};
+    vm.reset = function () {
+      vm.sim.phoneNumber="";
+      vm.sim.provider="";
+
+      vm.org = null;
+    }
+
 
     vm.updateSim = function (abc,size) {
       var sourceSim = angular.copy(abc); //深度copy
@@ -170,37 +138,21 @@
             }
           }
         });
-        //modalInstance.result.then(function (selectedItem) {
-        ////  vm.query();
-        //}, function () {
-        //});
+
 
       modalInstance.result.then(function(result) {
-        console.log('client: resolved: ' + result);
-        abc=angular.copy(sourceSim);
-
-    //    $scope.$apply(abc);
-
-        abc.phoneNumber=2;
-        console.log(abc);
-
-        //vm.tableParams.data.push(abc);//刷新的内容
-
-
-
-
-
-        //$timeout(function() {
-        //  abc=angular.copy(sourceSim);
-        //});
+       console.log("111");
+        var tabList=vm.tableParams.data;
+        //恢复列表中的值
+        for(var i=0;i<tabList.length;i++){
+          if(tabList[i].id==result.id){
+            tabList[i]=result;
+          }
+        }
 
 
       }, function(reason) {
-        //console.log('client: rejected: ' + reason);
-        //console.log("aaa  ==");
-        //console.log(sourceSim);
-        // abc=sourceSim;
-        //console.log(abc);
+
         //恢复列表中的值
         for(var i=0;i<vm.tableParams.data.length;i++){
           if(vm.tableParams.data[i].id==sourceSim.id){
@@ -238,9 +190,30 @@
     //组织树的显示
     vm.openTreeInfo= function() {
       treeFactory.treeShow(function (selectedItem) {
-        vm.sim.deviceinfo.org =selectedItem;
+        vm.org =selectedItem;
       });
     }
+
+    vm.currentSim = function (sim, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/simManagement/currentSim.html',
+        controller: 'currentSimController as currentSimController',
+        size: size,
+        backdrop:false,
+        resolve: {
+          sim: function () {
+            return sim;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        //正常返回
+      }, function () {
+        //取消
+      });
+    };
 
   }
 })();
