@@ -68,25 +68,44 @@
                       max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
                       first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页" style="margin: 0;"></uib-pagination>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 button-group">
+
       <a class="btn btn-default pull-right"
          presentation-href="privilige:priviligeOper"
          ng-click="userMngController.addUser()">
         <i class="fa fa-plus"></i> 增加
       </a>
 
+      <a class="btn btn-default pull-right"
+         presentation-href="privilige:export"
+         ng-click="userMngController.privExport()">
+        <i class="glyphicon glyphicon-new-window"></i> 导出用户权限
+      </a>
+
+
+
     </div>
   </div>
   <div class="row " style="padding: 10px">
     <div class="table-responsive userTableBox">
+      <script id="selectAllHeader"  type="text/ng-template">
+        <input type="checkbox" style="height: 11px;" ng-click="userMngController.updateAllSelection($event)"
+               ng-model="userMngController.checked">
+      </script>
       <div class="userTableBoxLeft">
         <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="userinfo in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="userMngController.isSelected(userinfo.id)"
+                     ng-click="userMngController.updateSelection($event,userinfo.id)" ng-model="userinfo.checked">
+            </td>
             <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
           </tr>
         </table>
       </div>
+
       <div class="userTableBoxRight">
+
         <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="userinfo in $data">
             <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
