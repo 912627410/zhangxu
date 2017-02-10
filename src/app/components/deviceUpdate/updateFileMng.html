@@ -30,7 +30,12 @@
       <label class="control-label">适用对象</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="queryApplicableProducts" class="form-control" ng-model="updateFileMngCtrl.queryApplicableProducts" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+      <!--<input type="text" name="queryApplicableProducts" class="form-control" ng-model="updateFileMngCtrl.queryApplicableProducts" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>-->
+      <select class="form-control" id="applicableProducts" ng-model="updateFileMngCtrl.queryApplicableProducts">
+        <option value="1">GPS自身</option>
+        <option value="2">显示器</option>
+        <option value="3">控制器</option>
+      </select>
     </div>
     <div class="col-md-3 text-center">
       <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" presentation-href="updateFile:page">查询</button>

@@ -9,11 +9,14 @@
     .module('GPSCloud')
     .controller('selectUpdateFileController', selectUpdateFileController);
 
-  function selectUpdateFileController($rootScope, $scope, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDeviceId, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
+  function selectUpdateFileController($rootScope, ngTableDefaults, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDeviceId, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
     var vm = this;
     vm.updateDeviceId = updateDeviceId;
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
+
+    ngTableDefaults.params.count = 8;
+    ngTableDefaults.settings.counts = [];
 
     vm.query=function(page, size, sort, updateFile){
       var restCallURL = UPDATE_FILE_UPLOAD_QUERY;

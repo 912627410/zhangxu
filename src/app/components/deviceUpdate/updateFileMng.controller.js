@@ -9,9 +9,12 @@
     .module('GPSCloud')
     .controller('updateFileMngController', updateFileMngController);
 
-  function updateFileMngController($rootScope, $filter, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource) {
+  function updateFileMngController($rootScope, ngTableDefaults, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     vm.query=function(page, size, sort, updateFile){
       var restCallURL = UPDATE_FILE_UPLOAD_QUERY;
