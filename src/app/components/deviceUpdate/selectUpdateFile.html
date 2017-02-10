@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3 class="modal-title">选择升级文件</h3>
+</div>
+<form name="newFileForm" class="form-horizontal">
+  <div class="modal-body" style="padding-bottom: 0;">
+    <div class="box-body form-horizontal">
+      <table ng-table="selectUpdateFileCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="updateFile in $data">
+          <td class="text-nowrap text-center">
+            <input type="radio"
+                   name="selectFile"
+                   ng-checked
+                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum)"
+                   ng-model="updateFile.checked">
+          </td>
+          <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number:2}}</td>
+          <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
+          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'">{{updateFile.applicableProducts}}</td>
+          <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box-footer" style="padding: 0 10px;">
+    <uib-pagination total-items="selectUpdateFileCtrl.page.totalElements" ng-change="selectUpdateFileCtrl.query(selectUpdateFileCtrl.pageNumber-1,null,null,selectUpdateFileCtrl.versionNum)" max-size="15" ng-model="selectUpdateFileCtrl.pageNumber" items-per-page="selectUpdateFileCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </div>
+
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="selectUpdateFileCtrl.ok(selectUpdateFileCtrl.updateFile)" presentation-href="deviceUpdate:update">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="selectUpdateFileCtrl.cancel()">取消</button>
+  </div>
+</form>
+
+
+
+
