@@ -53,6 +53,8 @@
 
     .constant('GET_VERIFYCODE_URL', SERVER_BASE_URL + 'user/getverifyCode')   //获取验证码
     .constant('JUDGE_VERIFYCODE_URL', SERVER_BASE_URL + 'user/judgeverifyCode')   //验证码判断
+    .constant('GET_PASSWORD_URL', SERVER_BASE_URL + 'user/getpassword')   //获取密码
+    .constant('USER_LOGINBYTOKEN_URL', SERVER_BASE_URL + 'user/loginBytoken')
 
 
 
