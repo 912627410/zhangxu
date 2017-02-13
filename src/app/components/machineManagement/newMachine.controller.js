@@ -108,13 +108,12 @@
 
     vm.ok = function (machine) {
 
-    //  alert(machine.deviceinfo.id);
-      //如果设备没有输入,则给出提示信息,
-      //if(vm.machine.deviceinfo.deviceNum==""){
+      //alert(machine.deviceinfo.id);
+      // if(vm.machine.deviceinfo.deviceNum==""){
       //  if(!confirm("设备号没有输入,请注意")){
       //    return;
       //  }
-      //}
+      // }
 
       //为了减少请求的参数,重新上设置参数
      // vm.machine.deviceinfoId=vm.machine.deviceinfo.id;
@@ -144,7 +143,11 @@
      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
       restPromise.then(function (data) {
         if(data.code===0){
-          Notification.success("新建车辆信息成功!");
+          if (data.content.autoSendSMSResult){
+            Notification.warning("新建车辆信息成功!<br>自动发送激活短信: "+ data.content.autoSendSMSResult);
+          }else {
+            Notification.warning("新建车辆信息成功!");
+          }
           $uibModalInstance.close(data.content);
         }else{
           vm.machine = machine;
