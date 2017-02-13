@@ -58,20 +58,38 @@
       return tree;
     };
 
+    $scope.$on('$viewContentLoaded', function(){
+      if(null!=$cookies.getObject("user")){
+        if(null==$cookies.getObject("outstate")){
+          var userobj = {};
+          userobj.username = $cookies.getObject("user").username;
+          userobj.authtoken = $cookies.getObject("user").authtoken;
+          var restCallURL = GET_PASSWORD_URL;
+          restCallURL += "?&username=" + userobj.username;
+          var rspdata = serviceResource.restCallService(restCallURL,"GET");
+          vm.loginBytoken(userobj);
+        }
+      }
+    });
+
     vm.reset= function () {
       vm.credentials.password = null;
     }
 
-    var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
-    rspdata.then(function (data) {
-      verifyCodeInfo ={
-        token:data.token,
-        value:data.verifyCode
-      }
-      vm.verifyCode = verifyCodeInfo.value;
-    })
+    vm.createVerifyCode = function () {
+      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+      rspdata.then(function (data) {
+        verifyCodeInfo ={
+          token:data.token,
+          value:data.verifyCode
+        }
+        vm.verifyCode = verifyCodeInfo.value;
+      })
+    }
+
 
     vm.loginMe = function () {
+      vm.createVerifyCode();
       $cookies.remove("outstate");
       var code = vm.code ;
       if(null!=code&&""!=code){
@@ -92,6 +110,7 @@
     }
 
     vm.loginBytoken = function (userobj) {
+      vm.createVerifyCode();
       var rspPromise = serviceResource.authenticateb(userobj);
       rspPromise.then(function (response) {
         var data = response.data;
@@ -126,22 +145,6 @@
       });
     }
 
-    $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("user")){
-       if(null==$cookies.getObject("outstate")){
-         var userobj = {};
-         userobj.username = $cookies.getObject("user").username;
-         userobj.authtoken = $cookies.getObject("user").authtoken;
-         var restCallURL = GET_PASSWORD_URL;
-         restCallURL += "?&username=" + userobj.username;
-         var rspdata = serviceResource.restCallService(restCallURL,"GET");
-         rspdata.then(function (data) {
-           userobj.password = data.password;
-         })
-         vm.loginBytoken(userobj);
-       }
-      }
-    });
 
     vm.userverify = function () {
 
