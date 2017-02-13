@@ -216,6 +216,16 @@
           }
         }
       })
+      .state('home.orgMng', {
+        url: '/orgMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/orgManagement/orgMng.html',
+            controller: 'orgMngController as orgMngCtrl'
+          }
+
+        }
+      })
       .state('home.roleMng', {
         url: '/roleMng',
         views: {

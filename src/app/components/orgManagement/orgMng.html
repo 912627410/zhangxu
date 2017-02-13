@@ -1,0 +1,43 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">组织管理</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" ng-model="orgMngCtrl.searchText" placeholder="Search" >
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="orgMngCtrl.search(orgMngCtrl.searchText)">搜索</button>
+          <button class="btn btn-default" type="button" ng-click="orgMngCtrl.reset(orgMngCtrl.searchText)">重置</button>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-7 pull-right" >
+      <div class="btn btn-warning" type="button" ng-click="orgMngCtrl.update()">修改</div>
+      <div class="btn btn-danger" type="button" ng-click="orgMngCtrl.new()">新增</div>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3" ng-controller="orgMngController" >
+      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 380px;  height:820px;">
+        <div style="padding-top: 10px;">
+          <abn-tree tree-data="orgMngCtrl.my_data"
+                    tree-control="treeController"
+                    on-select="orgMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                    expand-level="2"></abn-tree>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

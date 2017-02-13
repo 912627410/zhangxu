@@ -842,19 +842,19 @@
                   <!--车载电压,时速,气压表2,机油压力,累计里程,阶段工作时间,阶段里程，只有矿车的显示-->
                   <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
                       <td>{{'batteryVol'|translate}}</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol}}V</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol | number:2}}V</td>
                       <td>{{'mph'|translate}}</td>
                       <td>{{deviceCurrentInfoCtrl.deviceinfo.mph}}km/H</td>
                       <td>{{'pressureMeter'|translate}}</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter}}MPa</td>
+                      <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter2 | number:2}}MPa</td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
                     <td>{{'totalMileage'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage}}/KM</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage | number:2}}/KM</td>
                     <td>{{'momentWorkTime'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
                     <td>{{'momentMileage'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage}}/KM</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage | number:2}}/KM</td>
 
                   </tr>
 
