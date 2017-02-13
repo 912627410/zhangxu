@@ -385,7 +385,7 @@
       //登录认证接口--b
       authenticateb:function(credentials){
 
-      var loginInfo={ssn:credentials.username,token:credentials.token};
+      var loginInfo={ssn:credentials.username,token:credentials.authtoken};
       var rspPromise= $http.post(
         USER_LOGINBYTOKEN_URL,
         loginInfo
