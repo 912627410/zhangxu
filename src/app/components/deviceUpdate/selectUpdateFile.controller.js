@@ -9,9 +9,9 @@
     .module('GPSCloud')
     .controller('selectUpdateFileController', selectUpdateFileController);
 
-  function selectUpdateFileController($rootScope, ngTableDefaults, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDeviceId, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
+  function selectUpdateFileController($rootScope, ngTableDefaults, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDevice, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
     var vm = this;
-    vm.updateDeviceId = updateDeviceId;
+    vm.updateDevice = updateDevice;
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
 
@@ -52,21 +52,47 @@
       }
 
       var updateDataVo = {
-        deviceIds : vm.updateDeviceId,
+        devices : vm.updateDevice,
         fileId : vm.checked
       };
-
+      var content = "";
+      var index = 0;
+      if(vm.updateDevice.length > 1) {
+        for(var i = 0; i< vm.updateDevice.length; i++){
+          if(vm.updateDevice[i].terminalVersion == vm.updateVersionNum) {
+            content += vm.updateDevice[i].deviceNum + ",";
+          } else {
+            index ++;
+          }
+        }
+        if(content && index == 0) {
+          content += "所选设备的终端软件版本与选择的升级版本相同，不作升级。";
+          vm.confirmUpdate = false;
+        } else if(content && index > 0) {
+          content += "当前的终端软件版本与选择的升级版本相同，不作升级。" + "您确定将选择的其余的设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+        } else {
+          content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+        }
+      } else {
+        if(vm.updateDevice[0].terminalVersion == vm.updateVersionNum) {
+          content += vm.updateDevice[0].deviceNum + "当前的终端软件版本与选择的升级版本相同，不作升级。";
+        } else {
+          content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+        }
+      }
       $confirm({
         title:"操作提示",
-        text:"您确定升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?"
+        text: content
       }).then(function () {
         var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
         restPromise.then(function (data) {
           if(data.code == 0){
             Notification.success("升级指令已下发!");
             $uibModalInstance.close();
-          }else{
-            Notification.error(data.message);
+          } else if(data.code == -1){
+
+          } else {
+            Notification.error(data.content);
           }
         }, function (reason) {
           Notification.error(reason.data.message);

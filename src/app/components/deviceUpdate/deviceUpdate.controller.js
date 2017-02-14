@@ -15,10 +15,9 @@
     vm.selectAll = false; //是否全选标志
     vm.selected = []; //选中的设备id
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
-
     vm.queryDeviceInfo = function (page, size, sort, deviceinfo) {
+      ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+      ngTableDefaults.settings.counts = [];
       var restCallURL = UPDATE_DEVICE_INFO_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
@@ -35,9 +34,9 @@
       if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
         restCallURL += "&search_LIKE_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
       }
-      // if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
-      //   restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
-      // }
+      if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
+        restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      }
 
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
       deviceDataPromis.then(function (data) {
@@ -57,21 +56,21 @@
     vm.queryDeviceInfo(null, null, null, null);
 
 
-    var updateSelected = function (action, id) {
-      if (action == 'add' && vm.selected.indexOf(id) == -1) {
-        vm.selected.push(id);
+    var updateSelected = function (action, deviceinfo) {
+      if (action == 'add' && vm.selected.indexOf(deviceinfo) == -1) {
+        vm.selected.push(deviceinfo);
       }
-      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
-        var idx = vm.selected.indexOf(id);
+      if (action == 'remove' && vm.selected.indexOf(deviceinfo) != -1) {
+        var idx = vm.selected.indexOf(deviceinfo);
         vm.selected.splice(idx, 1);
 
       }
     };
 
-    vm.updateSelection = function ($event, id, status) {
+    vm.updateSelection = function ($event, deviceinfo, status) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      updateSelected(action, id);
+      updateSelected(action, deviceinfo);
     };
 
 
@@ -79,13 +78,13 @@
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       vm.tableParams.data.forEach(function (deviceinfo) {
-        updateSelected(action, deviceinfo.id);
+        updateSelected(action, deviceinfo);
       })
 
     };
 
-    vm.isSelected = function (id) {
-      return vm.selected.indexOf(id) >= 0;
+    vm.isSelected = function (deviceinfo) {
+      return vm.selected.indexOf(deviceinfo) >= 0;
     };
     vm.checkAll = function () {
       var operStatus = false;
@@ -103,8 +102,7 @@
     };
 
     //单台设备升级
-    vm.deviceUpdate = function(id, size){
-      var updateId = [id];
+    vm.deviceUpdate = function(deviceinfo, size){
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',
@@ -113,13 +111,14 @@
         backdrop:false,
         scope:$scope,
         resolve: {
-          updateDeviceId: function () {
-            return updateId;
+          updateDevice: function () {
+            return [deviceinfo];
           }
         }
       });
       modalInstance.result.then(function () {
-        vm.queryDeviceInfo();
+        vm.queryDeviceInfo(null, null, null, null);
+        vm.selected =[];
       }, function () {
         //取消
       });
@@ -139,23 +138,24 @@
         backdrop:false,
         scope:$scope,
         resolve: {
-          updateDeviceId: function () {
+          updateDevice: function () {
             return vm.selected;
           }
         }
       });
       modalInstance.result.then(function () {
-        vm.queryDeviceInfo();
+        vm.queryDeviceInfo(null, null, null, null);
+        vm.selected =[];
       }, function () {
         //取消
       });
     };
 
     //取消升级
-    vm.cancelUpdate = function(id) {
+    vm.cancelUpdate = function(deviceinfo) {
 
       var updateDataVo = {
-        deviceIds: [id]
+        devices: [deviceinfo]
       };
 
       $confirm({
@@ -166,7 +166,7 @@
         restPromise.then(function (data) {
           if(data.code == 0){
             Notification.success(data.content);
-            vm.queryDeviceInfo();
+            vm.queryDeviceInfo(null, null, null, null);
           }else{
             Notification.error(data.message);
           }

@@ -78,7 +78,7 @@
         <table ng-table="deviceUpdateCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="deviceinfo in $data">
             <td class="text-nowrap text-center" data-header="'selectAllHeader'">
-              <input type="checkbox" ng-checked="deviceUpdateCtrl.isSelected(deviceinfo.id)" ng-click="deviceUpdateCtrl.updateSelection($event,deviceinfo.id)" ng-model="deviceinfo.checked">
+              <input type="checkbox" ng-checked="deviceUpdateCtrl.isSelected(deviceinfo)" ng-click="deviceUpdateCtrl.updateSelection($event,deviceinfo)" ng-model="deviceinfo.checked" />
             </td>
             <td class="text-nowrap" data-title="'设备号'" sortable="'deviceNum'">{{deviceinfo.deviceNum}}</td>
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
@@ -91,12 +91,13 @@
             <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate==null"></td>
             <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==0&&deviceinfo.deviceUpdate.updateResult==1">升级成功</td>
             <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==0&&deviceinfo.deviceUpdate.updateResult==0">升级失败</td>
+            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==0&&deviceinfo.deviceUpdate.updateResult==-1">取消升级</td>
             <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1&&deviceinfo.deviceUpdate.functionCode!=null">正在升级</td>
             <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1&&deviceinfo.deviceUpdate.functionCode==null">等待设备响应</td>
             <td class="text-nowrap" data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
-              <button type="button" class="btn btn-default btn-xs" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.whetherToUpdate==0" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo.id)" presentation-href="deviceUpdate:update">升级</button>
-              <button type="button" class="btn btn-default btn-xs btn-danger" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1" ng-click="deviceUpdateCtrl.cancelUpdate(deviceinfo.id)" presentation-href="deviceUpdate:cancelUpdate">取消升级</button>
+              <button type="button" class="btn btn-default btn-xs" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.whetherToUpdate==0" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo)" presentation-href="deviceUpdate:update">升级</button>
+              <button type="button" class="btn btn-default btn-xs btn-danger" ng-if="deviceinfo.deviceUpdate.whetherToUpdate==1" ng-click="deviceUpdateCtrl.cancelUpdate(deviceinfo)" presentation-href="deviceUpdate:cancelUpdate">取消升级</button>
             </td>
           </tr>
         </table>
