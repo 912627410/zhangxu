@@ -65,24 +65,24 @@
     </div>
   </div>
 
-    <div class="table-responsive">
-      <table ng-table="sysconfigMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <tr ng-repeat="sysconfig in $data">
-          <td class="text-nowrap" data-title="'参数名称'" sortable="'name'">
-            <a href ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{sysconfig.name}}</a>
-          </td>
-          <td class="text-nowrap" data-title="'参数值'" sortable="'value'">{{sysconfig.value}}</td>
-          <td class="text-nowrap" data-title="'参数描述'" sortable="'description'">{{sysconfig.description}}</td>
-          <td class="text-nowrap" data-title="'操作'" align="center">
-            <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="config:sysconfigOper"
-                    ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">修改
-            </button>
+  <div class="table-responsive">
+    <table ng-table="sysconfigMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <tr ng-repeat="sysconfig in $data">
+        <td class="text-nowrap" data-title="'参数名称'" sortable="'name'">
+          <a href ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{sysconfig.name}}</a>
+        </td>
+        <td class="text-nowrap" data-title="'参数值'" sortable="'value'">{{sysconfig.value}}</td>
+        <td class="text-nowrap" data-title="'参数描述'" sortable="'description'">{{sysconfig.description}}</td>
+        <td class="text-nowrap" data-title="'操作'" align="center">
+          <button type="button" class="btn btn-default btn-xs"
+                  presentation-href="config:sysconfigOper"
+                  ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">修改
+          </button>
 
-          </td>
-        </tr>
-      </table>
-    </div>
+        </td>
+      </tr>
+    </table>
+  </div>
   </div>
 
   <div class="box-footer">
@@ -95,3 +95,4 @@
 
 </section>
 
+s
