@@ -55,10 +55,6 @@
         devices : vm.updateDevice,
         fileId : vm.checked
       };
-      console.log(vm.updateDevice);
-      console.log(updateDataVo);
-      console.log(updateDataVo.devices);
-      console.log(updateDataVo.fileId);
       
       var content = "";
       var index = 0;
@@ -89,9 +85,6 @@
         title:"操作提示",
         text: content
       }).then(function () {
-        console.log(updateDataVo);
-        console.log(updateDataVo.devices);
-        console.log(updateDataVo.fileId);
         var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
         restPromise.then(function (data) {
           if(data.code == 0){
