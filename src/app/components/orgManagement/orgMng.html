@@ -22,12 +22,11 @@
     <div class="col-md-7 pull-right" >
       <div class="btn btn-warning" type="button" ng-click="orgMngCtrl.update()">修改</div>
       <div class="btn btn-danger" type="button" ng-click="orgMngCtrl.new()">新增</div>
-
     </div>
 
   </div>
-  <div class="row">
-    <div class="col-md-3" ng-controller="orgMngController" >
+  <div class="row" ng-controller="orgMngController">
+    <div class="col-md-5"  >
       <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 380px;  height:820px;">
         <div style="padding-top: 10px;">
           <abn-tree tree-data="orgMngCtrl.my_data"
@@ -39,5 +38,38 @@
 
     </div>
 
+
+    <div class="col-md-5" style="border: 1px solid #ddd;margin-top: 20px;">
+    <table class="table table-striped" >
+      <caption style="color:#292828;text-align: left;
+    font-size: 18px;"><strong>组织信息：</strong></caption>
+      <tbody>
+      <tr>
+        <td>上级组织:</td>
+        <td>{{orgMngCtrl.selectedParentOrg}}</td>
+      </tr>
+      <tr>
+        <td>组织名称:</td>
+        <td>{{orgMngCtrl.selectedOrg.label}}</td>
+      </tr>
+      <tr>
+        <td>组织简称:</td>
+        <td>{{orgMngCtrl.selectedOrg.orgSimpleName}}</td>
+      </tr>
+      <tr ng-show="orgMngCtrl.isShow">
+        <td>法人代表:</td>
+        <td>{{orgMngCtrl.selectedOrg.org_legalRepresentative}}</td>
+      </tr>
+      <tr ng-show="orgMngCtrl.isShow">
+        <td>电    话:</td>
+        <td>{{orgMngCtrl.selectedOrg.orgTellPhone}}</td>
+      </tr>
+      <tr ng-show="orgMngCtrl.isShow">
+        <td>传    真:</td>
+        <td>{{orgMngCtrl.selectedOrg.orgFax}}</td>
+      </tr>
+      </tbody>
+    </table>
+      </div>
   </div>
 </section>
