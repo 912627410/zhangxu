@@ -52,7 +52,7 @@
   "organisation":"所属组织",
   "terminalno":"终端",
   "supportfuzzyqueries":"支持模糊查询",
-  "machineNumberAndCarNumber":"整机编号/车号",
+  "machineNumberAndCarNumber":"车号",
   "protocolState":"协议状态",
   "recentDataUploadTime":"最近数据上传时间",
   "query":"查询",
@@ -178,7 +178,7 @@
   "moveAnimation":"继续",
   "telecontrol":"远程控制",
   "equipmentNumber":"设备编号",
-  "licensePlateNumber":"绑定车牌号",
+  "licensePlateNumber":"绑定车号",
   "engineCommunicationCode":"发动机通讯密码",
   "bindSIMNumber":"绑定SIM号",
   "permanentUnlockPassword":"永久解锁密码",
@@ -231,7 +231,7 @@
   "UnboundContent":"解除绑定时键盘输入数据内容",
   "BoundContent":"绑定时键盘输入数据内容",
 
-  "bindMachineId":"实际绑定车架号",
+  "bindMachineId":"实际绑定车号",
   "ecuLockStatus":"ECU锁车状态",
 
 
