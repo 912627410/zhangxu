@@ -60,6 +60,10 @@
 
     $scope.$on('$viewContentLoaded', function(){
       if(null!=$cookies.getObject("user")){
+        var user = {};
+        user.username = $cookies.getObject("user").username;
+        user.password = '';
+        vm.credentials = user;
         if(null==$cookies.getObject("outstate")){
           var userobj = {};
           userobj.username = $cookies.getObject("user").username;

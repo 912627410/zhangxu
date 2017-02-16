@@ -8,14 +8,14 @@
 <!--</div>-->
 <!--</script>-->
 
-<form name="updatedUserForm" class="form-horizontal" ng-submit="newOrgCtrl.ok(newOrgCtrl.newLabel,newOrgCtrl.newName)">
+<form name="updatedUserForm" class="form-horizontal" ng-submit="newOrgCtrl.ok(newOrgCtrl.newLabel,newOrgCtrl.newName,newOrgCtrl.newOrgSimpleName)">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
         <label for="label" class="col-sm-2 control-label">上级组织</label>
         <div class="col-sm-10">
           <input type="text" id="label" class="form-control"
-                 placeholder="组织名称"
+                 placeholder="上级组织名称"
                  ng-model="newOrgCtrl.selectedOrg.label"
                  name="label" readonly required/>
         </div>
@@ -25,19 +25,28 @@
         <label for="newLabel" class="col-sm-2 control-label">新建组织</label>
         <div class="col-sm-10">
           <input type="text" id="newLabel" class="form-control"
-                 placeholder="新建组织"
+                 placeholder="新建组织名称"
                  ng-model="newOrgCtrl.newLabel"
                  name="label" required/>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="newLabel" class="col-sm-2 control-label">组织简称</label>
+        <label for="newLabel" class="col-sm-2 control-label">组织标识</label>
         <div class="col-sm-10">
           <input type="text" id="name" class="form-control"
-                 placeholder="组织简称"
+                 placeholder="组织标识"
                  ng-model="newOrgCtrl.newName"
                  name="newName" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">组织简称</label>
+        <div class="col-sm-10">
+          <input type="text" id="orgSimpleName" class="form-control"
+                 placeholder="组织简称"
+                 ng-model="newOrgCtrl.newOrgSimpleName"
+                 name="neworgSimpleName" required/>
         </div>
       </div>
     </div>

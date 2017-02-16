@@ -54,6 +54,7 @@
     .constant('NOTIFICATION_PAGED_URL', SERVER_BASE_URL + 'user/notification')   //用户提醒信息分页
     .constant('NOTIFICATION_STATISTICS_URL', SERVER_BASE_URL + 'user/notificationStatistics')   //用户提醒数量统计数据
     .constant('ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'config/organazition')   //组织机构信息,返回树状json代码
+    .constant('QUERY_PARENTORG_URL', SERVER_BASE_URL + 'config/queryParentOrg')
 
 
     .constant('GET_VERIFYCODE_URL', SERVER_BASE_URL + 'user/getverifyCode')   //获取验证码
@@ -174,7 +175,6 @@
     .constant('ORG_TYPE_URL', SERVER_BASE_URL + 'config/orgTypeList')   //组织类型查询
     .constant('ORG_UPDATE_URL', SERVER_BASE_URL + 'org/updateOrg')   //修改组织
     .constant('ORG_ADD_URL', SERVER_BASE_URL + 'org/newOrg')   //新增组织
-
     .constant('NOTICE_PAGE_URL', SERVER_BASE_URL + 'notice/noticePage')   //保养提醒消息page
 
 

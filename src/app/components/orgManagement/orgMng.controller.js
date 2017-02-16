@@ -9,10 +9,13 @@
     .controller('orgMngController', orgMngController);
 
   /** @ngInject */
-  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE) {
+  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedOrg;
+    vm.selectedParentOrg;
+    vm.isShow = false;
+
     vm.searchText = '';     //搜索的数据
     var rootParent = {id: 0}; //默认根节点为0
     var userInfo =$rootScope.userInfo;
@@ -52,9 +55,6 @@
       //alert("tree="+tree);
       return tree;
     };
-
-
-
     //初始化组织树
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = [$rootScope.orgChart[0]];
@@ -64,9 +64,21 @@
 
     //选中组织事件
     vm.my_tree_handler = function (branch) {
+
+
       $scope.$emit("OrgSelectedEvent", branch);
       vm.selectedOrg = branch;
-
+      var restCallURL = QUERY_PARENTORG_URL;
+      restCallURL += "?parentId=" + vm.selectedOrg.parentId;
+      var orgDataPromis = serviceResource.restCallService(restCallURL, "GET");
+      orgDataPromis.then(function (data) {
+        vm.selectedParentOrg = data.label;
+      })
+      if(null!=vm.selectedOrg.org_legalRepresentative&&""!=vm.selectedOrg.org_legalRepresentative){
+        vm.isShow = true;
+      }else{
+        vm.isShow = false;
+      }
     };
 
     vm.search = function (searchText) {
@@ -179,7 +191,6 @@
           vm.getOrg();
 
         }, function () {
-          //$log.info('Modal dismissed at: ' + new Date());
         });
 
       }else {
@@ -224,6 +235,5 @@
         Notification.error(languages.findKey('failedToGetOrganizationInformation'));
       });
     }
-
   }
 })();

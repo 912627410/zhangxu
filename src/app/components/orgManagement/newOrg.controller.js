@@ -13,12 +13,13 @@
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     vm.selectedOrg = selectedOrg;
-    vm.ok = function (orgLabel,orgName) {
+    vm.ok = function (orgLabel,orgName,orgSimpleName) {
 
       var newOrg = {
         parentId: vm.selectedOrg.id,
         label: orgLabel,
-        name: orgName
+        name: orgName,
+        orgSimpleName:orgSimpleName
       };
 
       var restPromise = serviceResource.restUpdateRequest(ORG_ADD_URL,newOrg);
