@@ -195,12 +195,12 @@
       restPromise.then(function (data) {
 
         if(data.code==0){
-          Notification.success("更新用户成功!");
+          Notification.success("更新所属角色成功!");
         }
 
 
       }, function (reason) {
-        Notification.error(" 更新用户出错!");
+        Notification.error(" 更新所属角色出错!");
       });
 
 

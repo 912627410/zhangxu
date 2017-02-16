@@ -119,9 +119,6 @@
       }
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
-
-
         queryResult=data;
         if(getRolePriviligeState){
           queryFn()
@@ -242,12 +239,12 @@
       restPromise.then(function (data) {
 
         if(data.code==0){
-          Notification.success("更新用户成功!");
+          Notification.success("更新包含权限成功!");
         }
 
 
       }, function (reason) {
-        Notification.error(" 更新用户出错!");
+        Notification.error(" 更新包含权限出错!");
       });
 
 
