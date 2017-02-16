@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-md-2">
-      <label class="control-label">整机编号/车号</label>
+      <label class="control-label">车号</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
@@ -108,7 +108,7 @@
             <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">
+          <td class="text-nowrap" data-title="'车号'" sortable="'licenseId'">
             <a ng-if="machineMngCtrl.validateOperPermission()" href
                ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
             <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
@@ -122,7 +122,7 @@
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
             </button>
             <button type="button" class="btn btn-danger btn-xs" presentation-href="machine:oper"
-                    ng-click="machineMngCtrl.removeDevice(machine)">解绑
+                    ng-click="machineMngCtrl.removeDevice(machine)">解除关联
             </button>
             <button type="button" class="btn btn-warning btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.allocationlog(machine,'lg')">调拨日志

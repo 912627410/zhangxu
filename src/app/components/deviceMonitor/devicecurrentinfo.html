@@ -780,7 +780,7 @@
                     <td>{{'numberOfStarts'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.startTimes}}</td>
                     <td>{{'lockedCarStatus'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'Unlock'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
                     <!--锁车时候显示“二级”更改为“锁车”
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>-->
