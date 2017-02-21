@@ -30,10 +30,10 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       if (null != deviceinfo) {
         if (null != deviceinfo.deviceNum&&deviceinfo.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
+          restCallURL += "&search_LIKES_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
         }
         if (null != deviceinfo.phoneNumber&&deviceinfo.phoneNumber!="") {
-          restCallURL += "&search_LIKE_sim.phoneNumber=" + deviceinfo.phoneNumber;
+          restCallURL += "&search_LIKES_sim.phoneNumber=" + deviceinfo.phoneNumber;
         }
       }
 

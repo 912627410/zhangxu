@@ -901,7 +901,7 @@
                     <td></td>
                     <td></td>
                   </tr>
-                  <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
+                  <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">
                     <td>{{'simCardSerialNum'|translate}}</td>
                     <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
                   </tr>
