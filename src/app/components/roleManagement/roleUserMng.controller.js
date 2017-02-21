@@ -60,16 +60,17 @@
 
         }
 
-        if(queryState){
-          queryFn()
-        }else{
-          getRoleUserState=true;
-        }
+
 
         //  console.log(vm.roleUserinfoList);
       }, function (reason) {
         Notification.error('获取权限状态失败');
       })
+      if(queryState){
+        queryFn()
+      }else{
+        getRoleUserState=true;
+      }
     }
 
 
