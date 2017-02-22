@@ -9,9 +9,12 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,machineService,$http, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http, $uibModal,$uibModalInstance,treeFactory,MACHINEANDDEVCE_ORG_JUDGE,DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
+    vm.machineOrgId;
+    vm.deviceOrgId = [];
+    vm.notice ;
 
     vm.machine = {
       installTime:new Date(),
@@ -106,7 +109,87 @@
 
 
 
+
     vm.ok = function (machine) {
+
+
+      var restCallURL = MACHINEANDDEVCE_ORG_JUDGE;
+      restCallURL += "?&deviceNum=" + vm.machine.deviceinfo.deviceNum + '&orgLabel=' + vm.machine.org.label;
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+
+        vm.machineOrgId = vm.machine.org.id;
+        vm.deviceOrgId.push(data.content.id);
+        if(data.code==0){
+          if(vm.notice){
+            vm.saveMachine(machine);
+          }else{
+            var modalInstance = $uibModal.open({
+              animation: vm.animationsEnabled,
+              templateUrl: 'app/components/machineManagement/batchMoveOrg.html',
+              controller: 'batchMoveOrgController as batchMoveOrgController',
+              size: "lg",
+              backdrop: false,
+              resolve: {
+                deviceOrgId:function () {
+                  return vm.deviceOrgId;
+                },
+                machineOrgId:function () {
+                  return vm.machineOrgId;
+                }
+              }
+            });
+            modalInstance.result.then(function (notice) {
+              vm.notice = notice;
+            })
+          }
+
+        } else{
+
+          vm.saveMachine(machine);
+        }
+      })
+
+
+      vm.saveMachine = function (machine) {
+        console.log(machine.engineType);
+
+        var postInfo=machine;
+        if (machine.deviceinfo){
+          //条码输入
+          if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner !='') {
+            machine.deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
+          }
+          postInfo.deviceinfo={deviceNum:machine.deviceinfo.deviceNum};
+        }
+        else{
+          postInfo.deviceinfo=null;
+        }
+        postInfo.org={id:machine.org.id};
+        // postInfo.engineType={id:machine.engineType};
+        // postInfo.fuelConfig={id:machine.fuelConfig};
+
+
+        var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
+        restPromise.then(function (data) {
+            if(data.code===0){
+              if (data.content.autoSendSMSResult){
+                Notification.warning("新建车辆信息成功!<br>自动发送激活短信: "+ data.content.autoSendSMSResult);
+              }else {
+                Notification.warning("新建车辆信息成功!");
+              }
+              $uibModalInstance.close(data.content);
+            }else{
+              vm.machine = machine;
+              Notification.error(data.message);
+            }
+          }, function (reason) {
+            // alert(reason.data.message);
+            vm.errorMsg=reason.data.message;
+            Notification.error(reason.data.message);
+          }
+        );
+      }
 
       //alert(machine.deviceinfo.id);
       // if(vm.machine.deviceinfo.deviceNum==""){
@@ -122,49 +205,15 @@
     //  alert(vm.machine.deviceinfoId+"   "+vm.machine.orgId);
    //   alert(vm.machine.deviceinfo.deviceNum);
 
-      console.log(machine.engineType);
 
-      var postInfo=machine;
-      if (machine.deviceinfo){
-        //条码输入
-        if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner !='') {
-          machine.deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
-        }
-        postInfo.deviceinfo={deviceNum:machine.deviceinfo.deviceNum};
-      }
-      else{
-        postInfo.deviceinfo=null;
-      }
-      postInfo.org={id:machine.org.id};
-     // postInfo.engineType={id:machine.engineType};
-     // postInfo.fuelConfig={id:machine.fuelConfig};
-
-
-     var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
-      restPromise.then(function (data) {
-        if(data.code===0){
-          if (data.content.autoSendSMSResult){
-            Notification.warning("新建车辆信息成功!<br>自动发送激活短信: "+ data.content.autoSendSMSResult);
-          }else {
-            Notification.warning("新建车辆信息成功!");
-          }
-          $uibModalInstance.close(data.content);
-        }else{
-          vm.machine = machine;
-          Notification.error(data.message);
-        }
-      }, function (reason) {
-       // alert(reason.data.message);
-          vm.errorMsg=reason.data.message;
-          Notification.error(reason.data.message);
-      }
-
-      );
     };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+
+
 
     //默认不是通过扫码输入
     vm.deviceNumFromScanner = false;
