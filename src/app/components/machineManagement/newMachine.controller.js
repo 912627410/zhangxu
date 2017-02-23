@@ -103,48 +103,43 @@
 
     vm.ok = function (machine) {
 
-
+      var deviceNum = vm.machine.deviceinfo.deviceNum;
+      var machineOrgLabel = vm.machine.org.label;
       var restCallURL = MACHINEANDDEVCE_ORG_JUDGE;
-      restCallURL += "?&deviceNum=" + vm.machine.deviceinfo.deviceNum + '&orgLabel=' + vm.machine.org.label;
+      restCallURL += "?&deviceNum=" + deviceNum;
+
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        var deviceInfo = data.content;
-        var machineInfo = vm.machine;
-        if (data.code == 3) {
-          Notification.warning("设备不不存在!");
-        }
-        else if (data.code == 0) {
-          if (vm.notice) {
-            vm.saveMachine(machine);
-          } else {
-            var modalInstance = $uibModal.open({
-              animation: vm.animationsEnabled,
-              templateUrl: 'app/components/machineManagement/batchMoveOrg.html',
-              controller: 'batchMoveOrgController as batchMoveOrgController',
-              size: "md",
-              backdrop: false,
-              resolve: {
-                deviceInfo: function () {
-                  return deviceInfo;
-                },
-                machineInfo: function () {
-                  return machineInfo;
-                }
+        var deviceOrgLabel =data.content.label;
 
+        if(org.label != vm.machine.org.label) {
+          var modalInstance = $uibModal.open({
+            animation: vm.animationsEnabled,
+            templateUrl: 'app/components/machineManagement/batchMoveOrg.html',
+            controller: 'batchMoveOrgController as batchMoveOrgController',
+            size: "md",
+            backdrop: false,
+            resolve: {
+              deviceNum: function () {
+                return deviceNum;
+              },
+              deviceOrgLabel: function () {
+                return deviceOrgLabel;
+              },
+              machineOrgLabel:function () {
+                return machineOrgLabel;
               }
-            });
-            modalInstance.result.then(function (notice) {
-              vm.notice = notice;
-            })
-          }
-
-        } else {
-
+            }
+          });
+        }else{
           vm.saveMachine(machine);
         }
-      })
+      },function (reason) {
+        Notification.error(reason.data.message);
 
+      });
+    };
 
       vm.saveMachine = function (machine) {
         console.log(machine.engineType);
@@ -201,7 +196,7 @@
       //   alert(vm.machine.deviceinfo.deviceNum);
 
 
-    };
+
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');

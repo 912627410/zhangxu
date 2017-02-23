@@ -1,42 +1,10 @@
 <div class="modal-header">
   <h3 class="modal-title">提示信息:</h3>
 </div>
-<section class="content">
-  <table class="table ">
-    <tbody>
-    <tr>
-      <td>
-        <label class="control-label">整机编号/车号</label>
-      </td>
-      <td>
-        <span>{{batchMoveOrgController.machineAndDeviceInfo.machineLicenseId}}</span>
-      </td>
-      <td>
-        <label class="control-label">所属组织</label>
-      </td>
-      <td>
-        <span>{{batchMoveOrgController.machineAndDeviceInfo.machineOrg}}</span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label class="control-label">设备号</label>
-      </td>
-      <td>
-        <span>{{batchMoveOrgController.machineAndDeviceInfo.deviceNum}}</span>
-      </td>
-      <td>
-        <label class="control-label">所属组织</label>
-      </td>
-      <td>
-        <span>{{batchMoveOrgController.machineAndDeviceInfo.deviceOrg}}</span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div>
-    <p>当前设备所属组织与车辆所属组织不同.&nbsp;&nbsp;&nbsp;<span style="color: red;font-size: 18px;">请先进行调拨! </span></p>
-  </div>
+<section >
+  <p style="font-size: 18px;line-height: 32px;padding-left: 20px;">
+    当前设备[{{batchMoveOrgController.machineAndDeviceInfo.deviceNum}}]所属组织为{{batchMoveOrgController.machineAndDeviceInfo.deviceOrg}},请调拨到{{batchMoveOrgController.machineAndDeviceInfo.machineOrg}}.
+  </p>
 </section>
 <div class="modal-footer">
   <button class="btn btn-warning" type="button" ng-click="batchMoveOrgController.cancel()">关闭</button>
