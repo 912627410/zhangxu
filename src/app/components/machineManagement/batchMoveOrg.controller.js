@@ -9,31 +9,23 @@
     .module('GPSCloud')
     .controller('batchMoveOrgController', batchMoveOrgController);
 
-  function batchMoveOrgController($rootScope,$scope,serviceResource,Notification,$uibModalInstance,DEIVCIE_MOVE_ORG_URL,deviceOrgId,machineOrgId){
+  function batchMoveOrgController($rootScope,$scope,serviceResource,Notification,$uibModalInstance,DEIVCIE_MOVE_ORG_URL,deviceInfo,machineInfo){
     var vm = this;
-    vm.machineOrgId = machineOrgId;
-    vm.deviceOrgId = deviceOrgId;
+    vm.machineOrgId = machineInfo.org.id;
+
+    vm.machineAndDeviceInfo = {
+      machineLicenseId:machineInfo.licenseId,
+      machineOrg:machineInfo.org.label,
+      deviceNum:deviceInfo.deviceNum,
+      deviceOrg:deviceInfo.org.label
+    };
+    vm.deviceId = [];
+    vm.deviceId.push(deviceInfo.id);
+
     vm.notice = true;
-
-    vm.ok = function () {
-
-      var moveOrg = {ids: vm.deviceOrgId, "orgId": vm.machineOrgId};
-
-      var restPromise = serviceResource.restUpdateRequest(DEIVCIE_MOVE_ORG_URL, moveOrg);
-      restPromise.then(function (data) {
-        Notification.success("调拨设备成功!");
-
-
-      }, function (reason) {
-        Notification.error("调拨设备出错!");
-      });
-      $uibModalInstance.dismiss('cancel');
-    }
 
     vm.cancel = function () {
       $uibModalInstance.close(vm.notice);
-      //$uibModalInstance.dismiss('cancel');
-
     }
   }
 
