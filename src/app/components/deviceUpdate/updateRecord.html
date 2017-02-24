@@ -37,8 +37,8 @@
         <table ng-table="updateRecordCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="updateRecord in $data">
             <td class="text-nowrap" data-title="'设备号'" sortable="'fieldName'">{{updateRecord.fieldName}}</td>
-            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue!=null">VER{{updateRecord.originValue/100 | number: 2}}</td>
-            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue==null"></td>
+            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue!=null && updateRecord.originValue!='0'">VER{{updateRecord.originValue/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue==null || updateRecord.originValue=='0'"></td>
             <td class="text-nowrap" data-title="'升级后版本'" sortable="'targetValue'">VER{{updateRecord.targetValue/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'升级结果'" sortable="'updateDesc'">{{updateRecord.updateDesc}}</td>
             <td class="text-nowrap" data-title="'操作者'" sortable="''">{{updateRecord.operator.ssn}}</td>
