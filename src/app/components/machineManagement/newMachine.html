@@ -149,6 +149,20 @@
           <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
                  ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
         </div>
+
+        <label for="machineState" class="col-sm-2 control-label">车辆状态</label>
+        <div class="col-sm-4">
+
+          <ui-select id="machineState" name="machineState" ng-model="newMachineController.machine.machineState" theme="bootstrap"
+                     ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.machineState}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineState.code as machineState in newMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
+              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
       </div>
 
     <i style="color: red" ng-if="null!=newMachineController.errorMsg">
