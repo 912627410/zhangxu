@@ -101,9 +101,6 @@
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
-          if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
-          }
           if(data.code==1){
             vm.userverify();
           }
@@ -141,6 +138,9 @@
 
       }, function (reason) {
         Notification.error(languages.findKey('loginFailure'));
+
+        vm.credentials.password = "";
+
         count = count + 1;
         if(count == 2){
           $scope.isShow = true;
@@ -342,22 +342,32 @@
       })
 
       document.getElementById("verifyCode").value="";
-
+      vm.message = "";
     }
 
     vm.validate =  function () {
       var code = vm.code ;
+
       if(null!=code&&""!=code){
+        //前端进行验证
+        if (code == verifyCodeInfo.value) {
+          vm.message = "√";
+          document.getElementById("Codemessage").style.color = "green";
+        } else {
+          vm.message = "×";
+          document.getElementById("Codemessage").style.color = "Red";
+        }
+
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
           if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
+           // Notification.error("验证码输入错误！请重新输入！!");
             $scope.disabled = true;
           }
           if(data.code==1){
-            Notification.success("验证码输入正确!");
+            //Notification.success("验证码输入正确!");
 
           }
         })
