@@ -29,7 +29,7 @@
         if(sim){
 
           if (sim.phoneNumber) {
-            restCallURL += "&search_LIKE_phoneNumber=" + sim.phoneNumber;
+            restCallURL += "&search_LIKES_phoneNumber=" + sim.phoneNumber;
           }
           if (sim.provider) {
             restCallURL += "&search_EQ_provider=" + sim.provider.value;

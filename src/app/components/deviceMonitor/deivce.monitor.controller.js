@@ -17,6 +17,7 @@
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
     vm.querySubOrg = true;
+    vm.queryLinkage = false;
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
@@ -67,7 +68,11 @@
         restCallURL += "&search_LIKES_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
       }
       if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
-        restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+        if(null != vm.queryDeviceType2&&vm.queryDeviceType2 != "") {
+          restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType2);
+        } else {
+          restCallURL += "&search_LIKE_machine.machineType=" + $filter('uppercase')(vm.queryDeviceType);
+        }
       }
       if(null != vm.queryOrg&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.queryOrg.id;
@@ -133,7 +138,9 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
       vm.queryDeviceType = null;
+      vm.queryDeviceType2 = null;
       vm.querySubOrg = true;
+      vm.queryLinkage = false;
     }
 
     //组织树的显示
@@ -184,6 +191,15 @@
           Notification.error("请选择需要导出的组织!");
       }
 
+    };
+
+    vm.selectChange = function(selectCon) {
+      if(selectCon == "挖掘机") {
+        vm.queryLinkage = true;
+      } else {
+        vm.queryLinkage = false;
+        vm.queryDeviceType2 = null;
+      }
     }
   }
 })();
