@@ -22,6 +22,7 @@
     vm.deleteList = [];
     vm.addList = [];
     vm.otherList = [];
+    vm.flag = false;
     /*tin atart*/
     var getPriviligeRoleState,queryState,queryResult;
     function queryFn(){
@@ -50,16 +51,16 @@
           }
 
         }
-        if(queryState){
-          queryFn()
-        }else{
-          getPriviligeRoleState=true;
-        }
-
         //  console.log(vm.roleUserinfoList);
       }, function (reason) {
         Notification.error('获取权限状态失败');
       })
+      if(queryState){
+        queryFn()
+      }else{
+        getPriviligeRoleState=true;
+      }
+      vm.flag = true;
     }
 
 
@@ -109,7 +110,10 @@
     vm.init=function(){
       $LAB.script().wait(function () {
         vm.getPriviligeRole();
-        vm.query(null, 10, null, null);
+        if(vm.flag){
+          vm.query(null, 10, null, null);
+        }
+
 
 
       })

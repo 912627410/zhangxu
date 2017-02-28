@@ -18,10 +18,17 @@ function listFiles() {
 
   var patterns = wiredep(wiredepOptions).js
     .concat([
-      path.join(conf.paths.src, '/app/**/*.module.js'),
-      path.join(conf.paths.src, '/app/**/*.js'),
-      path.join(conf.paths.src, '/**/*.spec.js'),
-      path.join(conf.paths.src, '/**/*.mock.js'),
+       path.join(conf.paths.src, '/app/**/*.module.js'),
+       path.join(conf.paths.src, '/app/**/*.js'),
+       path.join(conf.paths.src, '/**/*.spec.js'),
+       path.join(conf.paths.src, '/**/*.mock.js'),
+       path.join(conf.paths.src,'../bower_components/angular/angular.js'),
+       path.join(conf.paths.src,'../bower_components/angular-ui-router/**/*.js'),
+       path.join(conf.paths.src,'../bower_components/angular-mocks/angular-mocks.js'),
+       path.join(conf.paths.src,'../bower_components/angular-*/angular-*.js'),
+       path.join(conf.paths.src, '/app/*.js'),
+
+
     ])
     .concat(pathSrcHtml);
 
@@ -50,7 +57,7 @@ module.exports = function(config) {
 
     ngHtml2JsPreprocessor: {
       stripPrefix: conf.paths.src + '/',
-      moduleName: 'emcloudGulp'
+      moduleName: 'GPSCloud'
     },
 
     logLevel: 'WARN',
@@ -61,10 +68,10 @@ module.exports = function(config) {
       whitelist: [path.join(conf.paths.src, '/**/!(*.html|*.spec|*.mock).js')]
     },
 
-    browsers : ['PhantomJS'],
+    browsers : ['Firefox'],
 
     plugins : [
-      'karma-phantomjs-launcher',
+      'karma-firefox-launcher',
       'karma-angular-filesort',
       'karma-coverage',
       'karma-jasmine',
@@ -108,3 +115,5 @@ module.exports = function(config) {
 
   config.set(configuration);
 };
+
+
