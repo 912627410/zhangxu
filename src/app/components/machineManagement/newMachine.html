@@ -154,8 +154,8 @@
         <div class="col-sm-4">
 
           <ui-select id="machineState" name="machineState" ng-model="newMachineController.machine.machineState" theme="bootstrap"
-                     ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.machineState}}
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in newMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
               <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>

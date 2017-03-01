@@ -124,7 +124,7 @@
 
         var deviceOrgLabel =data.content.label;
 
-        if(org.label != vm.machine.org.label) {
+        if(deviceOrgLabel != vm.machine.org.label) {
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
             templateUrl: 'app/components/machineManagement/batchMoveOrg.html',
