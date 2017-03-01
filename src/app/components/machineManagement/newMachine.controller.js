@@ -114,83 +114,46 @@
 
     vm.ok = function (machine) {
 
-      var deviceNum = vm.machine.deviceinfo.deviceNum;
-      var machineOrgLabel = vm.machine.org.label;
-      var restCallURL = MACHINEANDDEVCE_ORG_JUDGE;
-      restCallURL += "?&deviceNum=" + deviceNum;
+      console.log(machine.engineType);
 
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-
-        var deviceOrgLabel =data.content.label;
-
-        if(deviceOrgLabel != vm.machine.org.label) {
-          var modalInstance = $uibModal.open({
-            animation: vm.animationsEnabled,
-            templateUrl: 'app/components/machineManagement/batchMoveOrg.html',
-            controller: 'batchMoveOrgController as batchMoveOrgController',
-            size: "md",
-            backdrop: false,
-            resolve: {
-              deviceNum: function () {
-                return deviceNum;
-              },
-              deviceOrgLabel: function () {
-                return deviceOrgLabel;
-              },
-              machineOrgLabel:function () {
-                return machineOrgLabel;
-              }
-            }
-          });
-        }else{
-          vm.saveMachine(machine);
+      var postInfo = machine;
+      if (machine.deviceinfo) {
+        //条码输入
+        if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner != '') {
+          machine.deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
         }
-      },function (reason) {
-        Notification.error(reason.data.message);
+        postInfo.deviceinfo = {deviceNum: machine.deviceinfo.deviceNum};
+      }
+      else {
+        postInfo.deviceinfo = null;
+      }
+      postInfo.org = {id: machine.org.id};
+      // postInfo.engineType={id:machine.engineType};
+      // postInfo.fuelConfig={id:machine.fuelConfig};
 
-      });
+
+      var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
+      restPromise.then(function (data) {
+          if (data.code === 0) {
+            if (data.content.autoSendSMSResult) {
+              Notification.warning("新建车辆信息成功!<br>自动发送激活短信: " + data.content.autoSendSMSResult);
+            } else {
+              Notification.warning("新建车辆信息成功!");
+            }
+            $uibModalInstance.close(data.content);
+          } else {
+            vm.machine = machine;
+            Notification.error(data.message);
+          }
+        }, function (reason) {
+          // alert(reason.data.message);
+          vm.errorMsg = reason.data.message;
+          Notification.error(reason.data.message);
+        }
+      );
     };
 
-      vm.saveMachine = function (machine) {
-        console.log(machine.engineType);
 
-        var postInfo = machine;
-        if (machine.deviceinfo) {
-          //条码输入
-          if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner != '') {
-            machine.deviceinfo.deviceNum = vm.deviceNumContentFromScanner;
-          }
-          postInfo.deviceinfo = {deviceNum: machine.deviceinfo.deviceNum};
-        }
-        else {
-          postInfo.deviceinfo = null;
-        }
-        postInfo.org = {id: machine.org.id};
-        // postInfo.engineType={id:machine.engineType};
-        // postInfo.fuelConfig={id:machine.fuelConfig};
-
-
-        var restPromise = serviceResource.restAddRequest(MACHINE_URL, postInfo);
-        restPromise.then(function (data) {
-            if (data.code === 0) {
-              if (data.content.autoSendSMSResult) {
-                Notification.warning("新建车辆信息成功!<br>自动发送激活短信: " + data.content.autoSendSMSResult);
-              } else {
-                Notification.warning("新建车辆信息成功!");
-              }
-              $uibModalInstance.close(data.content);
-            } else {
-              vm.machine = machine;
-              Notification.error(data.message);
-            }
-          }, function (reason) {
-            // alert(reason.data.message);
-            vm.errorMsg = reason.data.message;
-            Notification.error(reason.data.message);
-          }
-        );
-      }
 
       //alert(machine.deviceinfo.id);
       // if(vm.machine.deviceinfo.deviceNum==""){
