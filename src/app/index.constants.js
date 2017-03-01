@@ -38,8 +38,12 @@
     .constant('DEVCE_ECU_NOTACTIVE_EXCELEXPORT', SERVER_BASE_URL + 'device/ecuNotActiveExport')   //ecu未激活数据导出
     .constant('DEVCE_NORMAL_UNBOUND_QUERY', SERVER_BASE_URL + 'device/normalUnboundPage')   //分页查询正常解绑的车辆数据URL
     .constant('DEVCE_NORMAL_UNBOUND_EXPORT', SERVER_BASE_URL + 'device/normalUnboundExport')   //正常解绑的车辆导出
-
     .constant('DEVCEDINFO_EXCELEXPORT', SERVER_BASE_URL + 'device/deviceinfoexport')   //deviceInfoMng导出
+
+    .constant('DEVCE_MF', SERVER_BASE_URL + 'config/mf')
+    .constant('DEVCE_POWERTYPE', SERVER_BASE_URL + 'config/devicepowertype')
+    .constant('DEVCE_HIGHTTYPE', SERVER_BASE_URL + 'config/deviceheighttype')
+    .constant('DEVCE_DEVICETYPE', SERVER_BASE_URL + 'config/devicetype')
 
     .constant('DEVICEREPORT_ATTENDANCE_URL', SERVER_BASE_URL + 'deviceReport/getMachineAttendance')   //车辆出勤率
     .constant('DEVICEREPORT_EXPORT_URL', SERVER_BASE_URL + 'deviceReport/excelExport')   //deviceReport导出

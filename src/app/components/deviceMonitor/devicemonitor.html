@@ -33,7 +33,19 @@
 
   <div class="row form-group">
     <hr>
+    <div class="col-md-1">
+      <label class="control-label">{{'terminalno'|translate}}:</label>
+    </div>
     <div class="col-md-2">
+      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+    <div class="col-md-1">
       <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-2">
@@ -48,28 +60,53 @@
                   </span>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <label class="control-label">包含下级组织:</label>
       <input type="checkbox" checked="checked" ng-model="monitorCtrl.querySubOrg"/>
     </div>
 
-    <div class="col-md-2">
-      <label class="control-label">{{'terminalno'|translate}}:</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-    </div>
+
   </div>
+
+    <div class=" row form-group">
+      <div class="col-md-1">
+        <label class="control-label right">品牌类型:</label>
+      </div>
+      <div class="col-md-2">
+        <select name="deviceMF" class="form-control"
+                ng-model="deviceInfoListCtrl.queryManufacture"
+                ng-options="deviceManufacture.id as deviceManufacture.name for deviceManufacture in monitorCtrl.deviceManufactureList">
+          <option value="">请选择...</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label class="control-label right">驱动类型:</label>
+      </div>
+      <div class="col-md-2">
+        <select name="devicePowerType" class="form-control"
+                ng-model="deviceInfoListCtrl.queryDevicePowerType"
+                ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in monitorCtrl.devicePowerTypeList">
+          <option value="">请选择...</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label class="control-label right">高度类型:</label>
+      </div>
+      <div class="col-md-2">
+        <select name="deviceMF" class="form-control"
+                ng-model="deviceInfoListCtrl.queryDeviceHeightType"
+                ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in monitorCtrl.deviceHeightTypeList">
+          <option value="">请选择...</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
   <div class="row form-group">
-    <div class="col-md-2">
-      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-    </div>
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
+
+    <div class="col-md-1">
       <label class="control-label">设备类型:</label>
     </div>
     <div class="col-md-2">
@@ -80,13 +117,17 @@
         <option value="1,2,3">装载机</option>
       </select>
     </div>
+    <div class="col-md-6">
+    </div>
+
     <div class="col-md-2">
 
       <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
-
+  <div class="col-md-1">
+  </div>
   <div class="row">
     <hr>
     <div class="btn-group col-md-2">

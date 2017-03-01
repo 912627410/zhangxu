@@ -10,7 +10,9 @@
 
   /** @ngInject */
 
-  function DeviceMonitorController($rootScope, $scope,$http, $uibModal, $timeout, $filter, permissions,$translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification,DEVCEMONITOR_EXCELEXPORT) {
+  function DeviceMonitorController($rootScope, $scope,$http, $uibModal, $timeout, $filter, permissions,$translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY,
+                                   DEVCE_HIGHTTYPE,DEVCE_MF,DEVCE_POWERTYPE,
+                                   DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification,DEVCEMONITOR_EXCELEXPORT) {
     var vm = this;
 
     //modal打开是否有动画效果
@@ -46,6 +48,54 @@
         })
       }
     }
+
+
+    //读取参数信息
+    vm.getMFList = function() {
+      var search = DEVCE_MF;
+      var page = search.page||0;
+      var size = search.size||100;
+      var sort = search.sort||'id,desc';
+      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort;
+      var rspData = serviceResource.restCallService(finalURL, "GET");
+      rspData.then(function(data){
+        vm.deviceManufactureList = data.content;
+      },function(reason){
+        Notification.error("读取生产厂家出错");
+      });
+    };
+
+    vm.getPowerTypeList = function() {
+      var search = DEVCE_POWERTYPE;
+      var page = search.page||0;
+      var size = search.size||100;
+      var sort = search.sort||'id,desc';
+      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort;
+      var rspData = serviceResource.restCallService(finalURL, "GET");
+      rspData.then(function(data){
+        vm.devicePowerTypeList = data.content;
+      },function(reason){
+        Notification.error("读取驱动类型出错");
+      });
+    };
+
+    vm.getHeightTypeList = function() {
+      var search = DEVCE_HIGHTTYPE;
+      var page = search.page||0;
+      var size = search.size||40;
+      var sort = search.sort||'id,desc';
+      var finalURL = search+ "?page=" + page  + '&size=' + size + '&sort=' + sort;
+
+    //  alert(finalURL);
+      var rspData = serviceResource.restCallService(finalURL, "GET");
+      rspData.then(function(data){
+        vm.deviceHeightTypeList = data.content;
+      },function(reason){
+        Notification.error("读取高度类型出错");
+      });
+    };
+
+
 
     vm.queryDeviceInfo = function (page, size, sort, deviceinfo) {
       //if (queryCondition){
@@ -99,6 +149,9 @@
     }
     else {
       vm.queryDeviceInfo(0, null, null, null);
+       vm.getMFList();
+       vm.getPowerTypeList();
+       vm.getHeightTypeList();
     }
 
 //监控
