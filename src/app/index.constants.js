@@ -80,6 +80,7 @@
     .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
     .constant('MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL', SERVER_BASE_URL + 'machine/uploadTemplateDownload')   //车辆导入模板下载
     .constant('MACHINE_UPLOAD_URL', SERVER_BASE_URL + 'machine/upload')   //车辆批量导入
+    .constant('MACHINE_FENCE',SERVER_BASE_URL+'machine/setfence')  //车辆电子围栏
 
 
 

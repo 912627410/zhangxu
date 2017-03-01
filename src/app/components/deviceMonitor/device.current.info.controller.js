@@ -17,7 +17,8 @@
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
-                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo, ngTableDefaults, NgTableParams) {
+                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo,
+                                       MACHINE_FENCE,ngTableDefaults, NgTableParams) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -2556,6 +2557,470 @@
         }
       }]
     }
+    //默认显示当前设备的最新地址
+    vm.initMapTab = function(deviceInfo){
+
+      $timeout(function(){
+        var deviceInfoList = new Array();
+        deviceInfoList.push(deviceInfo);
+        //    alert("deviceInfo.amaplongitudeNum=="+deviceInfo.amaplongitudeNum+", deviceInfo.amaplatitudeNum="+deviceInfo.amaplatitudeNum)
+        if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
+          var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
+        }
+
+
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,12,centerAddr);
+      })
+    };
+
+    //构造地图对象
+    vm.initMap=function(mapId,zoomsize,centeraddr){
+      //初始化地图对象
+      if (!AMap) {
+        location.reload(false);
+      }
+      var amapRuler, amapScale, toolBar,overView;
+
+
+      var localZoomSize = 4;  //默认缩放级别
+      if (zoomsize){
+        localZoomSize = zoomsize;
+      }
+
+      var localCenterAddr = [103.39,36.9];//设置中心点大概在兰州附近
+      if (centeraddr){
+        localCenterAddr = centeraddr;
+      }
+
+
+      var map = new AMap.Map(mapId, {
+        resizeEnable: true,
+        center: localCenterAddr,
+        zooms: [localZoomSize, 18]
+      });
+      //    alert(555);
+      map.setZoom(1);
+      map.plugin(['AMap.ToolBar'], function () {
+        map.addControl(new AMap.ToolBar());
+      });
+      //加载比例尺插件
+      map.plugin(["AMap.Scale"], function () {
+        amapScale = new AMap.Scale();
+        map.addControl(amapScale);
+      });
+      //添加地图类型切换插件
+      map.plugin(["AMap.MapType"], function () {
+        //地图类型切换
+        var mapType = new AMap.MapType({
+          defaultType: 0,//默认显示卫星图
+          showRoad: false //叠加路网图层
+        });
+        map.addControl(mapType);
+      });
+      //在地图中添加ToolBar插件
+      map.plugin(["AMap.ToolBar"], function () {
+        toolBar = new AMap.ToolBar();
+        map.addControl(toolBar);
+      });
+
+      //在地图中添加鹰眼插件
+      map.plugin(["AMap.OverView"], function () {
+        //加载鹰眼
+        overView = new AMap.OverView({
+          visible: true //初始化隐藏鹰眼
+        });
+        map.addControl(overView);
+      });
+
+      vm.scopeMap=map;
+      return map;
+    };
+
+    vm.updateLocationInfo=function(address,location){
+      vm.selectAddress=address;
+
+      vm.amaplongitudeNum=location[0];//选中的经度
+      vm.amaplatitudeNum=location[1];//选中的维度
+
+      $scope.$apply();
+
+
+    };
+
+    //查询设备数据并更新地图 mapid是DOM中地图放置位置的id
+    vm.refreshScopeMapWithDeviceInfo=function (mapId,deviceInfo,zoomsize,centeraddr) {
+
+      $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
+
+        var map=vm.initMap(mapId,zoomsize,centeraddr);
+
+
+        var marker;
+
+        map.on('click', function(e) {
+
+          var  lnglatXY=[e.lnglat.getLng(), e.lnglat.getLat()];
+          marker = new AMap.Marker({
+            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            position: lnglatXY
+          });
+          marker.setMap(map);
+
+          var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+          });
+
+          geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              //       geocoder_CallBack(result);
+              var  address= result.regeocode.formattedAddress; //返回地址描述
+
+
+
+              var poi={location:lnglatXY,name:null,address: address};
+              vm.createMarker(poi);
+
+              vm.updateLocationInfo(address, lnglatXY);
+            }
+          });
+
+
+
+
+        });
+
+
+        //读取所有设备的gps信息，home map使用
+        if (deviceInfo.locateStatus === '1' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+          serviceResource.addMarkerModel(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
+        }
+
+        //围栏地址标注
+        if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
+          var  lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
+          marker = new AMap.Marker({
+            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+            position: lnglatXY
+          });
+          marker.setMap(map);
+
+          var geocoder = new AMap.Geocoder({
+            radius: 1000,
+            extensions: "all"
+          });
+
+          geocoder.getAddress(lnglatXY, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              //       geocoder_CallBack(result);
+              var  address= result.regeocode.formattedAddress; //返回地址描述
+
+              var poi={location:lnglatXY,name:null,address: address};
+              vm.createMarker(poi);
+
+              vm.updateLocationInfo(address, lnglatXY);
+            }
+          });
+          //围栏地址标注end
+        }
+
+
+
+      })
+    },
+
+
+      vm.createMarker=function(poi){
+        // 添加marker
+        var marker = new AMap.Marker({
+          map: vm.scopeMap,
+          position: poi.location
+        });
+
+
+        vm.scopeMap.setCenter(marker.getPosition());
+        var infoWindow= vm.createInfoWindow(poi);
+        infoWindow.open(vm.scopeMap, marker.getPosition());
+
+        AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+          var infoWindow= vm.createInfoWindow(poi);
+
+
+          infoWindow.open(vm.scopeMap, marker.getPosition());
+
+          var  lnglatXY=[marker.getPosition().getLng(), marker.getPosition().getLat()];
+          vm.updateLocationInfo(poi.address, lnglatXY);
+
+        });
+      }
+
+    vm.createInfoWindow=function(poi){
+      var infoWindow = new AMap.InfoWindow({
+        autoMove: true,
+        offset: {x: 0, y: -30}
+      });
+
+      infoWindow.setContent(vm.createContent(poi));
+      return infoWindow;
+
+    }
+
+    vm.createContent=function(poi) {  //信息窗体内容
+      var s = [];
+      if(null!=poi.name){
+
+
+        s.push("<b>名称：" + poi.name+"</b>");
+      }
+      s.push("围栏地址：" + poi.address+"</b>");
+      //s.push("取消围栏： <button class='btn btn-primary btn-xs' type='button' onclick=''>重置</button></b>");
+
+
+      return s.join("<br>");
+    }
+
+    vm.updateScopeMap = function () {
+      if(null==deviceinfo.machine){
+        Notification.error("设备未绑定车辆,暂无法设置电子围栏");
+        return false;
+      }
+
+
+      if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
+        Notification.error('无效的地址');
+        return false;
+      }
+      if(!vm.amaplongitudeNum&&typeof(vm.amaplongitudeNum)=="undefined"){
+        Notification.error('无效的经度');
+        return false;
+      }
+      if(!vm.amaplatitudeNum&&typeof(vm.amaplatitudeNum)=="undefined"){
+        Notification.error('无效的维度');
+        return false;
+      }
+      if(!vm.radius||typeof(vm.radius)=="undefined"||isNaN(vm.radius)){
+        Notification.error('无效的半径');
+        return false;
+      }
+
+      var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
+      $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+        .then(function() {
+
+
+
+          var machieId;
+          if(deviceinfo.machine.id!=null){
+            machieId=deviceinfo.machine.id;
+          }else{
+            machieId=deviceinfo.machine;
+          }
+
+          var fence={
+            id:machieId,
+            radius:vm.radius,
+            selectAddress:vm.selectAddress,
+            amaplongitudeNum:vm.amaplongitudeNum,
+            amaplatitudeNum:vm.amaplatitudeNum
+          }
+
+          //TODO 保存电子围栏
+          var restResult = serviceResource.restAddRequest(MACHINE_FENCE,fence);
+          restResult.then(function (data) {
+              Notification.success("设置电子围栏成功!");
+              $uibModalInstance.close();
+            },function (reason) {
+              vm.errorMsg=reason.data.message;
+              Notification.error(reason.data.message);
+            }
+          );
+
+        });
+    };
+
+
+    vm.refreshLocationList = function(value) {
+      //   alert(11);
+      vm.locationList=[];
+      AMap.service(["AMap.Autocomplete"], function() { //加载地理编码
+        var autocomplete = new AMap.Autocomplete({
+          city: "", //城市，默认全国
+          input: "",//使用联想输入的input的id
+        });
+
+
+        //
+        autocomplete.search(value, function(status, result) {
+        });
+
+        AMap.event.addListener(autocomplete, "complete", complete);//注册监听，当选中某条记录时会触发
+        function complete(result) {
+          vm.locationList=result.tips;
+        }
+
+      });
+    },
+
+      vm.onSelectCallback = function (item, model){
+
+        AMap.service(["AMap.PlaceSearch"], function() { //加载地理编码
+          var placeSearch = new AMap.PlaceSearch({
+            map: vm.scopeMap
+
+
+          });  //构造地点查询类
+
+
+
+          placeSearch.setCity(item.adcode);
+          placeSearch.search(item.name,function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              placeSearch_CallBack(result);
+            }
+
+          });
+
+
+          //回调函数
+          function placeSearch_CallBack(data) {
+            var poiArr = data.poiList.pois;
+
+            for(var i=0;i<poiArr.length;i++){
+              vm.createMarker(poiArr[i]);
+
+              var  lnglatXY=[poiArr[i].location.getLng(), poiArr[i].location.getLat()];
+
+              vm.updateLocationInfo(poiArr[i].address, lnglatXY); //更新选中的地址信息
+            }
+
+
+          }
+
+
+        });
+      };
+
+    vm.getLocation=function(address){
+      var geocoder = new AMap.Geocoder({
+        radius: 1000,
+        extensions: "all"
+      });
+
+
+      geocoder.getLocation(address, function(status, result) {
+        if (status === 'complete' && result.info === 'OK') {
+
+          var resultStr = "";
+          var  lnglatXY;
+          //地理编码结果数组
+          var geocode = result.geocodes;
+          for (var i = 0; i < geocode.length; i++) {
+            //拼接输出html
+            resultStr += "<span style=\"font-size: 12px;padding:0px 0 4px 2px; border-bottom:1px solid #C1FFC1;\">" + "<b>地址</b>：" + geocode[i].formattedAddress + "" + "&nbsp;&nbsp;<b>的地理编码结果是:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;坐标</b>：" + geocode[i].location.getLng() + ", " + geocode[i].location.getLat() + "" + "<b>&nbsp;&nbsp;&nbsp;&nbsp;匹配级别</b>：" + geocode[i].level + "</span>";
+            lnglatXY=[geocode[i].location.getLng(), geocode[i].location.getLat()];
+            vm.addMarker(vm.scopeMap,i, geocode[i]);
+          }
+
+        }
+      });
+    },
+
+
+      //默认显示当前设备的最新地址
+      vm.initScopeMapTab = function(deviceInfo){
+
+        if (!permissions.getPermissions("device:scopeMapPage")) {
+          return;
+        }
+
+        $timeout(function(){
+          //第一个标注
+          if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
+            var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
+          }
+
+
+          //第一个标注
+          vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,8,centerAddr);
+
+
+
+        })
+      };
+
+
+
+
+    vm.addMarker=function(map, location) {
+      var marker = new AMap.Marker({
+        map: map,
+        position: location
+      });
+      var infoWindow = new AMap.InfoWindow({
+        content: d.formattedAddress,
+        offset: {x: 0, y: -30}
+      });
+      marker.on("mouseover", function(e) {
+        infoWindow.open(map, marker.getPosition());
+      });
+
+      AMap.event.addDomListener(marker, 'click', function () {
+        infoWindow.open(vm.map, marker.getPosition());
+      }, false);
+
+      map.setCenter(location);
+    }
+
+    //参数: 地图轨迹gps 数据
+    vm.refreshMapTab = function(lineAttr){
+      $timeout(function(){
+        $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
+          var marker, lineArr = [];
+          if (lineAttr){
+            lineArr = lineAttr;
+          }
+          var map = new AMap.Map("deviceDetailMap", {
+            resizeEnable: true,
+            //center: [116.397428, 39.90923],
+            zoom: 17
+          });
+          map.on("complete", completeEventHandler);
+          AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
+            marker.moveAlong(lineArr, 500);
+          }, false);
+          AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
+            marker.stopMove();
+          }, false);
+          var carPostion = [116.397428, 39.90923];   //默认地点
+          if (lineArr.length > 0){
+            carPostion = lineArr[0];
+          }
+          // 地图图块加载完毕后执行函数
+          function completeEventHandler() {
+            marker = new AMap.Marker({
+              map: map,
+              position: carPostion,
+              //icon: "http://code.mapabc.com/images/car_03.png",
+              icon: "assets/images/car_03.png",
+              offset: new AMap.Pixel(-26, -13),
+              autoRotation: true
+            });
+            // 绘制轨迹
+            var polyline = new AMap.Polyline({
+              map: map,
+              path: lineArr,
+              strokeColor: "#00A",  //线颜色
+              strokeOpacity: 1,     //线透明度
+              strokeWeight: 3,      //线宽
+              strokeStyle: "solid"  //线样式
+            });
+            map.setFitView();
+          }
+        })
+      })
+    };
+
+
 
 
   }
