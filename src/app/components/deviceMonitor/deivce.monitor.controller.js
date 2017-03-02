@@ -119,6 +119,17 @@
       if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
       }
+
+      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+      }
+      if (null != vm.queryDevicePowerType&&vm.queryDevicePowerType!="") {
+        restCallURL += "&search_EQ_devicePowerType.id=" +$filter('uppercase')(vm.queryDevicePowerType);
+      }
+      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+      }
+
       if(null != vm.queryOrg&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.queryOrg.id;
       }
@@ -186,6 +197,11 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
       vm.queryDeviceType = null;
+
+      vm.queryManufacture = null;
+      vm.queryDeviceHeightType = null;
+      vm.queryDevicePowerType = null;
+
       vm.querySubOrg = true;
     }
 

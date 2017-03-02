@@ -9,7 +9,8 @@
     .controller('newDeviceinfoController', newDeviceinfoController);
 
   /** @ngInject */
-  function newDeviceinfoController($q,$scope,$http, $uibModalInstance, SIM_UNUSED_URL,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
+  function newDeviceinfoController($q,$scope,$http, $uibModalInstance, SIM_UNUSED_URL,SIM_FETCH_UNUSED_URL,DEVCE_HIGHTTYPE,DEVCE_POWERTYPE,DEVCE_MF,
+                                   DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL,DEVCEINFO_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.deviceinfo = {};
@@ -83,6 +84,29 @@
       Notification.error('获取设备类型失败');
     })
 
+
+
+
+    var deviceHeightTypeData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
+    deviceHeightTypeData.then(function (data) {
+      vm.deviceHeightTypeList = data.content;
+    }, function (reason) {
+      Notification.error('获取高度类型失败');
+    })
+    var devicePowerTypeData = serviceResource.restCallService(DEVCE_POWERTYPE, "GET");
+    devicePowerTypeData.then(function (data) {
+      vm.devicePowerTypeList = data.content;
+    }, function (reason) {
+      Notification.error('获取驱动类型失败');
+    })
+    var deviceMFData = serviceResource.restCallService(DEVCE_MF, "GET");
+    deviceMFData.then(function (data) {
+      vm.deviceMFList = data.content;
+    }, function (reason) {
+      Notification.error('获取厂商失败');
+    })
+
+
     //日期控件相关
     //date picker
     vm.produceDateOpenStatus = {
@@ -114,7 +138,11 @@
         "deviceNum":deviceinfo.deviceNum,
         "protocalType":deviceinfo.protocalType,
         "produceDate":deviceinfo.produceDate,
-        "simPhoneNumber":deviceinfo.sim.phoneNumber
+        "simPhoneNumber":deviceinfo.sim.phoneNumber,
+        "deviceType":deviceinfo.deviceType,
+        "deviceManufacture":deviceinfo.deviceManufacture,
+        "devicePowerType":deviceinfo.devicePowerType,
+        "deviceHeightType":deviceinfo.deviceHeightType
       };
 
    //   console.log(operDeviceinfo);

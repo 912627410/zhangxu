@@ -1821,6 +1821,78 @@
 
     </uib-tab>
 
+    <uib-tab select="deviceCurrentInfoCtrl.initScopeMapTab(deviceCurrentInfoCtrl.deviceinfo)" presentation-href="device:scopeMapPage">
+      <uib-tab-heading  >
+        电子围栏
+      </uib-tab-heading>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-1">
+            <label class="control-label text-nowrap">地址:</label>
+          </div>
+          <div class="col-md-6">
+
+            <ui-select name="newAddress" ng-model="deviceCurrentInfoCtrl.newAddress" theme="bootstrap"
+                       ng-disabled="disabled"  on-select="deviceCurrentInfoCtrl.onSelectCallback($item, $model)">
+              <ui-select-match allow-clear="true" placeholder="输入地址">{{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="locationInfo.name as locationInfo in deviceCurrentInfoCtrl.locationList|  propsFilter: {name: $select.search, address: $select.search}"
+                                 refresh="deviceCurrentInfoCtrl.refreshLocationList($select.search)"
+                                 refresh-delay="0">
+
+                <div ng-bind-html="locationInfo.name | highlight: $select.search"></div>
+                <small>
+                  地址: {{locationInfo.district}} <span ng-bind-html="''+locationInfo.address | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+
+
+          </div>
+          <div class="col-md-1">
+            <label class="control-label text-nowrap">距离(米):</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control" id="test" ng-model="deviceCurrentInfoCtrl.radius"/>
+
+            </p>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceCurrentInfoCtrl.updateScopeMap()">设置</button>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label class="text-nowrap">当前地址:</label> {{deviceCurrentInfoCtrl.deviceinfo.address}}
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="text-nowrap">选中地址:</label> {{deviceCurrentInfoCtrl.selectAddress}}
+          </div>
+
+          <div class="col-md-6">
+            <label class="control-label text-nowrap">坐标:</label>经度: {{deviceCurrentInfoCtrl.amaplongitudeNum}}  维度: {{deviceCurrentInfoCtrl.amaplatitudeNum}}
+          </div>
+
+
+        </div>
+        <br/>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box-body" style="height: 600px" id="deviceScopeMap"></div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+
   </uib-tabset>
 
   <div class="modal-footer">

@@ -9,7 +9,8 @@
     .controller('updateDeviceinfoController', updateDeviceinfoController);
 
   /** @ngInject */
-  function updateDeviceinfoController($rootScope, $scope,$http,$uibModal, $uibModalInstance, treeFactory,SIM_FETCH_UNUSED_URL, DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo) {
+  function updateDeviceinfoController($rootScope, $scope,$http,$uibModal, $uibModalInstance, treeFactory,SIM_FETCH_UNUSED_URL, DEVCE_HIGHTTYPE,DEVCE_POWERTYPE,DEVCE_MF,
+                                      DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo) {
     var vm = this;
     vm.deviceinfo = deviceinfo;
     vm.operatorInfo = $rootScope.userInfo;
@@ -66,6 +67,25 @@
       Notification.error('获取协议类型失败');
     })
 
+    var deviceHeightTypeData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
+    deviceHeightTypeData.then(function (data) {
+      vm.deviceHeightTypeList = data.content;
+    }, function (reason) {
+      Notification.error('获取高度类型失败');
+    })
+    var devicePowerTypeData = serviceResource.restCallService(DEVCE_POWERTYPE, "GET");
+    devicePowerTypeData.then(function (data) {
+      vm.devicePowerTypeList = data.content;
+    }, function (reason) {
+      Notification.error('获取驱动类型失败');
+    })
+    var deviceMFData = serviceResource.restCallService(DEVCE_MF, "GET");
+    deviceMFData.then(function (data) {
+      vm.deviceMFList = data.content;
+    }, function (reason) {
+      Notification.error('获取厂商失败');
+    })
+
     //日期控件相关
     //date picker
     vm.produceDateOpenStatus = {
@@ -106,6 +126,22 @@
         vm.simNumber = deviceinfo.sim.phoneNumber;
       }
 
+      if (deviceinfo.deviceTypeDto){
+        var deviceTypeId = deviceinfo.deviceTypeDto.id;
+      }
+
+      if (deviceinfo.deviceManufactureDto){
+        var deviceManufactureId = deviceinfo.deviceManufactureDto.id;
+      }
+
+      if (deviceinfo.devicePowerTypeDto){
+        var devicePowerTypeId = deviceinfo.devicePowerTypeDto.id;
+      }
+
+      if (deviceinfo.deviceHeightTypeDto){
+        var deviceHeightTypeId = deviceinfo.deviceHeightTypeDto.id;
+      }
+
       //重新构造需要传输的数据
       var operDeviceinfo={
         "id":deviceinfo.id,
@@ -113,7 +149,12 @@
         "protocalType":deviceinfo.protocalType,
         "produceDate":deviceinfo.produceDate,
         "simPhoneNumber": vm.simNumber,
-        "orgId":deviceinfo.org.id
+        "orgId":deviceinfo.org.id,
+        "status":deviceinfo.status,
+        "deviceType":deviceTypeId,
+        "deviceManufacture":deviceManufactureId,
+        "devicePowerType":devicePowerTypeId,
+        "deviceHeightType":deviceHeightTypeId
       };
 
 

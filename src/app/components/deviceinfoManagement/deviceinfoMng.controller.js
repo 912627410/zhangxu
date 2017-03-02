@@ -303,7 +303,9 @@
     vm.excelExport=function (org) {
 
       if (org) {
+        alert(111);
         var filterTerm = "id=" + vm.org.id;
+        alert(filterTerm);
         var restCallURL = DEVCEDINFO_EXCELEXPORT;
         if (filterTerm){
           restCallURL += "?";

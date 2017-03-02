@@ -74,7 +74,7 @@
       </div>
       <div class="col-md-2">
         <select name="deviceMF" class="form-control"
-                ng-model="deviceInfoListCtrl.queryManufacture"
+                ng-model="monitorCtrl.queryManufacture"
                 ng-options="deviceManufacture.id as deviceManufacture.name for deviceManufacture in monitorCtrl.deviceManufactureList">
           <option value="">请选择...</option>
         </select>
@@ -84,7 +84,7 @@
       </div>
       <div class="col-md-2">
         <select name="devicePowerType" class="form-control"
-                ng-model="deviceInfoListCtrl.queryDevicePowerType"
+                ng-model="monitorCtrl.queryDevicePowerType"
                 ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in monitorCtrl.devicePowerTypeList">
           <option value="">请选择...</option>
         </select>
@@ -94,7 +94,7 @@
       </div>
       <div class="col-md-2">
         <select name="deviceMF" class="form-control"
-                ng-model="deviceInfoListCtrl.queryDeviceHeightType"
+                ng-model="monitorCtrl.queryDeviceHeightType"
                 ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in monitorCtrl.deviceHeightTypeList">
           <option value="">请选择...</option>
         </select>
