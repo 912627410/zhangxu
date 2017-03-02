@@ -302,7 +302,7 @@
     //导出至Excel
     vm.excelExport=function (org) {
 
-      if (org) {
+      if (org.label) {
         var filterTerm = "id=" + vm.org.id;
         var restCallURL = DEVCEDINFO_EXCELEXPORT;
         if (filterTerm){
