@@ -258,6 +258,24 @@
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
+
+        //判读是否是高空车
+        if(vm.deviceinfoMonitor.versionNum=='A001'){
+
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
+            controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+            size: size,
+            resolve: { //用来向controller传数据
+              deviceinfo: function () {
+                return vm.deviceinfoMonitor;
+              }
+            }
+          });
+
+        }else{
           $rootScope.currentOpenModal = $uibModal.open({
             animation: vm.animationsEnabled,
             backdrop: false,
@@ -270,6 +288,8 @@
               }
             }
           });
+
+        }
 
         }, function (reason) {
           Notification.error('获取设备信息失败');

@@ -174,8 +174,6 @@
           vm.deviceinfoMonitor = data.content;
 
         //判读是否是高空车
-
-        console.log(vm.deviceinfoMonitor);
         if(vm.deviceinfoMonitor.versionNum=='A001'){
 
           $rootScope.currentOpenModal = $uibModal.open({

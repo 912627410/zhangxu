@@ -5,7 +5,7 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,
+    function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
                                          Notification, serviceResource, AMAP_URL,DEVCE_SIMPLE_DATA_PAGED_QUERY, SEND_SMS_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
                                          VIEW_SMS_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA) {
         var vm = this;
