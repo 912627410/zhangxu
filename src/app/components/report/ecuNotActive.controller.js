@@ -9,7 +9,7 @@
     .controller('ecuNotActiveController', ecuNotActiveController);
 
   /** @ngInject */
-  function ecuNotActiveController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_ECU_NOTACTIVE_QUERY, DEVCE_ECU_NOTACTIVE_EXCELEXPORT) {
+  function ecuNotActiveController($rootScope, $http, $filter, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_ECU_NOTACTIVE_QUERY, DEVCE_ECU_NOTACTIVE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -23,6 +23,14 @@
       var sortUrl = sort || "lastDataUploadTime,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&search_LIKEEND_ecuLockStatus=0";
+      if (null != queryCriteria) {
+        if (null != queryCriteria.deviceNum&&queryCriteria.deviceNum!="") {
+          restCallURL += "&search_LIKES_deviceNum=" + $filter('uppercase')(queryCriteria.deviceNum);
+        }
+        if (null != queryCriteria.machineLicenseId&&queryCriteria.machineLicenseId!="") {
+          restCallURL += "&search_LIKES_machine.licenseId=" + $filter('uppercase')(queryCriteria.machineLicenseId);
+        }
+      }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -53,12 +61,16 @@
         anchor.attr({
           href: objectUrl,
           target: '_blank',
-          download: 'ECU锁车状态未激活.xls'
+          download: 'ECU未绑定车辆.xls'
         })[0].click();
 
       }).error(function (data, status, headers, config) {
         Notification.error("下载失败!");
       });
+    };
+
+    vm.reset = function () {
+      vm.queryDeviceinfo = null;
     };
   }
 })();

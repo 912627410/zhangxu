@@ -77,27 +77,38 @@ table.text-center {
 }
 
 /* userMngPage*/
-.userTableBox{
+.tableBox{
   position: relative;
   overflow: hidden;
   table td{
     height: 34px;
   }
-  .userTableBoxLeft{
+  .tableBoxLeft{
     position:absolute;
     left: 0;
     top: 0;
-    width: 150px;
     z-index:99;
     background: #fff;
   }
+  .userTableBoxLeft{
+    width: 150px;
+  }
   .userTableBoxRight{
     overflow-x: auto;
-    table thead tr th:first-child{
-      width: 150px;
-    }
-    thead tr th:first-child div{
+    thead tr th:first-child, thead tr th:first-child div{
       width: 138px;
+    }
+  }
+  .twoColumnFixedLeft{
+    width: 260px;
+  }
+  .twoColumnFixedRight{
+    overflow-x: auto;
+    thead tr th:first-child, thead tr th:first-child div{
+      width: 78px;
+    }
+    thead tr th:nth-child(2), thead tr th:nth-child(2) div{
+      width: 158px;
     }
   }
 }

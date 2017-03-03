@@ -9,7 +9,7 @@
     .controller('normalUnboundController', normalUnboundController);
 
   /** @ngInject */
-  function normalUnboundController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_NORMAL_UNBOUND_QUERY, DEVCE_NORMAL_UNBOUND_EXPORT) {
+  function normalUnboundController($rootScope, $http, $filter, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_NORMAL_UNBOUND_QUERY, DEVCE_NORMAL_UNBOUND_EXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -22,7 +22,14 @@
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "sendTime,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      restCallURL += "&search_EQ_smsType=2";
+      if (null != queryCriteria) {
+        if (null != queryCriteria.deviceNum&&queryCriteria.deviceNum!="") {
+          restCallURL += "&deviceNum=" + $filter('uppercase')(queryCriteria.deviceNum);
+        }
+        if (null != queryCriteria.machineLicenseId&&queryCriteria.machineLicenseId!="") {
+          restCallURL += "&licenseId=" + $filter('uppercase')(queryCriteria.machineLicenseId);
+        }
+      }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -59,6 +66,10 @@
       }).error(function (data, status, headers, config) {
         Notification.error("下载失败!");
       });
+    };
+
+    vm.reset = function () {
+      vm.queryDeviceinfo = null;
     };
   }
 })();
