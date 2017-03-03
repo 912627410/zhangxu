@@ -613,6 +613,15 @@
           callback && callback(reason);
         });
       },
+      //油缸压力转换
+      convertTooilPressure:function(value){
+
+        return 25*value/4095;
+      },
+      convertTobatteryPower:function( value){
+
+        return 55*value/4095;
+      },
 
     }
   }
