@@ -42,10 +42,10 @@
         </div>
         <label for="org" class="col-sm-2 control-label">所属组织</label>
         <div class="col-sm-4">
-          <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="所属组织"
-                   ng-model="newMachineController.machine.org.label" name="org" readonly validator="required"/>
-                  <span class="input-group-btn">
+          <p class="input-group" >
+            <input type="text" id="org" class="form-control" placeholder="所属组织" validator="required"
+                   ng-model="newMachineController.machine.org.label" name="org" readonly />
+                  <span class="input-group-btn" style="vertical-align: top;">
                     <button type="button" class="btn btn-default" ng-click="newMachineController.openTreeInfo()">
                       <i class="fa fa-sitemap"></i>
                     </button>
