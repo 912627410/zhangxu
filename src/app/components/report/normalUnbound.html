@@ -11,6 +11,28 @@
 <!-- Main content -->
 <section class="content form-horizontal">
   <div class="row form-group">
+    <div class="col-md-2">
+      <label class="control-label">终端编号</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="deviceNum" class="form-control " ng-model="normalUnboundCtrl.queryDeviceinfo.deviceNum"
+             placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">整机编号</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="machineLicenseId" class="form-control " ng-model="normalUnboundCtrl.queryDeviceinfo.machineLicenseId"
+             placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" presentation-href="report:normalUnbound"
+              ng-click="normalUnboundCtrl.query(null,null,null,normalUnboundCtrl.queryDeviceinfo)">查询
+      </button>
+      <button class="btn btn-primary" type="button" ng-click="normalUnboundCtrl.reset()">重置</button>
+    </div>
+  </div>
+  <div class="row form-group">
     <div class="btn-group col-md-2">
       <span class="label label-info pull-left">总数:{{normalUnboundCtrl.page.totalElements}}</span>
     </div>
@@ -32,7 +54,7 @@
 
   <div class="box-footer">
     <uib-pagination total-items="normalUnboundCtrl.page.totalElements"
-                    ng-change="normalUnboundCtrl.query(normalUnboundCtrl.pageNumber-1,null,null,null)"
+                    ng-change="normalUnboundCtrl.query(normalUnboundCtrl.pageNumber-1,null,null,normalUnboundCtrl.queryDeviceinfo)"
                     max-size="5" ng-model="normalUnboundCtrl.pageNumber" items-per-page="normalUnboundCtrl.page.size"
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页">
