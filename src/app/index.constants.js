@@ -239,6 +239,11 @@
     .constant('ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
     .constant('ORG_PARENTID_URL', SERVER_BASE_URL + 'config/getOrgByParentId')   //根据parentId查询组织信息
 
+
+    //高空车短信 by mariqian 20170306
+    .constant('VIEW_SMS_EMCLOUD_URL', SERVER_BASE_URL + 'sms_emcloud/getsms')   //得到短消息内容
+    .constant('SEND_SMS_EMCLOUD_URL', SERVER_BASE_URL + 'sms_emcloud/sendsms')   //发送短消息
+
   ;
 
 

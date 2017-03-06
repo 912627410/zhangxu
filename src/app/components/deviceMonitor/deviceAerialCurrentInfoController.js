@@ -6,8 +6,8 @@
 
     /** @ngInject */
     function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
-                                         Notification, serviceResource, AMAP_URL,DEVCE_SIMPLE_DATA_PAGED_QUERY, SEND_SMS_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
-                                         VIEW_SMS_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA) {
+                                         Notification, serviceResource, AMAP_URL,DEVCE_SIMPLE_DATA_PAGED_QUERY, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
+                                         VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -252,7 +252,7 @@
                 Notification.error("请提供要设置的参数");
                 return;
             }
-            var restURL = VIEW_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+            var restURL = VIEW_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
             if (type == 5) {
                 restURL += "&host=" + host + "&port=" + port;
             }
@@ -281,7 +281,7 @@
                 Notification.error("请提供要设置的参数");
                 return;
             }
-            var restURL = SEND_SMS_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+            var restURL = SEND_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
             if (type == 5) {
                 restURL += "&host=" + host + "&port=" + port;
             }

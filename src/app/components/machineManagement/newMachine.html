@@ -32,7 +32,7 @@
 
 
           <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType.id" theme="bootstrap"
-                     ng-disabled="disabled" validator="required">
+                     ng-disabled="disabled" >
             <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in newMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
