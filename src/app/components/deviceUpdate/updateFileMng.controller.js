@@ -105,7 +105,7 @@
       modalInstance.result.then(function () {
         vm.query();
       }, function () {
-
+        vm.query();
       });
     };
 

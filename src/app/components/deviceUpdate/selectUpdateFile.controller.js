@@ -14,6 +14,7 @@
     vm.updateDevice = updateDevice;
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
+    vm.updateApplicableProducts = null;
 
     ngTableDefaults.params.count = 8;
     ngTableDefaults.settings.counts = [];
@@ -40,9 +41,10 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id, versionNum) {
+    vm.fileSelection = function (id, versionNum, applicableProducts) {
       vm.checked = id;
       vm.updateVersionNum = versionNum;
+      vm.updateApplicableProducts = applicableProducts;
     };
 
     vm.ok = function () {
@@ -55,8 +57,7 @@
         devices : vm.updateDevice,
         fileId : vm.checked
       };
-      
-      var content = "";
+      var content = "";//提示内容
       var index = 0;
       if(vm.updateDevice.length > 1) {
         for(var i = 0; i< vm.updateDevice.length; i++){
@@ -71,33 +72,45 @@
           vm.confirmUpdate = false;
         } else if(content && index > 0) {
           content += "当前的终端软件版本与选择的升级版本相同，不作升级。" + "您确定将选择的其余的设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+          vm.confirmUpdate = true;
         } else {
           content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+          vm.confirmUpdate = true;
         }
       } else {
         if(vm.updateDevice[0].terminalVersion == vm.updateVersionNum) {
           content += vm.updateDevice[0].deviceNum + "当前的终端软件版本与选择的升级版本相同，不作升级。";
+          vm.confirmUpdate = false;
         } else {
           content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+          vm.confirmUpdate = true;
         }
       }
+
+      if(vm.updateApplicableProducts != "1") {
+        content = "您选择的升级文件不适合当前设备，请重新选择！";
+        vm.confirmUpdate = false;
+      }
+
       $confirm({
         title:"操作提示",
         text: content
       }).then(function () {
-        var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
-        restPromise.then(function (data) {
-          if(data.code == 0){
-            Notification.success("升级指令已下发!");
-            $uibModalInstance.close();
-          } else if(data.code == -1){
+        if(vm.confirmUpdate) {
+          var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
+          restPromise.then(function (data) {
+            if(data.code == 0){
+              Notification.success("升级指令已下发!");
+              $uibModalInstance.close();
+            } else if(data.code == -1){
 
-          } else {
-            Notification.error(data.content);
-          }
-        }, function (reason) {
-          Notification.error(reason.data.message);
-        });
+            } else {
+              Notification.error(data.content);
+            }
+          }, function (reason) {
+            Notification.error(reason.data.message);
+          });
+        }
 
       })
 

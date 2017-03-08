@@ -31,10 +31,10 @@
             Notification.success(data.content);
             $uibModalInstance.close();
           }else{
-            Notification.error(data.message);
+            Notification.error(data.content);
           }
         }, function (reason) {
-          Notification.error(reason.data.message);
+          Notification.error(reason.data.content);
         });
 
       })

@@ -10,12 +10,15 @@
             <input type="radio"
                    name="selectFile"
                    ng-checked
-                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum)"
+                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum, updateFile.applicableProducts)"
                    ng-model="updateFile.checked">
           </td>
           <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number:2}}</td>
           <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
-          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'">{{updateFile.applicableProducts}}</td>
+          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
+          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">GPS自身</td>
+          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">显示器</td>
+          <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
           <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
       </table>
