@@ -301,7 +301,7 @@
                 .then(function () {
                     var rspData = serviceResource.restCallService(restURL, "ADD");  //post请求
                     rspData.then(function (data) {
-                        if (data.code == 0 && data.content.smsStatus == 1) {
+                        if (data.code == 0 && data.content.smsStatus == 0) {
                             vm.assginSMSContent(type, data.content.smsContent);
                             Notification.success("短信已发送成功");
                         }

@@ -9,10 +9,10 @@
 <!--</script>-->
 
 <form  name="updateMachineForm"  class="form-horizontal">
-  <div class="modal-body">
-    <div class="box-body">
+  <div class="modal-body row" style="font-size: 13px;">
+    <div class="box-body col-sm-7">
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">车号</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">车号</label>
         <div class="col-sm-4">
 
           <input type="text" id="licenseId" class="form-control" placeholder="车号"
@@ -21,16 +21,16 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
-        <div class="col-sm-2">
-          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
+        <label for="licenseId" class="col-sm-2 control-label padding5" style="padding-right: 0px;">绑定终端</label>
+        <div class="col-sm-2" style="padding-right: 0px;">
+          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" style="padding: 6px 10px;" placeholder="手工输入6位号码或扫条码"
                  ng-model="updateMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
                  ng-minlength='6' ng-maxlength='26' ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)"/>
           <label class="text-blue" ng-if="updateMachineController.deviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.deviceNumContentFromScanner}}</label>
           <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">最长26位</span>
           <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">最短6位</span>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 padding5">
           <div class="checkbox">
             <label>
               <input type="checkbox" name="newDeviceChk" ng-model="updateMachineController.newDeviceChk" id="newDeviceChk">
@@ -41,7 +41,7 @@
       </div>
 
       <div class="form-group" ng-show="updateMachineController.newDeviceChk">
-        <label for="newDeviceNum" class="col-sm-2 control-label">新终端</label>
+        <label for="newDeviceNum" class="col-sm-2 control-label padding5">新终端</label>
         <div class="col-sm-8">
           <input type="text" id="newDeviceNum" name="newDeviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
                  ng-model="updateMachineController.newDeviceNum" ng-minlength='6' ng-maxlength='26'
@@ -56,7 +56,7 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">发动机类型</label>
+        <label class="col-sm-2 control-label padding5">发动机类型</label>
         <div class="col-sm-4">
 
 
@@ -69,7 +69,7 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label for="org" class="col-sm-2 control-label">所属组织</label>
+        <label for="org" class="col-sm-2 control-label padding5">所属组织</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" id="org" class="form-control" placeholder="所属组织"
@@ -84,7 +84,7 @@
       </div>
 
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">购买价格</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">购买价格</label>
         <div class="col-sm-4">
 
           <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
@@ -92,7 +92,7 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">购买时间</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">购买时间</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -108,14 +108,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="upkeepPrice" class="col-sm-2 control-label">保养费用</label>
+        <label for="upkeepPrice" class="col-sm-2 control-label padding5">保养费用</label>
         <div class="col-sm-4">
 
           <input type="text" id="upkeepPrice" class="form-control" placeholder="保养费用"
                  ng-model="updateMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"/>
         </div>
 
-        <label for="upkeepPriceType" class="col-sm-2 control-label">保养费用类型</label>
+        <label for="upkeepPriceType" class="col-sm-2 control-label padding5">保养费用类型</label>
         <div class="col-sm-4">
 
 
@@ -128,14 +128,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="salary" class="col-sm-2 control-label">员工工资</label>
+        <label for="salary" class="col-sm-2 control-label padding5">员工工资</label>
         <div class="col-sm-4">
 
           <input type="text" id="salary" class="form-control" placeholder="员工工资"
                  ng-model="updateMachineController.machine.salary" name="salary" typeahead-show-hint="true"/>
         </div>
 
-        <label for="salaryType" class="col-sm-2 control-label">员工工资类型</label>
+        <label for="salaryType" class="col-sm-2 control-label padding5">员工工资类型</label>
         <div class="col-sm-4">
           <ui-select type="text" id="salaryType" name="salaryType"  ng-model="updateMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap"  >
             <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
@@ -148,7 +148,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="fuelTank" class="col-sm-2 control-label">油箱容量(升)</label>
+        <label for="fuelTank" class="col-sm-2 control-label padding5">油箱容量(升)</label>
         <div class="col-sm-4">
 
           <input type="text" id="fuelTank" class="form-control" placeholder="油箱容量(升)"
@@ -156,7 +156,7 @@
 
         </div>
 
-        <label for="fuelConfig" class="col-sm-2 control-label">燃油类型</label>
+        <label for="fuelConfig" class="col-sm-2 control-label padding5">燃油类型</label>
         <div class="col-sm-4">
 
           <ui-select id="fuelConfig" name="fuelConfig" ng-model="updateMachineController.machine.fuelConfig.id" theme="bootstrap"
@@ -173,7 +173,7 @@
       </div>
       <div class="form-group">
 
-        <label for="depreciableLife" class="col-sm-2 control-label">折旧年限</label>
+        <label for="depreciableLife" class="col-sm-2 control-label padding5">折旧年限</label>
         <div class="col-sm-4">
           <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
                  ng-model="updateMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
@@ -185,6 +185,18 @@
       </i>
     </div>
 
+    <div class="map-body col-sm-5">
+      <div class="form-group">
+        <label for="currentAddress" class="col-sm-3 control-label padding5">车辆当前位置</label>
+        <div class="col-sm-5">
+          <input type="text" id="currentAddress" class="form-control" placeholder="车辆当前位置"
+                 ng-model="updateMachineController.machine.currentAddress" name="currentAddress" typeahead-show-hint="true"/>
+        </div>
+        <input class="btn col-sm-3" type="button" class="btn" value="地图上显示" id="showMachineAddress" ng-click="updateMachineController.showAddress(updateMachineController.machine.currentAddress)">
+      </div>
+      <div class="box" id="machineMap" style="height:350px;width: 330px;"></div>
+
+    </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.ok(updateMachineController.machine)">保存</button>
