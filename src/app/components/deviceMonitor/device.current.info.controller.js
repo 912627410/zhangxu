@@ -17,7 +17,7 @@
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
-                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo, ngTableDefaults, NgTableParams) {
+                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,MACHINE_STORAGE_URL,deviceinfo, ngTableDefaults, NgTableParams) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -845,7 +845,7 @@
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 4, centerAddr);
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 17, centerAddr);
       })
     };
 
@@ -892,9 +892,9 @@
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
-        zoom: 17
+        zooms: [9, 18]
       });
-
+      vm.maps=map;
       /*工具条，比例尺，预览插件*/
       AMap.plugin(['AMap.Scale', 'AMap.OverView'],
         function () {
@@ -1036,6 +1036,22 @@
       )
     }
 
+    vm.draw=function (ids) {
+      var storageDataURL =MACHINE_STORAGE_URL+"?licenseId="+ids;
+      var storageDataPromis = serviceResource.restCallService(storageDataURL,"GET");
+      storageDataPromis.then(function (data) {
+        var circle = new AMap.Circle({
+          center: new AMap.LngLat(data.storagelongitudeNum, data.storageLatitudeNum),// 圆心位置
+          radius: 1000, //半径
+          strokeColor: "#F33", //线颜色
+          strokeOpacity: 1, //线透明度
+          strokeWeight: 3, //线粗细度
+          fillColor: "#ee2200", //填充颜色
+          fillOpacity: 0.35//填充透明度
+        });
+      circle.setMap(vm.maps);
+      })
+    }
 
     //******************远程控制tab**********************]
 
