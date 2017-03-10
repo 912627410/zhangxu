@@ -93,20 +93,24 @@
 
 
     vm.loginMe = function () {
-      vm.createVerifyCode();
-      $cookies.remove("outstate");
-      var code = vm.code ;
-      if(null!=code&&""!=code){
-        var restCallURL = JUDGE_VERIFYCODE_URL;
-        restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
-          if(data.code==1){
-            vm.userverify();
-          }
-        })
-      }else{
+
+      if(count<2){
         vm.userverify();
+      }else{
+        vm.createVerifyCode();
+        var code = vm.code ;
+        if(null!=code&&""!=code){
+          var restCallURL = JUDGE_VERIFYCODE_URL;
+          restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
+          var rspData = serviceResource.restCallService(restCallURL, "GET");
+          rspData.then(function (data) {
+            if(data.code==1){
+              vm.userverify();
+            }
+          })
+        }else{
+          Notification.error("请输入验证码!");
+        }
       }
     }
 
@@ -198,6 +202,7 @@
           $scope.isShow = true;
         }
         vm.changeVerifyCode();
+        vm.code = "";
       });
     }
 
