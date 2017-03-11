@@ -892,7 +892,7 @@
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
-        zooms: [9, 18]
+        zooms: [4, 18]
       });
       vm.maps=map;
       /*工具条，比例尺，预览插件*/
