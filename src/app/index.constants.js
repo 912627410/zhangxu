@@ -1,8 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
- // var SERVER_BASE_URL = 'http://localhost:8080/rest/';
-  var SERVER_BASE_URL = 'http://192.168.8.190:8085/rest/';
+   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
