@@ -1,7 +1,8 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+ // var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var SERVER_BASE_URL = 'http://192.168.8.190:8085/rest/';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -19,6 +20,9 @@
 
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder')
+    .constant('AMAP_PLACESEARCH_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Autocomplete,AMap.PlaceSearch')
+
+
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
 
     .constant('USER_LOGIN_URL', SERVER_BASE_URL + 'user/gettoken')
