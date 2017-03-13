@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,machineService,$http, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -194,6 +194,98 @@
       treeFactory.treeShow(function (selectedItem) {
         vm.machine.org =selectedItem;
       });
+    }
+
+    //load map
+    vm.refreshMap= function (mapId,zoomsize,centeraddr) {
+      $LAB.script(AMAP_PLACESEARCH_URL).wait(function () {
+        //初始化地图对象
+        if (!AMap) {
+          location.reload(false);
+        }
+        var amapScale, toolBar,overView;
+        var localZoomSize = 1;  //默认缩放级别
+        if (zoomsize){
+          localZoomSize = zoomsize;
+        }
+        var localCenterAddr = [118.439,34.995];//设置中心点大概在临工附近
+        if (centeraddr){
+          localCenterAddr = centeraddr;
+        }
+        var map = new AMap.Map(mapId, {
+          resizeEnable: true,
+          center: localCenterAddr,
+          zooms: [4, 18],
+          keyboardEnable: false
+        });
+        map.setZoom(localZoomSize);
+        //加载比例尺插件
+        map.plugin(["AMap.Scale"], function () {
+          amapScale = new AMap.Scale();
+          map.addControl(amapScale);
+        });
+        //在地图中添加ToolBar插件
+        map.plugin(["AMap.ToolBar"], function () {
+          toolBar = new AMap.ToolBar();
+          map.addControl(toolBar);
+        });
+        //在地图中添加鹰眼插件
+        map.plugin(["AMap.OverView"], function () {
+          //加载鹰眼
+          overView = new AMap.OverView({
+            visible: true //初始化隐藏鹰眼
+          });
+          map.addControl(overView);
+        });
+      });
+    };
+
+    $timeout(function(){
+      vm.refreshMap("machineMap",1,null);
+    },50);
+
+
+    vm.showAddress = function (currentAddress) {
+      var map = new AMap.Map("machineMap", {
+        zooms: [4, 8],
+      });
+      map.plugin(["AMap.Geocoder"], function () {
+          var geocoder = new AMap.Geocoder({
+            resizeEnable: true,
+            city:"",
+            radius: 500 //范围，默认：500
+          });
+          //地理编码,返回地理编码结果
+            geocoder.getLocation(currentAddress, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              geocoder_CallBack(result);
+            }
+          });
+        })
+
+        function addMarker(i, d) {
+          var marker = new AMap.Marker({
+            map: map,
+            position: [ d.location.getLng(),  d.location.getLat()]
+          });
+          var infoWindow = new AMap.InfoWindow({
+            content: d.formattedAddress,
+            offset: {x: 0, y: -30}
+          });
+          marker.on("mouseover", function(e) {
+            infoWindow.open(map, marker.getPosition());
+          });
+        }
+        //地理编码返回结果展示
+        function geocoder_CallBack(data) {
+          var resultStr = "";
+          //地理编码结果数组
+          var geocode = data.geocodes;
+          for (var i = 0; i < geocode.length; i++) {
+            addMarker(i, geocode[i]);
+          }
+          map.setFitView();
+        }
     }
 
 
