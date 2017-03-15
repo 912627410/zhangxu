@@ -15,7 +15,7 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
+  <div class="row form-group">
 
 
     <div class="col-md-2">
@@ -36,7 +36,7 @@
 
   </div>
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">所属车队</label>
     </div>
@@ -73,7 +73,7 @@
   </div>
 
 
-  <div class="row">
+  <div class="row form-group">
     <div class="btn-group col-md-3">
       <span class="label label-info pull-left">成本总数:{{costMngController.page.totalElements}}</span>
     </div>
@@ -90,7 +90,7 @@
 
 
 
-  <div class="row " style="padding: 10px">
+  <div class="row form-group" style="padding: 10px">
       <div class="table-responsive">
       <table ng-table="costMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="costVo in $data">
@@ -110,7 +110,7 @@
       </table>
       </div>
     </div>
-  <div class="row">
+  <div class="row form-group">
   </div>
   <div class="box-footer">
     <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="costMngController.selectQuery(costMngController.fleetRecord)"
