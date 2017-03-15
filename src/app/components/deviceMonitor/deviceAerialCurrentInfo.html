@@ -375,6 +375,102 @@
                 </div>
             </uib-tab>
 
+          <!--车辆参数-->
+          <uib-tab ng-if="deviceAerialCurrentInfoController.deviceinfo.parameterValue" select="deviceAerialCurrentInfoController.initParameterTab(deviceAerialCurrentInfoController.deviceinfo)">
+            <uib-tab-heading>
+              车辆参数
+            </uib-tab-heading>
+            <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+              <div class="box-body">
+
+                <div class="row">
+                  <div class="col-md-9">
+
+                  </div>
+                  <div class="col-md-3">
+                    <select name="queryType" class="form-control"
+                            ng-model="deviceAerialCurrentInfoController.queryParameter"
+                            ng-change="deviceAerialCurrentInfoController.refreshParameterChart(deviceAerialCurrentInfoController.parameterValue,deviceAerialCurrentInfoController.queryParameter.curve)"
+                            ng-options="queryP.name for queryP in deviceAerialCurrentInfoController.parameterTypeList">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <highchart id="parameterChart" config="deviceAerialCurrentInfoController.parameterConfig"></highchart>
+                  </div>
+                </div>
+                <div class="row" style="padding: 0 20px">
+                  <div class="col-md-3">本曲线所用的加速次数</div>
+                  <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bAccelIncrement}}</div>
+                  <div class="col-md-3">本曲线所用的加速次数</div>
+                  <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bDecelIncrement}}</div>
+                  <div class="col-md-3">本曲线所用的加速次数</div>
+                  <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bPeriod}}</div>
+
+                </div>
+                <div class="row" style="margin-top: 50px;">
+                  <table class="table table-striped" ng-init="rowInx=0">
+                    <!--<caption>设备输入信息</caption>-->
+                    <tr>
+                      <th>名称</th>
+                      <th>状态</th>
+                      <th>名称</th>
+                      <th>状态</th>
+                      <th>名称</th>
+                      <th>状态</th>
+                    </tr>
+                    <tr>
+                      <td>机型</td>
+                      <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.parameterValue.bLiftType">
+                        <div ng-switch-when="33">小型液驱</div>
+                        <div ng-switch-when="57">大型液压</div>
+                        <div ng-switch-when="84">小型电驱</div>
+                        <div ng-switch-when="120">大型电驱</div>
+                      </td>
+                      <td>刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bBrakeDelay*100}}ms</td>
+                      <td>阀故障检测延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bCoilFaultDetectionPeriod*10}}ms</td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap">转向停止时的延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bSteeringOffDelay*100}}ms</td>
+                      <td class="text-nowrap">换向延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bDirectionDelay*10}}ms</td>
+                      <td class="text-nowrap">马达使能延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bMotorEnableDelay*10}}ms</td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap">过载监控稳定时间</td><td>{{deviceAerialCurrentInfoController.parameterValue.bOverloadStabilizationPeriod*100}}ms</td>
+                      <td class="text-nowrap">行走时转向的液压增量</td><td>{{deviceAerialCurrentInfoController.parameterValue.bSteeringBoostPwm}}%</td>
+                      <td class="text-nowrap">原地转向的PWM百分比</td><td>{{deviceAerialCurrentInfoController.parameterValue.bNeutralSteeringPwm}}%</td>
+                    </tr>
+                    <tr>
+                      <td class="text-nowrap">车身控制上升速度百分比</td><td>{{deviceAerialCurrentInfoController.parameterValue.bChassisLiftUpPwm}}%</td>
+                      <td class="text-nowrap">平台控制上升最大速度</td><td>{{deviceAerialCurrentInfoController.parameterValue.bPlatformLiftUpMaxPwm}}</td>
+                      <td class="text-nowrap">手柄误差补偿</td><td>{{deviceAerialCurrentInfoController.parameterValue.bJoystickOffsetCompensation}}</td>
+                    </tr>
+
+                    <tr>
+                      <td >手柄中区最大位置</td><td>{{deviceAerialCurrentInfoController.parameterValue.bJoystickNeutralZone}}</td>
+                      <td >两格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel1 + 100)/10}}V</td>
+                      <td >三格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel2 + 100)/10}}V</td>
+                    </tr>
+
+                    <tr>
+                      <td >四格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel3 + 100)/10}}V</td>
+                      <td>五格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel4 + 100)/10}}V</td>
+                      <td>六格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel5 + 100)/10}}V</td>
+                    </tr>
+                    <tr>
+                      <td>倾斜时刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bTiltBrakeDelay *10}}ms</td>
+                      <td>水平时刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bLevelBrakeDelay *10}}ms</td>
+                      <td></td><td></td>
+                    </tr>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+
             <!--历史数据-->
             <uib-tab presentation-href="device:page">
                 <uib-tab-heading>

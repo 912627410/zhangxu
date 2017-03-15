@@ -7,7 +7,7 @@
     /** @ngInject */
     function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
                                          Notification, serviceResource, AMAP_URL,DEVCE_SIMPLE_DATA_PAGED_QUERY, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
-                                         VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA) {
+                                         VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -1825,7 +1825,101 @@
             vm.getDeviceData(page,size,sort,deviceinfo,startDate,endDate);
         };
 
-
+        //车辆参数
+        vm.parameterConfig = {
+            options: {
+                chart: {
+                    type: 'line',
+                    zoomType: 'xy',
+                    width: 840,
+                },
+                credits: {
+                    text: 'nvr-china',
+                    href: 'http://www.nvr-china.com/'
+                },
+                exporting: false,
+                legend: {
+                    enabled: false
+                }
+            },
+            title: {
+                text: false
+            },
+            xAxis: {
+                min: -127,
+                max: 127,
+                gridLineColor: '#197F07',
+                gridLineWidth: 1
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: false,
+                gridLineColor: '#197F07',
+                gridLineWidth: 1
+            },
+            series: [{
+                name: 'value',
+                data: []
+            },{
+                name: 'value',
+                data: []
+            }],
+            loading: false,
+            func: function (chart) {
+                $timeout(function () {
+                    chart.reflow();
+                }, 0);
+            }
+        };
+  
+        vm.refreshParameterChart = function (parameterValue,curve) {
+            var bIndex1 = curve.bIndex1;
+    
+            if(bIndex1 < parameterValue.bJoystickNeutralZone){
+                bIndex1 = parameterValue.bJoystickNeutralZone;
+            }
+    
+            var data1 = [bIndex1,curve.bPwmPos1];
+            var data2 = [curve.bIndex2,curve.bPwmPos2];
+            var data3 = [curve.bIndex3,curve.bPwmPos3];
+            var data4 = [curve.bIndex4,curve.bPwmPos4];
+            var data5 = [127,curve.bPwmPosMax];
+            var data6 = [-bIndex1,curve.bPwmNeg1];
+            var data7 = [-curve.bIndex2,curve.bPwmNeg2];
+            var data8 = [-curve.bIndex3,curve.bPwmNeg3];
+            var data9 = [-curve.bIndex4,curve.bPwmNeg4];
+            var data10 = [-127,curve.bPwmNegMax];
+    
+            vm.parameterConfig.series[0].data = [data1,data2,data3,data4,data5];
+            vm.parameterConfig.series[1].data = [data6,data7,data8,data9,data10];
+        };
+  
+        vm.initParameterTab = function (deviceinfo) {
+            var restURL = DEVCEINFO_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum;
+            var rspData = serviceResource.restCallService(restURL, "GET");
+            rspData.then(function (data) {
+                vm.parameterValue = data.content;
+      
+                vm.parameterTypeList=[{
+                    name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
+                },{
+                    name:'起升后行走曲线',curve : vm.parameterValue.driveRisedCurve
+                },{
+                    name:'上升曲线',curve : vm.parameterValue.liftUpCurve
+                },{
+                    name:'慢速行走曲线',curve : vm.parameterValue.driveSlowCurve
+                },{
+                    name:'转向曲线',curve : vm.parameterValue.steerRisedCurve
+                }];
+      
+                vm.queryParameter = vm.parameterTypeList[0];
+                vm.refreshParameterChart(vm.parameterValue,vm.queryParameter.curve);
+            }, function (reason) {
+                Notification.error('获取车辆参数失败');
+                Notification.error(reason.data.message);
+            });
+        };
 
     }
 })();
