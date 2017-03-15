@@ -15,7 +15,7 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">车号</label>
     </div>
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">所属组织</label>
     </div>
@@ -78,7 +78,7 @@
     </div>
 
   </div>
-  <div class="row">
+  <div class="row form-group">
     <div class="btn-group col-md-3">
       <span class="label label-info pull-left">车辆总数:{{machineMngCtrl.page.totalElements}}</span>
     </div>
@@ -95,7 +95,7 @@
       </a>
     </div>
   </div>
-  <div class="row " style="padding: 10px">
+  <div class="row form-group" style="padding: 10px">
       <script id="selectAllHeader" type="text/ng-template">
         <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
                ng-model="machineMngCtrl.checked">
