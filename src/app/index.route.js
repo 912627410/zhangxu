@@ -354,6 +354,15 @@
           }
         }
       })
+      .state('home.deviceparameter',{
+      url: '/deviceparameter',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/deviceParameter/deviceparameter.html',
+          controller: 'devivceparameterController as devivceparameterCtrl'
+        }
+      }
+    })
 
       .state('home.MachineeleArchivesmng', {
         url: '/MachineeleArchivesmng',

@@ -258,6 +258,24 @@
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
+
+        //判读是否是高空车
+        if(vm.deviceinfoMonitor.versionNum=='A001'){
+
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
+            controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+            size: size,
+            resolve: { //用来向controller传数据
+              deviceinfo: function () {
+                return vm.deviceinfoMonitor;
+              }
+            }
+          });
+
+        }else{
           $rootScope.currentOpenModal = $uibModal.open({
             animation: vm.animationsEnabled,
             backdrop: false,
@@ -270,6 +288,8 @@
               }
             }
           });
+
+        }
 
         }, function (reason) {
           Notification.error('获取设备信息失败');
@@ -302,15 +322,15 @@
     //导出至Excel
     vm.excelExport=function (org) {
 
-      if (org) {
-        var filterTerm = "id=" + vm.org.id;
+      if (org&&org.id) {
+        var filterTerm = "id=" + org.id;
         var restCallURL = DEVCEDINFO_EXCELEXPORT;
         if (filterTerm){
           restCallURL += "?";
           restCallURL += filterTerm;
         }
         if(vm.querySubOrg) {
-          restCallURL += "&parentOrgId="+ vm.org.id;
+          restCallURL += "&parentOrgId="+ org.id;
         }
 
         $http({
@@ -325,14 +345,14 @@
           anchor.attr({
             href: objectUrl,
             target: '_blank',
-            download: vm.org.label +'.xls'
+            download: org.label +'.xls'
           })[0].click();
 
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
         });
       }else {
-        Notification.error("请选择需要导出的组织!");
+        Notification.error("请选择所属组织!");
       }
 
     }

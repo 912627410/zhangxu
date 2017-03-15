@@ -119,6 +119,17 @@
       if (null != vm.queryDeviceType&&vm.queryDeviceType != ""){
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
       }
+
+      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+      }
+      if (null != vm.queryDevicePowerType&&vm.queryDevicePowerType!="") {
+        restCallURL += "&search_EQ_devicePowerType.id=" +$filter('uppercase')(vm.queryDevicePowerType);
+      }
+      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+      }
+
       if(null != vm.queryOrg&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.queryOrg.id;
       }
@@ -161,6 +172,24 @@
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
+
+        //判读是否是高空车
+        if(vm.deviceinfoMonitor.versionNum=='A001'){
+
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
+            controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+            size: size,
+            resolve: { //用来向controller传数据
+              deviceinfo: function () {
+                return vm.deviceinfoMonitor;
+              }
+            }
+          });
+
+        }else{
           $rootScope.currentOpenModal = $uibModal.open({
             animation: vm.animationsEnabled,
             backdrop: false,
@@ -174,6 +203,12 @@
             }
           });
 
+        }
+
+
+
+
+
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
@@ -186,6 +221,11 @@
       vm.queryMachineLicenseId = null;
       vm.queryOrg = null;
       vm.queryDeviceType = null;
+
+      vm.queryManufacture = null;
+      vm.queryDeviceHeightType = null;
+      vm.queryDevicePowerType = null;
+
       vm.querySubOrg = true;
     }
 

@@ -10,7 +10,7 @@
 
   /** @ngInject */
 
-  function serviceResource($rootScope,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
+  function serviceResource($rootScope,$location,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL,USER_LOGINBYTOKEN_URL) {
@@ -592,7 +592,36 @@
           alert(arr[i]);
         }
         return arr.join("");//用join方法来拼接，空拼接。就变成borderBottomColor
-      }
+      },
+      getConfigInfo:function (userInfo,requestURL,queryCondition,callback) {
+        var search = $location.search();
+        var page = search.page||0;
+        var size = search.size||40;
+        var sort = search.sort||'id,desc';
+        var finalURL = requestURL + "?page=" + page  + '&size=' + size + '&sort=' + sort;
+        if (queryCondition){
+          finalURL =  finalURL + queryCondition;
+        }
+        var respData = restCallService(finalURL, 'GET');
+        return respData;
+      },
+      addConfigInfo:function(userInfo,newConfigInfo,requestUrl,callback){
+        var rspData = restCallService(requestUrl, "ADD", newConfigInfo);
+        rspData.then(function(data){
+          callback && callback(data);
+        },function(reason){
+          callback && callback(reason);
+        });
+      },
+      //油缸压力转换
+      convertTooilPressure:function(value){
+
+        return 25*value/4095;
+      },
+      convertTobatteryPower:function( value){
+
+        return 55*value/4095;
+      },
 
     }
   }

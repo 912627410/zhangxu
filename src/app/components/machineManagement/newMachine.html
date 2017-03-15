@@ -1,11 +1,11 @@
 <div class="modal-header">
   <h3 class="modal-title">新建车辆</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal">
-  <div class="modal-body">
-    <div class="box-body">
+<form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
+  <div class="modal-body row">
+    <div class="box-body col-sm-6">
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">车号</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">车号</label>
         <div class="col-sm-4">
 
           <input type="text" id="licenseId" class="form-control" placeholder="车号"
@@ -14,7 +14,7 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">绑定终端</label>
         <div class="col-sm-4">
           <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
                  ng-model="newMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
@@ -27,12 +27,12 @@
 
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">发动机类型</label>
+        <label class="col-sm-2 control-label padding5">发动机类型</label>
         <div class="col-sm-4">
 
 
           <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType.id" theme="bootstrap"
-                     ng-disabled="disabled" validator="required">
+                     ng-disabled="disabled" >
             <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in newMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
@@ -40,7 +40,7 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label for="org" class="col-sm-2 control-label">所属组织</label>
+        <label for="org" class="col-sm-2 control-label padding5">所属组织</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" id="org" class="form-control" placeholder="所属组织"
@@ -55,7 +55,7 @@
       </div>
 
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">购买价格</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">购买价格</label>
         <div class="col-sm-4">
 
           <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
@@ -63,7 +63,7 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">购买时间</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">购买时间</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -79,14 +79,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="upkeepPrice" class="col-sm-2 control-label">保养费用</label>
+        <label for="upkeepPrice" class="col-sm-2 control-label padding5">保养费用</label>
         <div class="col-sm-4">
 
           <input type="text" id="upkeepPrice" class="form-control" placeholder="保养费用"
                  ng-model="newMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"/>
         </div>
 
-        <label for="upkeepPriceType" class="col-sm-2 control-label">保养费用类型</label>
+        <label for="upkeepPriceType" class="col-sm-2 control-label padding5">保养费用类型</label>
         <div class="col-sm-4">
 
 
@@ -99,14 +99,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="salary" class="col-sm-2 control-label">员工工资</label>
+        <label for="salary" class="col-sm-2 control-label padding5">员工工资</label>
         <div class="col-sm-4">
 
           <input type="text" id="salary" class="form-control" placeholder="员工工资"
                  ng-model="newMachineController.machine.salary" name="salary" typeahead-show-hint="true"/>
         </div>
 
-        <label for="salaryType" class="col-sm-2 control-label">员工工资类型</label>
+        <label for="salaryType" class="col-sm-2 control-label padding5">员工工资类型</label>
         <div class="col-sm-4">
           <ui-select type="text" id="salaryType" name="salaryType"  ng-model="newMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap">
             <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
@@ -119,7 +119,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="fuelTank" class="col-sm-2 control-label">油箱容量(升)</label>
+        <label for="fuelTank" class="col-sm-2 control-label padding5">油箱容量(升)</label>
         <div class="col-sm-4">
 
           <input type="text" id="fuelTank" class="form-control" placeholder="油箱容量(升)"
@@ -127,7 +127,7 @@
 
         </div>
 
-        <label for="fuelConfig" class="col-sm-2 control-label">燃油类型</label>
+        <label for="fuelConfig" class="col-sm-2 control-label padding5">燃油类型</label>
         <div class="col-sm-4">
 
           <ui-select id="fuelConfig" name="fuelConfig" ng-model="newMachineController.machine.fuelConfig.id" theme="bootstrap"
@@ -144,18 +144,30 @@
       </div>
       <div class="form-group">
 
-        <label for="depreciableLife" class="col-sm-2 control-label">折旧年限</label>
+        <label for="depreciableLife" class="col-sm-2 control-label padding5">折旧年限</label>
         <div class="col-sm-4">
           <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
                  ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
         </div>
+
+
       </div>
 
     <i style="color: red" ng-if="null!=newMachineController.errorMsg">
       {{newMachineController.errorMsg}}<br/>
     </i>
     </div>
-
+    <div class="map-body col-sm-6">
+      <div class="form-group">
+        <label for="currentAddress" class="col-sm-3 control-label padding5">车辆当前位置</label>
+        <div class="col-sm-6">
+          <input type="text" id="currentAddress" class="form-control" placeholder="车辆当前位置"
+                 ng-model="newMachineController.machine.currentAddress" name="currentAddress" typeahead-show-hint="true"/>
+        </div>
+        <button type="button" class="btn" value="地图上显示" id="showMachineAddress" ng-click="newMachineController.showAddress(newMachineController.machine.currentAddress)">地图上显示</button>
+      </div>
+      <div class="box" id="machineMap" style="height:400px;width: 400px;"></div>
+    </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="button" validation-submit="newMachineForm" ng-click="newMachineController.ok(newMachineController.machine)">提交</button>

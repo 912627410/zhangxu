@@ -13,6 +13,9 @@
   @media (min-width: @screen-sm-min) {
     .box-shadow(0 2px 3px rgba(0, 0, 0, .125));
   }
+  .control-label{
+    white-space: nowrap;
+  }
 }
 
 .modal-header {
@@ -77,4 +80,8 @@
     &:extend(.bg-red-active);
     border-color: darken(@red, 10%);
   }
+}
+
+.form-group .padding5{
+  padding:0 3px ;
 }

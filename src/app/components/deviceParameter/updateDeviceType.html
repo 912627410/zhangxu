@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3 class="modal-title">修改设备类型</h3>
+</div>
+<form name="updateTypeForm" class="form-horizontal" ng-submit="updateDeviceTypeCtrl.ok(updateDeviceTypeCtrl.deviceType)">
+    <div class="modal-body">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">名称</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" class="form-control" placeholder="名称" name="name"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="updateDeviceTypeCtrl.cancel()">Cancel</button>
+    </div>
+</form>
