@@ -364,6 +364,51 @@
       }
     })
 
+      .state('home.MachineeleArchivesmng', {
+        url: '/MachineeleArchivesmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/MachineEleArchivesMng.html',
+            controller: 'MachineeleArchivesmngController as MachineeleArchivesmngController'
+          }
+        }
+      })
+      .state('home.dullmachinemng', {
+        url: '/dullmachinemng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/dullmachineMng.html',
+            controller: 'dullmachineMngController as dullmachineMngController'
+          }
+        }
+      })
+      .state('home.workStartmng', {
+        url: '/workStartmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/workStartMng.html',
+            controller: 'workStartMngController as workStartMngController'
+          }
+        }
+      })
+      .state('home.barDistributionmng', {
+        url: '/barDistributionmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/barDistributionMng.html',
+            controller: 'barDistributionMngController as barDistributionMngController'
+          }
+        }
+      })
+      .state('home.machineworkreport', {
+        url: '/machineworkreportmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/machineworkreportMng.html',
+            controller: 'machineworkreportMngController as machineworkreportMngController'
+          }
+        }
+      })
 
 
 

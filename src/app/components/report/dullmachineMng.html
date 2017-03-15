@@ -1,0 +1,75 @@
+<div class="main-container" id="dullmachine">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <!-- 左侧查询条件 -->
+        <div class="span12"  style="margin-top: 20px;">
+          <form name="InactiveMachineForm" class="form-horizontal">
+              <div class="control-group">
+              <label class="control-label">产品类型：</label>
+                <div class="controls" >
+                  <ui-select id="machineTypeMult"  name="machineTypeMult" ng-model="dullmachineMngController.machine.engineType.id" theme="bootstrap"
+                             ng-disabled="disabled" validator="required">
+                    <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                    </ui-select-match>
+                    <ui-select-choices  repeat="engineType.id as engineType in dullmachineMngController.engineTypeList | propsFilter: {engineName: $select.search}" >
+                      <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+
+            </div>
+            <div class="control-group">
+              <label class="control-label">型号：</label>
+              <div class="controls">
+                <ui-select   id="productTypeMult" name="productTypeMult" ng-model="dullmachineMngController.machine.engineType.id" theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices  repeat="engineType.id as engineType in dullmachineMngController.engineTypeList | propsFilter: {engineName: $select.search}" >
+                    <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">订货号：</label>
+              <div class="controls">
+                <ui-select  id="orderNumberMult" name="orderNumberMult" ng-model="dullmachineMngController.machine.engineType.id" theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices  repeat="engineType.id as engineType in dullmachineMngController.engineTypeList | propsFilter: {engineName: $select.search}" >
+                    <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <br />
+            <div class="control-group">
+              <div class="controls">
+                <input id="queryBtn" type="button" class="btn btn-block btn-primary" value="待销车查询" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-container">
+    <div id="mapChart" style="height:100%;"> </div>
+    <div class="left-info">
+      <table id="countTop" class="table table-striped table-bordered table-condensed table-hover">
+        <thead>
+        <tr>
+          <td>产品类型</td>
+          <td>待销数</td>
+        </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
