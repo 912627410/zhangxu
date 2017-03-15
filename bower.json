@@ -42,7 +42,8 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-translate-storage-cookie": "^2.11.0",
     "moment": "^2.15.1",
-    "ztree": "^3.5.0"
+    "ztree": "^3.5.0",
+    "echarts":"3.4.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.2",
@@ -76,6 +77,11 @@
         "highcharts-more.js",
         "modules/solid-gauge.js",
         "modules/exporting.js"
+      ]
+    },
+    "echarts": {
+      "main": [
+        "dist/echarts.js"
       ]
     },
     "angular-underscore": {

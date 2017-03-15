@@ -1,0 +1,139 @@
+<div class="main-container" id="machineworkreport">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12"  style="margin-top: 20px;">
+          <form id="searchForm" class="form-search">
+            <div class="control-group">
+              <label class="control-label">产品类型：</label>
+              <div class="controls">
+                <ui-select id="machineType" name="machineType" ng-model="machineworkreportMngController.machine.machineType.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in machineworkreportMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">型号：</label>
+              <div class="controls">
+                <ui-select id="" name="productType" ng-model="machineworkreportMngController.machine.productType.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in machineworkreportMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">订货号：</label>
+              <div class="controls">
+                <ui-select id="orderNumber" name="orderNumber" ng-model="machineworkreportMngController.machine.orderNumber.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in machineworkreportMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">车辆编号：</label>
+              <div class="controls">
+                <select required class="form-control">
+                  <option value="">请选择...</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">回款状态：</label>
+              <div class="controls">
+                <select  required class="form-control">
+                  <option value="">请选择...</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">工作地区：</label>
+              <div class="controls">
+                <select  class="form-control">
+                  <option value="">请选择...</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">起始开工日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="machineworkreportMngController.startDateDeviceData"
+                         is-open="machineworkreportMngController.startDateOpenStatusDeviceData.opened"
+                         datepicker-options="machineworkreportMngController.dateOptions"
+                         min-date="machineworkreportMngController.minDate"
+                         max-date="machineworkreportMngController.maxDate"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="machineworkreportMngController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束开工日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="machineworkreportMngController.endDateDeviceData"
+                       is-open="machineworkreportMngController.endDateOpenStatusDeviceData.opened"
+                       datepicker-options="machineworkreportMngController.dateOptions"
+                       ng-required="true" current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="machineworkreportMngController.endDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="生成工作报告"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div id="chart-map-panel" class="right-chart-panel"></div>
+    <div style="position:relative; width: 100%;">
+      <div style="height: 550px;position: absolute;left: 0;width: 30%">
+
+      </div>
+      <div id="chart-heatmap-panel" style="height: 550px; position: absolute; right: 0;width: 70%;">
+      </div>
+    </div>
+  </div>
+
+</div>

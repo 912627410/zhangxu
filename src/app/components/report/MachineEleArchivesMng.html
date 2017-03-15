@@ -1,0 +1,174 @@
+<div class="main-container" id="machineEleArchives">
+  <div class="left-container"
+       ng-show='MachineeleArchivesmngController.show'>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12" style="margin-top: 20px;">
+          <div class="control-group" id="batchNumbers">
+            <label class="control-label text-nowrap">试验批次：</label>
+            <div class="controls">
+              <ui-select id="experimentalcar" name="experimentalcar"
+                         ng-model="MachineeleArchivesmngController.experimentalcar" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices
+                  repeat="experimentalcar in MachineeleArchivesmngController.experimentalcarList | propsFilter: {name: $select.search}">
+                  <div ng-bind-html="experimentalcar.name"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label text-nowrap">统计日期：</label>
+
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                     ng-model="MachineeleArchivesmngController.startDateDeviceData"
+                     is-open="MachineeleArchivesmngController.startDateOpenStatusDeviceData.opened"
+                     datepicker-options="MachineeleArchivesmngController.dateOptions"
+                     min-date="MachineeleArchivesmngController.minDate"
+                     max-date="MachineeleArchivesmngController.maxDate"
+                     ng-required="true" current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}" />
+              <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="MachineeleArchivesmngController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+            </p>
+          </div>
+          <div class="control-group">
+            <div class="controls" ng-click="MachineeleArchivesmngController.search();">
+              <a role="button" class="btn btn-primary btn-block">查看试验车工作概览</a>
+            </div>
+          </div>
+          <div class="alert" style="margin-top: 20px;">
+            <strong>注意：</strong> 仅展示试验时间区间包含统计日期的对应试验批次统计结果！
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="menuSwitch" class="cond-show ">
+    <div>
+      <a ng-click="MachineeleArchivesmngController.closeChange()">{{MachineeleArchivesmngController.falg}}</a>
+    </div>
+  </div>
+
+
+  <div id="right-container" class="right-container" >
+    <div id="chart-panel" class="right-panel"></div>
+    <div class="activityInfoDiv">
+      <table id="activityInfo" class="table table-bordered table-condensed table-hover td-align-center">
+        <thead>
+        <tr>
+          <th>产品类型</th>
+          <th>当日活跃/总试验车数</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <!--<div id="batchInfoDiv" class="for-open-div">-->
+      <!--<table id="batchInfo" class="table table-bordered table-condensed table-hover td-align-center">-->
+        <!--<thead>-->
+        <!--<tr>-->
+          <!--<th>试验批次</th>-->
+          <!--<th>当日达标/总试验车数</th>-->
+          <!--<th>达标</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <div id="gatherDoneInfo">
+      <div data-num="6" class="angleInfo">
+        <a ng-click="MachineeleArchivesmngController.getGatherDoneInfoDetail()">
+          <span class="label label-warning">未达标</span>
+        </a>
+      </div>
+      <div data-num="0" class="angleInfo">
+        <a ng-click="MachineeleArchivesmngController.getGatherDoneInfoDetail()">
+          <span class="label label-success">已达标</span>
+        </a>
+      </div>
+    </div>
+
+    <div id="exptDoneInfo">
+      <div data-num="1" class="angleInfo"><a href="javascript:drawBatchInfo();"><span
+        class="label label-info">试验批次列表</span></a></div>
+    </div>
+    <div id="noData"><span class="label label-warning">统计当日无记录</span></div>
+
+    <!--<div id="batchInfoDetailDiv" class="for-open-div">-->
+      <!--<table id="batchInfoDetail" class="table table-bordered table-condensed table-hover td-align-center">-->
+        <!--<thead>-->
+        <!--<tr>-->
+          <!--<th>试验车编号</th>-->
+          <!--<th>产品类型</th>-->
+          <!--<th>日均工时(小时)</th>-->
+          <!--<th>预期日均工时(小时)</th>-->
+          <!--<th>达标</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <!--<div id="gatherDoneInfoDetailDiv" class="for-open-div">-->
+      <!--<table id="gatherDoneInfoDetail" class="table table-bordered table-condensed table-hover td-align-center">-->
+        <!--<thead>-->
+        <!--<tr>-->
+          <!--<th>试验车编号</th>-->
+          <!--<th>产品类型</th>-->
+          <!--<th>试验批次</th>-->
+          <!--<th>日均工时(小时)</th>-->
+          <!--<th>预期日均工时(小时)</th>-->
+          <!--<th>达标</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <!--<div id="activityInfoDetailDiv" class="for-open-div">-->
+      <!--<table id="activityInfoDetail" class="table table-bordered table-condensed table-hover td-align-center">-->
+        <!--<thead>-->
+        <!--<tr>-->
+          <!--<th>试验车编号</th>-->
+          <!--<th>产品类型</th>-->
+          <!--<th>试验批次</th>-->
+          <!--<th>工作时长(小时)</th>-->
+          <!--<th>状态</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+
+    <!--<div id="dayAvgDiv" class="for-open-div">-->
+      <!--<div id="daySum-panel" class="barline-panel"></div>-->
+      <!--<div class="horizontal-seg-line"></div>-->
+      <!--<div id="dayAvg-panel" class="barline-panel"></div>-->
+      <!--<div class="horizontal-seg-line"></div>-->
+      <!--<div style="height: 35px;line-height: 35px; width: 100%; padding-left: 20px; font-size: 14px;">-->
+        <!--<i class=" icon-question-sign"> </i>点击上图柱体可显示对应单个试验车每日工作时长分布情况-->
+      <!--</div>-->
+      <!--<div id="everyDay-panel" class="barline-panel"></div>-->
+    <!--</div>-->
+
+  </div>
+  <script>
+
+  </script>
+
+</div>

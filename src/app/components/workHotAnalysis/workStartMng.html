@@ -1,0 +1,172 @@
+<div class="main-container" id="workStart">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12"  style="margin-top: 20px;">
+          <form id="searchForm" class="form-search">s
+            <div class="control-group">
+              <label class="control-label">产品类型：</label>
+              <div class="controls">
+                <ui-select id="machineType" name="machineType" ng-model="workStartMngController.machine.machineType.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">型号：</label>
+              <div class="controls">
+                <ui-select id="" name="productType" ng-model="workStartMngController.machine.productType.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">订货号：</label>
+              <div class="controls">
+                <ui-select id="orderNumber" name="orderNumber" ng-model="workStartMngController.machine.orderNumber.id"
+                           theme="bootstrap"
+                           ng-disabled="disabled" validator="required">
+                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
+                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">汇总周期：</label>
+
+
+              <div class="controls">
+                <ui-select id="cycleType" name="cycleType"
+                           ng-model="workStartMngController.cycleType" theme="bootstrap"
+                           ng-disabled="disabled">
+                  <ui-select-match allow-clear="true" placeholder="请选择">{{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="experimentalcar in workStartMngController.experimentalcarList | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="experimentalcar.name"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+            </div>
+            <div class="control-group">
+              <label class="control-label">热度类型：</label>
+
+
+              <div class="controls">
+                <ui-select id="densityType" name="densityType"
+                           ng-model="workStartMngController.experimentalcar" theme="bootstrap"
+                           ng-disabled="disabled">
+                  <ui-select-match allow-clear="true" placeholder="请选择">{{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices
+                    repeat="experimentalcar in workStartMngController.experimentalcarList | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="experimentalcar.name"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">开工月份：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom1}}"
+                         ng-model="workStartMngController.startDateDeviceData"
+                         is-open="workStartMngController.statisticalStatusData.opened"
+                         datepicker-options="workStartMngController.dateOptions"
+                         min-date="workStartMngController.minDate"
+                         max-date="workStartMngController.maxDate" ng-required="true"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}"/>
+                         <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="workStartMngController.statisticalData($event)"><i
+                              class="glyphicon glyphicon-calendar"></i></button>
+                         </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工热度分布"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div id="topic-container" class="topic-container">
+      &nbsp;
+      <span id="sapnWorkMonth"></span>
+      <span id="sapnWorkProvince">全国</span>
+      车辆开工热度分布
+      <span class="return-mask" style="display: none;">
+                <i class="icon-reply"></i>
+                <a class="return-word" href="javascript:void(0);" onclick="groupEvent()">返回到全国</a>
+            </span>
+    </div>
+    <div id="map-container" class="chart-container" style="height: 350px;"> </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示热度类型(开工时长或开机次数)与工作车辆数量的关系 </div>
+    <div id="pds-container" class="chart-container"> </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示各省热度类型(开工时长或开机次数)与活跃车辆数,销售车辆数的关系 </div>
+    <div class="table-container">
+      <div class="table-header">
+        <span class="table-header-text">各省数据<i ng-click="" style="margin-left: 20px;color:#EBA174;">显示更多</i></span>
+        <a class="table-show-all" id="showAllProvince"></a>
+      </div>
+      <table id="areaTop" class="table table-striped table-bordered table-condensed table-hover">
+        <thead>
+        <tr>
+          <th>省份名称</th>
+          <th>平均开工时长(小时)</th>
+          <th>活跃车辆数(台)</th>
+          <th>销售车辆数(台)</th>
+          <th>占比(活:销)</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i>  展示车辆各年份月度工作情况 </div>
+    <div id="mmu-container" class="chart-container"> </div>
+
+    <div id="areaTop-all" style="display:none;">
+      <table class="table table-striped table-bordered table-condensed table-hover" >
+        <thead>
+        <tr>
+          <th>省份名称</th>
+          <th>平均开工时长(小时)</th>
+          <th>活跃车辆数(台)</th>
+          <th>销售车辆数(台)</th>
+          <th>占比(活:销)</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div>
