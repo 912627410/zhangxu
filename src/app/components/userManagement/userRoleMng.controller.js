@@ -47,12 +47,12 @@
             vm.userinfoRoleList.push(data[i].roleId);
           }
         }
-        if(queryState){
-          queryFn()
-        }else{
-          getUserRoleState=true;
-        }
       })
+      if(queryState){
+        queryFn()
+      }else{
+        getUserRoleState=true;
+      }
     }
 
 
