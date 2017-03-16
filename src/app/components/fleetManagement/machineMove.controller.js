@@ -20,7 +20,9 @@
       });
     }
 
-
+    vm.reset = function () {
+      vm.org = null;
+    }
     /*
      * Map对象，实现Map功能
      * size() 获取Map元素个数
@@ -224,10 +226,11 @@
         var markersMap=new Map();
 
         if ($rootScope.userInfo ){
+          var url = FLEET_MAPDATA;
           if(org != null && org !=""){
-            FLEET_MAPDATA = FLEET_MAPDATA + "?orgLabel=" +org.label;
+            url += "?orgLabel=" +org.label;
           }
-          var rspdata = serviceResource.restCallService(FLEET_MAPDATA, "QUERY");
+          var rspdata = serviceResource.restCallService(url, "QUERY");
           rspdata.then(function (data) {
             var fleetList =data;  //返回的List
             var marker = "assets/images/car_03.png";
@@ -654,6 +657,9 @@
     vm.query = function () {
       if(vm.org!=null && vm.org.label != null ){
         vm.refreshMap("fleetMap",vm.org,13,null);
+      }else {
+        vm.refreshMap("fleetMap",null,13,null);
+
       }
     }
 
