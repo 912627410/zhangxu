@@ -19,12 +19,12 @@
 
     }
     else{
-      $rootScope.logo="assets/images/logo.png";
+      $rootScope.logo="assets/images/logo2.png";
     }
 
     vm.logout = function(){
 
-      $rootScope.logo="assets/images/logo.png";
+      $rootScope.logo="assets/images/logo2.png";
 
       $rootScope.userInfo = null;
       $rootScope.deviceGPSInfo = null;

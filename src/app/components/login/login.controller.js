@@ -131,7 +131,7 @@
           $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 
         }else{
-          $rootScope.logo="assets/images/logo.png";
+          $rootScope.logo="assets/images/logo2.png";
         }
         Notification.success(languages.findKey('loginSuccess'));
 
@@ -180,7 +180,7 @@
           $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 
         }else{
-          $rootScope.logo="assets/images/logo.png";
+          $rootScope.logo="assets/images/logo2.png";
         }
         Notification.success(languages.findKey('loginSuccess'));
 

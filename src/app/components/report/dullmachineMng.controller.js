@@ -12,8 +12,6 @@
   function dullmachineMngController($rootScope, $scope,$http,$filter) {
     var vm = this;
 
-    $http.get('../bower_components/echarts/map/json/china.json').success(function (chinaJson) {
-      echarts.registerMap('china', chinaJson);
       var date = new Date();
       var chart = echarts.init(document.getElementById('mapChart'));
       var option = {
@@ -104,7 +102,6 @@
         ]
       };
       chart.setOption(option);
-    })
 
 
 

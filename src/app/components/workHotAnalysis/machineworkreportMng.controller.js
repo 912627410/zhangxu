@@ -45,9 +45,9 @@
       startingDay: 1
     };
 
-    $http.get('../bower_components/echarts/map/json/china.json').success(function (chinaJson) {
 
-      echarts.registerMap('china', chinaJson);
+
+
       var myChart = echarts.init(document.getElementById('chart-map-panel'));
 
       var option = {
@@ -110,7 +110,6 @@
       myChart.setOption(option);
 
 
-    });
 
 
   }

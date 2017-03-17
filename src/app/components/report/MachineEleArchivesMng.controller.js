@@ -65,9 +65,9 @@
     //var myChart = echarts.init(document.getElementById('chart-panel'));
 
 
-    $http.get('../bower_components/echarts/map/json/china.json').success(function (chinaJson) {
+
      var date = new Date();
-      echarts.registerMap('china', chinaJson);
+
       var chart = echarts.init(document.getElementById('chart-panel'));
       var mapOption = {
         title: {
@@ -212,7 +212,6 @@
       };
       chart.setOption(mapOption);
 
-    });
 
 
 
