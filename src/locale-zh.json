@@ -317,6 +317,7 @@
   "momentWorkTime":"阶段工作时间",
   "momentMileage":"阶段里程",
   "oilPress":"机油压力",
+  "fuelConsumption":"瞬时油耗",
   "alertStatus":"报警状态",
   "flyWheelTeeth":"飞轮齿数",
   "proportionalValve":"比例阀电流",

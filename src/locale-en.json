@@ -325,6 +325,7 @@
   "momentWorkTime":"momentWorkTime",
   "momentMileage":"momentMileage",
   "oilPress":"oilPress",
+  "fuelConsumption":"fuelConsumption",
   "alertStatus":"Alert Status",
   "flyWheelTeeth":"FlyWheel Teeth",
   "proportionalValve":"proportionalValve Current",
