@@ -35,6 +35,7 @@
     .constant('DEVCEINFO_URL', SERVER_BASE_URL + 'device/deviceinfo')   //设备crud
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
     .constant('DEVCE_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimpledata')   //分页查询设备简化数据URL
+    .constant('DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/devicesimpledata')   //分页查询设备简化数据URL
     .constant('DEVCEMONITOR_EXCELEXPORT', SERVER_BASE_URL + 'deviceMonitor/excelExport')   //数据导出简化URL
     .constant('DEVCEDATA_EXCELEXPORT', SERVER_BASE_URL + 'device/excelExport')   //devicedata导出
     .constant('DEVCE_NOUPLOAD_DATA_EXCELEXPORT', SERVER_BASE_URL + 'device/noUploadExcelExport')  //长时间未连接数据导出
@@ -53,6 +54,7 @@
     .constant('DEVICEREPORT_EXPORT_URL', SERVER_BASE_URL + 'deviceReport/excelExport')   //deviceReport导出
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
+    .constant('DEVCEMONITOR_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/warningdata')   //分页查询设备报警数据URL
     .constant('DEVCE_LOCK_DATA_PAGED_QUERY',SERVER_BASE_URL+'device/locksms')//分页查询设备锁车数据url
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码
     .constant('SUPER_RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/superpassword')   //管理员修改用户密码

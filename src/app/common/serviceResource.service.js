@@ -584,7 +584,151 @@
         }
         return "[SPN:" + deviceWarningData.spn + "] [FMI:"+ deviceWarningData.fmi +"] [CM:"+ deviceWarningData.cm + "] [OC:"+ deviceWarningData.oc +"]";
       },
-
+      handleRsp: function (action, rspData) {
+        if (rspData.result != "Success") {
+          //     TipService.setMessage(action, 'error');
+          Notification.error(action + ' 操作失败');
+        }
+        else {
+          //   TipService.setMessage('操作成功', 'success');
+          Notification.success('操作成功');
+        }
+      },
+      padLeft: function (pad, str, padLeft) {
+        if (typeof str === 'undefined')
+          return pad;
+        if (padLeft) {
+          return (pad + str).slice(-pad.length);
+        } else {
+          return (str + pad).substring(0, pad.length);
+        }
+      },
+      getWarningInfo: function (errorCode) {
+        var warningMsg = {
+          description: '未找到',
+          action: '未找到'
+        };
+        switch (errorCode) {
+          //ECU传递数值导致接受到的warningCode 为数值，补充1 2 3与01 02 03对应
+          case '1':
+            warningMsg.description = "系统初始化错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '2':
+            warningMsg.description = "系统通信错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '3':
+            warningMsg.description = "无效选项设置错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '01':
+            warningMsg.description = "系统初始化错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '02':
+            warningMsg.description = "系统通信错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '03':
+            warningMsg.description = "无效选项设置错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '12':
+            warningMsg.description = "启动时底盘上升或下降按钮打开错误";
+            warningMsg.action = "停止所有底盘控制";
+            break;
+          case '18':
+            warningMsg.description = "坑洞保护错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '31':
+            warningMsg.description = "压力传感器错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '32':
+            warningMsg.description = "角度传感器错误";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '38':
+            warningMsg.description = "标定过程不成功或标定数据存储错误";
+            warningMsg.action = "重新标定";
+            break;
+          case '41':
+            warningMsg.description = "锁车报警";
+            warningMsg.action = "下次上电锁车";
+            break;
+          case '42':
+            warningMsg.description = "启动时,平台向左转向按钮按下错误";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '43':
+            warningMsg.description = "启动时,平台向右转向按钮按下错误";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '46':
+            warningMsg.description = "启动时,平台手柄使能开关按钮按下错误";
+            warningMsg.action = "停止平台控制";
+            break;
+          case '47':
+            warningMsg.description = "启动时,平台手柄不在中位错误";
+            warningMsg.action = "车速降到起升后的速度";
+            break;
+          case '52':
+            warningMsg.description = "前进线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '53':
+            warningMsg.description = "后退线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '54':
+            warningMsg.description = "起升上升线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '55':
+            warningMsg.description = "起升下降线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '56':
+            warningMsg.description = "右转线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '57':
+            warningMsg.description = "左转线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '58':
+            warningMsg.description = "刹车线圈错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+          case '68':
+            warningMsg.description = "低电压报警";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '80':
+            warningMsg.description = "超过80%负载报警";
+            warningMsg.action = "只是报警";
+            break;
+          case '90':
+            warningMsg.description = "超过90%负载报警";
+            warningMsg.action = "只是报警";
+            break;
+          case '99':
+            warningMsg.description = "超过99%负载报警";
+            warningMsg.action = "只是报警";
+            break;
+          case 'OL':
+            warningMsg.description = "平台超载报警";
+            warningMsg.action = "停止所有动作";
+            break;
+          case 'LL':
+            warningMsg.description = "机器倾斜超过安全限定错误";
+            warningMsg.action = "停止起升和行走";
+            break;
+        }
+        return warningMsg;
+      },
       lineToUpper:function test(str){
         var arr = str.split("-");//用split()函数来进行分割字符串arr里面包括【border，bottom，color】
         for(var i=1;i<arr.length;i++){//从数组的第二项开始循环，charAt(0)找到第一个字母。substring(1)截掉第一个字母。
