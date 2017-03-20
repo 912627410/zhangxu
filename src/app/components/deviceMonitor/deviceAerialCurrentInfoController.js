@@ -38,7 +38,6 @@
         }
 
 
-
         vm.highchartsPower = {
             options: {
                 chart: {
@@ -326,7 +325,7 @@
                 }
 
 
-                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,12,centerAddr);
+                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,centerAddr);
             })
         };
 
@@ -1872,14 +1871,14 @@
                 }, 0);
             }
         };
-  
+
         vm.refreshParameterChart = function (parameterValue,curve) {
             var bIndex1 = curve.bIndex1;
-    
+
             if(bIndex1 < parameterValue.bJoystickNeutralZone){
                 bIndex1 = parameterValue.bJoystickNeutralZone;
             }
-    
+
             var data1 = [bIndex1,curve.bPwmPos1];
             var data2 = [curve.bIndex2,curve.bPwmPos2];
             var data3 = [curve.bIndex3,curve.bPwmPos3];
@@ -1890,17 +1889,17 @@
             var data8 = [-curve.bIndex3,curve.bPwmNeg3];
             var data9 = [-curve.bIndex4,curve.bPwmNeg4];
             var data10 = [-127,curve.bPwmNegMax];
-    
+
             vm.parameterConfig.series[0].data = [data1,data2,data3,data4,data5];
             vm.parameterConfig.series[1].data = [data6,data7,data8,data9,data10];
         };
-  
+
         vm.initParameterTab = function (deviceinfo) {
             var restURL = DEVCEINFO_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum;
             var rspData = serviceResource.restCallService(restURL, "GET");
             rspData.then(function (data) {
                 vm.parameterValue = data.content;
-      
+
                 vm.parameterTypeList=[{
                     name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
                 },{
@@ -1912,7 +1911,7 @@
                 },{
                     name:'转向曲线',curve : vm.parameterValue.steerRisedCurve
                 }];
-      
+
                 vm.queryParameter = vm.parameterTypeList[0];
                 vm.refreshParameterChart(vm.parameterValue,vm.queryParameter.curve);
             }, function (reason) {

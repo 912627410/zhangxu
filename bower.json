@@ -81,7 +81,8 @@
     },
     "echarts": {
       "main": [
-        "dist/echarts.js"
+        "dist/echarts.js",
+        "map/js/china.js"
       ]
     },
     "angular-underscore": {
