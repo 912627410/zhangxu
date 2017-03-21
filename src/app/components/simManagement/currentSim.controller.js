@@ -50,7 +50,6 @@
             vm.status=simResposeDto.status;
           }else{
             vm.status="code: "+simResposeDto.code+"  "+ simResposeDto.message;
-            Notification.error(vm.location);
           }
 
         }else{
@@ -75,7 +74,6 @@
             vm.gprs=simResposeDto.totalGprs+" KB";
           }else{
             vm.gprs="code: "+simResposeDto.code+"  "+ simResposeDto.message;
-            Notification.error(vm.location);
           }
 
         }else{

@@ -8,7 +8,7 @@
     function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
-                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY) {
+                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -28,6 +28,7 @@
         vm.amaplongitudeNum;//选中的经度
         vm.amaplatitudeNum;//选中的维度
         vm.radius; //设置的半径
+        vm.zoomsize = 8;
 
         if(deviceinfo.machine!=null&&deviceinfo.machine.selectAddress!=null
             &&deviceinfo.machine.amaplongitudeNum!=null&&deviceinfo.machine.amaplatitudeNum!=null
@@ -407,25 +408,27 @@
 
         //查询设备数据并更新地图 mapid是DOM中地图放置位置的id
         vm.refreshScopeMapWithDeviceInfo=function (mapId,deviceInfo,zoomsize,centeraddr) {
-
+            var marker;
+            //保存之前的标注
+            var beforMarkers = [];
             $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
 
                 var map=vm.initMap(mapId,zoomsize,centeraddr);
 
-
-                var marker;
-
                 map.on('click', function(e) {
-
+                    vm.zoomsize = 8;
                     var  lnglatXY=[e.lnglat.getLng(), e.lnglat.getLat()];
                     marker = new AMap.Marker({
                         icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
                         position: lnglatXY
                     });
                     marker.setMap(map);
-
+                    //清除之前的标注
+                    map.remove(beforMarkers);
+                    //存入标注
+                    beforMarkers.push(marker);
                     var geocoder = new AMap.Geocoder({
-                        radius: 1000,
+                        radius: 100,
                         extensions: "all"
                     });
 
@@ -437,7 +440,7 @@
 
 
                             var poi={location:lnglatXY,name:null,address: address};
-                            vm.createMarker(poi);
+                            vm.createMarker(marker, poi);
 
                             vm.updateLocationInfo(address, lnglatXY);
                         }
@@ -451,52 +454,97 @@
 
                 //读取所有设备的gps信息，home map使用
                 if (deviceInfo.locateStatus === '1' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
-                    serviceResource.addMarkerModel(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
+                  vm.addMarkerModelEmcloud(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
                 }
 
-                //围栏地址标注
+                //回显围栏坐标
                 if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
                     var  lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
                     marker = new AMap.Marker({
+                        map: map,
                         icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
                         position: lnglatXY
                     });
                     marker.setMap(map);
-
-                    var geocoder = new AMap.Geocoder({
-                        radius: 1000,
-                        extensions: "all"
-                    });
-
-                    geocoder.getAddress(lnglatXY, function(status, result) {
-                        if (status === 'complete' && result.info === 'OK') {
-                            //       geocoder_CallBack(result);
-                            var  address= result.regeocode.formattedAddress; //返回地址描述
-
-                            var poi={location:lnglatXY,name:null,address: address};
-                            vm.createMarker(poi);
-
-                            vm.updateLocationInfo(address, lnglatXY);
-                        }
-                    });
+                    beforMarkers.push(marker);
+                    var poi = {location: lnglatXY, name: null, address: vm.selectAddress};
+                    var infoWindow = vm.createInfoWindow(poi);
+                    infoWindow.open(vm.scopeMap, marker.getPosition());
                     //围栏地址标注end
                 }
 
 
 
             })
-        },
+        };
 
+      vm.addMarkerModelEmcloud = function (mapObj, item, icon) {
+        var mapObj = mapObj;
+        //实例化信息窗体
+        var infoWindow = new AMap.InfoWindow({
+          isCustom: true,  //使用自定义窗体
+          offset: new AMap.Pixel(15, -40)//-113, -140
+        });
+        var marker = new AMap.Marker({
+          map: mapObj,
+          position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
+          icon: icon //复杂图标
+        });
+        AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+          infoWindow.open(mapObj, marker.getPosition());
+          var title = item.deviceNum;
+          var contentInfo = "";
+          contentInfo += "终端编号：" + item.deviceNum + "<br/>";
+          contentInfo += "工时: " + (item.workDuration == null ? '' : $filter('number')(item.workDuration, 2)) + "<br/>";
+          contentInfo += "维度: " + (item.amaplatitudeNum == null ? '' : $filter('number')(item.amaplatitudeNum, 2)) + "<br/>";
+          contentInfo += "经度: " + (item.amaplongitudeNum == null ? '' : $filter('number')(item.amaplongitudeNum, 2)) + "<br/>";
+          contentInfo += "当前位置：" + (item.address == null ? '' : item.address) + "<br/>";
+          contentInfo += "更新时间：" + (item.lastDataUploadTime == null ? '' : $filter('date')(item.lastDataUploadTime, 'yyyy-MM-dd HH:mm:ss')) + "<br/>";
+          var info = createInfoWindow(title, contentInfo, mapObj);
+          //设置窗体内容
+          infoWindow.setContent(info);
+        });
+        //构建自定义信息窗体
+        function createInfoWindow(title, content) {
+          var info = document.createElement("div");
+          info.className = "info";
+          //可以通过下面的方式修改自定义窗体的宽高
+          //info.style.width = "400px";
+          // 定义顶部标题
+          var top = document.createElement("div");
+          top.className = "info-top";
+          var titleD = document.createElement("div");
+          titleD.innerHTML = title;
+          var closeX = document.createElement("img");
+          closeX.src = "https://webapi.amap.com/images/close2.gif";
+          closeX.onclick = closeInfoWindow;
+          top.appendChild(titleD);
+          top.appendChild(closeX);
+          info.appendChild(top);
+          // 定义中部内容
+          var middle = document.createElement("div");
+          middle.className = "info-middle";
+          middle.style.backgroundColor = 'white';
+          middle.innerHTML = content;
+          info.appendChild(middle);
+          // 定义底部内容
+          var bottom = document.createElement("div");
+          bottom.className = "info-bottom";
+          bottom.style.position = 'relative';
+          bottom.style.top = '0px';
+          bottom.style.margin = '0 auto';
+          var sharp = document.createElement("img");
+          sharp.src = "https://webapi.amap.com/images/sharp.png";
+          bottom.appendChild(sharp);
+          info.appendChild(bottom);
+          return info;
+        }
+        function closeInfoWindow() {
+          mapObj.clearInfoWindow();
+        }
+      };
 
-             vm.createMarker=function(poi){
-                // 添加marker
-                var marker = new AMap.Marker({
-                    map: vm.scopeMap,
-                    position: poi.location
-                });
-
-
-                vm.scopeMap.setCenter(marker.getPosition());
+             vm.createMarker=function(marker, poi){
                 var infoWindow= vm.createInfoWindow(poi);
                 infoWindow.open(vm.scopeMap, marker.getPosition());
 
@@ -531,13 +579,20 @@
             s.push("<b>名称：" + poi.name+"</b>");
             }
             s.push("围栏地址：" + poi.address+"</b>");
-            //s.push("取消围栏： <button class='btn btn-primary btn-xs' type='button' onclick=''>重置</button></b>");
-
+            if (null == vm.radius) {
+              vm.radius = 0;
+            }
+            s.push("半径：" + vm.radius + "米</b>");
 
             return s.join("<br>");
         }
 
+        /*设置电子围栏*/
         vm.updateScopeMap = function () {
+            if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
+                Notification.error('当前设备未绑定车辆，无法设置电子围栏');
+                return false;
+            }
             if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
                 Notification.error('无效的地址');
                 return false;
@@ -569,13 +624,15 @@
                         radius:vm.radius,
                         selectAddress:vm.selectAddress,
                         amaplongitudeNum:vm.amaplongitudeNum,
-                        amaplatitudeNum:vm.amaplatitudeNum
+                        amaplatitudeNum:vm.amaplatitudeNum,
+                        fenceStatus: '1'
                     }
                     //TODO 保存电子围栏
                     var restResult = serviceResource.restAddRequest(MACHINE_FENCE,fence);
                     restResult.then(function (data) {
+                            deviceinfo.machine.fenceStatus = 1;
                             Notification.success("设置电子围栏成功!");
-                            $uibModalInstance.close();
+                            //$uibModalInstance.close();
                         },function (reason) {
                             vm.errorMsg=reason.data.message;
                             Notification.error(reason.data.message);
@@ -584,6 +641,44 @@
 
                 });
         };
+
+      /*取消电子围栏*/
+      vm.cacheElectronicFence = function() {
+        if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
+          Notification.error('当前设备未绑定车辆，无法设置电子围栏');
+          return false;
+        }
+        if (deviceinfo.machine.fenceStatus == null) {
+          Notification.error('当前车辆未设置围栏，无需取消');
+          return false;
+        }
+        var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
+        $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
+          .then(function () {
+            var fence = {
+              id: deviceinfo.machine.id,
+              radius: 0,
+              selectAddress: null,
+              amaplongitudeNum: null,
+              amaplatitudeNum: null
+            };
+            //取消电子围栏
+            var restResult = serviceResource.restUpdateRequest(MACHINE_FENCE_CACHE, fence);
+            restResult.then(function (data) {
+                deviceinfo.machine.fenceStatus = 0;
+                vm.selectAddress = ''; //选中的地址信息
+                vm.amaplongitudeNum = null;//选中的经度
+                vm.amaplatitudeNum = null;//选中的维度
+                vm.radius = null; //设置的半径
+                vm.initScopeMapTab(deviceinfo);
+                Notification.success("取消电子围栏成功!");
+              }, function (reason) {
+                vm.errorMsg = reason.data.message;
+                Notification.error(reason.data.message);
+              }
+            );
+          });
+      };
 
 
             vm.refreshLocationList = function(value) {
@@ -630,17 +725,14 @@
 
                     //回调函数
                     function placeSearch_CallBack(data) {
-                        var poiArr = data.poiList.pois;
-
-                        for(var i=0;i<poiArr.length;i++){
-                            vm.createMarker(poiArr[i]);
-
-                            var  lnglatXY=[poiArr[i].location.getLng(), poiArr[i].location.getLat()];
-
-                            vm.updateLocationInfo(poiArr[i].address, lnglatXY); //更新选中的地址信息
-                        }
-
-
+                        var lnglatXY = [item.location.lng, item.location.lat];
+                        var marker = new AMap.Marker({
+                          icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                          position: lnglatXY
+                        });
+                        var poi = {location: item.location, name: item.district, address: item.district + item.address};
+                        vm.createMarker(marker, poi);
+                        vm.updateLocationInfo(poi.address, lnglatXY); //更新选中的地址信息
                     }
 
 
@@ -682,20 +774,31 @@
 
             $timeout(function(){
                 //第一个标注
-                if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
+                if(null!=deviceInfo.amaplongitudeNum && null!=deviceInfo.amaplatitudeNum){
                     var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
                 }
 
 
                 //第一个标注
-                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,8,centerAddr);
+                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,vm.zoomsize,centerAddr);
 
 
 
             })
         };
 
-
+        /*监听radius变化*/
+        vm.changeradius = function (radius) {
+          if(null == vm.newAddress && "" == vm.selectAddress){
+            return;
+          }
+          vm.initScopeMapTab(deviceinfo);
+        };
+        /*回到以当前车辆为中心点的位置*/
+        vm.backCurrentAdd = function () {
+          // vm.zoomsize--;
+          vm.initScopeMapTab(deviceinfo);
+        };
 
 
         vm.addMarker=function(map, location) {
@@ -720,51 +823,110 @@
 
         //参数: 地图轨迹gps 数据
         vm.refreshMapTab = function(lineAttr){
-            $timeout(function(){
-                $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
-                    var marker, lineArr = [];
-                    if (lineAttr){
-                        lineArr = lineAttr;
-                    }
-                    var map = new AMap.Map("deviceDetailMap", {
-                        resizeEnable: true,
-                        //center: [116.397428, 39.90923],
-                        zoom: 17
-                    });
-                    map.on("complete", completeEventHandler);
-                    AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
-                        marker.moveAlong(lineArr, 500);
-                    }, false);
-                    AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
-                        marker.stopMove();
-                    }, false);
-                    var carPostion = [116.397428, 39.90923];   //默认地点
-                    if (lineArr.length > 0){
-                        carPostion = lineArr[0];
-                    }
-                    // 地图图块加载完毕后执行函数
-                    function completeEventHandler() {
-                        marker = new AMap.Marker({
-                            map: map,
-                            position: carPostion,
-                            //icon: "http://code.mapabc.com/images/car_03.png",
-                            icon: "assets/images/car_03.png",
-                            offset: new AMap.Pixel(-26, -13),
-                            autoRotation: true
-                        });
-                        // 绘制轨迹
-                        var polyline = new AMap.Polyline({
-                            map: map,
-                            path: lineArr,
-                            strokeColor: "#00A",  //线颜色
-                            strokeOpacity: 1,     //线透明度
-                            strokeWeight: 3,      //线宽
-                            strokeStyle: "solid"  //线样式
-                        });
-                        map.setFitView();
-                    }
-                })
-            })
+          /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
+          /**
+           * Marker移动控件
+           * @param {Map} map    地图对象
+           * @param {Marker} marker Marker对象
+           * @param {Array} path   移动的路径，以坐标数组表示
+           */
+          var MarkerMovingControl = function (map, marker, path) {
+            this._map = map;
+            this._marker = marker;
+            this._path = path;
+            this._currentIndex = 0;
+            marker.setMap(map);
+            marker.setPosition(path[0]);
+          };
+          /**************************************结束 ***********************************************************/
+          var marker;
+          var carPostion = lineAttr[0];
+          var map = new AMap.Map("deviceDetailMap", {
+            resizeEnable: true,
+            zoom: 17
+          });
+          /*工具条，比例尺，预览插件*/
+          AMap.plugin(['AMap.Scale', 'AMap.OverView'],
+            function () {
+              map.addControl(new AMap.ToolBar());
+              map.addControl(new AMap.Scale());
+              map.addControl(new AMap.OverView({isOpen: true}));
+            });
+          AMap.plugin(["AMap.RangingTool"], function () {
+          });
+          //小车
+          marker = new AMap.Marker({
+            map: map,
+            position: carPostion,
+            icon: "assets/images/car_03.png",
+            offset: new AMap.Pixel(-26, -13),
+            autoRotation: true
+          });
+          marker.setLabel({
+            offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
+            content: "行使了 0 米"
+          });
+          // 绘制轨迹
+          var polyline = new AMap.Polyline({
+            map: map,
+            path: lineAttr,
+            strokeColor: "#00A",  //线颜色
+            strokeOpacity: 1,     //线透明度
+            strokeWeight: 3,      //线宽
+            strokeStyle: "solid"  //线样式
+          });
+          map.setFitView();
+          var markerMovingControl = new MarkerMovingControl(map, marker, lineAttr);
+          var startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
+          var lastDistabce = 0;
+          /*移动完成触发事件*/
+          AMap.event.addListener(marker, "movealong", function () {
+            markerMovingControl._currentIndex = 0;
+          });
+          /*每一步移动完成触发事件*/
+          AMap.event.addListener(marker, "moveend", function () {
+            markerMovingControl._currentIndex++;
+          });
+          /*小车每一移动一部就会触发事件*/
+          AMap.event.addListener(marker, "moving", function () {
+            var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
+            lastDistabce += distances;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+            });
+            startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
+          });
+          /*开始事件*/
+          AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
+            lastDistabce = 0;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+            });
+            startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
+            markerMovingControl._currentIndex = 0;
+            markerMovingControl._marker.moveAlong(lineAttr, 500);
+          }, false);
+          /*暂停事件*/
+          AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
+            markerMovingControl._marker.stopMove();
+            var distabcess2 = lastDistabce;
+            var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
+            distabcess2 += distances;
+            console.log(distabcess2);
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
+            });
+          }, false);
+          /*继续移动事件*/
+          AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
+            console.log(markerMovingControl._currentIndex);
+            var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+            lineArr2.unshift(marker.getPosition());
+            markerMovingControl._marker.moveAlong(lineArr2, 500);
+          }, false);
         };
 
         //设备路径数据

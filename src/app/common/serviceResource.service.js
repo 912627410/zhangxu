@@ -13,7 +13,8 @@
   function serviceResource($rootScope,$location,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL,USER_LOGINBYTOKEN_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL,USER_LOGINBYTOKEN_URL,
+                           DEVCE_SIMPLE_GPS_DATA_PAGED_QUERY) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -47,11 +48,17 @@
     };
 
     /*判断机器设备类型*/
-    var mapDeviceType = function (id) {
-      if (id == null) {
+    var mapDeviceType = function (item) {
+      if (item == null) {
         return null;
       }
-      var machineLicenseId = id;
+      if(item.versionNum != null && item.versionNum == 'A001') {
+        return '高空车';
+      }
+      var machineLicenseId = item.machineLicenseId;
+      if(machineLicenseId == null) {
+        return null;
+      }
       var title = '';
 
       /*截取整机编号字符串*/
@@ -133,7 +140,7 @@
       //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
       //  var title = '';
 
-        title = mapDeviceType(item.machineLicenseId);
+        title = mapDeviceType(item);
         /*若整机编号为空，则显示终端编号*/
         if(title == null){
           title = item.deviceNum;
@@ -355,7 +362,7 @@
             }
             else{
               deviceList.forEach(function(deviceInfo){
-                if (deviceInfo.locateStatus === 'A' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+                if ((deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === '1') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
 
 
                   // var marker="http://webapi.amap.com/images/marker_sprite.png";
@@ -442,6 +449,19 @@
           restCallURL += queryCondition;
         }
         return restCallService(restCallURL,"GET");
+      },
+      //分页查询定位数据简化信息(device simple gps data)
+      queryDeviceSimpleGPSData: function (page, size, sort, queryCondition) {
+        var restCallURL = DEVCE_SIMPLE_GPS_DATA_PAGED_QUERY;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+        var sortUrl = sort || DEFAULT_DEVICE_DATA_SORT_BY;
+        restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        if (queryCondition) {
+          restCallURL += "&";
+          restCallURL += queryCondition;
+        }
+        return restCallService(restCallURL, "GET");
       },
       //分页查询设备报警数据信息(device warning data)
       queryDeviceWarningData:function(page,size,sort,queryCondition){

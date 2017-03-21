@@ -778,9 +778,10 @@
                         <div class="col-md-1">
                             <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.getDeviceMapData(0,1000,null,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateMapData,deviceAerialCurrentInfoController.endDateMapData)">确定</button>
                         </div>
-                        <div class="col-md-3">
-                            <button id="start" class="btn btn-default" type="button">开始动画</button>
-                            <button id="stop" class="btn btn-default" type="button">结束动画</button>
+                        <div class="col-md-3 btn-group">
+                            <button id="start" class="btn btn-sm" type="button">开始动画</button>
+                            <button id="stop" class="btn btn-sm" type="button">结束动画</button>
+                            <button id="move" class="btn btn-sm" type="button">{{'moveAnimation'|translate}}</button>
                         </div>
                         <!--<div class="col-md-1">-->
                         <!--</div>-->
@@ -1066,8 +1067,7 @@
                         <div class="col-md-1">
                             <label class="control-label text-nowrap">地址:</label>
                         </div>
-                        <div class="col-md-6">
-
+                        <div class="col-md-4">
                                 <ui-select name="newAddress" ng-model="deviceAerialCurrentInfoController.newAddress" theme="bootstrap"
                                            ng-disabled="disabled"  on-select="deviceAerialCurrentInfoController.onSelectCallback($item, $model)">
                                     <ui-select-match allow-clear="true" placeholder="输入地址">{{$select.selected.name}}
@@ -1082,40 +1082,40 @@
                                         </small>
                                     </ui-select-choices>
                                 </ui-select>
-
-
                         </div>
                         <div class="col-md-1">
-                            <label class="control-label text-nowrap">距离(米):</label>
+                            <label class="control-label text-nowrap">半径(米):</label>
                         </div>
                         <div class="col-md-3">
                             <p class="input-group">
-                                <input type="text" class="form-control" id="test" ng-model="deviceAerialCurrentInfoController.radius"/>
-
+                                <input type="text" class="form-control" id="test" ng-model="deviceAerialCurrentInfoController.radius" ng-change="deviceAerialCurrentInfoController.changeradius(deviceAerialCurrentInfoController.radius)"/>
                             </p>
                         </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceAerialCurrentInfoController.updateScopeMap()">设置</button>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceAerialCurrentInfoController.updateScopeMap()">设置围栏</button>
+                            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceAerialCurrentInfoController.cacheElectronicFence()">取消围栏</button>
                         </div>
 
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="text-nowrap">当前地址:</label> {{deviceAerialCurrentInfoController.deviceinfo.address}}
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <label class="text-nowrap">选中地址:</label> {{deviceAerialCurrentInfoController.selectAddress}}
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <label class="control-label text-nowrap">坐标:</label>经度: {{deviceAerialCurrentInfoController.amaplongitudeNum}}  维度: {{deviceAerialCurrentInfoController.amaplatitudeNum}}
                         </div>
-
-
+                        <div class="col-md-1" style="float: right">
+                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.backCurrentAdd()">
+                              <span class="glyphicon glyphicon-send"></span>
+                            </button>
+                        </div>
                     </div>
                     <br/>
 
