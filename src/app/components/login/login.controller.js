@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,GET_PASSWORD_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -68,9 +68,6 @@
           var userobj = {};
           userobj.username = $cookies.getObject("user").username;
           userobj.authtoken = $cookies.getObject("user").authtoken;
-          var restCallURL = GET_PASSWORD_URL;
-          restCallURL += "?&username=" + userobj.username;
-          var rspdata = serviceResource.restCallService(restCallURL,"GET");
           vm.loginBytoken(userobj);
         }
       }
