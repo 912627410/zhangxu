@@ -63,9 +63,17 @@
     </div>
   </div>
 
-  <div class="row form-group">
-    <div class="btn-group col-md-2">
+  <div class="row">
+    <div class="btn-group col-md-4">
       <span class="label label-info pull-left">设备总数:  {{deviceUpdateCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-8 text-right">
+      <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip"
+              ng-click="deviceUpdateCtrl.queryDeviceInfo(0,null,null,deviceUpdateCtrl.device)"
+              presentation-href="deviceUpdate:page" title="{{'refresh'|translate}}"
+              style="margin-right: 15px;">
+        <i class="fa fa-refresh"></i>
+      </button>
     </div>
   </div>
 
