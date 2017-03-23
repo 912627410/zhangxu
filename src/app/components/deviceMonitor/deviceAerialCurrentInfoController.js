@@ -6,8 +6,9 @@
 
     /** @ngInject */
     function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
-                                         Notification, serviceResource, AMAP_URL,DEVCE_SIMPLE_DATA_PAGED_QUERY, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
-                                         VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL) {
+                                               Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
+                                               VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
+                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -27,6 +28,7 @@
         vm.amaplongitudeNum;//选中的经度
         vm.amaplatitudeNum;//选中的维度
         vm.radius; //设置的半径
+        vm.zoomsize = 8;
 
         if(deviceinfo.machine!=null&&deviceinfo.machine.selectAddress!=null
             &&deviceinfo.machine.amaplongitudeNum!=null&&deviceinfo.machine.amaplatitudeNum!=null
@@ -405,25 +407,27 @@
 
         //查询设备数据并更新地图 mapid是DOM中地图放置位置的id
         vm.refreshScopeMapWithDeviceInfo=function (mapId,deviceInfo,zoomsize,centeraddr) {
-
+            var marker;
+            //保存之前的标注
+            var beforMarkers = [];
             $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
 
                 var map=vm.initMap(mapId,zoomsize,centeraddr);
 
-
-                var marker;
-
                 map.on('click', function(e) {
-
+                    vm.zoomsize = 8;
                     var  lnglatXY=[e.lnglat.getLng(), e.lnglat.getLat()];
                     marker = new AMap.Marker({
                         icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
                         position: lnglatXY
                     });
                     marker.setMap(map);
-
+                    //清除之前的标注
+                    map.remove(beforMarkers);
+                    //存入标注
+                    beforMarkers.push(marker);
                     var geocoder = new AMap.Geocoder({
-                        radius: 1000,
+                        radius: 100,
                         extensions: "all"
                     });
 
@@ -435,7 +439,7 @@
 
 
                             var poi={location:lnglatXY,name:null,address: address};
-                            vm.createMarker(poi);
+                            vm.createMarker(marker, poi);
 
                             vm.updateLocationInfo(address, lnglatXY);
                         }
@@ -449,52 +453,97 @@
 
                 //读取所有设备的gps信息，home map使用
                 if (deviceInfo.locateStatus === '1' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
-                    serviceResource.addMarkerModel(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
+                  vm.addMarkerModelEmcloud(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
                 }
 
-                //围栏地址标注
+                //回显围栏坐标
                 if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
                     var  lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
                     marker = new AMap.Marker({
+                        map: map,
                         icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
                         position: lnglatXY
                     });
                     marker.setMap(map);
-
-                    var geocoder = new AMap.Geocoder({
-                        radius: 1000,
-                        extensions: "all"
-                    });
-
-                    geocoder.getAddress(lnglatXY, function(status, result) {
-                        if (status === 'complete' && result.info === 'OK') {
-                            //       geocoder_CallBack(result);
-                            var  address= result.regeocode.formattedAddress; //返回地址描述
-
-                            var poi={location:lnglatXY,name:null,address: address};
-                            vm.createMarker(poi);
-
-                            vm.updateLocationInfo(address, lnglatXY);
-                        }
-                    });
+                    beforMarkers.push(marker);
+                    var poi = {location: lnglatXY, name: null, address: vm.selectAddress};
+                    var infoWindow = vm.createInfoWindow(poi);
+                    infoWindow.open(vm.scopeMap, marker.getPosition());
                     //围栏地址标注end
                 }
 
 
 
             })
-        },
+        };
 
+      vm.addMarkerModelEmcloud = function (mapObj, item, icon) {
+        var mapObj = mapObj;
+        //实例化信息窗体
+        var infoWindow = new AMap.InfoWindow({
+          isCustom: true,  //使用自定义窗体
+          offset: new AMap.Pixel(15, -40)//-113, -140
+        });
+        var marker = new AMap.Marker({
+          map: mapObj,
+          position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
+          icon: icon //复杂图标
+        });
+        AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+          infoWindow.open(mapObj, marker.getPosition());
+          var title = item.deviceNum;
+          var contentInfo = "";
+          contentInfo += "终端编号：" + item.deviceNum + "<br/>";
+          contentInfo += "工时: " + (item.workDuration == null ? '' : $filter('number')(item.workDuration, 2)) + "<br/>";
+          contentInfo += "维度: " + (item.amaplatitudeNum == null ? '' : $filter('number')(item.amaplatitudeNum, 2)) + "<br/>";
+          contentInfo += "经度: " + (item.amaplongitudeNum == null ? '' : $filter('number')(item.amaplongitudeNum, 2)) + "<br/>";
+          contentInfo += "当前位置：" + (item.address == null ? '' : item.address) + "<br/>";
+          contentInfo += "更新时间：" + (item.lastDataUploadTime == null ? '' : $filter('date')(item.lastDataUploadTime, 'yyyy-MM-dd HH:mm:ss')) + "<br/>";
+          var info = createInfoWindow(title, contentInfo, mapObj);
+          //设置窗体内容
+          infoWindow.setContent(info);
+        });
+        //构建自定义信息窗体
+        function createInfoWindow(title, content) {
+          var info = document.createElement("div");
+          info.className = "info";
+          //可以通过下面的方式修改自定义窗体的宽高
+          //info.style.width = "400px";
+          // 定义顶部标题
+          var top = document.createElement("div");
+          top.className = "info-top";
+          var titleD = document.createElement("div");
+          titleD.innerHTML = title;
+          var closeX = document.createElement("img");
+          closeX.src = "https://webapi.amap.com/images/close2.gif";
+          closeX.onclick = closeInfoWindow;
+          top.appendChild(titleD);
+          top.appendChild(closeX);
+          info.appendChild(top);
+          // 定义中部内容
+          var middle = document.createElement("div");
+          middle.className = "info-middle";
+          middle.style.backgroundColor = 'white';
+          middle.innerHTML = content;
+          info.appendChild(middle);
+          // 定义底部内容
+          var bottom = document.createElement("div");
+          bottom.className = "info-bottom";
+          bottom.style.position = 'relative';
+          bottom.style.top = '0px';
+          bottom.style.margin = '0 auto';
+          var sharp = document.createElement("img");
+          sharp.src = "https://webapi.amap.com/images/sharp.png";
+          bottom.appendChild(sharp);
+          info.appendChild(bottom);
+          return info;
+        }
+        function closeInfoWindow() {
+          mapObj.clearInfoWindow();
+        }
+      };
 
-             vm.createMarker=function(poi){
-                // 添加marker
-                var marker = new AMap.Marker({
-                    map: vm.scopeMap,
-                    position: poi.location
-                });
-
-
-                vm.scopeMap.setCenter(marker.getPosition());
+             vm.createMarker=function(marker, poi){
                 var infoWindow= vm.createInfoWindow(poi);
                 infoWindow.open(vm.scopeMap, marker.getPosition());
 
@@ -529,13 +578,20 @@
             s.push("<b>名称：" + poi.name+"</b>");
             }
             s.push("围栏地址：" + poi.address+"</b>");
-            //s.push("取消围栏： <button class='btn btn-primary btn-xs' type='button' onclick=''>重置</button></b>");
-
+            if (null == vm.radius) {
+              vm.radius = 0;
+            }
+            s.push("半径：" + vm.radius + "米</b>");
 
             return s.join("<br>");
         }
 
+        /*设置电子围栏*/
         vm.updateScopeMap = function () {
+            if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
+                Notification.error('当前设备未绑定车辆，无法设置电子围栏');
+                return false;
+            }
             if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
                 Notification.error('无效的地址');
                 return false;
@@ -567,13 +623,15 @@
                         radius:vm.radius,
                         selectAddress:vm.selectAddress,
                         amaplongitudeNum:vm.amaplongitudeNum,
-                        amaplatitudeNum:vm.amaplatitudeNum
+                        amaplatitudeNum:vm.amaplatitudeNum,
+                        fenceStatus: '1'
                     }
                     //TODO 保存电子围栏
                     var restResult = serviceResource.restAddRequest(MACHINE_FENCE,fence);
                     restResult.then(function (data) {
+                            deviceinfo.machine.fenceStatus = 1;
                             Notification.success("设置电子围栏成功!");
-                            $uibModalInstance.close();
+                            //$uibModalInstance.close();
                         },function (reason) {
                             vm.errorMsg=reason.data.message;
                             Notification.error(reason.data.message);
@@ -582,6 +640,44 @@
 
                 });
         };
+
+      /*取消电子围栏*/
+      vm.cacheElectronicFence = function() {
+        if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
+          Notification.error('当前设备未绑定车辆，无法设置电子围栏');
+          return false;
+        }
+        if (deviceinfo.machine.fenceStatus == null) {
+          Notification.error('当前车辆未设置围栏，无需取消');
+          return false;
+        }
+        var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
+        $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
+          .then(function () {
+            var fence = {
+              id: deviceinfo.machine.id,
+              radius: 0,
+              selectAddress: null,
+              amaplongitudeNum: null,
+              amaplatitudeNum: null
+            };
+            //取消电子围栏
+            var restResult = serviceResource.restUpdateRequest(MACHINE_FENCE_CACHE, fence);
+            restResult.then(function (data) {
+                deviceinfo.machine.fenceStatus = 0;
+                vm.selectAddress = ''; //选中的地址信息
+                vm.amaplongitudeNum = null;//选中的经度
+                vm.amaplatitudeNum = null;//选中的维度
+                vm.radius = null; //设置的半径
+                vm.initScopeMapTab(deviceinfo);
+                Notification.success("取消电子围栏成功!");
+              }, function (reason) {
+                vm.errorMsg = reason.data.message;
+                Notification.error(reason.data.message);
+              }
+            );
+          });
+      };
 
 
             vm.refreshLocationList = function(value) {
@@ -628,17 +724,14 @@
 
                     //回调函数
                     function placeSearch_CallBack(data) {
-                        var poiArr = data.poiList.pois;
-
-                        for(var i=0;i<poiArr.length;i++){
-                            vm.createMarker(poiArr[i]);
-
-                            var  lnglatXY=[poiArr[i].location.getLng(), poiArr[i].location.getLat()];
-
-                            vm.updateLocationInfo(poiArr[i].address, lnglatXY); //更新选中的地址信息
-                        }
-
-
+                        var lnglatXY = [item.location.lng, item.location.lat];
+                        var marker = new AMap.Marker({
+                          icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                          position: lnglatXY
+                        });
+                        var poi = {location: item.location, name: item.district, address: item.district + item.address};
+                        vm.createMarker(marker, poi);
+                        vm.updateLocationInfo(poi.address, lnglatXY); //更新选中的地址信息
                     }
 
 
@@ -680,20 +773,31 @@
 
             $timeout(function(){
                 //第一个标注
-                if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
+                if(null!=deviceInfo.amaplongitudeNum && null!=deviceInfo.amaplatitudeNum){
                     var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
                 }
 
 
                 //第一个标注
-                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,8,centerAddr);
+                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,vm.zoomsize,centerAddr);
 
 
 
             })
         };
 
-
+        /*监听radius变化*/
+        vm.changeradius = function (radius) {
+          if(null == vm.newAddress && "" == vm.selectAddress){
+            return;
+          }
+          vm.initScopeMapTab(deviceinfo);
+        };
+        /*回到以当前车辆为中心点的位置*/
+        vm.backCurrentAdd = function () {
+          // vm.zoomsize--;
+          vm.initScopeMapTab(deviceinfo);
+        };
 
 
         vm.addMarker=function(map, location) {
@@ -718,51 +822,110 @@
 
         //参数: 地图轨迹gps 数据
         vm.refreshMapTab = function(lineAttr){
-            $timeout(function(){
-                $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
-                    var marker, lineArr = [];
-                    if (lineAttr){
-                        lineArr = lineAttr;
-                    }
-                    var map = new AMap.Map("deviceDetailMap", {
-                        resizeEnable: true,
-                        //center: [116.397428, 39.90923],
-                        zoom: 17
-                    });
-                    map.on("complete", completeEventHandler);
-                    AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
-                        marker.moveAlong(lineArr, 500);
-                    }, false);
-                    AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
-                        marker.stopMove();
-                    }, false);
-                    var carPostion = [116.397428, 39.90923];   //默认地点
-                    if (lineArr.length > 0){
-                        carPostion = lineArr[0];
-                    }
-                    // 地图图块加载完毕后执行函数
-                    function completeEventHandler() {
-                        marker = new AMap.Marker({
-                            map: map,
-                            position: carPostion,
-                            //icon: "http://code.mapabc.com/images/car_03.png",
-                            icon: "assets/images/car_03.png",
-                            offset: new AMap.Pixel(-26, -13),
-                            autoRotation: true
-                        });
-                        // 绘制轨迹
-                        var polyline = new AMap.Polyline({
-                            map: map,
-                            path: lineArr,
-                            strokeColor: "#00A",  //线颜色
-                            strokeOpacity: 1,     //线透明度
-                            strokeWeight: 3,      //线宽
-                            strokeStyle: "solid"  //线样式
-                        });
-                        map.setFitView();
-                    }
-                })
-            })
+          /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
+          /**
+           * Marker移动控件
+           * @param {Map} map    地图对象
+           * @param {Marker} marker Marker对象
+           * @param {Array} path   移动的路径，以坐标数组表示
+           */
+          var MarkerMovingControl = function (map, marker, path) {
+            this._map = map;
+            this._marker = marker;
+            this._path = path;
+            this._currentIndex = 0;
+            marker.setMap(map);
+            marker.setPosition(path[0]);
+          };
+          /**************************************结束 ***********************************************************/
+          var marker;
+          var carPostion = lineAttr[0];
+          var map = new AMap.Map("deviceDetailMap", {
+            resizeEnable: true,
+            zoom: 17
+          });
+          /*工具条，比例尺，预览插件*/
+          AMap.plugin(['AMap.Scale', 'AMap.OverView'],
+            function () {
+              map.addControl(new AMap.ToolBar());
+              map.addControl(new AMap.Scale());
+              map.addControl(new AMap.OverView({isOpen: true}));
+            });
+          AMap.plugin(["AMap.RangingTool"], function () {
+          });
+          //小车
+          marker = new AMap.Marker({
+            map: map,
+            position: carPostion,
+            icon: "assets/images/car_03.png",
+            offset: new AMap.Pixel(-26, -13),
+            autoRotation: true
+          });
+          marker.setLabel({
+            offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
+            content: "行使了 0 米"
+          });
+          // 绘制轨迹
+          var polyline = new AMap.Polyline({
+            map: map,
+            path: lineAttr,
+            strokeColor: "#00A",  //线颜色
+            strokeOpacity: 1,     //线透明度
+            strokeWeight: 3,      //线宽
+            strokeStyle: "solid"  //线样式
+          });
+          map.setFitView();
+          var markerMovingControl = new MarkerMovingControl(map, marker, lineAttr);
+          var startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
+          var lastDistabce = 0;
+          /*移动完成触发事件*/
+          AMap.event.addListener(marker, "movealong", function () {
+            markerMovingControl._currentIndex = 0;
+          });
+          /*每一步移动完成触发事件*/
+          AMap.event.addListener(marker, "moveend", function () {
+            markerMovingControl._currentIndex++;
+          });
+          /*小车每一移动一部就会触发事件*/
+          AMap.event.addListener(marker, "moving", function () {
+            var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
+            lastDistabce += distances;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+            });
+            startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
+          });
+          /*开始事件*/
+          AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
+            lastDistabce = 0;
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+            });
+            startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
+            markerMovingControl._currentIndex = 0;
+            markerMovingControl._marker.moveAlong(lineAttr, 500);
+          }, false);
+          /*暂停事件*/
+          AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
+            markerMovingControl._marker.stopMove();
+            var distabcess2 = lastDistabce;
+            var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
+            distabcess2 += distances;
+            console.log(distabcess2);
+            marker.setLabel({
+              offset: new AMap.Pixel(-10, -25),
+              content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
+            });
+          }, false);
+          /*继续移动事件*/
+          AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
+            console.log(markerMovingControl._currentIndex);
+            var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+            lineArr2.unshift(marker.getPosition());
+            markerMovingControl._marker.moveAlong(lineArr2, 500);
+          }, false);
         };
 
         //设备路径数据
@@ -882,17 +1045,15 @@
                     queryCondition = "&deviceNum=" + deviceNum;
                 }
 
-                var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
-                var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
-                if (startDate){
-                    queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+                //要求包含所选择的结束时间
+                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+                if (startDate) {
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
                 }
-                if (endDate){
-                    queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+                if (endDateAddOne) {
+                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
                 }
-               // var search = $location.search();
-
-                var restCallURL = DEVCE_SIMPLE_DATA_PAGED_QUERY;
+                var restCallURL = DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
                 var sizeUrl = size || 100;
                 var sortUrl = sort || "recordTime,desc";
@@ -903,52 +1064,12 @@
                     restCallURL = restCallURL + queryCondition
                 }
                 var rspData = serviceResource.restCallService(restCallURL, "GET");
-               // return rspData;
-
-               // var rspData = serviceResource.getDeviceSimpleData(vm.operatorInfo,deviceinfo.deviceNum,startDate,endDate);
                 rspData.then(function(data){
-                    var index;
-                    vm.noWorkingDeviceDataList = new Array();
-                    vm.workingDeviceDataList = new Array();
-                    var dotData = new Array();
-                    for(index = 0; index < data.content.length; index++){
-                        var recordDateTimeY = new Date(data.content[index].recordTime);
-                        var recordDate = recordDateTimeY.getFullYear().toString() + serviceResource.padLeft('00',recordDateTimeY.getMonth()+1,true) + serviceResource.padLeft('00',recordDateTimeY.getDate(),true);
-                        var recordTime = serviceResource.padLeft('00',recordDateTimeY.getHours().toString(),true) + serviceResource.padLeft('00',recordDateTimeY.getMinutes(),true) + serviceResource.padLeft('00',recordDateTimeY.getSeconds(),true);
-                        var machineStatus = data.content[index].machineStatus;
-                        dotData = {
-                            id: data.content[index].id,    //id can be used to query detail device data
-                            x: Number(recordDate),
-                            y: Number(recordTime)};
-                        if (machineStatus === 0){
-
-                            vm.workingDeviceDataList.push(dotData);
-                        }  //power on
-                        if (machineStatus === 1){
-                            vm.noWorkingDeviceDataList.push(dotData);
-                        }  //power off
-                    }
-
-
-
-                    var chart=vm.simpleConfig;
-                    chart.series[0].data = vm.noWorkingDeviceDataList;
-                    chart.series[1].data = vm.workingDeviceDataList;
-                    //chart.series.push({
-                    //    data: vm.noWorkingDeviceDataList
-                    //});
-                    //
-                    //chart.series.push({
-                    //    data: vm.workingDeviceDataList
-                    //});
-
-                    //var chart = $('#hot').highcharts();
-                    //chart.series[0].setData(vm.noWorkingDeviceDataList,true);  //3rd parameter is refresh
-                    //chart.series[1].setData(vm.workingDeviceDataList,true);
+                    vm.simpleList = data.content;
+                    vm.simpleConfig.series[0].data = data.content;
                 },function(reason){
                     serviceResource.handleRsp("获取运行数据失败",reason);
-                    vm.noWorkingDeviceDataList = null;
-                    vm.workingDeviceDataList = null;
+                    vm.simpleConfig.series[0].data = null;
                 });
             }
         };
@@ -962,15 +1083,11 @@
                 if (deviceNum){
                     queryCondition = "&deviceNum=" + deviceNum;
                 }
-
-
-                var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
-                var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
-                if (startDate){
-                    queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+                if (startDate) {
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
                 }
-                if (endDate){
-                    queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+                if (endDate) {
+                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
                 }
 
                 var restCallURL = DEVCE_DATA_PAGED_QUERY;
@@ -1003,34 +1120,47 @@
         //warning data
         vm.getDeviceWarningData = function(deviceNum,startDate,endDate){
             if (vm.operatorInfo){
-                var rspData = serviceResource.getDeviceWarningData(vm.operatorInfo,deviceNum,startDate,endDate);
-                rspData.then(function(data){
-                    var index;
-                    vm.warningDataList = new Array();
-                    var dotData = new Array();
-                    for(index = 0; index < data.content.length; index++){
-                        var recordDateTimeY = new Date(data.content[index].warningTime);  //should be warningTime, recordTime for testing
-                        var recordDate = recordDateTimeY.getFullYear().toString() + serviceResource.padLeft('00',recordDateTimeY.getMonth()+1,true) + serviceResource.padLeft('00',recordDateTimeY.getDate(),true);
-                        var recordTime = serviceResource.padLeft('00',recordDateTimeY.getHours().toString(),true) + serviceResource.padLeft('00',recordDateTimeY.getMinutes(),true) + serviceResource.padLeft('00',recordDateTimeY.getSeconds(),true);
-                        dotData = {
-                            id: data.content[index].id,    //id can be used to query detail device data
-                            warningMsg: serviceResource.getWarningInfo(data.content[index].warningCode),
-                            x: Number(recordDateTimeY),
-                            y: Number(recordTime)
-                        };
+                var queryCondition;
+                if (deviceNum) {
+                  queryCondition = "&deviceNum=" + deviceNum;
+                }
+                //要求包含所选择的结束时间
+                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
 
-                        vm.warningDataList.push(dotData);
+                if (startDate) {
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+                }
+                if (endDateAddOne) {
+                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+                }
+
+                var sort = 'warningTime,desc';
+                var deviceurl = DEVCEMONITOR_WARNING_DATA_PAGED_QUERY + '?sort=' + sort;
+                if (queryCondition) {
+                  deviceurl = deviceurl + queryCondition
+                }
+                var rspData = serviceResource.restCallService(deviceurl, "GET");
+                rspData.then(function (data) {
+                  vm.warningList = [];
+                  var wList = data.content;
+                  for(var i = 0 ;i<wList.length;i++){
+                    var warningTime = new Date(wList[i].warningTime);
+                    //new date实际意义，需要用到其时分秒  以及纵坐标的最小值
+                    var date = new Date(2016,7,31);
+                    date.setHours(warningTime.getHours());
+                    date.setMinutes(warningTime.getMinutes());
+                    date.setSeconds(warningTime.getSeconds());
+                    var data = {
+                      x:wList[i].x,
+                      y:date.getTime(),
+                      warningCode:wList[i].warningCode
                     }
-                    //     var chart = $('#hot-warning').highcharts();
-                    var chart=vm.warningConfig;
-                    //chart.series.push({
-                    //    data: vm.warningDataList
-                    //});  //3rd parameter is refresh
-
-                    chart.series[0].data = vm.warningDataList;
-                },function(reason){
-                    serviceResource.handleRsp("获取报警数据失败",reason);
-                    vm.warningDataList = null;
+                    vm.warningList.push(data);
+                  }
+                  vm.warningConfig.series[0].data = vm.warningList;
+                }, function (reason) {
+                  serviceResource.handleRsp("获取报警数据失败", reason);
+                  vm.warningConfig.series[0].data = null;
                 });
             }
         };
@@ -1038,51 +1168,29 @@
         //charger data
         vm.getDeviceChargerData = function(deviceNum,startDate,endDate){
             if (vm.operatorInfo){
-
-                var queryCondition;
-                if (deviceNum){
-                    queryCondition = "?deviceNum=" + deviceNum;
-                }
-
-                var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
-                var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
-                if (startDate){
-                    queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-                }
-                if (endDate){
-                    queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-                }
-
-                var restCallURL = DEVCE_CHARGER_DATA;
-
-                if (queryCondition){
-                    restCallURL = restCallURL + queryCondition
-                }
-                var rspData = serviceResource.restCallService(restCallURL, "GET");
-
-                rspData.then(function(data){
-                    var index;
-                    vm.voltageList = new Array();
-                    var dotData = new Array();
-                    for(index = 0; index < data.content.length; index++){
-                        var recordTime = data.content[index].recordTime;
-                        var voltage = data.content[index].voltage;
-                        dotData = {
-                            id: data.content[index].id,    //id can be used to query detail device data
-                            x: recordTime,
-                            y: Number(voltage)
-                        };
-
-                        vm.voltageList.push(dotData);
-                    }
-
-                    var chart=vm.voltageConfig;
-                    chart.series[0].data = vm.voltageList;
-                },function(reason){
-                    serviceResource.handleRsp("获取运行数据失败",reason);
-                    vm.noWorkingDeviceDataList = null;
-                    vm.workingDeviceDataList = null;
-                });
+              var queryCondition;
+              if (deviceNum) {
+                queryCondition = "?deviceNum=" + deviceNum;
+              }
+              //要求包含所选择的结束时间
+              var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
+              if (startDate) {
+                queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+              }
+              if (endDateAddOne) {
+                queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+              }
+              var restCallURL = DEVCE_CHARGER_DATA;
+              if (queryCondition) {
+                restCallURL = restCallURL + queryCondition
+              }
+              var rspData = serviceResource.restCallService(restCallURL, "GET");
+              rspData.then(function (data) {
+                vm.voltageConfig.series[0].data = data.content;
+              }, function (reason) {
+                serviceResource.handleRsp("获取运行数据失败", reason);
+                vm.voltageConfig.series[0].data = null;
+              });
             }
         };
 
@@ -1091,7 +1199,8 @@
         },{
             type:'02',name:'报警信息'
         },{
-            type:'03',name:'市电电压'
+            //2016-07-11 由市电电压调整成蓄电池组电压
+            type:'03',name:'蓄电池组电压'
         }];
 
         vm.queryType=vm.queryTypeData[0].type;
@@ -1115,703 +1224,372 @@
         var curDate = new Date();
         vm.startDate = new Date(curDate-48*3600*1000);
 
-        vm.refreshPageDate = function(queryType,deviceNum,startDate,endDate){
-             if(Math.floor((endDate-startDate)/24/3600/1000)>2){
-                 $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: '确认 ', cancel: '取消'},{shade:false}).then(
+        vm.queryChart = function (queryType, deviceNum, startDate, endDate) {
+          if (queryType != '01' && queryType != '02' && queryType != '03') {
+            Notification.error("请选择查询类型！");
+          } else if (queryType == '01') {
+            //设备状态
+            vm.getDeviceSimpleData(null, null, null, deviceNum, startDate, endDate);
+            vm.simpleConfig = {
+              options: {
+                chart: {
+                  type: 'scatter',
+                  zoomType: 'xy',
+                  width: 840
+                },
+                legend: {
+                  layout: 'vertical',
+                  align: 'left',
+                  verticalAlign: 'top',
+                  x: 100,
+                  y: 70,
+                  floating: true,
+                  backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                  borderWidth: 1,
+                  labelFormat: '{name}' + '<br><b>绿色：工作</b><br><b>黄色：空闲 </b><br>'
+                },
+                plotOptions: {
+                  series: {
+                    events: {
+                      legendItemClick: function () {
+                        // return false 即可禁止图例点击响应
+                        return false;
+                      }
+                    }
+                  },
+                  scatter: {
+                    marker: {
+                      radius: 5,
+                      states: {
+                        hover: {
+                          enabled: true,
+                          lineColor: 'rgb(100,100,100)'
+                        }
+                      }
+                    },
+                    states: {
+                      hover: {
+                        marker: {
+                          enabled: false
+                        }
+                      }
+                    },
+                    tooltip: {
+                      headerFormat: '<b></b>',
+                      shared: true,
+                      pointFormatter: function () {
+                        var recordDate = new Date(this.x);
+                        var datefmt = recordDate.getFullYear() + '-' +  (recordDate.getMonth()+1) + '-' + recordDate.getDate();
+                        var datedata = this.y.toString();
+                        var padDate = serviceResource.padLeft('000000000', datedata, true);
+                        var fmtData = padDate.substr(0, 2) + ':' + padDate.substr(2, 2) + ':' + padDate.substr(4, 2);
+                        if (this.color == '#90ed7d') {
+                          return '<b>工作状态</b><br>' + datefmt + ' ' + fmtData;
+                        } else if (this.color == '#f7a35c') {
+                          return '<b>空闲状态</b><br>' + datefmt + ' ' + fmtData;
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              xAxis: {
+                type: 'datetime',
+                title: {
+                  enabled: true,
+                  text: '日期'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true,
+                labels: {
+                  formatter: function () {
+                    var date = new Date(this.value);
+                    return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' + date.getDate();
+                  }
+                },
+                tickPositioner: function () {
+                  var positions = [];
+                  positions.push(this.dataMin);
+                  for(var i = 0;i< Math.ceil((this.dataMax - this.dataMin) / 3600/24/1000);i++){
+                    positions.push(this.dataMin+i*24*3600*1000);
+                  }
+                  positions.push(this.dataMax);
+                  return positions;
+                }
+              },
+              yAxis: {
+                title: {
+                  text: '时间'
+                },
+                labels: {
+                  formatter: function () {
+                    var datefmt = this.value;
+                    var padDate = serviceResource.padLeft('000000000', datefmt, true);
+                    return padDate.substr(0, 2) + ':' + padDate.substr(2, 2) + ':' + padDate.substr(4, 2);
+                  }
+                }
+              },
+              series: [{
+                name: '工作状态',
+                marker: {
+                  symbol: 'circle'
+                },
+                turboThreshold: 200000,
+                data: vm.simpleList
+              }],
+              title: {
+                text: '工作状态热点分布'
+              },
+              loading: false,
+              // function to trigger reflow in bootstrap containers
+              // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
+              func: function (chart) {
+                $timeout(function () {
+                  chart.reflow();
+                  //The below is an event that will trigger all instances of charts to reflow
+                  //vm.$broadcast('highchartsng.reflow');
+                }, 0);
+              }
+            };
+          } else if (queryType == '02') {
+            //报警信息
+            vm.getDeviceWarningData(deviceNum, startDate, endDate);
+            Highcharts.setOptions({
+              // 所有语言文字相关配置都设置在 lang 里
+              lang: {
+                resetZoom: '重置',
+                resetZoomTitle: '重置缩放比例'
+              }
+            });
+            vm.warningConfig = {
+              options: {
+                chart: {
+                  type: 'scatter',
+                  zoomType: 'xy',
+                  width: 840
+                  //height: 250
+                },
+                legend: {
+                  layout: 'vertical',
+                  align: 'left',
+                  verticalAlign: 'top',
+                  x: 100,
+                  y: 70,
+                  floating: true,
+                  backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                  borderWidth: 1
+                },
+                plotOptions: {
+                  scatter: {
+                    marker: {
+                      radius: 5,
+                      states: {
+                        hover: {
+                          enabled: true,
+                          lineColor: 'rgb(100,100,100)'
+                        }
+                      }
+                    },
+                    states: {
+                      hover: {
+                        marker: {
+                          enabled: false
+                        }
+                      }
+                    },
+                    tooltip: {
+                      headerFormat: '<b>{series.name}</b><br>',
+                      shared: true,
+                      pointFormatter: function () {
+                        var recordDate = new Date(this.x);
+                        var datefmt = recordDate.getFullYear() + '-' +  (recordDate.getMonth()+1) + '-' + recordDate.getDate();
+                        var recordTime = new Date(this.y);
+                        var timefmt = recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
+                        var warningMsg = serviceResource.getWarningInfo(this.warningCode);
+                        return '<b>日期: </b>' + datefmt + '<br><b>时间: </b>' + timefmt + '<br><b>描述: </b>' + warningMsg.description + '<br><b>处理方法: </b>' + warningMsg.action;
+                      }
+                    }
+                  },
+                  line: {
+                    dataLabels: {
+                      enabled: true
+                    },
+                    enableMouseTracking: true
+                  },
+                  series: {
+                    cursor: "pointer"
+                  }
+                }
+              },
+              //时间转为string格式显示处理
+              xAxis: {
+                title: {
+                  enabled: true,
+                  text: '日期'
+                },
+                showLastLabel: true,
+                type: 'datetime',
+                tickInterval: 24 * 3600 * 1000,
+                labels: {
+                  formatter: function () {
+                    var date = new Date(this.value);
+                    return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' + date.getDate();
+                  }
+                },
+                tickPositioner: function () {
+                  var positions = [];
+                  positions.push(this.dataMin);
+                  for(var i = 0;i< Math.ceil((this.dataMax - this.dataMin) / 3600/24/1000);i++){
+                    positions.push(this.dataMin+i*24*3600*1000);
+                  }
+                  positions.push(this.dataMax);
+                  return positions;
+                }
+              },
+              yAxis: {
+                title: {
+                  text: '报警时间'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true,
+                type: 'datetime',
+                maxZoom:4 * 3600 * 1000,
+                tickInterval: 2* 3600 * 1000,
+                min: 1472572800000 ,
+                dateTimeLabelFormats: {
+                  second: '%HH:%MM:%SS'
+                },
+                labels: {
+                  formatter: function () {
+                    var date = new Date(this.value);
+                    return date.getHours() + ':' +  date.getMinutes() + ':' + date.getSeconds();
+                  }
+                }
+              },
+              series: [{
+                name: '报警信息',
+                color: 'rgba(205, 51, 51, .5)',
+                turboThreshold: 100000
+                //data:vm.warningList
+              }],
+              title: {
+                text: '报警信息'
+              },
+              loading: false,
+              func: function (chart) {
+                $timeout(function () {
+                  chart.reflow();
+                }, 0);
+              }
+            };
+          }else if (vm.queryType=='03'){
+            //蓄电池组电压
+            vm.getDeviceChargerData(deviceNum,startDate,endDate);
+            vm.voltageConfig = {
+              options: {
+                chart: {
+                  type: 'spline',
+                  zoomType: 'xy',
+                  width: 840,
+                },
+                legend: {
+                  layout: 'vertical',
+                  align: 'left',
+                  verticalAlign: 'top',
+                  x: 100,
+                  y: 20,
+                  floating: true,
+                  backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
+                  borderWidth: 1
+                },
+                plotOptions: {
+                  scatter: {
+                    marker: {
+                      radius: 5,
+                      states: {
+                        hover: {
+                          enabled: true,
+                          lineColor: 'rgb(100,100,100)'
+                        }
+                      }
+                    },
+                    states: {
+                      hover: {
+                        marker: {
+                          enabled: false
+                        }
+                      }
+                    }
+                  }
+                },
+              },
+              xAxis: {
+                title: {
+                  text: '日期'
+                },
+                labels: {
+                  formatter: function () {
+                    var datefmt = new Date(this.value);
+                    return datefmt.getFullYear() + '-' + serviceResource.padLeft('00', datefmt.getMonth() + 1, true) + '-' + datefmt.getDate() + ' ' + datefmt.getHours() + 'H';
+                  },
+                  enabled: true
+                }
+              },
+              yAxis: {
+                title: {
+                  text: '伏特(V)'
+                },
+                tickPositions: [0, 5, 10, 15, 20, 25, 30],
+                labels: {
+                  formatter: function () {
+                    return this.value + 'V';
+                  }
+                }
+              },
+              series: [{
+                name: '蓄电池组电压',
+                color: 'rgba(223, 83, 83, .5)',
+                turboThreshold: 100000,
+                tooltip: {
+                  headerFormat: '<b>{series.name}</b><br>',
+                  shared: true,
+                  pointFormatter: function () {
+                    var datefmt = new Date(this.x);
+                    var xDate = datefmt.getFullYear()+ '-' + (datefmt.getMonth()+1) + '-' + datefmt.getDate();
+                    var xTime = datefmt.getHours()+ ':' + datefmt.getMinutes() + ':' + datefmt.getSeconds() + '.' + datefmt.getMilliseconds();
+                    return '<b>日期: </b>'+xDate+'<br><b>时间: </b>'+xTime+'<br><b>电压: </b>'+this.y+'V'+'<br>';
+                  }
+                }
+              }],
+              title: {
+                text: '蓄电池组电压变化'
+              },
+              loading: false,
+              // function to trigger reflow in bootstrap containers
+              // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
+              func: function (chart) {
+                $timeout(function () {
+                  chart.reflow();
+                  //The below is an event that will trigger all instances of charts to reflow
+                  //vm.$broadcast('highchartsng.reflow');
+                }, 0);
+              }
+            };
+          }
+        };
 
-                     function () {
-                         if (queryType !='01' && queryType !='02' && queryType !='03'){
-                             Notification.error("请选择查询类型！");
-                         }else if (queryType=='01'){
-                             //设备状态
-                             vm.getDeviceSimpleData(null,null,null,deviceNum,startDate,endDate);
-
-                             vm.simpleConfig={
-                                 options: {
-                                     chart: {
-                                         type: 'scatter',
-                                         zoomType: 'xy',
-                                         width: 840,
-                                     },
-                                     legend: {
-                                         layout: 'vertical',
-                                         align: 'left',
-                                         verticalAlign: 'top',
-                                         x: 100,
-                                         y: 70,
-                                         floating: true,
-                                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                         borderWidth: 1
-                                     },
-                                     plotOptions: {
-                                         scatter: {
-                                             marker: {
-                                                 radius: 5,
-                                                 states: {
-                                                     hover: {
-                                                         enabled: true,
-                                                         lineColor: 'rgb(100,100,100)'
-                                                     }
-                                                 }
-                                             },
-                                             states: {
-                                                 hover: {
-                                                     marker: {
-                                                         enabled: false
-                                                     }
-                                                 }
-                                             },
-                                             tooltip: {
-                                                 headerFormat: '<b>{series.name}</b><br>',
-                                                 shared : true,
-                                                 pointFormatter: function(){
-                                                     var datedata = this.y.toString();
-                                                     var padDate = serviceResource.padLeft('000000',datedata,true);
-                                                     var fmtData = padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                                     return this.x.toString() + ' ' + fmtData;
-                                                 }
-                                             }
-
-                                         }
-                                     },
-                                 },
-
-                                 xAxis: {
-                                     title: {
-                                         enabled: true,
-                                         text: '日期'
-                                     },
-                                     startOnTick: true,
-                                     endOnTick: true,
-                                     showLastLabel: true,
-                                     tickInterval: 1,
-                                     labels: {
-                                         formatter: function () {
-                                             var datefmt = this.value;
-                                             return datefmt.toString();
-                                         }
-                                     }
-                                 },
-                                 yAxis: {
-                                     title: {
-                                         text: '时间'
-                                     },
-                                     labels: {
-                                         formatter: function () {
-                                             var datefmt = this.value;
-                                             var padDate = serviceResource.padLeft('000000',datefmt,true);
-
-                                             return padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                         }
-                                     }
-                                 },
-
-                                 series: [{
-                                     name: '空闲状态',
-                                     color: 'rgba(223, 83, 83, .5)',
-                                     data: vm.noWorkingDeviceDataList,
-                                     turboThreshold: 100000
-                                     //data: []
-
-                                 }, {
-                                     name: '工作状态',
-                                     color: 'rgba(119, 152, 191, .5)',
-                                     data: vm.workingDeviceDataList,
-                                     turboThreshold: 100000
-                                 }],
-
-                                 title: {
-                                     text: '工作状态热点分布'
-                                 },
-                                 loading: false,
-                                 // function to trigger reflow in bootstrap containers
-                                 // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
-                                 func: function(chart) {
-                                     $timeout(function() {
-                                         chart.reflow();
-                                         //The below is an event that will trigger all instances of charts to reflow
-                                         //vm.$broadcast('highchartsng.reflow');
-                                     }, 0);
-
-                                 }
-                             };
-
-                         }else if (queryType=='02'){
-                             //报警信息
-                             vm.getDeviceWarningData(deviceNum,startDate,endDate);
-
-                             vm.warningConfig = {
-                                 options: {
-                                     chart: {
-                                         type: 'scatter',
-                                         zoomType: 'xy',
-                                         width: 840,
-                                         //height: 250
-                                     },
-                                     legend: {
-                                         layout: 'vertical',
-                                         align: 'left',
-                                         verticalAlign: 'top',
-                                         x: 100,
-                                         y: 70,
-                                         floating: true,
-                                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                         borderWidth: 1
-                                     },
-                                     plotOptions: {
-                                         scatter: {
-                                             marker: {
-                                                 radius: 5,
-                                                 states: {
-                                                     hover: {
-                                                         enabled: true,
-                                                         lineColor: 'rgb(100,100,100)'
-                                                     }
-                                                 }
-                                             },
-                                             states: {
-                                                 hover: {
-                                                     marker: {
-                                                         enabled: false
-                                                     }
-                                                 }
-                                             },
-                                             tooltip: {
-                                                 headerFormat: '<b>{series.name}</b><br>',
-                                                 shared : true,
-                                                 pointFormatter: function(){
-                                                     var recordDate = new Date(this.x)
-                                                     var recordTime = this.y;
-                                                     var padDate = serviceResource.padLeft('000000',recordTime,true);
-                                                     var timefmt= padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                                     var datefmt = recordDate.getFullYear().toString() + '-' + serviceResource.padLeft('00',recordDate.getMonth()+1,true) + '-' +  serviceResource.padLeft('00',recordDate.getDate(),true);
-                                                     return '<b>日期: </b>'+datefmt+'<br><b>时间: </b>'+timefmt+'<br><b>描述: </b>' + this.warningMsg.description + '<br><b>处理方法: </b>' + this.warningMsg.action ;
-                                                 }
-                                             }
-                                         },
-                                         line: {
-                                             dataLabels: {
-                                                 enabled: true
-                                             },
-                                             enableMouseTracking: true
-                                         },
-                                         series: {
-                                             cursor: "pointer",
-                                             //events: {
-                                             //    click: function(e) {
-                                             //        vm.warningInfo = vm.getWarningInfo(e.point.y);
-                                             //        vm.$apply();
-                                             //    }
-                                             //}
-                                         }
-
-                                     }
-                                 },
-                                 //时间转为string格式显示处理
-                                 xAxis: {
-                                     title: {
-                                         enabled: true,
-                                         text: '日期'
-                                     },
-                                     startOnTick: true,
-                                     endOnTick: true,
-                                     showLastLabel: true,
-                                     tickInterval: 24 * 3600 * 1000,
-                                     type: 'datetime',
-                                     labels: {
-                                         formatter: function () {
-                                             var recordDateTimeY = new Date(this.value)
-                                             var datefmt = recordDateTimeY.getFullYear().toString() + serviceResource.padLeft('00',recordDateTimeY.getMonth()+1,true) + serviceResource.padLeft('00',recordDateTimeY.getDate(),true);
-                                             return datefmt.toString();
-                                         }
-                                     }
-                                 },
-                                 yAxis: {
-                                     title: {
-                                         text: '报警时间'
-                                     },
-                                     dateTimeLabelFormats: {
-                                         second: '%HH:%MM:%SS',
-                                     },
-                                     labels: {
-                                         formatter: function () {
-                                             var datefmt = this.value;
-                                             var padDate = serviceResource.padLeft('000000',datefmt,true);
-                                             return padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                         }
-                                     }
-
-                                 },
-                                 series: [{
-                                     name: '报警信息',
-                                     color: 'rgba(205, 51, 51, .5)',
-                                     data: vm.warningDataList,
-                                     turboThreshold:100000
-
-                                 }],
-                                 title: {
-                                     text: '报警信息'
-                                 },
-                                 loading: false,
-                                 func: function(chart) {
-                                     $timeout(function() {
-                                         chart.reflow();
-                                     }, 0);
-                                 }
-                             };
-
-                         }else if (vm.queryType=='03'){
-                             //市电电压
-                             vm.getDeviceChargerData(deviceNum,startDate,endDate);
-
-                             vm.voltageConfig={
-                                 options: {
-                                     chart: {
-                                         type: 'spline',
-                                         zoomType: 'xy',
-                                         width: 840,
-                                     },
-                                     legend: {
-                                         layout: 'vertical',
-                                         align: 'left',
-                                         verticalAlign: 'top',
-                                         x: 100,
-                                         y: 20,
-                                         floating: true,
-                                         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                         borderWidth: 1
-                                     },
-                                     plotOptions: {
-                                         scatter: {
-                                             marker: {
-                                                 radius: 5,
-                                                 states: {
-                                                     hover: {
-                                                         enabled: true,
-                                                         lineColor: 'rgb(100,100,100)'
-                                                     }
-                                                 }
-                                             },
-                                             states: {
-                                                 hover: {
-                                                     marker: {
-                                                         enabled: false
-                                                     }
-                                                 }
-                                             }
-
-                                         }
-                                     },
-                                 },
-
-                                 xAxis: {
-                                     title: {
-                                         text: '日期'
-                                     },
-                                     labels: {
-                                         formatter: function () {
-                                             var datefmt = new Date(this.value);
-                                             return datefmt.getFullYear()+ '-' + serviceResource.padLeft('00',datefmt.getMonth()+1,true) + '-' + datefmt.getDate() + ' ' + datefmt.getHours()+'H';
-                                         },
-                                         enabled:true
-                                     }
-                                 },
-                                 yAxis: {
-                                     title: {
-                                         text: '伏特(V)'
-                                     },
-                                     labels: {
-                                         formatter: function () {
-                                             return this.value + 'V';
-                                         }
-                                     }
-                                 },
-
-                                 series: [{
-                                     name: '市电电压',
-                                     color: 'rgba(223, 83, 83, .5)',
-                                     data: vm.voltageList,
-                                     turboThreshold: 100000,
-                                     tooltip: {
-                                         headerFormat: '<b>{series.name}</b><br>',
-                                         shared : true,
-                                         pointFormatter: function(){
-                                             var datefmt = new Date(this.x);
-                                             var xDate = datefmt.getFullYear()+ '-' + (datefmt.getMonth()+1) + '-' + datefmt.getDate();
-                                             var xTime = datefmt.getHours()+ ':' + datefmt.getMinutes() + ':' + datefmt.getSeconds() + '.' + datefmt.getMilliseconds();
-                                             return '<b>日期: </b>'+xDate+'<br><b>时间: </b>'+xTime+'<br><b>电压: </b>'+this.y+'V'+'<br>';
-                                         }
-                                     }
-                                 }],
-
-                                 title: {
-                                     text: '市电电压变化'
-                                 },
-                                 loading: false,
-                                 // function to trigger reflow in bootstrap containers
-                                 // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
-                                 func: function(chart) {
-                                     $timeout(function() {
-                                         chart.reflow();
-                                         //The below is an event that will trigger all instances of charts to reflow
-                                         //vm.$broadcast('highchartsng.reflow');
-                                     }, 0);
-
-                                 }
-                             };
-
-                         }
-                     }
-                 )
-
-             }else{
-                 if (queryType !='01' && queryType !='02' && queryType !='03'){
-                     Notification.error("请选择查询类型！");
-                 }else if (queryType=='01'){
-                     //设备状态
-                     vm.getDeviceSimpleData(null,null,null,deviceNum,startDate,endDate);
-
-                     vm.simpleConfig={
-                         options: {
-                             chart: {
-                                 type: 'scatter',
-                                 zoomType: 'xy',
-                                 width: 840,
-                             },
-                             legend: {
-                                 layout: 'vertical',
-                                 align: 'left',
-                                 verticalAlign: 'top',
-                                 x: 100,
-                                 y: 70,
-                                 floating: true,
-                                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                 borderWidth: 1
-                             },
-                             plotOptions: {
-                                 scatter: {
-                                     marker: {
-                                         radius: 5,
-                                         states: {
-                                             hover: {
-                                                 enabled: true,
-                                                 lineColor: 'rgb(100,100,100)'
-                                             }
-                                         }
-                                     },
-                                     states: {
-                                         hover: {
-                                             marker: {
-                                                 enabled: false
-                                             }
-                                         }
-                                     },
-                                     tooltip: {
-                                         headerFormat: '<b>{series.name}</b><br>',
-                                         shared : true,
-                                         pointFormatter: function(){
-                                             var datedata = this.y.toString();
-                                             var padDate = serviceResource.padLeft('000000',datedata,true);
-                                             var fmtData = padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                             return this.x.toString() + ' ' + fmtData;
-                                         }
-                                     }
-
-                                 }
-                             },
-                         },
-
-                         xAxis: {
-                             title: {
-                                 enabled: true,
-                                 text: '日期'
-                             },
-                             startOnTick: true,
-                             endOnTick: true,
-                             showLastLabel: true,
-                             tickInterval: 1,
-                             labels: {
-                                 formatter: function () {
-                                     var datefmt = this.value;
-                                     return datefmt.toString();
-                                 }
-                             }
-                         },
-                         yAxis: {
-                             title: {
-                                 text: '时间'
-                             },
-                             labels: {
-                                 formatter: function () {
-                                     var datefmt = this.value;
-                                     var padDate = serviceResource.padLeft('000000',datefmt,true);
-
-                                     return padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                 }
-                             }
-                         },
-
-                         series: [{
-                             name: '空闲状态',
-                             color: 'rgba(223, 83, 83, .5)',
-                             data: vm.noWorkingDeviceDataList,
-                             turboThreshold: 100000
-                             //data: []
-
-                         }, {
-                             name: '工作状态',
-                             color: 'rgba(119, 152, 191, .5)',
-                             data: vm.workingDeviceDataList,
-                             turboThreshold: 100000
-                         }],
-
-                         title: {
-                             text: '工作状态热点分布'
-                         },
-                         loading: false,
-                         // function to trigger reflow in bootstrap containers
-                         // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
-                         func: function(chart) {
-                             $timeout(function() {
-                                 chart.reflow();
-                                 //The below is an event that will trigger all instances of charts to reflow
-                                 //vm.$broadcast('highchartsng.reflow');
-                             }, 0);
-
-                         }
-                     };
-
-                 }else if (queryType=='02'){
-                     //报警信息
-                     vm.getDeviceWarningData(deviceNum,startDate,endDate);
-
-                     vm.warningConfig = {
-                         options: {
-                             chart: {
-                                 type: 'scatter',
-                                 zoomType: 'xy',
-                                 width: 840,
-                                 //height: 250
-                             },
-                             legend: {
-                                 layout: 'vertical',
-                                 align: 'left',
-                                 verticalAlign: 'top',
-                                 x: 100,
-                                 y: 70,
-                                 floating: true,
-                                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                 borderWidth: 1
-                             },
-                             plotOptions: {
-                                 scatter: {
-                                     marker: {
-                                         radius: 5,
-                                         states: {
-                                             hover: {
-                                                 enabled: true,
-                                                 lineColor: 'rgb(100,100,100)'
-                                             }
-                                         }
-                                     },
-                                     states: {
-                                         hover: {
-                                             marker: {
-                                                 enabled: false
-                                             }
-                                         }
-                                     },
-                                     tooltip: {
-                                         headerFormat: '<b>{series.name}</b><br>',
-                                         shared : true,
-                                         pointFormatter: function(){
-                                             var recordDate = new Date(this.x)
-                                             var recordTime = this.y;
-                                             var padDate = serviceResource.padLeft('000000',recordTime,true);
-                                             var timefmt= padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-
-                                             var datefmt = recordDate.getFullYear().toString() + '-' + serviceResource.padLeft('00',recordDate.getMonth()+1,true) + '-' +  serviceResource.padLeft('00',recordDate.getDate(),true);
-                                             return '<b>日期: </b>'+datefmt+'<br><b>时间: </b>'+timefmt+'<br><b>描述: </b>' + this.warningMsg.description + '<br><b>处理方法: </b>' + this.warningMsg.action ;
-                                         }
-                                     }
-                                 },
-                                 line: {
-                                     dataLabels: {
-                                         enabled: true
-                                     },
-                                     enableMouseTracking: true
-                                 },
-                                 series: {
-                                     cursor: "pointer",
-                                     //events: {
-                                     //    click: function(e) {
-                                     //        vm.warningInfo = vm.getWarningInfo(e.point.y);
-                                     //        vm.$apply();
-                                     //    }
-                                     //}
-                                 }
-
-                             }
-                         },
-                         //时间转为string格式显示处理
-                         xAxis: {
-                             title: {
-                                 enabled: true,
-                                 text: '日期'
-                             },
-                             startOnTick: true,
-                             endOnTick: true,
-                             showLastLabel: true,
-                             tickInterval: 24 * 3600 * 1000,
-                             type: 'datetime',
-                             labels: {
-                                 formatter: function () {
-                                     var recordDateTimeY = new Date(this.value)
-                                     var datefmt = recordDateTimeY.getFullYear().toString() + serviceResource.padLeft('00',recordDateTimeY.getMonth()+1,true) + serviceResource.padLeft('00',recordDateTimeY.getDate(),true);
-
-                                     return datefmt.toString();
-                                 }
-                             }
-                         },
-                         yAxis: {
-                             title: {
-                                 text: '报警时间'
-                             },
-                             dateTimeLabelFormats: {
-                                 second: '%H:%M:%S',
-                             },
-                             labels: {
-                                 formatter: function () {
-                                     var datefmt = this.value;
-                                     var padDate = serviceResource.padLeft('000000',datefmt,true);
-
-                                     return padDate.substr(0,2) + ':' + padDate.substr(2,2) + ':' + padDate.substr(4,2);
-                                 }
-                             }
-
-                         },
-                         series: [{
-                             name: '报警信息',
-                             color: 'rgba(205, 51, 51, .5)',
-                             data: vm.warningDataList,
-                             turboThreshold:100000
-
-                         }],
-                         title: {
-                             text: '报警信息'
-                         },
-                         loading: false,
-                         func: function(chart) {
-                             $timeout(function() {
-                                 chart.reflow();
-                             }, 0);
-                         }
-                     };
-
-                 }else if (vm.queryType=='03'){
-                     //市电电压
-                     vm.getDeviceChargerData(deviceNum,startDate,endDate);
-
-                     vm.voltageConfig={
-                         options: {
-                             chart: {
-                                 type: 'spline',
-                                 zoomType: 'xy',
-                                 width: 840,
-                             },
-                             legend: {
-                                 layout: 'vertical',
-                                 align: 'left',
-                                 verticalAlign: 'top',
-                                 x: 100,
-                                 y: 20,
-                                 floating: true,
-                                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                                 borderWidth: 1
-                             },
-                             plotOptions: {
-                                 scatter: {
-                                     marker: {
-                                         radius: 5,
-                                         states: {
-                                             hover: {
-                                                 enabled: true,
-                                                 lineColor: 'rgb(100,100,100)'
-                                             }
-                                         }
-                                     },
-                                     states: {
-                                         hover: {
-                                             marker: {
-                                                 enabled: false
-                                             }
-                                         }
-                                     }
-
-                                 }
-                             },
-                         },
-
-                         xAxis: {
-                             title: {
-                                 text: '日期'
-                             },
-                             labels: {
-                                 formatter: function () {
-                                     var datefmt = new Date(this.value);
-                                     return datefmt.getFullYear()+ '-' + serviceResource.padLeft('00',datefmt.getMonth()+1,true) + '-' + datefmt.getDate() + ' ' + datefmt.getHours()+'H';
-                                 },
-                                 enabled:true
-                             }
-                         },
-                         yAxis: {
-                             title: {
-                                 text: '伏特(V)'
-                             },
-                             labels: {
-                                 formatter: function () {
-                                     return this.value + 'V';
-                                 }
-                             }
-                         },
-
-                         series: [{
-                             name: '市电电压',
-                             color: 'rgba(223, 83, 83, .5)',
-                             data: vm.voltageList,
-                             turboThreshold: 100000,
-                             tooltip: {
-                                 headerFormat: '<b>{series.name}</b><br>',
-                                 shared : true,
-                                 pointFormatter: function(){
-                                     var datefmt = new Date(this.x);
-                                     var xDate = datefmt.getFullYear()+ '-' + (datefmt.getMonth()+1) + '-' + datefmt.getDate();
-                                     var xTime = datefmt.getHours()+ ':' + datefmt.getMinutes() + ':' + datefmt.getSeconds() + '.' + datefmt.getMilliseconds();
-                                     return '<b>日期: </b>'+xDate+'<br><b>时间: </b>'+xTime+'<br><b>电压: </b>'+this.y+'V'+'<br>';
-                                 }
-                             }
-                         }],
-
-                         title: {
-                             text: '市电电压变化'
-                         },
-                         loading: false,
-                         // function to trigger reflow in bootstrap containers
-                         // see: http://jsfiddle.net/pgbc988d/ and https://github.com/pablojim/highcharts-ng/issues/211
-                         func: function(chart) {
-                             $timeout(function() {
-                                 chart.reflow();
-                                 //The below is an event that will trigger all instances of charts to reflow
-                                 //vm.$broadcast('highchartsng.reflow');
-                             }, 0);
-
-                         }
-                     };
-
-                 }
-
-             }
-
+        vm.refreshPageDate = function (queryType, deviceNum, startDate, endDate) {
+            if (Math.floor((endDate - startDate) / 24 / 3600 / 1000) > 2) {
+                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: '确认 ', cancel: '取消'}).then(
+                    function () {
+                        vm.queryChart(vm.queryType, vm.deviceinfo.deviceNum, vm.startDate, vm.endDate);
+                    }
+                )
+            } else {
+                vm.queryChart(vm.queryType, vm.deviceinfo.deviceNum, vm.startDate, vm.endDate);
+            }
         };
 
         //取消进入页面后自动加载DeviceSimpleDataPage 和 DeviceWarningDataPage
