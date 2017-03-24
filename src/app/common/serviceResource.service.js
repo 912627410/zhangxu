@@ -229,18 +229,33 @@
         var deviceinfoPromis = restCallService(singlUrl, "GET");
         deviceinfoPromis.then(function (data) {
             $rootScope.deviceinfoMonitor = data.content;
-            $rootScope.currentOpenModal = $uibModal.open({
-              animation: true,
-              backdrop: false,
-              templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-              controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-              size: 'lg',
-              resolve: { //用来向controller传数据
-                deviceinfo: function () {
-                  return $rootScope.deviceinfoMonitor;
+            if($rootScope.deviceinfoMonitor.versionNum == 'A001') {
+              $rootScope.currentOpenModal = $uibModal.open({
+                animation: true,
+                backdrop: false,
+                templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
+                controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+                size: 'lg',
+                resolve: { //用来向controller传数据
+                  deviceinfo: function () {
+                    return $rootScope.deviceinfoMonitor;
+                  }
+                } 
+              });
+            } else {
+              $rootScope.currentOpenModal = $uibModal.open({
+                animation: true,
+                backdrop: false,
+                templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+                controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+                size: 'lg',
+                resolve: { //用来向controller传数据
+                  deviceinfo: function () {
+                    return $rootScope.deviceinfoMonitor;
+                  }
                 }
-              }
-            });
+              });
+            }
 
           }, function (reason) {
             Notification.error(languages.findKey('failedToGetDeviceInformation'));
