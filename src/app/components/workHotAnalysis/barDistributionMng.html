@@ -6,54 +6,20 @@
           <form id="searchForm" class="form-search">
             <input type="hidden" id="province" name="province" value=""/>
             <div class="control-group">
-              <label class="control-label">产品类型：</label>
+              <label class="control-label">车辆类型:</label>
               <div class="controls">
-                <ui-select id="machineType" name="machineType" ng-model="barDistributionMngController.machine.machineType.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in barDistributionMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
+                <select class="form-control" ng-model="barDistributionMngController.machine.machineType">
+                  <option value="A1">小挖</option>
+                  <option value="30">矿机</option>
+                  <option value="40">中挖</option>
+                  <option value="1,2,3">装载机</option>
+                  <option value="A001">高空车</option>
+                </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label">型号：</label>
-              <div class="controls">
-                <ui-select id="" name="productType" ng-model="barDistributionMngController.machine.productType.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in barDistributionMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">订货号：</label>
-              <div class="controls">
-                <ui-select id="orderNumber" name="orderNumber" ng-model="barDistributionMngController.machine.orderNumber.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in barDistributionMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
+
             <div class="control-group">
               <label class="control-label">汇总周期：</label>
-
-
               <div class="controls">
                 <ui-select id="cycleType" name="cycleType"
                            ng-model="barDistributionMngController.cycleType" theme="bootstrap"
@@ -73,16 +39,16 @@
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom1}}"
-                         ng-model="workStartMngController.startDateDeviceData"
-                         is-open="workStartMngController.statisticalStatusData.opened"
-                         datepicker-options="workStartMngController.dateOptions"
-                         min-date="workStartMngController.minDate"
-                         max-date="workStartMngController.maxDate" ng-required="true"
+                         ng-model="barDistributionMngController.startDateDeviceData"
+                         is-open="barDistributionMngController.statisticalStatusData.opened"
+                         datepicker-options="barDistributionMngController.dateOptions"
+                         min-date="barDistributionMngController.minDate"
+                         max-date="barDistributionMngController.maxDate" ng-required="true"
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}"/>
                   <span class="input-group-btn">
                             <button type="button" class="btn btn-default"
-                                    ng-click="workStartMngController.statisticalData($event)"><i
+                                    ng-click="barDistributionMngController.statisticalData($event)"><i
                               class="glyphicon glyphicon-calendar"></i></button>
                          </span>
                 </p>

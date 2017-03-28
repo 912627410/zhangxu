@@ -3,56 +3,23 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span12"  style="margin-top: 20px;">
-          <form id="searchForm" class="form-search">s
+          <form id="searchForm" class="form-search">
             <div class="control-group">
-              <label class="control-label">产品类型：</label>
+
+              <label class="control-label">车辆类型:</label>
               <div class="controls">
-                <ui-select id="machineType" name="machineType" ng-model="workStartMngController.machine.machineType.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
+                <select class="form-control" ng-model="workStartMngController.machine.machineType">
+                  <option value="A1">小挖</option>
+                  <option value="30">矿机</option>
+                  <option value="40">中挖</option>
+                  <option value="1,2,3">装载机</option>
+                  <option value="A001">高空车</option>
+                </select>
               </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">型号：</label>
-              <div class="controls">
-                <ui-select id="" name="productType" ng-model="workStartMngController.machine.productType.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label">订货号：</label>
-              <div class="controls">
-                <ui-select id="orderNumber" name="orderNumber" ng-model="workStartMngController.machine.orderNumber.id"
-                           theme="bootstrap"
-                           ng-disabled="disabled" validator="required">
-                  <ui-select-match allow-clear="true" placeholder="全部">{{$select.selected.engineName}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="engineType.id as engineType in workStartMngController.engineTypeList | propsFilter: {engineName: $select.search}">
-                    <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
+
             </div>
             <div class="control-group">
               <label class="control-label">汇总周期：</label>
-
-
               <div class="controls">
                 <ui-select id="cycleType" name="cycleType"
                            ng-model="workStartMngController.cycleType" theme="bootstrap"

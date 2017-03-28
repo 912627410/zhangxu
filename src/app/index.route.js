@@ -364,21 +364,22 @@
       }
     })
 
-      .state('home.MachineeleArchivesmng', {
-        url: '/MachineeleArchivesmng',
-        views: {
-          'rightside@home': {
-            templateUrl: 'app/components/report/MachineEleArchivesMng.html',
-            controller: 'MachineeleArchivesmngController as MachineeleArchivesmngController'
-          }
-        }
-      })
+
       .state('home.dullmachinemng', {
         url: '/dullmachinemng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/report/dullmachineMng.html',
+            templateUrl: 'app/components/trackRecordManagement/dullmachineMng.html',
             controller: 'dullmachineMngController as dullmachineMngController'
+          }
+        }
+      })
+      .state('home.trackRecordAnalyzemng', {
+        url: '/trackRecordAnalyzemng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/trackRecordManagement/trackRecordAnalyzemng.html',
+            controller: 'trackRecordAnalyzeMngController as trackRecordAnalyzeMngController'
           }
         }
       })
@@ -409,6 +410,28 @@
           }
         }
       })
+
+      .state('home.machineworklive', {
+        url: '/machineworklivemng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/machineworkliveMng.html',
+            controller: 'machineworkliveMngController as machineworkliveMngController'
+          }
+        }
+      })
+
+      .state('home.MachineClustering', {
+        url: '/MachineClusteringmng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/MachineClusteringMng.html',
+            controller: 'MachineClusteringMngController as MachineClusteringMngController'
+          }
+        }
+      })
+
+
 
 
 

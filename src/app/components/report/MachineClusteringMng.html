@@ -1,0 +1,95 @@
+<div class="main-container" id="MachineClustering">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12"  style="margin-top: 20px;">
+          <form id="searchForm" class="form-search">
+            <div class="control-group">
+              <label class="control-label">车辆类型:</label>
+              <div class="controls">
+                <select class="form-control" ng-model="MachineClusteringMngController.machine.machineType">
+                  <option value="A1">小挖</option>
+                  <option value="30">矿机</option>
+                  <option value="40">中挖</option>
+                  <option value="1,2,3">装载机</option>
+                  <option value="A001">高空车</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label for="licenseId" class="control-label">车号:</label>
+              <div>
+                <input type="text" id="licenseId" class="form-control" placeholder="车号"
+                       ng-model="MachineClusteringMngController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
+                       validator="required" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">传感器:</label>
+              <div class="controls">
+                <select  required class="form-control">
+                  <option value="">请选择...</option>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">起始日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="MachineClusteringMngController.startDateDeviceData"
+                         is-open="MachineClusteringMngController.startDateOpenStatusDeviceData.opened"
+                         datepicker-options="MachineClusteringMngController.dateOptions"
+                         min-date="MachineClusteringMngController.minDate"
+                         max-date="MachineClusteringMngController.maxDate"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="MachineClusteringMngController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="MachineClusteringMngController.endDateDeviceData"
+                         is-open="MachineClusteringMngController.endDateOpenStatusDeviceData.opened"
+                         datepicker-options="MachineClusteringMngController.dateOptions"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="MachineClusteringMngController.endDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="绘制"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div id="rightChart"></div>
+    <div id="rightUlDiv">
+      <div id="rightUl">
+      </div>
+    </div>
+  </div>
+
+</div>
