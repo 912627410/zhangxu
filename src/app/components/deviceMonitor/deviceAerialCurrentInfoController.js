@@ -167,7 +167,7 @@
 
 
         //******************远程控制tab**********************]
-        vm.serverHost = "awp.nvr-china.com";
+        vm.serverHost = "iot.nvr-china.com";
         vm.serverPort = "09999";
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';

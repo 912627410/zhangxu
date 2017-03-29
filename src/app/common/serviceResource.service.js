@@ -229,11 +229,19 @@
         var deviceinfoPromis = restCallService(singlUrl, "GET");
         deviceinfoPromis.then(function (data) {
             $rootScope.deviceinfoMonitor = data.content;
+            var templateUrl, controller;
+            if($rootScope.deviceinfoMonitor.versionNum == 'A001') {
+              templateUrl = 'app/components/deviceMonitor/deviceAerialCurrentInfo.html';
+              controller = 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController';
+            } else {
+              templateUrl = 'app/components/deviceMonitor/devicecurrentinfo.html';
+              controller = 'DeviceCurrentInfoController as deviceCurrentInfoCtrl';
+            }
             $rootScope.currentOpenModal = $uibModal.open({
               animation: true,
               backdrop: false,
-              templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-              controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+              templateUrl: templateUrl,
+              controller: controller,
               size: 'lg',
               resolve: { //用来向controller传数据
                 deviceinfo: function () {
