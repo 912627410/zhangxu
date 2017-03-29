@@ -1,0 +1,83 @@
+#MachineClustering{
+  .left-container {
+    position: absolute;
+    left: 0px;
+    width: 20%;
+    height: 100%;
+    border-right: 2px solid #EEEEEE;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: white;
+    z-index: 999;
+  }
+  .right-container{
+    position: absolute;
+    right: 0;
+    width: 78%;
+    height: 100%;
+    padding: 0;
+    overflow-y: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .main-container {
+    overflow-y: hidden;
+  }
+
+  .right-container {
+    overflow-y: auto;
+  }
+
+  .pill-content > .pill-pane,
+  .tab-content > .tab-pane {
+    display: block;
+    height: 0;
+    overflow-y: hidden;
+  }
+
+  .pill-content > .active,
+  .tab-content > .active {
+    height: auto;
+  }
+  #rightChart {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 20%;
+    width: 80%;
+  }
+  #rightUlDiv {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 80%;
+    right: 0;
+    width: 20%;
+  }
+
+  #rightUl {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 2px solid #eee;
+    padding: 10px 5px 10px 10px;
+    overflow-y: auto;
+  }
+
+  #rightUl label {
+    display: block;
+    padding: 4px 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}
+

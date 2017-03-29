@@ -351,24 +351,7 @@
                 ng-class="reportMng1?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng1}">
-
-          <li>
-            <a ng-click="MachineManagement=!MachineManagement"  presentation-href="dataAnalysis:testmachinemanager">
-              <i class="fa ion-clipboard"></i>
-              <span>试验机管理</span>
-              <span class="glyphicon pull-right"
-                    ng-class="MachineManagement?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-            </a>
-            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: MachineManagement}">
-              <li>
-                <a ui-sref="home.MachineeleArchivesmng"
-                   presentation-href="dataAnalysis:positionview">
-                  <i class="fa ion-ios-location-outline"></i> <span>试验机运行概览</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-
+          
           <li>
             <a ng-click="trackRecord=!trackRecord" presentation-href="dataAnalysis:toptrackrecord">
               <i class="fa ion-document"></i>
@@ -377,6 +360,14 @@
                     ng-class="trackRecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
             </a>
             <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: trackRecord}">
+
+              <li>
+                <a ui-sref="home.trackRecordAnalyzemng"
+                     presentation-href="dataAnalysis:trackrecord">
+                     <i class="fa ion-ios-pulse-strong"></i> <span>工作履历分析</span>
+                </a>
+              </li>
+
               <li>
                 <a ui-sref="home.dullmachinemng"
                   presentation-href="dataAnalysis:dullmachine">
@@ -412,7 +403,20 @@
                   <i class="glyphicon glyphicon-list-alt"></i> <span>机器工作报告</span>
                 </a>
               </li>
+              <li>
+              <a ui-sref="home.machineworklive"
+              presentation-href="dataAnalysis:machineworklive">
+              <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
+              </a>
+              </li>
             </ul>
+          </li>
+
+          <li>
+          <a ui-sref="home.MachineClustering"
+          presentation-href="dataAnalysis:clustering">
+          <i class="fa ion-gear-b"></i> <span>机器聚类探索</span>
+          </a>
           </li>
 
         </ul>

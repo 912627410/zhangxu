@@ -190,9 +190,7 @@
       function showProvince(Cname) {
 
         $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
-        //$.getJSON('js/echarts-master/map/json/province/' + Cname + '.json', function (geoJson) {
 
-          // myChart.hideLoading();
           var myChart = echarts.init(document.getElementById('map-container'));
 
           echarts.registerMap(Cname, geoJson);
@@ -251,8 +249,6 @@
                   }
                 },
                 animation: false
-                // animationDurationUpdate: 1000,
-                // animationEasingUpdate: 'quinticInOut'
               }
             ]
           });

@@ -12,6 +12,19 @@
   /** @ngInject */
   function barDistributionMngController($rootScope, $scope, $http, $filter) {
     var vm = this;
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
+    vm.statisticalStatusData = {
+      opened: false
+    };
+    vm.statisticalData = function ($event) {
+      vm.statisticalStatusData.opened = true;
+    };
+
+
 
     var mapChart = echarts.init(document.getElementById('area-container'));
     var areaOption = {

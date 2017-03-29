@@ -1,0 +1,101 @@
+<div class="main-container" id="trackRecordAnalyzemng">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12"  style="margin-top: 20px;">
+          <form id="searchForm" class="form-search">
+            <div class="control-group">
+
+              <label class="control-label">车辆类型:</label>
+              <div class="controls">
+                <select class="form-control" ng-model="trackRecordAnalyzeMngController.machine.machineType">
+                  <option value="A1">小挖</option>
+                  <option value="30">矿机</option>
+                  <option value="40">中挖</option>
+                  <option value="1,2,3">装载机</option>
+                  <option value="A001">高空车</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+              <label for="licenseId" class="control-label">车号:</label>
+              <div>
+                <input type="text" id="licenseId" class="form-control" placeholder="车号"
+                       ng-model="trackRecordAnalyzeMngController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
+                       validator="required" />
+
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">开工日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="trackRecordAnalyzeMngController.startDateDeviceData"
+                         is-open="trackRecordAnalyzeMngController.startDateOpenStatusDeviceData.opened"
+                         datepicker-options="trackRecordAnalyzeMngController.dateOptions"
+                         min-date="trackRecordAnalyzeMngController.minDate"
+                         max-date="trackRecordAnalyzeMngController.maxDate"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="trackRecordAnalyzeMngController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">结束日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="trackRecordAnalyzeMngController.endDateDeviceData"
+                         is-open="trackRecordAnalyzeMngController.endDateOpenStatusDeviceData.opened"
+                         datepicker-options="trackRecordAnalyzeMngController.dateOptions"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="trackRecordAnalyzeMngController.endDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="工作履历分析"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-container">
+    <div id="scatterChart1"></div>
+    <div id="barChart" ></div>
+    <div class="drawTableDiv">
+      <div id="machineCount"></div>
+      <div id="mapDiv">
+        <table id="map">
+          <thead>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
