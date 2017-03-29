@@ -67,19 +67,22 @@
       Notification.error('获取协议类型失败');
     })
 
-    var deviceHeightTypeData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
+    var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
+    var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
       Notification.error('获取高度类型失败');
     })
-    var devicePowerTypeData = serviceResource.restCallService(DEVCE_POWERTYPE, "GET");
+    var devicePowerTypeUrl = DEVCE_POWERTYPE + "?search_EQ_status=1";
+    var devicePowerTypeData = serviceResource.restCallService(devicePowerTypeUrl, "GET");
     devicePowerTypeData.then(function (data) {
       vm.devicePowerTypeList = data.content;
     }, function (reason) {
       Notification.error('获取驱动类型失败');
     })
-    var deviceMFData = serviceResource.restCallService(DEVCE_MF, "GET");
+    var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
+    var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
       vm.deviceMFList = data.content;
     }, function (reason) {

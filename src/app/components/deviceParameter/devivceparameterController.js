@@ -5,7 +5,7 @@
     'use strict';
     angular.module('GPSCloud')
         .controller('devivceparameterController', devivceparameterCtrl);
-    function devivceparameterCtrl($rootScope,$scope, $uibModal, $log, serviceResource,permissions,Notification,DEVCE_MF,DEVCE_POWERTYPE,DEVCE_DEVICETYPE,DEVCE_HIGHTTYPE,ORG_TREE_JSON_DATA_URL,ORG_URL,ORG_ID_URL,ORG_PARENTID_URL) {
+    function devivceparameterCtrl($rootScope,$scope, $uibModal, $log, $window, serviceResource,permissions,Notification,DEVCE_MF,DEVCE_POWERTYPE,DEVCE_DEVICETYPE,DEVCE_HIGHTTYPE,ORG_TREE_JSON_DATA_URL,ORG_URL,ORG_ID_URL,ORG_PARENTID_URL) {
         var vm = this;
         vm.operatorInfo = $rootScope.userInfo;
 
@@ -47,38 +47,6 @@
                     serviceResource.handleRsp("获取厂商参数出错",reason);
                 });
 
-            }
-        };
-
-
-
-
-
-        vm.revertConfigStatus = function(deviceConfig,action){
-            if (vm.operatorInfo){
-                if (deviceConfig.status == 0)
-                {
-                    deviceConfig.status =1;
-                }
-                else{
-                    deviceConfig.status =0;
-                }
-                var deviceConfigs = new Array();
-                deviceConfigs.push(deviceConfig);
-                serviceResource.updateConfigInfo(vm.operatorInfo,deviceConfigs,action,function(rspData){
-                    if (rspData.result != "Success")
-                    {
-                        //rollback update
-                        if (deviceConfigs.status == 0)
-                        {
-                            deviceConfigs.status =1;
-                        }
-                        else{
-                            deviceConfigs.status =0;
-                        }
-                    }
-                    serviceResource.handleRsp("操作出错",rspData);
-                });
             }
         };
 
@@ -151,7 +119,10 @@
                             break;
                         }
                     }
-                    vm.orgChart=vm.unflatten (list);
+                  $rootScope.orgChart = vm.unflatten(list);
+                  $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+
+                  vm.orgShow();
                 },function (reason) {
                     Notification.error('获取组织机构信息失败');
                 })
@@ -165,18 +136,22 @@
 
         vm.my_tree_handler = function(branch) {
             $scope.$emit("OrgSelectedEvent",branch);
+            vm.selectedOrg = branch;
         };
 
         vm.user_tree_handler = function(eventName,branch) {
             $scope.$emit(eventName,branch);
         };
 
-        if ($scope.orgChart && $scope.orgChart.length > 0){
-            vm.my_data=[$scope.orgChart[0]];
-        }
-        else{
-            Notification.error('获取组织机构信息失败');
-        }
+        vm.orgShow = function () {
+            if ($scope.orgChart && $scope.orgChart.length > 0){
+                vm.my_data=[$scope.orgChart[0]];
+            }
+            else{
+                Notification.error('获取组织机构信息失败');
+            }
+        };
+        vm.orgShow();
 
         vm.animationsEnabled = true;
         vm.toggleAnimation = function () {
@@ -224,9 +199,33 @@
                 vm.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
+                vm.loadDeviceMF();
             });
         };
 
+//update MF status
+        vm.updateDeviceMFStatus = function (deviceMF) {
+            if (vm.operatorInfo) {
+                if (deviceMF.status == 0) {
+                    deviceMF.status = 1;
+                } else {
+                    deviceMF.status = 0;
+                }
+                var updatedMFs = new Array();
+                updatedMFs.push(deviceMF);
+                var rspData = serviceResource.restCallService(DEVCE_MF, "UPDATE", updatedMFs);
+                rspData.then(function (data) {
+                    if (data.result != "Success") {
+                        Notification.error('操作出错');
+                    }
+                    else {
+                        Notification.success('操作成功');
+                    }
+                }, function (reason) {
+                    Notification.error('操作出错');
+                });
+            }
+        };
 
 //new device type
         vm.newDeviceType = function (size) {
@@ -250,7 +249,7 @@
             });
         };
 
-//update MF
+//update device type
         vm.updateDeviceType = function (deviceType,size) {
             var modalInstance = $uibModal.open({
                 animation: vm.animationsEnabled,
@@ -268,7 +267,32 @@
                 vm.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
+                vm.loadDeviceType();
             });
+        };
+
+//update device type status
+        vm.updateDeviceTypeStatus = function (deviceType) {
+            if (vm.operatorInfo) {
+                if (deviceType.status == 0) {
+                    deviceType.status = 1;
+                } else {
+                    deviceType.status = 0;
+                }
+                var deviceTypes = new Array();
+                deviceTypes.push(deviceType);
+                var rspData = serviceResource.restCallService(DEVCE_DEVICETYPE, "UPDATE", deviceTypes);
+                rspData.then(function (data) {
+                    if (data.result != "Success") {
+                        Notification.error('操作出错');
+                    }
+                    else {
+                        Notification.success('操作成功');
+                    }
+                }, function (reason) {
+                    Notification.error('操作出错');
+                });
+            }
         };
 
 //new device power type
@@ -311,7 +335,32 @@
                 vm.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
+                vm.loadDevicePowerType();
             });
+        };
+
+//update device power type status
+        vm.updateDevicePowerTypeStatus = function (devicePowerType) {
+            if (vm.operatorInfo) {
+                if (devicePowerType.status == 0) {
+                  devicePowerType.status = 1;
+                } else {
+                  devicePowerType.status = 0;
+                }
+                var devicePowerTypes = new Array();
+                devicePowerTypes.push(devicePowerType);
+                var rspData = serviceResource.restCallService(DEVCE_POWERTYPE, "UPDATE", devicePowerTypes);
+                rspData.then(function (data) {
+                    if (data.result != "Success") {
+                        Notification.error('操作出错');
+                    }
+                    else {
+                        Notification.success('操作成功');
+                    }
+                }, function (reason) {
+                    Notification.error('操作出错');
+                });
+            }
         };
 
 //new device height type
@@ -355,9 +404,33 @@
                 vm.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
+                vm.loadDeviceHeightType();
             });
         };
 
+//update device height type status
+        vm.updateDeviceHeightTypeStatus = function (deviceHeightType) {
+            if (vm.operatorInfo) {
+                if (deviceHeightType.status == 0) {
+                    deviceHeightType.status = 1;
+                } else {
+                    deviceHeightType.status = 0;
+                }
+                var deviceHeightTypes = new Array();
+                deviceHeightTypes.push(deviceHeightType);
+                var rspData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "UPDATE", deviceHeightTypes);
+                rspData.then(function (data) {
+                    if (data.result != "Success") {
+                        Notification.error('操作出错');
+                    }
+                    else {
+                        Notification.success('操作成功');
+                    }
+                }, function (reason) {
+                    Notification.error('操作出错');
+                });
+            }
+        };
 
 
 
@@ -378,14 +451,18 @@
                 }
             });
 
-            modalInstance.result.then(function () {
-                //when close
+            modalInstance.result.then(function (newOrg) {
+              vm.loadLocalOrgTree();
             }, function () {
                 //取消
             });
         };
 //update org
         vm.updateOrg = function (size) {
+            if(null == vm.selectedOrg) {
+              Notification.warning("请选择更新的组织");
+              return;
+            }
             if(vm.selectedOrg.parentId=="0"){
                 Notification.error("不可以更新根组织!");
             }else{
@@ -410,6 +487,7 @@
                     });
 
                     modalInstance.result.then(function () {
+                        vm.loadLocalOrgTree();
                         //when close
                     }, function () {
                         //取消

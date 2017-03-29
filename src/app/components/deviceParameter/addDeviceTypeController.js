@@ -5,17 +5,24 @@
     'use strict';
     angular.module('GPSCloud')
         .controller('addDeviceTypeController', addDeviceTypeCtrl);
-    function addDeviceTypeCtrl($rootScope, $uibModalInstance, serviceResource, DEVCE_DEVICETYPE) {
+    function addDeviceTypeCtrl($rootScope, $uibModalInstance, serviceResource, Notification, DEVCE_DEVICETYPE) {
         var vm = this;
         vm.operatorInfo = $rootScope.userInfo;
         vm.ok = function (newDeivceType) {
             var newDeivceTypes = new Array();
             newDeivceType.status = 1;  //dafault value
             newDeivceTypes.push(newDeivceType);
-            serviceResource.addConfigInfo(vm.operatorInfo,newDeivceTypes,DEVCE_DEVICETYPE,function(rspData){
-                serviceResource.handleRsp("新建设备类型出错",rspData);
+            var rspData = serviceResource.restCallService(DEVCE_DEVICETYPE, "ADD", newDeivceTypes);
+            rspData.then(function(data){
+                if (data.result != "Success") {
+                    Notification.error('新建设备类型出错');
+                } else {
+                    Notification.success('新建设备类型成功');
+                    $uibModalInstance.close();
+                }
+            },function(reason){
+                Notification.error('新建设备类型出错');
             });
-            $uibModalInstance.close();
         };
 
         vm.cancel = function () {

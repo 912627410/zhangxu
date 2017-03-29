@@ -56,7 +56,7 @@
       var page = search.page||0;
       var size = search.size||100;
       var sort = search.sort||'id,desc';
-      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort;
+      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort + '&search_EQ_status=1';
       var rspData = serviceResource.restCallService(finalURL, "GET");
       rspData.then(function(data){
         vm.deviceManufactureList = data.content;
@@ -70,7 +70,7 @@
       var page = search.page||0;
       var size = search.size||100;
       var sort = search.sort||'id,desc';
-      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort;
+      var finalURL = search + "?page=" + page  + '&size=' + size + '&sort=' + sort + '&search_EQ_status=1';
       var rspData = serviceResource.restCallService(finalURL, "GET");
       rspData.then(function(data){
         vm.devicePowerTypeList = data.content;
@@ -84,7 +84,7 @@
       var page = search.page||0;
       var size = search.size||40;
       var sort = search.sort||'id,desc';
-      var finalURL = search+ "?page=" + page  + '&size=' + size + '&sort=' + sort;
+      var finalURL = search+ "?page=" + page  + '&size=' + size + '&sort=' + sort + '&search_EQ_status=1';
 
     //  alert(finalURL);
       var rspData = serviceResource.restCallService(finalURL, "GET");

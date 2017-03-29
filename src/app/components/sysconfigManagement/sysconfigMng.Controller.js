@@ -28,13 +28,13 @@
       if (null != sysconfig) {
 
         if (null != sysconfig.name&&sysconfig.name!="") {
-          restCallURL += "&search_LIKE_name=" + $filter('uppercase')(sysconfig.name);
+          restCallURL += "&search_LIKE_name=" + sysconfig.name;
         }
         if (null != sysconfig.value&&sysconfig.value!="") {
-          restCallURL += "&search_LIKE_value=" + $filter('uppercase')(sysconfig.value);
+          restCallURL += "&search_LIKE_value=" + sysconfig.value;
         }
         if (null != sysconfig.description&&sysconfig.description!="") {
-          restCallURL += "&search_LIKE_description=" + $filter('uppercase')(sysconfig.description);
+          restCallURL += "&search_LIKE_description=" + sysconfig.description;
         }
 
       }
