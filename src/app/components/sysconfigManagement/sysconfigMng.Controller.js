@@ -28,7 +28,7 @@
       if (null != sysconfig) {
 
         if (null != sysconfig.name&&sysconfig.name!="") {
-          restCallURL += "&search_LIKE_name=" + sysconfig.name;
+          restCallURL += "&search_LIKE_name=" + $filter('uppercase')(sysconfig.name);
         }
         if (null != sysconfig.value&&sysconfig.value!="") {
           restCallURL += "&search_LIKE_value=" + sysconfig.value;
