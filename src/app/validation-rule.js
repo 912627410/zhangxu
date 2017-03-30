@@ -72,7 +72,7 @@
         success: ''
       },
       numberAndCharForPass: {
-        error: '密码只能为大小写字母和数字,长度为8-20',
+        error: '密码必须包含大写字母、小写字母和数字，长度8-20',
         success: ''
       }
     };

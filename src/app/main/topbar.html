@@ -52,6 +52,12 @@
             </i>
           </a>
         </li>
+        <li role="button" ng-if="userInfo" ng-controller="profileController as profileCtrl">
+          <a ng-click="profileCtrl.updatePassword(userInfo)">
+            <i class="glyphicon glyphicon-lock"></i>
+            <span>修改密码</span>
+          </a>
+        </li>
         <li ui-sref="home.login" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
       </ul>
     </div>
