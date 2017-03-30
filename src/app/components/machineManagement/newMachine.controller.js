@@ -17,6 +17,7 @@
     vm.machine = {
       installTime: new Date(),
       //  buyTime:new Date()
+      org: operatorInfo.userdto.organizationDto
     };
 
     var salaryTypePromise = machineService.getSalaryTypeList();
@@ -117,6 +118,10 @@
       console.log(machine.engineType);
 
       var postInfo = machine;
+      if (machine.licenseId.length != 17) {
+        Notification.warning("录入的车号有误，请重新录入！");
+        return;
+      }
       if (machine.deviceinfo) {
         //条码输入
         if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner != '') {
@@ -127,7 +132,7 @@
       else {
         postInfo.deviceinfo = null;
       }
-      postInfo.org = {id: machine.org.id};
+      postInfo.org = machine.org;
       // postInfo.engineType={id:machine.engineType};
       // postInfo.fuelConfig={id:machine.fuelConfig};
 
