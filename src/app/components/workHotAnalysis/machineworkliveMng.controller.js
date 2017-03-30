@@ -231,5 +231,22 @@
     myChart.setOption(option);
 
 
+    var queryWorkHotObj = {
+      machineType:'',
+      licenseId:'',
+      startDate:''
+    }
+    vm.viewWorkLive = function () {
+
+      if(vm.machine){
+        queryWorkHotObj.machineType = vm.machine.machineType;
+        queryObj.licenseId = vm.machine.licenseId;
+      }
+      if( vm.startDateDeviceData){
+        queryWorkHotObj.startDate = vm.startDateDeviceData;
+      }
+
+    }
+
   }
 })();

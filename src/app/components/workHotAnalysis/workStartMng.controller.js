@@ -11,6 +11,8 @@
   /** @ngInject */
   function workStartMngController($rootScope, $scope, $http, $filter) {
     var vm = this;
+
+
     vm.maxDate = new Date();
     vm.dateOptions = {
       formatYear: 'yyyy',
@@ -28,204 +30,231 @@
     }
 
 
-      var date = new Date();
+    var date = new Date();
 
-      var mapChart = echarts.init(document.getElementById('map-container'));
-      var chinaOption = {
-        title: {
-          text: '车辆开工热度分布',
-          subtext: '全国',
-          left: 'center'
+    var mapChart = echarts.init(document.getElementById('map-container'));
+    var chinaOption = {
+      title: {
+        text: '车辆开工热度分布',
+        subtext: '全国',
+        left: 'center'
+      },
+      tooltip: [
+        {
+          trigger: 'item',
+          backgroundColor: 'rgba(219,219,216,0.8)',
+          textStyle: {
+            color: '#333333'
+          },
+          formatter: function(params) {
+            if(params.componentSubType == 'map') {
+              var unit =  '小时' ;
+              var name = '平均开工时长';
+
+              if(params.value) {
+                return params.data.name + '<br />'
+                  + name + '：' +  params.data.value + unit +  '<br />'
+                  + '车辆数量：' + params.data.count + ' 台';
+              }
+              return params.name + '<br />'
+                + name + '：' + 0 + unit +  '<br />'
+                + '车辆数量：' + 0 + ' 台';
+            }
+            return '';
+          }
+        }
+      ],
+      toolbox: {
+        show: true,
+        orient: 'vertical',
+        top: 'center',
+        right: 20,
+        itemGap: 30,
+        feature: {
+          restore: {show: true},
+          saveAsImage: {show: true}
         },
-        tooltip: {
-          // trigger: 'item',
-          // formatter: function (params) {
-          //   if (params.data.type == '01') {
-          //     return params.name + '<br/>' + '接单数量:' + params.value[2];
-          //   } else if (params.data.type == '03') {
-          //     return params.name + '<br/>' + '销售数量:' + params.value[2];
-          //   }
-          // }
-        },
-        visualMap: {
-          type: 'continuous',
-          min: 0,
-          max: 200,
-          left: 20,
-          bottom: 15,
-          calculable: true,
-          precision: 2,
-          seriesIndex: [0],
-          color: ['#980000', '#f6f3d2', '#075e89'],
-          text: ['高', '低']
-        },
-        toolbox: {
-          show: true,
-          itemSize: 20,
-          itemGap: 30,
-          left: 'right',
-          feature: {
-            restore: {},
-            saveAsImage: {}
+        iconStyle: {
+          emphasis: {
+            color: '#2F4056'
+          }
+        }
+      },
+      visualMap: {
+        type: 'continuous',
+        min: 0,
+        left: 20,
+        bottom: 15,
+        calculable: true,
+        precision: 2,
+        seriesIndex: [0],
+        color: ['#980000','#f6f3d2','#075e89'],
+        text: ['高', '低']
+      },
+      geo: {
+        map: 'china',
+        label: {
+          normal: {
+            show: false
+          },
+          emphasis: {
+            show: true
           }
         },
-        geo: {
+        roam: true,
+        scaleLimit: {
+          min: 0.5
+        }
+      },
+      series: [
+        {
+          name: '开工热度',
+          type: 'map',
           map: 'china',
+          roam: true,
+          scaleLimit: {
+            min: 0.5
+          },
+          showLegendSymbol: false,
           label: {
-            normal: {
-              show: false
-            },
             emphasis: {
               show: true
             }
           },
-          roam: true,
-          scaleLimit: {
-            min: 0.5
-          }
-        },
-        series: [
-          {
-            name: 'aa',
-            type: 'map',
-            map: 'china',
-            roam: true,
-            scaleLimit: {
-              min: 0.5
-            },
-            showLegendSymbol: false,
-            label: {
-              emphasis: {
-                show: true
-              }
-            },
-            data: [{name: "山东", count: 829, value: 94.85},
+          data: [{name: "山东", count: 829, value: 94.85},
 
-              {name: "河北", count: 574, value: 161.98},
+            {name: "河北", count: 574, value: 161.98},
 
-              {name: "山东", count: 829, value: 94.85},
+            {name: "山东", count: 829, value: 94.85},
 
-              {name: "河北", count: 574, value: 161.98},
+            {name: "河北", count: 574, value: 161.98},
 
-              {name: "云南", count: 481, value: 70.3},
+            {name: "云南", count: 481, value: 70.3},
 
-              {name: "山西", count: 425, value: 101.45},
+            {name: "山西", count: 425, value: 101.45},
 
-              {name: "河南", count: 307, value: 78.87},
+            {name: "河南", count: 307, value: 78.87},
 
-              {name: "安徽", count: 249, value: 71.22},
+            {name: "安徽", count: 249, value: 71.22},
 
-              {name: "西藏", count: 226, value: 28.78},
+            {name: "西藏", count: 226, value: 28.78},
 
-              {name: "贵州", count: 186, value: 62.52},
+            {name: "贵州", count: 186, value: 62.52},
 
-              {name: "广东", count: 182, value: 68.87},
+            {name: "广东", count: 182, value: 68.87},
 
-              {name: "内蒙古", count: 160, value: 111.8},
+            {name: "内蒙古", count: 160, value: 111.8},
 
-              {name: "江西", count: 154, value: 66.27},
+            {name: "江西", count: 154, value: 66.27},
 
-              {name: "湖北", count: 145, value: 60.42},
+            {name: "湖北", count: 145, value: 60.42},
 
-              {name: "辽宁", count: 143, value: 116.67},
+            {name: "辽宁", count: 143, value: 116.67},
 
-              {name: "江苏", count: 142, value: 80.73},
+            {name: "江苏", count: 142, value: 80.73},
 
-              {name: "", count: 132, value: 91.13},
+            {name: "", count: 132, value: 91.13},
 
-              {name: "湖南", count: 126, value: 52.87},
+            {name: "湖南", count: 126, value: 52.87},
 
-              {name: "四川", count: 115, value: 76.77},
+            {name: "四川", count: 115, value: 76.77},
 
-              {name: "陕西", count: 112, value: 85.65},
+            {name: "陕西", count: 112, value: 85.65},
 
-              {name: "甘肃", count: 111, value: 38.3},
+            {name: "甘肃", count: 111, value: 38.3},
 
-              {name: "广西", count: 106, value: 91.05},
+            {name: "广西", count: 106, value: 91.05},
 
-              {name: "福建省", count: 86, value: 72.67},
+            {name: "福建省", count: 86, value: 72.67},
 
-              {name: "浙江", count: 73, value: 60.97},
+            {name: "浙江", count: 73, value: 60.97},
 
-              {name: "吉林", count: 57, value: 54.43},
+            {name: "吉林", count: 57, value: 54.43},
 
-              {name: "黑龙江", count: 51, value: 138.38},
+            {name: "黑龙江", count: 51, value: 138.38},
 
-              {name: "海南", count: 50, value: 78.6},
+            {name: "海南", count: 50, value: 78.6},
 
-              {name: "北京", count: 37, value: 94.1},
+            {name: "北京", count: 37, value: 94.1},
 
-              {name: "宁夏", count: 35, value: 120},
+            {name: "宁夏", count: 35, value: 120},
 
-              {name: "重庆", count: 28, value: 56.18},
+            {name: "重庆", count: 28, value: 56.18},
 
-              {name: "青海", count: 27, value: 77.55},
+            {name: "青海", count: 27, value: 77.55},
 
-              {name: "天津", count: 8, value: 94.27},
+            {name: "天津", count: 8, value: 94.27},
 
-              {name: "新疆", count: 4, value: 34.93},
+            {name: "新疆", count: 4, value: 34.93},
 
-              {name: "上海", count: 1, value: 46.1}]
-          }
-        ]
-      };
-      mapChart.setOption(chinaOption);
+            {name: "上海", count: 1, value: 46.1}]
 
-      mapChart.on("click", function (param){
-        console.log(param);
-        var n = getindex(param.name);
-        var Cname = provinces[n];
-        showProvince(Cname);
-      })
+        }
+      ]
+    };
 
-      function getindex(name){
-        for (var i = 0; i < provincesText.length; i++) {
-          if(name==provincesText[i]){
-            return i;
-          }
+
+
+    mapChart.setOption(chinaOption);
+
+    mapChart.on("click", function (param){
+      console.log(param);
+      var n = getindex(param.name,provincesText);
+      var Cname = provinces[n];
+      showProvince(Cname);
+    })
+
+    function getindex(name,arr){
+      for (var i = 0; i < arr.length; i++) {
+        if(name==arr[i]){
+          return i;
         }
       }
+    }
 
 
-      function showProvince(Cname) {
+    function showProvince(Cname) {
 
-        $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
+      $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
 
-          var myChart = echarts.init(document.getElementById('map-container'));
+        var myChart = echarts.init(document.getElementById('map-container'));
 
-          echarts.registerMap(Cname, geoJson);
-          var option
-          myChart.setOption(
-            option = {
+        echarts.registerMap(Cname, geoJson);
+        var option;
+        var n = getindex(Cname,provinces);
+        var name = provincesText[n];
+        console.log(name)
+        myChart.setOption(
+          option = {
             title: {
-              text: Cname,
+              text: name,
               left: 'center',
-              textStyle: {
-                color: '#fff'
+              textStyle:{
+                color:'#000'
               }
             },
-              visualMap: {
-                type: 'continuous',
-                min: 0,
-                max: 200,
-                left: 20,
-                bottom: 15,
-                calculable: true,
-                precision: 2,
-                seriesIndex: [0],
-                color: ['#980000', '#f6f3d2', '#075e89'],
-                text: ['高', '低']
-              },
-              toolbox: {
-                show: true,
-                itemSize: 20,
-                itemGap: 30,
-                left: 'right',
-                feature: {
-                  restore: {},
-                  saveAsImage: {}
-                }
-              },
+            visualMap: {
+              type: 'continuous',
+              min: 0,
+              max: 200,
+              left: 20,
+              bottom: 15,
+              calculable: true,
+              precision: 2,
+              seriesIndex: [0],
+              color: ['#980000', '#f6f3d2', '#075e89'],
+              text: ['高', '低']
+            },
+            toolbox: {
+              show: true,
+              itemSize: 20,
+              itemGap: 30,
+              left: 'right',
+              feature: {
+                restore: {},
+                saveAsImage: {}
+              }
+            },
             series: [
               {
                 type: 'map',
@@ -233,15 +262,11 @@
                 roam: true,
                 label: {
                   emphasis: {
-                    textStyle: {
-                      color: '#fff'
-                    }
+                    show: true
                   }
                 },
                 itemStyle: {
                   normal: {
-                    //borderColor: '#389BB7',
-                    //areaColor: '#fff',
                   },
                   emphasis: {
                     areaColor: '#389BB7',
@@ -252,8 +277,8 @@
               }
             ]
           });
-        });
-      }
+      });
+    }
 
 
     var provinces = ['shanghai', 'hebei','shanxi','neimenggu','liaoning','jilin','heilongjiang','jiangsu','zhejiang','anhui','fujian','jiangxi','shandong','henan','hubei','hunan','guangdong','guangxi','hainan','sichuan','guizhou','yunnan','xizang','shanxi1','gansu','qinghai','ningxia','xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen'];
@@ -632,6 +657,27 @@
       ]
     };
     mmuChart.setOption(mmuOption);
+
+
+
+    var queryWorkHotObj = {
+      machineType:'',
+      experimentalcar:'',
+      startDate:''
+    }
+    vm.drawWorkHot = function () {
+      if(vm.machine){
+        queryWorkHotObj.machineType = vm.machine.machineType;
+      }
+      if(vm.experimentalcar){
+       queryWorkHotObj.experimentalcar = vm.experimentalcar;
+      }
+      if( vm.startDateDeviceData){
+       queryWorkHotObj.startDate = vm.startDateDeviceData;
+      }
+
+    }
+
 
 
   }

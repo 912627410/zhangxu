@@ -7,7 +7,7 @@
             <div class="control-group">
               <label class="control-label">车辆类型:</label>
               <div class="controls">
-                <select class="form-control" ng-model="workStartMngController.machine.machineType">
+                <select class="form-control" ng-model="machineworkreportMngController.machine.machineType" validator="required">
                   <option value="A1">小挖</option>
                   <option value="30">矿机</option>
                   <option value="40">中挖</option>
@@ -27,23 +27,21 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">回款状态：</label>
-              <div class="controls">
-                <select  required class="form-control">
-                  <option value="">请选择...</option>
-                </select>
-              </div>
-            </div>
-            <div class="control-group">
               <label class="control-label">工作地区：</label>
               <div class="controls">
-                <select  class="form-control">
-                  <option value="">请选择...</option>
-                </select>
+                <span style="width: 48%;display: inline-block;" >
+                  <select required="" class="form-control"  ng-model="machineworkreportMngController.province" ng-options="m.name for m in machineworkreportMngController.division" >
+                  </select>
+                </span>
+                <span style="width: 48%; display: inline-block;">
+                  <select required="" class="form-control"  ng-model="machineworkreportMngController.city"  ng-options="m.name for m in machineworkreportMngController.province.city" >
+                  </select>
+                </span>
+
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">起始开工日期：</label>
+              <label class="control-label">起始日期：</label>
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -64,7 +62,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">结束开工日期：</label>
+              <label class="control-label">结束日期：</label>
               <div class="controls">
                 <p class="input-group">
                 <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -85,7 +83,7 @@
 
             <div class="control-group">
               <div class="controls">
-                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="生成工作报告"/>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="生成工作报告" ng-click="machineworkreportMngController.generateReport();">生成工作报告</button>
               </div>
             </div>
           </form>
