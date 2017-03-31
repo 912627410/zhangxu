@@ -5,17 +5,24 @@
     'use strict';
     angular.module('GPSCloud')
         .controller('addHeightTypeController', addHeightTypeCtrl);
-    function addHeightTypeCtrl($rootScope, $uibModalInstance, serviceResource, DEVCE_HIGHTTYPE) {
+    function addHeightTypeCtrl($rootScope, $uibModalInstance, serviceResource, Notification, DEVCE_HIGHTTYPE) {
         var vm = this;
         vm.operatorInfo = $rootScope.userInfo;
         vm.ok = function (newHeightType) {
             var newHeightTypes = new Array();
             newHeightType.status = 1;  //dafault value
             newHeightTypes.push(newHeightType);
-            serviceResource.addConfigInfo(vm.operatorInfo,newHeightTypes,DEVCE_HIGHTTYPE,function(rspData){
-                serviceResource.handleRsp("新建高度类型出错",rspData);
+            var rspData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "ADD", newHeightTypes);
+            rspData.then(function(data){
+                if (data.result != "Success") {
+                    Notification.error('新建高度类型出错');
+                } else {
+                    Notification.success('新建高度类型成功');
+                    $uibModalInstance.close();
+                }
+            },function(reason){
+                Notification.error('新建高度类型出错');
             });
-            $uibModalInstance.close();
         };
 
         vm.cancel = function () {

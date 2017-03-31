@@ -49,8 +49,8 @@
                     <div class="box-footer">
                         <code>
                             <div class="pull-right">
-                                <span ng-if="deviceMF.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceMF,'UPDATE_DEVICE_MF')">失效</button></span>
-                                <span ng-if="deviceMF.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceMF,'UPDATE_DEVICE_MF')">激活</button></span>
+                                <span ng-if="deviceMF.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateDeviceMFStatus(deviceMF)">失效</button></span>
+                                <span ng-if="deviceMF.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateDeviceMFStatus(deviceMF)">激活</button></span>
                                 <button type="button" class="btn btn-primary btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateMF(deviceMF)">修改</button>
                             </div>
                         </code>
@@ -79,8 +79,8 @@
                     <div class="box-footer">
                         <code>
                             <div class="pull-right">
-                                <span ng-if="deviceType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceType,'UPDATE_DEVICE_TYPE')">失效</button></span>
-                                <span ng-if="deviceType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceType,'UPDATE_DEVICE_TYPE')">激活</button></span>
+                                <span ng-if="deviceType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceTypeStatus(deviceType)">失效</button></span>
+                                <span ng-if="deviceType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceTypeStatus(deviceType)">激活</button></span>
                                 <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceType(deviceType)">修改</button>
                             </div>
                         </code>
@@ -109,8 +109,8 @@
                     <div class="box-footer">
                         <code>
                             <div class="pull-right">
-                                <span ng-if="devicePowerType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(devicePowerType,'UPDATE_DEVICE_POWER_TYPE')">失效</button></span>
-                                <span ng-if="devicePowerType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(devicePowerType,'UPDATE_DEVICE_POWER_TYPE')">激活</button></span>
+                                <span ng-if="devicePowerType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">失效</button></span>
+                                <span ng-if="devicePowerType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">激活</button></span>
                                 <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updatePowerType(devicePowerType)">修改</button>
                             </div>
                         </code>
@@ -139,8 +139,8 @@
                     <div class="box-footer">
                         <code>
                             <div class="pull-right">
-                                <span ng-if="deviceHeightType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceHeightType,'UPDATE_DEVICE_POWER_TYPE')">失效</button></span>
-                                <span ng-if="deviceHeightType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.revertConfigStatus(deviceHeightType,'UPDATE_DEVICE_POWER_TYPE')">激活</button></span>
+                                <span ng-if="deviceHeightType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateDeviceHeightTypeStatus(deviceHeightType)">失效</button></span>
+                                <span ng-if="deviceHeightType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateDeviceHeightTypeStatus(deviceHeightType)">激活</button></span>
                                 <button type="button" class="btn btn-primary btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateHeightType(deviceHeightType)">修改</button>
                             </div>
                         </code>
@@ -159,24 +159,18 @@
 
 
     <uib-tab heading="组织管理" presentation-href="config:organazitionPage">
-        <div ng-controller="orgController as orgCtrl">
-        <div style="width: 30%;">
-                <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree" on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
+        <div>
+            <div style="width: 30%;">
+                <abn-tree tree-data="devivceparameterCtrl.my_data" tree-control="treeController" on-select="devivceparameterCtrl.my_tree_handler(branch);" expand-level="4"></abn-tree>
             </div>
             <div class="row">
                 <div class="col-md-7"></div>
-                <a class="btn btn-primary" style="width: 6%"  ng-click="orgCtrl.addOrg()">
+                <a class="btn btn-primary" style="width: 6%"  ng-click="devivceparameterCtrl.addOrg()">
                     <i class="fa fa-plus"></i> 增加
                 </a>
-                <a class="btn btn-warning" style="width: 6%"  ng-click="orgCtrl.updateOrg()">
+                <a class="btn btn-warning" style="width: 6%"  ng-click="devivceparameterCtrl.updateOrg()">
                     <i class="fa fa-pencil"></i> 修改
                 </a>
-                <a class="btn btn-danger" style="width: 6%"  ng-click="orgCtrl.deleteOrg()">
-                    <i class="fa fa-trash"></i> 删除
-                </a>
-                <button ng-click="orgCtrl.expand_all()" class="btn btn-default btn-sm">Expand All</button>
-                <button ng-click="orgCtrl.addBranch()" class="btn btn-default btn-sm">Add Branch</button>
-                <button ng-click="orgCtrl.addOrg()" class="btn btn-default btn-sm">Add Org</button>
             </div>
         </div>
     </uib-tab>
