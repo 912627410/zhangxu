@@ -13,11 +13,7 @@
     var vm = this;
 
 
-    vm.maxDate = new Date();
-    vm.dateOptions = {
-      formatYear: 'yyyy',
-      startingDay: 1
-    };
+    vm.startDateDeviceData = new Date();
     vm.statisticalStatusData = {
       opened: false
     };
@@ -25,12 +21,17 @@
       vm.statisticalStatusData.opened = true;
     };
 
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
+
     function randomData() {
       return Math.round(Math.random()*1000);
     }
 
 
-    var date = new Date();
 
     var mapChart = echarts.init(document.getElementById('map-container'));
     var chinaOption = {

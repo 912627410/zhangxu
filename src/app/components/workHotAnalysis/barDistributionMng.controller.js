@@ -17,6 +17,7 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
+    vm.startDateDeviceData = new Date();
     vm.statisticalStatusData = {
       opened: false
     };
