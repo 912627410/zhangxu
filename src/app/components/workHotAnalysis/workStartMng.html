@@ -19,43 +19,19 @@
 
             </div>
             <div class="control-group">
-              <label class="control-label">汇总周期：</label>
-              <div class="controls">
-                <ui-select id="cycleType" name="cycleType"
-                           ng-model="workStartMngController.cycleType" theme="bootstrap"
-                           ng-disabled="disabled">
-                  <ui-select-match allow-clear="true" placeholder="请选择">{{$select.selected.name}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="experimentalcar in workStartMngController.experimentalcarList | propsFilter: {name: $select.search}">
-                    <div ng-bind-html="experimentalcar.name"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-
-            </div>
-            <div class="control-group">
               <label class="control-label">热度类型：</label>
-
-
               <div class="controls">
-                <ui-select id="densityType" name="densityType"
-                           ng-model="workStartMngController.experimentalcar" theme="bootstrap"
-                           ng-disabled="disabled">
-                  <ui-select-match allow-clear="true" placeholder="请选择">{{$select.selected.name}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="experimentalcar in workStartMngController.experimentalcarList | propsFilter: {name: $select.search}">
-                    <div ng-bind-html="experimentalcar.name"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
+                  <select class="form-control" ng-model="workStartMngController.experimentalcar" placeholder="请选择">
+                    <option value="0">平均开工时间</option>
+                    <option value="1">平均开工次数</option>
+                  </select>
+                </div>
             </div>
             <div class="control-group">
-              <label class="control-label">开工月份：</label>
+              <label class="control-label">起始日期：</label>
               <div class="controls">
                 <p class="input-group">
-                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom1}}"
+                  <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                          ng-model="workStartMngController.startDateDeviceData"
                          is-open="workStartMngController.statisticalStatusData.opened"
                          datepicker-options="workStartMngController.dateOptions"
@@ -74,10 +50,11 @@
 
             <div class="control-group">
               <div class="controls">
-                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工热度分布"/>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工热度分布" ng-click="workStartMngController.drawWorkHot();">车辆开工热度分布</button>
               </div>
             </div>
           </form>
+
         </div>
       </div>
     </div>

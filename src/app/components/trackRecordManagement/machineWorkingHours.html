@@ -1,0 +1,60 @@
+<div class="main-container" id="machineWorkHours">
+  <div class="left-container">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12">
+          <form id="searchForm"  class="form-search">
+            <div class="control-group">
+              <label class="control-label">车辆类型:</label>
+              <div class="controls">
+                <select class="form-control" ng-model="machineWorkingHoursController.machine.machineType">
+                  <option value="A1">小挖</option>
+                  <option value="30">矿机</option>
+                  <option value="40">中挖</option>
+                  <option value="1,2,3">装载机</option>
+                  <option value="A001">高空车</option>
+                </select>
+              </div>
+            </div>
+            <br>
+
+            <div class="control-group">
+              <label class="control-label">起始日期：</label>
+              <div class="controls">
+                <p class="input-group">
+                  <input id="workDate" name="workDate" type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="machineWorkingHoursController.startDateDeviceData"
+                         is-open="machineWorkingHoursController.startDateOpenStatusDeviceData.opened"
+                         datepicker-options="machineWorkingHoursController.dateOptions"
+                         min-date="machineWorkingHoursController.minDate"
+                         max-date="machineWorkingHoursController.maxDate"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="machineWorkingHoursController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <div class="controls">
+                <input id="chartButton" class="btn btn-primary btn-block" type="button" value="工作时长分布"/>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-container">
+    <div id="divRightTop"></div>
+   <div id="divRightBottom"></div>
+  </div>
+</div>
+
+
