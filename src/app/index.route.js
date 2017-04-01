@@ -443,6 +443,27 @@
 
 
 
+      .state('home.VersionInformation', {
+        url: '/templateRegistry',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/VersionInformation.html',
+            controller: 'VersionInfoMngController as VersionInfoMngController'
+          }
+        }
+      })
+    .state('home.templateRegistry', {
+      url: '/templateRegistry',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/templateRegistry/templateRegistry.html',
+          controller: 'templateRegistryMngController as templateRegistryMngController'
+        }
+      }
+    })
+
+
+
 
 
     ;
