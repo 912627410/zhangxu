@@ -17,7 +17,7 @@
     var vm = this;
     var registerNum;
     var jsonData = jsonData;
-    var obj = {
+    var templateItem = {
       name:"",
       alis:"",
       type:"",
@@ -31,40 +31,40 @@
 
     vm.show = false;
 
-    vm.getlength = function () {
+    vm.showCharLengthInputBox = function () {
 
-      if(vm.obj.type=="char"){
+      if(vm.templateInfo.type=="char"){
         vm.show = true;
       }else{
         vm.show = false;
       }
     }
-    vm.ok = function (obj1) {
-          vm.arr = [];
-          obj.name = obj1.name;
-          obj.alis = obj1.cname;
-          obj.type = obj1.type;
-          obj.converter = obj1.converter;
-          if(obj1.type=="int"){
-            obj.length = 4;
-          }else if(obj1.type=="short"){
-            obj.length = 2;
+    vm.confirm = function (templateInfo) {
+          vm.templateItemArr = [];
+          templateItem.name = templateInfo.name;
+          templateItem.alis = templateInfo.cname;
+          templateItem.type = templateInfo.type;
+          templateItem.converter = templateInfo.converter;
+         //int类型长度为4, short类型长度为2, char类型长度自定义
+          if(templateInfo.type=="int"){
+            templateItem.length = 4;
+          }else if(templateInfo.type=="short"){
+            templateItem.length = 2;
           }else{
-            obj.length = parseInt(obj1.length);
+            templateItem.length = parseInt(templateInfo.length);
           }
+          //register第一个为1，剩下以2为长度累加
           if(jsonData.length ==0){
-            obj.register = 1;
+            templateItem.register = 1;
           }else{
             registerNum = jsonData[jsonData.length-1].register;
-
-            registerNum +=  Math.ceil(obj.length/2);
-
-            obj.register = registerNum;
+            registerNum +=  Math.ceil(templateItem.length/2);
+            templateItem.register = registerNum;
           }
-          var item = obj;
-          vm.arr.push(item);
+          var item = templateItem;
+          vm.templateItemArr.push(item);
 
-       $uibModalInstance.close(vm.arr);
+       $uibModalInstance.close(vm.templateItemArr);
     }
 
     vm.cancel = function () {
@@ -72,14 +72,14 @@
     };
 
     vm.converterData = [{
-      name:"a",
-      value:"org.gpscloud.converter.CHexConver"
+      name:"转化器a",
+      value:"org.gpscloud.converter.CHexConver1"
     },{
-      name:"b",
-      value:"org.gpscloud.converter.CHexConver"
+      name:"转化器b",
+      value:"org.gpscloud.converter.CHexConver2"
     },{
-      name:"c",
-      value:"org.gpscloud.converter.CHexConver"
+      name:"转化器c",
+      value:"org.gpscloud.converter.CHexConver3"
     }]
 
   }
