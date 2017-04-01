@@ -351,7 +351,7 @@
                 ng-class="reportMng1?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng1}">
-          
+
           <li>
             <a ng-click="trackRecord=!trackRecord" presentation-href="dataAnalysis:toptrackrecord">
               <i class="fa ion-document"></i>
@@ -511,15 +511,25 @@
               <i class="fa fa-user"></i> <span>权限管理</span>
             </a>
           </li>
+
+          <li >
+            <a  ui-sref="home.VersionInformation">
+              <i class="fa fa-gear"></i><span>模板注册</span>
+            </a>
+          </li>
         </ul>
       </li>
       <hr>
+
+
 
       <li class="treeview">
         <a href="http://iotcloud.mydoc.io/" target="_blank">
           <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>
         </a>
       </li>
+
+
     </ul>
   </section>
   <!-- /.sidebar -->
