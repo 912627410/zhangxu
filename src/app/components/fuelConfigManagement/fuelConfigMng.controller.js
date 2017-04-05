@@ -80,7 +80,7 @@
       modalInstance.result.then(function (result) {
         //console.log(result);
         vm.tableParams.data.splice(0, 0, result);
-
+        vm.page.totalElements += 1;
       }, function () {
         //取消
       });
