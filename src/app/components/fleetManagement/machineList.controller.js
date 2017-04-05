@@ -52,11 +52,19 @@
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
+          var templateUrl, controller;
+          if(vm.deviceinfoMonitor.versionNum == 'A001') {
+            templateUrl = 'app/components/deviceMonitor/deviceAerialCurrentInfo.html';
+            controller = 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController';
+          } else {
+            templateUrl = 'app/components/deviceMonitor/devicecurrentinfo.html';
+            controller = 'DeviceCurrentInfoController as deviceCurrentInfoCtrl';
+          }
           $rootScope.currentOpenModal = $uibModal.open({
             animation: vm.animationsEnabled,
             backdrop: false,
-            templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-            controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+            templateUrl: templateUrl,
+            controller: controller,
             size: size,
             resolve: { //用来向controller传数据
               deviceinfo: function () {
