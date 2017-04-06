@@ -6,7 +6,7 @@
     .controller('roleUserMngController', roleUserMngController);
 
   /** @ngInject */
-  function roleUserMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, USER_PAGE_URL, ROLE_USER_OPER_URL, ROLE_USER_LIST_URL, roleInfo) {
+  function roleUserMngController($rootScope, $scope, $confirm,$timeout, $uibModalInstance, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, USER_PAGE_URL, ROLE_USER_OPER_URL, ROLE_USER_LIST_URL, roleInfo) {
     var vm = this;
     vm.org = {label: ""};    //组织
     vm.operatorInfo = $rootScope.userInfo;
@@ -50,27 +50,22 @@
       roleUserPromise.then(function (data) {
         //  vm.roleUserinfoList = data;
         for (var i = 0; i < data.length; i++) {
-         // console.log(data[i]);
-
-
+          // console.log(data[i]);
           // vm.selected.push(data[i].userinfoId);
           if (null != data[i]) {
             vm.roleUserinfoList.push(data[i].userinfoId);
           }
-
         }
-
-
+        if(queryState){
+          queryFn()
+        }else{
+          getRoleUserState=true;
+        }
 
         //  console.log(vm.roleUserinfoList);
       }, function (reason) {
         Notification.error('获取权限状态失败');
       })
-      if(queryState){
-        queryFn()
-      }else{
-        getRoleUserState=true;
-      }
     }
 
 
@@ -155,10 +150,10 @@
     //首次查询
     vm.init=function(){
       $LAB.script().wait(function () {
-        vm.query(null, 10, null, null);
         vm.getRoleUser();
-
-
+        var timer=$timeout(function(){
+          vm.query(null, 10, null, null);
+        },200);
 
       })
     }

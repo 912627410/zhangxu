@@ -6,7 +6,7 @@
     .controller('priviligeRoleMngController', priviligeRoleMngController);
 
   /** @ngInject */
-  function priviligeRoleMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
+  function priviligeRoleMngController($rootScope, $scope, $confirm,$timeout, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
                                       PRIVILAGE_ROLE_OPER_URL, PRIVILAGE_ROLE_LIST_URL, priviligeInfo) {
     var vm = this;
     vm.org = {label: ""};    //组织
@@ -51,18 +51,15 @@
           }
 
         }
-
-
+        if(queryState){
+          queryFn()
+        }else{
+          getPriviligeRoleState=true;
+        }
         //  console.log(vm.roleUserinfoList);
       }, function (reason) {
         Notification.error('获取权限状态失败');
       })
-
-      if(queryState){
-        queryFn()
-      }else{
-        getPriviligeRoleState=true;
-      }
     }
 
 
@@ -112,7 +109,10 @@
     vm.init=function(){
       $LAB.script().wait(function () {
         vm.getPriviligeRole();
-        vm.query(null, 10, null, null);
+        var timer=$timeout(function(){
+          vm.query(null, 10, null, null);
+        },200);
+
 
       })
     }

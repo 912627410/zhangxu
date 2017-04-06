@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function userRoleMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
-                                 USER_ROLE_OPER_URL, USER_ROLE_LIST_URL, userinfo) {
+                                 USER_ROLE_OPER_URL, USER_ROLE_LIST_URL, userinfo,$timeout) {
     var vm = this;
     vm.org = {label: ""};    //组织
     vm.operatorInfo = $rootScope.userInfo;
@@ -23,38 +23,6 @@
     vm.addList = [];
     vm.otherList = [];
 
-    var getUserRoleState,queryState,queryResult;
-    function queryFn(){
-      vm.selected = angular.copy(vm.userinfoRoleList); //深度copy
-      vm.roleList = queryResult.content;
-      vm.tableParams = new NgTableParams({},
-        {
-          dataset: queryResult.content
-        });
-      vm.page = queryResult.page;
-      vm.pageNumber = queryResult.page.number + 1;
-    }
-
-    vm.getUserRole = function () {
-      var roleUserUrl = USER_ROLE_LIST_URL;
-      roleUserUrl += "?userinfoId=" + vm.userinfo.id;
-      //得到设备类型集合
-      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "QUERY");
-      roleUserPromise.then(function (data) {
-        //  vm.roleUserinfoList = data;
-        for (var i = 0; i < data.length; i++) {
-          if (null != data[i]) {
-            vm.userinfoRoleList.push(data[i].roleId);
-          }
-        }
-      })
-      if(queryState){
-        queryFn()
-      }else{
-        getUserRoleState=true;
-      }
-    }
-
 
     /**
      * 分页查询用户信息
@@ -64,7 +32,6 @@
      * @param priviligeInfo
      */
     vm.query = function (page, size, sort, roleInfo) {
-
       //构造查询条件
       var restCallURL = ROLE_PAGE_URL;
       var pageUrl = page || 0;
@@ -81,8 +48,9 @@
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
         queryResult=data;
+
         if(getUserRoleState){
-          queryFn()
+          queryFn();
         }else{
           queryState=true;
         }
@@ -92,17 +60,56 @@
     }
 
 
+    var getUserRoleState,queryState,queryResult;
+    function queryFn(){
+      vm.selected = angular.copy(vm.userinfoRoleList); //深度copy
+      vm.roleList = queryResult.content;
+      vm.tableParams = new NgTableParams({},
+        {
+          dataset: queryResult.content
+        });
+      vm.page = queryResult.page;
+      vm.pageNumber = queryResult.page.number + 1;
+    }
+
+    vm.getUserRole = function () {
+      var roleUserUrl = USER_ROLE_LIST_URL;
+      roleUserUrl += "?userinfoId=" + vm.userinfo.id;
+      //得到角色用户信息
+      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "QUERY");
+      roleUserPromise.then(function (data) {
+        //vm.roleUserinfoList= data;
+
+        for (var i = 0; i < data.length; i++) {
+          if (null != data[i]) {
+            vm.userinfoRoleList.push(data[i].roleId);
+          }
+        }
+        if(queryState){
+          queryFn();
+        }else{
+          getUserRoleState=true;
+        }
+      })
+    }
+
+
+
+
     //首次查询
     vm.init=function(){
       $LAB.script().wait(function () {
-        vm.query(null, 10, null, null);
         vm.getUserRole();
-
+        var timer=$timeout(function(){
+          vm.query(null, 10, null, null);
+        },200);
 
       })
     }
 
     vm.init();
+
+
 
     /**
      * 重置查询框
