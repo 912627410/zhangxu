@@ -108,65 +108,7 @@
         }
       }
 
-      vm.deviceinfo.produceDate = new Date(deviceinfo.produceDate);  //必须重新生成date object，否则页面报错
-      //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
-      vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus, 2);
-      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
-      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16).toUpperCase();
-      /*
-       中央报警灯   指的就是三角报警灯
-       另：1、当转速小于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯也不亮
-       2、当转速大于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯亮
-       3、当转速小于1000转时，手制动指示灯亮时，三角报警灯也不亮
-       4、当转速大于1000转时，手制动指示灯亮时，三角报警灯亮
-       */
-      //转速
-      vm.enginRotate = vm.deviceinfo.enginRotate;
-      //充电指示灯
-      vm.charge = vm.deviceinfo.ledStatus.substring(0, 1);
-      //中央报警
-      vm.centerCode = '0';
-      //机油压力指示灯
-      vm.engineOilPressure = vm.deviceinfo.ledStatus.substring(28, 29);
-      //制动指示灯
-      vm.parkingBrake = vm.deviceinfo.ledStatus.substring(6, 7);
-
-      if (vm.enginRotate > 500 && vm.charge == "1" && vm.engineOilPressure == "1") {
-        vm.centerCode = '1';
-      }
-      if (vm.enginRotate > 1000 && vm.parkingBrake == "1") {
-        vm.centerCode = '1';
-      }
-
-      //根据中挖协议修改
-      if (vm.deviceinfo.voltageHigthAlarmValue != 0) {
-        vm.deviceinfo.voltageHigthAlarmValue = vm.deviceinfo.voltageHigthAlarmValue * 0.1 + 10;
-      }
-      if (vm.deviceinfo.voltageLowAlarmValue != 0) {
-        vm.deviceinfo.voltageLowAlarmValue = vm.deviceinfo.voltageLowAlarmValue * 0.1 + 10;
-      }
-      //改为过滤器
-      //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
-      //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
-      vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
-      //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据deviceNum来判断当前设备是否是小挖,装载机，矿车
-      //如果车架号不为空就根据车架号来判断车辆类型,判断出来不为小挖返回null，再根据vserionNum判断
-      if (deviceinfo.machine == null || null == deviceinfo.machine.licenseId) {
-        vm.DeviceType = null;
-      } else {
-        vm.DeviceType = serviceResource.getDeviceType(deviceinfo.machine.licenseId);
-      }
-      //如果上面没有判断出来，versionNum也不为空，就根据deviceNum来判断车辆类型
-      if (vm.DeviceType == null) {
-        if (deviceinfo.versionNum != null) {
-          vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum, deviceinfo.deviceType);
-        } else {
-          vm.DeviceType = serviceResource.getDeviceType(null);
-        }
-      }
-
     }
-
     vm.controllerInitialization(deviceinfo);
 
     //保养提醒modal
@@ -184,6 +126,7 @@
         }
       });
     }
+
     //气压图
     vm.highchartsAir = {
       options: {
@@ -269,93 +212,6 @@
         }, 0);
       }
     };
-
-    //水温图
-    vm.highchartsWater = {
-      options: {
-        chart: {
-          type: 'solidgauge'
-        },
-
-        title: languages.findKey('waterTemperature') + '',
-        exporting: {enabled: false},
-
-        pane: {
-          center: ['50%', '75%'],
-          size: '140%',
-          startAngle: -90,
-          endAngle: 90,
-          background: {
-            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-            innerRadius: '60%',
-            outerRadius: '100%',
-            shape: 'arc'
-          }
-        },
-
-        tooltip: {
-          enabled: true
-        },
-
-        // the value axis
-        yAxis: {
-          stops: [
-            [0.2, '#55BF3B'], // green
-            [0.6, '#DDDF0D'], // yellow
-            [0.8, '#DF5353'] // red
-          ],
-          lineWidth: 0,
-          minorTickInterval: null,
-          tickPixelInterval: 400,
-          tickWidth: 0,
-          title: {
-            y: 0,
-            text: languages.findKey('waterTemperature') + ''
-          },
-          labels: {
-            y: 16
-          },
-          min: 40,
-          max: 140,  //水温表最大140
-        },
-        credits: {
-          enabled: false
-        },
-
-        plotOptions: {
-          solidgauge: {
-            dataLabels: {
-              y: 5,
-              borderWidth: 0,
-              useHTML: true
-            }
-          }
-        }
-      },
-      title: languages.findKey('waterTemperature') + '',
-      series: [{
-        name: languages.findKey('waterTemperature') + '',
-        data: [vm.deviceinfo.engineTemperature],
-        dataLabels: {
-          format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-          ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
-          '<span style="font-size:12px;color:silver"></span></div>'
-        },
-        tooltip: {
-          valueSuffix: null
-        }
-      }],
-
-      loading: false,
-      func: function (chart) {
-        $timeout(function () {
-          chart.reflow();
-          //The below is an event that will trigger all instances of charts to reflow
-          //$scope.$broadcast('highchartsng.reflow');
-        }, 0);
-      }
-    };
-
     //转速图
     vm.highchartsRpm = {
       options: {
@@ -475,8 +331,6 @@
         }, 0);
       }
     };
-
-
     //油位图
     vm.highchartsOil = {
       options: {
@@ -561,8 +415,7 @@
         }, 0);
       }
     };
-
-
+    //关闭model
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
@@ -1733,6 +1586,7 @@
         });
     }
 
+    //数据分析
     vm.checkedRad = 'DASHBOARD';
     /*初始化图表*/
     vm.initConfig = function (deviceNum) {

@@ -165,7 +165,7 @@
        vm.getHeightTypeList();
     }
 
-//监控
+    //监控
     vm.currentInfo = function (id, size) {
 
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
@@ -204,10 +204,6 @@
           });
 
         }
-
-
-
-
 
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
