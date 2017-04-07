@@ -20,6 +20,7 @@
         //vm.deviceinfo.workDuration=serviceResource.convertToMins(vm.deviceinfo.workDuration);
         vm.deviceinfo.oilPressure=serviceResource.convertTooilPressure(vm.deviceinfo.oilPressure);
         vm.deviceinfo.batteryPower=serviceResource.convertTobatteryPower(vm.deviceinfo.batteryPower);
+        vm.deviceinfo.gsmsignalStrength=serviceResource.convertGSMSing(vm.deviceinfo.gsmsignalStrength);
 
         vm.scopeMap;
         vm.locationList=[];
@@ -39,6 +40,36 @@
             vm.radius=deviceinfo.machine.radius; //设置的半径
         }
 
+        if (vm.deviceinfo.calibrationStatus!=null){
+            switch(vm.deviceinfo.calibrationStatus){
+                case 128:
+                    vm.deviceinfo.calibrationStatus = "满载标定成功,空载未标定";
+                    break;
+                case 64:
+                    vm.deviceinfo.calibrationStatus = "空载标定成功,满载未标定";
+                    break;
+                case 192:
+                    vm.deviceinfo.calibrationStatus = "标定成功（满载和空载）";
+                    break;
+                case 32:
+                    vm.deviceinfo.calibrationStatus = "未标定";
+                    break;
+                case 33:
+                    vm.deviceinfo.calibrationStatus = "失败,压力传感器值过大";
+                    break;
+                case 34:
+                    vm.deviceinfo.calibrationStatus = "失败,压力传感器值过小";
+                    break;
+                case 36:
+                    vm.deviceinfo.calibrationStatus = "失败,角度传感器值过大";
+                    break;
+                case 40:
+                    vm.deviceinfo.calibrationStatus = "失败,角度传感器值过小";
+                    break;
+                default:
+                    vm.deviceinfo.calibrationStatus = "标定失败";
+            }
+        }
 
         vm.highchartsPower = {
             options: {

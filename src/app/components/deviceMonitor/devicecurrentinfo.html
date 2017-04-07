@@ -717,8 +717,7 @@
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <td>{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
@@ -1607,10 +1606,10 @@
             <div class="col-md-4" style="padding: 0px;">
               <div style="float:left;margin-top: -5px;">
                 <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;综合分析</div>
-                <div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>
+                <!--<div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>-->
               </div>
-              <button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
-                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>
+              <!--<button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
+                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>-->
               <button class="btn btn-primary ng-binding" style="float:left;margin-left: 18px;" type="button" ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum, deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">确定</button>
             </div>
           </div>
@@ -1821,7 +1820,7 @@
 
     </uib-tab>
 
-    <uib-tab select="deviceCurrentInfoCtrl.initScopeMapTab(deviceCurrentInfoCtrl.deviceinfo)" presentation-href="device:scopeMapPage">
+    <!--<uib-tab select="deviceCurrentInfoCtrl.initScopeMapTab(deviceCurrentInfoCtrl.deviceinfo)" presentation-href="device:scopeMapPage">
       <uib-tab-heading  >
         电子围栏
       </uib-tab-heading>
@@ -1890,7 +1889,7 @@
           </div>
         </div>
       </div>
-    </uib-tab>
+    </uib-tab>-->
 
 
   </uib-tabset>

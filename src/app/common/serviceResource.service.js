@@ -794,7 +794,10 @@
 
         return 55*value/4095;
       },
-
+      convertGSMSing: function (value) {
+        var singValue = value / 31 * 100;
+        return singValue.toFixed(2);
+      }
     }
   }
 
