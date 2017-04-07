@@ -17,23 +17,18 @@
                 </select>
               </div>
             </div>
-
+            <br>
             <div class="control-group">
               <label class="control-label">汇总周期：</label>
               <div class="controls">
-                <ui-select id="cycleType" name="cycleType"
-                           ng-model="barDistributionMngController.cycleType" theme="bootstrap"
-                           ng-disabled="disabled">
-                  <ui-select-match allow-clear="true" placeholder="请选择">{{$select.selected.name}}
-                  </ui-select-match>
-                  <ui-select-choices
-                    repeat="experimentalcar in barDistributionMngController.experimentalcarList | propsFilter: {name: $select.search}">
-                    <div ng-bind-html="experimentalcar.name"></div>
-                  </ui-select-choices>
-                </ui-select>
+                <select class="form-control" ng-model="barDistributionMngController.cycleType" placeholder="请选择">
+                  <option value="1">按月</option>
+                  <option value="0">按季度</option>
+                </select>
               </div>
-
             </div>
+
+            <br>
             <div class="control-group">
               <label class="control-label">开工月份：</label>
               <div class="controls">
@@ -57,7 +52,7 @@
 
             <div class="control-group">
               <div class="controls">
-                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工热度分布"/>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工区域分布" ng-click="barDistributionMngController.drawDistribution()">车辆开工区域分布</button>
               </div>
             </div>
           </form>

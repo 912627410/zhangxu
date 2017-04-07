@@ -156,6 +156,7 @@
 
       modalInstance.result.then(function (result) {
 
+        vm.queryOwn(null, null, null, vm.fleet);
         vm.queryOther(null, null, null, vm.fleet);
 
       }, function () {

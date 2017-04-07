@@ -3,17 +3,19 @@
       <button class="btn btn-warning pull-right" type="button" ng-click="machineListCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
-<div>
-  <div class="table-responsive">
-    <table ng-table="machineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
-      <tr ng-repeat="machine in $data">
-        <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
-        <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
-        <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-        <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-        <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
-      </tr>
-    </table>
+<div class="modal-body">
+  <div class="box-body">
+    <div class="table-responsive">
+      <table ng-table="machineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="machine in $data">
+          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
+          <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
+          <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+          <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 <div class="box-footer">

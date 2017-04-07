@@ -365,21 +365,31 @@
     })
 
 
-      .state('home.dullmachinemng', {
-        url: '/dullmachinemng',
-        views: {
-          'rightside@home': {
-            templateUrl: 'app/components/trackRecordManagement/dullmachineMng.html',
-            controller: 'dullmachineMngController as dullmachineMngController'
-          }
-        }
-      })
+
       .state('home.trackRecordAnalyzemng', {
         url: '/trackRecordAnalyzemng',
         views: {
           'rightside@home': {
             templateUrl: 'app/components/trackRecordManagement/trackRecordAnalyzemng.html',
             controller: 'trackRecordAnalyzeMngController as trackRecordAnalyzeMngController'
+          }
+        }
+      })
+      .state('home.machineWorkingHours', {
+        url: '/machineWorkingHours',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/trackRecordManagement/machineWorkingHours.html',
+            controller: 'machineWorkingHoursController as machineWorkingHoursController'
+          }
+        }
+      })
+      .state('home.dullmachinemng', {
+        url: '/dullmachinemng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/trackRecordManagement/dullmachineMng.html',
+            controller: 'dullmachineMngController as dullmachineMngController'
           }
         }
       })
@@ -430,6 +440,27 @@
           }
         }
       })
+
+
+
+      .state('home.VersionInformation', {
+        url: '/templateRegistry',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/VersionInformation.html',
+            controller: 'VersionInfoMngController as VersionInfoMngController'
+          }
+        }
+      })
+    .state('home.templateRegistry', {
+      url: '/templateRegistry',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/templateRegistry/templateRegistry.html',
+          controller: 'templateRegistryMngController as templateRegistryMngController'
+        }
+      }
+    })
 
 
 

@@ -165,7 +165,7 @@
       });
     };
  /**
-     * 包含用户管理
+     * 包含权限管理
      * @param size
      */
     vm.rolePriviligeManage = function (roleInfo,size) {

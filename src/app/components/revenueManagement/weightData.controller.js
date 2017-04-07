@@ -58,13 +58,14 @@
 
       if(weightData !=null && weightData.recordTimeStart!=null){
         var recordTimeStartMonth = weightData.recordTimeStart.getMonth() +1;  //getMonth返回的是0-11
-        var recordTimeStartDateFormated = weightData.recordTimeStart.getFullYear() + '-' + addZero(recordTimeStartMonth,2) + '-' + addZero(weightData.recordTimeStart.getDate()+1,2);
+        var recordTimeStartDateFormated = weightData.recordTimeStart.getFullYear() + '-' + addZero(recordTimeStartMonth,2) + '-' + addZero(weightData.recordTimeStart.getDate(),2);
         restCallURL += "&search_DGTE_recordTime=" + recordTimeStartDateFormated;
       }
 
       if(weightData !=null && weightData.recordTimeEnd!=null){
-        var recordTimeEndMonth = weightData.recordTimeEnd.getMonth() +1;  //getMonth返回的是0-11
-        var recordTimeEndDateFormated = weightData.recordTimeEnd.getFullYear() + '-' + addZero(recordTimeEndMonth,2) + '-' + addZero(weightData.recordTimeEnd.getDate(),2);
+        var endDateAddOne = new Date(weightData.recordTimeEnd.getFullYear(), weightData.recordTimeEnd.getMonth(), weightData.recordTimeEnd.getDate() + 1);
+        var recordTimeEndMonth = endDateAddOne.getMonth() +1;  //getMonth返回的是0-11
+        var recordTimeEndDateFormated = endDateAddOne.getFullYear() + '-' + addZero(recordTimeEndMonth,2) + '-' + addZero(endDateAddOne.getDate(),2);
         restCallURL += "&search_DLTE_recordTime=" + recordTimeEndDateFormated;
       }
 

@@ -136,7 +136,7 @@
         vm.selected=[]; //把选中的设备设置为空
 
         Notification.success("借调车辆成功!");
-
+        $uibModalInstance.close();
       }, function (reason) {
         Notification.error("借调车辆出错!");
       });

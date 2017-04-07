@@ -21,10 +21,10 @@
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
     vm.startDate = startDate;
-    vm.endDate = new Date();
+    var endDate = new Date();
 
     vm.startDateDeviceData = startDate;
-    vm.endDateDeviceData = new Date();
+    vm.endDateDeviceData = endDate;
 
     //date picker
     vm.startDateOpenStatusDeviceData = {
@@ -379,8 +379,50 @@
    console.log(vm.selected);
  }
 
+    $http.get('assets/json/ChineseCities.json').success(function(data, status) {
+      vm.division=data;
+    }).error(function(data, status) {
+      alert("error")
+    });
 
 
+    myChart.on("click", function (param){
+      console.log(param);
+      alert(param.name)
+    })
+
+
+    var queryObj = {
+      province:'',
+      city:'',
+      startDateDeviceData:'',
+      endDateDeviceData:'',
+      machineType:'',
+      licenseId:''
+    }
+
+    var queryStartData = startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+    var queryEndData = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
+    vm.generateReport = function () {
+
+      if(vm.machine){
+        queryObj.machineType = vm.machine.machineType;
+        queryObj.licenseId = vm.machine.licenseId;
+      }
+      if(vm.province){
+        queryObj.province = vm.province.name;
+      }
+      if(vm.city){
+        queryObj.city = vm.city.name;
+      }
+      if(vm.startDateDeviceData){
+        queryObj.startDateDeviceData = queryStartData;
+      }
+      if(vm.endDateDeviceData){
+        queryObj.endDateDeviceData = queryEndData;
+      }
+
+    }
 
 
 

@@ -17,6 +17,7 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
+    vm.startDateDeviceData = new Date();
     vm.statisticalStatusData = {
       opened: false
     };
@@ -578,6 +579,28 @@
     };
 
     mapChart.setOption(areaOption);
+
+
+    var queryWorkHotObj = {
+      machineType:'',
+      cycleType:'',
+      startDate:''
+    }
+    vm.drawDistribution = function () {
+      if(vm.machine){
+        queryWorkHotObj.machineType = vm.machine.machineType;
+      }
+      if(vm.cycleType){
+        queryWorkHotObj.cycleType = vm.cycleType;
+      }
+      if( vm.startDateDeviceData){
+        queryWorkHotObj.startDate = vm.startDateDeviceData;
+      }
+
+    }
+
+
+
 
   }
 })();

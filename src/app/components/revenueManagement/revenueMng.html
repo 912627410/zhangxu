@@ -91,7 +91,7 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="revenueMngController.selectQuery(revenueMngController.fleetRecord)">查询</button>
+      <button class="btn btn-primary" type="button"  ng-click="revenueMngController.selectQuery(revenueMngController.fleetRecord)">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="revenueMngController.reset()">重置</button>
     </div>
 
@@ -113,9 +113,14 @@
           <td class="text-nowrap" data-title="'所属车队'" sortable="'phoneNumber'">{{fleetRecord.org.label}}</td>
           <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'serialNumber'">{{fleetRecord.machine.licenseId}}</td>
           <td class="text-nowrap" data-title="'设备编号'" sortable="'price'">{{fleetRecord.machine.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'收入'" sortable="'price'">{{fleetRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'开始时间'" sortable="'serviceBeginDate'">{{fleetRecord.startDate | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'结束时间'" sortable="'serviceEndDate'">{{fleetRecord.endDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'开始时间'" sortable="'serviceBeginDate'">{{fleetRecord.startDate | date:'yyyy-MM-dd HH:mm'}}</td>
+          <td class="text-nowrap" data-title="'结束时间'" sortable="'serviceEndDate'">{{fleetRecord.endDate | date:'yyyy-MM-dd HH:mm'}}</td>
+          <td class="text-nowrap" data-title="'趟次'" sortable="'times'">{{fleetRecord.times}}</td>
+          <td class="text-nowrap" data-title="'货重(吨)'" sortable="'totalWeight'">{{fleetRecord.totalWeight*0.01 | number:1}}</td>
+          <td class="text-nowrap" data-title="'收入'" sortable="'revenue'">{{fleetRecord.revenue}}</td>
+          <td class="text-nowrap" data-title="'油耗(L)'" sortable="'totalOil'">{{fleetRecord.totalOil}}</td>
+          <td class="text-nowrap" data-title="'燃油成本'" sortable="'oilCost'">{{fleetRecord.oilCost}}</td>
+          <td class="text-nowrap" data-title="'利润'">{{fleetRecord.revenue - fleetRecord.oilCost}}</td>
             </button>
           </td>
         </tr>
@@ -125,8 +130,8 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,null,null,simMngCtrl.phoneNumber)"
-                    max-size="5" ng-model="simMngCtrl.pageNumber" items-per-page="simMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+    <uib-pagination total-items="revenueMngController.page.totalElements" ng-change="revenueMngController.query(revenueMngController.pageNumber-1,null,null,revenueMngController.phoneNumber)"
+                    max-size="5" ng-model="revenueMngController.pageNumber" items-per-page="revenueMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
   </div>
 
