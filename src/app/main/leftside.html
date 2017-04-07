@@ -57,7 +57,7 @@
         <ul class="treeview-menu panel-collapse collapse" ng-class="{in: deviceMng}">
           <li>
             <a ui-sref="home.deviceinfoMng" presentation-href="device:page">
-              <i class="fa ion-ios-location"></i> <span>GPS设备管理</span>
+              <i class="fa ion-ios-location"></i> <span>{{'GPSdeviceManagement' | translate}}</span>
             </a>
           </li>
           <li>
@@ -80,7 +80,7 @@
       <li>
         <a ng-click="reportMng1=!reportMng1" presentation-href="report:topIdleDeviceReport">
           <i class="fa ion-stats-bars"></i>
-          <span style="width:200px">统计分析</span>
+          <span style="width:200px">{{'statisticalAnalysis' | translate}}</span>
           <span class="glyphicon pull-right"
                 ng-class="reportMng1?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
         </a>
@@ -165,7 +165,7 @@
       <li>
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
           <i class="fa fa-car"></i>
-          <span>车队管理</span>
+          <span>{{'fleetManagement' | translate}}</span>
           <span class="glyphicon pull-right"
                 ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
                 &nbsp;&nbsp;
@@ -174,33 +174,33 @@
         <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
           <li>
             <a ui-sref="home.workplane" presentation-href="workplane:page">
-              <i class="fa fa-flag"></i> <span>作业面管理</span>
+              <i class="fa fa-flag"></i> <span>{{'workplaneManagement' | translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.fleetMng" presentation-href="fleet:page">
-              <i class="fa fa-flag"></i> <span>车队管理</span>
+              <i class="fa fa-flag"></i> <span>{{'fleetManagement' | translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-              <i class="fa fa-car"></i> <span>燃油配置</span>
+              <i class="fa fa-car"></i> <span>{{'fuelconfiguration' | translate}}</span>
             </a>
           </li>
           <li>
 
             <a ui-sref="home.machineMove" presentation-href="fleet:page">
-              <i class="fa fa-car"></i> <span>作业监控</span>
+              <i class="fa fa-car"></i> <span>{{'operationMonitoring' | translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
-              <i class="fa fa-dollar"></i> <span>收入统计</span>
+              <i class="fa fa-dollar"></i> <span>{{'incomeStatistics' | translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.cost" presentation-href="cost:page">
-              <i class="fa ion-calculator"></i> <span>成本统计</span>
+              <i class="fa ion-calculator"></i> <span>{{'costStatistics' | translate}}</span>
             </a>
           </li>
           <li>
@@ -214,7 +214,7 @@
       <li>
         <a ng-click="sysMng =!sysMng" href="" presentation-href="config:show">
           <i class="fa fa-home"></i>
-          <span>系统管理</span>
+          <span>{{'systemManagement' | translate}}</span>
           <span class="glyphicon pull-right"
                 ng-class="sysMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
                 &nbsp;&nbsp;
@@ -228,7 +228,7 @@
           </li>
           <li >
             <a ui-sref="home.deviceparameter" presentation-href="config:page">
-              <i class="fa fa-gear"></i> <span>设备参数</span>
+              <i class="fa fa-gear"></i> <span>{{'equipmentParameters' | translate}}</span>
             </a>
           </li>
           <li class="treeview" presentation-href="user:page">
@@ -238,12 +238,12 @@
           </li>
           <li>
             <a ui-sref="home.orgMng" presentation-href="org:orgMng">
-              <i class="fa fa-users"></i> <span>组织管理</span>
+              <i class="fa fa-users"></i> <span>{{'orgManagement' | translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-              <i class="fa fa-user"></i> <span>角色管理</span>
+              <i class="fa fa-user"></i> <span>{{'roleManagement' | translate}}</span>
             </a>
           </li>
           <li>

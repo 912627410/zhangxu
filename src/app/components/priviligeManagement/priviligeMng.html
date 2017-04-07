@@ -39,8 +39,8 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" presentation-href="privilige:priviligePage"  ng-click="priviligeMngCtrl.query(null,null,null,priviligeMngCtrl.priviligeInfo)">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="priviligeMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" presentation-href="privilige:priviligePage"  ng-click="priviligeMngCtrl.query(null,null,null,priviligeMngCtrl.priviligeInfo)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="priviligeMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
 
 
@@ -54,7 +54,7 @@
       <a class="btn btn-default pull-right"
          presentation-href="privilige:priviligePage"
          ng-click="priviligeMngCtrl.newPrivilige()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
   </div>

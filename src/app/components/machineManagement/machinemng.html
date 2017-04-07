@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">车辆管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
+    <li class="active">{{'vehicleManagement'| translate}}</li>
   </ol>
 </section>
 
@@ -17,38 +17,38 @@
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">车号</label>
+      <label class="control-label">{{'machineNumber'| translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">设备编号</label>
+      <label class="control-label">{{'deviceNum'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">查询
+              ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">所属组织</label>
+      <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
 
-        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="machineMngCtrl.org.label" name="org" readonly required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="machineMngCtrl.org.label" name="org" readonly required/>
           <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openTreeInfo()">
@@ -58,11 +58,11 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label">调拨组织</label>
+      <label class="control-label">{{'allotOrganization'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="allot" class="form-control" placeholder="调拨组织" ng-model="machineMngCtrl.allot.label" name="allot" readonly required/>
+        <input type="text" id="allot" class="form-control" placeholder="{{'allotOrganization'|translate}}" ng-model="machineMngCtrl.allot.label" name="allot" readonly required/>
         <span class="input-group-btn">
           <!--打开组织树-->
           <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openTreeInfoAllot()">
@@ -73,25 +73,25 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-warning" type="button" presentation-href="machine:moveOrg" ng-click="machineMngCtrl.batchMoveOrg()">调拨</button>
+      <button class="btn btn-warning" type="button" presentation-href="machine:moveOrg" ng-click="machineMngCtrl.batchMoveOrg()">{{'allot'|translate}}</button>
 
     </div>
 
   </div>
   <div class="row form-group">
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">车辆总数:{{machineMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfMachine'|translate}}:{{machineMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
 
 
       <a presentation-href="machine:oper" class="btn btn-default pull-right"
          ng-click="machineMngCtrl.newMachine('lg')">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i>{{'add'|translate}}
       </a>
       <a class="btn btn-default pull-right" presentation-href="machine:upload"
          ng-click="machineMngCtrl.uploadMachine('lg')">
-        <i class="fa fa-plus"></i> 批量导入
+        <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
     </div>
   </div>
@@ -108,24 +108,24 @@
             <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'车号'" sortable="'licenseId'">
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
             <a ng-if="machineMngCtrl.validateOperPermission()" href
                ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
             <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
 
           </td>
-          <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-          <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
-          <td class="text-nowrap" data-title="'操作'">
+          <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
-                    ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改
+                    ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{'alter'| translate}}
             </button>
             <button type="button" class="btn btn-danger btn-xs" presentation-href="machine:oper"
-                    ng-click="machineMngCtrl.removeDevice(machine)">解除关联
+                    ng-click="machineMngCtrl.removeDevice(machine)">{{'dissociate'| translate}}
             </button>
             <button type="button" class="btn btn-warning btn-xs" presentation-href="machine:oper"
-                    ng-click="machineMngCtrl.allocationlog(machine,'lg')">调拨日志
+                    ng-click="machineMngCtrl.allocationlog(machine,'lg')">{{'allocatingLog'| translate}}
             </button>
           </td>
         </tr>

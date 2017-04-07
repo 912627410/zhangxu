@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">设备管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
+    <li class="active">{{'equipmentManagement'| translate}}</li>
   </ol>
 </section>
 
@@ -18,20 +18,20 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">设备编号</label>
+      <label class="control-label">{{'deviceNum'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="deviceinfoMngCtrl.queryDeviceinfo.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-2"></div>
 
     <div class="col-md-1">
-      <label class="control-label">SIM</label>
+      <label class="control-label">{{'sim'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="phoneNumber" class="form-control " ng-model="deviceinfoMngCtrl.queryDeviceinfo.phoneNumber"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
 
@@ -39,10 +39,10 @@
 
       <button class="btn btn-primary" type="button" presentation-href="device:page"
 
-              ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.queryDeviceinfo)">查询
+              ng-click="deviceinfoMngCtrl.query(null,null,null,deviceinfoMngCtrl.queryDeviceinfo)">{{'query'|translate}}
       </button>
 
-      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="deviceinfoMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
@@ -50,11 +50,11 @@
 
 
     <div class="col-md-1">
-      <label class="control-label">所属组织</label>
+      <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="deviceinfoMngCtrl.org.label" name="org" readonly required/>
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="deviceinfoMngCtrl.openTreeInfo()">
@@ -64,16 +64,16 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label">包含下级组织:</label>
+      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
       <input type="checkbox" checked="checked" ng-model="deviceinfoMngCtrl.querySubOrg"/>
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">调拨组织</label>
+      <label class="control-label">{{'allotOrganization'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="allot" class="form-control" placeholder="调拨组织"
+        <input type="text" id="allot" class="form-control" placeholder="{{'allotOrganization'|translate}}"
                ng-model="deviceinfoMngCtrl.allot.label" name="allot" readonly required/>
         <span class="input-group-btn">
           <button type="button" class="btn btn-default" ng-click="deviceinfoMngCtrl.openTreeInfoAllot()">
@@ -86,7 +86,7 @@
 
       <button class="btn btn-warning" type="button" presentation-href="device:moveOrg"
 
-              ng-click="deviceinfoMngCtrl.batchMoveOrg()">调拨
+              ng-click="deviceinfoMngCtrl.batchMoveOrg()">{{'allot'|translate}}
       </button>
     </div>
 
@@ -97,25 +97,25 @@
   <div class="row form-group">
 
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">设备总数:{{deviceinfoMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfDevices'|translate}}:{{deviceinfoMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
 
 
       <a class="btn btn-default pull-right" presentation-href="device:oper"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
       <a class="btn btn-default pull-right" presentation-href="device:oper"
 
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
-        <i class="fa fa-plus"></i> 批量导入
+        <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
 
 
       <a class="btn btn-default pull-right"
        title="Export Table" ng-click="deviceinfoMngCtrl.excelExport(deviceinfoMngCtrl.org)" >
-        <i class="glyphicon glyphicon-new-window" ></i> 批量导出
+        <i class="glyphicon glyphicon-new-window" ></i> {{'batchExport'|translate}}
       </a>
 
     </div>
@@ -139,37 +139,37 @@
                      ng-checked="deviceinfoMngCtrl.isSelected(deviceinfo.id)"
                      ng-click="deviceinfoMngCtrl.updateSelection($event,deviceinfo.id)"
                      ng-model="deviceinfo.checked"></td>
-            <td class=" text-nowrap" data-title="'设备号'" sortable="'deviceNum'">
+            <td class=" text-nowrap" data-title="'terminalno'|translate" sortable="'deviceNum'">
 
               <a ng-if="deviceinfoMngCtrl.validateOperPermission()" href
                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
               <span ng-if="!deviceinfoMngCtrl.validateOperPermission()">{{deviceinfo.deviceNum}}</span>
             </td>
-            <td class="text-nowrap" data-title="'车号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
+            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
             </td>
-            <td class="text-nowrap" data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}
+            <td class="text-nowrap" data-title="'protocalTypeDescribe'| translate" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}
             </td>
-            <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{deviceinfo.org.label}}</td>
-            <td class="text-nowrap" data-title="'SIM'" sortable="'sim.phoneNumber'">{{deviceinfo.sim.phoneNumber}}</td>
-            <td class="text-nowrap" data-title="'SIM序列号'" sortable="'sim.serialNumber'">
+            <td class="text-nowrap" data-title="'organisation'| translate" sortable="'org.label'">{{deviceinfo.org.label}}</td>
+            <td class="text-nowrap" data-title="'sim'|translate" sortable="'sim.phoneNumber'">{{deviceinfo.sim.phoneNumber}}</td>
+            <td class="text-nowrap" data-title="'simSerialNumber'| translate" sortable="'sim.serialNumber'">
               {{deviceinfo.sim.serialNumber}}
             </td>
-            <td class="text-nowrap" data-title="'调拨时间'" sortable="'moveTime'">{{deviceinfo.moveTime | date:'yyyy-MM-dd
+            <td class="text-nowrap" data-title="'allocateTime'| translate" sortable="'moveTime'">{{deviceinfo.moveTime | date:'yyyy-MM-dd
               HH:mm:ss'}}
             </td>
-            <td class="text-nowrap" data-title="'生产日期'" sortable="'produceDate'">
+            <td class="text-nowrap" data-title="'produceDate'|translate" sortable="'produceDate'">
               {{deviceinfo.produceDate | date:'yyyy-MM-dd'}}
             </td>
-            <td class="text-nowrap" data-title="'操作'">
+            <td class="text-nowrap" data-title="'operation'|translate">
 
               <button type="button" class="btn btn-default btn-xs" presentation-href="device:oper"
-                      ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">修改
+                      ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{'alter'| translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-click="deviceinfoMngCtrl.currentDeviceinfo(deviceinfo,'lg')">状态
+                      ng-click="deviceinfoMngCtrl.currentDeviceinfo(deviceinfo,'lg')">{{'state'| translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-click="deviceinfoMngCtrl.allocationlog(deviceinfo,'lg')">调拨日志
+                      ng-click="deviceinfoMngCtrl.allocationlog(deviceinfo,'lg')">{{'allocatingLog'| translate}}
               </button>
 
             </td>

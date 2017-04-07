@@ -81,7 +81,7 @@
       <input type="checkbox" ng-model="attendanceCtrl.querySubOrg">
     </div>
     <div class="col-md-1" style="width: 170px;">
-      <a  class="btn"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">查询</a>
+      <a  class="btn"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">{{'query'|translate}}</a>
 &nbsp;&nbsp;
       <a  class="btn"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出</a>
     </div>

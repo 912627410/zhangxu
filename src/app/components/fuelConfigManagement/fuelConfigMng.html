@@ -42,8 +42,8 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"  presentation-href="fuelConfig:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="fuelConfigMngController.reset()">重置</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fuelConfig:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="fuelConfigMngController.reset()">{{'reset'|translate}}</button>
     </div>
 
 
@@ -59,7 +59,7 @@
 
       <a class="btn btn-default pull-right" presentation-href="sim:oper"
          ng-click="fuelConfigMngController.newFuelConfig()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
   </div>

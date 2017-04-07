@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-md-2">
-      <label class="control-label">作业面名称</label>
+      <label class="control-label">{{'workplaneName'|translate}}</label>
     </div>
     <div class="col-md-4">
       <input type="text" name="deviceNum" class="form-control " ng-model="workplaneMngCtrl.workplane.label"
@@ -26,21 +26,21 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="workplaneMngCtrl.query(null,null,null,workplaneMngCtrl.workplane)">查询
+              ng-click="workplaneMngCtrl.query(null,null,null,workplaneMngCtrl.workplane)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="workplaneMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="workplaneMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
   <div class="row">
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">作业面总数:{{workplaneMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'TheTotalNumberOfworkplane'|translate}}:{{workplaneMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
 
 
       <a presentation-href="machine:oper" class="btn btn-default pull-right"
          ng-click="workplaneMngCtrl.newWorkplane('lg')">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
 
     </div>
@@ -50,23 +50,23 @@
 
       <table ng-table="workplaneMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="workplane in $data">
-          <td class="text-nowrap" data-title="'名称'" sortable="'workplane.name'">{{workplane.name}}</td>
-          <td class="text-nowrap" data-title="'描述'" sortable="'workplane.describe'">{{workplane.describe}}</td>
-          <td class="text-nowrap" data-title="'装料点名称'" >{{workplane.startPoint}}</td>
-          <td class="text-nowrap" data-title="'装料点经/纬度'" >{{workplane.startLongitude}}/{{workplane.startLatitude}}</td>
-          <td class="text-nowrap" data-title="'装料点半径(米)'" >{{workplane.startRadius}}</td>
-          <td class="text-nowrap" data-title="'卸料点名称'" >{{workplane.endPoint}}</td>
-          <td class="text-nowrap" data-title="'卸料点经/纬度'" >{{workplane.endLongitude}}/{{workplane.endLatitude}}</td>
-          <td class="text-nowrap" data-title="'卸料点半径(米) '" >{{workplane.endRadius}}</td>
-          <td class="text-nowrap" data-title="'总长度(米)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
-          <td class="text-nowrap" data-title="'收入(每吨矿)'" sortable="'workplane.income'">{{workplane.income}}</td>
+          <td class="text-nowrap" data-title="'name'|translate" sortable="'workplane.name'">{{workplane.name}}</td>
+          <td class="text-nowrap" data-title="'describe'|translate" sortable="'workplane.describe'">{{workplane.describe}}</td>
+          <td class="text-nowrap" data-title="'loadingPointName'|translate" >{{workplane.startPoint}}</td>
+          <td class="text-nowrap" data-title="'loadingPointsOfLatitudeAndLongitude'|translate" >{{workplane.startLongitude}}/{{workplane.startLatitude}}</td>
+          <td class="text-nowrap" data-title="'loadingPointRadius'|translate" >{{workplane.startRadius}}</td>
+          <td class="text-nowrap" data-title="'dischargePointName'|translate" >{{workplane.endPoint}}</td>
+          <td class="text-nowrap" data-title="'dischargePointsOfLatitudeAndLongitude'|translate" >{{workplane.endLongitude}}/{{workplane.endLatitude}}</td>
+          <td class="text-nowrap" data-title="'dischargePointRadius'|translate" >{{workplane.endRadius}}</td>
+          <td class="text-nowrap" data-title="'totalLength'|translate" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
+          <td class="text-nowrap" data-title="'IncomePerTonOre'|translate" sortable="'workplane.income'">{{workplane.income}}</td>
 
-          <td class="text-nowrap" data-title="''">
+          <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs"
-                    ng-click="workplaneMngCtrl.updateWorkplane(workplane,'lg')">修改
+                    ng-click="workplaneMngCtrl.updateWorkplane(workplane,'lg')">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-danger btn-xs"
-                    ng-click="workplaneMngCtrl.disableWorkPlane(workplane)">停用
+                    ng-click="workplaneMngCtrl.disableWorkPlane(workplane)">{{'disable'|translate}}
             </button>
           </td>
         </tr>

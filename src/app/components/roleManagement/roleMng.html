@@ -27,8 +27,8 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="roleMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="roleMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
 
 
@@ -42,7 +42,7 @@
       <a class="btn btn-default pull-right"
          presentation-href="role:roleOper"
          ng-click="roleMngCtrl.newRole()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
   </div>

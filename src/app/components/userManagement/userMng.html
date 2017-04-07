@@ -37,9 +37,9 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="userMngController.query(null,null,null,userMngController.userinfo)">查询
+              ng-click="userMngController.query(null,null,null,userMngController.userinfo)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
@@ -73,7 +73,7 @@
       <a class="btn btn-default pull-right"
          presentation-href="privilige:priviligeOper"
          ng-click="userMngController.addUser()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
 
       <a class="btn btn-default pull-right"

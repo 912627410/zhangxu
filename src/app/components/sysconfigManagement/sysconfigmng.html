@@ -35,9 +35,9 @@
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
               presentation-href="config:sysconfigPage"
-              ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">查询
+              ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
@@ -60,7 +60,7 @@
       <a class="btn btn-default pull-right"
          presentation-href="config:sysconfigOper"
          ng-click="sysconfigMngCtrl.newSysconfig()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
   </div>

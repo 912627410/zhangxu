@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">SIM卡管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'SIMManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">SIM卡号</label>
+      <label class="control-label"> {{'SIMCardNumber'|translate}}</label>
 
     </div>
     <div class="col-md-2">
@@ -26,7 +26,7 @@
 
 
     <div class="col-md-1">
-      <label class="control-label">所属组织</label>
+      <label class="control-label">{{'organisation'|translate}}</label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">供应商</label>
+      <label class="control-label">{{'supplier'|translate}}</label>
     </div>
     <div class="col-md-2">
       <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
@@ -57,8 +57,8 @@
 
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
 
 
@@ -66,18 +66,18 @@
 
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">SIM卡总数:  {{simMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfSIMcard'| translate}}:  {{simMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
 
 
       <a class="btn btn-default pull-right" presentation-href="sim:oper"
          ng-click="simMngCtrl.newSim()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
       <a class="btn btn-default pull-right" presentation-href="sim:oper"
          ng-click="simMngCtrl.uploadSim()">
-        <i class="fa fa-plus"></i> 批量导入
+        <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
 
     </div>
@@ -87,25 +87,25 @@
       <table ng-table="simMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="sim in $data">
 
-          <td class="text-nowrap" data-title="'SIM卡号'" sortable="'phoneNumber'"><a href ng-click="simMngCtrl.updateSim(sim)">{{sim.phoneNumber}}</a></td>
-          <td class="text-nowrap" data-title="'序列号'" sortable="'serialNumber'">{{sim.serialNumber}}</td>
+          <td class="text-nowrap" data-title="'SIMCardNumber'|translate" sortable="'phoneNumber'"><a href ng-click="simMngCtrl.updateSim(sim)">{{sim.phoneNumber}}</a></td>
+          <td class="text-nowrap" data-title="'simSerialNumber'| translate" sortable="'serialNumber'">{{sim.serialNumber}}</td>
 
           <td class="text-nowrap" data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'所属组织'" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
-          <td class="text-nowrap" data-title="'供应商'" sortable="'statusDesc'">{{sim.providerDesc}}</td>
-          <td class="text-nowrap" data-title="'备注'" sortable="'description'">{{sim.description}}</td>
-          <td class="text-nowrap" data-title="'价格(元)'" sortable="'price'">{{sim.price}}</td>
-          <td class="text-nowrap" data-title="'激活时间'" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'开通时间'" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'到期时间'" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'操作'">
+          <td class="text-nowrap" data-title="'organisation'| translate" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
+          <td class="text-nowrap" data-title="'supplier'| translate" sortable="'statusDesc'">{{sim.providerDesc}}</td>
+          <td class="text-nowrap" data-title="'remarks'| translate" sortable="'description'">{{sim.description}}</td>
+          <td class="text-nowrap" data-title="'price(RMB)'|translate" sortable="'price'">{{sim.price}}</td>
+          <td class="text-nowrap" data-title="'activationTime'|translate" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'serviceBeginDate'|translate" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'serviceEndDate'|translate" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'operation'|translate">
 
             <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
-                    ng-click="simMngCtrl.updateSim(sim)">修改
+                    ng-click="simMngCtrl.updateSim(sim)">{{'alter'| translate}}
             </button>
 
             <button type="button" class="btn btn-default btn-xs" presentation-href="sim:statusQuery"
-                    ng-click="simMngCtrl.currentSim(sim,'lg')">状态
+                    ng-click="simMngCtrl.currentSim(sim,'lg')">{{'state'| translate}}
             </button>
 
 
