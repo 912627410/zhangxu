@@ -470,37 +470,34 @@
       }
     }
 
-    vm.getDeviceData = function (page, size, sort, deviceNum, startDate, endDate) {
+    vm.getDeviceData = function (page, size, sort,totalElements, deviceNum,versionNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
+      }
+      if (versionNum){
+        filterTerm+="&versionNum=" + versionNum;
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
         var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-        if (filterTerm) {
-          filterTerm += "&startDate=" + startDateFormated
-        }
-        else {
-          filterTerm += "startDate=" + startDateFormated;
-        }
+        filterTerm += "&startDate=" + startDateFormated
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
         var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-        if (filterTerm) {
-          filterTerm += "&endDate=" + endDateFormated;
-        }
-        else {
-          filterTerm += "endDate=" + endDateFormated;
-        }
+        filterTerm += "&endDate=" + endDateFormated;
+      }
+      if (totalElements){
+        filterTerm += "&totalElements=" + totalElements;
       }
       var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           vm.deviceDataList = data.content;
           vm.deviceDataPage = data.page;
-          vm.deviceDataPageNumber = data.page.number + 1;
+          vm.deviceDataPageNumber = data.page.number+1 ;
+          vm.totalElements=data.page.totalElements;
           vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
-          angular.forEach(vm.deviceDataList, function (data) {
+          /*angular.forEach(vm.deviceDataList, function (data) {
             //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
             data.alertStatus = parseInt(data.alertStatus, 2);
             data.alertStatus = data.alertStatus.toString(16).toUpperCase();
@@ -517,7 +514,7 @@
             if (data.voltageLowAlarmValue != 0) {
               data.voltageLowAlarmValue = data.voltageLowAlarmValue * 0.1 + 10;
             }
-          });
+          });*/
           if (vm.deviceDataList.length == 0) {
             Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
           }
