@@ -502,7 +502,6 @@
       <uib-tab-heading>
         {{'historicalData'|translate}}
       </uib-tab-heading>
-
       <div class="modal-body" >
         <div class="box-body"  >
           <div class="row">
@@ -529,87 +528,102 @@
               </p>
             </div>
             <div class="col-md-1">
-              <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
+              <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,
+                deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
             </div>
-
             <div class="col-md-3">
               <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
               <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
             </div>
-
-
-
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
-                <!-- Default panel contents -->
-                <!-- Table -->
                 <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv='csv'>
                   <tr>
-                    <th class="text-nowrap">ID</th>
+                    <!--数据回传时间-->
                     <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
+                    <!--定位时间-->
                     <th class="text-nowrap">{{'positioningTime'|translate}}</th>
+                    <!--位置-->
                     <th class="text-nowrap">{{'position'|translate}}</th>
+                    <!--gpsSpeed 速度-->
                     <th class="text-nowrap">{{'speed'|translate}}</th>
+                    <!--总工时-->
                     <th class="text-nowrap">{{'totalProductiveHours'|translate}}</th>
-
+                    <!--燃油液位-->
                     <th class="text-nowrap">{{'fuelLevel'|translate}}</th>
+                    <!--发动机转速-->
                     <th class="text-nowrap">{{'engineSpeed'|translate}}</th>
+                    <!--水温-->
                     <th class="text-nowrap">{{'waterTemperature'|translate}}</th>
+                    <!--串口通信状态-->
                     <th class="text-nowrap">{{'CANCommunicationStatus'|translate}}</th>
+                    <!--供电方式-->
                     <th class="text-nowrap">{{'powerSupplyMode'|translate}}</th>
-
+                    <!--变矩器油温-->
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
+                    <!--制动气压-->
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
+                    <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
+                    <!--运行监控-->
                     <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
-
+                    <!--led状态-->
                     <th class="text-nowrap">{{'LEDState'|translate}}</th>
-
+                    <!--实时工时-->
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
+                    <!--启动次数-->
                     <th class="text-nowrap">{{'numberOfStarts'|translate}}</th>
+                    <!--TODO 锁车状态-->
                     <th class="text-nowrap">{{'lockedCarStatus'|translate}}</th>
+                    <!--ACC状态-->
                     <th class="text-nowrap">{{'ACCState'|translate}}</th>
+                    <!--发电机状态-->
                     <th class="text-nowrap">{{'generatorState'|translate}}</th>
-
+                    <!--GPS电源检测和模拟量1是相同的-->
                     <th class="text-nowrap">{{'GPSPowerDetection'|translate}}</th>
+                    <!--模拟量2-->
                     <th class="text-nowrap">{{'Built-inBatteryRealTime'|translate}}</th>
+                    <!--电压-->
                     <th class="text-nowrap">{{'vehicleMountedBatteryVoltage'|translate}}</th>
-
+                    <!--开盖状态-->
                     <th class="text-nowrap">{{'openCoverState'|translate}}</th>
-                    <!--模拟量1改成系统电压，模拟量2改成实时内置电池电压
-                    <th class="text-nowrap">{{'analogOne'|translate}}</th>
-                    <th class="text-nowrap">{{'analogTwo'|translate}}</th>-->
-                    <!-- 新增的历史记录字段显示-->
+                    <!--可见卫星数-->
                     <th  class="text-nowrap">{{'visibleSatelliteNumber'|translate}}</th>
+                    <!--可用卫星数-->
                     <th  class="text-nowrap">{{'usableSatelliteNumber'|translate}}</th>
+                    <!--定位所用时间-->
                     <th  class="text-nowrap">{{'locateDuration'|translate}}</th>
+                    <!--ECU锁车状态-->
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
+                    <!--实际绑定车号-->
                     <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
-                    <!-- 中挖新增字段-->
-                    <th class="text-nowrap">{{'alertStatus'|translate}}</th>
-                    <th class="text-nowrap">{{'flyWheelTeeth'|translate}}</th>
-                    <th class="text-nowrap">{{'proportionalValve'|translate}}</th>
-                    <th class="text-nowrap">{{'coolantAlarmValue'|translate}}</th>
-                    <th class="text-nowrap">{{'voltageHigthAlarmValue'|translate}}</th>
-                    <th class="text-nowrap">{{'voltageLowAlarmValue'|translate}}</th>
-                    <th class="text-nowrap">{{'oilLowAlarmValue'|translate}}</th>
-                    <th class="text-nowrap">{{'oilPressAlarmValue'|translate}}</th>
-
+                    <th  class="text-nowrap">累计里程</th>
+                    <th  class="text-nowrap">GPRS信号百分比</th>
+                    <th  class="text-nowrap">气压表2</th>
+                    <th  class="text-nowrap">机油压力</th>
+                    <th  class="text-nowrap">阶段工作时间</th>
+                    <th  class="text-nowrap">阶段里程</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
-                    <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')">{{deviceData.id}}</a></td>
+                    <!--数据回传时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <!--定位时间-->
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
+                    <!--位置-->
                     <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
+                    <!--gpsSpeed 速度-->
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
+                    <!--总工时-->
                     <td ng-cloak class="text-nowrap">{{deviceData.totalDuration | convertToMins }}</td>
-
+                    <!--燃油液位-->
                     <td ng-cloak>{{deviceData.oilLevel}}%</td>
-                    <td ng-cloak>{{deviceData.enginRotate | number:2}}</td>
+                    <!--发动机转速-->
+                    <td ng-cloak>{{deviceData.engineRotate | number:2}}</td>
+                    <!--水温-->
                     <td ng-cloak>{{deviceData.engineTemperature}}</td>
                     <!--串口通信状态-->
                     <td ng-if="deviceData.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
@@ -619,21 +633,24 @@
                     <td ng-if="deviceData.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceData.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceData.powerType==null">{{'noData'|translate}}</td>
-
+                    <!--变矩器油温-->
                     <td ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
+                    <!--制动气压-->
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
+                    <!--gsm信号质量-->
                     <td ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
+                    <!--运行监控-->
                     <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
+                    <!--led状态-->
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
-
-                    <td ng-cloak class="text-nowrap">{{deviceData.realtimeDuration | convertToMins}}</td>
+                    <!--实时工时-->
+                    <td ng-cloak class="text-nowrap">{{deviceData.realTimeDuration | convertToMins}}</td>
+                    <!--启动次数-->
                     <td ng-cloak>{{deviceData.startTimes}}</td>
-                    <!--锁车状态-->
+                    <!--TODO 锁车状态-->
                     <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
-
-                    <td ng-if="deviceData.lockStatus==null">{{deviceData.startTimes}}</td>
                     <!--ACC状态-->
                     <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">ON</td>
                     <td ng-if="deviceData.accStatus=='10'" class="bg-danger text-danger">OFF</td>
@@ -646,31 +663,35 @@
                     <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <!--模拟量2-->
                     <td ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
+                    <!--电压-->
                     <td ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
                     <!--开盖状态-->
                     <td ng-if="deviceData.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
-
+                    <!--可见卫星数-->
                     <td  ng-cloak>{{deviceData.visibleSatelliteNumber}}</td>
+                    <!--可用卫星数-->
                     <td  ng-cloak>{{deviceData.usableSatelliteNumber}}</td>
+                    <!--定位所用时间-->
                     <td  ng-cloak>{{deviceData.locateDuration}}</td>
+                    <!--ECU锁车状态-->
                     <td  ng-cloak>{{deviceData.ecuLockStatusDesc}}</td>
+                    <!--实际绑定车号-->
                     <td  ng-cloak>{{deviceData.bindMachineId}}</td>
                     <!--总里程 消息结构中没有数据-->
                   </tr>
-
                 </table>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.totalElements,
+                  deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
             </div>
           </div>
         </div>
-
       </div>
     </uib-tab>
 
@@ -790,7 +811,6 @@
     </uib-tab>
 
     <!--远程控制-->
-
     <uib-tab select="" presentation-href="device:remoteControl" >
       <uib-tab-heading>
         {{'telecontrol'|translate}}
@@ -1110,7 +1130,7 @@
       </div>
     </uib-tab>
 
-    <!--锁车详情-->
+    <!--操作日志-->
     <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber)">
       <uib-tab-heading>操作日志</uib-tab-heading>
       <div class="modal-body">
@@ -1142,6 +1162,7 @@
         </div>
       </div>
     </uib-tab>
+
     <!--数据分析-->
     <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>数据分析</uib-tab-heading>
@@ -1383,86 +1404,8 @@
           </div>
         </div>
       </div>
-
-
     </uib-tab>
-
-    <!--<uib-tab select="deviceCurrentInfoCtrl.initScopeMapTab(deviceCurrentInfoCtrl.deviceinfo)" presentation-href="device:scopeMapPage">
-      <uib-tab-heading  >
-        电子围栏
-      </uib-tab-heading>
-      <div class="modal-body">
-        <div class="row">
-
-          <div class="col-md-1">
-            <label class="control-label text-nowrap">地址:</label>
-          </div>
-          <div class="col-md-6">
-
-            <ui-select name="newAddress" ng-model="deviceCurrentInfoCtrl.newAddress" theme="bootstrap"
-                       ng-disabled="disabled"  on-select="deviceCurrentInfoCtrl.onSelectCallback($item, $model)">
-              <ui-select-match allow-clear="true" placeholder="输入地址">{{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="locationInfo.name as locationInfo in deviceCurrentInfoCtrl.locationList|  propsFilter: {name: $select.search, address: $select.search}"
-                                 refresh="deviceCurrentInfoCtrl.refreshLocationList($select.search)"
-                                 refresh-delay="0">
-
-                <div ng-bind-html="locationInfo.name | highlight: $select.search"></div>
-                <small>
-                  地址: {{locationInfo.district}} <span ng-bind-html="''+locationInfo.address | highlight: $select.search"></span>
-                </small>
-              </ui-select-choices>
-            </ui-select>
-
-
-          </div>
-          <div class="col-md-1">
-            <label class="control-label text-nowrap">距离(米):</label>
-          </div>
-          <div class="col-md-3">
-            <p class="input-group">
-              <input type="text" class="form-control" id="test" ng-model="deviceCurrentInfoCtrl.radius"/>
-
-            </p>
-          </div>
-          <div class="col-md-1">
-            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceCurrentInfoCtrl.updateScopeMap()">设置</button>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-nowrap">当前地址:</label> {{deviceCurrentInfoCtrl.deviceinfo.address}}
-          </div>
-
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="text-nowrap">选中地址:</label> {{deviceCurrentInfoCtrl.selectAddress}}
-          </div>
-
-          <div class="col-md-6">
-            <label class="control-label text-nowrap">坐标:</label>经度: {{deviceCurrentInfoCtrl.amaplongitudeNum}}  维度: {{deviceCurrentInfoCtrl.amaplatitudeNum}}
-          </div>
-
-
-        </div>
-        <br/>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box-body" style="height: 600px" id="deviceScopeMap"></div>
-          </div>
-        </div>
-      </div>
-    </uib-tab>-->
-
-
   </uib-tabset>
-
-  <div class="modal-footer">
-    <!--<button class="btn btn-primary" type="submit">OK</button>-->
-  </div>
+  <div class="modal-footer"></div>
 </form>
 
