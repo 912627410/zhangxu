@@ -68,7 +68,7 @@
 
   </div>
 
-    <div class=" row form-group">
+    <!--<div class=" row form-group">
       <div class="col-md-1">
         <label class="control-label right">品牌类型:</label>
       </div>
@@ -101,7 +101,7 @@
       </div>
       <div class="col-md-2">
       </div>
-    </div>
+    </div>-->
 
 
   <div class="row form-group">
@@ -118,16 +118,10 @@
         <option value="A001">高空车</option>
       </select>
     </div>
-    <div class="col-md-6">
-    </div>
-
-    <div class="col-md-2">
-
+    <div class="col-md-offset-7 col-md-2">
       <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
     </div>
-  </div>
-  <div class="col-md-1">
   </div>
   <div class="row">
     <hr>
@@ -174,7 +168,8 @@
               {{'workingHours'|translate}}:
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.totalDuration |number:2}}
+              <span ng-if="deviceinfo.versionNum=='A001'">{{deviceinfo.workDuration | convertToMins}}</span>
+              <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | number:2}}</span>
             </div>
           </div>
           <div class="row">
@@ -237,7 +232,10 @@
             <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
           </td>
           <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
-          <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
+          <td  data-title="'workingHours'|translate" >
+            <span ng-if="deviceinfo.versionNum=='A001'">{{deviceinfo.workDuration | convertToMins}}</span>
+            <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | number:2}}</span>
+          </td>
           <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1'">{{'hasBeenpositioning'|translate}}</span>
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'">{{'notLocate'|translate}}</span>
