@@ -157,6 +157,8 @@
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
   <!--设备监控-->
   <uib-tabset justified="true">
+
+    <!--数据-->
     <uib-tab>
       <uib-tab-heading>
         {{'data'|translate}}
@@ -600,7 +602,6 @@
                     <!--实际绑定车号-->
                     <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
                     <th  class="text-nowrap">累计里程</th>
-                    <th  class="text-nowrap">GPRS信号百分比</th>
                     <th  class="text-nowrap">气压表2</th>
                     <th  class="text-nowrap">机油压力</th>
                     <th  class="text-nowrap">阶段工作时间</th>
@@ -679,7 +680,16 @@
                     <td  ng-cloak>{{deviceData.ecuLockStatusDesc}}</td>
                     <!--实际绑定车号-->
                     <td  ng-cloak>{{deviceData.bindMachineId}}</td>
-                    <!--总里程 消息结构中没有数据-->
+                    <!--累计里程-->
+                    <td  ng-cloak>{{deviceData.totalMileage | number:2}}/KM</td>
+                    <!--气压表2-->
+                    <td  ng-cloak>{{deviceData.pressureMeter2 | number:2}}MPa</td>
+                    <!--机油压力-->
+                    <td  ng-cloak>{{deviceData.oilPress}}KPa</td>
+                    <!--阶段工作时间-->
+                    <td  ng-cloak>{{deviceData.momentWorkTime | convertToMins}}</td>
+                    <!--阶段里程-->
+                    <td  ng-cloak>{{deviceData.momentMileage | number:2}}/KM</td>
                   </tr>
                 </table>
               </div>
@@ -1405,6 +1415,7 @@
         </div>
       </div>
     </uib-tab>
+
   </uib-tabset>
   <div class="modal-footer"></div>
 </form>
