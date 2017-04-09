@@ -212,6 +212,7 @@
         }, 0);
       }
     };
+
     //转速图
     vm.highchartsRpm = {
       options: {
@@ -331,6 +332,7 @@
         }, 0);
       }
     };
+
     //油位图
     vm.highchartsOil = {
       options: {
@@ -415,11 +417,11 @@
         }, 0);
       }
     };
+
     //关闭model
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-
 
     //历史数据tab
     var startDate = new Date();
@@ -451,8 +453,7 @@
       startingDay: 1
     };
 
-    //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
-    //现在废弃
+    //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整现在废弃
     vm.refreshDOM = function () {
       setTimeout(function () {
         vm.setDefaultAddress();
@@ -593,7 +594,6 @@
       });
     };
 
-
     //报警数据tab
     vm.startDateDeviceWarningData = startDate;
     vm.endDateDeviceWarningData = new Date();
@@ -613,7 +613,7 @@
       vm.endDateOpenStatusDeviceWarningData.opened = true;
     };
 
-
+    //获取报警数据
     vm.getDeviceWarningData = function (page, size, sort, deviceNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
@@ -657,6 +657,7 @@
         }
       )
     }
+
     vm.getLockData=function (phoneNumber) {
       var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
 
@@ -688,9 +689,7 @@
       )
     }
 
-    //地图tab,请求该设备一段时间内的数据用于绘制轨迹
-
-    //默认显示当前设备的最新地址
+    //地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
     vm.initMapTab = function (deviceInfo) {
       $timeout(function () {
         var deviceInfoList = new Array();
@@ -889,9 +888,7 @@
 
 
     //******************远程控制tab**********************]
-
     vm.serverHost = "iotserver1.nvr-china.com";
-
     vm.serverPort = "09999";
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
@@ -899,8 +896,7 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-
-    //设置ECU 锁车状态 描述
+    //设置ECU和gps绑定状态状态描述 （废弃），后端直接返回
     vm.ecuLockStatusDesc = "";
     if (vm.deviceinfo.ecuLockStatus != null) {
       if (vm.deviceinfo.ecuLockStatus.length == 8) {
@@ -910,18 +906,9 @@
         else {
           vm.ecuLockStatusDesc += "已绑定";
         }
-        /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
-         vm.ecuLockStatusDesc += ".";
-         }
-         else{
-         vm.ecuLockStatusDesc += ".";
-         }*/
       }
     }
 
-    //vm.secOutPower =
-    //secLocateInt
-    //secInnerPower
 
     if (permissions.getPermissions("device:remoteControl")) {
 
@@ -939,8 +926,6 @@
 
 
     vm.cancelLockTimes = "";
-
-
     //查询绑定短信的短信内容
     vm.getActiveLockSMS = function (devicenum) {
 
@@ -962,7 +947,6 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
 
     //发送绑定短信
     vm.sendActiveLockSMS = function (devicenum) {
@@ -1007,11 +991,9 @@
         });
     }
 
-
     vm.validateMonitorShowPermission = function () {
       return permissions.getPermissions("device:monitorShow");
     }
-
 
     //查询解绑短信的短信内容
     vm.getUnActiveLockSMS = function (devicenum) {
@@ -1034,7 +1016,6 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
 
     //发送解绑短信
     vm.sendUnActiveLockSMS = function (devicenum) {
@@ -1356,7 +1337,6 @@
       })
     }
 
-
     //发送回传地址信息
     vm.sendSetIpSMS = function (devicenum, host, port) {
       if (devicenum == null) {
@@ -1417,7 +1397,6 @@
       })
     }
 
-
     //发送启动次数信息
     vm.sendSetStartTimesSMS = function (devicenum, startTimes) {
       if (devicenum == null) {
@@ -1455,7 +1434,6 @@
         });
     }
 
-
     //查询工作小时信息
     vm.getSetWorkHoursSMS = function (devicenum, workHours) {
 
@@ -1477,7 +1455,6 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
 
     //发送回传地址信息
     vm.sendSetWorkHoursSMS = function (devicenum, workHours) {
@@ -1541,6 +1518,7 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
+
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
       if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
@@ -1608,6 +1586,7 @@
       loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
       loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
     }
+
     /*状态量选择*/
     vm.selectSensor = function (checkedRad) {
       if (vm.checkedRad == 'DASHBOARD') {
@@ -1629,10 +1608,12 @@
         vm.sensorItem = selectedItem
       })
     }
+
     /*移除选中的状态量*/
     vm.removeItem = function (key) {
       delete vm.sensorItem[key];
     }
+
     /*数据分析*/
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
       if (vm.checkedRad == 'DASHBOARD') {
@@ -1652,6 +1633,7 @@
         loadDeviceMetadata(sensor);
       }
     }
+
     /*使用折线图展现设备的元数据*/
     var loadDeviceMetadata = function (sensor) {
       var rspPromise = $resource(ANALYSIS_POSTGRES, {}, {'analysisPostgres': {method: 'POST', isArray: true}});
@@ -1709,6 +1691,7 @@
 
       })
     }
+
     /*加载个工作时间的图表*/
     var loadWorkTimeChart = function (deviceNum, workTimeOptModel, startDate, endDate) {
       var reqUrl=ANALYSIS_INFLUX+"getworktime?deviceNum=" + deviceNum + "&model=" + workTimeOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
@@ -1768,6 +1751,7 @@
         }
       })
     }
+
     /*加载启动次数的图表*/
     var loadStartTimesChart = function (deviceNum, startTimesOptModel, startDate, endDate) {
       var reqUrl=ANALYSIS_INFLUX+"getstarttimes?deviceNum=" + deviceNum + "&model=" + startTimesOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
@@ -1827,11 +1811,13 @@
         }
       });
     }
+
     /*格式化时间函数*/
     var dateFormat = function (date) {
       var startMonth = date.getMonth() + 1;  //getMonth返回的是0-11
       return date.getFullYear() + '-' + startMonth + '-' + date.getDate();
     }
+
     /*图表样式切换*/
     vm.changeChartType =function (chart) {
       if (chart.options.chart.type === 'line') {
@@ -1841,9 +1827,6 @@
         chart.options.chart.zoomType = 'x'
       }
     }
-
-
-
 
     // 用户画像
     vm.initPortrait = function () {
@@ -2408,9 +2391,9 @@
         }
       }]
     }
+
     //默认显示当前设备的最新地址
     vm.initMapTab = function(deviceInfo){
-
       $timeout(function(){
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
@@ -2580,30 +2563,28 @@
       })
     },
 
+    vm.createMarker=function(poi){
+      // 添加marker
+      var marker = new AMap.Marker({
+        map: vm.scopeMap,
+        position: poi.location
+      });
 
-      vm.createMarker=function(poi){
-        // 添加marker
-        var marker = new AMap.Marker({
-          map: vm.scopeMap,
-          position: poi.location
-        });
+      vm.scopeMap.setCenter(marker.getPosition());
+      var infoWindow= vm.createInfoWindow(poi);
+      infoWindow.open(vm.scopeMap, marker.getPosition());
 
-
-        vm.scopeMap.setCenter(marker.getPosition());
+      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         var infoWindow= vm.createInfoWindow(poi);
+
+
         infoWindow.open(vm.scopeMap, marker.getPosition());
 
-        AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
-          var infoWindow= vm.createInfoWindow(poi);
+        var  lnglatXY=[marker.getPosition().getLng(), marker.getPosition().getLat()];
+        vm.updateLocationInfo(poi.address, lnglatXY);
 
-
-          infoWindow.open(vm.scopeMap, marker.getPosition());
-
-          var  lnglatXY=[marker.getPosition().getLng(), marker.getPosition().getLat()];
-          vm.updateLocationInfo(poi.address, lnglatXY);
-
-        });
-      }
+      });
+     }
 
     vm.createInfoWindow=function(poi){
       var infoWindow = new AMap.InfoWindow({
@@ -2689,7 +2670,6 @@
         });
     };
 
-
     vm.refreshLocationList = function(value) {
       //   alert(11);
       vm.locationList=[];
@@ -2712,44 +2692,43 @@
       });
     },
 
-      vm.onSelectCallback = function (item, model){
-
-        AMap.service(["AMap.PlaceSearch"], function() { //加载地理编码
-          var placeSearch = new AMap.PlaceSearch({
-            map: vm.scopeMap
-
-
-          });  //构造地点查询类
+    vm.onSelectCallback = function (item, model){
+      AMap.service(["AMap.PlaceSearch"], function() { //加载地理编码
+        var placeSearch = new AMap.PlaceSearch({
+          map: vm.scopeMap
 
 
-
-          placeSearch.setCity(item.adcode);
-          placeSearch.search(item.name,function(status, result) {
-            if (status === 'complete' && result.info === 'OK') {
-              placeSearch_CallBack(result);
-            }
-
-          });
+        });  //构造地点查询类
 
 
-          //回调函数
-          function placeSearch_CallBack(data) {
-            var poiArr = data.poiList.pois;
 
-            for(var i=0;i<poiArr.length;i++){
-              vm.createMarker(poiArr[i]);
+        placeSearch.setCity(item.adcode);
+        placeSearch.search(item.name,function(status, result) {
+          if (status === 'complete' && result.info === 'OK') {
+            placeSearch_CallBack(result);
+          }
 
-              var  lnglatXY=[poiArr[i].location.getLng(), poiArr[i].location.getLat()];
-
-              vm.updateLocationInfo(poiArr[i].address, lnglatXY); //更新选中的地址信息
-            }
+        });
 
 
+        //回调函数
+        function placeSearch_CallBack(data) {
+          var poiArr = data.poiList.pois;
+
+          for(var i=0;i<poiArr.length;i++){
+            vm.createMarker(poiArr[i]);
+
+            var  lnglatXY=[poiArr[i].location.getLng(), poiArr[i].location.getLat()];
+
+            vm.updateLocationInfo(poiArr[i].address, lnglatXY); //更新选中的地址信息
           }
 
 
-        });
-      };
+        }
+
+
+      });
+    };
 
     vm.getLocation=function(address){
       var geocoder = new AMap.Geocoder({
@@ -2776,31 +2755,27 @@
       });
     },
 
+    //默认显示当前设备的最新地址
+    vm.initScopeMapTab = function(deviceInfo){
 
-      //默认显示当前设备的最新地址
-      vm.initScopeMapTab = function(deviceInfo){
+    if (!permissions.getPermissions("device:scopeMapPage")) {
+      return;
+    }
 
-        if (!permissions.getPermissions("device:scopeMapPage")) {
-          return;
-        }
-
-        $timeout(function(){
-          //第一个标注
-          if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
-            var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
-          }
-
-
-          //第一个标注
-          vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,8,centerAddr);
+    $timeout(function(){
+      //第一个标注
+      if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
+        var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
+      }
 
 
-
-        })
-      };
+      //第一个标注
+      vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,8,centerAddr);
 
 
 
+    })
+    };
 
     vm.addMarker=function(map, location) {
       var marker = new AMap.Marker({
@@ -2870,9 +2845,6 @@
         })
       })
     };
-
-
-
 
   }
 })();

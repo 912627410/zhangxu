@@ -367,7 +367,7 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <!--ecu和gps绑定状态-->
                     <td>{{'ecuLockStatus'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus}}</td>
                   <tr>
                     <!--运行总时间(小时)-->
                     <td>{{'totalRunningTimeHour'|translate}}</td>
@@ -677,7 +677,7 @@
                     <!--定位所用时间-->
                     <td  ng-cloak>{{deviceData.locateDuration}}</td>
                     <!--ECU锁车状态-->
-                    <td  ng-cloak>{{deviceData.ecuLockStatusDesc}}</td>
+                    <td  ng-cloak>{{deviceData.ecuLockStatus}}</td>
                     <!--实际绑定车号-->
                     <td  ng-cloak>{{deviceData.bindMachineId}}</td>
                     <!--累计里程-->
@@ -869,7 +869,7 @@
                 <label for="ecuLockStatus" class="col-md-2 control-label text-nowrap">{{'ecuLockStatus'|translate}}</label>
                 <div class="col-md-4">
                   <input type="text" readonly id="ecuLockStatus" class="form-control"
-                         ng-model="deviceCurrentInfoCtrl.ecuLockStatusDesc" name="enginePassCode"/>
+                         ng-model="deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus" name="enginePassCode"/>
                 </div>
                 <label for="bindMachineId" class="col-md-2 control-label text-nowrap">{{'bindMachineId'|translate}}</label>
                 <div class="col-md-4">
