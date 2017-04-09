@@ -896,20 +896,6 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-    //设置ECU和gps绑定状态状态描述 （废弃），后端直接返回
-    vm.ecuLockStatusDesc = "";
-    if (vm.deviceinfo.ecuLockStatus != null) {
-      if (vm.deviceinfo.ecuLockStatus.length == 8) {
-        if (vm.deviceinfo.ecuLockStatus.substr(7, 1) == "0") {
-          vm.ecuLockStatusDesc += "未绑定";
-        }
-        else {
-          vm.ecuLockStatusDesc += "已绑定";
-        }
-      }
-    }
-
-
     if (permissions.getPermissions("device:remoteControl")) {
 
       ////读取初始化设备时需要的信息
