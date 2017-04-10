@@ -471,24 +471,53 @@
       }
     }
 
-    vm.getDeviceData = function (page, size, sort,totalElements, deviceNum,versionNum, startDate, endDate) {
+    /**
+     * 获取历史数据
+     * @param page
+     * @param size
+     * @param sort
+     * @param totalElements
+     * @param deviceNum
+     * @param versionNum
+     * @param startDate
+     * @param endDate
+     */
+    vm.getDeviceData = function (page, size, sort,totalElements,newReq, deviceNum,versionNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
       }
+
       if (versionNum){
         filterTerm+="&versionNum=" + versionNum;
       }
+
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-        filterTerm += "&startDate=" + startDateFormated
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+        if (filterTerm) {
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else {
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-        filterTerm += "&endDate=" + endDateFormated;
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
+        if (filterTerm) {
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else {
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
-      if (totalElements){
+      if (!newReq){
         filterTerm += "&totalElements=" + totalElements;
       }
       var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
@@ -498,24 +527,6 @@
           vm.deviceDataPageNumber = data.page.number+1 ;
           vm.totalElements=data.page.totalElements;
           vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
-          /*angular.forEach(vm.deviceDataList, function (data) {
-            //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
-            data.alertStatus = parseInt(data.alertStatus, 2);
-            data.alertStatus = data.alertStatus.toString(16).toUpperCase();
-            data.ecuLockStatusDesc = '';
-            if (data.ecuLockStatus.substr(7, 1) == "0") {
-              data.ecuLockStatusDesc += "未绑定";
-            }
-            else {
-              data.ecuLockStatusDesc += "已绑定";
-            }
-            if (data.voltageHigthAlarmValue != 0) {
-              data.voltageHigthAlarmValue = data.voltageHigthAlarmValue * 0.1 + 10;
-            }
-            if (data.voltageLowAlarmValue != 0) {
-              data.voltageLowAlarmValue = data.voltageLowAlarmValue * 0.1 + 10;
-            }
-          });*/
           if (vm.deviceDataList.length == 0) {
             Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
           }
@@ -689,7 +700,20 @@
       )
     }
 
-    //地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
+    /*******************远程控制tab***********************/
+    vm.startDateMapData = startDate;
+    vm.endDateMapData = new Date();
+    vm.startDateOpenStatusMapData = {
+      opened: false
+    };
+    vm.endDateOpenStatusMapData = {
+      opened: false
+    };
+
+    /**
+     *  地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
+     * @param deviceInfo
+     */
     vm.initMapTab = function (deviceInfo) {
       $timeout(function () {
         var deviceInfoList = new Array();
@@ -699,27 +723,27 @@
       })
     };
 
-    vm.startDateMapData = startDate;
-    vm.endDateMapData = new Date();
-
-    //date picker
-    vm.startDateOpenStatusMapData = {
-      opened: false
-    };
-    vm.endDateOpenStatusMapData = {
-      opened: false
-    };
-
+    /**
+     *
+     * @param $event
+     */
     vm.startDateOpenMapData = function ($event) {
       vm.startDateOpenStatusMapData.opened = true;
     };
+
+    /**
+     *
+     * @param $event
+     */
     vm.endDateOpenMapData = function ($event) {
       vm.endDateOpenStatusMapData.opened = true;
     };
 
-
-    //参数: 地图轨迹gps 数据
-    vm.refreshMapTab = function (lineAttr) {
+    /**
+     * 参数: 地图轨迹gps 数据
+     * @param lineAttr
+     */
+    vm.refreshMapTabCar = function (lineAttr) {
       /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
       /**
        * Marker移动控件
@@ -742,9 +766,9 @@
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
-        zoom: 17
+        zooms: [4, 18]
       });
-
+      vm.maps=map;
       /*工具条，比例尺，预览插件*/
       AMap.plugin(['AMap.Scale', 'AMap.OverView'],
         function () {
@@ -831,31 +855,50 @@
       }, false);
     };
 
-
-    vm.getDeviceMapData = function (page, size, sort, deviceNum, startDate, endDate) {
+    /**
+     * 轨迹回放获取经纬度数据
+     * @param page
+     * @param size
+     * @param sort
+     * @param deviceNum
+     * @param startDate
+     * @param endDate
+     */
+    vm.getDeviceMapData = function (page, size, sort, deviceNum,versionNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       }
+      if (versionNum){
+        filterTerm+="&versionNum=" + versionNum;
+      }
+
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
+
       var lineArr = [];
       var lineArr2 = [];
       var deviceDataPromis = serviceResource.queryDeviceSimpleData(page, size, sort, filterTerm);
@@ -870,15 +913,11 @@
               lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
             })
             for (var i = 0; i < lineArr.length; i++) {
-              if (i == lineArr.length - 1) {
-                break;
-              }
-              if (lineArr[i].lat == lineArr[i + 1].lat && lineArr[i].lng == lineArr[i + 1].lng) {
-              } else {
-                lineArr2.push(lineArr[i])
+              if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
+                lineArr2.push(lineArr[i]);
               }
             }
-            vm.refreshMapTab(lineArr2);
+            vm.refreshMapTabCar(lineArr2);
           }
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
@@ -886,11 +925,32 @@
       )
     }
 
+    /**
+     * 根据仓库地址和半径画圆
+     * @param ids
+     */
+    vm.draw=function (ids) {
+      var storageDataURL =MACHINE_STORAGE_URL+"?licenseId="+ids;
+      var storageDataPromis = serviceResource.restCallService(storageDataURL,"GET");
+      storageDataPromis.then(function (data) {
+        var circle = new AMap.Circle({
+          center: new AMap.LngLat(data.storagelongitudeNum, data.storageLatitudeNum),// 圆心位置
+          radius: 1000, //半径
+          strokeColor: "#F33", //线颜色
+          strokeOpacity: 1, //线透明度
+          strokeWeight: 3, //线粗细度
+          fillColor: "#ee2200", //填充颜色
+          fillOpacity: 0.35//填充透明度
+        });
+        circle.setMap(vm.maps);
+      })
+    }
 
-    //******************远程控制tab**********************]
+    /*******************远程控制tab***********************/
     vm.serverHost = "iotserver1.nvr-china.com";
     vm.serverPort = "09999";
     vm.startTimes = vm.deviceinfo.startTimes;
+    vm.cancelLockTimes = "";
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
     if (vm.workHours != null) {
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
@@ -910,8 +970,6 @@
       })
     }
 
-
-    vm.cancelLockTimes = "";
     //查询绑定短信的短信内容
     vm.getActiveLockSMS = function (devicenum) {
 
@@ -1552,25 +1610,94 @@
     /*初始化图表*/
     vm.initConfig = function (deviceNum) {
       vm.chartConfig = {
-        title: {text: '设备工作分析'}
+        options: {
+          chart: {
+            type: 'line',
+            zoomType: 'xy',
+          }
+        },
+        title: {text: '设备工作分析'},
+        //x轴坐标显示
+        xAxis: {
+          title: {
+            text: '日期'
+          },
+          categories:[],
+          labels: {
+
+          }
+        },
+        //y轴坐标显示
+        yAxis: {title: {text: ''}},
+        series: [{
+          name: '启动次数',
+          data:[]
+        }]
       }
       vm.workTimeChart={
-        title: {text: '工作时长分析'},
-       size: {
-         width: 416,
-           height: 250
-       }
+        options: {
+          chart: {
+            type: 'line',
+            zoomType: 'xy',
+          }
+        },
+        title: {
+          text: '工作时长分析',
+        },
+        //x轴坐标显示
+        xAxis: {
+          title: {
+            text: '日期'
+          },
+          categories:[],
+          labels: {
+
+          }
+        },
+        //y轴坐标显示
+        yAxis: {
+          title: {text: '单位(/h)'},
+        },
+        series: [{
+          name: '工作时长',
+          data:[]
+        }],
+        size: {
+          width: 418,
+          height: 250
+        }
       }
-      vm.startTimesChart = {
-        title: {text: '启动次数分析'},
-       size: {
-         width: 416,
-           height: 250
-       }
+      vm.startTimesChart={
+        options: {
+          chart: {
+            type: 'line',
+            zoomType: 'xy',
+          }
+        },
+        title: {
+          text: '启动次数分析',
+        },
+        //x轴坐标显示
+        xAxis: {
+          title: {
+            text: '日期'
+          },
+          categories:[],
+          labels: {
+
+          }
+        },
+        //y轴坐标显示
+        yAxis: {title: {text: '单位/次'}},
+        series: [{
+          name: '启动次数',
+          data:[]
+        }],
+        size: {
+          width: 422,
+          height: 250
+        }
       }
-      //默认显示综合数据分析
-      loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
-      loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
     }
 
     /*状态量选择*/
@@ -1630,7 +1757,7 @@
         }
         var categoriesdata = {};
         for (var i = sensorData.length - 1; i >= 0; i--) {
-          if (sensorData[i].name == 'locateDate') {
+          if (sensorData[i].name == 'locateDateTime') {
             categoriesdata = (sensorData[i].data)
             break;
           }
@@ -1667,7 +1794,7 @@
         }
 
         for (var i = 0; i < sensorData.length; i++) {
-          if (sensorData[i].name != 'locateDate') {
+          if (sensorData[i].name != 'locateDateTime') {
             vm.chartConfig.series.push({
               name: vm.sensorItem[sensorData[i].name],
               data: sensorData[i].data

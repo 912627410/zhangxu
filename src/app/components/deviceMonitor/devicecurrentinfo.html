@@ -512,7 +512,7 @@
             </div>
             <div class="col-md-3">
               <p class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.startDateDeviceData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateDeviceData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -523,14 +523,14 @@
             </div>
             <div class="col-md-3">
               <p class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.endDateDeviceData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateDeviceData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
               </p>
             </div>
             <div class="col-md-1">
-              <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,
+              <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,true,
                 deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
             </div>
             <div class="col-md-3">
@@ -697,7 +697,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.totalElements,
+              <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.totalElements,false,
                   deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
             </div>
           </div>
@@ -784,7 +784,7 @@
           </div>
           <div class="col-md-3">
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -795,17 +795,17 @@
           </div>
           <div class="col-md-3">
             <p class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
             </p>
           </div>
           <div class="col-md-1">
-            <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceMapData(0,1000,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
+            <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getDeviceMapData(0,10000,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
           </div>
           <div class="col-md-3 btn-group " role="group" >
-            <button id="start"class="btn btn-sm" type="button">{{'startAnimation'|translate}}</button>
+            <button id="start" class="btn btn-sm" type="button">{{'startAnimation'|translate}}</button>
             <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
             <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
           </div>
@@ -1204,10 +1204,10 @@
             <div class="col-md-4" style="padding: 0px;">
               <div style="float:left;margin-top: -5px;">
                 <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;综合分析</div>
-                <!--<div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>-->
+                <div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>
               </div>
-              <!--<button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
-                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>-->
+              <button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
+                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>
               <button class="btn btn-primary ng-binding" style="float:left;margin-left: 18px;" type="button" ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum, deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">确定</button>
             </div>
           </div>
