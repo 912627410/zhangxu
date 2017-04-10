@@ -67,7 +67,7 @@
     //定义全局日期格式--只显示年月
     $rootScope.formatCustom1 = "yyyy-M!";
 
-
+    $rootScope.formatCustomTime = "yyyy-M!-d! HH:mm:ss";
   }
 
 })();
