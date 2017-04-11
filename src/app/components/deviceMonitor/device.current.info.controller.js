@@ -845,7 +845,7 @@
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 17, centerAddr);
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 10, centerAddr);
       })
     };
 
