@@ -1114,12 +1114,32 @@
                 if (deviceNum){
                     queryCondition = "&deviceNum=" + deviceNum;
                 }
-                if (startDate) {
-                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+              if (startDate) {
+                var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+                var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+                if (queryCondition) {
+                  queryCondition += "&startDate=" + startDateFormated
                 }
-                if (endDate) {
-                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
+                else {
+                  queryCondition += "startDate=" + startDateFormated;
                 }
+              } else {
+                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                return;
+              }
+              if (endDate) {
+                var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
+                if (queryCondition) {
+                  queryCondition += "&endDate=" + endDateFormated;
+                }
+                else {
+                  queryCondition += "endDate=" + endDateFormated;
+                }
+              } else {
+                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                return;
+              }
 
                 var restCallURL = DEVCE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
@@ -1134,10 +1154,14 @@
                 var rspData = serviceResource.restCallService(restCallURL, "GET");
 
                 rspData.then(function(data){
+                  if(data.content.length>0){
                     vm.deviceDataList = data.content;
                     vm.page = data.page;
                     vm.deviceData_pagenumber = data.page.number + 1;
                     vm.basePath = "device/devicedata";
+                  }else {
+                    Notification.warning("暂无数据！");
+                  }
                 },function(reason){
                     serviceResource.handleRsp("获取数据失败",reason);
                     vm.deviceInfoList = null;
