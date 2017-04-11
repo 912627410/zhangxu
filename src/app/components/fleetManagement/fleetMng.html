@@ -55,11 +55,11 @@
             <a href
                ng-click="fleetMngCtrl.updateFleet(fleet,'lg','query')">{{fleet.label}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'拥有车辆'" sortable="'fleet.machineNum'">
+          <td class="text-nowrap" align="center" data-title="'ownMachine'|translate" sortable="'fleet.machineNum'">
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','own')">{{fleet.ownNum}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'工作车辆'" sortable="'fleet.machineNum'">
+          <td class="text-nowrap" align="center" data-title="'WorkingMachine'|translate" sortable="'fleet.machineNum'">
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','work')">{{fleet.workNum}}</a>
           </td>
@@ -72,10 +72,10 @@
                     ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">车辆调剂
+                    ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">{{'machineTransfer'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">作业面维护
+                    ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">{{'WorkingFaceMaintain'|translate}}
             </button>
           </td>
         </tr>

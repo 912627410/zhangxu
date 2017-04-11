@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">作业面管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'workplaneManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-4">
       <input type="text" name="deviceNum" class="form-control " ng-model="workplaneMngCtrl.workplane.label"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
@@ -51,13 +51,13 @@
       <table ng-table="workplaneMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="workplane in $data">
           <td class="text-nowrap" data-title="'name'|translate" sortable="'workplane.name'">{{workplane.name}}</td>
-          <td class="text-nowrap" data-title="'describe'|translate" sortable="'workplane.describe'">{{workplane.describe}}</td>
+          <td class="text-nowrap" data-title="'description'|translate" sortable="'workplane.describe'">{{workplane.describe}}</td>
           <td class="text-nowrap" data-title="'loadingPointName'|translate" >{{workplane.startPoint}}</td>
           <td class="text-nowrap" data-title="'loadingPointsOfLatitudeAndLongitude'|translate" >{{workplane.startLongitude}}/{{workplane.startLatitude}}</td>
           <td class="text-nowrap" data-title="'loadingPointRadius'|translate" >{{workplane.startRadius}}</td>
-          <td class="text-nowrap" data-title="'dischargePointName'|translate" >{{workplane.endPoint}}</td>
-          <td class="text-nowrap" data-title="'dischargePointsOfLatitudeAndLongitude'|translate" >{{workplane.endLongitude}}/{{workplane.endLatitude}}</td>
-          <td class="text-nowrap" data-title="'dischargePointRadius'|translate" >{{workplane.endRadius}}</td>
+          <td class="text-nowrap" data-title="'unloadPointName'|translate" >{{workplane.endPoint}}</td>
+          <td class="text-nowrap" data-title="'unloadPointsOfLatitudeAndLongitude'|translate" >{{workplane.endLongitude}}/{{workplane.endLatitude}}</td>
+          <td class="text-nowrap" data-title="'unloadPointRadius'|translate" >{{workplane.endRadius}}</td>
           <td class="text-nowrap" data-title="'totalLength'|translate" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
           <td class="text-nowrap" data-title="'IncomePerTonOre'|translate" sortable="'workplane.income'">{{workplane.income}}</td>
 

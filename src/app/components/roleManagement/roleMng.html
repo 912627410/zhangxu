@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">角色管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'roleManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -17,11 +17,11 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">角色名</label>
+      <label class="control-label">{{'roleName'|translate}}</label>
 
     </div>
     <div class="col-md-3">
-      <input type="text" name="name" class="form-control " ng-model="roleMngCtrl.roleInfo.name" placeholder="支持模糊查询"/>
+      <input type="text" name="name" class="form-control " ng-model="roleMngCtrl.roleInfo.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
 
@@ -35,7 +35,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">角色总数:  {{roleMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfRoles'|translate}}:  {{roleMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
 
@@ -52,23 +52,23 @@
         <tr ng-repeat="roleInfo in $data">
 
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{roleInfo.id}}</td>
-          <td class="text-nowrap" data-title="'角色名'" sortable="'name'">{{roleInfo.name}}</td>
-          <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{roleInfo.organizationDto.label}}</td>
-          <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'类型'" sortable="'typeDesc'">{{roleInfo.typeDesc}}</td>
-          <td class="text-nowrap"  data-title="'操作'" >
+          <td class="text-nowrap" data-title="'roleName'|translate" sortable="'name'">{{roleInfo.name}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'label'">{{roleInfo.organizationDto.label}}</td>
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'type'|translate" sortable="'typeDesc'">{{roleInfo.typeDesc}}</td>
+          <td class="text-nowrap"  data-title="'operation'|translate" >
             <button type="button" class="btn btn-default btn-xs"
                     presentation-href="role:roleOper"
-                    ng-click="roleMngCtrl.updateRole(roleInfo)">修改
+                    ng-click="roleMngCtrl.updateRole(roleInfo)">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs"
                     presentation-href="role:roleUserOper"
-                    ng-click="roleMngCtrl.roleUserManage(roleInfo,'lg')">包含用户
+                    ng-click="roleMngCtrl.roleUserManage(roleInfo,'lg')">{{'includeUsers'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs"
                     presentation-href="role:rolePermissionOper"
-                    ng-click="roleMngCtrl.rolePriviligeManage(roleInfo,'lg')">包含权限
+                    ng-click="roleMngCtrl.rolePriviligeManage(roleInfo,'lg')">{{'includePrivilige'|translate}}
             </button>
           </td>
 

@@ -21,7 +21,7 @@
 
     </div>
     <div class="col-md-2">
-      <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.sim.phoneNumber" placeholder="支持模糊查询"/>
+      <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.sim.phoneNumber" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
 
@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-2">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="simMngCtrl.org.label" name="org" readonly required/>
             <span class="input-group-btn">
                <!--打开组织树-->
@@ -47,7 +47,7 @@
     <div class="col-md-2">
       <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
                  ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
         </ui-select-match>
         <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
           <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
@@ -90,12 +90,12 @@
           <td class="text-nowrap" data-title="'SIMCardNumber'|translate" sortable="'phoneNumber'"><a href ng-click="simMngCtrl.updateSim(sim)">{{sim.phoneNumber}}</a></td>
           <td class="text-nowrap" data-title="'simSerialNumber'| translate" sortable="'serialNumber'">{{sim.serialNumber}}</td>
 
-          <td class="text-nowrap" data-title="'所属设备'" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'theEquipment'|translate" sortable="'deviceinfo.deviceNum'">{{sim.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'organisation'| translate" sortable="'deviceinfo.org.label'">{{sim.deviceinfo.org.label}}</td>
           <td class="text-nowrap" data-title="'supplier'| translate" sortable="'statusDesc'">{{sim.providerDesc}}</td>
           <td class="text-nowrap" data-title="'remarks'| translate" sortable="'description'">{{sim.description}}</td>
           <td class="text-nowrap" data-title="'price(RMB)'|translate" sortable="'price'">{{sim.price}}</td>
-          <td class="text-nowrap" data-title="'activationTime'|translate" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'activeTime'|translate" sortable="'activeTime'">{{sim.activeTime | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'serviceBeginDate'|translate" sortable="'serviceBeginDate'">{{sim.serviceBeginDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'serviceEndDate'|translate" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">

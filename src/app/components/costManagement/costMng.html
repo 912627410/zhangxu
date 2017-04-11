@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">成本管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'costManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -19,31 +19,31 @@
 
 
     <div class="col-md-2">
-      <label class="control-label">整机编号/车号</label>
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="costMngController.fleetRecord.licenseId"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">设备编号</label>
+      <label class="control-label">{{'deviceNum'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="costMngController.fleetRecord.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
   </div>
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">所属车队</label>
+      <label class="control-label">{{'theFleet'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
 
-        <input type="text" id="org" class="form-control" placeholder="所属车队" ng-model="costMngController.org.label" name="org" readonly required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'theFleet'|translate}}" ng-model="costMngController.org.label" name="org" readonly required/>
           <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="costMngController.openTreeInfo()">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">所属时间</label>
+      <label class="control-label">{{'theTime'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -75,7 +75,7 @@
 
   <div class="row form-group">
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">成本总数:{{costMngController.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfCost'|translate}}:{{costMngController.page.totalElements}}</span>
     </div>
 
     <div class="col-md-6"></div>
@@ -95,15 +95,15 @@
       <table ng-table="costMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="costVo in $data">
 
-          <td class="text-nowrap" data-title="'所属车队'" sortable="'orgLabel'">{{costVo.org.label}}</td>
-          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{costVo.licenseId}}</td>
-          <td class="text-nowrap" data-title="'设备编号'" sortable="'deviceNum'">{{costVo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'折旧成本'" sortable="'depreciableCost'">{{costVo.depreciableCost}}</td>
-          <td class="text-nowrap" data-title="'保养成本'" sortable="'upkeepCost'">{{costVo.upkeepCost}}</td>
-          <td class="text-nowrap" data-title="'燃油成本'" sortable="'fuelCost'">{{costVo.fuelCost}}</td>
-          <td class="text-nowrap" data-title="'人工成本'" sortable="'salaryCost'">{{costVo.salaryCost}}</td>
-          <td class="text-nowrap" data-title="'总比成本'" sortable="'totalCost'">{{costVo.totalCost}}</td>
-          <td class="text-nowrap" data-title="'时间'" sortable="'date'">{{costVo.calcDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'theFleet'|translate" sortable="'orgLabel'">{{costVo.org.label}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{costVo.licenseId}}</td>
+          <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceNum'">{{costVo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'depreciableCost'|translate" sortable="'depreciableCost'">{{costVo.depreciableCost}}</td>
+          <td class="text-nowrap" data-title="'upkeepCost'|translate" sortable="'upkeepCost'">{{costVo.upkeepCost}}</td>
+          <td class="text-nowrap" data-title="'fuelCost'|translate" sortable="'fuelCost'">{{costVo.fuelCost}}</td>
+          <td class="text-nowrap" data-title="'salaryCost'|translate" sortable="'salaryCost'">{{costVo.salaryCost}}</td>
+          <td class="text-nowrap" data-title="'totalCost'|translate" sortable="'totalCost'">{{costVo.totalCost}}</td>
+          <td class="text-nowrap" data-title="'time'|translate" sortable="'date'">{{costVo.calcDate | date:'yyyy-MM-dd'}}</td>
             </button>
           </td>
         </tr>

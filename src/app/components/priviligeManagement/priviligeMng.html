@@ -15,21 +15,21 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">权限名</label>
+      <label class="control-label">{{'priviligeName'|translate}}</label>
 
     </div>
     <div class="col-md-3">
-      <input type="text" name="permission" class="form-control " ng-model="priviligeMngCtrl.priviligeInfo.permission" placeholder="支持模糊查询"/>
+      <input type="text" name="permission" class="form-control " ng-model="priviligeMngCtrl.priviligeInfo.permission" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-1">
-      <label class="control-label">状态</label>
+      <label class="control-label">{{'state'|translate}}</label>
     </div>
     <div class="col-md-3">
       <ui-select name="status" ng-model="priviligeMngCtrl.priviligeInfo.status" theme="bootstrap"
                  ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
         </ui-select-match>
         <ui-select-choices repeat="priviligeStatus in priviligeMngCtrl.priviligeStatusList">
           <div ng-bind-html="priviligeStatus.desc | highlight: $select.search"></div>
@@ -45,9 +45,9 @@
 
 
   </div>
-  <div class="row">
+  <div class="row form-group">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">权限总数:  {{priviligeMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfPrivilige'|translate}}:  {{priviligeMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
 
@@ -64,27 +64,27 @@
         <tr ng-repeat="priviligeInfo in $data">
 
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{priviligeInfo.id}}</td>
-          <td class="text-nowrap" data-title="'权限名'" sortable="'permission'">{{priviligeInfo.permission}}</td>
-          <td class="text-nowrap" data-title="'描述'" sortable="'remark'">{{priviligeInfo.remark}}</td>
-          <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{priviligeInfo.statusDesc}}</td>
+          <td class="text-nowrap" data-title="'priviligeName'|translate" sortable="'permission'">{{priviligeInfo.permission}}</td>
+          <td class="text-nowrap" data-title="'description'|translate" sortable="'remark'">{{priviligeInfo.remark}}</td>
+          <td class="text-nowrap" data-title="'state'|translate" sortable="'statusDesc'">{{priviligeInfo.statusDesc}}</td>
 
-          <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{priviligeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{priviligeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap"  data-title="'操作'" >
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{priviligeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{priviligeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap"  data-title="'operation'|translate" >
             <button type="button" class="btn btn-default btn-xs"
                     presentation-href="privilige:priviligeOper"
-                    ng-click="priviligeMngCtrl.updatePrivilige(priviligeInfo)">修改
+                    ng-click="priviligeMngCtrl.updatePrivilige(priviligeInfo)">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-success btn-xs"
                     ng-if="priviligeInfo.status===0"
-                    ng-click="priviligeMngCtrl.statusEnable(priviligeInfo)">启用
+                    ng-click="priviligeMngCtrl.statusEnable(priviligeInfo)">{{'enabled'|translate}}
             </button>
             <button type="button" class="btn btn-danger btn-xs"
                     ng-if="priviligeInfo.status===1"
-                    ng-click="priviligeMngCtrl.statusDisable(priviligeInfo)">禁止
+                    ng-click="priviligeMngCtrl.statusDisable(priviligeInfo)">{{'forbidden'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs"
-                    ng-click="priviligeMngCtrl.priviligeRoleManage(priviligeInfo,'lg')">隶属角色
+                    ng-click="priviligeMngCtrl.priviligeRoleManage(priviligeInfo,'lg')">{{'affiliatedRole'|translate}}
             </button>
           </td>
         </tr>

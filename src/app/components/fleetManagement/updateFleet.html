@@ -7,37 +7,37 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="fleetNum" class="col-xs-2 control-label">车队编号</label>
+        <label for="fleetNum" class="col-xs-2 control-label">{{'fleetNo'| translate}}</label>
         <div class="col-sm-4">
 
-          <input type="text" id="fleetNum" class="form-control" placeholder="车队编号"
+          <input type="text" id="fleetNum" class="form-control" placeholder="{{'fleetNo'| translate}}"
                  ng-model="updateFleetCtrl.fleet.id" name="licenseId" typeahead-show-hint="true"
                  readonly validator="required" />
 
         </div>
       </div>
       <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">车队名称</label>
+        <label for="name" class="col-xs-2 control-label">{{'fleetName'| translate}}</label>
         <div class="col-sm-4">
-          <input type="text" id="name"  class="form-control" placeholder="车队名称"
+          <input type="text" id="name"  class="form-control" placeholder="{{'fleetName'| translate}}"
                  ng-model="updateFleetCtrl.fleet.label" name="name" typeahead-show-hint="true"
                  validator="required" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">车队简称</label>
+        <label class="col-sm-2 control-label">{{'fleetAbbreviation'| translate}}</label>
         <div class="col-sm-4">
-          <input type="text" class="form-control" placeholder="车队英文简称"
+          <input type="text" class="form-control" placeholder="{{'fleetAbbreviation'| translate}}"
                  ng-model="updateFleetCtrl.fleet.name" name="name" typeahead-show-hint="true"
                  validator="required" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">上级组织</label>
+        <label class="col-sm-2 control-label">{{'parentOrganization'| translate}}</label>
         <div class="col-md-4">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="上级组织" ng-model="updateFleetCtrl.fleet.parentLabel" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'parentOrganization'| translate}}" ng-model="updateFleetCtrl.fleet.parentLabel" name="org" readonly required/>
           <span class="input-group-btn" ng-if="updateFleetCtrl.type=='update'">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="updateFleetCtrl.openTreeInfo()">
@@ -51,6 +51,6 @@
   </div>
 </form>
 <div class="modal-footer" ng-if="updateFleetCtrl.type=='update'">
-  <button class="btn btn-primary" type="button" validation-submit="updateFleetForm" ng-click="updateFleetCtrl.ok(updateFleetCtrl.fleet)">保存</button>
-  <button class="btn btn-warning" type="button" ng-click="updateFleetCtrl.cancel()">取消</button>
+  <button class="btn btn-primary" type="button" validation-submit="updateFleetForm" ng-click="updateFleetCtrl.ok(updateFleetCtrl.fleet)">{{'confirm'| translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="updateFleetCtrl.cancel()">{{'cancel'| translate}}</button>
 </div>

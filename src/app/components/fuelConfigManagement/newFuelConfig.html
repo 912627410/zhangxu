@@ -5,19 +5,19 @@
   <div class="modal-body">
     <div class="box-body">
         <div class="form-group">
-          <label for="name" class="col-sm-2 control-label">配置名</label>
-          <div class="col-sm-10">
-            <input type="text" id="name" class="form-control" placeholder="配置名"
+          <label for="name" class="col-sm-3 control-label">{{'configurationName'|translate}}</label>
+          <div class="col-sm-9">
+            <input type="text" id="name" class="form-control" placeholder="{{'configurationName'|translate}}"
                    ng-model="newFuelConfigController.fuelConfig.name" name="name"  validator="required"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="fuelType" class="col-sm-2 control-label">燃油类型</label>
-          <div class="col-sm-10">
+          <label for="fuelType" class="col-sm-3 control-label">{{'fuelType'|translate}}</label>
+          <div class="col-sm-9">
             <ui-select id="fuelType" name="fuelType" ng-model="newFuelConfigController.fuelConfig.fuelType" theme="bootstrap"
                        ng-disabled="disabled" validator="required">
-              <ui-select-match allow-clear="true" placeholder="燃油类型">{{$select.selected.desc}}
+              <ui-select-match allow-clear="true" placeholder="{{'fuelType'|translate}}">{{$select.selected.desc}}
               </ui-select-match>
               <ui-select-choices  repeat="fuelType.value as fuelType in newFuelConfigController.fuelTypeList | propsFilter: {desc: $select.search}" >
                 <div  ng-bind-html="fuelType.desc | highlight: $select.search"></div>
@@ -27,17 +27,17 @@
         </div>
 
       <div class="form-group">
-        <label for="price" class="col-sm-2 control-label">价格</label>
-        <div class="col-sm-10">
-          <input type="text" id="price" class="form-control" placeholder="价格"
+        <label for="price" class="col-sm-3 control-label">{{'price'|translate}}</label>
+        <div class="col-sm-9">
+          <input type="text" id="price" class="form-control" placeholder="{{'price'|translate}}"
                  ng-model="newFuelConfigController.fuelConfig.price" name="price"  validator="required,numberAndDot"/>
         </div>
       </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label">所属组织</label>
-          <div class="col-sm-10">
+          <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
+          <div class="col-sm-9">
             <p class="input-group">
-              <input type="text" id="org" class="form-control" placeholder="所属组织"
+              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                      ng-model="newFuelConfigController.fuelConfig.orgEntity.label" name="org" readonly validator="required"/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="newFuelConfigController.openTreeInfo()">
@@ -56,8 +56,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" presentation-href="fuelConfig:oper" validation-submit="newSimForm"  ng-click="newFuelConfigController.ok(newFuelConfigController.fuelConfig)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="newFuelConfigController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" presentation-href="fuelConfig:oper" validation-submit="newSimForm"  ng-click="newFuelConfigController.ok(newFuelConfigController.fuelConfig)">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newFuelConfigController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>
 

@@ -3,18 +3,18 @@
 
   <div class="row">
     <div class="col-sm-2">
-      <label class="control-label">整机编号/车号</label>
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
     </div>
     <div class="col-sm-3">
       <input type="text" name="licenseId" class="form-control " ng-model="loanMachineCtrl.machine.licenseId"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-sm-2">
-      <label class="control-label">设备编号</label>
+      <label class="control-label">{{'deviceNum'|translate}}</label>
     </div>
     <div class="col-sm-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="loanMachineCtrl.machine.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
 
@@ -40,11 +40,11 @@
             <input type="checkbox" ng-checked="loanMachineCtrl.isSelected(machine.id)"
                    ng-click="loanMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
-          <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-          <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-          <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
+          <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'currentFleet'|translate" sortable="'fleet.label'">{{machine.fleet.label}}</td>
         </tr>
       </table>
     </div>

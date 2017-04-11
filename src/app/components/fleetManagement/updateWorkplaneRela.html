@@ -5,15 +5,15 @@
 </div>
 <section class="content">
   <div class="row">
-    <div class="col-md-2">
-      <label class="control-label">作业面名称</label>
+    <div class="col-md-3">
+      <label class="control-label">{{'workplaneName'|translate}}</label>
 
     </div>
     <div class="col-md-3">
-      <input type="text" name="workplane.name" class="form-control " ng-model="updateWorkplaneRelaCtrl.workplane.name" placeholder="支持模糊查询"/>
+      <input type="text" name="workplane.name" class="form-control " ng-model="updateWorkplaneRelaCtrl.workplane.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
       <button class="btn btn-primary" type="button" presentation-href="workplane:page"  ng-click="updateWorkplaneRelaCtrl.query(null,null,null,updateWorkplaneRelaCtrl.workplane)">{{'query'|translate}}</button>
       <button class="btn btn-primary" type="button"  ng-click="updateWorkplaneRelaCtrl.reset()">{{'reset'|translate}}</button>
     </div>
@@ -22,7 +22,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">作业面总数:  {{updateWorkplaneRelaCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'TheTotalNumberOfworkplane'|translate}}:  {{updateWorkplaneRelaCtrl.page.totalElements}}</span>
     </div>
     <!--
     <div class="col-md-10">
@@ -36,19 +36,19 @@
       <!--<caption class="pull-left"><b>其它作业面</b></caption>-->
       <table ng-table="updateWorkplaneRelaCtrl.tableParams" class="table table-condensed table-bordered text-nowrap">
         <tr ng-repeat="workplane in $data" ng-class="{true: 'success', false: ''}[updateWorkplaneRelaCtrl.fleet.workplaneVo.id==workplane.id]">
-          <td class="text-nowrap" data-title="'作业面编号'" sortable="'workplane.id'">{{workplane.id}}</td>
-          <td class="text-nowrap" data-title="'名称'" sortable="'workplane.name'">{{workplane.name}}</td>
-          <td class="text-nowrap" data-title="'描述'" sortable="'workplane.describe'">{{workplane.describe}}</td>
-          <td class="text-nowrap" data-title="'装料点名称'" >{{workplane.startPoint}}</td>
-          <td class="text-nowrap" data-title="'卸料点名称'" >{{workplane.endPoint}}</td>
-          <td class="text-nowrap" data-title="'总长度(KM)'" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
-          <td class="text-nowrap" data-title="'收入(每吨矿)'" sortable="'workplane.income'">{{workplane.income}}</td>
-          <td class="text-nowrap" data-title="'操作'">
+          <td class="text-nowrap" data-title="'workplaneNO'|translate" sortable="'workplane.id'">{{workplane.id}}</td>
+          <td class="text-nowrap" data-title="'name'|translate" sortable="'workplane.name'">{{workplane.name}}</td>
+          <td class="text-nowrap" data-title="'description'|translate" sortable="'workplane.describe'">{{workplane.describe}}</td>
+          <td class="text-nowrap" data-title="'loadingPointName'|translate" >{{workplane.startPoint}}</td>
+          <td class="text-nowrap" data-title="'dischargePointName'|translate" >{{workplane.endPoint}}</td>
+          <td class="text-nowrap" data-title="'totalLength(KM)'|translate" sortable="'workplane.totalLength'">{{workplane.totalLength}}</td>
+          <td class="text-nowrap" data-title="'IncomePerTonOre'|translate" sortable="'workplane.income'">{{workplane.income}}</td>
+          <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-warning btn-xs" ng-if="updateWorkplaneRelaCtrl.fleet.workplaneVo.id==workplane.id"
-                    ng-click="updateWorkplaneRelaCtrl.cancelRelaToFleet()">取消关联
+                    ng-click="updateWorkplaneRelaCtrl.cancelRelaToFleet()">{{'disassociation'|translate}}
             </button>
             <button type="button" class="btn btn-primary btn-xs" ng-if="updateWorkplaneRelaCtrl.fleet.workplaneVo.id!=workplane.id"
-                    ng-click="updateWorkplaneRelaCtrl.relaToFleet(workplane)">关联车队
+                    ng-click="updateWorkplaneRelaCtrl.relaToFleet(workplane)">{{'associatedFleet'|translate}}
             </button>
           </td>
         </tr>
