@@ -37,7 +37,8 @@
       <label class="control-label">{{'terminalno'|translate}}:</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-1">
       <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
@@ -61,7 +62,7 @@
       </p>
     </div>
     <div class="col-md-3">
-      <label class="control-label">包含下级组织:</label>
+      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
       <input type="checkbox" checked="checked" ng-model="monitorCtrl.querySubOrg"/>
     </div>
 
@@ -70,33 +71,33 @@
 
     <!--<div class=" row form-group">
       <div class="col-md-1">
-        <label class="control-label right">品牌类型:</label>
+        <label class="control-label right">{{'brandType'|translate}}:</label>
       </div>
       <div class="col-md-2">
         <select name="deviceMF" class="form-control"
                 ng-model="monitorCtrl.queryManufacture"
                 ng-options="deviceManufacture.id as deviceManufacture.name for deviceManufacture in monitorCtrl.deviceManufactureList">
-          <option value="">请选择...</option>
+          <option value="">{{'pleaseSelect'|translate}}</option>
         </select>
       </div>
       <div class="col-md-1">
-        <label class="control-label right">驱动类型:</label>
+        <label class="control-label right">{{'driveType'|translate}}:</label>
       </div>
       <div class="col-md-2">
         <select name="devicePowerType" class="form-control"
                 ng-model="monitorCtrl.queryDevicePowerType"
                 ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in monitorCtrl.devicePowerTypeList">
-          <option value="">请选择...</option>
+          <option value="">{{'pleaseSelect'|translate}}</option>
         </select>
       </div>
       <div class="col-md-1">
-        <label class="control-label right">高度类型:</label>
+        <label class="control-label right">{{'highlyType'|translate}}:</label>
       </div>
       <div class="col-md-2">
         <select name="deviceMF" class="form-control"
                 ng-model="monitorCtrl.queryDeviceHeightType"
                 ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in monitorCtrl.deviceHeightTypeList">
-          <option value="">请选择...</option>
+          <option value="">{{'pleaseSelect'|translate}}</option>
         </select>
       </div>
       <div class="col-md-2">
@@ -107,7 +108,7 @@
   <div class="row form-group">
 
     <div class="col-md-1">
-      <label class="control-label">设备类型:</label>
+      <label class="control-label">{{'deviceType'|translate}}:</label>
     </div>
     <div class="col-md-2">
       <select class="form-control" ng-model="monitorCtrl.queryDeviceType">

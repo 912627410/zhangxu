@@ -10,17 +10,17 @@
       <tbody>
       <h4 class="text text-green">拥有车辆</h4>
       <tr ng-repeat="machine in $data">
-        <td class="col-md-3" align="center" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
-        <td class="col-md-2" align="center" data-title="'设备编号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-        <td class="col-md-2" align="center" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-        <td class="col-md-2" align="center" data-title="'所属车队'" sortable="'org.label'">{{machine.org.label}}</td>
+        <td class="col-md-3" align="center" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
+        <td class="col-md-2" align="center" data-title="'deviceNum'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+        <td class="col-md-2" align="center" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+        <td class="col-md-2" align="center" data-title="'theFleet'|translate" sortable="'org.label'">{{machine.org.label}}</td>
         <td class="col-md-2" align="center"
-            data-title="'当前工作车队'"
+            data-title="'currentFleet'|translate"
             ng-class="{true: '', false: 'text-danger'}[machine.fleet.label==machine.org.label]"
             sortable="'fleet.label'">
           {{machine.fleet.label}}
         </td>
-        <td class="col-md-2" align="center" data-title="'操作'">
+        <td class="col-md-2" align="center" data-title="'operation'|translate">
           <button type="button" class="btn btn-primary btn-xs" ng-if="machine.fleet.label==machine.org.label||machine.fleet.label==null"
                   ng-click="fleetMachineMngCtrl.moveToOtherFleet(machine)">借调至其它车队
           </button>
@@ -47,14 +47,14 @@
         <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="fleetMachineMngCtrl.loanMachine('fleet')">借调车辆</button>
       </h4>
       <tr ng-repeat="machine in $data" ng-class="{}">
-        <td class="col-md-3" align="center" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
-        <td class="col-md-2" align="center" data-title="'设备编号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-        <td class="col-md-2" align="center" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-        <td class="col-md-2" align="center" data-title="'所属车队'" sortable="'org.label'"
+        <td class="col-md-3" align="center" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
+        <td class="col-md-2" align="center" data-title="'deviceNum'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+        <td class="col-md-2" align="center" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+        <td class="col-md-2" align="center" data-title="'theFleet'|translate" sortable="'org.label'"
             ng-class="{true: '', false: 'text-danger'}[machine.fleet.label==machine.org.label]">
           {{machine.org.label}}</td>
-        <td class="col-md-2" align="center" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
-        <td class="col-md-2" align="center" data-title="'操作'">
+        <td class="col-md-2" align="center" data-title="'currentFleet'|translate" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+        <td class="col-md-2" align="center" data-title="'operation'|translate">
           <button type="button" class="btn btn-primary btn-xs" ng-if="machine.org.id!=machine.fleet.id"
                   ng-click="fleetMachineMngCtrl .backToOrg(machine)">归还车辆
           </button>

@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">车队管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
+    <li class="active">{{'fleetManagement'| translate}}</li>
   </ol>
 </section>
 
@@ -18,29 +18,29 @@
   <div class="row">
 
     <div class="col-md-2">
-      <label class="control-label">车队名称</label>
+      <label class="control-label">{{'fleetName'| translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="label" class="form-control " ng-model="fleetMngCtrl.org.label"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" presentation-href="fleet:page"
-              ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">查询
+              ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
   <div class="row">
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">车队总数:{{fleetMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfFleet'|translate}}:{{fleetMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
 
       <a presentation-href="machine:oper" class="btn btn-default pull-right"
          ng-click="fleetMngCtrl.newFleet('xs')">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
 
     </div>
@@ -50,32 +50,32 @@
 
       <table ng-table="fleetMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="fleet in $data">
-          <td class="text-nowrap" align="center" data-title="'车队编号'" sortable="'fleet.id'">{{fleet.id}}</td>
-          <td class="text-nowrap" data-title="'车队名称'" sortable="'fleet.label'">
+          <td class="text-nowrap" align="center" data-title="'fleetNo'|translate" sortable="'fleet.id'">{{fleet.id}}</td>
+          <td class="text-nowrap" data-title="'fleetName'| translate" sortable="'fleet.label'">
             <a href
                ng-click="fleetMngCtrl.updateFleet(fleet,'lg','query')">{{fleet.label}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'拥有车辆'" sortable="'fleet.machineNum'">
+          <td class="text-nowrap" align="center" data-title="'ownMachine'|translate" sortable="'fleet.machineNum'">
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','own')">{{fleet.ownNum}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'工作车辆'" sortable="'fleet.machineNum'">
+          <td class="text-nowrap" align="center" data-title="'WorkingMachine'|translate" sortable="'fleet.machineNum'">
             <a href
                ng-click="fleetMngCtrl.queryMachineList(fleet,'lg','work')">{{fleet.workNum}}</a>
           </td>
-          <td class="text-nowrap" data-title="'作业面名称'" >
+          <td class="text-nowrap" data-title="'workplaneName'|translate" >
             <a href
                ng-click="fleetMngCtrl.updateWorkplane(fleet.workplaneVo,'lg')">{{fleet.workplaneVo.name}}</a>
           </td>
-          <td class="text-nowrap" align="center" data-title="'操作'" >
+          <td class="text-nowrap" align="center" data-title="'operation'|translate" >
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">修改
+                    ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">车辆调剂
+                    ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">{{'machineTransfer'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">作业面维护
+                    ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">{{'WorkingFaceMaintain'|translate}}
             </button>
           </td>
         </tr>

@@ -252,7 +252,7 @@
 
         //判断是否需要提示修改密码
         if(passwordPattenStatus==false){
-          Notification.error({message: '密码过于简单,请修改', positionX: 'center'});
+          Notification.error({message: languages.findKey('passwordIsTooSimplePleaseModify'), positionX: 'center'});
 
         }
 

@@ -5,33 +5,33 @@
 
 <!-- Main content -->
 <section class="content">
-  <div class="row">
-  <div class="col-md-1">
-    <label class="control-label">角色名</label>
+  <div class="row form-group">
+  <div class="col-md-2">
+    <label class="control-label">{{'roleName'|translate}}</label>
 
   </div>
   <div class="col-md-3">
-    <input type="text" name="name" class="form-control " ng-model="priviligeRoleMngController.roleInfo.name" placeholder="支持模糊查询"/>
+    <input type="text" name="name" class="form-control " ng-model="priviligeRoleMngController.roleInfo.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
   </div>
 
 
 
-  <div class="col-md-2">
-    <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="priviligeRoleMngController.query(null,10,null,priviligeRoleMngController.roleInfo)">查询</button>
-    <button class="btn btn-primary" type="button"  ng-click="priviligeRoleMngController.reset()">重置</button>
+  <div class="col-md-4">
+    <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="priviligeRoleMngController.query(null,10,null,priviligeRoleMngController.roleInfo)">{{'query'|translate}}</button>
+    <button class="btn btn-primary" type="button"  ng-click="priviligeRoleMngController.reset()">{{'reset'|translate}}</button>
   </div>
 
 
 </div>
 
   </div>
-  <div class="row">
+  <div class="row form-group">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">用户总数:  {{priviligeRoleMngController.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumbeOfUsers'|translate}}:  {{priviligeRoleMngController.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
-      <button class="btn btn-warning pull-right" type="button" ng-click="priviligeRoleMngController.cancel()">取消</button>
-      <button class="btn btn-primary pull-right" type="button"  ng-click="priviligeRoleMngController.updateUserRole()">更新</button>
+      <button class="btn btn-warning pull-right" type="button" ng-click="priviligeRoleMngController.cancel()">{{'cancel'|translate}}</button>
+      <button class="btn btn-primary pull-right" type="button"  ng-click="priviligeRoleMngController.updateUserRole()">{{'update'|translate}}</button>
 
     </div>
   </div>
@@ -48,10 +48,10 @@
                    ng-click="priviligeRoleMngController.updateSelection($event,roleInfo.id)" ng-model="roleInfo.checked" >
           </td>
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{roleInfo.id}}</td>
-          <td class="text-nowrap" data-title="'角色名'" sortable="'name'">{{roleInfo.name}}</td>
+          <td class="text-nowrap" data-title="'roleName'|translate" sortable="'name'">{{roleInfo.name}}</td>
 
-          <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
       </table>
       </div>
