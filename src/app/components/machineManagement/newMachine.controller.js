@@ -42,7 +42,13 @@
       Notification.error('获取燃油类型失败');
     })
 
-
+    var machineStatePromise = machineService.getMachineStateList();
+    machineStatePromise.then(function (data) {
+      vm.machineStateList= data;
+      console.log(vm.machineStateList);
+    }, function (reason) {
+      Notification.error('获取车辆状态失败');
+    })
 
 
 
