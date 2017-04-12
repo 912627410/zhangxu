@@ -623,7 +623,7 @@
                             </div>
                             <div class="col-md-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -634,7 +634,7 @@
                             </div>
                             <div class="col-md-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
