@@ -141,6 +141,7 @@
         vm.getPermission();
 
       }, function (reason) {
+
         Notification.error(languages.findKey('loginFailure'));
 
         vm.credentials.password = "";
@@ -196,7 +197,7 @@
 
 
       }, function (reason) {
-        Notification.error(languages.findKey('loginFailure'));
+        Notification.error(reason.data.message);
         count = count + 1;
         if(count == 2){
           $scope.isShow = true;
