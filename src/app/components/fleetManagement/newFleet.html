@@ -15,27 +15,27 @@
       </div>
       -->
       <div class="form-group">
-        <label class="col-sm-2 control-label">车队名称</label>
+        <label class="col-sm-3 control-label">{{'fleetName'|translate}}</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="车队名称"
+          <input type="text" class="form-control" placeholder="{{'fleetName'|translate}}"
                  ng-model="newFleetCtrl.fleet.label" name="label" typeahead-show-hint="true"
                  validator="required" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">车队简称</label>
+        <label class="col-sm-3 control-label">{{'fleetAbbreviation'|translate}}</label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="车队英文简称"
+          <input type="text" class="form-control" placeholder="{{'fleetAbbreviation'|translate}}"
                  ng-model="newFleetCtrl.fleet.name" name="name" typeahead-show-hint="true"
                  validator="required" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">上级组织</label>
+        <label class="col-sm-3 control-label">{{'parentOrganization'|translate}}</label>
         <div class="col-md-5">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="上级组织" ng-model="newFleetCtrl.org.label" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'parentOrganization'|translate}}" ng-model="newFleetCtrl.org.label" name="org" readonly required/>
           <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="newFleetCtrl.openTreeInfo()">
@@ -49,6 +49,6 @@
   </div>
 </form>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="newFleetCtrl.ok()">提交</button>
-  <button class="btn btn-warning" type="button" ng-click="newFleetCtrl.cancel()">取消</button>
+  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="newFleetCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="newFleetCtrl.cancel()">{{'cancel'|translate}}</button>
 </div>

@@ -109,6 +109,7 @@
     .constant('SIM_PROVIDER_URL', SERVER_BASE_URL + 'sim/simProvider')   //查询sim卡供应商使用信息
 
     .constant('ENGINE_TYPE_LIST_URL', SERVER_BASE_URL + 'config/enginetype')   //发动机类型集合
+    .constant('MACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'config/machineState')   //车辆状态集合
 
     .constant('DEIVCIE_TYPE_LIST_URL', SERVER_BASE_URL + 'deviceType/deviceTypeList')   //设备类型集合
     .constant('DEIVCIE_PROTOCAL_TYPE_LIST_URL', SERVER_BASE_URL + 'device/protocalTypeList')   //设备协议类型集合

@@ -38,6 +38,18 @@
       Notification.error('获取燃油类型失败');
     })
 
+    var machineStatePromise = machineService.getMachineStateList();
+    machineStatePromise.then(function (data) {
+      vm.machineStateList = data;
+
+      for(var i=0;i<vm.machineStateList.length;i++){
+        if(vm.machine.machineState ==  vm.machineStateList[i].machineState){
+          vm.machine.machineState =vm.machineStateList[i].code;
+        }
+      }
+    }, function (reason) {
+      Notification.error('获取车辆状态失败');
+    })
 
     // vm.deviceinfoList=[];
 

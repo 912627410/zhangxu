@@ -5,20 +5,20 @@
     <div class="modal-body">
             <div class="box-body">
                 <div class="form-group">
-                    <label for="ssn" class="col-sm-2 control-label">用户名</label>
+                    <label for="ssn" class="col-sm-2 control-label">{{'userName'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="text" id="ssn" class="form-control" placeholder="用户名" ng-model="addUserCtrl.newUser.ssn" name="ssn" required/>
+                        <input type="text" id="ssn" class="form-control" placeholder="{{'userName'|translate}}" ng-model="addUserCtrl.newUser.ssn" name="ssn" required/>
                     </div>
                 </div>
 
               <div class="form-group">
-                <label for="org" class="col-sm-2 control-label">所属组织</label>
+                <label for="org" class="col-sm-2 control-label">{{'organisation'|translate}}</label>
                 <!--<div ng-controller="orgController as orgCtrl1">-->
                 <!--<button uib-popover-template="updateUserinfoCtrl.dynamicPopover.templateUrl" popover-title="{{updateUserinfoCtrl.dynamicPopover.title}}" type="button" class="btn btn-default">组织机构</button>-->
                 <!--</div>-->
                 <div class="col-sm-10">
                   <p class="input-group">
-                    <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="addUserCtrl.newUser.organizationDto.label" name="org" readonly required/>
+                    <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="addUserCtrl.newUser.organizationDto.label" name="org" readonly required/>
                     <span class="input-group-btn">
                        <!--打开组织树-->
                       <button type="button" class="btn btn-default" ng-click="addUserCtrl.openTreeInfo()">
@@ -30,46 +30,46 @@
               </div>
 
                 <div class="form-group">
-                    <label for="lastName" class="col-sm-2 control-label">姓</label>
+                    <label for="lastName" class="col-sm-2 control-label">{{'laseName'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="text" id="lastName" class="form-control" placeholder="姓" ng-model="addUserCtrl.newUser.lastname" name="lastName" required/>
+                        <input type="text" id="lastName" class="form-control" placeholder="{{'laseName'|translate}}" ng-model="addUserCtrl.newUser.lastname" name="lastName" required/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="firstName" class="col-sm-2 control-label">名字</label>
+                    <label for="firstName" class="col-sm-2 control-label">{{'firstName'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="text" id="firstName" class="form-control" placeholder="名字" ng-model="addUserCtrl.newUser.firstname" name="firstName" required/>
+                        <input type="text" id="firstName" class="form-control" placeholder="{{'firstName'|translate}}" ng-model="addUserCtrl.newUser.firstname" name="firstName" required/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mobile" class="col-sm-2 control-label">手机号</label>
+                    <label for="mobile" class="col-sm-2 control-label">{{'phoneNumber'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="text" id="mobile" class="form-control" placeholder="手机号" ng-model="addUserCtrl.newUser.mobile" name="mobile" required/>
+                        <input type="text" id="mobile" class="form-control" placeholder="{{'phoneNumber'|translate}}" ng-model="addUserCtrl.newUser.mobile" name="mobile" required/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <label for="email" class="col-sm-2 control-label">{{'email'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="email" id="email" class="form-control" placeholder="Email" ng-model="addUserCtrl.newUser.email" name="email"/>
+                        <input type="email" id="email" class="form-control" placeholder="{{'email'|translate}}" ng-model="addUserCtrl.newUser.email" name="email"/>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="address" class="col-sm-2 control-label">地址</label>
+                    <label for="address" class="col-sm-2 control-label">{{'address'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="text" id="address" class="form-control" placeholder="地址" ng-model="addUserCtrl.newUser.address" name="address" />
+                        <input type="text" id="address" class="form-control" placeholder="{{'address'|translate}}" ng-model="addUserCtrl.newUser.address" name="address" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label">密码</label>
+                    <label for="password" class="col-sm-2 control-label">{{'password'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="password" id="password" class="form-control" placeholder="密码" ng-model="addUserCtrl.newUser.password" name="password" validator="numberAndCharForPass"/>
+                        <input type="password" id="password" class="form-control" placeholder="{{'password'|translate}}" ng-model="addUserCtrl.newUser.password" name="password" validator="numberAndCharForPass"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword" class="col-sm-2 control-label">重复密码</label>
+                    <label for="confirmPassword" class="col-sm-2 control-label">{{'repeatPassword'|translate}}</label>
                     <div class="col-sm-10">
-                        <input type="password" id="confirmPassword" class="form-control" placeholder="重复密码" ng-model="addUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="addUserCtrl.newUser.password" validator="numberAndCharForPass"/>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="{{'repeatPassword'|translate}}" ng-model="addUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="addUserCtrl.newUser.password" validator="numberAndCharForPass"/>
                       <div class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">密码两次输入不匹配</div>
                     </div>
                 </div>

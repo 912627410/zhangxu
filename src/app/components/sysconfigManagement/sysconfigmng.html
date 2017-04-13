@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">系统参数</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'sysconfigManagement'| translate}}</li>
   </ol>
 </section>
 
@@ -17,67 +17,67 @@
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">参数名称</label>
+      <label class="control-label">{{'parameterName'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="name" class="form-control " ng-model="sysconfigMngCtrl.sysconfig.name"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">参数值</label>
+      <label class="control-label">{{'parameterValue'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="value" class="form-control " ng-model="sysconfigMngCtrl.sysconfig.value"
-             placeholder="支持模糊查询,字母区分大小写"/>
+             placeholder="{{'supportfuzzyqueriesLettersAreCaseSensitive'|translate}}"/>
     </div>
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
               presentation-href="config:sysconfigPage"
-              ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">查询
+              ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">参数描述</label>
+      <label class="control-label">{{'parameterDescription'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="description" class="form-control " ng-model="sysconfigMngCtrl.sysconfig.description"
-             placeholder="支持模糊查询,字母区分大小写"/>
+             placeholder="{{'supportfuzzyqueriesLettersAreCaseSensitive'|translate}}"/>
     </div>
   </div>
 
 
   <div class="row form-group">
     <div class="btn-group col-md-3">
-      <span class="label label-info pull-left">参数总数:{{sysconfigMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfParameters'|translate}}:{{sysconfigMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-9">
       <a class="btn btn-default pull-right"
          presentation-href="config:sysconfigOper"
          ng-click="sysconfigMngCtrl.newSysconfig()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
   </div>
   <div class="table-responsive">
     <table ng-table="sysconfigMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="sysconfig in $data">
-        <td class="text-nowrap" data-title="'参数名称'" sortable="'name'">
+        <td class="text-nowrap" data-title="'parameterName'|translate" sortable="'name'">
           <a href ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{sysconfig.name}}</a>
         </td>
-        <td class="text-nowrap"  data-title="'参数值'" sortable="'value'">
+        <td class="text-nowrap"  data-title="'parameterValue'|translate" sortable="'value'">
           <div title="{{sysconfig.value}}">{{sysconfig.value| limitTo: 30}}{{sysconfig.value.length > 30? '...' : ''}}</div></td>
-        <td class="text-nowrap"  data-title="'参数描述'" sortable="'description'" >
+        <td class="text-nowrap"  data-title="'parameterDescription'|translate" sortable="'description'" >
           <div title="{{sysconfig.description}}">{{sysconfig.description| limitTo: 15}}{{sysconfig.description.length > 15? '...' : ''}}</div></td>
-        <td class="text-nowrap" data-title="'操作'" align="center">
+        <td class="text-nowrap" data-title="'operation'|translate" align="center">
           <button type="button" class="btn btn-default btn-xs"
                   presentation-href="config:sysconfigOper"
-                  ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">修改
+                  ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{'alter'|translate}}
           </button>
         </td>
       </tr>

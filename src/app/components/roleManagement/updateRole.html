@@ -5,18 +5,18 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="name" class="col-sm-2 control-label">角色名</label>
+        <label for="name" class="col-sm-2 control-label">{{'roleName'|translate}}</label>
         <div class="col-sm-10">
-          <input type="text" id="name" class="form-control" placeholder="角色名"
+          <input type="text" id="name" class="form-control" placeholder="{{'roleName'|translate}}"
                  ng-model="updateRoleController.roleInfo.name" name="name" typeahead-show-hint="true"
                  validator="required"/>
         </div>
       </div>
       <div class="form-group">
-        <label for="org" class="col-sm-2 control-label">所属组织</label>
+        <label for="org" class="col-sm-2 control-label">{{'organisation'|translate}}</label>
         <div class="col-sm-10">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="updateRoleController.roleInfo.organizationDto.label" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="updateRoleController.roleInfo.organizationDto.label" name="org" readonly required/>
             <span class="input-group-btn">
                        <!--打开组织树-->
                       <button type="button" class="btn btn-default" ng-click="updateRoleController.openTreeInfo()">
@@ -27,12 +27,12 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="name" class="col-sm-2 control-label">类型</label>
+        <label for="name" class="col-sm-2 control-label">{{'type'|translate}}</label>
         <div class="col-sm-10">
 
           <ui-select name="type" ng-model="updateRoleController.roleInfo.type" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="类型">{{$select.selected.desc}}
+            <ui-select-match allow-clear="true" placeholder="{{'type'|translate}}">{{$select.selected.desc}}
             </ui-select-match>
             <ui-select-choices repeat="orgType in updateRoleController.orgTypeList">
               <div ng-bind-html="orgType.desc | highlight: $select.search"></div>
@@ -48,7 +48,7 @@
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" presentation-href="role:roleOper" validation-submit="updateRoleForm" ng-click="updateRoleController.ok(updateRoleController.roleInfo)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="updateRoleController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" presentation-href="role:roleOper" validation-submit="updateRoleForm" ng-click="updateRoleController.ok(updateRoleController.roleInfo)">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateRoleController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

@@ -8,20 +8,20 @@
 
   <div class="row">
     <div class="col-md-2">
-      <label class="control-label">用户名</label>
+      <label class="control-label">{{'userName'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="ssn" class="form-control " ng-model="roleUserMngController.userinfo.ssn"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">状态</label>
+      <label class="control-label">{{'state'|translate}}</label>
     </div>
     <div class="col-md-3">
       <ui-select name="status" ng-model="roleUserMngController.userinfo.status" theme="bootstrap"
                  ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
         </ui-select-match>
         <ui-select-choices repeat="userinfoStatus in roleUserMngController.userinfoStatusList">
           <div ng-bind-html="userinfoStatus.desc | highlight: $select.search"></div>
@@ -32,19 +32,19 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="roleUserMngController.query(null,10,null,roleUserMngController.userinfo)">查询
+              ng-click="roleUserMngController.query(null,10,null,roleUserMngController.userinfo)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="roleUserMngController.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="roleUserMngController.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-2">
-      <label class="control-label">调拨组织</label>
+      <label class="control-label">{{'allotOrganization'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="roleUserMngController.org.label" name="org" readonly required/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="roleUserMngController.openOrgTree()"><i
@@ -64,11 +64,11 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">用户总数:  {{roleUserMngController.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumbeOfUsers'|translate}}:  {{roleUserMngController.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
-      <button class="btn btn-warning pull-right" type="button" ng-click="roleUserMngController.cancel()">取消</button>
-      <button class="btn btn-primary pull-right" type="button"  ng-click="roleUserMngController.updateRoleUser()">更新</button>
+      <button class="btn btn-warning pull-right" type="button" ng-click="roleUserMngController.cancel()">{{'cancel'|translate}}</button>
+      <button class="btn btn-primary pull-right" type="button"  ng-click="roleUserMngController.updateRoleUser()">{{'update'|translate}}</button>
 
     </div>
   </div>
@@ -84,14 +84,14 @@
             <input type="checkbox" ng-checked="roleUserMngController.isSelected(userinfo.id)"
                    ng-click="roleUserMngController.updateSelection($event,userinfo.id)" ng-model="userinfo.checked" ng-if="userInfo.userdto.id !=userinfo.id" >
           </td>
-          <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
-          <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{userinfo.organizationDto.label}}</td>
-          <td class="text-nowrap" data-title="'手机号'" sortable="'mobile'">{{userinfo.mobile}}</td>
-          <td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>
-          <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
+          <td class="text-nowrap" data-title="'userName'|translate" sortable="'ssn'">{{userinfo.ssn}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'label'">{{userinfo.organizationDto.label}}</td>
+          <td class="text-nowrap" data-title="'phoneNumber'|translate" sortable="'mobile'">{{userinfo.mobile}}</td>
+          <td class="text-nowrap" data-title="'email'|translate" sortable="'email'">{{userinfo.email}}</td>
+          <td class="text-nowrap" data-title="'state'|translate" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
 
-          <td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
       </table>
       </div>

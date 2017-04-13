@@ -3,8 +3,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">用户管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'userManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -13,20 +13,20 @@
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">用户名</label>
+      <label class="control-label">{{'userName'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="ssn" class="form-control " ng-model="userMngController.userinfo.ssn"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">状态</label>
+      <label class="control-label">{{'state'|translate}}</label>
     </div>
     <div class="col-md-3">
       <ui-select name="status" ng-model="userMngController.userinfo.status" theme="bootstrap"
                  ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="状态">{{$select.selected.desc}}
+        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
         </ui-select-match>
         <ui-select-choices repeat="userinfoStatus in userMngController.userinfoStatusList">
           <div ng-bind-html="userinfoStatus.desc | highlight: $select.search"></div>
@@ -37,19 +37,19 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="userMngController.query(null,null,null,userMngController.userinfo)">查询
+              ng-click="userMngController.query(null,null,null,userMngController.userinfo)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">所属组织</label>
+      <label class="control-label">{{'organisation'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="userMngController.org.label" name="org" readonly required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="userMngController.org.label" name="org" readonly required/>
           <span class="input-group-btn">
              <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="userMngController.openTreeInfo()">
@@ -61,7 +61,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-1">
-      <span class="label label-info pull-left" style="margin-top: 6px;">用户总数:  {{userMngController.page.totalElements}}</span>
+      <span class="label label-info pull-left" style="margin-top: 6px;">{{'totalNumbeOfUsers'|translate}}:  {{userMngController.page.totalElements}}</span>
     </div>
     <div class="col-md-6">
       <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
@@ -73,7 +73,7 @@
       <a class="btn btn-default pull-right"
          presentation-href="privilige:priviligeOper"
          ng-click="userMngController.addUser()">
-        <i class="fa fa-plus"></i> 增加
+        <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
 
       <a class="btn btn-default pull-right"
@@ -99,7 +99,7 @@
               <input type="checkbox" ng-checked="userMngController.isSelected(userinfo.id)"
                      ng-click="userMngController.updateSelection($event,userinfo.id)" ng-model="userinfo.checked">
             </td>
-            <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
+            <td class="text-nowrap" data-title="'userName'|translate" sortable="'ssn'">{{userinfo.ssn}}</td>
           </tr>
         </table>
       </div>
@@ -108,37 +108,37 @@
 
         <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="userinfo in $data">
-            <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
-            <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{userinfo.organizationDto.label}}</td>
-            <td class="text-nowrap" data-title="'手机号'" sortable="'mobile'">{{userinfo.mobile}}</td>
-            <td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>
-            <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
-            <td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'userName'|translate" sortable="'ssn'">{{userinfo.ssn}}</td>
+            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'label'">{{userinfo.organizationDto.label}}</td>
+            <td class="text-nowrap" data-title="'phoneNumber'|translate" sortable="'mobile'">{{userinfo.mobile}}</td>
+            <td class="text-nowrap" data-title="'email'|translate" sortable="'email'">{{userinfo.email}}</td>
+            <td class="text-nowrap" data-title="'state'|translate" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
+            <td class="text-nowrap" data-title="'createTime'|translate" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <!--<td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
 
-            <td class="text-nowrap text-center"  data-title="'操作'" >
+            <td class="text-nowrap text-center"  data-title="'operation'|translate" >
               <button type="button" class="btn btn-default btn-xs"
                       presentation-href="user:superResetPassword"
-                      ng-click="userMngController.updatePassword(userinfo)">重置密码
+                      ng-click="userMngController.updatePassword(userinfo)">{{'resetPassword'|translate}}
               </button>
               <button type="button" class="btn  btn-success  btn-xs"
                       ng-if="userinfo.status===0" presentation-href="user:oper"
-                      ng-click="userMngController.statusEnable(userinfo,'lg')">启用
+                      ng-click="userMngController.statusEnable(userinfo,'lg')">{{'enabled'|translate}}
               </button>
               <button type="button" class="btn btn-danger btn-xs"
                       ng-if="userinfo.status===1" presentation-href="user:oper"
-                      ng-click="userMngController.statusDisable(userinfo)">禁止
+                      ng-click="userMngController.statusDisable(userinfo)">{{'forbidden'|translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
-                      ng-click="userMngController.updateUserInfo(userinfo)">修改
+                      ng-click="userMngController.updateUserInfo(userinfo)">{{'alter'|translate}}
               </button>
 
               <button type="button" class="btn btn-default btn-xs"  presentation-href="role:roleUserList"
-                      ng-click="userMngController.userRoleManage(userinfo,'lg')">隶属角色
+                      ng-click="userMngController.userRoleManage(userinfo,'lg')">{{'affiliatedRole'|translate}}
               </button>
 
               <button type="button" class="btn btn-default btn-xs" presentation-href="operationLog:page"
-                      ng-click="userMngController.logQuery(userinfo,'lg')">操作日志
+                      ng-click="userMngController.logQuery(userinfo,'lg')">{{'operationLog'|translate}}
               </button>
             </td>
           </tr>

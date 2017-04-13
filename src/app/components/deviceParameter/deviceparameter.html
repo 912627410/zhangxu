@@ -6,8 +6,8 @@
         <small></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li class="active">设备参数</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+        <li class="active">{{'equipmentParameters'|translate}}</li>
     </ol>
 </section>
 
@@ -16,7 +16,7 @@
 <uib-tabset justified="true">
     <uib-tab  select="devivceparameterCtrl.loadDeviceMF()" presentation-href="config:mfPage">
         <uib-tab-heading>
-            生产厂家
+            {{'Manufacturer'|translate}}
         </uib-tab-heading>
         <div class="row" style="padding-top: 10px">
             <div class="col-md-3" ng-repeat="deviceMF in devivceparameterCtrl.deviceMFList">
@@ -51,7 +51,7 @@
                             <div class="pull-right">
                                 <span ng-if="deviceMF.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateDeviceMFStatus(deviceMF)">失效</button></span>
                                 <span ng-if="deviceMF.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateDeviceMFStatus(deviceMF)">激活</button></span>
-                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateMF(deviceMF)">修改</button>
+                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.updateMF(deviceMF)">{{'alter'|translate}}</button>
                             </div>
                         </code>
                     </div>
@@ -61,11 +61,11 @@
         <div class="row">
             <div class="col-md-9"></div>
             <a class="btn btn-primary" style="width: 15%" presentation-href="config:mfOper" ng-click="devivceparameterCtrl.newMF()">
-                <i class="fa fa-plus"></i> 增加
+                <i class="fa fa-plus"></i> {{'add'|translate}}
             </a>
         </div>
     </uib-tab>
-    <uib-tab heading="类型" select="devivceparameterCtrl.loadDeviceType()" presentation-href="config:devicetypePage">
+    <uib-tab heading="{{'type'|translate}}" select="devivceparameterCtrl.loadDeviceType()" presentation-href="config:devicetypePage">
         <div class="row" style="padding-top: 10px">
             <div class="col-md-3" ng-repeat="deviceType in devivceparameterCtrl.deviceTypeList">
                 <div class="box box-success">
@@ -81,7 +81,7 @@
                             <div class="pull-right">
                                 <span ng-if="deviceType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceTypeStatus(deviceType)">失效</button></span>
                                 <span ng-if="deviceType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceTypeStatus(deviceType)">激活</button></span>
-                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceType(deviceType)">修改</button>
+                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.updateDeviceType(deviceType)">{{'alter'|translate}}</button>
                             </div>
                         </code>
                     </div>
@@ -91,11 +91,11 @@
         <div class="row">
             <div class="col-md-9"></div>
             <a class="btn btn-primary" style="width: 15%" presentation-href="config:devicetypeOper" ng-click="devivceparameterCtrl.newDeviceType()">
-                <i class="fa fa-plus"></i> 增加
+                <i class="fa fa-plus"></i>{{'add'|translate}}
             </a>
         </div>
     </uib-tab>
-    <uib-tab heading="驱动类型" select="devivceparameterCtrl.loadDevicePowerType()" presentation-href="config:devicepowertypePage">
+    <uib-tab heading="{{'driveType'|translate}}" select="devivceparameterCtrl.loadDevicePowerType()" presentation-href="config:devicepowertypePage">
         <div class="row" style="padding-top: 10px">
             <div class="col-md-3" ng-repeat="devicePowerType in devivceparameterCtrl.devicePowerTypeList">
                 <div class="box box-success">
@@ -111,7 +111,7 @@
                             <div class="pull-right">
                                 <span ng-if="devicePowerType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">失效</button></span>
                                 <span ng-if="devicePowerType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">激活</button></span>
-                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updatePowerType(devicePowerType)">修改</button>
+                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.updatePowerType(devicePowerType)">{{'alter'|translate}}</button>
                             </div>
                         </code>
                     </div>
@@ -121,11 +121,11 @@
         <div class="row">
             <div class="col-md-9"></div>
             <a class="btn btn-primary" style="width: 15%" presentation-href="config:devicepowertypeOper" ng-click="devivceparameterCtrl.newPowerType()">
-                <i class="fa fa-plus"></i> 增加
+                <i class="fa fa-plus"></i> {{'add'|translate}}
             </a>
         </div>
     </uib-tab>
-    <uib-tab heading="高度" select="devivceparameterCtrl.loadDeviceHeightType()" presentation-href="config:deviceheighttypePage">
+    <uib-tab heading="{{'highlyType'|translate}}" select="devivceparameterCtrl.loadDeviceHeightType()" presentation-href="config:deviceheighttypePage">
         <div class="row" style="padding-top: 10px">
             <div class="col-md-3" ng-repeat="deviceHeightType in devivceparameterCtrl.deviceHeightTypeList">
                 <div class="box box-success">
@@ -141,7 +141,7 @@
                             <div class="pull-right">
                                 <span ng-if="deviceHeightType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateDeviceHeightTypeStatus(deviceHeightType)">失效</button></span>
                                 <span ng-if="deviceHeightType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateDeviceHeightTypeStatus(deviceHeightType)">激活</button></span>
-                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateHeightType(deviceHeightType)">修改</button>
+                                <button type="button" class="btn btn-primary btn-xs" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.updateHeightType(deviceHeightType)">{{'alter'|translate}}</button>
                             </div>
                         </code>
                     </div>
@@ -151,11 +151,10 @@
         <div class="row">
             <div class="col-md-9"></div>
             <a class="btn btn-primary" style="width: 15%" presentation-href="config:deviceheighttypeOper" ng-click="devivceparameterCtrl.newHeightType()">
-                <i class="fa fa-plus"></i> 增加
+                <i class="fa fa-plus"></i> {{'add'|translate}}
             </a>
         </div>
     </uib-tab>
-
 
 
 </uib-tabset><!-- /.col -->
