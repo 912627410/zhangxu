@@ -14,14 +14,14 @@
       <div class="input-group input-group-sm">
         <input type="text" class="form-control" ng-model="orgMngCtrl.searchText" placeholder="Search" >
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="orgMngCtrl.search(orgMngCtrl.searchText)">搜索</button>
+          <button class="btn btn-default" type="button" ng-click="orgMngCtrl.search(orgMngCtrl.searchText)">{{'search'|translate}}</button>
           <button class="btn btn-default" type="button" ng-click="orgMngCtrl.reset(orgMngCtrl.searchText)">{{'reset'|translate}}</button>
         </span>
       </div>
     </div>
     <div class="col-md-7 pull-right" >
-      <div class="btn btn-warning" type="button" presentation-href="org:update" ng-click="orgMngCtrl.update()">修改</div>
-      <div class="btn btn-danger" type="button" presentation-href="org:add" ng-click="orgMngCtrl.new()">新增</div>
+      <div class="btn btn-warning" type="button" presentation-href="org:update" ng-click="orgMngCtrl.updateOrg()">修改</div>
+      <div class="btn btn-danger" type="button" presentation-href="org:add" ng-click="orgMngCtrl.addOrg()">新增</div>
     </div>
 
   </div>
