@@ -478,7 +478,8 @@
   "includePrivilige":"包含权限",
   "update":"更新",
   "priviligeName":"权限名",
-  "totalNumberOfPrivilige":"权限总数"
+  "totalNumberOfPrivilige":"权限总数",
+  "installTime":"录入时间"
 
 
 

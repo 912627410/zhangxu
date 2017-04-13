@@ -114,10 +114,14 @@
             <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
 
           </td>
+
           <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
           <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'installTime'|translate" sortable="'installTime'">{{machine.installTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'allocateTime'|translate" sortable="'moveTime'">{{machine.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
+
             <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{'alter'| translate}}
             </button>

@@ -483,7 +483,8 @@
   "includePrivilige":"Include privilige",
   "update":"Update",
   "priviligeName":"Privilige Name",
-  "totalNumberOfPrivilige":"Total number of privilige"
+  "totalNumberOfPrivilige":"Total number of privilige",
+  "installTime":"Install time"
 
 
 
