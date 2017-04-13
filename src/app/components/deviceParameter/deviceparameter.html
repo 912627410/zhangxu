@@ -158,22 +158,4 @@
 
 
 
-    <uib-tab heading="组织管理" presentation-href="config:organazitionPage">
-        <div>
-            <div style="width: 30%;">
-                <abn-tree tree-data="devivceparameterCtrl.my_data" tree-control="treeController" on-select="devivceparameterCtrl.my_tree_handler(branch);" expand-level="4"></abn-tree>
-            </div>
-            <div class="row">
-                <div class="col-md-7"></div>
-                <a class="btn btn-primary" style="width: 6%"  ng-click="devivceparameterCtrl.addOrg()">
-                    <i class="fa fa-plus"></i> 增加
-                </a>
-                <a class="btn btn-warning" style="width: 6%"  ng-click="devivceparameterCtrl.updateOrg()">
-                    <i class="fa fa-pencil"></i> 修改
-                </a>
-            </div>
-        </div>
-    </uib-tab>
-
-
 </uib-tabset><!-- /.col -->

@@ -9,30 +9,6 @@
         var vm = this;
         vm.operatorInfo = $rootScope.userInfo;
 
-        var rootParent={id:0}; //默认根节点为0
-        //通过后台返回的结构生成json tree
-        vm.unflatten=function( array, parent, tree ){
-            tree = typeof tree !== 'undefined' ? tree : [];
-            parent = typeof parent !== 'undefined' ? parent : { id: 0 };
-            var children = _.filter( array, function(child) {
-                return child.parentId == parent.id;
-            });
-
-            if( !_.isEmpty( children )  ){
-                if( parent.id == 0){
-                    tree = children;
-
-                }else{
-                    parent['children'] = children
-                }
-                _.each( children, function( child ){ vm.unflatten( array, child,null ) } );
-            }
-
-
-            //alert("tree="+tree);
-            return tree;
-        };
-
 
         vm.loadDeviceMF = function(){
             if (!permissions.getPermissions("config:mfPage")) {
@@ -97,61 +73,6 @@
 
             }
         };
-
-//生成局部组织树
-        vm.loadLocalOrgTree = function () {
-            if (!permissions.getPermissions("config:organazitionPage")) {
-                return;
-            }
-
-            if(vm.operatorInfo){
-                var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL,"QUERY");
-                rspData.then(function (data) {
-                    var orgParent = rootParent;
-                    if(vm.operatorInfo.userdto.organizationDto!=null){
-                        orgParent.id=vm.operatorInfo.userdto.organizationDto.id;
-                        rootParent.id=orgParent.id;
-                    }
-                    var list=data;
-                    for(var i=0;i<list.length;i++){
-                        if(list[i].id==rootParent.id){
-                            list[i].parentId=0;
-                            break;
-                        }
-                    }
-                  $rootScope.orgChart = vm.unflatten(list);
-                  $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
-
-                  vm.orgShow();
-                },function (reason) {
-                    Notification.error('获取组织机构信息失败');
-                })
-            }
-        }
-        vm.showOrgTree = false;
-
-        vm.openOrgTree = function(){
-            vm.showOrgTree = !vm.showOrgTree;
-        }
-
-        vm.my_tree_handler = function(branch) {
-            $scope.$emit("OrgSelectedEvent",branch);
-            vm.selectedOrg = branch;
-        };
-
-        vm.user_tree_handler = function(eventName,branch) {
-            $scope.$emit(eventName,branch);
-        };
-
-        vm.orgShow = function () {
-            if ($scope.orgChart && $scope.orgChart.length > 0){
-                vm.my_data=[$scope.orgChart[0]];
-            }
-            else{
-                Notification.error('获取组织机构信息失败');
-            }
-        };
-        vm.orgShow();
 
         vm.animationsEnabled = true;
         vm.toggleAnimation = function () {
@@ -432,102 +353,5 @@
             }
         };
 
-
-
-
-//new org
-        vm.addOrg = function (size) {
-            var modalInstance = $uibModal.open({
-                animation: vm.animationsEnabled,
-                templateUrl: 'app/components/deviceParameter/newOrg.html',
-                controller: 'addOrgController as addOrgCtrl',
-                size: size,
-                backdrop: false,
-                resolve: {
-                    selectedOrg: function () {
-                        return vm.selectedOrg;
-
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (newOrg) {
-              vm.loadLocalOrgTree();
-            }, function () {
-                //取消
-            });
-        };
-//update org
-        vm.updateOrg = function (size) {
-            if(null == vm.selectedOrg) {
-              Notification.warning("请选择更新的组织");
-              return;
-            }
-            if(vm.selectedOrg.parentId=="0"){
-                Notification.error("不可以更新根组织!");
-            }else{
-                var url = ORG_ID_URL+"?id=" + vm.selectedOrg.parentId;
-                var orgPromise = serviceResource.restCallService(url,"GET");
-                orgPromise.then(function (data) {
-                    var parentOrg = data.content;
-                    var modalInstance = $uibModal.open({
-                        animation:vm.animationsEnabled,
-                        templateUrl:'app/components/deviceParameter/updateOrg.html',
-                        controller: 'updateOrgController as updateOrgCtrl',
-                        size: size,
-                        backdrop: false,
-                        resolve: {
-                            selectedOrg: function () {
-                                return vm.selectedOrg;
-                            },
-                            parentOrg:function () {
-                                return parentOrg;
-                            }
-                        }
-                    });
-
-                    modalInstance.result.then(function () {
-                        vm.loadLocalOrgTree();
-                        //when close
-                    }, function () {
-                        //取消
-                    });
-                },function (reason) {
-
-                });
-            }
-        };
-//delete org
-        /*
-        vm.deleteOrg = function () {
-            if(vm.selectedOrg==null){
-                Notification.error("请选择要删除的组织!");
-            }else {
-                var url = ORG_PARENTID_URL+"?parentId=" + vm.selectedOrg.id;
-                var orgPromise = serviceResource.restCallService(url,"QUERY");
-                orgPromise.then(function (data) {
-                    var childOrg=data;
-                    console.log(childOrg.length);
-                    if(childOrg.length>'0'){
-                        Notification.error("该组织下存在子组织,无法删除!");
-                    }else {
-                        var restPromise = serviceResource.restDeleteRequest(ORG_URL,vm.selectedOrg);
-                        restPromise.then(function (data) {
-                            Notification.success("删除部门成功");
-                        },function (reason) {
-                            Notification.error("删除部门失败");
-                        })
-                    }
-                },function (reason) {
-
-                });
-            }
-            modalInstance.result.then(function (selectedItem) {
-                vm.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        };
-    */
     }
 })();

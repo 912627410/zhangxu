@@ -43,20 +43,15 @@
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
-
           vm.controllerInitialization(data.content);
 
           if (vm.highchartsAir != null) {
 
             vm.highchartsAir.series[0].data = [vm.deviceinfo.pressureMeter];
           }
-          if (vm.highchartsWater != null) {
-
-            vm.highchartsWater.series[0].data = [vm.deviceinfo.engineTemperature];
-          }
           if (vm.highchartsRpm != null) {
 
-            vm.highchartsRpm.series[0].data = [vm.deviceinfo.enginRotate];
+            vm.highchartsRpm.series[0].data = [vm.deviceinfo.engineRotate];
           }
           if (vm.highchartsOil != null) {
 
@@ -69,7 +64,7 @@
         }
       )
     }
-
+    vm.refreshCurrentDeviceInfo(deviceinfo.id);
     //初始化controller
     vm.controllerInitialization = function (deviceinfo) {
       vm.deviceinfo = deviceinfo;
