@@ -144,18 +144,33 @@
                 </a>
               </li>
               <li>
-              <a ui-sref="home.machineworklive"
-              presentation-href="dataAnalysis:machineworklive">
-              <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
-              </a>
+                <a ui-sref="home.machineworklive"
+                  presentation-href="dataAnalysis:machineworklive">
+                  <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="dataAnalysis:vehicleStatistics">
+              <i class="fa fa-car"></i>
+              <span>车辆统计</span>
+              <span class="glyphicon pull-right" ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: vehicleStatistics}">
+              <li>
+                <a ui-sref="home.attendance" presentation-href="report:machineAttendance">
+                  <i class="fa fa-bookmark"></i> <span>车辆出勤率</span>
+                </a>
               </li>
             </ul>
           </li>
 
           <li>
           <a ui-sref="home.MachineClustering"
-          presentation-href="dataAnalysis:clustering">
-          <i class="fa ion-gear-b"></i> <span>机器聚类探索</span>
+            presentation-href="dataAnalysis:clustering">
+            <i class="fa ion-gear-b"></i> <span>机器聚类探索</span>
           </a>
           </li>
 
