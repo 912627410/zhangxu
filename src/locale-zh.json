@@ -406,7 +406,7 @@
   "totalLength(KM)":"总长度(KM)",
   "IncomePerTonOre":"收入(每吨矿)",
   "fleetName":"车队名称",
-  "totalNumberOfTeams":"车队总数",
+  "totalNumberOfFleet":"车队总数",
   "fleetNo":"车队编号",
   "parameterName":"参数名称",
   "parameterValue":"参数值",
@@ -479,7 +479,8 @@
   "update":"更新",
   "priviligeName":"权限名",
   "totalNumberOfPrivilige":"权限总数",
-  "installTime":"录入时间"
+  "installTime":"录入时间",
+  "Mpa":"Mpa"
 
 
 

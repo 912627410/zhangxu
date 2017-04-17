@@ -194,7 +194,7 @@
           '<span style="font-size:12px;color:silver"></span></div>'
         },
         tooltip: {
-          valueSuffix: null
+          valueSuffix: languages.findKey('Mpa') + ''
         }
       }],
 
