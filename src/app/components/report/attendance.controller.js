@@ -120,6 +120,10 @@
         dateLength = Math.round((queryDate.endDate - queryDate.startDate)/3600/1000/24);
       }
 
+      if(vm.querySubOrg){
+        restCallURL += "&parentOrgId=" + queryOrg.id;
+      }
+
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         var deviceList = data.content;
