@@ -250,7 +250,7 @@
     }
 
 
-    //批量设置为已处理
+    //批量调拨
     vm.batchMoveOrg = function () {
 
       if (vm.selected.length == 0) {
@@ -286,8 +286,11 @@
         })
         vm.allot=null;
         vm.selected=[]; //把选中的设备设置为空
-        Notification.success("调拨车辆成功!");
-
+        if (data.result){
+          Notification.success("调拨车辆成功!"+data.result);
+        }else {
+          Notification.success("调拨车辆成功!");
+        }
       }, function (reason) {
         Notification.error("调拨车辆出错!");
       });

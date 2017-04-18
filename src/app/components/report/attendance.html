@@ -19,7 +19,7 @@
     <div class="col-md-1">
       <label class="control-label text-nowrap">开始时间:</label>
     </div >
-    <div class="col-md-2">
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text"
                class="form-control"
@@ -39,10 +39,10 @@
         </span>
       </p>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-offset-2 col-md-1">
       <label class="control-label text-nowrap">结束时间: </label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text"
                class="form-control"
@@ -62,10 +62,12 @@
         </span>
       </p>
     </div>
+  </div>
+  <div class="row form-group">
     <div class="col-md-1">
       <label class="control-label">所属组织:</label>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="queryOrg.label" name="org" readonly required/>
         <span class="input-group-btn">
@@ -76,14 +78,14 @@
           </span>
       </p>
     </div>
-    <div class="col-md-2" style="width: 110px;">
+    <div class="col-md-2">
       <label class="control-label" style="font-size: 8px;">包含子组织</label>
       <input type="checkbox" ng-model="attendanceCtrl.querySubOrg">
     </div>
-    <div class="col-md-1" style="width: 170px;">
-      <a  class="btn"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">{{'query'|translate}}</a>
-&nbsp;&nbsp;
-      <a  class="btn"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出</a>
+    <div class="col-md-offset-4 col-md-2">
+      <button  class="btn btn-primary"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">{{'query'|translate}}</button>
+      &nbsp;&nbsp;
+      <button  class="btn btn-warning"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出</button>
     </div>
   </div>
 
