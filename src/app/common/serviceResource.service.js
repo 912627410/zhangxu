@@ -307,9 +307,9 @@
           var map = new AMap.Map(mapId, {
             resizeEnable: true,
             center: localCenterAddr,
-            zooms: [localZoomSize, 18]
+            zooms: [4, 18]
           });
-          map.setZoom(1);
+          map.setZoom(localZoomSize);
           map.plugin(['AMap.ToolBar'], function () {
             map.addControl(new AMap.ToolBar());
           });
