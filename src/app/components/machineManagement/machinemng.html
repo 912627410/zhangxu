@@ -16,15 +16,15 @@
 <section class="content">
 
   <div class="row form-group">
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">{{'machineNumber'| translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
              placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
-
-    <div class="col-md-2">
+    <div class="col-md-2"></div>
+    <div class="col-md-1">
       <label class="control-label">{{'deviceNum'|translate}}:</label>
     </div>
     <div class="col-md-3">
@@ -42,7 +42,7 @@
   </div>
 
   <div class="row form-group">
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-3">
@@ -58,6 +58,10 @@
       </p>
     </div>
     <div class="col-md-2">
+      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+      <input type="checkbox" checked="checked" ng-model="machineMngCtrl.querySubOrg"/>
+    </div>
+    <div class="col-md-1">
       <label class="control-label">{{'allotOrganization'|translate}}:</label>
     </div>
     <div class="col-md-3">
@@ -93,6 +97,10 @@
          ng-click="machineMngCtrl.uploadMachine('lg')">
         <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
+      <a class="btn btn-default pull-right" presentation-href="machine:export"
+         title="Export Table" ng-click="machineMngCtrl.excelExport(machineMngCtrl.org)" >
+        <i class="glyphicon glyphicon-new-window" ></i> {{'batchExport'|translate}}
+      </a>
     </div>
   </div>
   <div class="row form-group" style="padding: 10px">
@@ -117,6 +125,7 @@
 
           <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+          <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">{{machine.machineState }}</td>
           <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
           <td class="text-nowrap" data-title="'installTime'|translate" sortable="'installTime'">{{machine.installTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'allocateTime'|translate" sortable="'moveTime'">{{machine.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

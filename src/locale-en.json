@@ -489,7 +489,10 @@
   "installTime":"Install time",
   "Mpa":"Mpa",
   "machineStatistics":"Machine Statistics",
-  "machineAttendance":"Machine Attendance"
+  "machineAttendance":"Machine Attendance",
+  "weightData":"Weight data"
+
+
 
 
 
