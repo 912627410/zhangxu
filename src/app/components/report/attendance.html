@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 统计分析</a></li>
-    <li class="active">车辆出勤率</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'statisticalAnalysis'|translate}}</a></li>
+    <li class="active">{{'machineAttendance'|translate}}</li>
   </ol>
 </section>
 
@@ -17,7 +17,7 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label text-nowrap">开始时间:</label>
+      <label class="control-label text-nowrap">{{'startingTime'|translate}}:</label>
     </div >
     <div class="col-md-3">
       <p class="input-group">
@@ -40,7 +40,7 @@
       </p>
     </div>
     <div class="col-md-offset-2 col-md-1">
-      <label class="control-label text-nowrap">结束时间: </label>
+      <label class="control-label text-nowrap">{{'endTime'|translate}}: </label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -65,11 +65,11 @@
   </div>
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">所属组织:</label>
+      <label class="control-label">{{'organisation'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="queryOrg.label" name="org" readonly required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="queryOrg.label" name="org" readonly required/>
         <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="attendanceCtrl.openTreeInfo()">
@@ -79,13 +79,13 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label" style="font-size: 8px;">包含子组织</label>
+      <label class="control-label" style="font-size: 8px;">{{'subordinateOrganization'|translate}}</label>
       <input type="checkbox" ng-model="attendanceCtrl.querySubOrg">
     </div>
     <div class="col-md-offset-4 col-md-2">
       <button  class="btn btn-primary"  presentation-href="report:machineAttendance" ng-click="attendanceCtrl.query(queryOrg, queryDate)">{{'query'|translate}}</button>
       &nbsp;&nbsp;
-      <button  class="btn btn-warning"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">导出</button>
+      <button  class="btn btn-warning"  presentation-href="deviceReport:excelExport" ng-click="attendanceCtrl.exportHistory(queryOrg, queryDate)">{{'export'|translate}}<</button>
     </div>
   </div>
 

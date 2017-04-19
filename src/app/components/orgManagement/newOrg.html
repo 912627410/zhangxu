@@ -1,15 +1,15 @@
 <div class="modal-header">
-  <h3 class="modal-title">新增组织</h3>
+  <h3 class="modal-title">{{'newOrganization'|translate}}</h3>
 </div>
 
 <form name="newOrgForm" class="form-horizontal" ng-submit="addOrgCtrl.ok(addOrgCtrl.newOrg)">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label class="col-sm-2 control-label">上级组织:</label>
-        <div class="col-sm-10">
+        <label class="col-sm-4 control-label">{{'parentOrganization' | translate}}:</label>
+        <div class="col-sm-8">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="上级部门" ng-model="addOrgCtrl.selectedOrg.label" name="org" readonly required />
+            <input type="text" id="org" class="form-control" placeholder="{{'parentOrganization' | translate}}" ng-model="addOrgCtrl.selectedOrg.label" name="org" readonly required />
             <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="addOrgCtrl.openOrgTree()">
                     <i class="fa fa-sitemap"></i>
@@ -24,28 +24,28 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">组织名称:</label>
-        <div class="col-sm-10">
+        <label class="col-sm-4 control-label">{{'organizationName' | translate}}:</label>
+        <div class="col-sm-8">
           <input type="text" id="name" class="form-control" ng-model="addOrgCtrl.newOrg.name" placeholder="insert your org name"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">组织标识:</label>
-        <div class="col-sm-10">
+        <label class="col-sm-4 control-label">{{'organizationLabel' | translate}}:</label>
+        <div class="col-sm-8">
           <input type="text" id="label" class="form-control" ng-model="addOrgCtrl.newOrg.label" />
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">组织简称:</label>
-        <div class="col-sm-10">
+        <label class="col-sm-4 control-label">{{'organizationAbbreviation' | translate}}:</label>
+        <div class="col-sm-8">
           <input type="text" id="orgSimpleName" class="form-control" ng-model="addOrgCtrl.newOrg.orgSimpleName"/>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="submit">确认</button>
-    <button class="btn btn-warning" type="button" ng-click="addOrgCtrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="submit">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="addOrgCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

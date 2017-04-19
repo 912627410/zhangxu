@@ -473,6 +473,8 @@
   "search":"Search",
   "organizationInformation":"Organization Information",
   "organizationName":"Organization name",
+  "organizationLabel":"Organization Label",
+  "newOrganization":"New Organization",
   "organizationAbbreviation":"Organization abbreviation",
   "legalRepresentative":"Legal representative",
   "fax":"Fax",
@@ -485,7 +487,9 @@
   "priviligeName":"Privilige Name",
   "totalNumberOfPrivilige":"Total number of privilige",
   "installTime":"Install time",
-  "Mpa":"Mpa"
+  "Mpa":"Mpa",
+  "machineStatistics":"Machine Statistics",
+  "machineAttendance":"Machine Attendance"
 
 
 
