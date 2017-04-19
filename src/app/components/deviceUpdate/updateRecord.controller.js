@@ -9,9 +9,11 @@
     .module('GPSCloud')
     .controller('updateRecordController', updateRecordController);
 
-  function updateRecordController($rootScope, Notification, NgTableParams, UPDATE_RECORD_URL, DEFAULT_SIZE_PER_PAGE, UPDATE_RECORD_SORT_BY, serviceResource) {
+  function updateRecordController($rootScope, $filter, Notification, NgTableParams, ngTableDefaults, UPDATE_RECORD_URL, DEFAULT_SIZE_PER_PAGE, UPDATE_RECORD_SORT_BY, serviceResource) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     vm.query=function(page, size, sort, record){
       var restCallURL = UPDATE_RECORD_URL;
@@ -23,7 +25,7 @@
       restCallURL += "&search_EQ_tableName=DeviceUpdate";
 
       if(null != vm.queryDeviceNum&&null != ""){
-        restCallURL += "&search_LIKE_fieldName=" + (vm.queryDeviceNum);
+        restCallURL += "&search_LIKES_fieldName=" + $filter('uppercase')(vm.queryDeviceNum);
       }
 
       var updateRecord = serviceResource.restCallService(restCallURL, "GET");
