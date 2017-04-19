@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION) {
+  function machineMngController($rootScope, $scope, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //所属组织
@@ -160,6 +160,45 @@
         //取消
       });
     };
+
+    //导出至Excel
+    vm.excelExport=function (org) {
+
+      if (org&&org.id) {
+        var filterTerm = "id=" + org.id;
+        var restCallURL = MACHINE_EXCELEXPORT;
+        if (filterTerm){
+          restCallURL += "?";
+          restCallURL += filterTerm;
+        }
+        if(vm.querySubOrg) {
+          restCallURL += "&parentOrgId="+ org.id;
+        }
+
+        $http({
+          url: restCallURL,
+          method: "GET",
+          responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+          var objectUrl = window.URL.createObjectURL(blob);
+
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: objectUrl,
+            target: '_blank',
+            download: org.label +'.xls'
+          })[0].click();
+
+        }).error(function (data, status, headers, config) {
+          Notification.error("下载失败!");
+        });
+      }else {
+        Notification.error("请选择所属组织!");
+      }
+
+    }
+
 
 
 
