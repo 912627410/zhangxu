@@ -1771,8 +1771,8 @@
        }
       }
       //默认显示综合数据分析
-      loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
-      loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+      //loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+      //loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
     }
     /*状态量选择*/
     vm.selectSensor = function (checkedRad) {
