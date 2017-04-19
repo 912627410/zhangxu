@@ -468,6 +468,8 @@
   "search":"搜索",
   "organizationInformation":"组织信息",
   "organizationName":"组织名称",
+  "organizationLabel":"组织标识",
+  "newOrganization":"新增组织",
   "organizationAbbreviation":"组织简称",
   "legalRepresentative":"法人代表",
   "fax":"传真",
@@ -480,10 +482,12 @@
   "priviligeName":"权限名",
   "totalNumberOfPrivilige":"权限总数",
   "installTime":"录入时间",
+  "Mpa":"Mpa",
+  "machineStatistics":"车辆统计",
+  "machineAttendance":"车辆出勤率",
+  "weightData":"称重数据"
 
-  "weightData":"称重数据",
 
-  "Mpa":"Mpa"
 
 
 
