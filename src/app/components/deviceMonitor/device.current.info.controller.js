@@ -420,7 +420,7 @@
 
     //历史数据tab
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
+    startDate.setDate(startDate.getDate() - 1);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
@@ -1604,31 +1604,18 @@
     vm.checkedRad = 'DASHBOARD';
     /*初始化图表*/
     vm.initConfig = function (deviceNum) {
+      /*元数据展示*/
       vm.chartConfig = {
         options: {
           chart: {
-            type: 'line',
             zoomType: 'xy',
           }
         },
         title: {text: '设备工作分析'},
-        //x轴坐标显示
-        xAxis: {
-          title: {
-            text: '日期'
-          },
-          categories:[],
-          labels: {
-
-          }
-        },
-        //y轴坐标显示
-        yAxis: {title: {text: ''}},
-        series: [{
-          name: '启动次数',
-          data:[]
-        }]
+        xAxis: [],
+        yAxis: []
       }
+      /*工作小时数*/
       vm.workTimeChart={
         options: {
           chart: {
@@ -1659,9 +1646,10 @@
         }],
         size: {
           width: 418,
-          height: 250
+          height: 270
         }
       }
+      /*启动次数配置*/
       vm.startTimesChart={
         options: {
           chart: {
@@ -1690,7 +1678,38 @@
         }],
         size: {
           width: 422,
-          height: 250
+          height: 270
+        }
+      }
+      /*设备单次工作时长分析*/
+      vm.singleWorkHours={
+        options: {
+          chart: {
+            type: 'scatter',
+            zoomType: 'xy'
+          }
+        },
+        title: {
+          text: '设备单次工作时长分析',
+        },
+        //x轴坐标显示
+        xAxis: {
+          title: {
+            text: '日期'
+          },
+          categories:[],
+          labels: {
+
+          }
+        },
+        //y轴坐标显示
+        yAxis: {title: {text: '单位/次'}},
+        series: [{
+          name: '启动次数',
+          data:[]
+        }],
+        size: {
+          height: 400
         }
       }
     }
@@ -1744,58 +1763,85 @@
 
     /*使用折线图展现设备的元数据*/
     var loadDeviceMetadata = function (sensor) {
+      vm.chartConfig = {};
       var rspPromise = $resource(ANALYSIS_POSTGRES, {}, {'analysisPostgres': {method: 'POST', isArray: true}});
       rspPromise.analysisPostgres(sensor, function (sensorData) {
+        //判断数据
         if (sensorData == null || sensorData.length == 0) {
           Notification.error("暂无数据！");
           return;
         }
-        var categoriesdata = {};
-        for (var i = sensorData.length - 1; i >= 0; i--) {
+        //时间轴
+        var categoriesdata2=[];
+        for (var i = 0; i < sensorData.length; i++) {
           if (sensorData[i].name == 'locateDateTime') {
-            categoriesdata = (sensorData[i].data)
-            break;
+            var categoriesdata =sensorData.splice(i,1);
+            for (var i = 0; i < categoriesdata[0].data.length; i++) {
+              categoriesdata2.push($filter('date')(new Date(categoriesdata[0].data[i]), 'yyyy-MM-dd HH:mm:ss'));
+            }
+
           }
         }
+        //初始化配置
         vm.chartConfig = {
           options: {
             chart: {
-              type: 'line',
               zoomType: 'xy'
-            },
-            tooltip: {
-              formatter: function () {
-                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss');
-                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + '' + '<br>';
-              }
             }
           },
           title: {text: '设备工作分析'},
           //x轴坐标显示
           xAxis: {
-            title: {
-              text: '日期'
-            },
-            categories: categoriesdata,
-            labels: {
-              formatter: function () {
-                return $filter('date')(new Date(this.value), 'MM-dd HH:mm');
-              }
-            }
+            categories: categoriesdata2
           },
           //y轴坐标显示
-          yAxis: {title: {text: ''}},
-          series: []
+          yAxis: [],
+          legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 80,
+            verticalAlign: 'top',
+            y: 55,
+            floating: true
+          },
+          series:[]
         }
-
-        for (var i = 0; i < sensorData.length; i++) {
-          if (sensorData[i].name != 'locateDateTime') {
-            vm.chartConfig.series.push({
-              name: vm.sensorItem[sensorData[i].name],
-              data: sensorData[i].data
+        angular.forEach(sensorData, function(data,index,array){
+          //data等价于array[index]
+          var splitStr =vm.sensorItem[data.name].split("_")
+          var unit=splitStr[0];
+          var name=splitStr[1];
+          if (index%2==0){
+            vm.chartConfig.yAxis.push({
+              labels: {format: '{value}'+unit},
+              title: {text: name}
+            })
+          }else {
+            vm.chartConfig.yAxis.push({
+              labels: {format: '{value}'+unit},
+              title: {text: name},
+              opposite: true
             })
           }
-        }
+
+
+          if(index+1==sensorData.length){
+            vm.chartConfig.series.push({
+              name: name,
+              type: 'spline',
+              data: data.data,
+              tooltip: {valueSuffix: unit}
+            })
+          }else {
+            vm.chartConfig.series.push({
+              name: name,
+              type: 'spline',
+              yAxis: index+1,
+              data: data.data,
+              tooltip: {valueSuffix:unit}
+            })
+          }
+        });
 
       })
     }
@@ -1838,7 +1884,7 @@
           },
           size: {
             width: 416,
-            height: 250
+            height: 270
           }
         }
         for (var i = 0; i < sensorData.length; i++) {
@@ -1898,7 +1944,7 @@
           series: [],
           size: {
             width: 402,
-            height: 250
+            height: 270
           }
         }
         for (var i = 0; i < sensorData.length; i++) {
