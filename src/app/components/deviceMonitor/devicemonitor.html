@@ -170,7 +170,7 @@
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               <span ng-if="deviceinfo.versionNum=='A001'">{{deviceinfo.workDuration | convertToMins}}</span>
-              <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | number:2}}</span>
+              <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | convertToMins}}</span>
             </div>
           </div>
           <div class="row">
@@ -235,9 +235,11 @@
           <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
           <td  data-title="'workingHours'|translate" >
             <span ng-if="deviceinfo.versionNum=='A001'">{{deviceinfo.workDuration | convertToMins}}</span>
-            <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | number:2}}</span>
+            <span ng-if="deviceinfo.versionNum!='A001'">{{deviceinfo.totalDuration | convertToMins}}</span>
           </td>
-          <td  data-title="'整车时速'" sortable="'gpsSpeed'">{{deviceinfo.gpsSpeed |number:2}}</td>
+          <td  data-title="'machineSpeed'|translate" sortable="'gpsSpeed'">
+            <span ng-if="deviceinfo.gpsSpeed==null || deviceinfo.gpsSpeed==''"></span>
+            <span ng-if="deviceinfo.gpsSpeed!=null && deviceinfo.gpsSpeed!=''">{{deviceinfo.gpsSpeed |number:2}}km/h</span>
           <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1'">{{'hasBeenpositioning'|translate}}</span>
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'">{{'notLocate'|translate}}</span>
