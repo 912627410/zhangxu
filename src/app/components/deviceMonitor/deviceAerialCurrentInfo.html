@@ -1167,12 +1167,12 @@
                         </div>
                         <div class="row">
                           <div class="form-group">
-                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">短信内容</label>
+                          <label for="deviceNum" class="col-md-2 control-label text-nowrap">短信内容</label>
                           <div class="col-md-7">
                             <input type="text" id="setCollectIntMsg" readonly  class="form-control" placeholder="间隔时间短信内容"
                                    ng-model="deviceAerialCurrentInfoController.setCollectIntMsg" name="setCollectIntMsg"/>
                           </div>
-                          <div class="col-md-2">
+                          <div class="col-md-2 col-md-offset-1">
                             <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">查看</button>
                             <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">发送</button>
                           </div>
