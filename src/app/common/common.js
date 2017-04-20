@@ -392,12 +392,3 @@ function showHighLight(id,times){
 function addZero(str,length){
   return new Array(length - str.toString().length + 1).join("0") + str;
 }
-
-/**
- * 四舍五入保留n位小数
- * @param number 待操作数
- * @param n 目标位数
- */
-function reservendDecimal(number, n) {
-  return Math.round(number * Math.pow(10,n)) / Math.pow(10,n);
-}
