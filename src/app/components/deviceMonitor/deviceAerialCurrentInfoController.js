@@ -222,7 +222,7 @@
         })
 
         //检查短信参数
-        vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower) {
+        vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,catPhoneNumber, secInnerPower,vehicleStateCollect,chargerStateCollect) {
             if (type == null || devicenum == null) {
                 return false;
             }
@@ -240,6 +240,9 @@
             }
             //type == 8表示设置各间隔时间
             if (type == 8 && (secOutsidePower == null || secLocateInt == null || secInnerPower == null)) {
+                return false;
+            }
+            if (type == 11 && (vehicleStateCollect == null || chargerStateCollect == null )){
                 return false;
             }
             return true;
@@ -272,19 +275,20 @@
                 vm.setWorkIntMsg = sms;
             }else if(type == 9){
                 vm.setCatPhoneNumberMsg=sms;
-            }
-            else if(type == 10){
+            }else if(type == 10){
                 vm.terminalReset=sms;
+            } else if (type==11){
+                vm.setCollectIntMsg=sms;
             }
         }
 
         //得到短信内容
-        vm.viewSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber) {
-            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber) == false) {
+        vm.viewSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
             }
-            var restURL = VIEW_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+            var restURL = VIEW_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + devicenum;
             if (type == 5) {
                 restURL += "&host=" + host + "&port=" + port;
             }
@@ -298,6 +302,8 @@
                 restURL += "&secOutsidePower=" + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
             }else if(type == 9){
                 restURL += "&catPhoneNumber=" + catPhoneNumber;
+            }else if (type==11){
+              restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
             var rspData = serviceResource.restCallService(restURL, "GET");
             rspData.then(function (data) {
@@ -308,12 +314,12 @@
         }
 
         //发送短信
-        vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber) {
-            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber) == false) {
+        vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
             }
-            var restURL = SEND_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + vm.deviceinfo.deviceNum;
+            var restURL = SEND_SMS_EMCLOUD_URL + "?type=" + type + "&devicenum=" + devicenum;
             if (type == 5) {
                 restURL += "&host=" + host + "&port=" + port;
             }
@@ -328,6 +334,8 @@
             }
             else if(type == 9){
                 restURL += "&catPhoneNumber=" + catPhoneNumber;
+            }else if (type==11){
+                restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
             $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
                 .then(function () {

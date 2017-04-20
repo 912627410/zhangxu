@@ -916,7 +916,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="form-group">
                                 <label for="deviceNum" class="col-md-2 control-label text-nowrap">发动机通讯密码</label>
@@ -924,16 +923,18 @@
                                     <input type="text" readonly id="enginePassCode" class="form-control" placeholder="发动机通讯密码"
                                            ng-model="deviceAerialCurrentInfoController.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
                                 </div>
+                              <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定SIM号</label>
+                              <div class="col-md-4">
+                                <input type="text" readonly id="phoneNumber" class="form-control" placeholder="绑定SIM号"
+                                       ng-model="deviceAerialCurrentInfoController.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
+                              </div>
                             </div>
                         </div>
 
+                        <hr>
                         <div class="row">
                             <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">绑定SIM号</label>
-                                <div class="col-md-4">
-                                    <input type="text" readonly id="phoneNumber" class="form-control" placeholder="绑定SIM号"
-                                           ng-model="deviceAerialCurrentInfoController.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
-                                </div>
+
                                 <label ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" for="deviceNum" class="col-md-2 control-label text-nowrap">永久解锁密码</label>
                                 <div ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" class="col-md-4">
                                     <input type="text" readonly id="UnLockPass" ng-mouseover="UnLockPass = deviceUnLockFactor.unlockerPass" class="form-control text-red" placeholder="鼠标移动在输入框显示"
@@ -941,7 +942,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="form-group">
                                 <label for="deviceNum" class="col-md-2 control-label text-nowrap">启动锁车</label>
@@ -955,7 +955,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="form-group">
                                 <label for="deviceNum" class="col-md-2 control-label text-nowrap">取消锁车</label>
@@ -993,7 +992,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <hr>
                         <div class="row">
@@ -1073,6 +1071,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <hr>
                         <div class="row">
                             <div class="form-group">
@@ -1136,7 +1135,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="form-group">
                                 <label for="deviceNum" class="col-md-2 control-label text-nowrap">解锁</label>
@@ -1150,6 +1148,37 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!--车辆状态采样时间、充电信息采样时间设置begin-->
+                        <hr>
+                        <div class="row">
+                          <div class="form-group">
+                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">车辆状态采样时间(秒)</label>
+                          <div class="col-md-3">
+                            <input type="text" id="vehicleStateCollect" class="form-control" placeholder="车辆状态采样时间(秒)" validator="number"
+                                   ng-model="deviceAerialCurrentInfoController.vehicleStateCollect" name="vehicleStateCollect"/>
+                          </div>
+                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">充电信息采样时间(秒)</label>
+                          <div class="col-md-3">
+                            <input type="text" id="chargerStateCollect"  class="form-control" placeholder="充电信息采样时间(秒)" validator="number"
+                                   ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
+                          </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group">
+                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">短信内容</label>
+                          <div class="col-md-7">
+                            <input type="text" id="setCollectIntMsg" readonly  class="form-control" placeholder="间隔时间短信内容"
+                                   ng-model="deviceAerialCurrentInfoController.setCollectIntMsg" name="setCollectIntMsg"/>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">查看</button>
+                            <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">发送</button>
+                          </div>
+                        </div>
+                        </div>
+                        <!--车辆状态采样时间、充电信息采样时间设置end-->
                     </div>
                 </div>
             </uib-tab>
