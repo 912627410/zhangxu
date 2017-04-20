@@ -47,7 +47,7 @@
 
           if (vm.highchartsAir != null) {
 
-            vm.highchartsAir.series[0].data = [vm.deviceinfo.pressureMeter];
+            vm.highchartsAir.series[0].data = [Math.round(vm.deviceinfo.pressureMeter * 100) / 100];
           }
           if (vm.highchartsRpm != null) {
 
@@ -187,7 +187,7 @@
       title: languages.findKey('barometricPressure') + '',
       series: [{
         name: languages.findKey('barometricPressure') + '',
-        data: [vm.deviceinfo.pressureMeter],
+        data: [Math.round(vm.deviceinfo.pressureMeter * 100) / 100],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +

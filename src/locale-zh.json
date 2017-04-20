@@ -485,7 +485,8 @@
   "Mpa":"Mpa",
   "machineStatistics":"车辆统计",
   "machineAttendance":"车辆出勤率",
-  "weightData":"称重数据"
+  "weightData":"称重数据",
+  "machineSpeed":"整车时速"
 
 
 
