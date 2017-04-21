@@ -2563,6 +2563,10 @@
 
     //构造地图对象
     vm.initMap=function(mapId,zoomsize,centeraddr){
+
+      vm.lnglatShow = false;
+
+
       //初始化地图对象
       if (!AMap) {
         location.reload(false);
@@ -2953,6 +2957,8 @@
 
     //参数: 地图轨迹gps 数据
     vm.refreshMapTab = function(lineAttr){
+      vm.lnglatShow = true;
+
       $timeout(function(){
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           var marker, lineArr = [];
@@ -2965,6 +2971,13 @@
             zoom: 17
           });
           map.on("complete", completeEventHandler);
+
+          //为地图注册click事件获取鼠标点击出的经纬度坐标
+          var clickEventListener = map.on('click', function(e) {
+            document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+          });
+
+
           AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
             marker.moveAlong(lineArr, 500);
           }, false);
