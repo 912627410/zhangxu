@@ -502,7 +502,9 @@
   "loadingstarttime":"LoadingPoint start time",
   "loadingCompletetime":"LoadingPoint complete time",
   "bucketNumber":"Bucket Number",
-  "totalWeight(t)":"Total Weight(t)"
+  "totalWeight(t)":"Total Weight(t)",
+  "machineSpeed":"Machine speed"
+
 
 
 

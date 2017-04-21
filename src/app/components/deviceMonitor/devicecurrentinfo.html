@@ -1224,8 +1224,6 @@
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">切换</button>
                         </label>
-                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
-                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.workTimeOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp;天</label>
                         <highchart id="workTimeChart" title="平均工作时长"
                                    style="height:250px;"
                                    config="deviceCurrentInfoCtrl.workTimeChart">
@@ -1235,8 +1233,6 @@
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
                         </label>
-                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
-                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.startTimesOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp; 天</label>
                         <highchart id="startTimesChart" title="平均启动次数"
                                      style="height: 250px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
@@ -1245,16 +1241,15 @@
                     </div>
                     <div class="row">
                       <div class="col-xs-12">
-                       <!-- <label style="position: absolute;top: 12px;right: 80px;z-index: 99;"><input ng-model="deviceCurrentInfoCtrl.realtimeOptModel"  style="width: 50px;display: inline-block;"/></label>
-                        <highchart id="realtimeChart" title="实时分析"
+                        <highchart id="realtimeChart" title="设备单次工作时长分析"
                                    style="min-width:850px;height: 250px"
-                                   config="deviceCurrentInfoCtrl.realtimeChart">
-                        </highchart>-->
+                                   config="deviceCurrentInfoCtrl.singleWorkHours">
+                        </highchart>
                       </div>
                     </div>
                 </div>
                 <div ng-switch-when="状态量">
-                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
+                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig" ></highchart>
                 </div>
               </div>
           </div>
