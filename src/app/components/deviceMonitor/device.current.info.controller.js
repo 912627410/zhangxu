@@ -312,7 +312,7 @@
       },
       series: [{
         name: languages.findKey('rotatingSpeed') + '',
-        data: [vm.deviceinfo.enginRotate],
+        data: [vm.deviceinfo.engineRotate],
         tooltip: {
           valueSuffix: languages.findKey('turn') + ''
         }

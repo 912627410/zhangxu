@@ -490,7 +490,19 @@
   "Mpa":"Mpa",
   "machineStatistics":"Machine Statistics",
   "machineAttendance":"Machine Attendance",
-  "weightData":"Weight data"
+  "weightData":"Weight data",
+  "excavatorDeviceNum":"Excavator deviceNum",
+  "TubDeviceNum":"Tub deviceNum",
+  "recordGenerationStartTime":"Record start time",
+  "recordGenerationEndTime":"Record end time",
+  "versionNumber":"Version Number",
+  "functionCode":"Function code",
+  "recordGenerationTime":"Record generation time",
+  "serialNumber":"Serial number",
+  "loadingstarttime":"LoadingPoint start time",
+  "loadingCompletetime":"LoadingPoint complete time",
+  "bucketNumber":"Bucket Number",
+  "totalWeight(t)":"Total Weight(t)"
 
 
 

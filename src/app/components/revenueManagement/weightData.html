@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">称重数据</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'weightData'|translate}}</li>
   </ol>
 </section>
 
@@ -18,26 +18,26 @@
   <div class="row">
 
     <div class="col-md-2">
-      <label class="control-label">挖机设备编号</label>
+      <label class="control-label">{{'excavatorDeviceNum'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="label" class="form-control " ng-model="weightDataCtrl.weightData.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">矿车设备编号</label>
+      <label class="control-label">{{'TubDeviceNum'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="label" class="form-control " ng-model="weightDataCtrl.weightData.rfNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
   </div>
 
   <div class="row" style="margin-top: 10px">
     <div class="col-md-2">
-      <label class="control-label">纪录生成开始时间</label>
+      <label class="control-label">{{'recordGenerationStartTime'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">纪录生成结束时间</label>
+      <label class="control-label">{{'recordGenerationEndTime'|translate}}</label>
     </div>
     <div class="col-md-3">
 
@@ -87,17 +87,17 @@
 
       <table ng-table="weightDataCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="weightData in $data">
-          <td class="text-nowrap" data-title="'挖机设备号'" sortable="'weightData.deviceNum'">{{weightData.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'版本号'" sortable="'weightData.versionNum'">{{weightData.versionNum}}</td>
-          <td class="text-nowrap" data-title="'功能码'" sortable="'weightData.functionCode'">{{weightData.functionCode}}</td>
-          <td class="text-nowrap" data-title="'设备类型'" sortable="'weightData.deviceType'">000{{weightData.deviceType}}</td>
-          <td class="text-nowrap" data-title="'纪录生成时间'" sortable="'weightData.recordTime'">{{weightData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'流水号'" sortable="'weightData.serialNum'">{{weightData.serialNum}}</td>
-          <td class="text-nowrap" data-title="'矿车设备号'" sortable="'weightData.rfNum'">{{weightData.rfNum}}</td>
-          <td class="text-nowrap" data-title="'装料开始时间'" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'装料完成时间'" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'斗数'" sortable="'weightData.hopperNum'">{{weightData.hopperNum}}</td>
-          <td class="text-nowrap" data-title="'总重量(t)'" sortable="'weightData.totalWeight'">{{weightData.totalWeight/100}}</td>
+          <td class="text-nowrap" data-title="'excavatorDeviceNum'|translate" sortable="'weightData.deviceNum'">{{weightData.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'versionNumber'|translate" sortable="'weightData.versionNum'">{{weightData.versionNum}}</td>
+          <td class="text-nowrap" data-title="'functionCode'|translate" sortable="'weightData.functionCode'">{{weightData.functionCode}}</td>
+          <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'weightData.deviceType'">000{{weightData.deviceType}}</td>
+          <td class="text-nowrap" data-title="'recordGenerationTime'|translate" sortable="'weightData.recordTime'">{{weightData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'serialNumber'|translate" sortable="'weightData.serialNum'">{{weightData.serialNum}}</td>
+          <td class="text-nowrap" data-title="'TubDeviceNum'|translate" sortable="'weightData.rfNum'">{{weightData.rfNum}}</td>
+          <td class="text-nowrap" data-title="'loadingstarttime'|translate" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'loadingCompletetime'|translate" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'bucketNumber'|translate" sortable="'weightData.hopperNum'">{{weightData.hopperNum}}</td>
+          <td class="text-nowrap" data-title="'totalWeight(t)'|translate" sortable="'weightData.totalWeight'">{{weightData.totalWeight/100}}</td>
         </tr>
       </table>
     </div>
