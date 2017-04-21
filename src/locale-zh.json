@@ -486,6 +486,18 @@
   "machineStatistics":"车辆统计",
   "machineAttendance":"车辆出勤率",
   "weightData":"称重数据",
+  "excavatorDeviceNum":"挖机设备编号",
+  "TubDeviceNum":"矿车设备编号",
+  "recordGenerationStartTime":"纪录生成开始时间",
+  "recordGenerationEndTime":"纪录生成结束时间",
+  "versionNumber":"版本号",
+  "functionCode":"功能码",
+  "recordGenerationTime":"纪录生成时间",
+  "serialNumber":"流水号",
+  "loadingstarttime":"装料开始时间",
+  "loadingCompletetime":"装料完成时间",
+  "bucketNumber":"斗数",
+  "totalWeight(t)":"总重量(t)",
   "machineSpeed":"整车时速"
 
 
