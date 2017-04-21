@@ -188,6 +188,17 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
           <li>
+            <a ui-sref="home.workPoint" presentation-href="fleet:workPoint">
+              <i class="fa fa-flag"></i> <span>作业点管理</span>
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="home.workRecord" presentation-href="fleet:workRecord">
+              <i class="fa fa-flag"></i> <span>工作纪录</span>
+            </a>
+          </li>
+          <li>
             <a ui-sref="home.workplane" presentation-href="workplane:page">
               <i class="fa fa-flag"></i> <span>{{'workplaneManagement' | translate}}</span>
             </a>

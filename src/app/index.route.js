@@ -260,6 +260,33 @@
           }
         }
       })
+      .state('home.workPoint', {
+        url: '/workPoint',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleetManagement/workPoint.html',
+            controller: 'workPointController',
+            controllerAs: 'workPointCtrl'
+          }
+        }
+      })
+
+      .state('home.workRecord', {
+        url: '/workRecord',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/revenueManagement/workRecord.html',
+            controller: 'workRecordController',
+            controllerAs: 'workRecordCtrl'
+          }
+        }
+      })
 
       .state('home.workplane', {
         url: '/workplane',

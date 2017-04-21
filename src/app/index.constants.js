@@ -199,6 +199,10 @@
     .constant('REVENUE_URL', SERVER_BASE_URL + 'fleetRecord/revenue') //收入统计
     .constant('COST_URL', SERVER_BASE_URL + 'cost/costpage') //成本统计
     .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleetRecord/fleetRecordPage') //分页查询
+    .constant('DRIVER_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/driverRecord') //行驶轨迹
+    .constant('WORK_POINT_URL', SERVER_BASE_URL + 'fleet/workPoint') //行驶轨迹
+    .constant('WORK_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workRecord') //工作纪录
+    .constant('WORK_POINT_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workPointRecord') //工作纪录
 
     //按车队查询distance
     .constant('DEVCE_DISTANCE_TOFLEET_PAGE', SERVER_BASE_URL + 'fleet/distanceToFleetPage')
