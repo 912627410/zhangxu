@@ -30,10 +30,10 @@
       var circle,strokeColor,fillColor;
 
 
-      if(workPoint.type == '装料点'){
+      if(workPoint.type == 1){
         strokeColor="#6495ED"; //线颜色
         fillColor= "#A2B5CD"; //填充颜色
-      }else if(workPoint.type = '卸料点'){
+      }else if(workPoint.type = 2){
         strokeColor= "#F33"; //线颜色
         fillColor="#ee2200"; //填充颜色
       }
@@ -192,9 +192,6 @@
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
           vm.workPointList = data.content;
-          for(var i=0;i<vm.workPointList.length; i++){
-            (vm.workPointList[i].type ==1) ? vm.workPointList[i].type ='装料点' : vm.workPointList[i].type ='卸料点';
-          }
 
           vm.tableParams = new NgTableParams({},
             {
@@ -279,7 +276,6 @@
 
       modalInstance.result.then(function (result) {
         var workPoint = result;
-        (workPoint.type ==1) ? workPoint.type ='装料点' : workPoint.type ='卸料点';
 
         var circle = createCircle(workPoint);
         circle.setMap(vm.map);
