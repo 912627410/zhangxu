@@ -1226,24 +1226,29 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-11">
                             <label class="text-nowrap">当前地址:</label> {{deviceAerialCurrentInfoController.deviceinfo.address}}
                         </div>
+                      <div class="col-md-1" style="float: right">
+                        <button type="button" class="btn btn-default" title="回到车辆定位的位置" ng-click="deviceAerialCurrentInfoController.backCurrentAdd()">
+                          <span class="glyphicon glyphicon-send"></span>
+                        </button>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <label class="text-nowrap">选中地址:</label> {{deviceAerialCurrentInfoController.selectAddress}}
-                        </div>
-
-                        <div class="col-md-5">
-                            <label class="control-label text-nowrap">坐标:</label>经度: {{deviceAerialCurrentInfoController.amaplongitudeNum}}  维度: {{deviceAerialCurrentInfoController.amaplatitudeNum}}
-                        </div>
-                        <div class="col-md-1" style="float: right">
-                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.backCurrentAdd()">
-                              <span class="glyphicon glyphicon-send"></span>
-                            </button>
+                        <div class="col-md-12">
+                          <label class="text-nowrap">选中地址:</label>
+                          <span style="color: red;"> {{deviceAerialCurrentInfoController.selectAddress}}</span>
                         </div>
                     </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label class="control-label text-nowrap">坐标:</label>
+                      经度:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplongitudeNum}}</span>
+                      &nbsp;&nbsp;
+                      维度:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplatitudeNum}}</span>
+                    </div>
+                  </div>
                     <br/>
 
                         <div class="row">
