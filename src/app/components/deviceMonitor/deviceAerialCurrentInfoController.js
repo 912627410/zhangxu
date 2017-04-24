@@ -28,7 +28,7 @@
         vm.selectAddress=''; //选中的地址信息
         vm.amaplongitudeNum;//选中的经度
         vm.amaplatitudeNum;//选中的维度
-        vm.radius; //设置的半径
+        vm.radius = 100; //设置的半径,默认100米
         vm.zoomsize = 8;
 
         if(deviceinfo.machine!=null&&deviceinfo.machine.selectAddress!=null
@@ -429,6 +429,15 @@
                 map.addControl(overView);
             });
 
+          //在地图中添加圆编辑插件
+          map.plugin(['AMap.CircleEditor'], function () {
+          });
+
+          //在地图中添加地理编码插件
+          map.plugin(['AMap.Geocoder'], function () {
+
+          });
+
             vm.scopeMap=map;
             return map;
         };
@@ -444,9 +453,26 @@
 
         };
 
+      /**
+       * 在地图上画圆
+       * @param position
+       * @returns {*}
+         */
+      var createCircle = function (position) {
+        return new AMap.Circle({
+          center: position,// 圆心位置
+          radius: vm.radius, //半径
+          strokeColor: "#F33", //线颜色
+          strokeOpacity: 1, //线透明度
+          strokeWeight: 3, //线粗细度
+          fillColor: "#ee2200", //填充颜色
+          fillOpacity: 0.35 //填充透明度
+        });
+      };
+
         //查询设备数据并更新地图 mapid是DOM中地图放置位置的id
         vm.refreshScopeMapWithDeviceInfo=function (mapId,deviceInfo,zoomsize,centeraddr) {
-            var marker;
+            var marker, circle, circleEditor;
             //保存之前的标注
             var beforMarkers = [];
             $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -454,38 +480,23 @@
                 var map=vm.initMap(mapId,zoomsize,centeraddr);
 
                 map.on('click', function(e) {
-                    vm.zoomsize = 8;
                     var  lnglatXY=[e.lnglat.getLng(), e.lnglat.getLat()];
-                    marker = new AMap.Marker({
-                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-                        position: lnglatXY
-                    });
-                    marker.setMap(map);
-                    //清除之前的标注
-                    map.remove(beforMarkers);
-                    //存入标注
-                    beforMarkers.push(marker);
+                    vm.amaplongitudeNum = e.lnglat.getLng();
+                    vm.amaplatitudeNum = e.lnglat.getLat();
+
                     var geocoder = new AMap.Geocoder({
-                        radius: 100,
-                        extensions: "all"
+                      radius: 100,
+                      extensions: "all"
                     });
 
                     geocoder.getAddress(lnglatXY, function(status, result) {
-                        if (status === 'complete' && result.info === 'OK') {
-                            //       geocoder_CallBack(result);
-                            var  address= result.regeocode.formattedAddress; //返回地址描述
-
-
-
-                            var poi={location:lnglatXY,name:null,address: address};
-                            vm.createMarker(marker, poi);
-
-                            vm.updateLocationInfo(address, lnglatXY);
-                        }
+                      if (status === 'complete' && result.info === 'OK') {
+                        var  address= result.regeocode.formattedAddress; //返回地址描述
+                        vm.updateLocationInfo(address, lnglatXY);
+                      }
                     });
 
-
-
+                    vm.initScopeMapTab(deviceinfo);
 
                 });
 
@@ -497,18 +508,32 @@
 
                 //回显围栏坐标
                 if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
-                    var  lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
-                    marker = new AMap.Marker({
-                        map: map,
-                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-                        position: lnglatXY
+                  var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
+
+                  circle = createCircle(lnglatXY);
+                  circle.setMap(map);
+
+                  var circleEditor = new AMap.CircleEditor(map, circle);
+
+                  AMap.event.addListener(circleEditor, "move", function (e) {
+                    var location = [e.lnglat.lng, e.lnglat.lat];
+                    var geocoder = new AMap.Geocoder({
+
                     });
-                    marker.setMap(map);
-                    beforMarkers.push(marker);
-                    var poi = {location: lnglatXY, name: null, address: vm.selectAddress};
-                    var infoWindow = vm.createInfoWindow(poi);
-                    infoWindow.open(vm.scopeMap, marker.getPosition());
-                    //围栏地址标注end
+                    geocoder.getAddress(location, function (status, result) {
+                      if(status === 'complete' && result.info === 'OK') {
+                        vm.updateLocationInfo(result.regeocode.formattedAddress, location);
+                      }
+                    });
+                  });
+
+                  AMap.event.addListener(circleEditor, "adjust" ,function (e) {
+                    vm.radius = e.radius;
+                    $scope.$apply();
+                  });
+
+                  circleEditor.open();
+
                 }
 
 
@@ -818,7 +843,7 @@
 
 
                 //第一个标注
-                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,vm.zoomsize,centerAddr);
+                vm.refreshScopeMapWithDeviceInfo("deviceScopeMap",deviceInfo,15,centerAddr);
 
 
 
