@@ -739,6 +739,9 @@
      * @param lineAttr
      */
     vm.refreshMapTabCar = function (lineAttr) {
+
+      vm.lnglatShow = true;
+
       /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
       /**
        * Marker移动控件
@@ -774,6 +777,12 @@
 
       AMap.plugin(["AMap.RangingTool"], function () {
       });
+
+      //为地图注册click事件获取鼠标点击出的经纬度坐标
+      var clickEventListener = map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+      });
+
       //小车
       marker = new AMap.Marker({
         map: map,
