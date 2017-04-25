@@ -429,6 +429,33 @@
             </li>
           </ul>
       </li>
+
+      <li>
+        <a ng-click="update=!update" href="" presentation-href="deviceUpdate:page">
+          <i class="fa fa-arrow-up"></i>
+          <span>远程设备升级</span>
+          <span class="glyphicon pull-right"
+                ng-class="deviceMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: update}">
+          <li>
+            <a ui-sref="home.deviceUpdate" presentation-href="deviceUpdate:page">
+              <i class="fa fa-arrow-circle-up"></i> <span>设备升级</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.updateFileMng" presentation-href="updateFile:page">
+              <i class="fa fa-file-text"></i> <span>升级文件管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.updateRecord" presentation-href="updateRecord:page">
+              <i class="fa fa-file-text"></i> <span>设备升级记录</span>
+            </a>
+          </li>
+        </ul>
+      </li>
       <hr>
 
       <li class="treeview">

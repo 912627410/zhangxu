@@ -1,0 +1,55 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">设备升级记录</li>
+  </ol>
+</section>
+
+<section class="content form-horizontal">
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">设备号</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="queryDeviceNum" class="form-control" ng-model="updateRecordCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? updateRecordCtrl.query(0,null,null,updateRecordCtrl.record) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-2 text-center"><!--col-md-offset-6-->
+      <button class="btn btn-primary" type="button" ng-click="updateRecordCtrl.query(0,null,null,updateRecordCtrl.record)" presentation-href="updateRecord:page">查询</button>
+      <button class="btn btn-primary" type="button"  ng-click="updateRecordCtrl.reset()" style="margin: 0 12px;">重置</button>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">记录总数:  {{updateRecordCtrl.page.totalElements}}</span>
+    </div>
+  </div>
+
+  <div class="row " style="padding-top: 10px">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table ng-table="updateRecordCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="updateRecord in $data">
+            <td class="text-nowrap" data-title="'设备号'" sortable="'fieldName'">{{updateRecord.fieldName}}</td>
+            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue!=null && updateRecord.originValue!='0'">VER{{updateRecord.originValue/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'升级前版本'" sortable="'originValue'" ng-if="updateRecord.originValue==null || updateRecord.originValue=='0'"></td>
+            <td class="text-nowrap" data-title="'升级后版本'" sortable="'targetValue'">VER{{updateRecord.targetValue/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'升级结果'" sortable="'updateDesc'">{{updateRecord.updateDesc}}</td>
+            <td class="text-nowrap" data-title="'操作者'" sortable="''">{{updateRecord.operator.ssn}}</td>
+            <td class="text-nowrap" data-title="'操作完成时间'" sortable="'recordTime'">{{updateRecord.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="updateRecordCtrl.page.totalElements" ng-change="updateRecordCtrl.query(updateRecordCtrl.pageNumber-1,null,null,updateRecordCtrl.record)" max-size="15" ng-model="updateRecordCtrl.pageNumber" items-per-page="updateRecordCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </div>
+</section>

@@ -866,8 +866,12 @@
                     <td >{{'bindMachineId'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
 
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3' || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'">{{'fuelConsumption'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3' || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">
                     <td>{{'operationMonitoring'|translate}}</td>
@@ -1027,7 +1031,9 @@
                     <th class="text-nowrap">{{'voltageLowAlarmValue'|translate}}</th>
                     <th class="text-nowrap">{{'oilLowAlarmValue'|translate}}</th>
                     <th class="text-nowrap">{{'oilPressAlarmValue'|translate}}</th>
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3' || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'">{{'fuelConsumption'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
                     <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')">{{deviceData.id}}</a></td>
@@ -1099,7 +1105,9 @@
                     <td>{{deviceData.voltageLowAlarmValue}}</td>
                     <td>{{deviceData.oilLowAlarmValue}}%</td>
                     <td>{{deviceData.oilPressAlarmValue}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3' || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'">{{deviceData.fuelConsumption | number:2}}L/H</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceData.fuelConsumption | number:2}}L/H</td>
                   </tr>
 
                 </table>
