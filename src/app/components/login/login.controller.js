@@ -11,20 +11,18 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,GET_PASSWORD_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
     vm.rememberMe = true;
     var count = 0;
     $scope.isShow = false;
-
     var verifyCodeInfo ={
       token:'',
       value:''
     }
-
-
+    var userinfo
     //通过后台返回的结构生成json tree
     vm.unflatten = function (array, parent, tree) {
       tree = typeof tree !== 'undefined' ? tree : [];
@@ -62,85 +60,121 @@
 
     $scope.$on('$viewContentLoaded', function(){
       if(null!=$cookies.getObject("user")){
-        var userobj = {};
-        var base = new Base64();
-        var password = base.decode($cookies.getObject("user").password);
-        userobj.username = base.decode($cookies.getObject("user").username);
-        userobj.password = password.substring(0,password.length-4);
-
-        vm.credentials = userobj;
-       if(null==$cookies.getObject("outstate")){
-         vm.loginMe();
-       }
+        var user = {};
+        user.username = $cookies.getObject("user").username;
+        user.password = '';
+        vm.credentials = user;
+        if(null==$cookies.getObject("outstate")){
+          var userobj = {};
+          userobj.username = $cookies.getObject("user").username;
+          userobj.authtoken = $cookies.getObject("user").authtoken;
+          var restCallURL = GET_PASSWORD_URL;
+          restCallURL += "?&username=" + userobj.username;
+          var rspdata = serviceResource.restCallService(restCallURL,"GET");
+          vm.loginBytoken(userobj);
+        }
       }
     });
+
     vm.reset= function () {
       vm.credentials.password = null;
     }
 
-    var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
-    rspdata.then(function (data) {
-      verifyCodeInfo ={
-        token:data.token,
-        value:data.verifyCode
-      }
-      vm.verifyCode = verifyCodeInfo.value;
-    })
-
-
+    vm.createVerifyCode = function () {
+      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+      rspdata.then(function (data) {
+        verifyCodeInfo ={
+          token:data.token,
+          value:data.verifyCode
+        }
+        vm.verifyCode = verifyCodeInfo.value;
+      })
+    }
 
 
     vm.loginMe = function () {
-      $cookies.remove("outstate");
-      var code = vm.code ;
-      if(null!=code&&""!=code){
-        var restCallURL = JUDGE_VERIFYCODE_URL;
-        restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
-          if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
-          }
-          if(data.code==1){
-            Notification.success("验证码输入正确!");
-            vm.userverify();
-          }
-        })
-      }else{
-        vm.userverify();
-      }
 
+      if(count<2){
+        vm.userverify();
+      }else{
+        vm.createVerifyCode();
+        var code = vm.code ;
+        if(null!=code&&""!=code){
+          var restCallURL = JUDGE_VERIFYCODE_URL;
+          restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
+          var rspData = serviceResource.restCallService(restCallURL, "GET");
+          rspData.then(function (data) {
+            if(data.code==1){
+              vm.userverify();
+            }
+          })
+        }else{
+          Notification.error("请输入验证码!");
+        }
+      }
     }
 
-    vm.userverify = function () {
-      var rspPromise = serviceResource.authenticate(vm.credentials);
+    vm.loginBytoken = function (userobj) {
+      vm.createVerifyCode();
+      var rspPromise = serviceResource.authenticateb(userobj);
       rspPromise.then(function (response) {
-        if(vm.rememberMe){
-          //检测是否存在cookie   user
-          $cookies.remove("user");
-          //记录登录时间
-          $scope.loginTime = new Date().getTime();
-
-          var codeSuffix="";
-          for(var i=0;i<4;i++)
-          {
-            codeSuffix+=Math.floor(Math.random()*10);
-          }
-
-          var base = new Base64();
-          var cookieDate = {};
-          cookieDate.username = base.encode(vm.credentials.username);
-          cookieDate.password = base.encode(vm.credentials.password+codeSuffix);
-          $cookies.putObject("user", cookieDate);
-          var expireDate = new Date();
-          expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
-          $cookies.putObject("user", cookieDate, {'expires': expireDate});
-        }
         var data = response.data;
         userInfo = {
           authtoken: data.token,
           userdto: data.userinfo
         };
+        var passwordPattenStatus=data.passwordPattenStatus;
+        //获取token和用户信息,存放到缓存中去
+        $http.defaults.headers.common['token'] = data.token;
+        $rootScope.userInfo = userInfo;
+        $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+        if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
+          $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+
+        }else{
+          $rootScope.logo="assets/images/logo.png";
+        }
+        Notification.success(languages.findKey('loginSuccess'));
+
+        //监控用户登录超时
+        Idle.watch();
+        vm.getPermission();
+
+      }, function (reason) {
+
+        Notification.error(languages.findKey('loginFailure'));
+
+        vm.credentials.password = "";
+
+        count = count + 1;
+        if(count == 2){
+          $scope.isShow = true;
+        }
+        vm.changeVerifyCode();
+      });
+    }
+
+
+    vm.userverify = function () {
+
+      var rspPromise = serviceResource.authenticatea(vm.credentials);
+      rspPromise.then(function (response) {
+        var data = response.data;
+        userInfo = {
+          authtoken: data.token,
+          userdto: data.userinfo
+        };
+        if(vm.rememberMe){
+          //检测是否存在cookie   user
+          $cookies.remove("user");
+          var cookieDate = {};
+          cookieDate.username = vm.credentials.username;
+          cookieDate.authtoken = userInfo.authtoken;
+          var expireDate = new Date();
+          expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
+          $cookies.putObject("user", cookieDate, {'expires': expireDate});
+        }
+
 
         var passwordPattenStatus=data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
@@ -153,84 +187,90 @@
         }else{
           $rootScope.logo="assets/images/logo.png";
         }
-
         Notification.success(languages.findKey('loginSuccess'));
 
 
 
         //监控用户登录超时
         Idle.watch();
+        vm.getPermission(passwordPattenStatus);
 
-        var rspData = serviceResource.getPermission();
-        rspData.then(function (data) {
-          var permissionList = $filter("array2obj")(data.content, "permission");
-          $rootScope.permissionList = permissionList;
-          $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
-
-          if (permissions.getPermissions("config:organazitionPage")) {
-            vm.getOrg();
-          }
-          if (permissions.getPermissions("user:notification")) {
-            vm.getNotification();
-          }
-
-
-          //读取小挖型号参数
-          var smallExcavatorURL = SYS_CONFIG_URL + "?name=SMALL_EXCAVATOR_MODEL";
-          var smallExcavatorPromis = serviceResource.restCallService(smallExcavatorURL,"GET");
-          smallExcavatorPromis.then(function (data) {
-              $window.sessionStorage["SMALL_EXCAVATOR_MODEL"] = data.value;
-              $rootScope.SMALL_EXCAVATOR_MODEL = data.value;
-            }, function (reason) {
-              Notification.error(languages.findKey('failedToGetSmallExcavatorModel'));
-            }
-          );
-
-          //读取所有系统参数，放到rootscope中供其它controller使用
-          var sysconfigUrl = SYS_CONFIG_LIST_URL;
-          var sysconfigPromis = serviceResource.restCallService(sysconfigUrl,"QUERY");
-          sysconfigPromis.then(function (data) {
-              $window.sessionStorage["SYSCONFIG"] = data;
-              $rootScope.SYSCONFIG = data;
-            }, function (reason) {
-              Notification.error(languages.findKey('failedToGetSysconfig'));
-            }
-          );
-
-          //加载故障代码描述对照表(小挖)
-          $http.get('warningDtc.json').success(function(data){
-            $rootScope.warningDataDtc=data;
-            $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
-
-          });
-
-          //加载sensor列表
-          $http.get('sensor.json').success(function(data){
-            $rootScope.sensor=data;
-            $window.sessionStorage["sensor"]=JSON.stringify(data);
-          });
-
-
-
-          //判断是否需要提示修改密码
-          if(passwordPattenStatus==false){
-            Notification.error({message: '密码过于简单,请修改', positionX: 'center'});
-
-          }
-
-          $rootScope.$state.go('home');
-
-        }, function (reason) {
-        });
 
       }, function (reason) {
-        Notification.error(languages.findKey('loginFailure'));
+        Notification.error(reason.data.message);
         count = count + 1;
         if(count == 2){
           $scope.isShow = true;
         }
+        vm.changeVerifyCode();
+        vm.code = "";
       });
     }
+
+    vm.getPermission = function (passwordPattenStatus) {
+      var rspData = serviceResource.getPermission();
+      rspData.then(function (data) {
+        var permissionList = $filter("array2obj")(data.content, "permission");
+        $rootScope.permissionList = permissionList;
+        $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
+
+        if (permissions.getPermissions("config:organazitionPage")) {
+          vm.getOrg();
+        }
+        if (permissions.getPermissions("user:notification")) {
+          vm.getNotification();
+        }
+
+
+        //读取小挖型号参数
+        var smallExcavatorURL = SYS_CONFIG_URL + "?name=SMALL_EXCAVATOR_MODEL";
+        var smallExcavatorPromis = serviceResource.restCallService(smallExcavatorURL,"GET");
+        smallExcavatorPromis.then(function (data) {
+            $window.sessionStorage["SMALL_EXCAVATOR_MODEL"] = data.value;
+            $rootScope.SMALL_EXCAVATOR_MODEL = data.value;
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetSmallExcavatorModel'));
+          }
+        );
+
+        //读取所有系统参数，放到rootscope中供其它controller使用
+        var sysconfigUrl = SYS_CONFIG_LIST_URL;
+        var sysconfigPromis = serviceResource.restCallService(sysconfigUrl,"QUERY");
+        sysconfigPromis.then(function (data) {
+            $window.sessionStorage["SYSCONFIG"] = data;
+            $rootScope.SYSCONFIG = data;
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetSysconfig'));
+          }
+        );
+
+        //加载故障代码描述对照表(小挖)
+        $http.get('warningDtc.json').success(function(data){
+          $rootScope.warningDataDtc=data;
+          $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
+
+        });
+
+        //加载sensor列表
+        $http.get('sensor.json').success(function(data){
+          $rootScope.sensor=data;
+          $window.sessionStorage["sensor"]=JSON.stringify(data);
+        });
+
+
+
+        //判断是否需要提示修改密码
+        if(passwordPattenStatus==false){
+          Notification.error({message: '密码过于简单,请修改', positionX: 'center'});
+
+        }
+
+        $rootScope.$state.go('home');
+
+      }, function (reason) {
+      });
+    }
+
     //读取组织结构信息
     vm.getOrg = function () {
       var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
@@ -308,22 +348,32 @@
       })
 
       document.getElementById("verifyCode").value="";
-
+      vm.message = "";
     }
 
     vm.validate =  function () {
       var code = vm.code ;
+
       if(null!=code&&""!=code){
+        //前端进行验证
+        if (code == verifyCodeInfo.value) {
+          vm.message = "√";
+          document.getElementById("Codemessage").style.color = "green";
+        } else {
+          vm.message = "×";
+          document.getElementById("Codemessage").style.color = "Red";
+        }
+
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
           if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
+           // Notification.error("验证码输入错误！请重新输入！!");
             $scope.disabled = true;
           }
           if(data.code==1){
-            Notification.success("验证码输入正确!");
+            //Notification.success("验证码输入正确!");
 
           }
         })

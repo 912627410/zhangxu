@@ -13,7 +13,7 @@
   function serviceResource($rootScope,$resource,$http,$q,$uibModal,$window,$filter,permissions,Notification,languages,USER_LOGIN_URL,NOTIFICATION_STATISTICS_URL,DEVCE_MONITOR_SINGL_QUERY,
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL) {
+                           DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY_ASC,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL,USER_LOGINBYTOKEN_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -372,15 +372,24 @@
           }
         })
       },
-      //登录认证接口
-      authenticate:function(credentials){
+      //登录认证接口--a
+      authenticatea:function(credentials){
 
         var loginInfo={ssn:credentials.username,password:credentials.password};
         var rspPromise= $http.post(
           USER_LOGIN_URL,
            loginInfo
         );
+        return rspPromise;
+      },
+      //登录认证接口--b
+      authenticateb:function(credentials){
 
+      var loginInfo={ssn:credentials.username,token:credentials.authtoken};
+      var rspPromise= $http.post(
+        USER_LOGINBYTOKEN_URL,
+        loginInfo
+      );
         return rspPromise;
       },
       //分页查询设备信息(device info)
@@ -426,7 +435,7 @@
         var restCallURL = DEVCE_SIMPLE_DATA_PAGED_QUERY;
         var pageUrl = page || 0;
         var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-        var sortUrl = sort || DEFAULT_DEVICE_DATA_SORT_BY;
+        var sortUrl = sort || DEFAULT_DEVICE_DATA_SORT_BY_ASC;
         restCallURL += "?page=" + pageUrl  + '&size=' + sizeUrl + '&sort=' + sortUrl;
         if (queryCondition){
           restCallURL += "&";

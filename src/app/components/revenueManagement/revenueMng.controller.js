@@ -138,8 +138,8 @@
       var restCallURL=vm.buildQueryUrl2(FLEET_PAGE_URL,fleetRecord);
 
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
+      var sizeUrl = size || 10;
+      var sortUrl = sort || "endDate";
       restCallURL += "&page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
 
@@ -186,7 +186,10 @@
 
 
         var monthes=new Array();
+        var oilCost=new Array();
         var amounts=new Array();
+        var profit=new Array();
+        var times=new Array();
         //根据月份升序排列
           var result=data.content.sort(function(a, b) { return a.desc > b.desc ? 1 : -1;} );//升序
 
@@ -194,7 +197,10 @@
         for(var i=0;i<result.length;i++){
           //     console.log("new "+i+" "+result[i].incomeMonth);
           monthes[i]=result[i].desc;
+          oilCost[i]=result[i].oilCost;
           amounts[i]=result[i].amount;
+          profit[i]=result[i].profit;
+          times[i]=result[i].times;
         }
 
         //alert(monthes.length);
@@ -245,17 +251,37 @@
              categories:monthes
             //categories:[]
           },
-          yAxis: {
+          yAxis: [{
             title: {
-              text: '收入(W)'
+              text: '收入'
             }
 
-          },
+          },{
+            title: {
+              text: '趟数'
+            },
+            opposite: true
+
+          }],
           series: [{
+             type: 'column',
              name: '收入',
            // data: []
             //     data: [100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23,100.00, 50.00, 130.00, 160.00, 100.00, 70.00, 90.00, 145.00, 125.50, 100.01, 120.23]
             data:amounts
+          },{
+            type: 'column',
+            name: '成本',
+            data: oilCost
+          },{
+            type: 'spline',
+            name: '利润',
+            data: profit
+          },{
+            type: 'spline',
+            yAxis: 1,
+            name: '趟次',
+            data: times
           }]
           //    });
         };

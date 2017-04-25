@@ -13,10 +13,10 @@
 
 
 <!-- Main content -->
-<section class="content">
+<section class="content form-horizontal">
 
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-1">
       <label class="control-label">设备编号</label>
     </div>
@@ -46,7 +46,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row form-group">
 
 
     <div class="col-md-1">
@@ -114,7 +114,7 @@
 
 
       <a class="btn btn-default pull-right"
-       title="Export Table" ng-click="deviceinfoMngCtrl.excelExport(deviceinfoMngCtrl.allot)" >
+       title="Export Table" ng-click="deviceinfoMngCtrl.excelExport(deviceinfoMngCtrl.org)" >
         <i class="glyphicon glyphicon-new-window" ></i> 批量导出
       </a>
 
@@ -145,7 +145,7 @@
                  ng-click="deviceinfoMngCtrl.updateDeviceinfo(deviceinfo.id)">{{deviceinfo.deviceNum}}</a>
               <span ng-if="!deviceinfoMngCtrl.validateOperPermission()">{{deviceinfo.deviceNum}}</span>
             </td>
-            <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
+            <td class="text-nowrap" data-title="'车号'" sortable="'machine.licenseId'">{{deviceinfo.machine.licenseId}}
             </td>
             <td class="text-nowrap" data-title="'协议类型'" sortable="'protocalTypeDesc'">{{deviceinfo.protocalTypeDesc}}
             </td>
@@ -168,7 +168,7 @@
               <button type="button" class="btn btn-default btn-xs"
                       ng-click="deviceinfoMngCtrl.currentDeviceinfo(deviceinfo,'lg')">状态
               </button>
-              <button type="button" class="btn btn-default btn-xs"
+              <button type="button" class="btn btn-default btn-xs" presentation-href="allotLog:query"
                       ng-click="deviceinfoMngCtrl.allocationlog(deviceinfo,'lg')">调拨日志
               </button>
 

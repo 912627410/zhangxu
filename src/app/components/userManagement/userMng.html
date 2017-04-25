@@ -87,12 +87,12 @@
     </div>
   </div>
   <div class="row " style="padding: 10px">
-    <div class="table-responsive userTableBox">
+    <div class="table-responsive tableBox">
       <script id="selectAllHeader"  type="text/ng-template">
         <input type="checkbox" style="height: 11px;" ng-click="userMngController.updateAllSelection($event)"
                ng-model="userMngController.checked">
       </script>
-      <div class="userTableBoxLeft">
+      <div class="tableBoxLeft userTableBoxLeft">
         <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="userinfo in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">

@@ -30,10 +30,10 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       if (null != deviceinfo) {
         if (null != deviceinfo.deviceNum&&deviceinfo.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
+          restCallURL += "&search_LIKES_deviceNum=" +$filter('uppercase')(deviceinfo.deviceNum);
         }
         if (null != deviceinfo.phoneNumber&&deviceinfo.phoneNumber!="") {
-          restCallURL += "&search_LIKE_sim.phoneNumber=" + deviceinfo.phoneNumber;
+          restCallURL += "&search_LIKES_sim.phoneNumber=" + deviceinfo.phoneNumber;
         }
       }
 
@@ -302,15 +302,15 @@
     //导出至Excel
     vm.excelExport=function (org) {
 
-      if (org) {
-        var filterTerm = "id=" + vm.org.id;
+      if (org &&org.id !=null) {
+        var filterTerm = "id=" + org.id;
         var restCallURL = DEVCEDINFO_EXCELEXPORT;
         if (filterTerm){
           restCallURL += "?";
           restCallURL += filterTerm;
         }
         if(vm.querySubOrg) {
-          restCallURL += "&parentOrgId="+ vm.org.id;
+          restCallURL += "&parentOrgId="+ org.id;
         }
 
         $http({
@@ -325,14 +325,14 @@
           anchor.attr({
             href: objectUrl,
             target: '_blank',
-            download: vm.org.label +'.xls'
+            download:org.label +'.xls'
           })[0].click();
 
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
         });
       }else {
-        Notification.error("请选择需要导出的组织!");
+        Notification.error("请选择所属组织!");
       }
 
     }

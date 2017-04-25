@@ -12,10 +12,10 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">整机编号/车号</label>
+        <label for="licenseId" class="col-sm-2 control-label">车号</label>
         <div class="col-sm-4">
 
-          <input type="text" id="licenseId" class="form-control" placeholder="整机编号/车号"
+          <input type="text" id="licenseId" class="form-control" placeholder="车号"
                  ng-model="updateMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
                  validator="required" />
 
@@ -177,6 +177,19 @@
         <div class="col-sm-4">
           <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
                  ng-model="updateMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
+        </div>
+
+        <label for="machineState" class="col-sm-2 control-label">车辆状态</label>
+        <div class="col-sm-4">
+
+          <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
+              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
 

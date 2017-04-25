@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建组织</h3>
+</div>
+<!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
+<!--<div >{{updateUserinfoCtrl.dynamicPopover.content}}</div>-->
+<!--<div class="form-group">-->
+<!--<abn-tree tree-data="orgCtrl1.my_data" tree-control="orgCtrl1.my_tree" on-select="orgCtrl1.my_tree_handler(branch)" expand-level="2"></abn-tree>-->
+<!--</div>-->
+<!--</script>-->
+
+<form name="updatedUserForm" class="form-horizontal" ng-submit="newOrgCtrl.ok(newOrgCtrl.newLabel,newOrgCtrl.newName,newOrgCtrl.newOrgSimpleName)">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label for="label" class="col-sm-2 control-label">上级组织</label>
+        <div class="col-sm-10">
+          <input type="text" id="label" class="form-control"
+                 placeholder="上级组织名称"
+                 ng-model="newOrgCtrl.selectedOrg.label"
+                 name="label" readonly required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">新建组织</label>
+        <div class="col-sm-10">
+          <input type="text" id="newLabel" class="form-control"
+                 placeholder="新建组织名称"
+                 ng-model="newOrgCtrl.newLabel"
+                 name="label" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">组织标识</label>
+        <div class="col-sm-10">
+          <input type="text" id="name" class="form-control"
+                 placeholder="组织标识"
+                 ng-model="newOrgCtrl.newName"
+                 name="newName" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">组织简称</label>
+        <div class="col-sm-10">
+          <input type="text" id="orgSimpleName" class="form-control"
+                 placeholder="组织简称"
+                 ng-model="newOrgCtrl.newOrgSimpleName"
+                 name="neworgSimpleName" required/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="newOrgCtrl.cancel()">取消</button>
+  </div>
+</form>

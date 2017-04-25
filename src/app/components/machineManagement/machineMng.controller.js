@@ -30,10 +30,10 @@
       if (null != machine) {
 
         if (null != machine.deviceNum&&machine.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
+          restCallURL += "&search_LIKES_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
         }
         if (null != machine.licenseId&&machine.licenseId!="") {
-          restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
+          restCallURL += "&search_LIKES_licenseId=" + $filter('uppercase')(machine.licenseId);
         }
 
       }

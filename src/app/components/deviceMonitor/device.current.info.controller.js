@@ -17,7 +17,7 @@
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
-                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo, ngTableDefaults, NgTableParams) {
+                                       PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,MACHINE_STORAGE_URL,deviceinfo, ngTableDefaults, NgTableParams) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -652,10 +652,10 @@
             data.alertStatus = data.alertStatus.toString(16).toUpperCase();
             data.ecuLockStatusDesc = '';
             if (data.ecuLockStatus.substr(7, 1) == "0") {
-              data.ecuLockStatusDesc += "未激活";
+              data.ecuLockStatusDesc += "未绑定";
             }
             else {
-              data.ecuLockStatusDesc += "已激活";
+              data.ecuLockStatusDesc += "已绑定";
             }
             if (data.voltageHigthAlarmValue != 0) {
               data.voltageHigthAlarmValue = data.voltageHigthAlarmValue * 0.1 + 10;
@@ -845,7 +845,7 @@
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 4, centerAddr);
+        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 10, centerAddr);
       })
     };
 
@@ -892,9 +892,9 @@
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
-        zoom: 17
+        zooms: [4, 18]
       });
-
+      vm.maps=map;
       /*工具条，比例尺，预览插件*/
       AMap.plugin(['AMap.Scale', 'AMap.OverView'],
         function () {
@@ -988,23 +988,29 @@
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       var lineArr = [];
       var lineArr2 = [];
@@ -1020,12 +1026,8 @@
               lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
             })
             for (var i = 0; i < lineArr.length; i++) {
-              if (i == lineArr.length - 1) {
-                break;
-              }
-              if (lineArr[i].lat == lineArr[i + 1].lat && lineArr[i].lng == lineArr[i + 1].lng) {
-              } else {
-                lineArr2.push(lineArr[i])
+              if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
+                lineArr2.push(lineArr[i]);
               }
             }
             vm.refreshMapTab(lineArr2);
@@ -1036,6 +1038,22 @@
       )
     }
 
+    vm.draw=function (ids) {
+      var storageDataURL =MACHINE_STORAGE_URL+"?licenseId="+ids;
+      var storageDataPromis = serviceResource.restCallService(storageDataURL,"GET");
+      storageDataPromis.then(function (data) {
+        var circle = new AMap.Circle({
+          center: new AMap.LngLat(data.storagelongitudeNum, data.storageLatitudeNum),// 圆心位置
+          radius: 1000, //半径
+          strokeColor: "#F33", //线颜色
+          strokeOpacity: 1, //线透明度
+          strokeWeight: 3, //线粗细度
+          fillColor: "#ee2200", //填充颜色
+          fillOpacity: 0.35//填充透明度
+        });
+      circle.setMap(vm.maps);
+      })
+    }
 
     //******************远程控制tab**********************]
 
@@ -1054,10 +1072,10 @@
     if (vm.deviceinfo.ecuLockStatus != null) {
       if (vm.deviceinfo.ecuLockStatus.length == 8) {
         if (vm.deviceinfo.ecuLockStatus.substr(7, 1) == "0") {
-          vm.ecuLockStatusDesc += "未激活";
+          vm.ecuLockStatusDesc += "未绑定";
         }
         else {
-          vm.ecuLockStatusDesc += "已激活";
+          vm.ecuLockStatusDesc += "已绑定";
         }
         /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
          vm.ecuLockStatusDesc += ".";
@@ -1121,8 +1139,8 @@
       }
       var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
-      // 如果是中挖，并且当前已经绑定（“已激活”），则提示是否继续发送绑定短信
-      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "已激活"){
+      // 如果是中挖，并且当前已经绑定（“已绑定”），则提示是否继续发送绑定短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "已绑定"){
         vm.confirmText = '当前设备已经绑定，继续绑定可能会产生异常，你确定继续发送绑定短信吗？';
       }else{
         vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
@@ -1193,8 +1211,8 @@
       }
       var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
-      // 如果是中挖，并且当前未绑定（“未激活”），则提示是否继续发送解绑短信
-      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "未激活"){
+      // 如果是中挖，并且当前未绑定（“未绑定”），则提示是否继续发送解绑短信
+      if(vm.deviceinfo.versionNum == '40' &&  vm.ecuLockStatusDesc == "未绑定"){
         vm.confirmText = '当前设备未绑定，解绑短信无效，你确定继续发送解绑短信吗？';
       }else{
         vm.confirmText = languages.findKey('youSureYouWantToSendThisMessage') + '';
@@ -1753,8 +1771,8 @@
        }
       }
       //默认显示综合数据分析
-      loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
-      loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+      //loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
+      //loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
     }
     /*状态量选择*/
     vm.selectSensor = function (checkedRad) {

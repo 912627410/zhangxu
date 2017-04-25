@@ -23,18 +23,19 @@
       <div class="form-group">
         <label for="value" class="col-sm-3 control-label">参数值</label>
         <div class="col-sm-9">
-          <input type="text" id="value" class="form-control" placeholder="参数值"
-                 ng-model="updateSysconfigController.sysconfig.value" name="value" typeahead-show-hint="true"
-                 validator="required"/>
+
+          <textarea rows="3" id="value" class="form-control" placeholder="参数值"
+                    ng-model="updateSysconfigController.sysconfig.value" name="value" typeahead-show-hint="true"
+                    validator="required" ></textarea>
         </div>
       </div>
 
       <div class="form-group">
         <label for="description" class="col-sm-3 control-label">参数描述</label>
         <div class="col-sm-9">
-          <input type="text" id="description" class="form-control" placeholder="参数描述"
-                 ng-model="updateSysconfigController.sysconfig.description" name="description" typeahead-show-hint="true"
-                 validator="required"/>
+          <textarea rows="3" id="description" class="form-control" placeholder="参数描述"
+                    ng-model="updateSysconfigController.sysconfig.description" name="description" typeahead-show-hint="true"
+                    validator="required"  ></textarea>
         </div>
       </div>
 

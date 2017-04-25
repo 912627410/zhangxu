@@ -316,7 +316,7 @@
               </li>
               <li>
                 <a ui-sref="home.ecuNotActive" presentation-href="report:ecuNotActive">
-                  <i class="fa fa-eye-slash"></i> <span>ECU未激活车辆</span>
+                  <i class="fa fa-eye-slash"></i> <span>ECU未绑定车辆</span>
                 </a>
               </li>
               <li>
@@ -410,6 +410,11 @@
             <li class="treeview" presentation-href="user:page">
               <a ui-sref="home.userinfomng">
                 <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="home.orgMng" presentation-href="org:orgMng">
+                <i class="fa fa-users"></i> <span>组织管理</span>
               </a>
             </li>
             <li>

@@ -41,7 +41,8 @@
     "angular-translate-loader-url": "^2.11.0",
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-translate-storage-cookie": "^2.11.0",
-    "moment": "^2.15.1"
+    "moment": "^2.15.1",
+    "ztree": "^3.5.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.2",
@@ -59,6 +60,9 @@
       ]
     },
     "jquery": {
+      "main": []
+    },
+    "ztree": {
       "main": []
     },
     "labjs": {
