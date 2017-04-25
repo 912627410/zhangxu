@@ -554,6 +554,9 @@
         if(version_num=='40'){
             return '03';
         }
+        if(deviceType=='3') {
+          return '04';
+        }
       },
       //将hh.hh翻译成hh时mm分
       convertToMins: function(hours){
