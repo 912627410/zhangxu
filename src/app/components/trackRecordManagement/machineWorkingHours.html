@@ -5,21 +5,21 @@
         <div class="span12">
           <form id="searchForm"  class="form-search">
             <div class="control-group">
-              <label class="control-label">车辆类型:</label>
+              <label class="control-label">{{'vehicleType'|translate}}:</label>
               <div class="controls">
                 <select class="form-control" ng-model="machineWorkingHoursController.machine.machineType">
-                  <option value="A1">小挖</option>
-                  <option value="30">矿机</option>
-                  <option value="40">中挖</option>
-                  <option value="1,2,3">装载机</option>
-                  <option value="A001">高空车</option>
+                  <option value="A1">{{'smallExcavator'|translate}}</option>
+                  <option value="30">{{'oreMachine'|translate}}</option>
+                  <option value="40">{{'mediumExcavator'|translate}}</option>
+                  <option value="1,2,3">{{'loader'|translate}}</option>
+                  <option value="A001">{{'arialVehicle'|translate}}</option>
                 </select>
               </div>
             </div>
             <br>
 
             <div class="control-group">
-              <label class="control-label">起始日期：</label>
+              <label class="control-label">{{'startDate'|translate}}：</label>
               <div class="controls">
                 <p class="input-group">
                   <input id="workDate" name="workDate" type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -42,7 +42,7 @@
 
             <div class="control-group">
               <div class="controls">
-                <input id="chartButton" class="btn btn-primary btn-block" type="button" value="工作时长分布"/>
+                <input id="chartButton" class="btn btn-primary btn-block" type="button" value="{{'machineWorkingLengthDistribution'|translate}}"/>
               </div>
             </div>
 

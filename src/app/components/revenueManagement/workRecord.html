@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">工作纪录</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'workRecord'|translate}}</li>
   </ol>
 </section>
 
@@ -18,12 +18,12 @@
   <div class="row">
 
     <div class="col-md-1">
-      <label class="control-label">车队</label>
+      <label class="control-label">{{'fleet'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
 
-        <input type="text" id="org" class="form-control" placeholder="车队" ng-model="workRecordCtrl.org.label" name="org" readonly required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'fleet'|translate}}" ng-model="workRecordCtrl.org.label" name="org" readonly required/>
         <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="workRecordCtrl.openTreeInfo()">
@@ -35,19 +35,19 @@
 
 
     <div class="col-md-1">
-      <label class="control-label">整机编号/车号</label>
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="workRecordCtrl.workRecord.licenseId"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">设备编号</label>
+      <label class="control-label">{{'equipmentNumber'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="workRecordCtrl.workRecord.deviceNum"
-             placeholder="支持模糊查询"/>
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
   </div>
@@ -55,7 +55,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">开始时间</label>
+      <label class="control-label">{{'startingTime'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -72,7 +72,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">结束时间</label>
+      <label class="control-label">{{'endTime'|translate}}</label>
     </div>
     <div class="col-md-3">
 
@@ -91,8 +91,8 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button"  presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="workRecordCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="workRecordCtrl.reset()">{{'reset'|translate}}</button>
     </div>
 
 
@@ -111,16 +111,16 @@
       <table ng-table="workRecordCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="workRecord in $data">
 
-          <td class="text-nowrap" data-title="'日期'" sortable="'phoneNumber'">{{workRecord.recordDate | date: 'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'车队'" sortable="'phoneNumber'">{{workRecord.fleet}}</td>
-          <td class="text-nowrap" data-title="'车号'" sortable="'serialNumber'">{{workRecord.licenseId}}</td>
-          <td class="text-nowrap" data-title="'设备编号'" sortable="'price'">{{workRecord.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'趟次'" sortable="'times'">{{workRecord.records}}</td>
-          <td class="text-nowrap" data-title="'收入'" sortable="'revenue'">{{workRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'成本'" sortable="'oilCost'">{{workRecord.oilCost}}</td>
-          <td class="text-nowrap" data-title="'利润'">{{workRecord.revenue - workRecord.oilCost}}</td>
-          <td class="text-nowrap" data-title="'操作'">
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">查看详情</button>
+          <td class="text-nowrap" data-title="'date'|translate" sortable="'phoneNumber'">{{workRecord.recordDate | date: 'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'fleet'|translate" sortable="'phoneNumber'">{{workRecord.fleet}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'serialNumber'">{{workRecord.licenseId}}</td>
+          <td class="text-nowrap" data-title="'equipmentNumber'" sortable="'price'">{{workRecord.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'times'|translate" sortable="'times'">{{workRecord.records}}</td>
+          <td class="text-nowrap" data-title="'income'|translate" sortable="'revenue'">{{workRecord.revenue}}</td>
+          <td class="text-nowrap" data-title="'cost'|translate" sortable="'oilCost'">{{workRecord.oilCost}}</td>
+          <td class="text-nowrap" data-title="'profit'|translate">{{workRecord.revenue - workRecord.oilCost}}</td>
+          <td class="text-nowrap" data-title="'operation'|translate">
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
           </td>
         </tr>
       </table>

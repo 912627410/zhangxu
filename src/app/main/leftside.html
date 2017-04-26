@@ -89,7 +89,7 @@
           <li>
             <a ng-click="trackRecord=!trackRecord" presentation-href="dataAnalysis:toptrackrecord">
               <i class="fa ion-document"></i>
-              <span>工作履历管理</span>
+              <span>{{'WorkHistoryMng'|translate}}</span>
               <span class="glyphicon pull-right"
                     ng-class="trackRecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
             </a>
@@ -98,20 +98,20 @@
               <li>
                 <a ui-sref="home.trackRecordAnalyzemng"
                      presentation-href="dataAnalysis:trackrecord">
-                     <i class="fa ion-ios-pulse-strong"></i> <span>工作履历分析</span>
+                     <i class="fa ion-ios-pulse-strong"></i> <span>{{'WorkHistoryAnalysis'|translate}}</span>
                 </a>
               </li>
 
               <li>
                 <a ui-sref="home.machineWorkingHours">
-                  <i class="fa ion-ios-pulse-strong"></i> <span>车辆工作时长分布</span>
+                  <i class="fa ion-ios-pulse-strong"></i> <span>{{'machineWorkingLengthDistribution'|translate}}</span>
                 </a>
               </li>
 
               <li>
                 <a ui-sref="home.dullmachinemng"
                   presentation-href="dataAnalysis:dullmachine">
-                  <i class="fa ion-ionic"></i> <span>待销车分布</span>
+                  <i class="fa ion-ionic"></i> <span>{{'consignmentDistribution'|translate}}</span>
                 </a>
               </li>
             </ul>
@@ -120,7 +120,7 @@
           <li>
             <a ng-click="workstart=!workstart" presentation-href="dataAnalysis:topworkstart">
               <i class="fa ion-bonfire"></i>
-              <span>开工热度分析</span>
+              <span>{{'startHeatAnalysis'|translate}}</span>
               <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
             </a>
             <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: workstart}">
@@ -128,25 +128,25 @@
               <li>
                 <a ui-sref="home.workStartmng"
                   presentation-href="dataAnalysis:workstart">
-                  <i class="fa ion-fireball"></i> <span>开工热度分布</span>
+                  <i class="fa ion-fireball"></i> <span>{{'startHeatDistribution'|translate}}</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="home.barDistributionmng"
                   presentation-href="dataAnalysis:bardistribution">
-                  <i class="fa ion-stats-bars"></i> <span>开工区域分布</span>
+                  <i class="fa ion-stats-bars"></i> <span>{{'startAreaDistribution'|translate}}</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="home.machineworkreport"
                   presentation-href="dataAnalysis:machineworkreport">
-                  <i class="glyphicon glyphicon-list-alt"></i> <span>机器工作报告</span>
+                  <i class="glyphicon glyphicon-list-alt"></i> <span>{{'machineWorkReport'|translate}}</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="home.machineworklive"
                   presentation-href="dataAnalysis:machineworklive">
-                  <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
+                  <i class="glyphicon glyphicon-eye-open"></i> <span>{{'machineWorkLive'|translate}}</span>
                 </a>
               </li>
             </ul>
@@ -170,7 +170,7 @@
           <li>
           <a ui-sref="home.MachineClustering"
             presentation-href="dataAnalysis:clustering">
-            <i class="fa ion-gear-b"></i> <span>机器聚类探索</span>
+            <i class="fa ion-gear-b"></i> <span>{{'machineClustering'|translate}}</span>
           </a>
           </li>
 
@@ -189,13 +189,13 @@
         <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
           <li>
             <a ui-sref="home.workPoint" presentation-href="fleet:workPoint">
-              <i class="fa fa-flag"></i> <span>作业点管理</span>
+              <i class="fa fa-flag"></i> <span>{{'workPointMng' | translate}}</span>
             </a>
           </li>
 
           <li>
             <a ui-sref="home.workRecord" presentation-href="fleet:workRecord">
-              <i class="fa fa-flag"></i> <span>工作纪录</span>
+              <i class="fa fa-flag"></i> <span>{{'workRecord' | translate}}</span>
             </a>
           </li>
           <li>

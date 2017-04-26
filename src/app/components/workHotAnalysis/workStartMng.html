@@ -6,14 +6,14 @@
           <form id="searchForm" class="form-search">
             <div class="control-group">
 
-              <label class="control-label">车辆类型:</label>
+              <label class="control-label">{{'vehicleType'|translate}}:</label>
               <div class="controls">
                 <select class="form-control" ng-model="workStartMngController.machine.machineType">
-                  <option value="A1">小挖</option>
-                  <option value="30">矿机</option>
-                  <option value="40">中挖</option>
-                  <option value="1,2,3">装载机</option>
-                  <option value="A001">高空车</option>
+                  <option value="A1">{{'smallExcavator'|translate}}</option>
+                  <option value="30">{{'oreMachine'|translate}}</option>
+                  <option value="40">{{'mediumExcavator'|translate}}</option>
+                  <option value="1,2,3">{{'loader'|translate}}</option>
+                  <option value="A001">{{'arialVehicle'|translate}}</option>
                 </select>
               </div>
 
@@ -21,14 +21,14 @@
             <div class="control-group">
               <label class="control-label">热度类型：</label>
               <div class="controls">
-                  <select class="form-control" ng-model="workStartMngController.experimentalcar" placeholder="请选择">
+                  <select class="form-control" ng-model="workStartMngController.experimentalcar" placeholder="{{'pleaseSelect'|translate}}">
                     <option value="0">平均开工时间</option>
                     <option value="1">平均开工次数</option>
                   </select>
                 </div>
             </div>
             <div class="control-group">
-              <label class="control-label">起始日期：</label>
+              <label class="control-label">{{'startDate'|translate}}：</label>
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -50,7 +50,7 @@
 
             <div class="control-group">
               <div class="controls">
-                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工热度分布" ng-click="workStartMngController.drawWorkHot();">车辆开工热度分布</button>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'车辆开工热度分布'|translate}}" ng-click="workStartMngController.drawWorkHot();">{{'车辆开工热度分布'|translate}}</button>
               </div>
             </div>
           </form>

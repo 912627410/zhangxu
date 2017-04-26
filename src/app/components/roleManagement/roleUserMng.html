@@ -6,7 +6,7 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">{{'userName'|translate}}</label>
     </div>
@@ -18,7 +18,7 @@
     <div class="col-md-2">
       <label class="control-label">{{'state'|translate}}</label>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
       <ui-select name="status" ng-model="roleUserMngController.userinfo.status" theme="bootstrap"
                  ng-disabled="disabled">
         <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
@@ -30,7 +30,7 @@
     </div>
 
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button class="btn btn-primary" type="button"
               ng-click="roleUserMngController.query(null,10,null,roleUserMngController.userinfo)">{{'query'|translate}}
       </button>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row form-group">
     <div class="col-md-2">
       <label class="control-label">{{'allotOrganization'|translate}}</label>
     </div>

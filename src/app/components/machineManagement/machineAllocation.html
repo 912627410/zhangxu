@@ -1,24 +1,24 @@
 <div class="modal-header">
-  <h3 class="modal-title">车辆调拨日志</h3>
+  <h3 class="modal-title">{{'transferLog'|translate}}</h3>
 
 </div>
 
 <section class="content">
 <div class="table-responsive">
-  <p><strong>车号:</strong><span>{{machinelicenseId}}</span></p>
+  <p><strong>{{'machineNumberAndCarNumber'|translate}}:</strong><span>{{machinelicenseId}}</span></p>
   <table ng-table="machineAllocationController.tableParams" class="table table-bordered table-striped ">
       <tr ng-repeat="allocationlog in allocationlog">
         <!--<td data-title="'整机编号/车号'" >{{}}</td>-->
-        <td  data-title="'原所属组织'"  >{{allocationlog.originValue}}</td>
-        <td  data-title="'现所属组织'"  >{{allocationlog.targetValue}}</td>
-        <td  data-title="'操作员'"  >{{allocationlog.operationStaff}}</td>
-        <td  data-title="'操作时间'"  >{{allocationlog.recordTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+        <td  data-title="'originalOrganization'|translate"  >{{allocationlog.originValue}}</td>
+        <td  data-title="'currentOrganization'|translate"  >{{allocationlog.targetValue}}</td>
+        <td  data-title="'operator'|translate"  >{{allocationlog.operationStaff}}</td>
+        <td  data-title="'operationTime'|translate"  >{{allocationlog.recordTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
       </tr>
   </table>
 </div>
 </section>
 <form name="myForm" class="form-horizontal ">
   <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="machineAllocationController.cancel()">关闭</button>
+    <button class="btn btn-warning" type="button" ng-click="machineAllocationController.cancel()">{{'close'|translate}}</button>
   </div>
 </form>

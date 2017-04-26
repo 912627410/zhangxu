@@ -6,29 +6,29 @@
           <form id="searchForm" class="form-search">
             <div class="control-group">
 
-              <label class="control-label">车辆类型:</label>
+              <label class="control-label">{{'vehicleType'|translate}}:</label>
               <div class="controls">
                 <select class="form-control" ng-model="trackRecordAnalyzeMngController.machine.machineType">
-                  <option value="A1">小挖</option>
-                  <option value="30">矿机</option>
-                  <option value="40">中挖</option>
-                  <option value="1,2,3">装载机</option>
-                  <option value="A001">高空车</option>
+                  <option value="A1">{{'smallExcavator'|translate}}</option>
+                  <option value="30">{{'oreMachine'|translate}}</option>
+                  <option value="40">{{'mediumExcavator'|translate}}</option>
+                  <option value="1,2,3">{{'loader'|translate}}</option>
+                  <option value="A001">{{'arialVehicle'|translate}}</option>
                 </select>
                 </div>
             </div>
 
             <div class="control-group">
-              <label for="licenseId" class="control-label">车号:</label>
+              <label for="licenseId" class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
               <div>
-                <input type="text" id="licenseId" class="form-control" placeholder="车号"
+                <input type="text" id="licenseId" class="form-control" placeholder="{{'machineNumberAndCarNumber'|translate}}"
                        ng-model="trackRecordAnalyzeMngController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
                        validator="required" />
 
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">起始日期：</label>
+              <label class="control-label">{{'startDate'|translate}}：</label>
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -49,7 +49,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">结束日期：</label>
+              <label class="control-label">{{'endDate'|translate}}：</label>
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -70,7 +70,7 @@
 
             <div class="control-group">
               <div class="controls">
-                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="工作履历分析"/>
+                <input id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'WorkHistoryAnalysis'|translate}}"/>
               </div>
             </div>
           </form>
