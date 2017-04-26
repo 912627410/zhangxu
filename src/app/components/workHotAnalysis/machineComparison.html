@@ -1,0 +1,170 @@
+<div class="mainBox"  id="machineCompared">
+  <div class="leftBox" style="position: absolute;left: 0;top: 0;width: 65%;height: 900px;">
+    <div class="row form-group">
+      <div class="control-group" style="padding:20px 10px;">
+        <label class="control-label col-md-2">起始日期：</label>
+        <div class="controls col-md-3">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="machineComparedMngController.startDateDeviceData"
+                   is-open="machineComparedMngController.startDateOpenStatusDeviceData.opened"
+                   datepicker-options="machineComparedMngController.dateOptions"
+                   min-date="machineComparedMngController.minDate"
+                   max-date="machineComparedMngController.maxDate"
+                   ng-required="true" current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
+            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="machineComparedMngController.startDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+          </p>
+        </div>
+
+        <label class="control-label col-md-2">结束日期：</label>
+        <div class="controls col-md-3">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="machineComparedMngController.endDateDeviceData"
+                   is-open="machineComparedMngController.endDateOpenStatusDeviceData.opened"
+                   datepicker-options="machineComparedMngController.dateOptions"
+                   ng-required="true" current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
+            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default"
+                                    ng-click="machineComparedMngController.endDateOpenDeviceData($event)">
+                              <i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+          </p>
+        </div>
+
+
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                  ng-click="machineComparedMngController.query(machineComparedMngController.machineType1,machineComparedMngController.heatType1)">{{'query'|translate}}
+          </button>
+          <button class="btn btn-primary" type="button" ng-click="machineComparedMngController.reset()">{{'reset'|translate}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="control-label col-md-2">车辆类型:</label>
+      <div class="controls">
+        <select class="form-control col-md-3" ng-model="machineComparedMngController.machineType1">
+          <option value="A1">小挖</option>
+          <option value="30">矿机</option>
+          <option value="40">中挖</option>
+        </select>
+      </div>
+      <label class="control-label col-md-2">车辆类型:</label>
+      <div class="controls">
+        <select class="form-control col-md-3" ng-model="machineComparedMngController.machineType2">
+          <option value="A1">小挖</option>
+          <option value="30">矿机</option>
+          <option value="40">中挖</option>
+        </select>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label class="control-label col-md-2">车辆热度类型</label>
+      <div class="controls">
+        <select class="form-control col-md-3" ng-model="machineComparedMngController.heatType1">
+          <option value="1">开工热度分布</option>
+          <option value="0">销售热度分布</option>
+        </select>
+      </div>
+
+      <label class="control-label col-md-2">车辆热度类型</label>
+      <div class="controls">
+        <select class="form-control col-md-3" ng-model="machineComparedMngController.heatType2">
+          <option value="1">开工热度分布</option>
+          <option value="0">销售热度分布</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="machineComparedMngController.viewResults(machineComparedMngController.machineType1,machineComparedMngController.machineType2,machineComparedMngController.heatType1,machineComparedMngController.heatType2)">查看对比结果
+        </button>
+      </div>
+    </div>
+    <div class="mapBox" style="border: 1px solid #cccccc;height: 750px;width: 100%;position: relative;">
+      <div class="mapContainerBox" style="position: absolute;height: 750px;width: 100%;;left: 0px;">
+        <div class="mapContainer" id="mapContainer1" style="height: 750px;width: 100%;"></div>
+        <div style="position: absolute;position:absolute;right: 0;top: 40px;width: 200px;height: 120px;border: 1px solid #cccccc;">
+          <div style="position: relative;">
+            <div
+              style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+              平均工作时长
+            </div>
+            <ul style="position: absolute;list-style: none;line-height: 20px;">
+              <li>总平均：6.24小时</li>
+              <li style="color: #eb4f38;">矿机：1.6小时<img src="assets/images/down.png"/></li>
+              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">小挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">中挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+            </ul>
+            <a class="backChina" style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngController.backChina1();">
+              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div  class="mapContainerBox" style="position: absolute;height:750px;right: 0px;">
+        <div class="mapContainer" id="mapContainer2" style="height: 750px;"></div>
+        <div id="mapContainerQushi2" style="position: absolute;right: 0;top: 40px;width: 200px;height: 120px;border: 1px solid #cccccc;display: none;">
+          <div style="position: relative;">
+            <div
+              style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+              平均工作时长
+            </div>
+            <ul style="position: absolute;list-style: none;line-height: 20px;">
+              <li>总平均：6.24小时</li>
+              <li style="color: #eb4f38;">矿机：1.6小时<img src="assets/images/down.png"/></li>
+              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">小挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">中挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+            </ul>
+            <a class="backChina"  style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngController.backChina2();">
+              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="rightBox" style="position: absolute;right: 0px; top: 0px;height: 900px;width: 30%;">
+    <div class="row form-group" style="padding:20px 10px;">
+      <label class="control-label col-md-4">车辆热度分布</label>
+      <div class="controls">
+        <select class="form-control col-md-4" ng-model="machineComparedMngController.heatType">
+          <option value="1">开工热度分布</option>
+          <option value="0">销售热度分布</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="machineComparedMngController.showMachineHeatDetails(machineComparedMngController.heatType)">查看
+        </button>
+      </div>
+    </div>
+
+      <div id="subMap1" class="detdistribution"></div>
+
+      <div id="subMap2" class="detdistribution"></div>
+
+      <div id="subMap3" class="detdistribution"></div>
+    </div>
+</div>
+<div style="margin-top: 15px;">
+  <hr>
+  <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示车辆各年份月度工作情况</div>
+  <div style="width: 100%;height:300px;position: relative; height: 300px;width: 100%;">
+    <div id="mmu-container1" class="chart-container" style="width: 65%;height: 300px;position: absolute;left: 0px;top: 0px;"></div>
+    <div id="mmu-container2" class="chart-container" style="height: 300px;position: absolute;right: 0px;top: 0px;"></div>
+  </div>
+
+</div>
