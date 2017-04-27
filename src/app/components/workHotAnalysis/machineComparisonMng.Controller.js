@@ -109,7 +109,7 @@
         calculable: true,
         precision: 2,
         seriesIndex: [0],
-        color: ['#075e89','#f6f3d2'],
+        color: ['#075e89','#FFFFFF'],
         text: ['高', '低']
       },
       geo: {
@@ -268,7 +268,7 @@
         calculable: true,
         precision: 2,
         seriesIndex: [0],
-        color: ['#980000','#f6f3d2','#075e89'],
+        color: ['#075e89','#FFFFFF'],
         text: ['高', '低']
       },
       geo: {
