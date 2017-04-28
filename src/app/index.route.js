@@ -488,6 +488,15 @@
         }
       }
     })
+    .state('home.machineComparison', {
+      url: '/machineComparison',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/workHotAnalysis/machineComparison.html',
+          controller: 'machineComparedMngController as machineComparedMngController'
+        }
+      }
+    })
 
 
 
