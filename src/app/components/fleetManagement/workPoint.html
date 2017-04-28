@@ -20,8 +20,8 @@
           <!-- tools box -->
 
             <div class="form-inline pull-right box-tools">
-                <input type="text" id="tipinput" class="form-control" placeholder="搜索" name="tipinput" style="width: 200px;"/>
-                <input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;"/>
+                <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" name="tipinput" style="width: 200px;"/>
+                <input type="text" id="lnglat" class="form-control" placeholder="{{'latitudeAndLongitude'|translate}}" name="lnglat" style="width: 200px;"/>
               <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="workPointCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
             </div>
           <i class="fa fa-cloud"></i>
@@ -46,7 +46,7 @@
       <span>{{'totalNumberOfRecords'|translate}} {{workPointCtrl.page.totalElements}}</span>
     </div>
     <div class="btn-group col-md-8 right">
-      <a class="btn btn-default pull-right"  presentation-href="fleet:workPoint:add"  ng-click="workPointCtrl.create()">增加</a>
+      <a class="btn btn-default pull-right"  presentation-href="fleet:workPoint:add"  ng-click="workPointCtrl.create()">{{'add'|translate}}</a>
     </div>
   </div>
 
@@ -58,20 +58,20 @@
       <table ng-table="workPointCtrl.tableParams"  class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
         <tr ng-repeat="workPoint in $data">
 
-          <td class="text-nowrap" data-title="'ID'" sortable="'workPoint.id'">{{workPoint.id}}</td>
-          <td class="text-nowrap" data-title="'名称'" sortable="'workPoint.name'">{{workPoint.name}}</td>
-          <td class="text-nowrap" data-title="'类型'" sortable="'workPoint.typeDesc'" >{{workPoint.typeDesc}}</td>
-          <td class="text-nowrap" data-title="'描述'" sortable="'workPoint.describe'">{{workPoint.describe}}</td>
-          <td class="text-nowrap" data-title="'经度'" >{{workPoint.longitude}}</td>
-          <td class="text-nowrap" data-title="'纬度'" >{{workPoint.latitude}}</td>
-          <td class="text-nowrap" data-title="'半径(米)'" >{{workPoint.radius}}</td>
+          <td class="text-nowrap" data-title="'id'|translate" sortable="'workPoint.id'">{{workPoint.id}}</td>
+          <td class="text-nowrap" data-title="'name'|translate" sortable="'workPoint.name'">{{workPoint.name}}</td>
+          <td class="text-nowrap" data-title="'type'|translate" sortable="'workPoint.typeDesc'" >{{workPoint.typeDesc}}</td>
+          <td class="text-nowrap" data-title="'description'|translate" sortable="'workPoint.describe'">{{workPoint.describe}}</td>
+          <td class="text-nowrap" data-title="'longitude'|translate" >{{workPoint.longitude}}</td>
+          <td class="text-nowrap" data-title="'latitude'|translate" >{{workPoint.latitude}}</td>
+          <td class="text-nowrap" data-title="'radius'|translate" >{{workPoint.radius}}</td>
 
-          <td class="text-nowrap" data-title="'操作'">
+          <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs" ng-hide="workPoint.id==workPointCtrl.operWorkPorint"
-                    presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.update(workPoint)">编辑
+                    presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.update(workPoint)">{{'edit'|translate}}
             </button>
             <button type="button" class="btn btn-danger btn-xs" ng-show="workPoint.id==workPointCtrl.operWorkPorint"
-                    presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.save(workPoint)">保存
+                    presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.save(workPoint)">{{'save'|translate}}
             </button>
           </td>
         </tr>

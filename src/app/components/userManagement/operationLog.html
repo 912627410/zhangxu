@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">操作日志
+  <h3 class="modal-title">{{'operationLog'|translate}}
     <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="operationLogCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
@@ -9,7 +9,7 @@
 
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label text-nowrap">起始日期:</label>
+      <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -20,7 +20,7 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label text-nowrap">结束日期:</label>
+      <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -37,24 +37,24 @@
 
   <div class="row form-group">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">记录总数:{{operationLogCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfRecords'|translate}}:{{operationLogCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
-      <span style="color: red;">特别提醒：</span>
-      新建用户、更新用户、管理员更改密码中的原值为被操作的用户名
+      <span style="color: red;">{{'specialReminder'|translate}}：</span>
+      {{'specialReminderContent'|translate}}
     </div>
   </div>
 
   <div class="table-responsive">
     <table ng-table="operationLogCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="operationLogData in $data">
-        <td class="text-nowrap" data-title="'描述'" sortable="'updateDesc'">{{operationLogData.updateDesc}}</td>
-        <td class="text-nowrap" data-title="'原值'" sortable="'originValue'">{{operationLogData.originValue}}</td>
-        <td class="text-nowrap" data-title="'新值'" sortable="'targetValue'">{{operationLogData.targetValue}}</td>
-        <td class="text-nowrap" data-title="'ip'" sortable="'ip'">{{operationLogData.ip}}</td>
-        <td class="text-nowrap" data-title="'修改人'" sortable="'operator'">{{operationLogData.operator}}</td>
-        <td class="text-nowrap" data-title="'所属组织'" sortable="'operatorOrg'">{{operationLogData.operatorOrg}}</td>
-        <td class="text-nowrap" data-title="'操作时间'" sortable="'recordTime'">{{operationLogData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" data-title="'description'|translate" sortable="'updateDesc'">{{operationLogData.updateDesc}}</td>
+        <td class="text-nowrap" data-title="'originalValue'|translate" sortable="'originValue'">{{operationLogData.originValue}}</td>
+        <td class="text-nowrap" data-title="'newValue'|translate" sortable="'targetValue'">{{operationLogData.targetValue}}</td>
+        <td class="text-nowrap" data-title="'ip'|translate" sortable="'ip'">{{operationLogData.ip}}</td>
+        <td class="text-nowrap" data-title="'operator'|translate" sortable="'operator'">{{operationLogData.operator}}</td>
+        <td class="text-nowrap" data-title="'organisation'|translate" sortable="'operatorOrg'">{{operationLogData.operatorOrg}}</td>
+        <td class="text-nowrap" data-title="'operationTime'|translate" sortable="'recordTime'">{{operationLogData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
       </tr>
     </table>
   </div>

@@ -1153,12 +1153,12 @@
               <div class="table-responsive">
                 <table ng-table="deviceCurrentInfoCtrl.lockDataTable" class="table table-striped">
                   <tr>
-                    <th class="text-nowrap">下发时间</th>
-                    <th class="text-nowrap">操作人</th>
-                    <th class="text-nowrap">操作人姓名</th>
-                    <th class="text-nowrap">操作类型</th>
-                    <th class="text-nowrap">操作结果</th>
-                    <th class="text-nowrap">终端ip</th>
+                    <th class="text-nowrap">{{'releaseTime'|translate}}</th>
+                    <th class="text-nowrap">{{'operator'|translate}}</th>
+                    <th class="text-nowrap">{{'operatorName'|translate}}</th>
+                    <th class="text-nowrap">{{'operationType'|translate}}</th>
+                    <th class="text-nowrap">{{'operationResult'|translate}}</th>
+                    <th class="text-nowrap">{{'terminalIP'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceLockDataList in $data">
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -1206,12 +1206,12 @@
             </div>
             <div class="col-md-4" style="padding: 0px;">
               <div style="float:left;margin-top: -5px;">
-                <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;综合分析</div>
-                <div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;数据展示</div>
+                <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;{{'comprehensiveAnalysis'|translate}}</div>
+                <div><input type="radio" name="radio" value="状态量" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;{{'dataDisplay'|translate}}</div>
               </div>
               <button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
-                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">状态量</button>
-              <button class="btn btn-primary ng-binding" style="float:left;margin-left: 18px;" type="button" ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum, deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">确定</button>
+                      class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">{{'stateQuantity'|translate}}</button>
+              <button class="btn btn-primary ng-binding" style="float:left;margin-left: 18px;" type="button" ng-click="deviceCurrentInfoCtrl.viewReport(deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.deviceinfo.deviceNum, deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
             </div>
           </div>
           <div ng-show="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?false:true">
@@ -1225,18 +1225,18 @@
                     <div class="row">
                       <div class="col-md-6">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
-                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">切换</button>
+                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">{{'switching'|translate}}</button>
                         </label>
-                        <highchart id="workTimeChart" title="平均工作时长"
+                        <highchart id="workTimeChart" title="{{'averageWorkingHours'|translate}}"
                                    style="height:250px;"
                                    config="deviceCurrentInfoCtrl.workTimeChart">
                         </highchart>
                       </div>
                       <div class="col-md-6">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
-                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
+                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">{{'switching'|translate}}</button>
                         </label>
-                        <highchart id="startTimesChart" title="平均启动次数"
+                        <highchart id="startTimesChart" title="{{'averageNumberOfStarts'|translate}}"
                                      style="height: 250px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
                         </highchart>
@@ -1244,15 +1244,15 @@
                     </div>
                     <div class="row">
                       <div class="col-xs-12">
-                        <highchart id="realtimeChart" title="设备单次工作时长分析"
+                        <highchart id="realtimeChart" title="{{'analysisOfMachineSingleWorkHours'|translate}}"
                                    style="min-width:850px;height: 250px"
                                    config="deviceCurrentInfoCtrl.singleWorkHours">
                         </highchart>
                       </div>
                     </div>
                 </div>
-                <div ng-switch-when="状态量">
-                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig" ></highchart>
+                <div ng-switch-when="{{'stateQuantity'|translate}}">
+                    <highchart id="simpleChart" title="{{'operationalDataAnalysis'|translate}}" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig" ></highchart>
                 </div>
               </div>
           </div>
@@ -1262,7 +1262,7 @@
 
     <!--用户画像-->
     <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait">
-      <uib-tab-heading>用户画像</uib-tab-heading>
+      <uib-tab-heading>{{'userPortrait'|translate}}</uib-tab-heading>
       <div class="modal-body"  style="overflow-y: auto; overflow-x:hidden; height:600px;">
 
         <div class="row">
@@ -1317,19 +1317,19 @@
                         width: 350px;height: 170px; text-align: center"
                  ng-show="deviceCurrentInfoCtrl.portraitChart==null">
               <div class="row bg-info" style="height: 20%;padding:5px;">
-                <div class="col-sm-4">年龄</div>
+                <div class="col-sm-4">{{'age'|translate}}</div>
                 <div class="col-sm-8">{{deviceCurrentInfoCtrl.customerInfo.age}}</div>
               </div>
               <div class="row bg-success" style="height: 20%;padding:5px;">
-                <div class="col-sm-4">籍贯</div>
+                <div class="col-sm-4">{{'nativePlace'|translate}}</div>
                 <div class="col-sm-8">{{deviceCurrentInfoCtrl.customerInfo.address}}</div>
               </div>
               <div class="row bg-warning" style="height: 20%;padding:5px;">
-                <div class="col-sm-4">职业</div>
+                <div class="col-sm-4">{{'job'|translate}}</div>
                 <div class="col-sm-8">{{deviceCurrentInfoCtrl.customerInfo.jobs}}</div>
               </div>
               <div class="row bg-danger" style="vertical-align:middle;height: 40%;padding:10px;">
-                <div class="col-sm-4">特征</div>
+                <div class="col-sm-4">{{'feature'|translate}}</div>
                 <div class="col-sm-8">{{deviceCurrentInfoCtrl.customerInfo.description}}</div>
               </div>
             </div>
@@ -1360,26 +1360,26 @@
               <table class="table" style="text-align: center">
                 <tbody>
                   <tr class="primary">
-                    <td colspan="2"><h4 class="text-red">离下次保养还有{{deviceCurrentInfoCtrl.enginePerforms.nextMaintainTime}}小时</h4></td>
+                    <td colspan="2"><h4 class="text-red">{{'fromTheNextMaintenance'|translate}}{{deviceCurrentInfoCtrl.enginePerforms.nextMaintainTime}}{{'hour'|translate}}</h4></td>
                   </tr>
                   <tr class="info">
-                    <td>平均油耗</td>
+                    <td>{{'averageFuelConsumption'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.enginePerforms.avgOil}} g/kW·h</td>
                   </tr>
                   <tr class="success">
-                    <td>平均温度</td>
+                    <td>{{'averageTemperature'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.enginePerforms.avgTemperature}} ℃</td>
                   </tr>
                   <tr class="warning">
-                    <td>最大扭矩</td>
+                    <td>{{'maximumTorque'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.enginePerforms.maxTorque}} N.m</td>
                   </tr>
                   <tr class="danger">
-                    <td>额定功率/转速</td>
+                    <td>{{'ratedPowerSpeed'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.enginePerforms.avgPower}} kW/r/min</td>
                   </tr>
                   <tr class="active">
-                    <td>排量</td>
+                    <td>{{'displacement'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.enginePerforms.displacement}} L</td>
                   </tr>
                 </tbody>

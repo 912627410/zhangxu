@@ -7,21 +7,21 @@
           <form name="InactiveMachineForm" class="form-horizontal">
               <div class="control-group">
 
-                <label class="control-label">车辆类型:</label>
+                <label class="control-label">{{'vehicleType'|translate}}:</label>
                 <div class="controls">
                   <select class="form-control" ng-model="dullmachineMngController.machine.machineType">
-                    <option value="A1">小挖</option>
-                    <option value="30">矿机</option>
-                    <option value="40">中挖</option>
-                    <option value="1,2,3">装载机</option>
-                    <option value="A001">高空车</option>
+                    <option value="A1">{{'smallExcavator'|translate}}</option>
+                    <option value="30">{{'oreMachine'|translate}}</option>
+                    <option value="40">{{'mediumExcavator'|translate}}</option>
+                    <option value="1,2,3">{{'loader'|translate}}</option>
+                    <option value="A001">{{'arialVehicle'|translate}}</option>
                   </select>
                 </div>
             </div>
             <br>
             <div class="control-group">
               <div class="controls">
-                <input id="queryBtn" type="button" class="btn btn-block btn-primary" value="待销车查询" />
+                <input id="queryBtn" type="button" class="btn btn-block btn-primary" value="{{'consignmentDistribution'|translate}}" />
               </div>
             </div>
           </form>
