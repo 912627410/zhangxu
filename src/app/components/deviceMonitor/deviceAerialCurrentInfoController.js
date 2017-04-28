@@ -222,7 +222,7 @@
         })
 
         //检查短信参数
-        vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,catPhoneNumber, secInnerPower,vehicleStateCollect,chargerStateCollect) {
+        vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
             if (type == null || devicenum == null) {
                 return false;
             }
