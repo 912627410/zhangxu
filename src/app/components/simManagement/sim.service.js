@@ -31,6 +31,9 @@
           if (sim.phoneNumber) {
             restCallURL += "&search_LIKE_phoneNumber=" + sim.phoneNumber;
           }
+          if (sim.serialNumber) {
+            restCallURL += "&search_LIKE_serialNumber=" + sim.serialNumber;
+          }
           if (sim.provider) {
             restCallURL += "&search_EQ_provider=" + sim.provider.value;
           }
