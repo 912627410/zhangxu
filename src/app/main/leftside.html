@@ -160,6 +160,11 @@
             </a>
             <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: vehicleStatistics}">
               <li>
+                <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+                  <i class="fa fa-unlink"></i> <span>{{'idleDeviceReport' | translate}}</span>
+                </a>
+              </li>
+              <li>
                 <a ui-sref="home.attendance" presentation-href="report:machineAttendance">
                   <i class="fa fa-bookmark"></i> <span>{{'machineAttendance' | translate}}</span>
                 </a>
