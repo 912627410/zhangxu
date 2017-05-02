@@ -116,6 +116,7 @@
 
     vm.reset = function () {
       vm.sim.phoneNumber="";
+      vm.sim.serialNumber="";
       vm.sim.provider="";
 
       vm.org = null;
