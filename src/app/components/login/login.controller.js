@@ -99,7 +99,7 @@
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
           if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
+            Notification.error("验证码输入错误！请重新输入！！");
           }
           if(data.code==1){
             vm.userverify();
@@ -108,7 +108,7 @@
       }else if(!$scope.isShow){
             vm.userverify();
           }else {
-            Notification.error("请输入验证码！!");
+            Notification.error("请输入验证码！！");
           }
     }
 
