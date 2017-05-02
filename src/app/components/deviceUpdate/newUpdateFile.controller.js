@@ -34,7 +34,7 @@
       file.upload = Upload.upload({
         url: UPDATE_FILE_UPLOAD_URL,
         data: {
-          versionNum:file.versionNum*100,
+          versionNum: Math.round(file.versionNum*100),
           applicableProducts:file.applicableProducts
         },
         file: file
@@ -54,7 +54,7 @@
         Notification.error("新增升级文件失败!");
         Notification.error(vm.errorMsg);
       },function(evt){
-        
+
       });
     };
 
