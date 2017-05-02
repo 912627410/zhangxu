@@ -1,0 +1,133 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'fuelConsumptionStatistics'|translate}}</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'theFleet'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+
+        <input type="text" id="org" class="form-control" placeholder="{{'theFleet'|translate}}" ng-model="fuelConsumptionCtrl.org.label" name="org" readonly required/>
+          <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="fuelConsumptionCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="fuelConsumptionCtrl.fuelRecord.licenseId"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'deviceNum'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="deviceNum" class="form-control " ng-model="fuelConsumptionCtrl.fuelRecord.deviceNum"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'startingTime'|translate}}
+      </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="fuelConsumptionCtrl.startDate"
+               is-open="fuelConsumptionCtrl.startDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="fuelConsumptionCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'endTime'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="fuelConsumptionCtrl.endDate"
+               is-open="fuelConsumptionCtrl.endDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="fuelConsumptionCtrl.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'type'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-model="fuelConsumptionCtrl.fuelRecord.type">
+        <option value="">请选择</option>
+        <option value="1">白班</option>
+        <option value="0">夜班</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-offset-10 col-md-2 text-right">
+      <button class="btn btn-primary" type="button"  presentation-href="fleet:fuelConsumption:query" ng-click="fuelConsumptionCtrl.query(0,null,null,fuelConsumptionCtrl.fuelRecord)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="fuelConsumptionCtrl.reset()">{{'reset'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="btn-group col-md-12">
+      <span class="label label-info pull-left">{{'totalNumberOfRecords'|translate}}:{{fuelConsumptionCtrl.page.totalElements}}</span>
+    </div>
+  </div>
+
+  <div class="row " style="padding: 10px">
+    <div class="table-responsive">
+      <table ng-table="fuelConsumptionCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="fuelRecord in $data">
+          <td class="text-nowrap" data-title="'theFleet'|translate" sortable="'phoneNumber'">{{fuelRecord.organization.label}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'serialNumber'">{{fuelRecord.licenseId}}</td>
+          <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'price'">{{fuelRecord.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'fuelConsumption(%)'|translate" sortable="'oilConsumption'">{{fuelRecord.oilConsumption}}</td>
+          <td class="text-nowrap" data-title="'type'|translate" sortable="'type'">{{fuelRecord.typeDesc}}</td>
+          <td class="text-nowrap" data-title="'date'|translate" sortable="'workDate'">{{fuelRecord.workDate | date: 'yyyy-MM-dd'}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="fuelConsumptionCtrl.page.totalElements" ng-change="fuelConsumptionCtrl.query(fuelConsumptionCtrl.pageNumber-1,null,null,fuelConsumptionCtrl.fuelRecord)"
+                    max-size="5" ng-model="fuelConsumptionCtrl.pageNumber" items-per-page="fuelConsumptionCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+  </div>
+
+</section>
+
+
