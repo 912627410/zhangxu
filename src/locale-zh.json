@@ -425,6 +425,7 @@
   "income": "收入",
   "cost": "成本",
   "fuelConsumption(L)": "油耗(L)",
+  "fuelConsumption(%)": "油耗(%)",
   "fuelCost": "燃油成本",
   "profit": "利润",
   "costManagement": "成本管理",
@@ -666,7 +667,8 @@
   "specialReminder":"特别提醒",
   "specialReminderContent":"新建用户、更新用户、管理员更改密码中的原值为被操作的用户名",
   "affiliatedInformation":"隶属信息",
-  "createWorkReport":"生成工作报告"
+  "createWorkReport":"生成工作报告",
+  "fuelConsumptionStatistics":"油耗统计"
 
 
 
