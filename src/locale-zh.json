@@ -610,6 +610,7 @@
   "terminalResetMessageContent":"终端复位内容",
   "machineStateSamplingTime":"车辆状态采样时间(秒)",
   "chargingInformationSamplingTime":"充电信息采样时间(秒)",
+  "theInputRange":"输入范围10~18秒",
   "currentAddress":"当前地址",
   "SetFence":"设置围栏",
   "cancelFence":"取消围栏",
