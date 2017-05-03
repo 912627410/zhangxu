@@ -1177,7 +1177,7 @@
                 var restCallURL = DEVCE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
                 var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-                var sortUrl = sort || "recordTime,desc";
+                var sortUrl = sort || "dataGenerateTime,desc";
                 restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
                 if (queryCondition){
