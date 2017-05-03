@@ -66,7 +66,7 @@
     <div class="col-md-6">
       <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
                       max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                      first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页" style="margin: 0;"></uib-pagination>
+                      first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}" style="margin: 0;"></uib-pagination>
     </div>
     <div class="col-md-5 button-group">
 
@@ -127,7 +127,7 @@
               </button>
               <button type="button" class="btn btn-danger btn-xs"
                       ng-if="userinfo.status===1" presentation-href="user:oper"
-                      ng-click="userMngController.statusDisable(userinfo)">{{'notEnabled'|translate}}
+                      ng-click="userMngController.statusDisable(userinfo)">{{'forbidden'|translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
                       ng-click="userMngController.updateUserInfo(userinfo)">{{'alter'|translate}}
@@ -151,7 +151,7 @@
   <div class="box-footer">
     <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
                     max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
 
 </section>

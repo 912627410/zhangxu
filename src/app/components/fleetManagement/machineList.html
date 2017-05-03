@@ -19,5 +19,5 @@
   </div>
 </div>
 <div class="box-footer">
-  <uib-pagination total-items="machineListCtrl.page.totalElements" ng-change="machineListCtrl.query(machineListCtrl.machine_pagenumber-1,null,null,machineListCtrl.fleet)" max-size="15" ng-model="machineListCtrl.machine_pagenumber" items-per-page="machineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  <uib-pagination total-items="machineListCtrl.page.totalElements" ng-change="machineListCtrl.query(machineListCtrl.machine_pagenumber-1,null,null,machineListCtrl.fleet)" max-size="15" ng-model="machineListCtrl.machine_pagenumber" items-per-page="machineListCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
 </div>
