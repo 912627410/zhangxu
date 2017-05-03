@@ -1336,7 +1336,11 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
+    //格式化显示，使数字每4位以“-”连接
+    vm.XReplace = function(str){
+      var reg = new RegExp("(\\S{4})","g");
+      return str.replace(reg,"$1-");
+    }
 
     //发送解锁短信
     vm.sendUnLockSMS = function (devicenum) {
@@ -1393,8 +1397,11 @@
           var restURL = VIEW_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
-
-            vm.bindKeyboardMsg = data.content;
+            var content = vm.XReplace(data.content);
+            if(content.substr(content.length-1,1).indexOf("-")==0){
+                content = content.substring(0,content.length-1);
+            }
+            vm.bindKeyboardMsg = content;
             if (data.content) {
               vm.bindKeyboardMsgIdx = data.content.substr(17, 1) + data.content.substr(22, 1);
             }
@@ -1416,8 +1423,11 @@
           var restURL = VIEW_UN_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
-
-            vm.unbindKeyboardMsg = data.content;
+            var content = vm.XReplace(data.content);
+            if(content.substr(content.length-1,1).indexOf("-")==0){
+              content = content.substring(0,content.length-1);
+            }
+            vm.unbindKeyboardMsg = content;
             if (data.content) {
               var idxTmp = data.content.substr(5, 1) + data.content.substr(10, 1);
               vm.unbindKeyboardMsgIdx = 50 - idxTmp;
@@ -1440,8 +1450,12 @@
           var restURL = VIEW_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
+            var content = vm.XReplace(data.content);
+            if(content.substr(content.length-1,1).indexOf("-")==0){
+              content = content.substring(0,content.length-1);
+            }
 
-            vm.lockKeyboardMsg = data.content;
+            vm.lockKeyboardMsg = content;
             if (data.content) {
               vm.lockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
             }
@@ -1463,8 +1477,11 @@
           var restURL = VIEW_UN_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
-
-            vm.unLockKeyboardMsg = data.content;
+            var content = vm.XReplace(data.content);
+            if(content.substr(content.length-1,1).indexOf("-")==0){
+              content = content.substring(0,content.length-1);
+            }
+            vm.unLockKeyboardMsg = content;
             if (data.content) {
               vm.unLockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
             }
