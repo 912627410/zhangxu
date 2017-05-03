@@ -1110,12 +1110,11 @@
                 }
 
                 //要求包含所选择的结束时间
-                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
                 if (startDate) {
-                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
-                if (endDateAddOne) {
-                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+                if (endDate) {
+                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
                 var restCallURL = DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
@@ -1213,13 +1212,12 @@
                   queryCondition = "&deviceNum=" + deviceNum;
                 }
                 //要求包含所选择的结束时间
-                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
 
                 if (startDate) {
-                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
-                if (endDateAddOne) {
-                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+                if (endDate) {
+                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
 
                 var sort = 'warningTime,desc';
@@ -1310,7 +1308,7 @@
         };
 
         var curDate = new Date();
-        vm.startDate = new Date(curDate-48*3600*1000);
+        vm.startDate = new Date(curDate-24*3600*1000);
 
         vm.queryChart = function (queryType, deviceNum, startDate, endDate) {
           if (queryType != '01' && queryType != '02' && queryType != '03') {
