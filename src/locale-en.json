@@ -592,7 +592,7 @@
   "speakerButton": "Speaker button",
   "enableButton": "Enable button",
   "notEnabled": "Not Enabled",
-  "enabled": "Enabled",
+  "hasEnabled": "Enabled",
   "handleCenter": "Handle center",
   "direction": "Direction",
   "handleAnalog": "Handle analog",
