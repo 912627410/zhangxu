@@ -1336,7 +1336,7 @@
         Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
       })
     }
-
+    //格式化显示，使数字每4位以“-”连接
     vm.XReplace = function(str){
       var reg = new RegExp("(\\S{4})","g");
       return str.replace(reg,"$1-");
