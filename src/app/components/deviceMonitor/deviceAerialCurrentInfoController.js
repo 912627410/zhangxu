@@ -284,7 +284,12 @@
 
         //得到短信内容
         vm.viewSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
-            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
+
+          if(vehicleStateCollect<10||vehicleStateCollect>18 || chargerStateCollect<10||chargerStateCollect>18){
+            Notification.error("请输入正确的采样时间范围10~18秒");
+            return;
+          }
+          if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
             }
@@ -315,6 +320,10 @@
 
         //发送短信
         vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+            if(vehicleStateCollect<10||vehicleStateCollect>18 || chargerStateCollect<10||chargerStateCollect>18){
+              Notification.error("请输入正确的采样时间范围10~18秒");
+              return;
+            }
             if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
