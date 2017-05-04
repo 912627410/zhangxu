@@ -100,6 +100,51 @@
     </div>
   </div>
 
+  <div class="row form-group"  presentation-href="fleet:fuelConsumption:historyStatistics">
+    <div class="col-md-1">
+      <label class="control-label">{{'startingTime'|translate}}
+      </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="fuelConsumptionCtrl.statistics.startDate"
+               is-open="fuelConsumptionCtrl.statisticsStartDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="fuelConsumptionCtrl.statisticsStartDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'endTime'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="fuelConsumptionCtrl.statistics.endDate"
+               is-open="fuelConsumptionCtrl.statisticsEndDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="fuelConsumptionCtrl.statisticsEndDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+    <div class="col-md-1">{{'deviceNum'|translate}}</div>
+    <div class="col-md-3">
+      <input type="text" name="deviceNum" class="form-control " ng-model="fuelConsumptionCtrl.statistics.deviceNum"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+    <div class="col-md-offset-10 col-md-2 text-right">
+      <button class="btn btn-primary" type="button" ng-click="fuelConsumptionCtrl.historyStatistics(fuelConsumptionCtrl.statistics)">统计历史油耗</button>
+    </div>
+  </div>
+
   <div class="row form-group">
     <div class="btn-group col-md-12">
       <span class="label label-info pull-left">{{'totalNumberOfRecords'|translate}}:{{fuelConsumptionCtrl.page.totalElements}}</span>
