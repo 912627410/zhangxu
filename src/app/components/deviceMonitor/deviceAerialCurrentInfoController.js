@@ -1248,7 +1248,7 @@
                   var wList = data.content;
                   for(var i = 0 ;i<wList.length;i++){
                     var warningTime = new Date(wList[i].warningTime);
-                    //new date实际意义，Notification.warning("暂无数据！");需要用到其时分秒  以及纵坐标的最小值
+                    //new date实际意义,需要用到其时分秒  以及纵坐标的最小值
                     var date = new Date(2016,7,31);
                     date.setHours(warningTime.getHours());
                     date.setMinutes(warningTime.getMinutes());
