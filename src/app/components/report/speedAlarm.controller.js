@@ -14,7 +14,7 @@
 
     // 默认查询7天
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 7);
+    startDate.setDate(startDate.getDate() - 1);
 
     $scope.queryDate = {
       startDate: startDate,
@@ -100,8 +100,6 @@
 
     }
 
-
-
     vm.reset = function () {
       $scope.queryDate = {
         startDate: startDate,
@@ -111,33 +109,26 @@
       vm.SubOrg = true;
     };
 
-
-    var ws = new WebSocket("ws://localhost:8085/webSocketServer/overSpeed");
-    ws.onopen = function () {
-      ws.send(vm.operatorInfo.authtoken);
-    };
-
-    ws.onmessage = function (evt) {
-      console.log(evt.data);
-      vm.data = evt.data;
-      $scope.$apply();
-    };
-
-
     vm.reload = function () {
-      $window.location.reload();
+      ws = new WebSocket("ws://localhost:8085/webSocketServer/overSpeed");
+
+      ws.onopen = function () {
+        ws.send(vm.operatorInfo.authtoken);
+      };
+
+      ws.onmessage = function (evt) {
+        console.log(evt.data);
+        vm.data = evt.data;
+        $scope.$apply();
+      };
+
+      ws.onclose = function (evt) {
+         console.log("WebSocketClosed!");
+      };
+
+      ws.onerror = function (evt) {
+         console.log("WebSocketError!");
+      };
     };
-
-
-
-    //
-    // ws.onclose = function (evt) {
-    //   console.log("WebSocketClosed!");
-    // };
-    //
-    // ws.onerror = function (evt) {
-    //   console.log("WebSocketError!");
-    // };
-
   }
 })();
