@@ -130,6 +130,15 @@
           }
         }
       })
+      .state('home.speedAlarm', {
+        url: '/speedAlarm',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/speedAlarm.html',
+            controller: 'speedAlarmController as speedAlarmCtrl'
+          }
+        }
+      })
       .state('home.smsSendReport', {
         url: '/smsSendReport',
         views: {
