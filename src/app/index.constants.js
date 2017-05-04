@@ -205,6 +205,7 @@
     .constant('WORK_POINT_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workPointRecord') //工作纪录
 
     .constant('FUEL_CONSUMPTION_QUERY', SERVER_BASE_URL + 'fleetRecord/fuelConsumptionQuery')  //油耗分页查询
+    .constant('FUEL_CONSUMPTION_STATISTICS', SERVER_BASE_URL + 'fleetRecord/fuelConsumptionStatistics')  //统计历史油耗
 
     //按车队查询distance
     .constant('DEVCE_DISTANCE_TOFLEET_PAGE', SERVER_BASE_URL + 'fleet/distanceToFleetPage')

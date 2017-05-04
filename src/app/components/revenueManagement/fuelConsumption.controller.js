@@ -6,7 +6,7 @@
   .controller('fuelConsumptionController', fuelConsumptionController);
 
   /** @ngInject */
-  function fuelConsumptionController($rootScope,$filter ,treeFactory,NgTableParams, ngTableDefaults,Notification,serviceResource,DEFAULT_SIZE_PER_PAGE,FUEL_CONSUMPTION_QUERY) {
+  function fuelConsumptionController($rootScope,$filter ,treeFactory,NgTableParams, ngTableDefaults,Notification,serviceResource,DEFAULT_SIZE_PER_PAGE,FUEL_CONSUMPTION_QUERY,FUEL_CONSUMPTION_STATISTICS) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -121,6 +121,56 @@
       vm.initDate();
     };
 
+    vm.statisticsStartDateOpenStatus = {
+      opened: false
+    };
+
+    vm.statisticsStartDateOpen = function ($event) {
+      vm.statisticsStartDateOpenStatus.opened = true;
+    };
+
+    vm.statisticsEndDateOpenStatus = {
+      opened: false
+    };
+
+    vm.statisticsEndDateOpen = function ($event) {
+      vm.statisticsEndDateOpenStatus.opened = true;
+    };
+
+    /**
+     * 统计历史油耗
+     */
+    vm.historyStatistics = function (statistics) {
+      if(null == statistics) {
+        Notification.warning("请录入信息");
+        return;
+      }
+      if(null == statistics.deviceNum || "" == statistics.deviceNum) {
+        Notification.warning("请输入设备号");
+        return;
+      }
+      if(null == statistics.startDate || "" == statistics.startDate ||
+        null == statistics.endDate || "" == statistics.endDate) {
+        Notification.warning("请录入起止时间");
+        return;
+      }
+
+      var statisticsVo = {
+        startDate : $filter('date')(statistics.startDate,'yyyy-MM-dd'),
+        endDate : $filter('date')(statistics.endDate,'yyyy-MM-dd'),
+        deviceNum : $filter('uppercase')(statistics.deviceNum)
+      };
+      var rspData = serviceResource.restUpdateRequest(FUEL_CONSUMPTION_STATISTICS, statisticsVo);
+      rspData.then(function (data) {
+        if(data.code == 0) {
+          Notification.success(data.content);
+        } else {
+          Notification.error(data.message);
+        }
+      }, function (reason) {
+        Notification.error(reason.data.message);
+      })
+    };
 
   }
 })();
