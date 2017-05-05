@@ -12,86 +12,181 @@
 <!-- Main content -->
 <section class="content form-horizontal">
 
-  <div class="row form-group">
+  <div class="row">
     <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'startingTime'|translate}}:</label>
-    </div >
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text"
-               class="form-control"
-               uib-datepicker-popup="{{formatCustom}}"
-               ng-model="queryDate.startDate"
-               is-open="startDateOpenStatus"
-               datepicker-options="dateOptions"
-               ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
-        <span class="input-group-btn">
-          <button type="button"
-                  class="btn btn-default"
-                  ng-click="startDateOpen($event)">
-            <i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div>
-    <div class="col-md-offset-2 col-md-1">
-      <label class="control-label text-nowrap">{{'endTime'|translate}}: </label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text"
-               class="form-control"
-               uib-datepicker-popup="{{formatCustom}}"
-               ng-model="queryDate.endDate"
-               is-open="endDateOpenStatus"
-               datepicker-options="dateOptions"
-               ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
-        <span class="input-group-btn">
-          <button type="button"
-                  class="btn btn-default"
-                  ng-click="endDateOpen($event)">
-            <i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-1">
-      <label class="control-label">{{'organisation'|translate}}:</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="queryOrg.label" name="org" readonly required/>
-        <span class="input-group-btn">
-            <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="speedAlarmCtrl.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-      </p>
+      <label class="control-label">{{'startingTime'|translate}}</label>
     </div>
     <div class="col-md-2">
-      <label class="control-label" style="font-size: 8px;">{{'subordinateOrganization'|translate}}</label>
-      <input type="checkbox" ng-model="speedAlarmCtrl.querySubOrg">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="speedAlarmCtrl.startDate"
+               is-open="speedAlarmCtrl.startDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+        <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="speedAlarmCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
     </div>
-    <div class="col-md-offset-4 col-md-2">
-      <button  class="btn btn-primary" ng-click="speedAlarmCtrl.query(queryOrg, queryDate)">{{'query'|translate}}</button>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'endTime'|translate}}</label>
     </div>
+    <div class="col-md-2">
+
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="speedAlarmCtrl.endDate"
+               is-open="speedAlarmCtrl.endDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+        <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="speedAlarmCtrl.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+    <div class="col-md-1">
+      <label for="licenseId" class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
+    </div>
+    <div class="col-md-2">
+      <div>
+        <input type="text" id="licenseId" class="form-control" placeholder="{{'machineNumberAndCarNumber'|translate}}"
+               ng-model="speedAlarmCtrl.machinelicenseId" name="licenseId" typeahead-show-hint="true"
+               validator="required"/>
+
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary" type="button" presentation-href="fleet:workRecord:query"
+              ng-click="speedAlarmCtrl.query(speedAlarmCtrl.startDate,speedAlarmCtrl.endDate,speedAlarmCtrl.machinelicenseId)">{{'query'|translate}}
+      </button>
+      <button class="btn btn-primary" type="button" ng-click="speedAlarmCtrl.reset()">{{'reset'|translate}}</button>
+    </div>
+
+
   </div>
   <div class="row from-group">
     <div class="col-md-3">
-      <button  class="btn btn-primary" ng-click="speedAlarmCtrl.reload()">连接</button>
+      <button class="btn btn-primary" ng-click="speedAlarmCtrl.reload()">连接</button>
     </div>
   </div>
 
-  <div class="row from-group">
-    <div class="col-md-offset-3 col-md-9">
-      {{speedAlarmCtrl.data}}
+  <div class="MachineTransportInfosBox" style="position:relative;width: 100%;">
+    <div class="overSpeeding" style="position: absolute;width: 48%;left: 0;top: 0;height: 500px;">
+      <h4>车辆超速信息</h4>
+      <uib-tabset>
+      <!--	表格-->
+      <uib-tab select="speedAlarmCtrl.getLockData()">
+        <uib-tab-heading>表格</uib-tab-heading>
+        <div class="modal-body">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table ng-table="deviceCurrentInfoCtrl.lockDataTable" class="table table-striped">
+                    <tr>
+                      <th class="text-nowrap">设备号</th>
+                      <th class="text-nowrap">车号</th>
+                      <th class="text-nowrap">定位时间</th>
+                      <th class="text-nowrap">纪录生成时间</th>
+                      <th class="text-nowrap">地理位置</th>
+                      <th class="text-nowrap">经度</th>
+                      <th class="text-nowrap">纬度</th>
+                      <th class="text-nowrap">发动机转速</th>
+                      <th class="text-nowrap">时速</th>
+                      <th class="text-nowrap">ACC状态</th>
+                    </tr>
+                    <tr ng-repeat="machineTransport in speedAlarmCtrl.machineTransportList">
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.deviceNum}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.licenseId}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.locateDateTime}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.recordTime}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.address}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.amaplongitudeNum}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.amaplatitudeNum}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.engineRotateToEcu}}</td>
+                      <td ng-cloak class="text-nowrap text-center">{{machineTransport.mph}}</td>
+                      <td ng-if="machineTransport.accStatus=='01'">工作</td>
+                      <td ng-if="machineTransport.accStatus=='10'">不工作</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+
+      <!--图表-->
+      <uib-tab select="speedAlarmCtrl.drawLineChart1()">
+        <uib-tab-heading>图表</uib-tab-heading>
+        <div class="modal-body"  style=" overflow-y:scroll;height:600px;">
+          <div class="box-body">
+             <div id="overSpeedingChart" style="width: 500px;height:600Px; "></div>
+          </div>
+        </div>
+      </uib-tab>
+      </uib-tabset>
+
+    </div>
+    <div class="neutralGlide" style="position: absolute;width: 48%;right:  0;top: 0;height: 500px;">
+    <h4>车辆空挡滑行信息</h4>
+      <uib-tabset>
+        <!--	表格-->
+        <uib-tab select="speedAlarmCtrl.getLockData(speedAlarmCtrl.deviceinfo.sim.phoneNumber)">
+          <uib-tab-heading>表格</uib-tab-heading>
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table ng-table="deviceCurrentInfoCtrl.lockDataTable" class="table table-striped">
+                      <tr>
+                        <th class="text-nowrap">设备号</th>
+                        <th class="text-nowrap">车号</th>
+                        <th class="text-nowrap">定位时间</th>
+                        <th class="text-nowrap">纪录生成时间</th>
+                        <th class="text-nowrap">地理位置</th>
+                        <th class="text-nowrap">经度</th>
+                        <th class="text-nowrap">纬度</th>
+                        <th class="text-nowrap">发动机转速</th>
+                        <th class="text-nowrap">时速</th>
+                        <th class="text-nowrap">ACC状态</th>
+                      </tr>
+                      <tr ng-repeat="machineTransport in speedAlarmCtrl.machineTransportList">
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.deviceNum}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.licenseId}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.locateDateTime}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.recordTime}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.address}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.amaplongitudeNum}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.amaplatitudeNum}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.engineRotateToEcu}}</td>
+                        <td ng-cloak class="text-nowrap text-center">{{machineTransport.mph}}</td>
+                        <td ng-if="machineTransport.accStatus=='01'">工作</td>
+                        <td ng-if="machineTransport.accStatus=='10'">不工作</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+
+        <!--图表-->
+        <uib-tab select="speedAlarmCtrl.drawLineChart2()">
+          <uib-tab-heading>图表</uib-tab-heading>
+          <div class="modal-body"  style=" overflow-y:scroll; height:600px;">
+            <div class="box-body" style="width: 100%;">
+              <div id="neutralGlide" style="width:500px;height:600Px; "></div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
     </div>
   </div>
 
