@@ -556,7 +556,7 @@
   "turnLeft": "Turn left",
   "brake": "Brake",
   "speaker": "Speaker",
-  "speedValve": "Speed valve",
+  "speedValve": "Speed valve/Electrical drives can 2",
   "pumpEnabled": "Pump enabled",
   "electricDriveEnabled": "Electric drive enabled",
   "buzzer": "Buzzer",
@@ -664,5 +664,16 @@
   "specialReminderContent":" the original value of Create a new user, update the user, and administrator change the password  is the user neme who is operating",
   "affiliatedInformation":"Affiliated information",
   "createWorkReport":"Create work report",
-  "fuelConsumptionStatistics":"Fuel Consumption Statistics"
+  "fuelConsumptionStatistics":"Fuel Consumption Statistics",
+  "waitingForTheLink":"Waiting for the link",
+  "NVMInitialize":"NVM initialize",
+  "waitingPlatformInitialization":"Waiting for the platform initialization",
+  "protocolInitialization":"Protocol initialization",
+  "workingState":"Working state",
+  "reservedState":"Reserved state",
+  "speedRegulation":"Speed regulation",
+  "saveState":"Save TRIP ANGLE state",
+  "limitOperatingState":"Limit operating state",
+  "breakLease":"Break Lease"
+
 }

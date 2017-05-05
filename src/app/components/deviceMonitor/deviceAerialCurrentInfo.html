@@ -110,8 +110,17 @@
                                             <tr>
                                                 <td>{{'ECUstate'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0" class="bg-danger text-danger">{{'initialization'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5" class="bg-info text-info">{{'work'|translate}}</td>
-                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5)|| deviceAerialCurrentInfoController.deviceinfo.ecuStatus==null">{{'noData'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1" class="bg-info text-info">{{'waitingForTheLink'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2" class="bg-info text-info">{{'NVMInitialize'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3" class="bg-info text-info">{{'waitingPlatformInitialization'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4" class="bg-info text-info">{{'protocolInitialization'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5" class="bg-info text-info">{{'workingState'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6" class="bg-info text-info">{{'reservedState'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7" class="bg-info text-info">{{'speedRegulation'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8" class="bg-info text-info">{{'saveState'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9" class="bg-info text-info">{{'limitOperatingState'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10" class="bg-info text-info">{{'breakLease'|translate}}</td>
+                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10)|| deviceAerialCurrentInfoController.deviceinfo.ecuStatus==null">{{'noData'|translate}}</td>
                                                 <td>{{'GPSavailableSatelliteNumber'|translate}}</td>
                                                 <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.gprssignalStrength}}</td>
                                                 <td>{{'GPSvisibleSatelliteNumber'|translate}}</td>
@@ -236,7 +245,7 @@
                                             <tr>
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'state'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
+                                              <th style="width:22%">{{'name'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'name'|translate}}</th>

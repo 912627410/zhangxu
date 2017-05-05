@@ -562,7 +562,7 @@
   "turnLeft": "左转",
   "brake": "刹车",
   "speaker": "喇叭",
-  "speedValve": "速度阀",
+  "speedValve": "速度阀/电驱使能2",
   "pumpEnabled": "泵使能",
   "electricDriveEnabled": "电驱使能",
   "buzzer": "蜂鸣器",
@@ -668,8 +668,16 @@
   "specialReminderContent":"新建用户、更新用户、管理员更改密码中的原值为被操作的用户名",
   "affiliatedInformation":"隶属信息",
   "createWorkReport":"生成工作报告",
-  "fuelConsumptionStatistics":"油耗统计"
-
-
+  "fuelConsumptionStatistics":"油耗统计",
+  "waitingForTheLink":"等待链接",
+  "NVMInitialize":"NVM初始化",
+  "waitingPlatformInitialization":"等待平台初始化",
+  "protocolInitialization":"协议初始化",
+  "workingState":"工作状态",
+  "reservedState":"预留状态",
+  "speedRegulation":"速度调节",
+  "saveState":"保存TRIP ANGLE状态",
+  "limitOperatingState":"限制操作状态",
+  "breakLease":"Break Lease"
 
 }
