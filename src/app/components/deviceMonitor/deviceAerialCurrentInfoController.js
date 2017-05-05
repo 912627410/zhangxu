@@ -1550,9 +1550,6 @@
                 endOnTick: true,
                 showLastLabel: true,
                 type: 'datetime',
-                maxZoom:4 * 3600 * 1000,
-                tickInterval: 2* 3600 * 1000,
-                min: 1472572800000 ,
                 dateTimeLabelFormats: {
                   second: '%HH:%MM:%SS'
                 },
