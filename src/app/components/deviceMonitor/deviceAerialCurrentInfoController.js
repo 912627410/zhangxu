@@ -1137,7 +1137,7 @@
                 }
                 var rspData = serviceResource.restCallService(restCallURL, "GET");
                 rspData.then(function(data){
-                  if(data.content==""){
+                  if(!data.content.length>0){
                     Notification.warning("所选时间段暂无工作状态数据！");
                     return;
                   }
@@ -1240,7 +1240,7 @@
                 }
                 var rspData = serviceResource.restCallService(deviceurl, "GET");
                 rspData.then(function (data) {
-                  if(data.content==""){
+                  if(!data.content.length>0){
                     Notification.warning("所选时间段暂无报警数据！");
                     return;
                   }
@@ -1289,7 +1289,7 @@
               }
               var rspData = serviceResource.restCallService(restCallURL, "GET");
               rspData.then(function (data) {
-                if(data.content==""){
+                if(!data.content.length>0){
                   Notification.warning("所选时间段暂无电压变化数据！");
                   return;
                 }
