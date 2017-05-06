@@ -94,7 +94,6 @@
       $cookies.remove("outstate");
       var code = vm.code ;
       if(null!=code&&""!=code){
-        vm.loginBytoken();
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
