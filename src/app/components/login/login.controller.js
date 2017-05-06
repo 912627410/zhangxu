@@ -94,6 +94,7 @@
       $cookies.remove("outstate");
       var code = vm.code ;
       if(null!=code&&""!=code){
+        vm.loginBytoken();
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -165,6 +166,8 @@
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
           $cookies.putObject("user", cookieDate, {'expires': expireDate});
+        }else{
+          $cookies.remove("user");
         }
 
 
