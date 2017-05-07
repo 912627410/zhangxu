@@ -661,5 +661,7 @@
   "specialReminder":"Special Reminder",
   "specialReminderContent":" the original value of Create a new user, update the user, and administrator change the password  is the user neme who is operating",
   "affiliatedInformation":"Affiliated information",
-  "createWorkReport":"Create work report"
+  "createWorkReport":"Create work report",
+  "overSpeedQuery":"Query over speed",
+  "neutralSlideQuery":"Query neutral slide"
 }

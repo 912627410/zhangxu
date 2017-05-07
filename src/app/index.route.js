@@ -130,12 +130,12 @@
           }
         }
       })
-      .state('home.speedAlarm', {
-        url: '/speedAlarm',
+      .state('home.machineTransportMonitor', {
+        url: '/machineTransportMonitor',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/report/speedAlarm.html',
-            controller: 'speedAlarmController as speedAlarmCtrl'
+            templateUrl: 'app/components/report/machineTransportMonitor.html',
+            controller: 'machineTransportMonitorController as machineTransportMonitorCtrl'
           }
         }
       })

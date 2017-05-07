@@ -665,7 +665,9 @@
   "specialReminder":"特别提醒",
   "specialReminderContent":"新建用户、更新用户、管理员更改密码中的原值为被操作的用户名",
   "affiliatedInformation":"隶属信息",
-  "createWorkReport":"生成工作报告"
+  "createWorkReport":"生成工作报告",
+  "overSpeedQuery":"超速查询",
+  "neutralSlideQuery":"空档滑行查询"
 
 
 
