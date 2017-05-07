@@ -93,21 +93,23 @@
       vm.createVerifyCode();
       $cookies.remove("outstate");
       var code = vm.code ;
-      if(null!=code&&""!=code){
+      if($scope.isShow&&null!=code&&""!=code){
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
           if(data.code==0){
-            Notification.error("验证码输入错误！请重新输入！!");
+            Notification.error("验证码输入错误！请重新输入！！");
           }
           if(data.code==1){
             vm.userverify();
           }
         })
-      }else{
-        vm.userverify();
-      }
+      }else if(!$scope.isShow){
+            vm.userverify();
+          }else {
+            Notification.error("请输入验证码！！");
+          }
     }
 
     vm.loginBytoken = function (userobj) {

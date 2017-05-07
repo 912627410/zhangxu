@@ -425,6 +425,7 @@
   "income": "收入",
   "cost": "成本",
   "fuelConsumption(L)": "油耗(L)",
+  "fuelConsumption(%)": "油耗(%)",
   "fuelCost": "燃油成本",
   "profit": "利润",
   "costManagement": "成本管理",
@@ -596,7 +597,7 @@
   "speakerButton": "喇叭按键",
   "enableButton": "使能按键",
   "notEnabled": "未使能",
-  "enabled": "已使能",
+  "hasEnabled": "已使能",
   "handleCenter": "手柄中位",
   "direction": "方向",
   "handleAnalog": "手柄模拟量",
@@ -610,6 +611,7 @@
   "terminalResetMessageContent":"终端复位内容",
   "machineStateSamplingTime":"车辆状态采样时间(秒)",
   "chargingInformationSamplingTime":"充电信息采样时间(秒)",
+  "theInputRange":"输入范围10~18秒",
   "currentAddress":"当前地址",
   "SetFence":"设置围栏",
   "cancelFence":"取消围栏",
@@ -667,7 +669,8 @@
   "affiliatedInformation":"隶属信息",
   "createWorkReport":"生成工作报告",
   "overSpeedQuery":"超速查询",
-  "neutralSlideQuery":"空档滑行查询"
+  "neutralSlideQuery":"空档滑行查询",
+  "fuelConsumptionStatistics":"油耗统计"
 
 
 

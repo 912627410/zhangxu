@@ -27,9 +27,9 @@
       -->
       <div class="row">
         <div class="form-group">
-          <label for="status" class="col-md-2 control-label text-nowrap">状态</label>
+          <label for="status" class="col-md-2 control-label text-nowrap">{{'state'|translate}}</label>
           <div class="col-md-8">
-            <input type="text" readonly id="status" class="form-control" placeholder="状态"
+            <input type="text" readonly id="status" class="form-control" placeholder="{{'state'|translate}}"
                    ng-model="currentSimController.status" name="status"/>
           </div>
           <div class="col-md-2">
@@ -60,7 +60,7 @@
   </div>
   <div class="modal-footer">
 
-    <button class="btn btn-warning" type="button" ng-click="currentSimController.cancel()">关闭</button>
+    <button class="btn btn-warning" type="button" ng-click="currentSimController.cancel()">{{'close'|translate}}</button>
   </div>
 </form>
 

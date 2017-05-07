@@ -284,7 +284,12 @@
 
         //得到短信内容
         vm.viewSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
-            if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
+
+          if(vehicleStateCollect<10||vehicleStateCollect>18 || chargerStateCollect<10||chargerStateCollect>18){
+            Notification.error("请输入正确的采样时间范围10~18秒");
+            return;
+          }
+          if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
             }
@@ -315,6 +320,10 @@
 
         //发送短信
         vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+            if(vehicleStateCollect<10||vehicleStateCollect>18 || chargerStateCollect<10||chargerStateCollect>18){
+              Notification.error("请输入正确的采样时间范围10~18秒");
+              return;
+            }
             if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
@@ -1110,12 +1119,11 @@
                 }
 
                 //要求包含所选择的结束时间
-                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
                 if (startDate) {
-                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
-                if (endDateAddOne) {
-                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+                if (endDate) {
+                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
                 var restCallURL = DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
@@ -1177,7 +1185,7 @@
                 var restCallURL = DEVCE_DATA_PAGED_QUERY;
                 var pageUrl = page || 0;
                 var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-                var sortUrl = sort || "recordTime,desc";
+                var sortUrl = sort || "dataGenerateTime,desc";
                 restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
                 if (queryCondition){
@@ -1213,13 +1221,12 @@
                   queryCondition = "&deviceNum=" + deviceNum;
                 }
                 //要求包含所选择的结束时间
-                var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
 
                 if (startDate) {
-                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
+                  queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
-                if (endDateAddOne) {
-                  queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
+                if (endDate) {
+                  queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
 
                 var sort = 'warningTime,desc';
@@ -1310,7 +1317,7 @@
         };
 
         var curDate = new Date();
-        vm.startDate = new Date(curDate-48*3600*1000);
+        vm.startDate = new Date(curDate-24*3600*1000);
 
         vm.queryChart = function (queryType, deviceNum, startDate, endDate) {
           if (queryType != '01' && queryType != '02' && queryType != '03') {

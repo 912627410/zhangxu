@@ -423,6 +423,7 @@
   "income": "Income",
   "cost": "Cost",
   "fuelConsumption(L)": "FuelConsumption(L)",
+  "fuelConsumption(%)": "FuelConsumption(%)",
   "fuelCost": "Fuel cost",
   "profit": "Profit",
   "time": "Time",
@@ -517,8 +518,8 @@
   "Built-inBatteryVoltage": "Built-in battery voltage",
   "cylinderPressure":"Cylinder pressure",
   "ECUid":"ECU ID",
-  "ECUsoftwareVersion":"ECU软件版本",
-  "PCUsoftwareVersion":"PCU软件版本",
+  "ECUsoftwareVersion":"ECU software Version",
+  "PCUsoftwareVersion":"PCU software Version",
   "deviceInputInformation":"Device input information",
   "yes": "Yes",
   "no": "No",
@@ -592,7 +593,7 @@
   "speakerButton": "Speaker button",
   "enableButton": "Enable button",
   "notEnabled": "Not Enabled",
-  "enabled": "Enabled",
+  "hasEnabled": "Enabled",
   "handleCenter": "Handle center",
   "direction": "Direction",
   "handleAnalog": "Handle analog",
@@ -606,6 +607,7 @@
   "terminalResetMessageContent":"Terminal Reset message Content",
   "machineStateSamplingTime":"Machine state sampling time(s)",
   "chargingInformationSamplingTime":"Charging information sampling time(s)",
+  "theInputRange":"The input range 10~18s",
   "currentAddress":"Current address",
   "setFence":"Set fence",
   "cancelFence":"Cancel Fence",
@@ -663,5 +665,6 @@
   "affiliatedInformation":"Affiliated information",
   "createWorkReport":"Create work report",
   "overSpeedQuery":"Query over speed",
-  "neutralSlideQuery":"Query neutral slide"
+  "neutralSlideQuery":"Query neutral slide",
+  "fuelConsumptionStatistics":"Fuel Consumption Statistics"
 }

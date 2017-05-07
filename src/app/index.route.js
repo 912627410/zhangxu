@@ -378,6 +378,19 @@
           }
         }
       })
+      .state('home.fuelConsumption', {
+        url: '/fuelConsumption',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/revenueManagement/fuelConsumption.html',
+            controller: 'fuelConsumptionController',
+            controllerAs: 'fuelConsumptionCtrl'
+          }
+        }
+      })
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {

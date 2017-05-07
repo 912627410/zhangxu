@@ -15,24 +15,38 @@
 <!-- Main content -->
 <section class="content">
 
-  <div class="row">
+  <div class="row form-group">
+
     <div class="col-md-1">
       <label class="control-label"> {{'SIMCardNumber'|translate}}</label>
-
     </div>
-    <div class="col-md-2">
+
+    <div class="col-md-3">
       <input type="text" name="deviceNum" class="form-control " ng-model="simMngCtrl.sim.phoneNumber" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
+    <div class="col-md-1"></div>
+
+    <div class="col-md-1">
+      <label class="control-label"> {{'simSerialNumber'|translate}}</label>
+    </div>
+
+    <div class="col-md-3">
+      <input type="text" name="SerialNumber" class="form-control " ng-model="simMngCtrl.sim.serialNumber" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+  </div>
+  <div class="row form-group">
 
     <div class="col-md-1">
       <label class="control-label">{{'organisation'|translate}}</label>
     </div>
-    <div class="col-md-2">
+
+    <div class="col-md-3">
       <p class="input-group">
         <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="simMngCtrl.org.label" name="org" readonly required/>
-            <span class="input-group-btn">
+        <span class="input-group-btn">
                <!--打开组织树-->
               <button type="button" class="btn btn-default" ng-click="simMngCtrl.openTreeInfo()">
                 <i class="fa fa-sitemap"></i>
@@ -41,10 +55,13 @@
       </p>
     </div>
 
+    <div class="col-md-1"></div>
+
     <div class="col-md-1">
       <label class="control-label">{{'supplier'|translate}}</label>
     </div>
-    <div class="col-md-2">
+
+    <div class="col-md-3">
       <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
                  ng-disabled="disabled">
         <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
@@ -55,13 +72,10 @@
       </ui-select>
     </div>
 
-
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">{{'query'|translate}}</button>
       <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
-
-
   </div>
 
   <div class="row">
@@ -119,7 +133,7 @@
   <div class="box-footer">
     <uib-pagination total-items="simMngCtrl.page.totalElements" ng-change="simMngCtrl.query(simMngCtrl.pageNumber-1,null,null,simMngCtrl.sim)"
                     max-size="5" ng-model="simMngCtrl.pageNumber" items-per-page="simMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
 
 </section>

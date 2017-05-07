@@ -165,6 +165,11 @@
             </a>
             <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: vehicleStatistics}">
               <li>
+                <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
+                  <i class="fa fa-unlink"></i> <span>{{'idleDeviceReport' | translate}}</span>
+                </a>
+              </li>
+              <li>
                 <a ui-sref="home.attendance" presentation-href="report:machineAttendance">
                   <i class="fa fa-bookmark"></i> <span>{{'machineAttendance' | translate}}</span>
                 </a>
@@ -242,6 +247,11 @@
           <li>
             <a ui-sref="home.weightData" presentation-href="weightData:page">
               <i class="fa ion-calculator"></i> <span>{{'weightData'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.fuelConsumption" presentation-href="fleet:fuelConsumption">
+              <i class="fa fa-flask"></i> <span>{{'fuelConsumptionStatistics'|translate}}</span>
             </a>
           </li>
         </ul>
