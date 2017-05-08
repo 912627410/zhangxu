@@ -533,7 +533,7 @@
   "inputAddress": "输入地址",
   "radius": "半径(米)",
   "keySwitch": "钥匙开关",
-  "platformControl": "平台控制",
+  "platformControl": "上台控制",
   "offlineControl": "下台控制",
   "openState": "开盖状态",
   "notOpen": "未开盖",
@@ -562,7 +562,7 @@
   "turnLeft": "左转",
   "brake": "刹车",
   "speaker": "喇叭",
-  "speedValve": "速度阀",
+  "speedValve": "速度阀/电驱使能2",
   "pumpEnabled": "泵使能",
   "electricDriveEnabled": "电驱使能",
   "buzzer": "蜂鸣器",
@@ -611,7 +611,7 @@
   "terminalResetMessageContent":"终端复位内容",
   "machineStateSamplingTime":"车辆状态采样时间(秒)",
   "chargingInformationSamplingTime":"充电信息采样时间(秒)",
-  "theInputRange":"输入范围10~18秒",
+  "theInputRange":"输入范围10~180秒",
   "currentAddress":"当前地址",
   "SetFence":"设置围栏",
   "cancelFence":"取消围栏",
@@ -670,8 +670,16 @@
   "createWorkReport":"生成工作报告",
   "overSpeedQuery":"超速查询",
   "neutralSlideQuery":"空档滑行查询",
-  "fuelConsumptionStatistics":"油耗统计"
-
-
+  "fuelConsumptionStatistics":"油耗统计",
+  "waitingForTheLink":"等待链接",
+  "NVMInitialize":"NVM初始化",
+  "waitingPlatformInitialization":"等待平台初始化",
+  "protocolInitialization":"协议初始化",
+  "workingState":"工作状态",
+  "reservedState":"预留状态",
+  "speedRegulation":"速度调节",
+  "saveState":"保存TRIP ANGLE状态",
+  "limitOperatingState":"限制操作状态",
+  "breakLease":"Break Lease"
 
 }

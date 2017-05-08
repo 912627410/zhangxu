@@ -556,7 +556,7 @@
   "turnLeft": "Turn left",
   "brake": "Brake",
   "speaker": "Speaker",
-  "speedValve": "Speed valve",
+  "speedValve": "Speed valve/Electrical drives can 2",
   "pumpEnabled": "Pump enabled",
   "electricDriveEnabled": "Electric drive enabled",
   "buzzer": "Buzzer",
@@ -607,7 +607,7 @@
   "terminalResetMessageContent":"Terminal Reset message Content",
   "machineStateSamplingTime":"Machine state sampling time(s)",
   "chargingInformationSamplingTime":"Charging information sampling time(s)",
-  "theInputRange":"The input range 10~18s",
+  "theInputRange":"The input range 10~180s",
   "currentAddress":"Current address",
   "setFence":"Set fence",
   "cancelFence":"Cancel Fence",
@@ -666,5 +666,16 @@
   "createWorkReport":"Create work report",
   "overSpeedQuery":"Query over speed",
   "neutralSlideQuery":"Query neutral slide",
-  "fuelConsumptionStatistics":"Fuel Consumption Statistics"
+  "fuelConsumptionStatistics":"Fuel Consumption Statistics",
+  "waitingForTheLink":"Waiting for the link",
+  "NVMInitialize":"NVM initialize",
+  "waitingPlatformInitialization":"Waiting for the platform initialization",
+  "protocolInitialization":"Protocol initialization",
+  "workingState":"Working state",
+  "reservedState":"Reserved state",
+  "speedRegulation":"Speed regulation",
+  "saveState":"Save TRIP ANGLE state",
+  "limitOperatingState":"Limit operating state",
+  "breakLease":"Break Lease"
+
 }

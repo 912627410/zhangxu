@@ -167,6 +167,8 @@
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
           $cookies.putObject("user", cookieDate, {'expires': expireDate});
+        }else{
+          $cookies.remove("user");
         }
 
 
