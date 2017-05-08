@@ -1528,9 +1528,6 @@
             endOnTick: true,
             showLastLabel: true,
             type: 'datetime',
-            maxZoom:4 * 3600 * 1000,
-            tickInterval: 2* 3600 * 1000,
-            min: 1472572800000 ,
             dateTimeLabelFormats: {
               second: '%HH:%MM:%SS'
             },
@@ -1668,125 +1665,6 @@
                 resetZoomTitle: '重置缩放比例'
               }
             });
-            vm.warningConfig = {
-              options: {
-                chart: {
-                  type: 'scatter',
-                  zoomType: 'xy',
-                  width: 840
-                  //height: 250
-                },
-                legend: {
-                  layout: 'vertical',
-                  align: 'left',
-                  verticalAlign: 'top',
-                  x: 100,
-                  y: 70,
-                  floating: true,
-                  backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-                  borderWidth: 1
-                },
-                plotOptions: {
-                  scatter: {
-                    marker: {
-                      radius: 5,
-                      states: {
-                        hover: {
-                          enabled: true,
-                          lineColor: 'rgb(100,100,100)'
-                        }
-                      }
-                    },
-                    states: {
-                      hover: {
-                        marker: {
-                          enabled: false
-                        }
-                      }
-                    },
-                    tooltip: {
-                      headerFormat: '<b>{series.name}</b><br>',
-                      shared: true,
-                      pointFormatter: function () {
-                        var recordDate = new Date(this.x);
-                        var datefmt = recordDate.getFullYear() + '-' +  (recordDate.getMonth()+1) + '-' + recordDate.getDate();
-                        var recordTime = new Date(this.y);
-                        var timefmt = recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
-                        var warningMsg = serviceResource.getWarningInfo(this.warningCode);
-                        return '<b>日期: </b>' + datefmt + '<br><b>时间: </b>' + timefmt + '<br><b>描述: </b>' + warningMsg.description + '<br><b>处理方法: </b>' + warningMsg.action;
-                      }
-                    }
-                  },
-                  line: {
-                    dataLabels: {
-                      enabled: true
-                    },
-                    enableMouseTracking: true
-                  },
-                  series: {
-                    cursor: "pointer"
-                  }
-                }
-              },
-              //时间转为string格式显示处理
-              xAxis: {
-                title: {
-                  enabled: true,
-                  text: '日期'
-                },
-                showLastLabel: true,
-                type: 'datetime',
-                tickInterval: 24 * 3600 * 1000,
-                labels: {
-                  formatter: function () {
-                    var date = new Date(this.value);
-                    return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' + date.getDate();
-                  }
-                },
-                tickPositioner: function () {
-                  var positions = [];
-                  positions.push(this.dataMin);
-                  for(var i = 0;i< Math.ceil((this.dataMax - this.dataMin) / 3600/24/1000);i++){
-                    positions.push(this.dataMin+i*24*3600*1000);
-                  }
-                  positions.push(this.dataMax);
-                  return positions;
-                }
-              },
-              yAxis: {
-                title: {
-                  text: '报警时间'
-                },
-                startOnTick: true,
-                endOnTick: true,
-                showLastLabel: true,
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                  second: '%HH:%MM:%SS'
-                },
-                labels: {
-                  formatter: function () {
-                    var date = new Date(this.value);
-                    return date.getHours() + ':' +  date.getMinutes() + ':' + date.getSeconds();
-                  }
-                }
-              },
-              series: [{
-                name: '报警信息',
-                color: 'rgba(205, 51, 51, .5)',
-                turboThreshold: 100000
-                //data:vm.warningList
-              }],
-              title: {
-                text: '报警信息'
-              },
-              loading: false,
-              func: function (chart) {
-                $timeout(function () {
-                  chart.reflow();
-                }, 0);
-              }
-            };
           }else if (vm.queryType=='03'){
             //蓄电池组电压
             vm.getDeviceChargerData(deviceNum,startDate,endDate);
