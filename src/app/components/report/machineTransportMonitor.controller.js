@@ -6,7 +6,7 @@
   .controller('machineTransportMonitorController', machineTransportMonitorController);
 
   /** @ngInject */
-  function machineTransportMonitorController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, MACHINE_TRANSPORTINFO_URL) {
+  function machineTransportMonitorController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -134,7 +134,7 @@
      * 超速报警实时监控
      * @type {WebSocket}
        */
-    var wsSpeedAlert = new WebSocket("ws://139.196.153.4:8080/webSocketServer/speedAlertRealTimeMonitor");
+    var wsSpeedAlert = new WebSocket(WEBSOCKET_URL + "webSocketServer/speedAlertRealTimeMonitor");
     wsSpeedAlert.onmessage = function (evt) {
       if(evt.data == "1") {
         Notification.success("开启成功,请打开图表");
@@ -184,7 +184,7 @@
      * 空档滑行实时监控
      * @type {WebSocket}
        */
-    var wsNeutralSlide = new WebSocket("ws://139.196.153.4:8080/webSocketServer/neutralSlideRealTimeMonitor");
+    var wsNeutralSlide = new WebSocket(WEBSOCKET_URL + "webSocketServer/neutralSlideRealTimeMonitor");
     wsNeutralSlide.onmessage = function (evt) {
       if(evt.data == "1") {
         Notification.success("开启成功,请打开图表");
