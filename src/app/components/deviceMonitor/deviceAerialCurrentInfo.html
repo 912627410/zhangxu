@@ -61,9 +61,9 @@
                                                 <th>{{'name'|translate}}</th>
                                                 <th>{{'state'|translate}}</th>
                                                 <th>{{'name'|translate}}</th>
+                                                <th>{{'state'|translate}}</th>
                                                 <th>{{'name'|translate}}</th>
-                                                <th>{{'name'|translate}}</th>
-                                                <th>{{'name'|translate}}</th>
+                                                <th>{{'state'|translate}}</th>
                                             </tr>
                                             <tr>
                                                 <td>{{'terminalNumber'|translate}}</td>
@@ -83,7 +83,7 @@
                                             <tr>
                                                 <td>{{'machineRunningState'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'work'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1" class="bg-warning text-warning">{{'notwork'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1" class="bg-warning text-warning">{{'notWork'|translate}}</td>
                                                 <td>{{'batteryLevelSwitch'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.liquidLevelSw==1" class="bg-info text-info">{{'normal'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.liquidLevelSw==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
@@ -175,9 +175,9 @@
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                             </tr>
                                             <tr>
                                                 <td>{{'keySwitch'|translate}}</td>
@@ -245,10 +245,14 @@
                                             <tr>
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'state'|translate}}</th>
+<<<<<<< HEAD
                                               <th style="width:22%">{{'name'|translate}}</th>
+=======
                                               <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
+>>>>>>> REL2.00
                                               <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                             </tr>
                                             <tr>
                                                 <td>{{'advance'|translate}}</td>
@@ -324,9 +328,9 @@
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                             </tr>
                                             <tr>
                                                 <!-- 硬件无解决方案，暂时屏蔽
@@ -405,9 +409,9 @@
                                               <th>{{'name'|translate}}</th>
                                               <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                               <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
-                                              <th>{{'name'|translate}}</th>
+                                              <th>{{'state'|translate}}</th>
                                             </tr>
                                             <tr>
                                                 <td>{{'turtleSpeedButton'|translate}}</td>
@@ -513,9 +517,9 @@
                       <th>{{'name'|translate}}</th>
                       <th>{{'state'|translate}}</th>
                       <th>{{'name'|translate}}</th>
+                      <th>{{'state'|translate}}</th>
                       <th>{{'name'|translate}}</th>
-                      <th>{{'name'|translate}}</th>
-                      <th>{{'name'|translate}}</th>
+                      <th>{{'state'|translate}}</th>
                     </tr>
                     <tr>
                       <td>机型</td>
@@ -666,9 +670,9 @@
                                             <th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>
                                             <th class="text-nowrap">{{'MachineType'|translate}}</th>
                                             <th class="text-nowrap">{{'machineRunningState'|translate}}</th>
-                                            <th class="text-nowrap">{{'inBatteryVoltage'|translate}}</th>
+                                            <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
                                             <th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>
-                                            <th class="text-nowrap">{{'PCUSoftwareVersion'|translate}}</th>
+                                            <th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>
                                             <th class="text-nowrap">{{'GSMsignalStrength'|translate}}</th>
                                             <th class="text-nowrap">{{'GPSvisibleSatelliteNumber'|translate}}</th>
                                             <th class="text-nowrap">{{'GPSavailableSatelliteNumber'|translate}}</th>
@@ -729,7 +733,7 @@
                                             -->
                                             <td ng-if="deviceData.deviceCode==null">{{'noData'|translate}}</td>
                                             <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
-                                            <td ng-if="deviceData.machineStatus==0">{{'notwork'|translate}}</td>
+                                            <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
                                             <td ng-if="deviceData.machineStatus==null">{{'noData'|translate}}</td>
                                             <td ng-cloak>{{deviceData.builtInVoltage}}mv</td>
 
