@@ -130,6 +130,15 @@
           }
         }
       })
+      .state('home.machineTransportMonitor', {
+        url: '/machineTransportMonitor',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/machineTransportMonitor.html',
+            controller: 'machineTransportMonitorController as machineTransportMonitorCtrl'
+          }
+        }
+      })
       .state('home.smsSendReport', {
         url: '/smsSendReport',
         views: {
