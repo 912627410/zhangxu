@@ -9,7 +9,7 @@
     .controller('uploadSimController', uploadSimController);
 
   /** @ngInject */
-  function uploadSimController($scope,$timeout, $uibModalInstance,Upload, SIM_UPLOAD_URL,serviceResource, Notification, operatorInfo) {
+  function uploadSimController($scope,$timeout,$http, $uibModalInstance,Upload, SIM_UPLOAD_URL,serviceResource, Notification, operatorInfo,SIM_UPLOADTEMPLATE_DOWNLOAD_URL) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -46,6 +46,27 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+    vm.templateDownload = function () {
+      var restCallURL = SIM_UPLOADTEMPLATE_DOWNLOAD_URL;
+      $http({
+        url: restCallURL,
+        method: "GET",
+        responseType: 'arraybuffer'
+      }).success(function (data, status, headers, config) {
+        var blob = new Blob([data], {type: "application/vnd.ms-excel"});
+        var objectUrl = window.URL.createObjectURL(blob);
+
+        var anchor = angular.element('<a/>');
+        anchor.attr({
+          href: objectUrl,
+          target: '_blank',
+          download: 'SIM卡导入模板.xls'
+        })[0].click();
+
+      }).error(function (data, status, headers, config) {
+        Notification.error("下载失败!");
+      });
+    }
 
   }
 })();
