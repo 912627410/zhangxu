@@ -798,8 +798,7 @@
                   <tr>
                     <td>{{'generatorState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="(deviceCurrentInfoCtrl.deviceinfo.elecStatus!=='01'&&deviceCurrentInfoCtrl.deviceinfo.elecStatus!=='10')||deviceCurrentInfoCtrl.deviceinfo.elecStatus==null">{{'noData'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus!='01'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
 
@@ -1077,8 +1076,7 @@
                     <td ng-if="deviceData.accStatus==null">{{'noData'|translate}}</td>
                     <!--发电机状态-->
                     <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
-                    <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="(deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.elecStatus!='01'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <!--GPS电源检测和模拟量1是相同的-->
                     <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <!--模拟量2-->
