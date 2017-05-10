@@ -620,6 +620,7 @@
                     </div>
                 </div>
             </uib-tab>
+            <!--数据明细-->
             <uib-tab presentation-href="device:page">
                 <uib-tab-heading>
                     {{'dataDetails'|translate}}
@@ -632,7 +633,7 @@
                             </div>
                             <div class="col-md-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -643,7 +644,7 @@
                             </div>
                             <div class="col-md-3">
                                 <p class="input-group">
-                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-readonly="true" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -743,8 +744,17 @@
                                             <td>{{deviceData.ecuID}}</td>
                                             <td>{{deviceData.ecuSoftVersion}}</td>
                                             <td ng-if="deviceData.ecuStatus==0">{{'initialization'|translate}}</td>
-                                            <td ng-if="deviceData.ecuStatus==5">{{'work'|translate}}</td>
-                                            <td ng-if="!(deviceData.ecuStatus==0 || deviceData.ecuStatus==5) || deviceData.ecuStatus==null">{{'noData'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==1">{{'waitingForTheLink'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==2">{{'NVMInitialize'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==3">{{'waitingPlatformInitialization'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==4">{{'protocolInitialization'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==5">{{'workingState'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==6">{{'reservedState'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==7">{{'speedRegulation'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==8">{{'saveState'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==9">{{'limitOperatingState'|translate}}</td>
+                                            <td ng-if="deviceData.ecuStatus==10">{{'breakLease'|translate}}</td>
+                                            <td ng-if="!(deviceData.ecuStatus==0 || deviceData.ecuStatus==1 || deviceData.ecuStatus==2 || deviceData.ecuStatus==3 || deviceData.ecuStatus==4 || deviceData.ecuStatus==5 || deviceData.ecuStatus==6 || deviceData.ecuStatus==7 || deviceData.ecuStatus==8 || deviceData.ecuStatus==9 || deviceData.ecuStatus==10) || deviceData.ecuStatus==null">{{'noData'|translate}}</td>
                                             <td ng-cloak>{{5*deviceData.workDuration/60 | convertToMins}}</td>
 
                                             <td ng-if="deviceData.chassisUp==1" class="bg-info text-info">{{'open'|translate}}</td>
@@ -854,6 +864,7 @@
 
                 </div>
             </uib-tab>
+            <!--地图-->
             <uib-tab select="deviceAerialCurrentInfoController.initMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="device:page">
                 <uib-tab-heading>
                     {{'map'|translate}}
@@ -1192,7 +1203,7 @@
                 </div>
             </uib-tab>
 
-
+            <!--电子围栏-->
             <uib-tab select="deviceAerialCurrentInfoController.initScopeMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="device:scopeMapPage">
                 <uib-tab-heading  >
                     {{'electricFence'|translate}}
