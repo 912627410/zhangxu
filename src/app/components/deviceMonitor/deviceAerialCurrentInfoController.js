@@ -209,18 +209,20 @@
         //vm.secOutPower =
         //secLocateInt
         //secInnerPower
-        ////读取初始化设备时需要的信息
-        var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
+        //判断用户是否有权限
+        if (permissions.getPermissions("device:remoteControl")) {
+          ////读取初始化设备时需要的信息
+          var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
 
-        var rspData = serviceResource.restCallService(restURL, "GET");
-        rspData.then(function (data) {
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
             vm.deviceUnLockFactor = data.content;
             var licenseId = vm.deviceUnLockFactor.licenseId;
             //具体格式请参考短信激活文档
-        }, function (reason) {
+          }, function (reason) {
             Notification.error('获取信息失败');
-        })
-
+          })
+        }
         //检查短信参数
         vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
             if (type == null || devicenum == null) {
