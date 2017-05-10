@@ -130,12 +130,21 @@
           }
         }
       })
-      .state('home.machineTransportMonitor', {
-        url: '/machineTransportMonitor',
+      .state('home.machineSpeeding', {
+        url: '/machineSpeeding',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/report/machineTransportMonitor.html',
-            controller: 'machineTransportMonitorController as machineTransportMonitorCtrl'
+            templateUrl: 'app/components/report/machineSpeedingInfo.html',
+            controller: 'machineSpeedingController as machineSpeedingCtrl'
+          }
+        }
+      })
+      .state('home.machineNeutralSliding', {
+        url: '/machineNeutralSliding',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/report/machineNeutralSlidingInfo.html',
+            controller: 'machineNeutralSlidingController as machineNeutralSlidingCtrl'
           }
         }
       })

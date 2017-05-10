@@ -169,7 +169,6 @@
   "endAnimation": "End",
   "moveAnimation": "Continue",
   "telecontrol": "Remote Control",
-  "equipmentNumber": "Equipment ID",
   "licensePlateNumber": "License Plate ID",
   "engineCommunicationCode": "Engine Passcode",
   "bindSIMNumber": "Bound SIM ID",
@@ -258,8 +257,6 @@
   "nextPage": "Next page",
   "previousPage": "Previous page",
   "failedToGetSmallExcavatorModel": "Get small excavator parameter failed",
-  "amaplatitudeNumber": "Latitude",
-  "amaplongitudeNumber": "Longitude",
   "hour": "Hour",
   "mins": "Mins",
   "highSpeed": "High speed",
@@ -664,8 +661,6 @@
   "specialReminderContent":" the original value of Create a new user, update the user, and administrator change the password  is the user neme who is operating",
   "affiliatedInformation":"Affiliated information",
   "createWorkReport":"Create work report",
-  "overSpeedQuery":"Query over speed",
-  "neutralSlideQuery":"Query neutral slide",
   "fuelConsumptionStatistics":"Fuel Consumption Statistics",
   "waitingForTheLink":"Waiting for the link",
   "NVMInitialize":"NVM initialize",
@@ -676,6 +671,13 @@
   "speedRegulation":"Speed regulation",
   "saveState":"Save TRIP ANGLE state",
   "limitOperatingState":"Limit operating state",
-  "breakLease":"Break Lease"
+  "breakLease":"Break Lease",
+  "turnOnRealtimeMonitoring":"Turn on real-time monitoring",
+  "turnOffRealtimeMonitoring":"Turn off real-time monitoring",
+  "machineTransportationMonitoring":"Machine monitoring",
+  "ECUInactiveMachine":"ECU Inactive machine",
+  "SpeedMonitoring":"Speed monitoring",
+  "NeutralSlidingMonitoring":"Neutral sliding monitoring"
+
 
 }

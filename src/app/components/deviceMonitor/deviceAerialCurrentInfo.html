@@ -279,6 +279,7 @@
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==null">{{'noData'|translate}}</td>
                                             </tr>
                                             <tr>
+                                                <!--机器代码 0--15代表液压驱动剪叉车, 16--31代表直流电机驱动剪叉车-->
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'brake'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==0" class="bg-warning text-warning">{{'no'|translate}}</td>
@@ -287,13 +288,13 @@
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==0" class="bg-warning text-warning">{{'no'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==null">{{'noData'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16">{{'speedValve'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==null)">{{'noData'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15">{{'speedValve'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==null)">{{'noData'|translate}}</td>
                                                 <!--速度阀为空时填充行-->
-                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16)"></td>
-                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=16)"></td>
+                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15)"></td>
+                                                <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15)"></td>
                                                 <!--刹车为空时填充行-->
                                                 <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
                                                 <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
@@ -924,9 +925,9 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'equipmentNumber'|translate}}</label>
+                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'deviceNum'|translate}}</label>
                                 <div class="col-md-4">
-                                    <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'equipmentNumber'|translate}}"
+                                    <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'deviceNum'|translate}}"
                                            ng-model="deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum" name="deviceNum"/>
                                 </div>
                                 <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>

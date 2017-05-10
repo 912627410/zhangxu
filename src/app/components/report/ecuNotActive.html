@@ -3,8 +3,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">ECU未激活车辆</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'statisticalAnalysis'|translate}}</a></li>
+    <li class="active">{{'ECUInactiveMachine'|translate}}</li>
   </ol>
 </section>
 
@@ -22,44 +22,44 @@
   <div class="table-responsive">
     <table ng-table="ecuNotActiveCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="device in $data">
-        <td class="text-nowrap" data-title="'终端编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
-        <td class="text-nowrap" data-title="'整机编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
+        <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceNum'">{{device.deviceNum}}</td>
+        <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
 
-        <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'开盖状态'" sortable="'lockerStatus'">未开盖</td>
-        <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'开盖状态'" sortable="'lockerStatus'">开盖</td>
-        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'开盖状态'" sortable="'lockerStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'openState'|translate" sortable="'lockerStatus'">{{'notOpen'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'openState'|translate" sortable="'lockerStatus'">{{'openCover'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'openState'|translate" sortable="'lockerStatus'">-</td>
 
-        <td class="text-nowrap" data-title="'运行总时间'" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
+        <td class="text-nowrap" data-title="'totalRunningTimeHour'|translate" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
 
-        <td class="text-nowrap" ng-if="device.commStatus=='10'" data-title="'CAN通信状态'" sortable="'commStatus'">不工作</td>
-        <td class="text-nowrap" ng-if="device.commStatus=='01'" data-title="'CAN通信状态'" sortable="'commStatus'">工作</td>
-        <td class="text-nowrap" ng-if="device.commStatus=='00' || device.commStatus==null" data-title="'CAN通信状态'" sortable="'commStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.commStatus=='10'" data-title="'CANCommunicationStatus'|translate" sortable="'commStatus'">{{'notWork'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.commStatus=='01'" data-title="'CANCommunicationStatus'|translate" sortable="'commStatus'">{{'work'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.commStatus=='00' || device.commStatus==null" data-title="'CANCommunicationStatus'|translate" sortable="'commStatus'">-</td>
 
-        <td class="text-nowrap" ng-if="device.powerType=='00'" data-title="'供电方式'" sortable="'powerType'">{{'vehicleMountedPowerSupply'|translate}}</td>
-        <td class="text-nowrap" ng-if="device.powerType=='01'" data-title="'供电方式'" sortable="'powerType'">{{'internalBattery'|translate}}</td>
-        <td class="text-nowrap" ng-if="device.powerType==null" data-title="'供电方式'" sortable="'powerType'">-</td>
+        <td class="text-nowrap" ng-if="device.powerType=='00'" data-title="'powerSupplyMode'|translate" sortable="'powerType'">{{'vehicleMountedPowerSupply'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.powerType=='01'" data-title="'powerSupplyMode'|translate" sortable="'powerType'">{{'internalBattery'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.powerType==null" data-title="'powerSupplyMode'|translate" sortable="'powerType'">-</td>
 
-        <td class="text-nowrap" data-title="'GPRS信号质量'" sortable="'gsmSignal'">{{(device.gsmSignal*100/31) | number:0}}%</td>
-        <td class="text-nowrap" data-title="'启动次数'" sortable="'startTimes'">{{device.startTimes}}</td>
+        <td class="text-nowrap" data-title="'GPRSSignalQuality'|translate" sortable="'gsmSignal'">{{(device.gsmSignal*100/31) | number:0}}%</td>
+        <td class="text-nowrap" data-title="'numberOfStarts'|translate" sortable="'startTimes'">{{device.startTimes}}</td>
 
-        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='00'" data-title="'锁车状态'" sortable="'lockStatus'">正常</td>
-        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='01'" data-title="'锁车状态'" sortable="'lockStatus'">一级</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='00'" data-title="'lockedCarStatus'|translate" sortable="'lockStatus'">{{'normal'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='01'" data-title="'lockedCarStatus'|translate" sortable="'lockStatus'">{{'one-level'|translate}}</td>
         <!--锁车时候显示“二级”更改为“锁车”-->
-        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='10'" data-title="'锁车状态'" sortable="'lockStatus'">锁车</td>
-        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus!='00' && device.lockStatus!='01' && device.lockStatus!='10'" data-title="'锁车状态'" sortable="'lockStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus=='10'" data-title="'lockedCarStatus'|translate" sortable="'lockStatus'">{{'lockYourCar'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.versionNum!='40' && device.lockStatus!='00' && device.lockStatus!='01' && device.lockStatus!='10'" data-title="'lockedCarStatus'|translate" sortable="'lockStatus'">-</td>
         <!--中挖的锁车状态要根据GPRS信号百分比确定，90为锁车，其它为未锁车-->
-        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal=='90'" data-title="'锁车状态'" sortable="'gprsSignal'">锁车</td>
-        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal!='90'" data-title="'锁车状态'" sortable="'gprsSignal'">正常</td>
+        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal=='90'" data-title="'lockedCarStatus'|translate" sortable="'gprsSignal'">{{'lockYourCar'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.versionNum=='40' && device.gprsSignal!='90'" data-title="'lockedCarStatus'|translate" sortable="'gprsSignal'">{{'normal'|translate}}</td>
 
-        <td class="text-nowrap" data-title="'内部电源电压'" sortable="'imitate1'">{{device.imitate1/1000| number:1}} V</td>
-        <td class="text-nowrap" data-title="'可见卫星数'" sortable="'visibleSatelliteNumber'">{{device.visibleSatelliteNumber}}</td>
-        <td class="text-nowrap" data-title="'可用卫星数'" sortable="'usableSatelliteNumber'">{{device.usableSatelliteNumber}}</td>
-        <td class="text-nowrap" data-title="'实际绑定车架号'" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
-        <td class="text-nowrap" data-title="'当前位置'" sortable="'address'">{{device.address}}</td>
+        <td class="text-nowrap" data-title="'GPSPowerDetection'|translate" sortable="'imitate1'">{{device.imitate1/1000| number:1}} V</td>
+        <td class="text-nowrap" data-title="'visibleSatelliteNumber'|translate" sortable="'visibleSatelliteNumber'">{{device.visibleSatelliteNumber}}</td>
+        <td class="text-nowrap" data-title="'usableSatelliteNumber'|translate" sortable="'usableSatelliteNumber'">{{device.usableSatelliteNumber}}</td>
+        <td class="text-nowrap" data-title="'bindMachineId'|translate" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
+        <td class="text-nowrap" data-title="'currentPosition'|translate" sortable="'address'">{{device.address}}</td>
 
-        <td class="text-nowrap" ng-if="device.locateStatus=='A'" data-title="'定位时间'" sortable="'locateDateTime'">{{device.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        <td class="text-nowrap" ng-if="device.locateStatus=='V'||device.locateStatus == null" data-title="'定位时间'" sortable="'locateDateTime'">-</td>
-        <td class="text-nowrap" data-title="'回传时间'" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" ng-if="device.locateStatus=='A'" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{device.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" ng-if="device.locateStatus=='V'||device.locateStatus == null" data-title="'positioningTime'|translate" sortable="'locateDateTime'">-</td>
+        <td class="text-nowrap" data-title="'returnTime'|translate" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
       </tr>
     </table>
   </div>

@@ -1,0 +1,127 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'statisticalAnalysis'|translate}}</a></li>
+    <li class="active">{{'machineAttendance'|translate}}</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">{{'startingTime'|translate}}</label>
+    </div>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="machineNeutralSlidingCtrl.startDate"
+               is-open="machineNeutralSlidingCtrl.startDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+        <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="machineNeutralSlidingCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'endTime'|translate}}</label>
+    </div>
+    <div class="col-md-2">
+
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="machineNeutralSlidingCtrl.endDate"
+               is-open="machineNeutralSlidingCtrl.endDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+        <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="machineNeutralSlidingCtrl.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+    <div class="col-md-1">
+      <label for="licenseId" class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
+    </div>
+    <div class="col-md-2">
+      <div>
+        <input type="text" id="licenseId" class="form-control" placeholder="{{'machineNumberAndCarNumber'|translate}}"
+               ng-model="machineNeutralSlidingCtrl.queryLicenseId" name="licenseId" typeahead-show-hint="true"
+               validator="required"/>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-primary" type="button" presentation-href="statistical:machine:transport:query"
+              ng-click="machineNeutralSlidingCtrl.query(null, null, null, 2)">{{'query' | translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="machineNeutralSlidingCtrl.reset()">{{'reset'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="MachineTransportInfosBox" >
+    <div class="neutralSlide" >
+        <div class="pull-right">
+          <button class="btn btn-sm btn-primary" ng-click="machineNeutralSlidingCtrl.neutralSlideReload()"  presentation-href="statistical:machine:transport:monitor"
+                  ng-if="!machineNeutralSlidingCtrl.neutralSlideMonitor">{{'turnOnRealtimeMonitoring'|translate}}</button>
+          <button class="btn btn-sm btn-warning" ng-click="machineNeutralSlidingCtrl.neutralSlideClose()"  presentation-href="statistical:machine:transport:monitor"
+                  ng-if="machineNeutralSlidingCtrl.neutralSlideMonitor">{{'turnOffRealtimeMonitoring'|translate}}</button>
+        </div>
+      <uib-tabset>
+        <!--	表格-->
+        <uib-tab>
+          <uib-tab-heading>{{'table'|translate}}</uib-tab-heading>
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table ng-table="machineNeutralSlidingCtrl.neutralSlideTable" class="table table-condensed table-bordered table-striped text-nowrap">
+                      <tr ng-repeat="neutralSlide in $data">
+                        <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceNum'">{{neutralSlide.deviceNum}}</td>
+                        <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{neutralSlide.licenseId}}</td>
+                        <td class="text-nowrap" data-title="'ACCState'|translate" sortable="'accStatus'">{{neutralSlide.accStatus}}</td>
+                        <td class="text-nowrap" data-title="'mph'|translate" sortable="'gpsSpeed'">{{neutralSlide.gpsSpeed|number:2}}KM/H</td>
+                        <td class="text-nowrap" data-title="'engineSpeed'|translate" sortable="'engineRotate'">{{neutralSlide.engineRotate}}rpm</td>
+                        <td class="text-nowrap" data-title="'longitude'|translate" sortable="'longitude'">{{neutralSlide.amaplongitudeNum}}</td>
+                        <td class="text-nowrap" data-title="'latitude'|translate" sortable="'latitude'">{{neutralSlide.amaplatitudeNum}}</td>
+                        <td class="text-nowrap" data-title="'currentPosition'|translate" sortable="'address'">{{neutralSlide.address}}</td>
+                        <td class="text-nowrap" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{neutralSlide.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <uib-pagination total-items="machineNeutralSlidingCtrl.neutralSlidePage.totalElements"
+                              ng-change="machineNeutralSlidingCtrl.query(machineNeutralSlidingCtrl.neutralSlidePageNumber-1, null, null, 2)"
+                              max-size="5" ng-model="machineNeutralSlidingCtrl.neutralSlidePageNumber" items-per-page="machineNeutralSlidingCtrl.neutralSlidePage.size"
+                              class="pagination-sm" boundary-links="true" rotate="false"
+                              first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}">
+              </uib-pagination>
+            </div>
+          </div>
+        </uib-tab>
+
+        <!--图表-->
+        <uib-tab>
+          <uib-tab-heading>{{'chart'|translate}}</uib-tab-heading>
+          <div class="row">
+            <div class="col-md-12">
+              <highchart id="neutralSlideChart" config="machineNeutralSlidingCtrl.neutralSlideConfig"></highchart>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+
+</section>
+

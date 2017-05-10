@@ -8,11 +8,11 @@
     <div class="table-responsive">
       <table ng-table="machineListCtrl.tableParams" class="table table-condensed table-bordered table-striped">
         <tr ng-repeat="machine in $data">
-          <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'licenseId'">{{machine.licenseId}}</td>
-          <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
-          <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-          <td class="text-nowrap" data-title="'所属组织/车队'" sortable="'org.label'">{{machine.org.label}}</td>
-          <td class="text-nowrap" data-title="'当前工作车队'" sortable="'fleet.label'">{{machine.fleet.label}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
+          <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceinfo.deviceNum'"><a href ng-click="machineListCtrl.currentInfo(machine.deviceinfo.id,'lg')">{{machine.deviceinfo.deviceNum}}</a></td>
+          <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'currentFleet'|translate" sortable="'fleet.label'">{{machine.fleet.label}}</td>
         </tr>
       </table>
     </div>
