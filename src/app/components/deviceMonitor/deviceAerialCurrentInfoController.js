@@ -1177,8 +1177,9 @@
                 return;
               }
               if (endDate) {
+                endDate = new Date(endDate.getTime()-1000*3600*24);
                 var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + (endDate.getDate()-1) + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
+                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
                 if (queryCondition) {
                   queryCondition += "&endDate=" + endDateFormated;
                 }
