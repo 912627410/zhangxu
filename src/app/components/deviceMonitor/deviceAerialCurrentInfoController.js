@@ -285,10 +285,7 @@
         //得到短信内容
         vm.viewSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
 
-          if(vehicleStateCollect<10||vehicleStateCollect>180 || chargerStateCollect<10||chargerStateCollect>180){
-            Notification.error("请输入正确的采样时间范围10~180秒");
-            return;
-          }
+
           if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
@@ -308,6 +305,10 @@
             }else if(type == 9){
                 restURL += "&catPhoneNumber=" + catPhoneNumber;
             }else if (type==11){
+              if(vehicleStateCollect<10||vehicleStateCollect>180 || chargerStateCollect<10||chargerStateCollect>180){
+                Notification.error("请输入正确的采样时间范围10~180秒");
+                return;
+              }
               restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
             var rspData = serviceResource.restCallService(restURL, "GET");
@@ -320,10 +321,7 @@
 
         //发送短信
         vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
-            if(vehicleStateCollect<10||vehicleStateCollect>180 || chargerStateCollect<10||chargerStateCollect>180){
-              Notification.error("请输入正确的采样时间范围10~180秒");
-              return;
-            }
+
             if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
                 return;
@@ -344,6 +342,10 @@
             else if(type == 9){
                 restURL += "&catPhoneNumber=" + catPhoneNumber;
             }else if (type==11){
+              if(vehicleStateCollect<10||vehicleStateCollect>180 || chargerStateCollect<10||chargerStateCollect>180){
+                Notification.error("请输入正确的采样时间范围10~180秒");
+                return;
+              }
                 restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
             $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
@@ -1174,7 +1176,7 @@
               }
               if (endDate) {
                 var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
+                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + (endDate.getDate()-1) + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
                 if (queryCondition) {
                   queryCondition += "&endDate=" + endDateFormated;
                 }
