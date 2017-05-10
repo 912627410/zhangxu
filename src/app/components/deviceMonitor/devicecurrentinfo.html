@@ -488,7 +488,7 @@
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
                     <td>{{'currentPosition'|translate}}</td>
-                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'longitude'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'latitude'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
                   </tr>
                 </table>
               </div>
@@ -832,9 +832,9 @@
         <div class="box-body">
           <div class="row">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'equipmentNumber'|translate}}</label>
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'deviceNum'|translate}}</label>
               <div class="col-md-4">
-                <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'equipmentNumber'|translate}}"
+                <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'deviceNum'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum" name="deviceNum"/>
               </div>
               <label for="licenseId" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>

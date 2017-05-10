@@ -175,9 +175,22 @@
                 </a>
               </li>
               <li>
-                <a ui-sref="home.machineTransportMonitor" presentation-href="statistical:machine:transport">
-                  <i class="glyphicon glyphicon-stats"></i> <span>车辆运输监控</span>
+                <a  presentation-href="statistical:machine:transport" ng-click="machineTransportationMonitor=!machineTransportationMonitor">
+                  <i class="glyphicon glyphicon-stats"></i> <span>{{'machineTransportationMonitoring'|translate}}</span>
+                  <span class="glyphicon pull-right" ng-class="machineTransportationMonitor?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
                 </a>
+                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: machineTransportationMonitor}">
+                  <li>
+                    <a ui-sref="home.machineSpeeding" presentation-href="report:idleDeviceReport">
+                      <i class="fa fa-unlink"></i> <span>{{'SpeedMonitoring'|translate}}</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a ui-sref="home.machineNeutralSliding" presentation-href="report:idleDeviceReport">
+                      <i class="fa fa-bookmark"></i> <span>{{'NeutralSlidingMonitoring'|translate}}</span>
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>

@@ -171,7 +171,6 @@
   "endAnimation": "暂停",
   "moveAnimation": "继续",
   "telecontrol": "远程控制",
-  "equipmentNumber": "设备编号",
   "licensePlateNumber": "绑定车号",
   "engineCommunicationCode": "发动机通讯密码",
   "bindSIMNumber": "绑定SIM号",
@@ -259,8 +258,6 @@
   "nextPage": "下一页",
   "previousPage": "前一页",
   "failedToGetSmallExcavatorModel": "读取小挖设备型号参数失败",
-  "amaplatitudeNumber": "纬度",
-  "amaplongitudeNumber": "经度",
   "hour": "小时",
   "mins": "分钟",
   "highSpeed": "高速",
@@ -668,8 +665,6 @@
   "specialReminderContent":"新建用户、更新用户、管理员更改密码中的原值为被操作的用户名",
   "affiliatedInformation":"隶属信息",
   "createWorkReport":"生成工作报告",
-  "overSpeedQuery":"超速查询",
-  "neutralSlideQuery":"空档滑行查询",
   "fuelConsumptionStatistics":"油耗统计",
   "waitingForTheLink":"等待链接",
   "NVMInitialize":"NVM初始化",
@@ -680,6 +675,14 @@
   "speedRegulation":"速度调节",
   "saveState":"保存TRIP ANGLE状态",
   "limitOperatingState":"限制操作状态",
-  "breakLease":"Break Lease"
+  "breakLease":"Break Lease",
+  "turnOnRealtimeMonitoring":"开启实时监控",
+  "turnOffRealtimeMonitoring":"关闭实时监控",
+  "table":"表格",
+  "machineTransportationMonitoring":"车辆运输监控",
+  "ECUInactiveMachine":"ECU未激活车辆",
+  "SpeedMonitoring":"超速监控",
+  "NeutralSlidingMonitoring":"空挡滑行监控"
+
 
 }
