@@ -677,7 +677,8 @@
   "machineTransportationMonitoring":"Machine monitoring",
   "ECUInactiveMachine":"ECU Inactive machine",
   "SpeedMonitoring":"Speed monitoring",
-  "NeutralSlidingMonitoring":"Neutral sliding monitoring"
+  "NeutralSlidingMonitoring":"Neutral sliding monitoring",
+  "locationInformation":"Location information"
 
 
 }
