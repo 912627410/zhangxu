@@ -31,6 +31,12 @@
         return;
       }
 
+      var verArr = file.versionNum.split(".");
+      if(file.versionNum * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
+        Notification.error("请重新输入版本号!");
+        return;
+      }
+
       file.upload = Upload.upload({
         url: UPDATE_FILE_UPLOAD_URL,
         data: {
