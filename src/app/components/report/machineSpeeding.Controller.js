@@ -31,7 +31,106 @@
     vm.initDate();
 
 
-    vm.speedAlertList = [];
+    /**
+     * 超速时间监控图
+     */
+    Highcharts.setOptions({
+      // 所有语言文字相关配置都设置在 lang 里
+      lang: {
+        resetZoom: '重置',
+        resetZoomTitle: '重置缩放比例'
+      }
+    });
+    vm.overSpeedConfig = {
+      options: {
+        chart: {
+          type: 'scatter',
+          zoomType: 'xy',
+          // width: 1000,
+          height: 600
+        },
+        plotOptions: {
+          scatter: {
+            marker: {
+              radius: 5,
+              states: {
+                hover: {
+                  enabled: true,
+                  lineColor: 'rgb(100,100,100)'
+                }
+              }
+            },
+            states: {
+              hover: {
+                marker: {
+                  enabled: false
+                }
+              }
+            },
+            tooltip: {
+              headerFormat: '<b style="color: red;font-size: 14px;">超速报警</b><br/><br/>',
+              shared: true,
+              pointFormatter: function () {
+                var datefmt = new Date(this.x);
+                return '<b>设备号: </b>' + this.deviceNum + '<br/><b>整车编号: </b>' + this.licenseId
+                  + '<br/><b>速度: </b>' + $filter('number')(this.y, 2) + 'KM/H<br/><b>日期: </b>' + $filter('date')(datefmt, 'yyyy-MM-dd HH:mm:ss');
+              }
+            }
+          },
+          line: {
+            dataLabels: {
+              enabled: true
+            },
+            enableMouseTracking: true
+          },
+          series: {
+            cursor: "pointer"
+          }
+        },
+        legend: { // 图例
+          enabled: false
+        }
+      },
+      //时间转为string格式显示处理
+      xAxis: {
+        title: {
+          enabled: true,
+          text: '日期'
+        },
+        showLastLabel: true,
+        type: 'datetime',
+        labels: {
+          formatter: function () {
+            return $filter('date')(new Date(this.value), 'yyyy-MM-dd HH:mm:ss');
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: '速度(KM/H)'
+        },
+        startOnTick: true,
+        endOnTick: true,
+        showLastLabel: true,
+        type: 'linear',
+        labels: {
+          formatter: function () {
+            return this.value;
+          }
+        }
+      },
+      series: [{
+        color: 'rgba(205, 51, 51, .5)',
+        turboThreshold: 100000,
+        data: []
+      }],
+      title: {
+        text:'超速报警实时监控'
+      },
+      credits: { // 版权信息
+        enabled:false
+      }
+    };
 
     // 日期控件相关
     // date picker
@@ -61,9 +160,8 @@
      * @param page
      * @param size
      * @param sort
-     * @param type 1：超速报警  2：空档滑行
      */
-    vm.query = function (page, size, sort, type) {
+    vm.query = function (page, size, sort) {
       var restCallURL = MACHINE_TRANSPORTINFO_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 15;
@@ -80,47 +178,25 @@
       if(null != vm.queryLicenseId){
         restCallURL += "&search_LIKES_licenseId=" + $filter('uppercase')(vm.queryLicenseId);
       }
-
-      if(type == "1") {
-        restCallURL += "&search_EQ_type=1";
-        var OverSpeedData = serviceResource.restCallService(restCallURL, "GET");
-        OverSpeedData.then(function (data) {
-          if(data.content.length == 0) {
-            Notification.warning("查询结果为空");
-            return;
-          }
-          vm.overSpeedTable = new NgTableParams({
-          }, {
-            dataset: data.content
-          });
-          vm.overSpeedPage = data.page;
-          vm.overSpeedPageNumber = data.page.number + 1;
-          Notification.success("查询成功");
-        }, function (reason) {
-          Notification.error(reason.data.message);
+      restCallURL += "&search_EQ_type=1";
+      var OverSpeedData = serviceResource.restCallService(restCallURL, "GET");
+      OverSpeedData.then(function (data) {
+        if(data.content.length == 0) {
+          Notification.warning("查询结果为空");
+          return;
+        }
+        vm.overSpeedTable = new NgTableParams({
+        }, {
+          dataset: data.content
         });
-      } else if (type == "2") {
-        restCallURL += "&search_EQ_type=2";
-        var neutralSlideData = serviceResource.restCallService(restCallURL, "GET");
-        neutralSlideData.then(function (data) {
-          if(data.content.length == 0) {
-            Notification.warning("查询结果为空");
-            return;
-          }
-          vm.neutralSlideTable = new NgTableParams({
-          }, {
-            dataset: data.content
-          });
-          vm.neutralSlidePage = data.page;
-          vm.neutralSlidePageNumber = data.page.number + 1;
-          Notification.success("查询成功");
-        }, function (reason) {
-          Notification.error(reason.data.message);
-        });
-      }
+        vm.overSpeedPage = data.page;
+        vm.overSpeedPageNumber = data.page.number + 1;
+      }, function (reason) {
+        Notification.error(reason.data.message);
+      });
     };
 
-    vm.query(null, null, null, 1);
+    vm.query(null, null, null);
 
     /**
      * 重置
@@ -150,8 +226,8 @@
           licenseId: obj.licenseId,
           deviceNum: obj.deviceNum
         };
-        vm.speedAlertList.push(data);
-        vm.overSpeedCharts();
+        vm.overSpeedConfig.series[0].data.push(data);
+        $scope.$apply();
       }
     };
 
@@ -187,122 +263,6 @@
     $scope.$on("$destroy",function () {
       wsSpeedAlert.close();
     });
-
-
-    vm.overSpeedConfig = {
-      title: {
-        text:'超速报警实时监控'
-      }
-    };
-
-
-    /**
-     * 超速时间监控图
-     */
-    vm.overSpeedCharts = function () {
-      Highcharts.setOptions({
-        // 所有语言文字相关配置都设置在 lang 里
-        lang: {
-          resetZoom: '重置',
-          resetZoomTitle: '重置缩放比例'
-        }
-      });
-      vm.overSpeedConfig = {
-        options: {
-          chart: {
-            type: 'scatter',
-            zoomType: 'xy',
-            width: 1000,
-            height: 600
-          },
-          plotOptions: {
-            scatter: {
-              marker: {
-                radius: 5,
-                states: {
-                  hover: {
-                    enabled: true,
-                    lineColor: 'rgb(100,100,100)'
-                  }
-                }
-              },
-              states: {
-                hover: {
-                  marker: {
-                    enabled: false
-                  }
-                }
-              },
-              tooltip: {
-                headerFormat: '<b style="color: red;font-size: 14px;">超速报警</b><br/><br/>',
-                shared: true,
-                pointFormatter: function () {
-                  var datefmt = new Date(this.x);
-                  return '<b>设备号: </b>' + this.deviceNum + '<br/><b>整车编号: </b>' + this.licenseId
-                    + '<br/><b>速度: </b>' + this.y +$filter('number')(item.amaplatitudeNum,2)+ 'KM/H<br/><b>日期: </b>' + $filter('date')(datefmt, 'yyyy-MM-dd HH:mm:ss');
-                }
-              }
-            },
-            line: {
-              dataLabels: {
-                enabled: true
-              },
-              enableMouseTracking: true
-            },
-            series: {
-              cursor: "pointer"
-            }
-          },
-          legend: { // 图例
-            enabled: false
-          }
-        },
-        //时间转为string格式显示处理
-        xAxis: {
-          title: {
-            enabled: true,
-            text: '日期'
-          },
-          showLastLabel: true,
-          type: 'datetime',
-          labels: {
-            formatter: function () {
-              return $filter('date')(new Date(this.value), 'yyyy-MM-dd HH:mm:ss');
-            }
-          }
-        },
-        yAxis: {
-          title: {
-            text: '速度(KM/H)'
-          },
-          startOnTick: true,
-          endOnTick: true,
-          showLastLabel: true,
-          type: 'linear',
-          labels: {
-            formatter: function () {
-              return this.value;
-            }
-          }
-        },
-        series: [{
-          color: 'rgba(205, 51, 51, .5)',
-          turboThreshold: 100000,
-          data: vm.speedAlertList
-        }],
-        title: {
-          text:'超速报警实时监控'
-        },
-        credits: { // 版权信息
-          enabled:false
-        }
-      };
-    };
-
-    vm.overSpeedCharts();
-
-
-
 
   }
 })();
