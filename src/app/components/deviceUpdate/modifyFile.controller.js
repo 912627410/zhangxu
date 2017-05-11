@@ -15,8 +15,13 @@
     vm.versionNum = (updateFile.versionNum/100).toFixed(2);
 
     vm.ok = function(versionNum, updateFile){
+      var verArr = versionNum.split(".");
+      if(versionNum * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
+        Notification.error("请重新输入版本号!");
+        return;
+      }
       var modifyFile = {
-        versionNum: versionNum*100,
+        versionNum: Math.round(versionNum*100),
         id: updateFile.id,
         applicableProducts: updateFile.applicableProducts
       };
