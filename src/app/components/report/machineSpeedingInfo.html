@@ -60,7 +60,7 @@
 
     <div class="col-md-3">
       <button class="btn btn-primary" type="button" presentation-href="statistical:machine:transport:query"
-              ng-click="machineSpeedingCtrl.query(null, null, null, 1)">{{'query' | translate}}</button>
+              ng-click="machineSpeedingCtrl.query(null, null, null)">{{'query' | translate}}</button>
       <button class="btn btn-primary" type="button" ng-click="machineSpeedingCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
@@ -101,7 +101,7 @@
             </div>
             <div class="box-footer">
               <uib-pagination total-items="machineSpeedingCtrl.overSpeedPage.totalElements"
-                              ng-change="machineSpeedingCtrl.query(machineSpeedingCtrl.overSpeedPageNumber-1, null, null, 1)"
+                              ng-change="machineSpeedingCtrl.query(machineSpeedingCtrl.overSpeedPageNumber-1, null, null)"
                               max-size="5" ng-model="machineSpeedingCtrl.overSpeedPageNumber" items-per-page="machineSpeedingCtrl.overSpeedPage.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
                               first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}">
@@ -115,7 +115,7 @@
           <uib-tab-heading>{{'chart'|translate}}</uib-tab-heading>
           <div class="row">
             <div class="col-md-12">
-              <highchart id="overSpeedChart" config="machineSpeedingCtrl.overSpeedConfig"></highchart>
+              <highchart id="overSpeedChart" config="machineSpeedingCtrl.overSpeedConfig" style="min-width: 80%;"></highchart>
             </div>
           </div>
         </uib-tab>
