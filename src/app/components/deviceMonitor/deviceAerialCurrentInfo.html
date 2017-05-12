@@ -700,7 +700,7 @@
                                             <th class="text-nowrap">{{'speaker'|translate}}</th>
                                             <th class="text-nowrap">{{'speedValve'|translate}}</th>
                                             <th class="text-nowrap">{{'pumpEnabled'|translate}}</th>
-                                            <th class="text-nowrap">{{'electricDriveEnabled'|translate}}</th>
+                                            <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'electricDriveEnabled'|translate}}</th>
                                             <th class="text-nowrap">{{'buzzer'|translate}}</th>
 
                                             <th class="text-nowrap">{{'platformHeight'|translate}}</th>
@@ -820,9 +820,9 @@
                                             <td ng-if="deviceData.fetMCE2==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                             <td ng-if="deviceData.fetMCE2==0" class="bg-warning text-warning">{{'no'|translate}}</td>
                                             <td ng-if="deviceData.fetMCE2==null">{{'noData'|translate}}</td>
-                                            <td ng-if="deviceData.fetAlarm==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                                            <td ng-if="deviceData.fetAlarm==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                            <td ng-if="deviceData.fetAlarm==null" class="text-nowrap">{{'noData'|translate}}</td>
+                                            <td ng-if="deviceData.fetAlarm==1 && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="bg-info text-info">{{'yes'|translate}}</td>
+                                            <td ng-if="deviceData.fetAlarm==0 && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="bg-warning text-warning">{{'no'|translate}}</td>
+                                            <td ng-if="deviceData.fetAlarm==null && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="text-nowrap">{{'noData'|translate}}</td>
 
                                             <td ng-if="deviceData.hostHeight!=null"><!-- {{deviceData.hostHeight}}  -->0{{'m'|translate}}</td>
                                             <td ng-if="deviceData.hostHeight==null">-- {{'m'|translate}}</td>
