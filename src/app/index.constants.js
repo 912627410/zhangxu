@@ -35,7 +35,7 @@
     .constant('DEVCEINFO_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceParameter')   //设备参数
     .constant('DEVCEINFO_URL', SERVER_BASE_URL + 'device/deviceinfo')   //设备crud
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
-    .constant('DEVCE_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimpledata')   //分页查询设备简化数据URL
+    .constant('DEVCE_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimpledata')   //分页查询设备简化数据URL  分页查询设备位置
     .constant('DEVCE_SIMPLE_GPS_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicesimplegpsdata')   //分页查询设备简化数据URL
     .constant('DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/devicesimpledata')   //分页查询设备简化数据URL
     .constant('DEVCEMONITOR_EXCELEXPORT', SERVER_BASE_URL + 'deviceMonitor/excelExport')   //数据导出简化URL

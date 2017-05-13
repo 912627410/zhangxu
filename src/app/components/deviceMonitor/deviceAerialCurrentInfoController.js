@@ -1012,7 +1012,7 @@
             }
             if (startDate){
                 var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
-                var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+                var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
                 if (filterTerm){
                     filterTerm += "&startDate=" + startDateFormated
                 }
@@ -1021,8 +1021,9 @@
                 }
             }
             if (endDate){
+                endDate = new Date(endDate.getTime()-1000*3600*24);
                 var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
-                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+                var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
                 if (filterTerm){
                     filterTerm += "&endDate=" + endDateFormated;
                 }
@@ -1221,7 +1222,54 @@
 
         };
 
-
+        //设备位置
+        vm.getDeviceLocation = function(page,size,sort,deviceNum,startDate,endDate){
+          if (deviceNum){
+            var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
+          }
+          if (startDate){
+            var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
+            var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+            if (filterTerm){
+              filterTerm += "&startDate=" + startDateFormated
+            }
+            else{
+              filterTerm += "startDate=" + startDateFormated;
+            }
+          } else {
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            return;
+          }
+          if (endDate){
+            endDate = new Date(endDate.getTime()-1000*3600*24);
+            var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
+            var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+            if (filterTerm){
+              filterTerm += "&endDate=" + endDateFormated;
+            }
+            else{
+              filterTerm += "endDate=" + endDateFormated;
+            }
+          } else {
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            return;
+          }
+          var deviceDataPromis = serviceResource.queryDeviceSimpleGPSData(page, size, sort, filterTerm);
+          deviceDataPromis.then(function (data) {
+              if(data.content.length>0){
+                vm.deviceLocationList = data.content;
+                vm.page = data.page;
+                vm.deviceData_pagenumber = data.page.number + 1;
+                vm.basePath = "device/devicesimplegpsdata";
+              }else {
+                vm.deviceLocationList = null;
+                Notification.warning("暂无数据！");
+              }
+            }, function (reason) {
+              Notification.error("查询数据出错");
+            }
+          )
+        };
         //warning data
         vm.getDeviceWarningData = function(deviceNum,startDate,endDate){
             if (vm.operatorInfo){
@@ -1698,6 +1746,10 @@
             vm.getDeviceData(page,size,sort,deviceinfo,startDate,endDate);
         };
 
+        //设备位置明细页面
+        vm.refreshPageDateDeviceLocation = function(page,size,sort,deviceinfo,startDate,endDate){
+          vm.getDeviceLocation(page,size,sort,deviceinfo,startDate,endDate);
+        };
         //车辆参数
         vm.parameterConfig = {
             options: {
