@@ -300,7 +300,7 @@
           if (zoomsize){
             localZoomSize = zoomsize;
           }
-          var localCenterAddr = [103.39,36.9];//设置中心点大概在兰州附近
+          var localCenterAddr = [106.13,38.44];//设置中心点大概在银川附近
           if (centeraddr){
             localCenterAddr = centeraddr;
           }

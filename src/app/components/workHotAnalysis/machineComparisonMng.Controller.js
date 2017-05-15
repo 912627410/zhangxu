@@ -12,6 +12,9 @@
   /** @ngInject */
   function machineComparedMngController($rootScope, $scope, $http, $filter,Notification) {
     var vm = this;
+    var mapChart1;
+    var mapChart2;
+
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
     vm.startDate = startDate;
@@ -47,10 +50,8 @@
       return item;
     }
 
-    var mapChart1 = vm.echartsInit('mapContainer1');
-    var subMap1 = vm.echartsInit('subMap1');
-    var subMap2 = vm.echartsInit('subMap2');
-    var subMap3 = vm.echartsInit('subMap3');
+
+
 
 
 
@@ -92,7 +93,6 @@
         right: 20,
         itemGap: 30,
         feature: {
-          restore: {show: true},
           saveAsImage: {show: true}
         },
         iconStyle: {
@@ -122,7 +122,6 @@
             show: true
           }
         },
-        roam: true,
         scaleLimit: {
           min: 0.5
         }
@@ -132,7 +131,6 @@
           name: '开工热度',
           type: 'map',
           map: 'china',
-          roam: true,
           scaleLimit: {
             min: 0.5
           },
@@ -217,7 +215,7 @@
       title: {
         text: '车辆销售热度分布',
         subtext: '全国',
-        left: 'center'
+        left: 'left'
       },
       tooltip: [
         {
@@ -281,17 +279,15 @@
             show: true
           }
         },
-        roam: true,
         scaleLimit: {
           min: 0.5
         }
       },
       series: [
         {
-          name: '开工热度',
+          name: '销售热度',
           type: 'map',
           map: 'china',
-          roam: true,
           scaleLimit: {
             min: 0.5
           },
@@ -373,13 +369,44 @@
       ]
     };
 
-    mapChart1.setOption(chinaOption1);
+    //地图大图初始化  默认显示小挖全国开工热度分布
+      var mapChart1 = vm.echartsInit('mapContainer1');
+          chinaOption1.title.text = "小挖开工热度分布";
+          mapChart1.setOption(chinaOption1);
 
-    //右侧热度分布初始化
+      var backButtons = document.getElementsByClassName("backChina");
+
+      mapChart1.on("click", function (param){
+        console.log("click");
+        backButtons[0].style.display = "block";
+        var n = getindex(param.name,provincesText);
+        var Cname = provinces[n];
+        showProvince(Cname,'mapContainer1');
+      })
+
+      vm.backChina1 = function () {
+        mapChart1 = vm.echartsInit("mapContainer1");
+        mapChart1.setOption(chinaOption1);
+        backButtons[0].style.display = "none";
+
+        mapChart1.on("click", function (param){
+          console.log("click");
+          backButtons[0].style.display = "block";
+          var n = getindex(param.name,provincesText);
+          var Cname = provinces[n];
+          showProvince(Cname,'mapContainer1');
+        })
+      }
+
+
+    var subMap1 = vm.echartsInit('subMap1');
+    var subMap2 = vm.echartsInit('subMap2');
+    var subMap3 = vm.echartsInit('subMap3');
+    //右侧按车辆类型的热度分布初始化
     vm.subMapInit = function () {
 
       var subMapOption1 = chinaOption1;
-      subMapOption1.title.text = "矿车开工热度分布";
+      subMapOption1.title.text = "小挖开工热度分布";
       subMap1.setOption(subMapOption1);
 
       var subMapOption2 = chinaOption1;
@@ -387,16 +414,28 @@
       subMap2.setOption(subMapOption2);
 
       var subMapOption3 = chinaOption1;
-      subMapOption1.title.text = "挖掘机开工热度分布";
+      subMapOption1.title.text = "中挖开工热度分布";
       subMap3.setOption(subMapOption2);
     }
     vm.subMapInit();
 
-    vm.query = function (machineType1,heatType1) {
-      vm.mapchartLeftInit(machineType1,heatType1);
+
+    vm.query = function (startDate,endDate,machineType1,heatType1) {
+      var mapContainerList = document.getElementsByClassName("mapContainer");
+      mapContainerList[0].style.width = "100%";
+      mapContainerList[1].style.width = "100%";
+
+      var mapContainerBoxList = document.getElementsByClassName("mapContainerBox");
+      mapContainerBoxList[0].style.width = "100%";
+      mapContainerBoxList[1].style.width = "0%";
+
+      if(null!=machineType1&&null!=heatType1){
+        vm.mapchartLeftInit(machineType1,heatType1);
+      }
     }
 
     vm.mapchartLeftInit = function (machineType1,heatType1){
+      var mapChart1 = vm.echartsInit('mapContainer1');
       var mapOption1 = chinaOption1;
       if(machineType1=="A1"){
         if(heatType1==1){
@@ -405,11 +444,11 @@
           mapOption1.title.text = "小挖销售热度分布";
         }
       }
-      if(machineType1=="30"){
+      if(machineType1=="1,2,3"){
         if(heatType1==1){
-          mapOption1.title.text = "矿机开工热度分布";
+          mapOption1.title.text = "装载机开工热度分布";
         }else if(heatType1==0){
-          mapOption1.title.text = "矿机销售热度分布";
+          mapOption1.title.text = "装载机销售热度分布";
         }
       }
       if(machineType1=="40"){
@@ -426,7 +465,7 @@
     var mmuChart1 = echarts.init(document.getElementById('mmu-container1'));
     var mmuOption1 = {
       title: {
-        text: '月度工作车辆变化',
+        text: '开工变化趋势',
         padding: [10, 20]
       },
       toolbox: {
@@ -519,11 +558,17 @@
     };
     mmuChart1.setOption(mmuOption1);
 
+
     //查看对比结果
     vm.viewResults = function (machineType1,machineType2,heatType1,heatType2) {
+
+
       if(null==machineType1||null==machineType2||null==heatType1||null==heatType2){
         Notification.warning({message: '请选择相关参数'});
+      }else if(machineType1 == machineType2&&heatType1==heatType2){
+        Notification.warning({message: "相同车辆类型的相同热度类型的数据没有对比意义，请重新选择参数!"});
       }else{
+
         //热度对比显示格局样式
         var mapContainerList = document.getElementsByClassName("mapContainer");
         mapContainerList[0].style.width = "100%";
@@ -540,13 +585,8 @@
         lineContainerList[0].style.width = "50%";
         lineContainerList[1].style.width = "50%";
 
-        var backButtons = document.getElementsByClassName("backChina");
-
-
-        var mapChart1 = vm.echartsInit("mapContainer1");
-        var mapChart2 = vm.echartsInit("mapContainer2");
-
-
+        mapChart1 = vm.echartsInit("mapContainer1");
+        mapChart2 = vm.echartsInit("mapContainer2");
         var mapOption1 = chinaOption1;
         var mapOption2 = chinaOption2;
 
@@ -557,11 +597,11 @@
             mapOption1.title.text = "小挖销售热度分布";
           }
         }
-        if(machineType1=="30"){
+        if(machineType1=="1,2,3"){
           if(heatType1==1){
-            mapOption1.title.text = "矿机开工热度分布";
+            mapOption1.title.text = "装载机开工热度分布";
           }else if(heatType1==0){
-            mapOption1.title.text = "矿机销售热度分布";
+            mapOption1.title.text = "装载机销售热度分布";
           }
         }
         if(machineType1=="40"){
@@ -580,20 +620,22 @@
             mapOption2.title.text = "小挖销售热度分布";
           }
         }
-        if(machineType2=="30"){
+        if(machineType2=="1,2,3"){
           if(heatType2==1){
-            mapOption2.title.text = "矿机开工热度分布";
+            mapOption2.title.text = "装载机开工热度分布";
           }else if(heatType2==0){
-            mapOption2.title.text = "矿机销售热度分布";
+            mapOption2.title.text = "装载机销售热度分布";
           }
         }
         if(machineType2=="40"){
-          if(heatType1==2){
+          if(heatType2==1){
             mapOption2.title.text = "中挖开工热度分布";
           }else if(heatType2==0){
             mapOption2.title.text = "中挖销售热度分布";
           }
         }
+        mapOption1.title.left = "left";
+        mapOption2.title.left = "left";
 
         mapChart1.setOption(mapOption1);
         mapChart2.setOption(mapOption2);
@@ -605,7 +647,6 @@
           showProvince(Cname,'mapContainer1');
 
         })
-
         mapChart2.on("click", function (param){
           backButtons[1].style.display = "block";
           var n = getindex(param.name,provincesText);
@@ -613,10 +654,39 @@
           showProvince(Cname,'mapContainer2');
         })
 
+        var backButtons = document.getElementsByClassName("backChina");
+        vm.backChina1 = function () {
+          var mapChart1 = vm.echartsInit("mapContainer1");
+          mapChart1.setOption(mapOption1);
+          backButtons[0].style.display = "none";
+
+          mapChart1.on("click", function (param){
+            backButtons[0].style.display = "block";
+            var n = getindex(param.name,provincesText);
+            var Cname = provinces[n];
+            showProvince(Cname,'mapContainer1');
+
+          })
+        }
+
+        vm.backChina2 = function () {
+          var mapChart2 = vm.echartsInit("mapContainer2");
+          mapChart2.setOption(mapOption2);
+          backButtons[1].style.display = "none";
+
+          mapChart2.on("click", function (param){
+            backButtons[1].style.display = "block";
+            var n = getindex(param.name,provincesText);
+            var Cname = provinces[n];
+            showProvince(Cname,'mapContainer2');
+          })
+        }
+
+
         var mmuChart1 = echarts.init(lineContainerList[0]);
         var mmuOption1 = {
           title: {
-            text: '月度工作车辆变化',
+            text: '销售变化趋势',
             padding: [10, 20]
           },
           toolbox: {
@@ -711,7 +781,7 @@
         var mmuChart2 = echarts.init(lineContainerList[1]);
         var mmuOption2 = {
           title: {
-            text: '月度车辆销售分布',
+            text: '开工变化趋势',
             padding: [10, 20]
           },
           toolbox: {
@@ -804,18 +874,6 @@
         };
         mmuChart2.setOption(mmuOption2);
 
-        vm.backChina1 = function () {
-          var mapChart1 = vm.echartsInit("mapContainer1");
-          mapChart1.setOption(mapOption1);
-          backButtons[0].style.display = "none";
-        }
-
-        vm.backChina2 = function () {
-          var mapChart2 = vm.echartsInit("mapContainer2");
-          mapChart2.setOption(mapOption2);
-          backButtons[0].style.display = "none";
-        }
-
       }
 
     }
@@ -859,16 +917,15 @@
               calculable: true,
               precision: 2,
               seriesIndex: [0],
-              color: ['#980000', '#f6f3d2', '#075e89'],
+              color: ['#075e89','#f6f3d2'],
               text: ['高', '低']
             },
             toolbox: {
               show: true,
               itemSize: 20,
               itemGap: 30,
-              left: 'right',
+              top: 'bottom',
               feature: {
-                restore: {},
                 saveAsImage: {}
               }
             },
@@ -876,7 +933,6 @@
               {
                 type: 'map',
                 mapType: Cname,
-                roam: true,
                 label: {
                   emphasis: {
                     show: true
@@ -909,7 +965,7 @@
         vm.subMapInit();
       }else if(heatType==0){
         var subMapOption1 = chinaOption2;
-        subMapOption1.title.text = "矿车销售热度分布";
+        subMapOption1.title.text = "小挖销售热度分布";
         subMap1.setOption(subMapOption1);
 
         var subMapOption2 = chinaOption2;
@@ -917,7 +973,7 @@
         subMap2.setOption(subMapOption2);
 
         var subMapOption3 = chinaOption2;
-        subMapOption1.title.text = "挖掘机销售热度分布";
+        subMapOption1.title.text = "中挖销售热度分布";
         subMap3.setOption(subMapOption3);
       }
 
