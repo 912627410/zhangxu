@@ -1,3 +1,12 @@
+<section>
+  <!--class="content-header"class="panel"-->
+  <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li><a href="#">统计分析</a></li>
+    <li><a href="#">开工热度分析</a></li>
+    <li class="active">开工与销售热度</li>
+  </ol>
+</section>
 <div class="mainBox"  id="machineCompared">
   <div class="leftBox " >
     <div class="row form-group">
@@ -126,9 +135,8 @@
           </div>
         </div>
       </div>
-
-      <div class="mapContainerBox"  style="position: absolute;height:750px;right: 0px;border-left:1px dashed #cccccc">
-        <div class="mapContainer" ng-show="machineComparedMngCtrl.map" id="mapContainer2" style="height: 750px;width:50%"></div>
+      <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:750px;right: 0px;border-left:1px dashed #cccccc">
+        <div class="mapContainer" id="mapContainer2" style="height: 750px;"></div>
         <div id="mapContainerQushi2" style="position: absolute;right: 0;top:0px;width: 200px;height: 120px;border: 1px solid #cccccc;display: none;">
           <div style="position: relative;">
             <div
@@ -147,21 +155,20 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
   <div class="rightBox" style="position: absolute;right: 0px; top: 0px;height: 900px;width: 30%;">
     <div class="row form-group" style="padding:20px 10px;">
       <label class="control-label col-md-3">热度分布</label>
       <div class="controls">
-        <select class="form-control col-md-5" ng-model="machineComparedMngCtrl.heatType">
+        <select class="form-control col-md-5" ng-model="machineComparedMngCtrl.heatType3">
           <option value="1" ng-selected="true">开工热度分布</option>
           <option value="0">销售热度分布</option>
         </select>
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType)">查看
+                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType3)">查看
         </button>
       </div>
     </div>

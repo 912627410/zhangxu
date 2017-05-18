@@ -52,7 +52,6 @@
     //修改查询单一车型和对比车型的切换
     vm.only=true;
     vm.comtrast=false;
-    vm.map=false;
     vm.toggle = function () {
       vm.only=!vm.only;
       vm.contrast=!vm.contrast;
@@ -66,11 +65,11 @@
       title: {
         text: '车辆开工热度分布',
         textStyle:{
-          fontSize: 23,
+          fontSize: 28,
         },
         subtext: '全国',
         subtextStyle:{
-          fontSize: 14,
+          fontSize: 19,
         },
         top:'2%',
         left: 'center'
@@ -282,11 +281,11 @@
         type: 'continuous',
         min: 0,
         left: 20,
-        bottom: 5,
+        bottom: 15,
         calculable: true,
         precision: 2,
         seriesIndex: [0],
-        color: ['#075e89','#FFFFFF'],
+        color: ['orangered','yellow','lightskyblue'],
         text: ['高', '低']
       },
       geo: {
@@ -391,12 +390,16 @@
 
     //地图大图初始化  默认显示小挖全国开工热度分布
       var mapChart1 = vm.echartsInit('mapContainer1');
-          chinaOption1.title.text = "小挖开工热度分布";
-          mapChart1.setOption(chinaOption1);
+          var mapOption1 = chinaOption1;
+          mapOption1.title.text = "小挖开工热度分布";
+          mapChart1.setOption(mapOption1);
 
       var backButtons = document.getElementsByClassName("backChina");
 
       mapChart1.on("click", function (param){
+        mapOption1.title.text = "小挖开工热度分布";
+        mapOption1.title. textStyle={fontSize: 28};
+        mapOption1.title. subtextStyle={fontSize: 19};
         console.log("click");
         backButtons[0].style.display = "block";
         var n = getindex(param.name,provincesText);
@@ -406,7 +409,7 @@
 
       vm.backChina1 = function () {
         mapChart1 = vm.echartsInit("mapContainer1");
-        mapChart1.setOption(chinaOption1);
+        mapChart1.setOption(mapOption1);
         backButtons[0].style.display = "none";
 
         mapChart1.on("click", function (param){
@@ -424,19 +427,23 @@
     var subMap3 = vm.echartsInit('subMap3');
     //右侧按车辆类型的热度分布初始化
     vm.subMapInit = function () {
-      chinaOption1.title.left = "center";
-      chinaOption1.title. textStyle={fontSize: 17};
-      chinaOption1.title. subtextStyle={fontSize: 8};
       var subMapOption1 = chinaOption1;
+      subMapOption1.title.left = "center";
+      subMapOption1.title. textStyle={fontSize: 17};
+      subMapOption1.title. subtextStyle={fontSize: 8};
       subMapOption1.title.text = "小挖开工热度分布";
+      subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
+
       subMap1.setOption(subMapOption1);
 
       var subMapOption2 = chinaOption1;
       subMapOption1.title.text = "装载机开工热度分布";
+      subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
       subMap2.setOption(subMapOption2);
 
       var subMapOption3 = chinaOption1;
       subMapOption1.title.text = "中挖开工热度分布";
+      subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
       subMap3.setOption(subMapOption2);
     }
     vm.subMapInit();
@@ -447,7 +454,6 @@
         Notification.warning({message: '请选择单一车型状态下查询相关参数'});
         return;
       }
-      vm.map=false;
       var mapContainerList = document.getElementsByClassName("mapContainer");
       mapContainerList[0].style.width = "100%";
       mapContainerList[1].style.width = "100%";
@@ -455,38 +461,71 @@
       var mapContainerBoxList = document.getElementsByClassName("mapContainerBox");
       mapContainerBoxList[0].style.width = "100%";
       mapContainerBoxList[1].style.width = "0%";
+      var mapContainerBox = document.getElementById("mapContainerBox");
+      mapContainerBox.style.display = "none";
 
-      if(null!=machineType1&&null!=heatType1){
-        vm.mapchartLeftInit(machineType1,heatType1);
-      }
+      vm.mapchartLeftInit(machineType1,heatType1);
+
     }
 
     vm.mapchartLeftInit = function (machineType1,heatType1){
       var mapChart1 = vm.echartsInit('mapContainer1');
       var mapOption1 = chinaOption1;
       mapOption1.title.left = "center";
+      mapOption1.title. textStyle={fontSize: 28};
+      mapOption1.title. subtextStyle={fontSize: 19};
       if(machineType1=="A1"){
         if(heatType1==1){
           mapOption1.title.text = "小挖开工热度分布";
+          mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
           mapOption1.title.text = "小挖销售热度分布";
+          mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
       if(machineType1=="1,2,3"){
         if(heatType1==1){
           mapOption1.title.text = "装载机开工热度分布";
+          mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
           mapOption1.title.text = "装载机销售热度分布";
+          mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
       if(machineType1=="40"){
         if(heatType1==1){
           mapOption1.title.text = "中挖开工热度分布";
+          mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
           mapOption1.title.text = "中挖销售热度分布";
+          mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
       mapChart1.setOption(mapOption1);
+      vm.showMachineHeatDetails(heatType1);
+      var backButtons = document.getElementsByClassName("backChina");
+      backButtons[0].style.display = "none";
+      mapChart1.on("click", function (param){
+        console.log("click");
+        backButtons[0].style.display = "block";
+        var n = getindex(param.name,provincesText);
+        var Cname = provinces[n];
+        showProvince(Cname,'mapContainer1');
+      })
+
+      vm.backChina1 = function () {
+        mapChart1 = vm.echartsInit("mapContainer1");
+        mapChart1.setOption(mapOption1);
+        backButtons[0].style.display = "none";
+
+        mapChart1.on("click", function (param){
+          console.log("click");
+          backButtons[0].style.display = "block";
+          var n = getindex(param.name,provincesText);
+          var Cname = provinces[n];
+          showProvince(Cname,'mapContainer1');
+        })
+      }
     }
 
     //车辆各年份月度工作情况
@@ -596,7 +635,6 @@
       }else{
 
         //热度对比显示格局样式
-
         var mapContainerBoxList = document.getElementsByClassName("mapContainerBox");
         mapContainerBoxList[0].style.width = "50%";
         mapContainerBoxList[1].style.width = "50%";
@@ -604,41 +642,50 @@
         var mapContainerList = document.getElementsByClassName("mapContainer");
         mapContainerList[0].style.width = "100%";
         mapContainerList[1].style.width = "100%";
-        console.log(mapContainerList[0].style.width);
-        console.log(mapContainerList[1].style.width);
 
         var mapContainerQushi2 = document.getElementById("mapContainerQushi2");
         mapContainerQushi2.style.display = "block";
-
+        var mapContainerBox = document.getElementById("mapContainerBox");
+        mapContainerBox.style.display = "block";
         var lineContainerList = document.getElementsByClassName("chart-container");
         lineContainerList[0].style.width = "50%";
         lineContainerList[1].style.width = "50%";
-        vm.map=true;
+
         mapChart1 = vm.echartsInit("mapContainer1");
         mapChart2 = vm.echartsInit("mapContainer2");
         var mapOption1 = chinaOption1;
         mapOption1.title.left = "left";
+        mapOption1.title. textStyle={fontSize: 21};
+        mapOption1.title. subtextStyle={fontSize: 12};
         var mapOption2 = chinaOption2;
-
+        mapOption2.title.left = "left";
+        mapOption2.title. textStyle={fontSize: 21};
+        mapOption2.title. subtextStyle={fontSize: 12};
         if(machineType1=="A1"){
           if(heatType1==1){
             mapOption1.title.text = "小挖开工热度分布";
+            mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
             mapOption1.title.text = "小挖销售热度分布";
+            mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType1=="1,2,3"){
           if(heatType1==1){
             mapOption1.title.text = "装载机开工热度分布";
+            mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
             mapOption1.title.text = "装载机销售热度分布";
+            mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType1=="40"){
           if(heatType1==1){
             mapOption1.title.text = "中挖开工热度分布";
+            mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
             mapOption1.title.text = "中挖销售热度分布";
+            mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
 
@@ -646,28 +693,34 @@
         if(machineType2=="A1"){
           if(heatType2==1){
             mapOption2.title.text = "小挖开工热度分布";
+            mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
             mapOption2.title.text = "小挖销售热度分布";
+            mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
+
           }
         }
         if(machineType2=="1,2,3"){
           if(heatType2==1){
             mapOption2.title.text = "装载机开工热度分布";
+            mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
             mapOption2.title.text = "装载机销售热度分布";
+            mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType2=="40"){
           if(heatType2==1){
             mapOption2.title.text = "中挖开工热度分布";
+            mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
             mapOption2.title.text = "中挖销售热度分布";
+            mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
 
         mapChart1.setOption(mapOption1);
         mapChart2.setOption(mapOption2);
-
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
@@ -1023,19 +1076,22 @@
       if(heatType==1){
         vm.subMapInit();
       }else if(heatType==0){
-        chinaOption2.title.left = "center";
-        chinaOption2.title. textStyle={fontSize: 17};
-        chinaOption2.title. subtextStyle={fontSize: 8};
         var subMapOption1 = chinaOption2;
+        subMapOption1.title.left = "center";
+        subMapOption1.title. textStyle={fontSize: 17};
+        subMapOption1.title. subtextStyle={fontSize: 8};
         subMapOption1.title.text = "小挖销售热度分布";
+        subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap1.setOption(subMapOption1);
 
         var subMapOption2 = chinaOption2;
         subMapOption1.title.text = "装载机销售热度分布";
+        subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap2.setOption(subMapOption2);
 
         var subMapOption3 = chinaOption2;
         subMapOption1.title.text = "中挖销售热度分布";
+        subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap3.setOption(subMapOption3);
       }
 
