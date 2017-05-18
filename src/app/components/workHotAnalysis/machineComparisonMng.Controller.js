@@ -65,11 +65,11 @@
       title: {
         text: '车辆开工热度分布',
         textStyle:{
-          fontSize: 28,
+          fontSize: 26,
         },
         subtext: '全国',
         subtextStyle:{
-          fontSize: 19,
+          fontSize: 17,
         },
         top:'2%',
         left: 'center'
@@ -228,11 +228,11 @@
       title: {
         text: '车辆销售热度分布',
         textStyle:{
-          fontSize: 23,
+          fontSize: 21,
         },
         subtext: '全国',
         subtextStyle:{
-          fontSize: 14,
+          fontSize: 12,
         },
         top:'2%',
         left: 'left'
@@ -398,8 +398,8 @@
 
       mapChart1.on("click", function (param){
         mapOption1.title.text = "小挖开工热度分布";
-        mapOption1.title. textStyle={fontSize: 28};
-        mapOption1.title. subtextStyle={fontSize: 19};
+        mapOption1.title. textStyle={fontSize: 26};
+        mapOption1.title. subtextStyle={fontSize: 17};
         console.log("click");
         backButtons[0].style.display = "block";
         var n = getindex(param.name,provincesText);
@@ -472,8 +472,8 @@
       var mapChart1 = vm.echartsInit('mapContainer1');
       var mapOption1 = chinaOption1;
       mapOption1.title.left = "center";
-      mapOption1.title. textStyle={fontSize: 28};
-      mapOption1.title. subtextStyle={fontSize: 19};
+      mapOption1.title. textStyle={fontSize: 26};
+      mapOption1.title. subtextStyle={fontSize: 17};
       if(machineType1=="A1"){
         if(heatType1==1){
           mapOption1.title.text = "小挖开工热度分布";
