@@ -682,8 +682,7 @@
   "machineTransportationMonitoring":"车辆运输监控",
   "ECUInactiveMachine":"ECU未激活车辆",
   "SpeedMonitoring":"超速监控",
-  "NeutralSlidingMonitoring":"空挡滑行监控",
-  "locationInformation":"位置信息"
+  "NeutralSlidingMonitoring":"空挡滑行监控"
 
 
 }

@@ -162,6 +162,12 @@
                                                 <td></td>
                                                 <td></td>
                                             </tr>
+                                                <td>{{'longitude'|translate}}</td>
+                                                <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
+                                                <td>{{'latitude'|translate}}</td>
+                                                <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
+                                                <td></td>
+                                                <td></td>
                                             <tr>
                                                 <td>{{'currentPosition'|translate}}</td>
                                                 <td ng-cloak colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.address}}</td>
@@ -865,81 +871,6 @@
 
                 </div>
             </uib-tab>
-            <!--位置信息-->
-            <uib-tab presentation-href="device:page">
-            <uib-tab-heading>
-              {{'locationInformation'|translate}}
-            </uib-tab-heading>
-            <div class="modal-body">
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-2">
-                    <label class="control-label">{{'startDate'|translate}}:</label>
-                  </div>
-                  <div class="col-md-3">
-                    <p class="input-group">
-                      <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
-                      <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
-                  </div>
-                  <div class="col-md-2">
-                    <label class="control-label">{{'endDate'|translate}}:</label>
-                  </div>
-                  <div class="col-md-3">
-                    <p class="input-group">
-                      <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
-                      <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
-                  </div>
-                  <div class="col-md-2">
-                    <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceLocation(0,8,'locateDateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="table-responsive">
-                      <!-- Default panel contents -->
-                      <!-- Table -->
-                      <table class="table">
-                        <tr>
-                          <th class="text-nowrap">{{'terminalNumber'|translate}}</th>
-                          <th class="text-nowrap">{{'address'|translate}}</th>
-                          <th class="text-nowrap">{{'longitude'|translate}}</th>
-                          <th class="text-nowrap">{{'latitude'|translate}}</th>
-                          <th class="text-nowrap">{{'dataAcquisitionTime'|translate}}</th>
-                          <th class="text-nowrap">{{'recordGenerationTime'|translate}}</th>
-                        </tr>
-                        <tr ng-repeat="deviceLocation in deviceAerialCurrentInfoController.deviceLocationList">
-                          <td ng-cloak>{{deviceLocation.deviceNum}}</td>
-                          <td ng-cloak>{{deviceLocation.address}}</td>
-                          <td ng-cloak>{{deviceLocation.amaplongitudeNum}}</td>
-                          <td ng-cloak>{{deviceLocation.amaplatitudeNum}}</td>
-                          <td ng-cloak>{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                          <td ng-cloak>{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <uib-pagination total-items="deviceAerialCurrentInfoController.page.totalElements"
-                                    ng-change="deviceAerialCurrentInfoController.getDeviceLocation(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
-                                    ng-model="deviceAerialCurrentInfoController.deviceData_pagenumber"
-                                    items-per-page="deviceAerialCurrentInfoController.page.size"
-                                    class="pagination-sm" boundary-links="true" rotate="false"
-                                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </uib-tab>
             <!--地图-->
             <uib-tab select="deviceAerialCurrentInfoController.initMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="device:page">
                 <uib-tab-heading>
