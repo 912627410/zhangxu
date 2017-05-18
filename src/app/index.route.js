@@ -48,6 +48,16 @@
           },
         }
       })
+      .state('entry',{
+        url:'/entry',
+        views: {
+          '': {
+            templateUrl: 'app/components/entry/entry.html',
+            controller: 'entryController',
+            controllerAs: 'entryCtrl'
+          }
+        }
+      })
       .state('home.login', {
         url: '/login',
         views: {
@@ -532,9 +542,8 @@
 
 
 
-
     ;
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/entry');
   }
 
 })();
