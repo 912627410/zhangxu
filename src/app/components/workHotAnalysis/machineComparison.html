@@ -43,42 +43,66 @@
 
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.heatType1)">{{'query'|translate}}
+                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
           </button>
           <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group" ng-show="machineComparedMngCtrl.only">
       <label class="control-label col-md-2">车辆类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />小挖
-        <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
-        <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>中挖
+        <input type="radio" name="vehicleType" value="A1" ng-model="machineComparedMngCtrl.machineType" />小挖
+        <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
+        <input type="radio" name="vehicleType" value="40"  ng-model="machineComparedMngCtrl.machineType"/>中挖
       </div>
-      <label class="control-label col-md-2">车辆类型:</label>
+      <label class="control-label col-md-2">车辆热度类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />小挖
-        <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
-        <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>中挖
+        <input type="radio" name="heat" value="1" ng-model="machineComparedMngCtrl.heatType" />开工热度
+        <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+                ng-click="machineComparedMngCtrl.toggle()">∨ 车型对比
         </button>
       </div>
-
     </div>
-    <div class="row form-group">
-      <label class="control-label col-md-2">车辆热度类型</label>
-      <div class="controls col-md-3">
-        <input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度
-        <input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度
+    <div ng-show="machineComparedMngCtrl.contrast">
+      <div class="row form-group">
+        <label class="control-label col-md-2">车辆类型:</label>
+        <div class="controls col-md-3">
+          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />小挖
+          <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
+          <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>中挖
+        </div>
+        <label class="control-label col-md-2">车辆类型:</label>
+        <div class="controls col-md-3">
+          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />小挖
+          <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
+          <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>中挖
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+          </button>
+        </div>
       </div>
-      <label class="control-label col-md-2">车辆热度类型</label>
-      <div class="controls col-md-3">
-        <input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度
-        <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度
+      <div class="row form-group">
+        <label class="control-label col-md-2">车辆热度类型:</label>
+        <div class="controls col-md-3">
+          <input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度
+          <input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度
+        </div>
+        <label class="control-label col-md-2">车辆热度类型:</label>
+        <div class="controls col-md-3">
+          <input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度
+          <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                  ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
+          </button>
+        </div>
       </div>
     </div>
     <div class="mapBox" style="border: 1px solid #cccccc;height: 750px;width: 100%;position: relative;">
@@ -103,8 +127,8 @@
         </div>
       </div>
 
-      <div  class="mapContainerBox" style="position: absolute;height:750px;right: 0px;">
-        <div class="mapContainer" id="mapContainer2" style="height: 750px;"></div>
+      <div class="mapContainerBox"  style="position: absolute;height:750px;right: 0px;border-left:1px dashed #cccccc">
+        <div class="mapContainer" ng-show="machineComparedMngCtrl.map" id="mapContainer2" style="height: 750px;width:50%"></div>
         <div id="mapContainerQushi2" style="position: absolute;right: 0;top:0px;width: 200px;height: 120px;border: 1px solid #cccccc;display: none;">
           <div style="position: relative;">
             <div
@@ -131,7 +155,7 @@
       <label class="control-label col-md-3">热度分布</label>
       <div class="controls">
         <select class="form-control col-md-5" ng-model="machineComparedMngCtrl.heatType">
-          <option value="1">开工热度分布</option>
+          <option value="1" ng-selected="true">开工热度分布</option>
           <option value="0">销售热度分布</option>
         </select>
       </div>
