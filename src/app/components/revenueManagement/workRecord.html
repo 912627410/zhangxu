@@ -111,13 +111,13 @@
       <table ng-table="workRecordCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="workRecord in $data">
 
-          <td class="text-nowrap" data-title="'date'|translate" sortable="'phoneNumber'">{{workRecord.recordDate | date: 'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'fleet'|translate" sortable="'phoneNumber'">{{workRecord.fleet}}</td>
-          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'serialNumber'">{{workRecord.licenseId}}</td>
-          <td class="text-nowrap" data-title="'equipmentNumber'|translate" sortable="'price'">{{workRecord.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'times'|translate" sortable="'times'">{{workRecord.records}}</td>
-          <td class="text-nowrap" data-title="'income'|translate" sortable="'revenue'">{{workRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'cost'|translate" sortable="'oilCost'">{{workRecord.oilCost}}</td>
+          <td class="text-nowrap" data-title="'date'|translate">{{workRecord.recordDate | date: 'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'fleet'|translate">{{workRecord.fleet}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">{{workRecord.licenseId}}</td>
+          <td class="text-nowrap" data-title="'equipmentNumber'|translate">{{workRecord.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'times'|translate">{{workRecord.records}}</td>
+          <td class="text-nowrap" data-title="'income'|translate">{{workRecord.revenue}}</td>
+          <td class="text-nowrap" data-title="'cost'|translate">{{workRecord.oilCost}}</td>
           <td class="text-nowrap" data-title="'profit'|translate">{{workRecord.revenue - workRecord.oilCost}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
