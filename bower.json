@@ -21,6 +21,7 @@
     "labjs": "^2.0.3",
     "highcharts-ng": "^0.0.11",
     "highcharts": "^4.1.10",
+    "echarts":"3.4.0",
     "font-awesome": "latest",
     "Ionicons": "ionicons#^2.0.1",
     "angular-ui-notification": "~0.1.0",
@@ -76,6 +77,12 @@
         "highcharts-more.js",
         "modules/solid-gauge.js",
         "modules/exporting.js"
+      ]
+    },
+    "echarts": {
+      "main": [
+        "dist/echarts.js",
+        "map/js/china.js"
       ]
     },
     "angular-underscore": {
