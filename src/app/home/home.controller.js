@@ -20,7 +20,7 @@
    // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
   //  console.log("$rootScope.userInfo =="+$rootScope.userInfo );
     if ($rootScope.userInfo==null) {
-      $rootScope.$state.go( "home.login" );
+      $rootScope.$state.go( "entry" );
       return;
     }
 
