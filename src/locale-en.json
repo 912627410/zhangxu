@@ -678,7 +678,16 @@
   "ECUInactiveMachine":"ECU Inactive machine",
   "SpeedMonitoring":"Speed monitoring",
   "NeutralSlidingMonitoring":"Neutral sliding monitoring",
-  "locationInformation":"Location information"
+  "locationInformation":"Location information",
+  "profitStatistics":"Profit Statistics",
+  "incomePerTrip(Yuan)":"Income Per Trip(Yuan)",
+  "fuelTankVolume(L)":"Fuel Tank Volume(L)",
+  "oilPrices(Yuan/L)":"Oil Prices(Yuan/L)",
+  "depreciation(Yuan)":"Depreciation(Yuan)",
+  "shifts":"Shifts",
+  "dayShift":"Day Shift",
+  "nightShift":"Night Shift",
+  "profit(Yuan)":"Profit(Yuan)"
 
 
 }

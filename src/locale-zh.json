@@ -683,7 +683,16 @@
   "ECUInactiveMachine":"ECU未激活车辆",
   "SpeedMonitoring":"超速监控",
   "NeutralSlidingMonitoring":"空挡滑行监控",
-  "locationInformation":"位置信息"
+  "locationInformation":"位置信息",
+  "profitStatistics":"利润统计",
+  "incomePerTrip(Yuan)":"每趟收入(元)",
+  "fuelTankVolume(L)":"油箱体积(L)",
+  "oilPrices(Yuan/L)":"油价(元/L)",
+  "depreciation(Yuan)":"折旧(元)",
+  "shifts":"班次",
+  "dayShift":"白班",
+  "nightShift":"夜班",
+  "profit(Yuan)":"利润(元)"
 
 
 }

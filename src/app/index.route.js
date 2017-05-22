@@ -400,6 +400,19 @@
           }
         }
       })
+    .state('home.profit', {
+      url: '/profit',
+      views: {
+        'footer@home':{
+          templateUrl: 'app/main/footer.html'
+        },
+        'rightside@home': {
+          templateUrl: 'app/components/revenueManagement/profit.html',
+          controller: 'profitController',
+          controllerAs: 'profitCtrl'
+        }
+      }
+    })
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {

@@ -1,0 +1,146 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'profitStatistics'|translate}}</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'deviceNum'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.deviceNum" />
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.licenseId" />
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'incomePerTrip(Yuan)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="incomePerTrip" class="form-control " ng-model="profitCtrl.profitConfig.incomePerTrip" />
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'fuelTankVolume(L)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="fuelTankVolume" class="form-control " ng-model="profitCtrl.profitConfig.fuelTankVolume" />
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'oilPrices(Yuan/L)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="oilPrices" class="form-control " ng-model="profitCtrl.profitConfig.oilPrices" />
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'depreciation(Yuan)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="depreciation" class="form-control " ng-model="profitCtrl.profitConfig.depreciation" />
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'startingTime'|translate}}
+      </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="profitCtrl.startDate"
+               is-open="profitCtrl.startDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="profitCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'endTime'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="profitCtrl.endDate"
+               is-open="profitCtrl.endDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="profitCtrl.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'shifts'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-model="profitCtrl.profitConfig.type">
+        <option value="1" ng-selected="true">{{'dayShift'|translate}}</option>
+        <option value="0">{{'nightShift'|translate}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-12 text-center">
+      <button class="btn btn-primary" type="button" presentation-href="fleet:profit:query" ng-click="profitCtrl.query(profitCtrl.profitConfig)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="profitCtrl.reset()" style="margin-left: 10px;">{{'reset'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="row " style="padding: 10px;margin-top: 100px;">
+    <div class="table-responsive col-md-6 col-md-offset-3">
+      <table class="table table-condensed table-striped text-nowrap" style="font-size: 18px;">
+        <tr class="row">
+          <td class="text-nowrap col-md-2">{{'deviceNum'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.deviceNum}}</td>
+          <td class="text-nowrap col-md-2">{{'machineNumberAndCarNumber'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.licenseId}}</td>
+        </tr>
+        <tr class="row">
+          <td class="text-nowrap col-md-2">{{'times'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.timesNumber}}</td>
+          <td class="text-nowrap col-md-2">{{'shifts'|translate}}</td>
+          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 1">{{'dayShift'|translate}}</td>
+          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 0">{{'nightShift'|translate}}</td>
+          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type != 0 && profitCtrl.profitConfig.type != 1"></td>
+        </tr>
+        <tr class="row">
+          <td class="text-nowrap col-md-2">{{'fuelConsumption(L)'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.fuelConsumption}}</td>
+          <td class="text-nowrap col-md-2">{{'depreciation(Yuan)'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.profitConfig.depreciation}}</td>
+        </tr>
+        <tr class="row">
+          <td class="text-nowrap col-md-2">{{'profit(Yuan)'|translate}}</td>
+          <td class="text-nowrap col-md-10" colspan="3">{{profitCtrl.profit}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+
