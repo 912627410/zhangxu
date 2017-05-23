@@ -390,6 +390,15 @@
           }
         }
       })
+      .state('home.machineWorkTime', {
+        url: '/machineWorkTime',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/machineWorkTime.html',
+            controller: 'machineWorkTimeController as machineWorkTimeCtrl'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');
