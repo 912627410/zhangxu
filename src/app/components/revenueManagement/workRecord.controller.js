@@ -96,32 +96,43 @@
     }
 
 
-    //得到收入
+    //工作记录图表
     vm.initChart = function(workRecords) {
-
-
-        var recordDates=new Array();
-        var records=new Array();
-
-        var oilCost=new Array();
-        var amounts=new Array();
-        var profit=new Array();
+        var recordDates=[];
+        var totalRecords=[];
+        var averageRecords=[];
+        var recordArr=[];
         //根据月份升序排列
         var result = workRecords.sort(function(a, b) { return a.recordDate > b.recordDate ? 1 : -1;} );//升序
-
-        for(var i=0;i<result.length;i++){
-
-          recordDates[i]= $filter('date')(result[i].recordDate, 'yyyy-MM-dd');
-          records[i]=result[i].records;
-
-          // oilCost[i]=result[i].oilCost;
-          // amounts[i]=result[i].amount;
-          // profit[i]=result[i].profit;
+        var resultLen = result.length;
+        if(resultLen > 0) {
+          for (var i = 1; i < resultLen; i++) {
+            if (result[i].recordDate != result[i - 1].recordDate) {
+              recordDates.push($filter('date')(result[i - 1].recordDate, 'yyyy-MM-dd'));
+              recordArr.push(result[i - 1].records);
+              var sum = eval(recordArr.join("+"));
+              totalRecords.push(sum);
+              averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+              recordArr = [];
+              if (i == resultLen - 1) {
+                recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
+                totalRecords.push(result[i].records);
+                averageRecords.push(result[i].records);
+              }
+            } else {
+              recordArr.push(result[i - 1].records);
+              if (i == resultLen - 1) {
+                recordArr.push(result[i].records);
+                var sum = eval(recordArr.join("+"));
+                totalRecords.push(sum);
+                averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+              }
+            }
+          }
         }
 
 
         vm.revenueLineChart = {
-          // $('#revenueLineChart').highcharts({
           options: {
             chart: {
               type: 'line',
@@ -129,27 +140,20 @@
             },
             plotOptions: {
               line: {
-                //dataLabels: {
-                //    enabled: true
-                //},
                 enableMouseTracking: true
               },
               series: {
                 cursor: 'pointer',
                 events: {
                   click: function(e) {
-
-                    // console.log(e.point.category);
-                    //  vm.getCustomers();
                     vm.$apply();
                   }
-
-                  //click: function (e) {
-                  //    alert('Category: ' + e.point.category);
-                  //}
                 }
               }
             }
+          },
+          credits: {
+            enabled:false
           },
           title: {
             text: '工作纪录'
@@ -158,41 +162,30 @@
             text: ''
           },
           xAxis: {
-            categories: recordDates,
-            //categories:[]
+            categories: recordDates
           },
           yAxis: [{
             title: {
-              text: '收入'
+              text: '总趟次'
             }
 
           },{
             title: {
-              text: '趟数'
+              text: '平均趟数'
             },
             opposite: true,
             min: 0
           }],
           series: [{
             type: 'column',
-            name: '收入',
-            // data: []
-            data:amounts
-          },{
-            type: 'column',
-            name: '成本',
-            data: oilCost
-          },{
-            type: 'spline',
-            name: '利润',
-            data: profit
+            name: '总趟次',
+            data: totalRecords
           },{
             type: 'spline',
             yAxis: 1,
-            name: '趟次',
-            data: records
+            name: '平均趟数',
+            data: averageRecords
           }]
-          //    });
         };
 
 

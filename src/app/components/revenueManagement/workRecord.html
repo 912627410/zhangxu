@@ -116,22 +116,12 @@
           <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">{{workRecord.licenseId}}</td>
           <td class="text-nowrap" data-title="'equipmentNumber'|translate">{{workRecord.deviceNum}}</td>
           <td class="text-nowrap" data-title="'times'|translate">{{workRecord.records}}</td>
-          <td class="text-nowrap" data-title="'income'|translate">{{workRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'cost'|translate">{{workRecord.oilCost}}</td>
-          <td class="text-nowrap" data-title="'profit'|translate">{{workRecord.revenue - workRecord.oilCost}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
           </td>
         </tr>
       </table>
     </div>
-  </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="workRecordCtrl.page.totalElements" ng-change="workRecordCtrl.query(workRecordCtrl.pageNumber-1,null,null,workRecordCtrl.phoneNumber)"
-                    max-size="5" ng-model="workRecordCtrl.pageNumber" items-per-page="workRecordCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
 </section>
 
