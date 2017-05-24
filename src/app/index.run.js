@@ -61,10 +61,11 @@
     });
 
     $log.debug('runBlock end');
-    
+
     //定义全局日期格式
     $rootScope.formatCustom = "yyyy-M!-d!";
     $rootScope.formatCustomTime = "yyyy-M!-d! HH:mm:ss";
+    $rootScope.formatCustomMonth = "yyyy-M!";
 
 
   }

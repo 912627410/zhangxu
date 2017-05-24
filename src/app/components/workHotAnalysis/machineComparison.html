@@ -1,14 +1,60 @@
 <section>
   <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
     <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
-    <li><a href="#">统计分析</a></li>
-    <li><a href="#">开工热度分析</a></li>
+    <li>统计分析</li>
+    <li>开工热度分析</li>
     <li class="active">开工与销售热度</li>
   </ol>
 </section>
 <div class="mainBox"  id="machineCompared">
   <div class="leftBox " >
     <div class="row form-group">
+      <div class="control-group">
+        <label class="control-label col-md-2">查询周期：</label>
+        <div class="controls col-md-3">
+          <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
+            <option value="1" ng-selected="true">按季度</option>
+            <option value="2">按月</option>
+            <option value="3">按日</option>
+          </select>
+        </div>
+      </div>
+      <div ng-show="machineComparedMngCtrl.otherQuery">
+      <label class="control-label col-md-2">查询时间段:</label>
+      <div class="controls col-md-3">
+        <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
+          <!--<option value="14" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
+          <!--<option value="14" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
+          <option value="11" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
+          <option value="12" ng-show="machineComparedMngCtrl.one">2017年第一季度</option>
+          <option value="13" ng-show="machineComparedMngCtrl.one">2016年第四季度</option>
+          <option value="14" ng-show="machineComparedMngCtrl.one">2016年第三季度</option>
+          <option value="15" ng-show="machineComparedMngCtrl.one">2016年第二季度</option>
+          <option value="16" ng-show="machineComparedMngCtrl.one">2016年第一季度</option>
+
+          <option value="21" ng-show="machineComparedMngCtrl.two">2017年五月</option>
+          <option value="22" ng-show="machineComparedMngCtrl.two">2017年四月</option>
+          <option value="23" ng-show="machineComparedMngCtrl.two">2017年三月</option>
+          <option value="24" ng-show="machineComparedMngCtrl.two">2017年二月</option>
+          <option value="25" ng-show="machineComparedMngCtrl.two">2017年一月</option>
+          <option value="26" ng-show="machineComparedMngCtrl.two">2016年十二月</option>
+          <option value="27" ng-show="machineComparedMngCtrl.two">2016年十一月</option>
+          <option value="28" ng-show="machineComparedMngCtrl.two">2016年十月</option>
+          <option value="29" ng-show="machineComparedMngCtrl.two">2016年九月</option>
+          <option value="30" ng-show="machineComparedMngCtrl.two">2016年八月</option>
+          <option value="31" ng-show="machineComparedMngCtrl.two">2016年七月</option>
+          <option value="32" ng-show="machineComparedMngCtrl.two">2016年六月</option>
+        </select>
+      </div>
+
+
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
+      </div>
+    </div>
+    <div class="row form-group" ng-show="machineComparedMngCtrl.dayQuery">
       <div class="control-group" >
         <label class="control-label col-md-2">起始日期：</label>
         <div class="controls col-md-3">
@@ -23,10 +69,9 @@
                    clear-text="{{'cleanUp'|translate}}"
                    close-text="{{'close'|translate}}"/>
             <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"
-                                    ng-click="machineComparedMngCtrl.startDateOpenDeviceData($event)">
-                              <i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+              <button type="button" class="btn btn-default" ng-click="machineComparedMngCtrl.startDateOpenDeviceData($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
           </p>
         </div>
 
@@ -49,24 +94,25 @@
         </div>
 
 
-        <div class="col-md-2">
+        <div>
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
+                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
           </button>
           <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
     </div>
+
     <div class="row form-group" ng-show="machineComparedMngCtrl.only">
       <label class="control-label col-md-2">车辆类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType" value="A1" ng-model="machineComparedMngCtrl.machineType" />小挖
+        <input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />小挖
         <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
         <input type="radio" name="vehicleType" value="40"  ng-model="machineComparedMngCtrl.machineType"/>中挖
       </div>
       <label class="control-label col-md-2">车辆热度类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="heat" value="1" ng-model="machineComparedMngCtrl.heatType" />开工热度
+        <input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度
         <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度
       </div>
       <div class="col-md-2">
@@ -91,7 +137,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+                  ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
           </button>
         </div>
       </div>
@@ -108,7 +154,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
+                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
           </button>
         </div>
       </div>
@@ -167,7 +213,7 @@
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType3)">查看
+                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.heatType3)">查看
         </button>
       </div>
     </div>

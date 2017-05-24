@@ -2,6 +2,7 @@
 (function() {
   'use strict';
   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -237,6 +238,11 @@
     .constant('DEVCE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询设备调拨日志
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
+
+    .constant("START_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
+    .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
+    .constant("AVG_WORK_HOUR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHour/')  //平均工作小时数查询
+
 
 
   ;
