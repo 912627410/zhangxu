@@ -86,6 +86,8 @@
 
       var lineArr = [];
       var lineArr2 = [];
+      var position = [];
+      var markerName = [];
       var recordPromis = serviceResource.restCallService(filterTerm, "GET");
       recordPromis.then(function (data) {
           if (data.content.length == 0) {
@@ -96,15 +98,16 @@
             vm.driverRecords.forEach(function (record) {
               if(record.longitude!=null && record.latitude!=null ){
                 lineArr.push(new AMap.LngLat(record.longitude, record.latitude));
-
+                lineArr2.push(record.workPoint);
               }
             })
             for (var i = 0; i < lineArr.length; i++) {
               if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
-                lineArr2.push(lineArr[i]);
+                position.push(lineArr[i]);
+                markerName.push(lineArr2[i]);
               }
             }
-            vm.refreshMapTab(lineArr2);
+            vm.refreshMapTab(position, markerName);
           }
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
@@ -137,7 +140,7 @@
 
 
     //参数: 地图轨迹gps 数据
-    vm.refreshMapTab = function (lineAttr) {
+    vm.refreshMapTab = function (position, markerName) {
 
 
       /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
@@ -160,7 +163,7 @@
 
 
 
-      var carPostion = lineAttr[0];
+      var carPostion = position[0];
 
 
       var map = new AMap.Map("workRecordDetailMap", {
@@ -179,14 +182,24 @@
       AMap.plugin(["AMap.RangingTool"], function () {
       });
 
+      /*在地图中增加装料点丶卸料点的描述*/
+      var len = position.length;
+      for(var i = 0;i<len;i++) {
+        var m = new AMap.Marker({
+          map: map,
+          position: position[i],
+          offset: new AMap.Pixel(-15, -5),
+          content: markerName[i]
+        });
+      }
 
 
       //小车
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_03.png",
-        offset: new AMap.Pixel(-26, -13),
+        icon: "assets/images/car_right5_1.png",
+        offset: new AMap.Pixel(-40, -25),
         autoRotation: true
       });
       marker.setLabel({
@@ -196,7 +209,7 @@
       // 绘制轨迹
       var polyline = new AMap.Polyline({
         map: map,
-        path: lineAttr,
+        path: position,
         strokeColor: "#00A",  //线颜色
         strokeOpacity: 1,     //线透明度
         strokeWeight: 3,      //线宽
@@ -205,7 +218,7 @@
 
       //map.setFitView();
 
-      var markerMovingControl = new MarkerMovingControl(map, marker, lineAttr);
+      var markerMovingControl = new MarkerMovingControl(map, marker, position);
       var startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
       var lastDistabce = 0;
       /*移动完成触发事件*/
@@ -236,7 +249,7 @@
         });
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
-        markerMovingControl._marker.moveAlong(lineAttr, 1500);
+        markerMovingControl._marker.moveAlong(position, 1500);
       }, false);
       /*暂停事件*/
       AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
@@ -251,7 +264,7 @@
       }, false);
       /*继续移动事件*/
       AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-        var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1)
+        var lineArr2 = position.slice(markerMovingControl._currentIndex + 1);
         lineArr2.unshift(marker.getPosition());
         markerMovingControl._marker.moveAlong(lineArr2, 1500);
       }, false);
