@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://192.168.8.190:8089/rest/';
+  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
 
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
@@ -24,7 +24,6 @@
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder')
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
-    .constant("START_WITH_SALE_QUERY",'http://192.168.11.20:8080/slice/rest/workRate/quarter?workRateQuarter=201701&machineType=1&hourScope=2')
 
     .constant('USER_LOGIN_URL', SERVER_BASE_URL + 'user/gettoken')
     .constant('USER_REGISTER_URL', SERVER_BASE_URL + 'user/register')
@@ -239,6 +238,11 @@
     .constant('DEVCE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询设备调拨日志
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
+
+    .constant("START_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
+    .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
+    .constant("AVG_WORK_HOUR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHour/')  //平均工作小时数查询
+
 
 
   ;
