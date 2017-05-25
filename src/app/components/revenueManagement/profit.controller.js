@@ -16,7 +16,7 @@
 
     //初始化查询参数
     vm.profitConfig = {
-      type: 1
+      type: 2 // 班次默认全天
     };
 
     //日期控件相关
@@ -83,7 +83,7 @@
         if(null != profitConfig.incomePerTrip && "" != profitConfig.incomePerTrip) {
           restCallURL += "&incomePerTrip=" + profitConfig.incomePerTrip;
         } else {
-          Notification.warning("请输入每趟的单价!");
+          Notification.warning("请输入每趟的收入!");
           return;
         }
 
@@ -108,12 +108,22 @@
           return;
         }
 
+        if(null != profitConfig.wages && "" != profitConfig.wages) {
+          restCallURL += "&wages=" + profitConfig.wages;
+        } else {
+          Notification.warning("请输入工资!");
+          return;
+        }
+
         if(null != profitConfig.type && "" != profitConfig.type){
           restCallURL += "&type=" + profitConfig.type;
         } else {
           Notification.warning("请选择班次!");
           return;
         }
+      } else {
+        Notification.warning("请录入信息!");
+        return;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -121,7 +131,7 @@
         if(data.code == 0) {
           vm.deviceNum = data.content.deviceNum;
           vm.licenseId = data.content.licenseId;
-          vm.fuelConsumption = $filter('number')(data.content.fuelConsumption);
+          vm.fuelConsumption = $filter('number')(data.content.fuelConsumption, 2);
           vm.timesNumber = data.content.timesNumber;
           vm.profit = $filter('number')(data.content.profit, 2);
 

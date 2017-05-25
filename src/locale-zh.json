@@ -50,7 +50,7 @@
   "protocolState": "协议状态",
   "recentDataUploadTime": "最近数据上传时间",
   "query": "查询",
-  "reset": "重置",
+  "reset": "清除",
   "add": "增加",
   "list": "列表",
   "columnBlock": "列块",
@@ -690,9 +690,11 @@
   "fuelTankVolume(L)":"油箱体积(L)",
   "oilPrices(Yuan/L)":"油价(元/L)",
   "depreciation(Yuan)":"折旧(元)",
+  "wages(Yuan)":"工资(元)",
   "shifts":"班次",
   "dayShift":"白班",
   "nightShift":"夜班",
+  "allDay":"全天",
   "profit(Yuan)":"利润(元)"
 
 
