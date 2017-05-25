@@ -122,6 +122,7 @@
             } else {
               recordArr.push(result[i - 1].records);
               if (i == resultLen - 1) {
+                recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 recordArr.push(result[i].records);
                 var sum = eval(recordArr.join("+"));
                 totalRecords.push(sum);
@@ -166,7 +167,7 @@
           },
           yAxis: [{
             title: {
-              text: '总趟次'
+              text: '总趟数'
             }
 
           },{
@@ -178,10 +179,12 @@
           }],
           series: [{
             type: 'column',
-            name: '总趟次',
+            color: 'rgb(124, 181, 236)',
+            name: '总趟数',
             data: totalRecords
           },{
             type: 'spline',
+            color: 'rgb(194, 53, 49)',
             yAxis: 1,
             name: '平均趟数',
             data: averageRecords
