@@ -13,14 +13,14 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">{{'deviceNum'|translate}}</label>
+      <label class="control-label text-nowrap">{{'deviceNum'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.deviceNum" />
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}</label>
+      <label class="control-label text-nowrap">{{'machineNumberAndCarNumber'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.licenseId" />
@@ -42,14 +42,14 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">{{'oilPrices(Yuan/L)'|translate}}</label>
+      <label class="control-label text-nowrap">{{'oilPrices(Yuan/L)'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="oilPrices" class="form-control " ng-model="profitCtrl.profitConfig.oilPrices" />
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">{{'depreciation(Yuan)'|translate}}</label>
+      <label class="control-label text-nowrap">{{'depreciation(Yuan)'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="depreciation" class="form-control " ng-model="profitCtrl.profitConfig.depreciation" />
@@ -58,7 +58,14 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">{{'startingTime'|translate}}
+      <label class="control-label text-nowrap">{{'wages(Yuan)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="depreciation" class="form-control " ng-model="profitCtrl.profitConfig.wages" />
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'startingTime'|translate}}
       </label>
     </div>
     <div class="col-md-3">
@@ -76,7 +83,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">{{'endTime'|translate}}</label>
+      <label class="control-label text-nowrap">{{'endTime'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
@@ -91,22 +98,22 @@
               </span>
       </p>
     </div>
-
-    <div class="col-md-1">
-      <label class="control-label">{{'shifts'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <select class="form-control" ng-model="profitCtrl.profitConfig.type">
-        <option value="1" ng-selected="true">{{'dayShift'|translate}}</option>
-        <option value="0">{{'nightShift'|translate}}</option>
-      </select>
-    </div>
   </div>
 
   <div class="row form-group">
-    <div class="col-md-12 text-center">
-      <button class="btn btn-primary" type="button" presentation-href="fleet:profit:query" ng-click="profitCtrl.query(profitCtrl.profitConfig)">{{'query'|translate}}</button>
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'shifts'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-model="profitCtrl.profitConfig.type">
+        <option value="1">{{'dayShift'|translate}}</option>
+        <option value="0">{{'nightShift'|translate}}</option>
+        <option value="2" ng-selected="true">{{'allDay'|translate}}</option>
+      </select>
+    </div>
+    <div class="col-md-3 col-md-offset-5">
       <button class="btn btn-primary" type="button" ng-click="profitCtrl.reset()" style="margin-left: 10px;">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="fleet:profit:query" ng-click="profitCtrl.query(profitCtrl.profitConfig)">{{'query'|translate}}</button>
     </div>
   </div>
 
@@ -125,7 +132,8 @@
           <td class="text-nowrap col-md-2">{{'shifts'|translate}}</td>
           <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 1">{{'dayShift'|translate}}</td>
           <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 0">{{'nightShift'|translate}}</td>
-          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type != 0 && profitCtrl.profitConfig.type != 1"></td>
+          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 2">{{'allDay'|translate}}</td>
+          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type != 0 && profitCtrl.profitConfig.type != 1 && profitCtrl.profitConfig.type != 2"></td>
         </tr>
         <tr class="row">
           <td class="text-nowrap col-md-2">{{'fuelConsumption(L)'|translate}}</td>
@@ -134,6 +142,8 @@
           <td class="text-nowrap col-md-4">{{profitCtrl.profitConfig.depreciation}}</td>
         </tr>
         <tr class="row">
+          <td class="text-nowrap col-md-2">{{'wages(Yuan)'|translate}}</td>
+          <td class="text-nowrap col-md-4">{{profitCtrl.profitConfig.wages}}</td>
           <td class="text-nowrap col-md-2">{{'profit(Yuan)'|translate}}</td>
           <td class="text-nowrap col-md-10" colspan="3">{{profitCtrl.profit}}</td>
         </tr>

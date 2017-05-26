@@ -53,7 +53,7 @@
   "protocolState": "Protocol state",
   "recentDataUploadTime": "Upload Time",
   "query": "Query",
-  "reset": "Reset",
+  "reset": "Clean",
   "add": "Add",
   "list": "List",
   "columnBlock": "Block",
@@ -685,9 +685,11 @@
   "fuelTankVolume(L)":"Fuel Tank Volume(L)",
   "oilPrices(Yuan/L)":"Oil Prices(Yuan/L)",
   "depreciation(Yuan)":"Depreciation(Yuan)",
+  "wages(Yuan)":"Wages(Yuan)",
   "shifts":"Shifts",
   "dayShift":"Day Shift",
   "nightShift":"Night Shift",
+  "allDay":"All Day",
   "profit(Yuan)":"Profit(Yuan)"
 
 
