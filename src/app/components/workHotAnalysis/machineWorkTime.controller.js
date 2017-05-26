@@ -304,45 +304,45 @@
           barOption.series[0].markArea.data.push(
             [{
               name: machine0_6 + '台(' + machine0_6_p + '%)',
-              coord: [3000, 2]
+              coord: [3200, 2]
             }, {
-              coord: [3400, 4]
+              coord: [3900, 4]
             }],
             [{
               name: machine6_12 + '台(' + machine6_12_p + '%)',
-              coord: [3000, 8]
+              coord: [3200, 8]
             }, {
-              coord: [3400, 10]
+              coord: [3900, 10]
             }],
             [{
               name: machine12_18 + '台(' + machine12_18_p + '%)',
-              coord: [3000, 14]
+              coord: [3200, 14]
             }, {
-              coord: [3400, 16]
+              coord: [3900, 16]
             }],
             [{
               name: machine18_24 + '台(' + machine18_24_p + '%)',
-              coord: [3000, 20]
+              coord: [3200, 20]
             }, {
-              coord: [3400, 22]
+              coord: [3900, 22]
             }],
             [{
               name: machine0_1000 + '台(' + machine0_1000_p + '%)\n日均作业：' + time0_1000 + 'h',
               coord: [200, 20]
             }, {
-              coord: [600, 22]
+              coord: [980, 22]
             }],
             [{
               name: machine1000_2000 + '台(' + machine1000_2000_p + '%)\n日均作业：' + time1000_2000 + 'h',
               coord: [1200, 20]
             }, {
-              coord: [1600, 22]
+              coord: [1950, 22]
             }],
             [{
               name: machine2000_4000 + '台(' + machine2000_4000_p + '%)\n日均作业：' + time2000_4000 + 'h',
               coord: [2200, 20]
             }, {
-              coord: [2600, 22]
+              coord: [2950, 22]
             }]
           );
         } else if (totalDateType == 2) {
