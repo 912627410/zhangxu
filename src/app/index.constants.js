@@ -241,8 +241,12 @@
 
     .constant("START_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
     .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
-    .constant("AVG_WORK_HOUR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHour/')  //平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_MONTH",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_QUARTER",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
 
+    .constant("WORK_HOUR_YEAR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
+    .constant("SALES_YEAR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
 
 
   ;
