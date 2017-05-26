@@ -15,7 +15,7 @@
           <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
             <option value="1" ng-selected="true">按季度</option>
             <option value="2">按月</option>
-            <option value="3">按日</option>
+            <option value="3">按日期</option>
           </select>
         </div>
       </div>
@@ -23,35 +23,34 @@
       <label class="control-label col-md-2">查询时间段:</label>
       <div class="controls col-md-3">
         <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
-          <!--<option value="14" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
-          <!--<option value="14" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
-          <option value="11" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
-          <option value="12" ng-show="machineComparedMngCtrl.one">2017年第一季度</option>
-          <option value="13" ng-show="machineComparedMngCtrl.one">2016年第四季度</option>
-          <option value="14" ng-show="machineComparedMngCtrl.one">2016年第三季度</option>
-          <option value="15" ng-show="machineComparedMngCtrl.one">2016年第二季度</option>
-          <option value="16" ng-show="machineComparedMngCtrl.one">2016年第一季度</option>
+          <!--<option value="201704" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
+          <!--<option value="201703" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
+          <option value="201702" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
+          <option value="201701" ng-show="machineComparedMngCtrl.one">2017年第一季度</option>
+          <option value="201604" ng-show="machineComparedMngCtrl.one">2016年第四季度</option>
+          <option value="201603" ng-show="machineComparedMngCtrl.one">2016年第三季度</option>
+          <option value="201602" ng-show="machineComparedMngCtrl.one">2016年第二季度</option>
+          <option value="201601" ng-show="machineComparedMngCtrl.one">2016年第一季度</option>
 
-          <option value="21" ng-show="machineComparedMngCtrl.two">2017年五月</option>
-          <option value="22" ng-show="machineComparedMngCtrl.two">2017年四月</option>
-          <option value="23" ng-show="machineComparedMngCtrl.two">2017年三月</option>
-          <option value="24" ng-show="machineComparedMngCtrl.two">2017年二月</option>
-          <option value="25" ng-show="machineComparedMngCtrl.two">2017年一月</option>
-          <option value="26" ng-show="machineComparedMngCtrl.two">2016年十二月</option>
-          <option value="27" ng-show="machineComparedMngCtrl.two">2016年十一月</option>
-          <option value="28" ng-show="machineComparedMngCtrl.two">2016年十月</option>
-          <option value="29" ng-show="machineComparedMngCtrl.two">2016年九月</option>
-          <option value="30" ng-show="machineComparedMngCtrl.two">2016年八月</option>
-          <option value="31" ng-show="machineComparedMngCtrl.two">2016年七月</option>
-          <option value="32" ng-show="machineComparedMngCtrl.two">2016年六月</option>
+          <option value="201705" ng-show="machineComparedMngCtrl.two">2017年五月</option>
+          <option value="201704" ng-show="machineComparedMngCtrl.two">2017年四月</option>
+          <option value="201703" ng-show="machineComparedMngCtrl.two">2017年三月</option>
+          <option value="201702" ng-show="machineComparedMngCtrl.two">2017年二月</option>
+          <option value="201701" ng-show="machineComparedMngCtrl.two">2017年一月</option>
+          <option value="201612" ng-show="machineComparedMngCtrl.two">2016年十二月</option>
+          <option value="201611" ng-show="machineComparedMngCtrl.two">2016年十一月</option>
+          <option value="201610" ng-show="machineComparedMngCtrl.two">2016年十月</option>
+          <option value="201609" ng-show="machineComparedMngCtrl.two">2016年九月</option>
+          <option value="201608" ng-show="machineComparedMngCtrl.two">2016年八月</option>
+          <option value="201607" ng-show="machineComparedMngCtrl.two">2016年七月</option>
+          <option value="201606" ng-show="machineComparedMngCtrl.two">2016年六月</option>
         </select>
       </div>
 
-
+        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
                 ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
         </button>
-        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
       </div>
     </div>
     <div class="row form-group" ng-show="machineComparedMngCtrl.dayQuery">
@@ -95,10 +94,10 @@
 
 
         <div>
+          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
                   ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
           </button>
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
     </div>
@@ -106,9 +105,8 @@
     <div class="row form-group" ng-show="machineComparedMngCtrl.only">
       <label class="control-label col-md-2">车辆类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />小挖
+        <input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机
         <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
-        <input type="radio" name="vehicleType" value="40"  ng-model="machineComparedMngCtrl.machineType"/>中挖
       </div>
       <label class="control-label col-md-2">车辆热度类型:</label>
       <div class="controls col-md-3">
@@ -125,15 +123,13 @@
       <div class="row form-group">
         <label class="control-label col-md-2">车辆类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />小挖
+          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />挖掘机
           <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
-          <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>中挖
         </div>
         <label class="control-label col-md-2">车辆类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />小挖
+          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />挖掘机
           <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
-          <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>中挖
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
@@ -162,47 +158,85 @@
     <div class="mapBox" style="border: 1px solid #cccccc;height: 750px;width: 100%;position: relative;">
       <div class="mapContainerBox" style="position: absolute;height: 750px;width: 100%;;left: 0px;">
         <div class="mapContainer" id="mapContainer1" style="height: 750px;width: 100%;"></div>
-        <div style="position: absolute;position:absolute;right: 0;top: 0px;width: 200px;height: 120px;border: 1px solid #cccccc;">
+        <div ng-show="machineComparedMngCtrl.avgHours1" style="position: absolute;right: 0;top: 75px;width: 190px;height: 75px;border: 1px solid #cccccc;">
           <div style="position: relative;">
             <div
-              style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+              平均时长
             </div>
-            <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+            <ul style="position: absolute;list-style: none;line-height: 24px;">
+              <li>总平均：{{machineComparedMngCtrl.excavatorHours + machineComparedMngCtrl.loaderHours | number:2}}小时</li>
+              <li style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours}}小时<span>&nbsp;</span><img ng-if="machineComparedMngCtrl.excavatorHours>=machineComparedMngCtrl.beforeExcavatorHours" src="assets/images/up.png"/><img ng-if="machineComparedMngCtrl.excavatorHours<machineComparedMngCtrl.beforeExcavatorHours" src="assets/images/down.png"/></li>
+              <li style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours}}小时<span>&nbsp;</span><img ng-if="machineComparedMngCtrl.loaderHours>=machineComparedMngCtrl.beforeLoaderHours" src="assets/images/up.png"/><img ng-if="machineComparedMngCtrl.loaderHours<machineComparedMngCtrl.beforeLoaderHours" src="assets/images/down.png"/></li>
+              <!--<li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>-->
             </ul>
-            <a class="backChina" style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina1();">
-              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
-            </a>
           </div>
         </div>
+        <div ng-show="machineComparedMngCtrl.avgHours3" style="position: absolute;right: 20px;top: 75px;width: 120px;height: 50px;">
+          <div style="position: relative;">
+            <ul style="list-style: none;line-height: 23px;">
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales>=machineComparedMngCtrl.beforeTotalSales" >
+                <li>总销售额：</li>
+                <li style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span>
+                <img ng-if="machineComparedMngCtrl.totalSales>=machineComparedMngCtrl.beforeTotalSales" src="assets/images/up.png"/>
+                <img ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales" src="assets/images/down.png"/>
+                </li>
+
+              </span>
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales">
+                <li>总销售额：</li>
+                <li style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span>
+                <img src="assets/images/down.png"/>
+                </li>
+              </span>
+            </ul>
+          </div>
+        </div>
+        <a class="backChina" style="width: 40px; height: 40px;position: absolute;right: 50px;top: 170px;display: none;" ng-click="machineComparedMngCtrl.backChina1();">
+          <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+        </a>
       </div>
       <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:750px;right: 0px;border-left:1px dashed #cccccc">
         <div class="mapContainer" id="mapContainer2" style="height: 750px;"></div>
-        <div id="mapContainerQushi2" style="position: absolute;right: 0;top:0px;width: 200px;height: 120px;border: 1px solid #cccccc;display: none;">
+        <div id="mapContainerQushi2" ng-show="machineComparedMngCtrl.avgHours2" style="position: absolute;right: 0;top:75px;width: 190px;height: 75px;border: 1px solid #cccccc;display: none;">
           <div style="position: relative;">
             <div
-              style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+              平均时长
             </div>
-            <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+            <ul style="position: absolute;list-style: none;line-height: 24px;">
+              <li>总平均：{{machineComparedMngCtrl.excavatorHours2 + machineComparedMngCtrl.loaderHours2 | number:2}}小时</li>
+              <li style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours2}}小时<span>&nbsp;</span><img ng-if="machineComparedMngCtrl.excavatorHours2>=machineComparedMngCtrl.beforeExcavatorHours2" src="assets/images/up.png"/><img ng-if="machineComparedMngCtrl.excavatorHours2<machineComparedMngCtrl.beforeExcavatorHours2" src="assets/images/down.png"/></li>
+              <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
+              <li style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours2}}小时<span>&nbsp;</span><img ng-if="machineComparedMngCtrl.loaderHours2>=machineComparedMngCtrl.beforeLoaderHours2" src="assets/images/up.png"/><img ng-if="machineComparedMngCtrl.loaderHours2<machineComparedMngCtrl.beforeLoaderHours2" src="assets/images/down.png"/></li>
             </ul>
-            <a class="backChina"  style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina2();">
-              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
-            </a>
+
           </div>
         </div>
+        <div ng-show="machineComparedMngCtrl.avgHours4" style="position: absolute;right: 20px;top: 75px;width: 120px;height: 50px;">
+          <div style="position: relative;">
+            <ul style="list-style: none;line-height: 23px;">
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1>=machineComparedMngCtrl.beforeTotalSales1" >
+                <li">总销售额：</li>
+                <li style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/>
+                <!--<img ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales" src="assets/images/down.png"/>-->
+                </li>
+              </span>
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1<machineComparedMngCtrl.beforeTotalSales1">
+                <li>总销售额：</li>
+                <li style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/>
+                </li>
+              </span>
+            </ul>
+          </div>
+        </div>
+        <a class="backChina"  style="width: 40px; height: 40px;position: absolute;right: 50px;top: 170px;display: none;" ng-click="machineComparedMngCtrl.backChina2();">
+          <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+        </a>
       </div>
     </div>
   </div>
-  <div class="rightBox" style="position: absolute;right: 0px; top: 0px;height: 900px;width: 30%;">
+  <div class="rightBox" style="position: absolute;right: 0px; top: 20px;height: 1200px;width: 33%;">
     <div class="row form-group" style="padding:20px 10px;">
       <label class="control-label col-md-3">热度分布</label>
       <div class="controls">
@@ -222,7 +256,6 @@
 
     <div id="subMap2" class="detdistribution"></div>
 
-    <div id="subMap3" class="detdistribution"></div>
   </div>
 </div>
 <div style="margin-top: 15px;">
