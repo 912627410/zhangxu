@@ -1,3 +1,71 @@
-<div class="main-container" id="machineWorkTime">
-  <div id="barChartContainer" class="chart-container" style="padding-top:20px;min-height: 500px;width: 100%;"> </div>
-</div>
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">机器作业时间分布</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">车辆类型:</label>
+    </div>
+    <div class="col-md-3">
+      <label><input type="radio" name="vehicleType" value="1" ng-checked="true" ng-model="machineWorkTimeCtrl.machineType" />装载机&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="vehicleType" value="2" ng-model="machineWorkTimeCtrl.machineType" />挖机&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="vehicleType" value="3" ng-model="machineWorkTimeCtrl.machineType"/>矿机&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineWorkTimeCtrl.machineType"/>全部</label>
+    </div>
+
+    <!--<div class="col-md-2">
+      <label class="control-label">平均作业时间类型:</label>
+    </div>
+    <div class="col-md-2">
+      <label><input type="radio" name="averageDateType" value="1" ng-checked="true" ng-model="machineWorkTimeCtrl.averageDateType" />日&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="averageDateType" value="2" ng-model="machineWorkTimeCtrl.averageDateType" />月</label>
+    </div>-->
+
+    <div class="col-md-2">
+      <label class="control-label">累计作业时间类型:</label>
+    </div>
+    <div class="col-md-2">
+      <label><input type="radio" name="totalDateType" value="1" ng-checked="true" ng-model="machineWorkTimeCtrl.totalDateType" />小时&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="totalDateType" value="2" ng-model="machineWorkTimeCtrl.totalDateType" />天</label>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 col-md-offset-10">
+      <button class="btn btn-primary" type="button" ng-click="machineWorkTimeCtrl.ok(machineWorkTimeCtrl.machineType, machineWorkTimeCtrl.averageDateType, machineWorkTimeCtrl.totalDateType)">确定</button>
+    </div>
+  </div>
+
+  <!--散点图-->
+  <div class="main-container" id="machineWorkTime">
+    <div id="barChartContainer" class="chart-container" style="padding-top:20px;min-height: 500px;width: 100%;"></div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-12 text-right">
+      <a class="btn btn-primary" type="button" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="机器作业时间分布.csv">导出</a>
+    </div>
+  </div>
+  <div class="row " style="padding: 10px">
+    <div class="table-responsive">
+      <table ng-table="machineWorkTimeCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
+        <tr ng-repeat="workData in $data">
+          <td class="text-nowrap" data-title="'车号'">{{workData[2]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 1" data-title="'累计作业时间(h)'">{{workData[0]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 2" data-title="'累计作业时间(天)'">{{workData[0]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 1" data-title="'日平均作业时间(h)'">{{workData[1]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 2" data-title="'月平均作业时间(h)'">{{workData[1]}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
