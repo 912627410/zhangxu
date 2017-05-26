@@ -243,6 +243,9 @@
     .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
     .constant("AVG_WORK_HOUR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHour/')  //平均工作小时数查询
 
+    .constant("WORK_DISTRIBUTE_TIME_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/')  //机器作业时间分布按照累计作业时间
+    .constant("WORK_DISTRIBUTE_DAYS_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/')  //机器作业时间分布按照天数
+
 
 
   ;
