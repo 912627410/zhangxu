@@ -749,7 +749,7 @@
 
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=2";
+        filterTerm += "&hourScope=120";
       }
       //拼接查询路径
       if (filterTerm){
@@ -1507,10 +1507,10 @@
         }
         //开工热度查询默认查询范围2小时
         if(heatType1==1){
-          filterTerm1 += "&hourScope=2";
+          filterTerm1 += "&hourScope=120";
         }
         if(heatType2==1){
-          filterTerm2 += "&hourScope=2";
+          filterTerm2 += "&hourScope=120";
         }
         //拼接查询路径
         if (filterTerm1){
@@ -1970,7 +1970,7 @@
       }
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=2";
+        filterTerm += "&hourScope=120";
       }
       if(heatType1==1){
       //查询装载机
