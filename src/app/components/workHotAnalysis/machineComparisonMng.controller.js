@@ -117,11 +117,11 @@
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
-                + '车辆数量：' + 0 + ' 台';
+                + '车辆数量：' + 0 + ' 台/天';
             }
             return '';
           }
@@ -215,10 +215,10 @@
             if(params.componentSubType == 'map') {
               if(params.value) {
                 return params.data.name + '<br />'
-                  + '车辆数量：' + params.data.value + ' 台';
+                  + '车辆数量：' + params.data.value + ' 台/天';
               }
               return params.name + '<br />'
-                + '车辆数量：' + 0 + ' 台';
+                + '车辆数量：' + 0 + ' 台/天';
             }
             return '';
           }
@@ -1223,7 +1223,6 @@
           var value = data[i].tData;
           yearData1.push(value);
         }
-        console.log(yearData1);
         mmuLine.series[0].data = yearData1;
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
@@ -1232,7 +1231,6 @@
             var value = data[i].tData;
             yearData2.push(value);
           }
-          console.log(yearData2);
           mmuLine.series[1].data = yearData2;
           mmuChart1.setOption(mmuLine);
         });
@@ -1539,6 +1537,10 @@
         var lineContainerList = document.getElementsByClassName("chart-container");
         lineContainerList[0].style.width = "50%";
         lineContainerList[1].style.width = "50%";
+        //在省份城市情况下直接点击对比查询，隐藏返回箭头
+        var backButtons = document.getElementsByClassName("backChina");
+        backButtons[0].style.display = "none";
+        backButtons[1].style.display = "none";
 
         mapChart1 = vm.echartsInit("mapContainer1");
         mapChart2 = vm.echartsInit("mapContainer2");
