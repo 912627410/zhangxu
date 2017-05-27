@@ -10,42 +10,97 @@
     .controller('machineWorkTimeController', machineWorkTimeController);
 
   /** @ngInject */
-  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, WORK_DISTRIBUTE_TIME_QUERY, serviceResource, NgTableParams, ngTableDefaults) {
+  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY,serviceResource, NgTableParams, ngTableDefaults) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
 
     vm.tableAverageDateType = 1; // 默认日平均作业时间
     vm.tableTotalDateType = 1;
+    vm.averageDateType = 1;
     vm.totalDateType=1;//默认累计作业时间为小时
-
-    vm.ok = function (machineType, averageDateType, totalDateType) {
-
-      if(null == machineType || "" == machineType) {
-        machineType = 1;
+    vm.dateType1 = 0; //默认查询全部类型
+    vm.machineType = '1,2,3';//默认查询全部
+    vm.all = false;
+    vm.change = function(dateType1){
+      if(dateType1==1){
+        vm.all = true;
+        vm.one = true;
+        vm.two = false;
+        vm.dateType2 = '201702';
+      } else if(dateType1==2){
+        vm.all = true;
+        vm.one = false;
+        vm.two = true;
+        vm.dateType2 = '201705';
+      } else if(dateType1==0){
+        vm.all = false;
       }
-      if(null == averageDateType || "" == averageDateType) {
+    }
+
+
+    vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
+
+      if (null == machineType || "" == machineType) {
+        machineType = 1; //默认为装载机
+      }
+      if (null == averageDateType || "" == averageDateType) {
         averageDateType = 1;
       }
-      if(null == totalDateType || "" == totalDateType) {
-        totalDateType = 1;
+      if (null == totalDateType || "" == totalDateType) {
+        totalDateType = 1; //默认为小时
       }
+      if (null == dateType1 || "" == dateType1) {
+        dateType1 = 0;  //默认为全部
+      }
+      // if (null == dateType2 || "" == dateType2) {
+      //   dateType2 = 201702;  //默认为2017第二季度
+      // }
+
       vm.tableAverageDateType = averageDateType;
       vm.tableTotalDateType = totalDateType;
 
-      vm.tableParams = new NgTableParams({
-      }, {
-      });
+      vm.tableParams = new NgTableParams({}, {});
 
       //图表数据
       var data = [[]];
-      var restUrl = WORK_DISTRIBUTE_TIME_QUERY;
-      //请求数据
-      if(totalDateType == 1) { // 累计作业时间(h)
-        restUrl += "workTime?machineType=" + machineType;
-      } else if (totalDateType == 2) { // 累计作业时间(天)
-        restUrl += "workDays?machineType=" + machineType;
+      //判断查询时间还是天
+      if (totalDateType == 1) {
+        var restUrl = WORK_DISTRIBUTE_TIME_QUERY;//shijian
+      } else if(totalDateType==2){
+        var restUrl = WORK_DISTRIBUTE_DAYS_QUERY;//tian
       }
+      //判断全部/季度/月
+      if (dateType1 == 0) {
+        restUrl += '?';
+      } else if (dateType1 == 1) {
+        restUrl += '/quarter?';
+      } else if (dateType1 == 2) {
+        restUrl += '/month?';
+      }
+      //判断车型
+      restUrl += 'machineType=' + machineType;
+      //拼接时间
+      if (totalDateType == 1) {
+        if(dateType1==1) {
+          restUrl += '&workTimeQuarter=' + dateType2;
+        } else if(dateType1==2){
+          restUrl += '&workTimeMonth=' + dateType2;
+        }
+      } else if(totalDateType==2){
+        if(dateType1==1) {
+          restUrl += '&workDaysQuarter=' + dateType2;
+        } else if(dateType1==2){
+          restUrl += '&workDaysMonth=' + dateType2;
+        }
+      }
+
+      // //请求数据
+      // if(totalDateType == 1) { // 累计作业时间(h)
+      //   restUrl += "workTime?machineType=" + machineType;
+      // } else if (totalDateType == 2) { // 累计作业时间(天)
+      //   restUrl += "workDays?machineType=" + machineType;
+      // }
       var proMiss = serviceResource.restCallService(restUrl, "QUERY");
       proMiss.then(function (datas) {
         //装载数据
@@ -293,7 +348,7 @@
 
         if(totalDateType == 1) {
           barOption.xAxis.name="累计作业时间(h)";
-          barOption.xAxis.max = 8000;
+          // barOption.xAxis.max = 8000;
           barOption.xAxis.splitNumber= 14;
           barOption.series[0].markLine.data.push({
             name: '0-1000',
@@ -347,8 +402,8 @@
             }]
           );
         } else if (totalDateType == 2) {
-          barOption.xAxis.name="累计作业时间(天)";
-          barOption.xAxis.max = 500;
+          barOption.xAxis.name="车龄(天)";
+          // barOption.xAxis.max = 500;
           barOption.xAxis.splitNumber= 10;
           // barOption.series[0].markLine.data.push({
           //   name: '0-50',
@@ -416,6 +471,6 @@
       })
     };
 
-    vm.ok(1, 1, 1);
+    vm.ok('1,2,3', 1,1, 0, null);
   }
 })();

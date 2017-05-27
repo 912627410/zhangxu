@@ -4,6 +4,8 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li>统计分析</li>
+    <li>开工热度分析</li>
     <li class="active">机器作业时间分布</li>
   </ol>
 </section>
@@ -13,13 +15,13 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">车辆类型:</label>
+      <label class="control-label" style= "font-size:15px;">车辆类型:</label>
     </div>
     <div class="col-md-3">
-      <label><input type="radio" name="vehicleType" value="1" ng-checked="true" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;装载机&nbsp;&nbsp;&nbsp;</label>
-      <label><input type="radio" name="vehicleType" value="2" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;挖机&nbsp;&nbsp;&nbsp;</label>
-      <label><input type="radio" name="vehicleType" value="3" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;矿机&nbsp;&nbsp;&nbsp;</label>
-      <label><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;全部</label>
+      <label><input type="radio" name="vehicleType" value="1,2,3" style= "font-size:15px;" ng-checked="true" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;全部</label>
+      <label><input type="radio" name="vehicleType" value="1" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;装载机&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="vehicleType" value="2" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;挖机&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="vehicleType" value="3" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;矿机&nbsp;&nbsp;&nbsp;</label>
     </div>
 
     <!--<div class="col-md-2">
@@ -31,11 +33,11 @@
     </div>-->
 
     <div class="col-md-2">
-      <label class="control-label">累计作业时间类型:</label>
+      <label class="control-label" style= "font-size:15px;">累计作业时间类型:</label>
     </div>
     <div class="col-md-2">
-      <label><input type="radio" name="totalDateType" value="1" ng-checked="true" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;小时&nbsp;&nbsp;&nbsp;</label>
-      <label><input type="radio" name="totalDateType" value="2" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;天</label>
+      <label><input type="radio" name="totalDateType" value="1" style= "font-size:15px;" ng-checked="true" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;小时&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="totalDateType" value="2" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;天</label>
     </div>
   </div>
 
@@ -44,46 +46,51 @@
       <label class="control-label">查询周期:</label>
     </div>
     <div class="controls col-md-3">
-        <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
-          <option value="1" ng-selected="true">按季度</option>
+        <select class="form-control" ng-change="machineWorkTimeCtrl.change(machineWorkTimeCtrl.dateType1)" ng-model="machineWorkTimeCtrl.dateType1">
+          <option value="0" ng-selected="true">查询全部</option>
+          <option value="1">按季度</option>
           <option value="2">按月</option>
         </select>
     </div>
+    <div ng-show="machineWorkTimeCtrl.all">
+      <div class="col-md-1">
+        <label class="control-label" style= "font-size:15px;">时间段:</label>
+      </div>
+      <div class="controls col-md-3">
+        <select class="form-control" ng-model="machineWorkTimeCtrl.dateType2">
+          <!--<option value="201704" ng-show="machineWorkTimeCtrl.one">2017年第四季度</option>-->
+          <!--<option value="201703" ng-show="machineWorkTimeCtrl.one">2017年第三季度</option>-->
+          <option value="201702" ng-show="machineWorkTimeCtrl.one">2017年第二季度</option>
+          <option value="201701" ng-show="machineWorkTimeCtrl.one">2017年第一季度</option>
+          <option value="201604" ng-show="machineWorkTimeCtrl.one">2016年第四季度</option>
+          <option value="201603" ng-show="machineWorkTimeCtrl.one">2016年第三季度</option>
+          <option value="201602" ng-show="machineWorkTimeCtrl.one">2016年第二季度</option>
+          <option value="201601" ng-show="machineWorkTimeCtrl.one">2016年第一季度</option>
 
-    <div class="col-md-1">
-      <label class="control-label">时间段:</label>
-    </div>
-    <div class="controls col-md-3">
-        <select class="form-control" ng-model="machineComparedMngCtrl.dateType">
-          <!--<option value="201704" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
-          <!--<option value="201703" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
-          <option value="201702" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
-          <option value="201701" ng-show="machineComparedMngCtrl.one">2017年第一季度</option>
-          <option value="201604" ng-show="machineComparedMngCtrl.one">2016年第四季度</option>
-          <option value="201603" ng-show="machineComparedMngCtrl.one">2016年第三季度</option>
-          <option value="201602" ng-show="machineComparedMngCtrl.one">2016年第二季度</option>
-          <option value="201601" ng-show="machineComparedMngCtrl.one">2016年第一季度</option>
-
-          <option value="201705" ng-show="machineComparedMngCtrl.two">2017年五月</option>
-          <option value="201704" ng-show="machineComparedMngCtrl.two">2017年四月</option>
-          <option value="201703" ng-show="machineComparedMngCtrl.two">2017年三月</option>
-          <option value="201702" ng-show="machineComparedMngCtrl.two">2017年二月</option>
-          <option value="201701" ng-show="machineComparedMngCtrl.two">2017年一月</option>
-          <option value="201612" ng-show="machineComparedMngCtrl.two">2016年十二月</option>
-          <option value="201611" ng-show="machineComparedMngCtrl.two">2016年十一月</option>
-          <option value="201610" ng-show="machineComparedMngCtrl.two">2016年十月</option>
-          <option value="201609" ng-show="machineComparedMngCtrl.two">2016年九月</option>
-          <option value="201608" ng-show="machineComparedMngCtrl.two">2016年八月</option>
-          <option value="201607" ng-show="machineComparedMngCtrl.two">2016年七月</option>
-          <option value="201606" ng-show="machineComparedMngCtrl.two">2016年六月</option>
+          <option value="201705" ng-show="machineWorkTimeCtrl.two">2017年五月</option>
+          <option value="201704" ng-show="machineWorkTimeCtrl.two">2017年四月</option>
+          <option value="201703" ng-show="machineWorkTimeCtrl.two">2017年三月</option>
+          <option value="201702" ng-show="machineWorkTimeCtrl.two">2017年二月</option>
+          <option value="201701" ng-show="machineWorkTimeCtrl.two">2017年一月</option>
+          <option value="201612" ng-show="machineWorkTimeCtrl.two">2016年十二月</option>
+          <option value="201611" ng-show="machineWorkTimeCtrl.two">2016年十一月</option>
+          <option value="201610" ng-show="machineWorkTimeCtrl.two">2016年十月</option>
+          <option value="201609" ng-show="machineWorkTimeCtrl.two">2016年九月</option>
+          <option value="201608" ng-show="machineWorkTimeCtrl.two">2016年八月</option>
+          <option value="201607" ng-show="machineWorkTimeCtrl.two">2016年七月</option>
+          <option value="201606" ng-show="machineWorkTimeCtrl.two">2016年六月</option>
         </select>
     </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary" type="button" ng-click="machineWorkTimeCtrl.ok(machineWorkTimeCtrl.machineType, machineWorkTimeCtrl.averageDateType, machineWorkTimeCtrl.totalDateType)">确定</button>
     </div>
+    <div class="col-md-2">
+      <button class="btn btn-warning" type="button" ng-click="machineWorkTimeCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="machineWorkTimeCtrl.ok(machineWorkTimeCtrl.machineType,machineWorkTimeCtrl.totalDateType,machineWorkTimeCtrl.averageDateType, machineWorkTimeCtrl.dateType1,machineWorkTimeCtrl.dateType2)">查询</button>
+    </div>
+  <!--</div>-->
     <div class="row form-group">
       <div class="col-md-12 text-right"></div>
     </div>
+  </div>
   <!--散点图-->
   <div class="main-container" id="machineWorkTime">
     <div id="barChartContainer" class="chart-container" style="padding-top:20px;min-height: 500px;width: 100%;"></div>
@@ -106,5 +113,5 @@
       </table>
     </div>
   </div>
-  </div>
+  <!--</div>-->
 </section>
