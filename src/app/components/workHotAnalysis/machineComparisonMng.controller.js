@@ -1565,7 +1565,6 @@
         mapOption2.title.left = "center";
         mapOption2.title. textStyle={fontSize: 21};
         mapOption2.title. subtextStyle={fontSize: 12};
-
         var zData ;
         var rspData1 = serviceResource.restCallService(restCallURL1, 'QUERY');
         rspData1.then(function (data1) {
@@ -1610,7 +1609,7 @@
               }
             }
             //计算该查询周期的销售总和--右图
-            if(heatType1==0){
+            if(heatType2==0){
               var total1 = 0;
               for(var a=0;a<data2.length;a++){
                 total1 += data2[a].value;
@@ -1681,7 +1680,6 @@
         }, function (reason) {
           Notification.error("获取数据失败");
         });
-
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
