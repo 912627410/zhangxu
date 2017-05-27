@@ -38,6 +38,7 @@
       }
     }
 
+    vm.dataList = [];
 
     vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
 
@@ -295,6 +296,12 @@
         };
 
         if(averageDateType == 1) {
+          //计算斜线
+          var stringTime = "2016-03-01 00:00:00";
+          var k2 = Date.parse(new Date(stringTime));
+          var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
+          var xie=8000/days;
+
           barOption.yAxis.name="日平均作业时间(h)";
           barOption.yAxis.max=24;
           barOption.yAxis.splitNumber=5;
@@ -317,16 +324,12 @@
           }, {
             name: '1000-2000',
             xAxis: 2000
-          }, {
-            name: 'xie',
-            xAxis: [0, 300],
-            yAxis: [0, 20]
           },
-          [{
-            coord: [0, 0]
-          }, {
-            coord: [8000, 18]
-          }]);
+            [{
+              coord: [0, 0]
+            }, {
+              coord: [8000, xie]
+            }]);
         } else if(averageDateType == 2) {
           barOption.yAxis.name="月平均作业时间(h)";
           barOption.yAxis.max=750;
@@ -449,21 +452,19 @@
 
         function renderBrushed(params) {
           var mainSeries = params.batch[0].selected[0];
-          var selectedItems = [];
-
+          vm.dataList=[];
           for (var i = 0; i < mainSeries.dataIndex.length; i++) {
             var rawIndex = mainSeries.dataIndex[i];
             var dataItem = data[0][rawIndex];
-            selectedItems.push(dataItem);
+            vm.dataList.push({name: dataItem[2], avgHours: dataItem[1],cumulative:dataItem[0]});
           }
 
           vm.tableParams = new NgTableParams({
             count: 10
           }, {
-            dataset: selectedItems
+            dataset: vm.dataList
           });
           $scope.$apply();
-          console.log(selectedItems);
         }
 
       }, function (reason) {
@@ -472,5 +473,6 @@
     };
 
     vm.ok('1,2,3', 1,1, 0, null);
+
   }
 })();
