@@ -117,11 +117,11 @@
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
-                + '车辆数量：' + 0 + ' 台';
+                + '车辆数量：' + 0 + ' 台/天';
             }
             return '';
           }
@@ -215,10 +215,10 @@
             if(params.componentSubType == 'map') {
               if(params.value) {
                 return params.data.name + '<br />'
-                  + '车辆数量：' + params.data.value + ' 台';
+                  + '车辆数量：' + params.data.value + ' 台/天';
               }
               return params.name + '<br />'
-                + '车辆数量：' + 0 + ' 台';
+                + '车辆数量：' + 0 + ' 台/天';
             }
             return '';
           }
@@ -749,7 +749,7 @@
 
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=2";
+        filterTerm += "&hourScope=120";
       }
       //拼接查询路径
       if (filterTerm){
@@ -1223,7 +1223,6 @@
           var value = data[i].tData;
           yearData1.push(value);
         }
-        console.log(yearData1);
         mmuLine.series[0].data = yearData1;
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
@@ -1232,7 +1231,6 @@
             var value = data[i].tData;
             yearData2.push(value);
           }
-          console.log(yearData2);
           mmuLine.series[1].data = yearData2;
           mmuChart1.setOption(mmuLine);
         });
@@ -1509,10 +1507,10 @@
         }
         //开工热度查询默认查询范围2小时
         if(heatType1==1){
-          filterTerm1 += "&hourScope=2";
+          filterTerm1 += "&hourScope=120";
         }
         if(heatType2==1){
-          filterTerm2 += "&hourScope=2";
+          filterTerm2 += "&hourScope=120";
         }
         //拼接查询路径
         if (filterTerm1){
@@ -1539,6 +1537,10 @@
         var lineContainerList = document.getElementsByClassName("chart-container");
         lineContainerList[0].style.width = "50%";
         lineContainerList[1].style.width = "50%";
+        //在省份城市情况下直接点击对比查询，隐藏返回箭头
+        var backButtons = document.getElementsByClassName("backChina");
+        backButtons[0].style.display = "none";
+        backButtons[1].style.display = "none";
 
         mapChart1 = vm.echartsInit("mapContainer1");
         mapChart2 = vm.echartsInit("mapContainer2");
@@ -1563,7 +1565,6 @@
         mapOption2.title.left = "center";
         mapOption2.title. textStyle={fontSize: 21};
         mapOption2.title. subtextStyle={fontSize: 12};
-
         var zData ;
         var rspData1 = serviceResource.restCallService(restCallURL1, 'QUERY');
         rspData1.then(function (data1) {
@@ -1608,7 +1609,7 @@
               }
             }
             //计算该查询周期的销售总和--右图
-            if(heatType1==0){
+            if(heatType2==0){
               var total1 = 0;
               for(var a=0;a<data2.length;a++){
                 total1 += data2[a].value;
@@ -1679,7 +1680,6 @@
         }, function (reason) {
           Notification.error("获取数据失败");
         });
-
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
@@ -1968,7 +1968,7 @@
       }
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=2";
+        filterTerm += "&hourScope=120";
       }
       if(heatType1==1){
       //查询装载机
