@@ -54,7 +54,7 @@
       <label class="control-label">时间段:</label>
     </div>
     <div class="controls col-md-3">
-        <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
+        <select class="form-control" ng-model="machineComparedMngCtrl.dateType">
           <!--<option value="201704" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
           <!--<option value="201703" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
           <option value="201702" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
@@ -99,10 +99,9 @@
       <table ng-table="machineWorkTimeCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
         <tr ng-repeat="workData in $data">
           <td class="text-nowrap" data-title="'车号'">{{workData[2]}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 1" data-title="'累计作业时间(h)'">{{workData[0]}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 2" data-title="'累计作业时间(天)'">{{workData[0]}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 1" data-title="'日平均作业时间(h)'">{{workData[1]}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.tableAverageDateType == 2" data-title="'月平均作业时间(h)'">{{workData[1]}}</td>
+          <td class="text-nowrap" data-title="'日平均作业时间(h)'">{{workData[1]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 1" data-title="'累计作业时间(h)'">{{workData[0]}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 2" data-title="'累计作业时间(天)'">{{workData[0]}}</td>
         </tr>
       </table>
     </div>

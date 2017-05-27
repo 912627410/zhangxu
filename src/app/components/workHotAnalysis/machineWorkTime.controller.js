@@ -17,6 +17,7 @@
 
     vm.tableAverageDateType = 1; // 默认日平均作业时间
     vm.tableTotalDateType = 1;
+    vm.totalDateType=1;//默认累计作业时间为小时
 
     vm.ok = function (machineType, averageDateType, totalDateType) {
 
