@@ -10,41 +10,98 @@
     .controller('machineWorkTimeController', machineWorkTimeController);
 
   /** @ngInject */
-  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, WORK_DISTRIBUTE_TIME_QUERY, serviceResource, NgTableParams, ngTableDefaults) {
+  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY,serviceResource, NgTableParams, ngTableDefaults) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
 
     vm.tableAverageDateType = 1; // 默认日平均作业时间
     vm.tableTotalDateType = 1;
-
-    vm.ok = function (machineType, averageDateType, totalDateType) {
-
-      if(null == machineType || "" == machineType) {
-        machineType = 1;
+    vm.averageDateType = 1;
+    vm.totalDateType=1;//默认累计作业时间为小时
+    vm.dateType1 = 0; //默认查询全部类型
+    vm.machineType = '1,2,3';//默认查询全部
+    vm.all = false;
+    vm.change = function(dateType1){
+      if(dateType1==1){
+        vm.all = true;
+        vm.one = true;
+        vm.two = false;
+        vm.dateType2 = '201702';
+      } else if(dateType1==2){
+        vm.all = true;
+        vm.one = false;
+        vm.two = true;
+        vm.dateType2 = '201705';
+      } else if(dateType1==0){
+        vm.all = false;
       }
-      if(null == averageDateType || "" == averageDateType) {
+    }
+
+    vm.dataList = [];
+
+    vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
+
+      if (null == machineType || "" == machineType) {
+        machineType = 1; //默认为装载机
+      }
+      if (null == averageDateType || "" == averageDateType) {
         averageDateType = 1;
       }
-      if(null == totalDateType || "" == totalDateType) {
-        totalDateType = 1;
+      if (null == totalDateType || "" == totalDateType) {
+        totalDateType = 1; //默认为小时
       }
+      if (null == dateType1 || "" == dateType1) {
+        dateType1 = 0;  //默认为全部
+      }
+      // if (null == dateType2 || "" == dateType2) {
+      //   dateType2 = 201702;  //默认为2017第二季度
+      // }
+
       vm.tableAverageDateType = averageDateType;
       vm.tableTotalDateType = totalDateType;
 
-      vm.tableParams = new NgTableParams({
-      }, {
-      });
+      vm.tableParams = new NgTableParams({}, {});
 
       //图表数据
       var data = [[]];
-      var restUrl = WORK_DISTRIBUTE_TIME_QUERY;
-      //请求数据
-      if(totalDateType == 1) { // 累计作业时间(h)
-        restUrl += "workTime?machineType=" + machineType;
-      } else if (totalDateType == 2) { // 累计作业时间(天)
-        restUrl += "workDays?machineType=" + machineType;
+      //判断查询时间还是天
+      if (totalDateType == 1) {
+        var restUrl = WORK_DISTRIBUTE_TIME_QUERY;//shijian
+      } else if(totalDateType==2){
+        var restUrl = WORK_DISTRIBUTE_DAYS_QUERY;//tian
       }
+      //判断全部/季度/月
+      if (dateType1 == 0) {
+        restUrl += '?';
+      } else if (dateType1 == 1) {
+        restUrl += '/quarter?';
+      } else if (dateType1 == 2) {
+        restUrl += '/month?';
+      }
+      //判断车型
+      restUrl += 'machineType=' + machineType;
+      //拼接时间
+      if (totalDateType == 1) {
+        if(dateType1==1) {
+          restUrl += '&workTimeQuarter=' + dateType2;
+        } else if(dateType1==2){
+          restUrl += '&workTimeMonth=' + dateType2;
+        }
+      } else if(totalDateType==2){
+        if(dateType1==1) {
+          restUrl += '&workDaysQuarter=' + dateType2;
+        } else if(dateType1==2){
+          restUrl += '&workDaysMonth=' + dateType2;
+        }
+      }
+
+      // //请求数据
+      // if(totalDateType == 1) { // 累计作业时间(h)
+      //   restUrl += "workTime?machineType=" + machineType;
+      // } else if (totalDateType == 2) { // 累计作业时间(天)
+      //   restUrl += "workDays?machineType=" + machineType;
+      // }
       var proMiss = serviceResource.restCallService(restUrl, "QUERY");
       proMiss.then(function (datas) {
         //装载数据
@@ -239,6 +296,12 @@
         };
 
         if(averageDateType == 1) {
+          //计算斜线
+          var stringTime = "2016-03-01 00:00:00";
+          var k2 = Date.parse(new Date(stringTime));
+          var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
+          var xie=8000/days;
+
           barOption.yAxis.name="日平均作业时间(h)";
           barOption.yAxis.max=24;
           barOption.yAxis.splitNumber=5;
@@ -261,16 +324,12 @@
           }, {
             name: '1000-2000',
             xAxis: 2000
-          }, {
-            name: 'xie',
-            xAxis: [0, 300],
-            yAxis: [0, 20]
           },
-          [{
-            coord: [0, 0]
-          }, {
-            coord: [8000, 18]
-          }]);
+            [{
+              coord: [0, 0]
+            }, {
+              coord: [8000, xie]
+            }]);
         } else if(averageDateType == 2) {
           barOption.yAxis.name="月平均作业时间(h)";
           barOption.yAxis.max=750;
@@ -292,7 +351,7 @@
 
         if(totalDateType == 1) {
           barOption.xAxis.name="累计作业时间(h)";
-          barOption.xAxis.max = 8000;
+          // barOption.xAxis.max = 8000;
           barOption.xAxis.splitNumber= 14;
           barOption.series[0].markLine.data.push({
             name: '0-1000',
@@ -304,50 +363,50 @@
           barOption.series[0].markArea.data.push(
             [{
               name: machine0_6 + '台(' + machine0_6_p + '%)',
-              coord: [3000, 2]
+              coord: [3200, 2]
             }, {
-              coord: [3400, 4]
+              coord: [3900, 4]
             }],
             [{
               name: machine6_12 + '台(' + machine6_12_p + '%)',
-              coord: [3000, 8]
+              coord: [3200, 8]
             }, {
-              coord: [3400, 10]
+              coord: [3900, 10]
             }],
             [{
               name: machine12_18 + '台(' + machine12_18_p + '%)',
-              coord: [3000, 14]
+              coord: [3200, 14]
             }, {
-              coord: [3400, 16]
+              coord: [3900, 16]
             }],
             [{
               name: machine18_24 + '台(' + machine18_24_p + '%)',
-              coord: [3000, 20]
+              coord: [3200, 20]
             }, {
-              coord: [3400, 22]
+              coord: [3900, 22]
             }],
             [{
               name: machine0_1000 + '台(' + machine0_1000_p + '%)\n日均作业：' + time0_1000 + 'h',
               coord: [200, 20]
             }, {
-              coord: [600, 22]
+              coord: [980, 22]
             }],
             [{
               name: machine1000_2000 + '台(' + machine1000_2000_p + '%)\n日均作业：' + time1000_2000 + 'h',
               coord: [1200, 20]
             }, {
-              coord: [1600, 22]
+              coord: [1950, 22]
             }],
             [{
               name: machine2000_4000 + '台(' + machine2000_4000_p + '%)\n日均作业：' + time2000_4000 + 'h',
               coord: [2200, 20]
             }, {
-              coord: [2600, 22]
+              coord: [2950, 22]
             }]
           );
         } else if (totalDateType == 2) {
-          barOption.xAxis.name="累计作业时间(天)";
-          barOption.xAxis.max = 500;
+          barOption.xAxis.name="车龄(天)";
+          // barOption.xAxis.max = 500;
           barOption.xAxis.splitNumber= 10;
           // barOption.series[0].markLine.data.push({
           //   name: '0-50',
@@ -393,21 +452,19 @@
 
         function renderBrushed(params) {
           var mainSeries = params.batch[0].selected[0];
-          var selectedItems = [];
-
+          vm.dataList=[];
           for (var i = 0; i < mainSeries.dataIndex.length; i++) {
             var rawIndex = mainSeries.dataIndex[i];
             var dataItem = data[0][rawIndex];
-            selectedItems.push(dataItem);
+            vm.dataList.push({name: dataItem[2], avgHours: dataItem[1],cumulative:dataItem[0]});
           }
 
           vm.tableParams = new NgTableParams({
             count: 10
           }, {
-            dataset: selectedItems
+            dataset: vm.dataList
           });
           $scope.$apply();
-          console.log(selectedItems);
         }
 
       }, function (reason) {
@@ -415,6 +472,7 @@
       })
     };
 
-    vm.ok(1, 1, 1);
+    vm.ok('1,2,3', 1,1, 0, null);
+
   }
 })();
