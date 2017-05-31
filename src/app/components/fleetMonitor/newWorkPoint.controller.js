@@ -10,12 +10,13 @@
     .controller('newWorkPointController', newWorkPointController);
 
   /** @ngInject */
-  function newWorkPointController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL, $uibModalInstance) {
+  function newWorkPointController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL, $uibModalInstance,fleet) {
     var vm = this;
     vm.workPoint = {
       longitude: null,
       latitude: null,
-      radius: null
+      radius: null,
+      fleet: fleet
     }
 
     vm.pointTypeList = [{id: 1, name: "装料点"}, {id: 2, name: "卸料点"}];

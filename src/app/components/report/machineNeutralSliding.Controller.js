@@ -12,6 +12,7 @@
   function machineNeutralSlidingController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
+    var wsNeutralSlide;
     vm.operatorInfo = $rootScope.userInfo;
     vm.neutralSlideMonitor = false; // 空档滑行实时监控开关
 
@@ -206,19 +207,24 @@
       vm.initDate();
     };
 
+
     /**
-     * 空档滑行实时监控
-     * @type {WebSocket}
+     * 开启空档滑行实时监控
      */
-    var wsNeutralSlide = new WebSocket(WEBSOCKET_URL + "webSocketServer/neutralSlideRealTimeMonitor");
-    wsNeutralSlide.onmessage = function (evt) {
-      if(evt.data == "1") {
+    vm.neutralSlideReload = function () {
+      wsNeutralSlide = new WebSocket(WEBSOCKET_URL + "webSocketServer/neutralSlideRealTimeMonitor?token=" + vm.operatorInfo.authtoken);
+
+      wsNeutralSlide.onopen = function() {
         Notification.success("开启成功,请打开图表");
-        vm.neutralSlideMonitor = true;
-      } else if (evt.data == "0") {
-        Notification.warning("空档滑行实时监控关闭成功");
-        vm.neutralSlideMonitor = false;
-      } else {
+        vm.neutralSlideMonitor  = true;
+      };
+
+
+      wsNeutralSlide.onerror = function (evt) {
+        Notification.error("NeutralSlide WebSocketError!");
+      };
+      wsNeutralSlide.onmessage = function (evt) {
+
         var obj = JSON.parse(evt.data);
         var data = {
           x: obj.locateDateTime,
@@ -229,17 +235,9 @@
         };
         vm.neutralSlideConfig.series[0].data.push(data);
         $scope.$apply();
-      }
-    };
 
-    /**
-     * 开启空档滑行实时监控
-     */
-    vm.neutralSlideReload = function () {
-      wsNeutralSlide.send(JSON.stringify({
-        type: 1,
-        content:vm.operatorInfo.authtoken
-      }));
+      };
+
     };
 
     /**
@@ -247,14 +245,12 @@
      * @param evt
      */
     vm.neutralSlideClose = function (evt) {
-      wsNeutralSlide.send(JSON.stringify({
-        type: 0,
-        content:vm.operatorInfo.authtoken
-      }));
-    };
+      wsNeutralSlide.close();
 
-    wsNeutralSlide.onerror = function (evt) {
-      console.log("NeutralSlide WebSocketError!");
+      wsNeutralSlide.onclose = function () {
+        Notification.warning("空档滑行实时监控关闭成功");
+        vm.neutralSlideMonitor = false;
+      }
     };
 
 

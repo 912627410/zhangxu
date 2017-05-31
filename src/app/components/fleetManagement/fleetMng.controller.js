@@ -199,34 +199,5 @@
 
     };
 
-
-    //updateWorkplaneRela
-    vm.updateWorkplaneRela = function (fleet,size) {
-      var modalInstance = $uibModal.open({
-        animation:vm.animationsEnabled,
-        templateUrl: 'app/components/fleetManagement/updateWorkplaneRela.html',
-        controller: 'updateWorkplaneRelaController as updateWorkplaneRelaCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          fleet: function () {
-            return fleet;
-          }
-        }
-      })
-
-      modalInstance.result.then(function (result) {
-        var tabList=vm.tableParams.data;
-        //更新内容
-        for(var i=0;i<tabList.length;i++){
-          if(tabList[i].id==result.id){
-            tabList[i]=result;
-          }
-        }
-
-      }, function () {
-        //取消
-      });
-    }
   }
 })();

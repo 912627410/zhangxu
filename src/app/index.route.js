@@ -295,7 +295,7 @@
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/workPoint.html',
+            templateUrl: 'app/components/fleetMonitor/workPoint.html',
             controller: 'workPointController',
             controllerAs: 'workPointCtrl'
           }
@@ -316,16 +316,30 @@
         }
       })
 
-      .state('home.workplane', {
-        url: '/workplane',
+      .state('home.fleetMapMonitor', {
+        url: '/fleetMapMonitor',
         views: {
           'footer@home':{
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/workplaneMng.html',
-            controller: 'workplaneMngController',
-            controllerAs: 'workplaneMngCtrl'
+            templateUrl: 'app/components/fleetMonitor/fleetMapMonitor.html',
+            controller: 'fleetMapMonitorController',
+            controllerAs: 'fleetMapMonitorCtrl'
+          }
+        }
+      })
+
+      .state('home.fleetLineMonitor', {
+        url: '/fleetLineMonitor',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleetMonitor/fleetLineMonitor.html',
+            controller: 'fleetLineMonitorController',
+            controllerAs: 'fleetLineMonitorCtrl'
           }
         }
       })

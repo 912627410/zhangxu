@@ -1,0 +1,21 @@
+<section class="content-header">
+  <p class="input-group col-sm-3" style="top: 10px">
+    <input type="text" id="org" class="form-control"
+           placeholder="{{'fleet'|translate}}" ng-model="fleetMapMonitorCtrl.fleet.label" name="org" readonly required/>
+    <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="fleetMapMonitorCtrl.openFleetTree()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+    </span>
+  </p>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'mapMonitor'|translate}}</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="box box-danger" style="width: 100%;min-height:800px;" id="fleetMonitorMap">
+  </div>
+</section>
