@@ -15,7 +15,7 @@
       <label class="control-label" style= "font-size:15px;">车辆类型:</label>
     </div>
     <div class="col-md-3">
-      <label><input type="radio" name="vehicleType" value="1,2,3" style= "font-size:15px;" ng-checked="true" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;全部</label>
+      <label><input type="radio" name="vehicleType" value="1,2,3" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;全部</label>
       <label><input type="radio" name="vehicleType" value="1" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;装载机&nbsp;&nbsp;&nbsp;</label>
       <label><input type="radio" name="vehicleType" value="2" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType" />&nbsp;&nbsp;挖机&nbsp;&nbsp;&nbsp;</label>
       <label><input type="radio" name="vehicleType" value="3" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.machineType"/>&nbsp;&nbsp;矿机&nbsp;&nbsp;&nbsp;</label>
@@ -33,7 +33,7 @@
       <label class="control-label" style= "font-size:15px;">累计作业时间类型:</label>
     </div>
     <div class="col-md-2">
-      <label><input type="radio" name="totalDateType" value="1" style= "font-size:15px;" ng-checked="true" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;小时&nbsp;&nbsp;&nbsp;</label>
+      <label><input type="radio" name="totalDateType" value="1" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;小时&nbsp;&nbsp;&nbsp;</label>
       <label><input type="radio" name="totalDateType" value="2" style= "font-size:15px;" ng-model="machineWorkTimeCtrl.totalDateType" />&nbsp;&nbsp;天</label>
     </div>
   </div>
@@ -44,7 +44,7 @@
     </div>
     <div class="controls col-md-3">
         <select class="form-control" ng-change="machineWorkTimeCtrl.change(machineWorkTimeCtrl.dateType1)" ng-model="machineWorkTimeCtrl.dateType1">
-          <option value="0" ng-selected="true">查询全部</option>
+          <option value="0">查询全部</option>
           <option value="1">按季度</option>
           <option value="2">按月</option>
         </select>
@@ -54,7 +54,7 @@
         <label class="control-label" style= "font-size:15px;">时间段:</label>
       </div>
       <div class="controls col-md-3">
-        <select class="form-control" ng-model="machineWorkTimeCtrl.dateType2">
+        <select id="qwert" class="form-control" ng-change = "machineWorkTimeCtrl.change1()" ng-model="machineWorkTimeCtrl.dateType2">
           <!--<option value="201704" ng-show="machineWorkTimeCtrl.one">2017年第四季度</option>-->
           <!--<option value="201703" ng-show="machineWorkTimeCtrl.one">2017年第三季度</option>-->
           <option value="201702" ng-show="machineWorkTimeCtrl.one">2017年第二季度</option>
@@ -104,7 +104,7 @@
       <table ng-table="machineWorkTimeCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
         <tr ng-repeat="workData in $data">
           <td class="text-nowrap" data-title="'车号'">{{workData.name}}</td>
-          <td class="text-nowrap" data-title="'日平均作业时间(h)'">{{workData.avgHours}}</td>
+          <td class="text-nowrap" data-title="machineWorkTimeCtrl.title+'日平均作业时间(h)'">{{workData.avgHours}}</td>
           <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 1" data-title="'累计作业时间(h)'">{{workData.cumulative}}</td>
           <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 2" data-title="'累计作业时间(天)'">{{workData.cumulative}}</td>
         </tr>
