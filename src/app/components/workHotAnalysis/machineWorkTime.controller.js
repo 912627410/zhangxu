@@ -18,30 +18,230 @@
     vm.tableAverageDateType = 1; // 默认日平均作业时间
     vm.tableTotalDateType = 1;
     vm.averageDateType = 1;
-    vm.totalDateType=1;//默认累计作业时间为小时
-    vm.dateType1 = 0; //默认查询全部类型
-    vm.machineType = '1,2,3';//默认查询全部
+    // vm.totalDateType=1;//默认累计作业时间为小时
+    // vm.dateType1 = 0; //默认查询全部类型
+    // vm.machineType = '1,2,3';//默认查询全部
     vm.all = false;
     vm.change = function(dateType1){
       if(dateType1==1){
         vm.all = true;
         vm.one = true;
         vm.two = false;
-        vm.dateType2 = '201702';
+        vm.dateType2 = '';
       } else if(dateType1==2){
         vm.all = true;
         vm.one = false;
         vm.two = true;
-        vm.dateType2 = '201705';
+        vm.dateType2 = '';
       } else if(dateType1==0){
         vm.all = false;
       }
     }
 
+
+    vm.change1 = function(){
+      var x=document.getElementById("qwert").selectedIndex+3;
+      var y=document.getElementsByTagName("option");
+      vm.title = y[x].text ;
+    }
+
+
+
     vm.dataList = [];
+    var barChart1 = echarts.init(document.getElementById('barChartContainer'));
+    var barOption1 = {
+      title: {
+        text: '机器作业时间分布',
+        // textAlign: 'center'
+        left: 'center'
+      },
+      toolbox: {
+        feature: {
+          dataZoom: {},
+          brush: {
+            type: ['rect', 'polygon', 'clear']
+          },
+          restore: {}
+        }
+      },
+      brush: {},
+      xAxis: {
+        name: '累计作业时间(h)',
+        nameLocation: 'middle',
+        nameGap: 30,
+        type: 'value',
+        min:0,
+        max: 7000,
+        splitNumber: 14,
+        splitLine: {
+          lineStyle: {
+            color: '#f0f0f0'
+          }
+        }
+      },
+      yAxis: {
+        name: '日平均作业时间(h)',
+        nameLocation: 'middle',
+        nameGap: 30,
+        type: 'value',
+        min:0,
+        max: 24,
+        splitNumber: 5,
+        splitLine: {
+          lineStyle: {
+            color: '#f0f0f0'
+          }
+        }
+      },
+      dataZoom: [
+        //底部缩放滑动条
+        // {
+        //     type: 'slider',
+        //     show: true,
+        //     xAxisIndex: [0],
+        //     start: 0,
+        // },
+        {
+          type: 'inside',
+          xAxisIndex: [0],
+          start: 0
+        }, {
+          type: 'inside',
+          yAxisIndex: [0],
+          start: 0
+        }
+      ],
+      series: [{
+        animation: false,
+        data: '',
+        type: 'scatter',
+        symbol: 'circle',
+        symbolSize: 4,
+        itemStyle: {
+          normal: {
+            opacity: 0.8
+          }
+        },
+        markLine: {
+          data: [],
+          lineStyle: {
+            normal: {
+              color: '#6797e5',
+              type: 'solid'
+            }
+          },
+          label: {
+            normal: {
+              show: false
+            }
+          },
+          symbol: false
+        },
+        markArea: {
+          data: [
+
+          ],
+          label: {
+            normal: {
+              position: 'inside',
+              textStyle: {
+                color: 'green'
+              }
+            }
+          },
+          itemStyle: {
+            normal: {
+              color: '#f3f3f3',
+              borderColor: '#999',
+              borderWidth: '1'
+            }
+          }
+        }
+      }]
+    };
+
+    barOption1.series[0].markLine.lineStyle.normal.type='solid';
+    barOption1.series[0].markLine.data.push({
+        name: '0-5',
+        yAxis: 6
+      }, {
+        name: '5-10',
+        yAxis: 12
+      }, {
+        name: '10-15',
+        yAxis: 18
+      }, {
+        name: '20-25',
+        yAxis: 24
+      }, {
+        name: '0-1000',
+        xAxis: 1000
+      }, {
+        name: '1000-2000',
+        xAxis: 2000
+      },
+      [{
+        coord: [0, 0]
+      }, {
+        coord: [7500, 28]
+      }]);
+
+    barOption1.series[0].markLine.data.push({
+      name: '0-1000',
+      xAxis: 1000
+    }, {
+      name: '1000-2000',
+      xAxis: 2000
+    });
+    // barOption1.series[0].markArea.data.push(
+    //   [{
+    //     name: 0 + '台(' + 0+ '%)',
+    //     coord: [3200, 2]
+    //   }, {
+    //     coord: [3900, 4]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)',
+    //     coord: [3200, 8]
+    //   }, {
+    //     coord: [3900, 10]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)',
+    //     coord: [3200, 14]
+    //   }, {
+    //     coord: [3900, 16]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)',
+    //     coord: [3200, 20]
+    //   }, {
+    //     coord: [3900, 22]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)\n日均作业：' + 0 + 'h',
+    //     coord: [200, 20]
+    //   }, {
+    //     coord: [980, 22]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)\n日均作业：' + 0 + 'h',
+    //     coord: [1200, 20]
+    //   }, {
+    //     coord: [1950, 22]
+    //   }],
+    //   [{
+    //     name: 0 + '台(' + 0 + '%)\n日均作业：' + 0 + 'h',
+    //     coord: [2200, 20]
+    //   }, {
+    //     coord: [2950, 22]
+    //   }]
+    // );
+
+
+    barChart1.setOption(barOption1);
 
     vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
-
       if (null == machineType || "" == machineType) {
         machineType = 1; //默认为装载机
       }
@@ -471,7 +671,7 @@
       })
     };
 
-    vm.ok('1,2,3', 1,1, 0, null);
+    // vm.ok('1,2,3', 1,1, 0, null);
 
   }
 })();

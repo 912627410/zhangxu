@@ -165,8 +165,9 @@
             show: true
           }
         },
+        roam:true,
         scaleLimit: {
-          min: 0.5
+          min: 1
         }
       },
       series: [
@@ -174,8 +175,9 @@
           name: '开工热度',
           type: 'map',
           map: 'china',
+          roam:true,
           scaleLimit: {
-            min: 0.5
+            min: 1
           },
           showLegendSymbol: false,
           label: {
@@ -215,10 +217,10 @@
             if(params.componentSubType == 'map') {
               if(params.value) {
                 return params.data.name + '<br />'
-                  + '车辆数量：' + params.data.value + ' 台/天';
+                  + '车辆数量：' + params.data.value + ' 台';
               }
               return params.name + '<br />'
-                + '车辆数量：' + 0 + ' 台/天';
+                + '车辆数量：' + 0 + ' 台';
             }
             return '';
           }
@@ -261,8 +263,9 @@
             show: true
           }
         },
+        roam:true,
         scaleLimit: {
-          min: 0.5
+          min: 1
         }
       },
       series: [
@@ -270,8 +273,9 @@
           name: '销售热度',
           type: 'map',
           map: 'china',
+          roam:true,
           scaleLimit: {
-            min: 0.5
+            min: 1
           },
           showLegendSymbol: false,
           label: {
@@ -349,6 +353,10 @@
               show: true
             }
           },
+          roam:true,
+          scaleLimit: {
+            min: 1
+          },
           itemStyle: {
             normal: {
             },
@@ -422,6 +430,10 @@
             emphasis: {
               show: true
             }
+          },
+          roam:true,
+          scaleLimit: {
+            min: 1
           },
           itemStyle: {
             normal: {
