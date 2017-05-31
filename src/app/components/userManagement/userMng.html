@@ -111,11 +111,12 @@
             <td class="text-nowrap" data-title="'用户名'" sortable="'ssn'">{{userinfo.ssn}}</td>
             <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{userinfo.organizationDto.label}}</td>
             <td class="text-nowrap" data-title="'手机号'" sortable="'mobile'">{{userinfo.mobile}}</td>
-            <td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>
+            <!--<td class="text-nowrap" data-title="'Email'" sortable="'email'">{{userinfo.email}}</td>-->
             <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
-            <td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <!--<td class="text-nowrap" data-title="'创建时间'" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
             <!--<td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
-
+            <td class="text-nowrap" data-title="'姓名'">{{userinfo.lastname}}{{userinfo.firstname}}</td>
+            <td class="text-nowrap" data-title="'地址'">{{userinfo.address}}</td>
             <td class="text-nowrap text-center"  data-title="'操作'" >
               <button type="button" class="btn btn-default btn-xs"
                       presentation-href="user:superResetPassword"
