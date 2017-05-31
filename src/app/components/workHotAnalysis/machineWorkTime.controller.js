@@ -96,12 +96,6 @@
         }
       }
 
-      // //请求数据
-      // if(totalDateType == 1) { // 累计作业时间(h)
-      //   restUrl += "workTime?machineType=" + machineType;
-      // } else if (totalDateType == 2) { // 累计作业时间(天)
-      //   restUrl += "workDays?machineType=" + machineType;
-      // }
       var proMiss = serviceResource.restCallService(restUrl, "QUERY");
       proMiss.then(function (datas) {
         //装载数据
@@ -129,6 +123,7 @@
         var time1000_2000 = 0;
         var time2000_4000 = 0;
 
+        var xMax =0;
         //计算日均作业台数
         for (var i = 0; i < data[0].length; i++) {
           if (data[0][i][0] < 1000) {
@@ -141,8 +136,11 @@
             machine2000_4000++;
             time2000_4000 += data[0][i][1];
           }
+          //找出X轴数据最大值
+          if(xMax<data[0][i][0]){
+            xMax = data[0][i][0];
+          }
         }
-
         //计算累计作业台数
         for (var i = 0; i < data[0].length; i++) {
           if (data[0][i][1] < 6) {
@@ -206,6 +204,7 @@
             // name: '累计作业时间(h)',
             nameLocation: 'middle',
             nameGap: 30,
+            max:'dataMax',
             type: 'value',
             // max: 7000,
             // splitNumber: 14,
@@ -300,7 +299,7 @@
           var stringTime = "2016-03-01 00:00:00";
           var k2 = Date.parse(new Date(stringTime));
           var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
-          var xie=8000/days;
+          var xie=xMax/days;
 
           barOption.yAxis.name="日平均作业时间(h)";
           barOption.yAxis.max=24;
@@ -328,7 +327,7 @@
             [{
               coord: [0, 0]
             }, {
-              coord: [8000, xie]
+              coord: [xMax, xie]
             }]);
         } else if(averageDateType == 2) {
           barOption.yAxis.name="月平均作业时间(h)";
