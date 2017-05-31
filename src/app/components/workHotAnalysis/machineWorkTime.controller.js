@@ -27,12 +27,12 @@
         vm.all = true;
         vm.one = true;
         vm.two = false;
-        // vm.dateType2 = '201702';
+        vm.dateType2 = '';
       } else if(dateType1==2){
         vm.all = true;
         vm.one = false;
         vm.two = true;
-        // vm.dateType2 = '201705';
+        vm.dateType2 = '';
       } else if(dateType1==0){
         vm.all = false;
       }
@@ -242,7 +242,6 @@
     barChart1.setOption(barOption1);
 
     vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
-
       if (null == machineType || "" == machineType) {
         machineType = 1; //默认为装载机
       }
