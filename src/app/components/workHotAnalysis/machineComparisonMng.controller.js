@@ -272,6 +272,7 @@
         right: 20,
         itemGap: 30,
         feature: {
+          // restore: {show: true},
           saveAsImage: {show: true}
         },
         iconStyle: {
@@ -661,7 +662,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        // max:330000,
+        max:'dataMax',
         minInterval: 1,
         axisLine: {
           show: false
@@ -760,7 +761,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        // max:330000,
+        max:'dataMax',
         minInterval: 1,
         axisLine: {
           show: false
@@ -1371,9 +1372,9 @@
       workHoursYearData1.then(function (data) {
         if(heatType1==1){
           if(machineType1=="1,2,3"){
-            var yearData1 = [0,0];
+            var yearData1 = [null,null];
           } else if(machineType1=="A1"){
-            var yearData1 = [0,0,0,0,0];
+            var yearData1 = [null,null,null,null,null];
           } else {
             var yearData1 = [];
           }

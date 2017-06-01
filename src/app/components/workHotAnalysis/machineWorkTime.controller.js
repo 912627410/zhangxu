@@ -21,74 +21,115 @@
     // vm.totalDateType=1;//默认累计作业时间为小时
     // vm.dateType1 = 0; //默认查询全部类型
     // vm.machineType = '1,2,3';//默认查询全部
-    vm.all = false;
+
+    vm.monthDateDeviceData = new Date();
+    vm.monthDateOpenStatusDeviceData = {
+      opened: false
+    };
+    vm.monthDateOpenDeviceData = function ($event) {
+      vm.monthDateOpenStatusDeviceData.opened = true;
+    };
+    vm.dateOptions1 = {
+      formatYear: 'yyyy',
+      startingDay: 1,
+      minMode: 'month'
+    };
+    // var dates = new Array();
     vm.change = function(dateType1){
       if(dateType1==1){
-        vm.all = true;
-        vm.one = true;
-        vm.two = false;
-        vm.dateType2 = '';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        var dates = new Array();
+        vm.quarterQuery = true;
+        vm.monthQuery = false;
+        vm.dateType2 = '201702';
+        for(var i=0;i<6;i++){
+          var quarterDate = new Date();
+          if(i==0){
+            var monthDate = quarterDate.getMonth()+1;
+          }else if(i==1){
+            monthDate = quarterDate.getMonth()+1-3;
+          } else if(i==2) {
+            monthDate = quarterDate.getMonth()+1-6;
+          }else if(i==3) {
+            monthDate = quarterDate.getMonth()+1-9;
+          }else if(i==4) {
+            monthDate = quarterDate.getMonth()+1-12;
+          }else if(i==5) {
+            monthDate = quarterDate.getMonth()+1-15;
+          }
+          if(monthDate<=0){
+            if(-11<=monthDate && monthDate<=-9){
+              var year =quarterDate.getFullYear()-1;
+              var value = '01';
+              var value1 = '年第一季度';
+            } else if(-8<=monthDate && monthDate<=-6){
+              year =quarterDate.getFullYear()-1;
+              value = '02';
+              value1 = '年第二季度';
+            } else if(-5<=monthDate && monthDate<=-3){
+              year =quarterDate.getFullYear()-1;
+              value = '03';
+              value1 = '年第三季度';
+            }else if(-2<=monthDate && monthDate<=0){
+              year =quarterDate.getFullYear()-1;
+              value = '04';
+              value1 = '年第四季度';
+            }else if(-14<=monthDate && monthDate<=-12){
+              year =quarterDate.getFullYear()-2;
+              value = '04';
+              value1 = '年第四季度';
+            }
+          } else
+          if(1<=monthDate && monthDate<=3){
+            year =quarterDate.getFullYear();
+            var value = '01';
+            var value1 = '年第一季度';
+          } else if(4<=monthDate && monthDate<=6){
+            year =quarterDate.getFullYear();
+            value = '02';
+            value1 = '年第二季度';
+          } else if(7<=monthDate && monthDate<=9){
+            year =quarterDate.getFullYear();
+            value = '03';
+            value1 = '年第三季度';
+          }else if(10<=monthDate && monthDate<=12){
+            year =quarterDate.getFullYear();
+            value = '04';
+            value1 = '年第四季度';
+          }
+          var x = ''+year+value;
+          var y = year+value1;
+          var date = {
+            key: x,
+            value: y
+          }
+          dates.push(date);
+        }
+        vm.quarter = dates;
+        vm.monthDateDeviceData = '';
+        vm.title = '2017年第二季度';
       } else if(dateType1==2){
-        vm.all = true;
-        vm.one = false;
-        vm.two = true;
+        vm.quarterQuery = false;
+        vm.monthQuery = true;
+        vm.monthDateDeviceData = new Date();
         vm.dateType2 = '';
+        vm.title = '2017年6月';
       } else if(dateType1==0){
-        vm.all = false;
+        vm.quarterQuery = false;
+        vm.monthQuery = false;
+        vm.monthDateDeviceData = '';
       }
     }
-
-    // var d = new Date("2015/04/01");
-    // d.setMonth(d.getMonth()-6);
-    // console.log(d);
-    // console.log(d.getFullYear());
-    // console.log(d.getMonth());
-    // var a = d.getMonth()+1;
-    // if(a<10){
-    //   a = '0'+a;
-    // }
-    // console.log(''+d.getFullYear()+a);
-    //
-    //
-    //
-    // var d1 = new Date("2016/01/01");
-    // d1.setMonth(d1.getMonth()-6);
-    // console.log(d1);
-    // console.log(d1.getFullYear());
-    // console.log(d1.getMonth());
-    // console.log(d1.getMonth()+1);
-    // var a1 = d1.getMonth()+1;
-    // if(a1<10){
-    //   a1 = '0'+a1;
-    // }
-    // console.log(''+d1.getFullYear()+a1);
 
     vm.change1 = function(){
       var x=document.getElementById("qwert").selectedIndex+3;
       var y=document.getElementsByTagName("option");
       vm.title = y[x].text ;
     }
+    vm.change2 = function(monthDateDeviceData){
 
+      var month = monthDateDeviceData.getMonth() +1;
+      vm.title = monthDateDeviceData.getFullYear() +'年'+ month + '月';
+    }
 
 
     vm.dataList = [];
@@ -285,7 +326,7 @@
 
     barChart1.setOption(barOption1);
 
-    vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2) {
+    vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2,monthDateDeviceData) {
       if (null == machineType || "" == machineType) {
         machineType = 1; //默认为装载机
       }
@@ -330,13 +371,25 @@
         if(dateType1==1) {
           restUrl += '&workTimeQuarter=' + dateType2;
         } else if(dateType1==2){
-          restUrl += '&workTimeMonth=' + dateType2;
+          var month = monthDateDeviceData.getMonth() +1;
+          if(month<10){
+            var monthDateFormated = monthDateDeviceData.getFullYear() +'0'+ month;
+          }else{
+            monthDateFormated = ''+ monthDateDeviceData.getFullYear() + month;
+          }
+          restUrl += '&workTimeMonth=' + monthDateFormated;
         }
       } else if(totalDateType==2){
         if(dateType1==1) {
           restUrl += '&workDaysQuarter=' + dateType2;
         } else if(dateType1==2){
-          restUrl += '&workDaysMonth=' + dateType2;
+          var month = monthDateDeviceData.getMonth() +1;
+          if(month<10){
+            var monthDateFormated = monthDateDeviceData.getFullYear() +'0'+ month;
+          }else{
+            monthDateFormated = ''+ monthDateDeviceData.getFullYear() + month;
+          }
+          restUrl += '&workDaysMonth=' + monthDateFormated;
         }
       }
 
@@ -539,40 +592,73 @@
         };
 
         if(averageDateType == 1) {
-          //计算斜线
-          var stringTime = "2016-03-01 00:00:00";
-          var k2 = Date.parse(new Date(stringTime));
-          var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
-          var xie=xMax/days;
 
-          barOption.yAxis.name="日平均作业时间(h)";
-          barOption.yAxis.max=24;
-          barOption.yAxis.splitNumber=5;
-          barOption.series[0].markLine.lineStyle.normal.type='solid';
-          barOption.series[0].markLine.data.push({
-            name: '0-5',
-            yAxis: 6
-          }, {
-            name: '5-10',
-            yAxis: 12
-          }, {
-            name: '10-15',
-            yAxis: 18
-          }, {
-            name: '20-25',
-            yAxis: 24
-          }, {
-            name: '0-1000',
-            xAxis: 1000
-          }, {
-            name: '1000-2000',
-            xAxis: 2000
-          },
-            [{
-              coord: [0, 0]
-            }, {
-              coord: [xMax, xie]
-            }]);
+          if(machineType=="1,2,3" && totalDateType ==1 && dateType1==0){
+            //计算斜线
+            var stringTime = "2016-03-01 00:00:00";
+            var k2 = Date.parse(new Date(stringTime));
+            var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
+            var xie=xMax/days;
+
+            barOption.yAxis.name="日平均作业时间(h)";
+            barOption.yAxis.max=24;
+            barOption.yAxis.splitNumber=5;
+            barOption.series[0].markLine.lineStyle.normal.type='solid';
+            barOption.series[0].markLine.data.push({
+                name: '0-5',
+                yAxis: 6
+              }, {
+                name: '5-10',
+                yAxis: 12
+              }, {
+                name: '10-15',
+                yAxis: 18
+              }, {
+                name: '20-25',
+                yAxis: 24
+              }, {
+                name: '0-1000',
+                xAxis: 1000
+              }, {
+                name: '1000-2000',
+                xAxis: 2000
+              },
+              [{
+                coord: [0, 0]
+              }, {
+                coord: [xMax, xie]
+              }]);
+          }else {
+            // //计算斜线
+            // var stringTime = "2016-03-01 00:00:00";
+            // var k2 = Date.parse(new Date(stringTime));
+            // var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
+            // var xie=xMax/days;
+
+            barOption.yAxis.name="日平均作业时间(h)";
+            barOption.yAxis.max=24;
+            barOption.yAxis.splitNumber=5;
+            barOption.series[0].markLine.lineStyle.normal.type='solid';
+            barOption.series[0].markLine.data.push({
+                name: '0-5',
+                yAxis: 6
+              }, {
+                name: '5-10',
+                yAxis: 12
+              }, {
+                name: '10-15',
+                yAxis: 18
+              }, {
+                name: '20-25',
+                yAxis: 24
+              }, {
+                name: '0-1000',
+                xAxis: 1000
+              }, {
+                name: '1000-2000',
+                xAxis: 2000
+              });
+          }
         } else if(averageDateType == 2) {
           barOption.yAxis.name="月平均作业时间(h)";
           barOption.yAxis.max=750;
