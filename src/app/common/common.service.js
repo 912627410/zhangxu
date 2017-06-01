@@ -185,5 +185,29 @@
     return treeFactory;
   }
 
+  //组织树的factory
+  GPSCloudFactory.factory('fleetTreeFactory',fleetTreeFactory);
+
+  function fleetTreeFactory($rootScope,$uibModal){
+
+    var fleetTreeFactory={}
+
+    fleetTreeFactory.treeShow=function (selectedCallback) {
+      var modalInstance =  $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/common/fleet.html',
+        controller: 'fleetTreeController as fleetTreeController'
+      })
+      modalInstance.result.then(function(selectedItem){
+        selectedCallback(selectedItem);
+      },function(){
+        // 没有选中任何item
+        // console.log('Modal dismissed at: ' + new Date())
+      })
+    }
+    return fleetTreeFactory;
+  }
+
 
 })();

@@ -9,21 +9,28 @@
   <div class="modal-body row">
     <div class="box-body col-sm-6">
       <br>
-      <br>
       <div class="form-group">
-        <label for="name" class="col-sm-3 control-label padding5">名称</label>
+        <label for="fleet" class="col-sm-3 control-label padding5">{{'underFleet'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="name" class="form-control" placeholder="名称"
+          <input type="text" id="fleet" class="form-control" placeholder="{{'underFleet'|translate}}"
+                 ng-model="newWorkPointCtrl.workPoint.fleet.label" name="label" typeahead-show-hint="true"
+                 validator="required" readonly/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label padding5">{{'name'|translate}}</label>
+        <div class="col-sm-8">
+          <input type="text" id="name" class="form-control" placeholder="{{'name'|translate}}"
                  ng-model="newWorkPointCtrl.workPoint.name" name="name" typeahead-show-hint="true"
                  validator="required"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label padding5">类型</label>
+        <label class="col-sm-3 control-label padding5">{{'type'|translate}}</label>
         <div class="col-sm-8">
           <ui-select id="pointType" name="pointType" ng-model="newWorkPointCtrl.workPoint.type" theme="bootstrap"
                      validator="required">
-            <ui-select-match allow-clear="true" placeholder="类型">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'type'|translate}}">{{$select.selected.name}}
             </ui-select-match>
             <ui-select-choices
               repeat="pointType.id as pointType in newWorkPointCtrl.pointTypeList | propsFilter: {name: $select.search}">
@@ -33,32 +40,32 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label padding5">描述</label>
+        <label class="col-sm-3 control-label padding5">{{'description'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="describe" class="form-control" placeholder="描述"
+          <input type="text" id="describe" class="form-control" placeholder="{{'description'|translate}}"
                  ng-model="newWorkPointCtrl.workPoint.describe" name="describe" typeahead-show-hint="true"
                  validator="required"/>
         </div>
       </div>
       <div class="form-group">
-        <label for="longitude" class="col-sm-3 control-label padding5">经度</label>
+        <label for="longitude" class="col-sm-3 control-label padding5">{{'longitude'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="longitude" class="form-control" placeholder="经度" name="longitude"
+          <input type="text" id="longitude" class="form-control" placeholder="{{'longitude'|translate}}" name="longitude"
                  typeahead-show-hint="true"
                  required/>
         </div>
       </div>
       <div class="form-group">
-        <label for="latitude" class="col-sm-3 control-label padding5">维度</label>
+        <label for="latitude" class="col-sm-3 control-label padding5">{{'latitude'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="latitude" class="form-control" placeholder="维度" name="latitude"
+          <input type="text" id="latitude" class="form-control" placeholder="{{'latitude'|translate}}" name="latitude"
                  required/>
         </div>
       </div>
       <div class="form-group">
-        <label for="radius" class="col-sm-3 control-label padding5">半径</label>
+        <label for="radius" class="col-sm-3 control-label padding5">{{'radius'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="radius" class="form-control" placeholder="半径" name="radius" typeahead-show-hint="true"
+          <input type="text" id="radius" class="form-control" placeholder="{{'radius'|translate}}" name="radius" typeahead-show-hint="true"
                  required/>
         </div>
       </div>
@@ -68,7 +75,7 @@
         <button class="btn btn-primary" type="button" ng-click="newWorkPointCtrl.addPoint()">添加作业点</button>
         <button class="btn btn-warning" type="button" ng-click="newWorkPointCtrl.remove()">移除作业点</button>
         <button class="btn btn-danger" type="button" ng-click="newWorkPointCtrl.ok(newWorkPointCtrl.workPoint)"
-                validation-submit="newWorkPointForm">提交
+                validation-submit="newWorkPointForm">{{'submit'|translate}}
         </button>
       </div>
 
@@ -80,7 +87,7 @@
       <div class="form-group">
         <div class="col-sm-3"></div>
         <div class="col-sm-7">
-          <input type="text" id="tipinput" class="form-control" placeholder="搜索" ng-model="newWorkPointCtrl.tipinput"/>
+          <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" ng-model="newWorkPointCtrl.tipinput"/>
         </div>
         <button type="button" class="btn btn-primary" value="地图上显示" id="showMachineAddress"
                 ng-click="newWorkPointCtrl.showAddress(newWorkPointCtrl.tipinput)">定位

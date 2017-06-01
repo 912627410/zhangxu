@@ -23,6 +23,11 @@
       $rootScope.orgChart = JSON.parse($window.sessionStorage["orgChart"]);
     }
 
+    //fleet信息
+    if ($window.sessionStorage["fleetChart"]) {
+      $rootScope.fleetChart = JSON.parse($window.sessionStorage["fleetChart"]);
+    }
+
     //提醒消息数量
     if ($window.sessionStorage["notificationNumber"]) {
       $rootScope.notificationNumber = $window.sessionStorage["notificationNumber"];

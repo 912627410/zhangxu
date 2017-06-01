@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, commonFactory,$window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,FLEET_LIST_URL,$confirm, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -212,6 +212,9 @@
         if (permissions.getPermissions("config:organazitionPage")) {
           vm.getOrg();
         }
+        if (permissions.getPermissions("fleet:page")) {
+          vm.getFleet();
+        }
         if (permissions.getPermissions("user:notification")) {
           vm.getNotification();
         }
@@ -296,6 +299,20 @@
 
 
         $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+      }, function (reason) {
+        Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+      });
+    }
+
+    vm.getFleet = function () {
+      var rspData = serviceResource.restCallService(FLEET_LIST_URL, "GET");
+      rspData.then(function (data) {
+
+        var fleetList = data.content;
+
+        $rootScope.fleetChart = commonFactory.unflatten(fleetList);
+
+        $window.sessionStorage["fleetChart"] = JSON.stringify($rootScope.fleetChart);
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetOrganizationInformation'));
       });

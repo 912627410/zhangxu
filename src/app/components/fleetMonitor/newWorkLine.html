@@ -1,0 +1,87 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建工作路线
+    <button class="btn btn-warning pull-right" type="button" ng-click="newWorkLineCtrl.cancel()">{{'close'|translate}}</button>
+
+  </h3>
+
+</div>
+<form name="newWorkLineForm" class="form-horizontal" style="font-size:13px;">
+  <div class="modal-body row">
+    <div class="box-body col-sm-6">
+      <br>
+      <div class="form-group">
+        <label for="fleet" class="col-sm-3 control-label padding5">{{'underFleet'|translate}}</label>
+        <div class="col-sm-8">
+          <input type="text" id="fleet" class="form-control" placeholder="{{'underFleet'|translate}}"
+                 ng-model="newWorkLineCtrl.workLine.fleet.label" name="label" typeahead-show-hint="true"
+                 validator="required" readonly/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label padding5">名称</label>
+        <div class="col-sm-8">
+          <input type="text" id="name" class="form-control" placeholder="名称"
+                 ng-model="newWorkLineCtrl.workLine.name" name="name" typeahead-show-hint="true"
+                 validator="required"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label padding5">起点</label>
+        <div class="col-sm-8">
+          <ui-select id="startPoint" name="startPoint"
+                     on-select="newWorkLineCtrl.drawLine()"
+                     ng-model="newWorkLineCtrl.workLine.beginPoint" theme="bootstrap"
+                     validator="required">
+            <ui-select-match allow-clear="true" placeholder="起点">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices
+              repeat="workPoint in newWorkLineCtrl.startPointList | propsFilter: {name: $select.search}">
+              <div ng-bind-html="workPoint.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label padding5">终点</label>
+        <div class="col-sm-8">
+          <ui-select id="endPoint" name="endPoint"
+                     on-select="newWorkLineCtrl.drawLine()"
+                     ng-model="newWorkLineCtrl.workLine.endPoint" theme="bootstrap"
+                     validator="required">
+            <ui-select-match allow-clear="true" placeholder="终点">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices
+              repeat="workPoint in newWorkLineCtrl.endPointList | propsFilter: {name: $select.search}">
+              <div ng-bind-html="workPoint.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="radius" class="col-sm-3 control-label padding5">路线长度</label>
+        <div class="col-sm-8">
+          <input type="text" id="radius" class="form-control" placeholder="长度(单位:米)"
+                 ng-model="newWorkLineCtrl.workLine.distance" name="radius" typeahead-show-hint="true"
+                 required/>
+        </div>
+      </div>
+
+      <br>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="newWorkLineCtrl.reset()">{{'reset'|translate}}</button>
+        <button class="btn btn-danger" type="button" ng-click="newWorkLineCtrl.ok(newWorkLineCtrl.workLine)"
+                validation-submit="newWorkLineForm">{{'submit'|translate}}
+        </button>
+      </div>
+
+      <i style="color: red" ng-if="null!=newWorkLineCtrl.errorMsg">
+        {{newWorkLineCtrl.errorMsg}}<br/>
+      </i>
+    </div>
+    <div class="map-body col-sm-6">
+      <div class="box-body" id="newWorkLineMap" style="height:400px;width: 400px;"></div>
+    </div>
+  </div>
+</form>

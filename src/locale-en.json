@@ -679,6 +679,7 @@
   "ECUInactiveMachine":"ECU Inactive machine",
   "SpeedMonitoring":"Speed monitoring",
   "NeutralSlidingMonitoring":"Neutral sliding monitoring",
+<<<<<<< 8a8b53dcfdb94151d8985dc09c76e3eac104660f
   "locationInformation":"Location information",
   "profitStatistics":"Profit Statistics",
   "incomePerTrip(Yuan)":"Income Per Trip(Yuan)",
@@ -690,7 +691,16 @@
   "dayShift":"Day Shift",
   "nightShift":"Night Shift",
   "allDay":"All Day",
-  "profit(Yuan)":"Profit(Yuan)"
-
+  "profit(Yuan)":"Profit(Yuan)",
+  "workPoint":"Working place",
+  "workLine":"Working line",
+  "mapMonitor": "Map monitor",
+  "lineMonitor": "Chart monitor",
+  "underFleet": "Belongs to team",
+  "create": "Add",
+  "beginPoint": "Start Point",
+  "endPoint": "End Point",
+  "openMonitor": "Open Monitor",
+  "closeMonitor": "Close Monitor"
 
 }

@@ -9,9 +9,10 @@
     .controller('machineSpeedingController', machineSpeedingController);
 
   /** @ngInject */
-  function machineSpeedingController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
+  function machineSpeedingController($rootScope, $scope , $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
+    var wsSpeedAlert;
     vm.operatorInfo = $rootScope.userInfo;
     vm.speedAlertMonitor = false; // 超速报警实时监控开关
 
@@ -206,19 +207,26 @@
       vm.initDate();
     };
 
+
+
     /**
-     * 超速报警实时监控
-     * @type {WebSocket}
+     * 开启超速报警实时监控
      */
-    var wsSpeedAlert = new WebSocket(WEBSOCKET_URL + "webSocketServer/speedAlertRealTimeMonitor");
-    wsSpeedAlert.onmessage = function (evt) {
-      if(evt.data == "1") {
+    vm.speedAlertReload = function () {
+
+      wsSpeedAlert = new WebSocket(WEBSOCKET_URL + "webSocketServer/speedAlertRealTimeMonitor?token=" + vm.operatorInfo.authtoken);
+
+      wsSpeedAlert.onerror =function () {
+        Notification.error("wsSpeedAlert WebSocketError!");
+      }
+
+      wsSpeedAlert.onopen = function() {
         Notification.success("开启成功,请打开图表");
         vm.speedAlertMonitor = true;
-      } else if (evt.data == "0") {
-        Notification.warning("超速报警实时监控关闭成功");
-        vm.speedAlertMonitor = false;
-      } else {
+      };
+
+      wsSpeedAlert.onmessage = function (evt) {
+
         var obj = JSON.parse(evt.data);
         var data = {
           x: obj.locateDateTime,
@@ -228,17 +236,10 @@
         };
         vm.overSpeedConfig.series[0].data.push(data);
         $scope.$apply();
-      }
-    };
 
-    /**
-     * 开启超速报警实时监控
-     */
-    vm.speedAlertReload = function () {
-      wsSpeedAlert.send(JSON.stringify({
-        type: 1,
-        content:vm.operatorInfo.authtoken
-      }));
+      };
+
+
     };
 
     /**
@@ -246,15 +247,16 @@
      * @param evt
      */
     vm.speedAlertClose = function (evt) {
-      wsSpeedAlert.send(JSON.stringify({
-        type: 0,
-        content:vm.operatorInfo.authtoken
-      }));
+
+      wsSpeedAlert.close();
+
+      wsSpeedAlert.onclose = function () {
+        Notification.warning("超速报警实时监控关闭成功");
+        vm.speedAlertMonitor = false;
+      }
+
     };
 
-    wsSpeedAlert.onerror = function (evt) {
-      console.log("wsSpeedAlert WebSocketError!");
-    };
 
 
     /**

@@ -26,10 +26,11 @@
     </div>
 
     <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">{{'reset'|translate}}</button>
+
       <button class="btn btn-primary" type="button" presentation-href="fleet:page"
               ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">{{'reset'|translate}}</button>
     </div>
   </div>
   <div class="row">
@@ -73,9 +74,6 @@
             </button>
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
                     ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">{{'machineTransfer'|translate}}
-            </button>
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
-                    ng-click="fleetMngCtrl.updateWorkplaneRela(fleet,'lg')">{{'WorkingFaceMaintain'|translate}}
             </button>
           </td>
         </tr>
