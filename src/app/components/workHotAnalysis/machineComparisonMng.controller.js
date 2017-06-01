@@ -23,15 +23,21 @@
 
     vm.startDateDeviceData = startDate;
     vm.endDateDeviceData = new Date();
+    vm.monthDateDeviceData = new Date();
 
     //date picker
+    vm.monthDateOpenStatusDeviceData = {
+      opened: false
+    };
     vm.startDateOpenStatusDeviceData = {
       opened: false
     };
     vm.endDateOpenStatusDeviceData = {
       opened: false
     };
-
+    vm.monthDateOpenDeviceData = function ($event) {
+      vm.monthDateOpenStatusDeviceData.opened = true;
+    };
     vm.startDateOpenDeviceData = function ($event) {
       vm.startDateOpenStatusDeviceData.opened = true;
     };
@@ -44,7 +50,11 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
-
+    vm.dateOptions1 = {
+      formatYear: 'yyyy',
+      startingDay: 1,
+      minMode: 'month'
+    };
 
     vm.echartsInit = function (id) {
       var item = echarts.init(document.getElementById(id));
@@ -56,6 +66,71 @@
     vm.dateType1 = "1";
     vm.dateType2 = "201702";
     vm.heatType3 = "1";
+    var dates = new Array();
+    for(var i=0;i<6;i++){
+      var quarterDate = new Date();
+      if(i==0){
+        var monthDate = quarterDate.getMonth()+1;
+      }else if(i==1){
+        monthDate = quarterDate.getMonth()+1-3;
+      } else if(i==2) {
+        monthDate = quarterDate.getMonth()+1-6;
+      }else if(i==3) {
+        monthDate = quarterDate.getMonth()+1-9;
+      }else if(i==4) {
+        monthDate = quarterDate.getMonth()+1-12;
+      }else if(i==5) {
+        monthDate = quarterDate.getMonth()+1-15;
+      }
+      if(monthDate<=0){
+        if(-11<=monthDate && monthDate<=-9){
+          var year =quarterDate.getFullYear()-1;
+          var value = '01';
+          var value1 = '年第一季度';
+        } else if(-8<=monthDate && monthDate<=-6){
+          year =quarterDate.getFullYear()-1;
+          value = '02';
+          value1 = '年第二季度';
+        } else if(-5<=monthDate && monthDate<=-3){
+          year =quarterDate.getFullYear()-1;
+          value = '03';
+          value1 = '年第三季度';
+        }else if(-2<=monthDate && monthDate<=0){
+          year =quarterDate.getFullYear()-1;
+          value = '04';
+          value1 = '年第四季度';
+        }else if(-14<=monthDate && monthDate<=-12){
+          year =quarterDate.getFullYear()-2;
+          value = '04';
+          value1 = '年第四季度';
+        }
+      } else
+      if(1<=monthDate && monthDate<=3){
+        year =quarterDate.getFullYear();
+        var value = '01';
+        var value1 = '年第一季度';
+      } else if(4<=monthDate && monthDate<=6){
+        year =quarterDate.getFullYear();
+        value = '02';
+        value1 = '年第二季度';
+      } else if(7<=monthDate && monthDate<=9){
+        year =quarterDate.getFullYear();
+        value = '03';
+        value1 = '年第三季度';
+      }else if(10<=monthDate && monthDate<=12){
+        year =quarterDate.getFullYear();
+        value = '04';
+        value1 = '年第四季度';
+      }
+      var x = ''+year+value;
+      var y = year+value1;
+      var date = {
+        key: x,
+        value: y
+      }
+      dates.push(date);
+    }
+    vm.quarter = dates;
     //修改查询单一车型和对比车型的切换
     vm.only=true;
     vm.comtrast=false;
@@ -64,30 +139,93 @@
       vm.contrast=!vm.contrast;
       vm.reset();
     }
-    vm.otherQuery=true;
     vm.dayQuery = false;
-    vm.one = true;
-    vm.two = false;
+    vm.quarterQuery = true;
+    vm.monthQuery = false;
     //触发选择框时间
     vm.change = function (dateType1) {
       if(dateType1==3){
         vm.dayQuery = true;
-        vm.otherQuery= false;
+        vm.quarterQuery = false;
+        vm.monthQuery = false;
         vm.dateType2 = null;
       } else if(dateType1==2){
-        vm.otherQuery=true;
         vm.dayQuery = false;
-        vm.two = true;
-        vm.one = false;
-        vm.dateType2 = "201705";
+        vm.quarterQuery = false;
+        vm.monthQuery = true;
       } else {
-        vm.otherQuery=true;
         vm.dayQuery = false;
-        vm.one = true;
-        vm.two = false;
+        vm.quarterQuery = true;
+        vm.monthQuery = false;
+        var dates = new Array();
+        for(var i=0;i<6;i++){
+          var quarterDate = new Date();
+          if(i==0){
+            var monthDate = quarterDate.getMonth()+1;
+          }else if(i==1){
+            monthDate = quarterDate.getMonth()+1-3;
+          } else if(i==2) {
+            monthDate = quarterDate.getMonth()+1-6;
+          }else if(i==3) {
+            monthDate = quarterDate.getMonth()+1-9;
+          }else if(i==4) {
+            monthDate = quarterDate.getMonth()+1-12;
+          }else if(i==5) {
+            monthDate = quarterDate.getMonth()+1-15;
+          }
+          if(monthDate<=0){
+            if(-11<=monthDate && monthDate<=-9){
+              var year =quarterDate.getFullYear()-1;
+              var value = '01';
+              var value1 = '年第一季度';
+            } else if(-8<=monthDate && monthDate<=-6){
+              year =quarterDate.getFullYear()-1;
+              value = '02';
+              value1 = '年第二季度';
+            } else if(-5<=monthDate && monthDate<=-3){
+              year =quarterDate.getFullYear()-1;
+              value = '03';
+              value1 = '年第三季度';
+            }else if(-2<=monthDate && monthDate<=0){
+              year =quarterDate.getFullYear()-1;
+              value = '04';
+              value1 = '年第四季度';
+            }else if(-14<=monthDate && monthDate<=-12){
+              year =quarterDate.getFullYear()-2;
+              value = '04';
+              value1 = '年第四季度';
+            }
+          } else
+          if(1<=monthDate && monthDate<=3){
+            year =quarterDate.getFullYear();
+            var value = '01';
+            var value1 = '年第一季度';
+          } else if(4<=monthDate && monthDate<=6){
+            year =quarterDate.getFullYear();
+            value = '02';
+            value1 = '年第二季度';
+          } else if(7<=monthDate && monthDate<=9){
+            year =quarterDate.getFullYear();
+            value = '03';
+            value1 = '年第三季度';
+          }else if(10<=monthDate && monthDate<=12){
+            year =quarterDate.getFullYear();
+            value = '04';
+            value1 = '年第四季度';
+          }
+          var x = ''+year+value;
+          var y = year+value1;
+          var date = {
+            key: x,
+            value: y
+          }
+          dates.push(date);
+        }
+        vm.quarter = dates;
         vm.dateType2 = "201702";
       }
     }
+
     //开工热度地图
     var chinaOption1 = {
       title: {
@@ -655,7 +793,8 @@
     };
     mmuChart1.setOption(mmuOption1);
     //单一车型查询
-    vm.query = function (startDate,endDate,dateType1,dateType,machineType1,heatType1) {
+    vm.query = function (startDate,endDate,dateType1,dateType,monthDate,machineType1,heatType1) {
+      var monthDateFormated;
       if(null==machineType1||null==heatType1) {
         Notification.warning({message: '请选择单一车型状态下查询相关参数'});
         return;
@@ -668,6 +807,15 @@
       //判断查询时间段
       if(dateType){
         var filterTerm = dateType;
+      } else if(monthDate){
+        var month = monthDate.getMonth() +1;
+        if(month<10){
+          monthDateFormated = monthDate.getFullYear() +'0'+ month;
+
+        }else{
+          monthDateFormated = ''+monthDate.getFullYear() + month;
+        }
+        filterTerm = monthDateFormated;
       } else {
         if (startDate) {
           var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -734,10 +882,10 @@
             beforeFilter = dateType-1;
           }
         } else if(dateType1==2){
-          if(dateType==201701){
+          if(monthDateFormated==201701){
             beforeFilter = 201612;
           }else{
-            beforeFilter = dateType-1;
+            beforeFilter = monthDateFormated-1;
           }
         } else if(dateType1==3){
           var startDate1 = new Date();
@@ -761,7 +909,7 @@
 
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=120";
+        filterTerm += "&hourScope=2";
       }
       //拼接查询路径
       if (filterTerm){
@@ -829,7 +977,8 @@
         var mapTitleTextstyle = mapOption1.title.textStyle;
         var mapTitleSubtextstyle = mapOption1.title.subtextStyle;
         mapChart1.setOption(mapOption1);
-        vm.showMachineHeatDetails(startDate,endDate,dateType1,dateType,heatType1);
+
+        vm.showMachineHeatDetails(startDate,endDate,dateType1,dateType,monthDate,heatType1);
         var backButtons = document.getElementsByClassName("backChina");
         backButtons[0].style.display = "none";
         //地图下钻
@@ -925,6 +1074,7 @@
       }, function (reason) {
         Notification.error("获取数据失败");
       });
+
       vm.heatType3 = heatType1;
       var mapContainerList = document.getElementsByClassName("mapContainer");
       mapContainerList[0].style.width = "100%";
@@ -1313,13 +1463,24 @@
     }
 
     //默认进入页面后显示挖掘机开工热度2017年第二季度数据
-    vm.query(null,null,1,201702,'A1',1);
+    vm.query(null,null,1,201702,null,'A1',1);
     //查看对比结果
-    vm.viewResults = function (startDate,endDate,dateType1,dateType,machineType1,machineType2,heatType1,heatType2) {
-      if(dateType){
+    vm.viewResults = function (startDate,endDate,dateType1,dateType,monthDate,machineType1,machineType2,heatType1,heatType2) {
+      if(dateType1==1){
         startDate=null;
         endDate=null;
+        monthDate=null;
+      }else if(dateType1==2){
+        startDate=null;
+        endDate=null;
+        dateType=null;
+      }else if(dateType1==3){
+        dateType=null;
+        monthDate=null;
       }
+      var monthDateFormated;
+      var mapTitleText1;
+      var mapTitleText2;
       if(null==machineType1||null==machineType2||null==heatType1||null==heatType2){
         Notification.warning({message: '请选择相关参数'});
       }else if(machineType1 == machineType2&&heatType1==heatType2){
@@ -1381,6 +1542,15 @@
         //判断查询时间段--左图
         if(dateType){
           var filterTerm1 = dateType;
+        } else if(monthDate) {
+          var month = monthDate.getMonth() + 1;
+          if (month < 10) {
+            monthDateFormated = monthDate.getFullYear() + '0' + month;
+
+          } else {
+            monthDateFormated = '' + monthDate.getFullYear() + month;
+          }
+          filterTerm1 = monthDateFormated;
         } else {
           if (startDate) {
             var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -1393,7 +1563,6 @@
             filterTerm1 += "&endDate=" + endDateFormated;
           }
         }
-
 
         //查询上周期的销售总额URL--左图
         var beforeRestCallURL3 = restCallURL1;
@@ -1433,7 +1602,16 @@
         //判断查询时间段--右图
         if(dateType){
             var filterTerm2 = dateType;
-        } else {
+        } else if(monthDate) {
+          var month = monthDate.getMonth() + 1;
+          if (month < 10) {
+            monthDateFormated = monthDate.getFullYear() + '0' + month;
+
+          } else {
+            monthDateFormated = '' + monthDate.getFullYear() + month;
+          }
+          filterTerm2 = monthDateFormated;
+        }else {
           if (startDate) {
             var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
             var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
@@ -1519,10 +1697,10 @@
         }
         //开工热度查询默认查询范围2小时
         if(heatType1==1){
-          filterTerm1 += "&hourScope=120";
+          filterTerm1 += "&hourScope=2";
         }
         if(heatType2==1){
-          filterTerm2 += "&hourScope=120";
+          filterTerm2 += "&hourScope=2";
         }
         //拼接查询路径
         if (filterTerm1){
@@ -1663,6 +1841,7 @@
             }
             mapOption1.visualMap.max=max3;
             mapOption1.series[0].data=zData;
+            mapTitleText1 = mapOption1.title.text;
             mapChart1.setOption(mapOption1);
             if(machineType2=="A1"){
               if(heatType2==1){
@@ -1684,6 +1863,7 @@
             }
             mapOption2.visualMap.max=max3;
             mapOption2.series[0].data=data2;
+            mapTitleText2 = mapOption2.title.text;
             mapChart2.setOption(mapOption2);
           }, function (reason) {
             Notification.error("获取数据失败");
@@ -1779,8 +1959,10 @@
         var backButtons = document.getElementsByClassName("backChina");
         vm.backChina1 = function () {
           var mapChart1 = vm.echartsInit("mapContainer1");
+          mapOption1.title.text = mapTitleText1;
           mapChart1.setOption(mapOption1);
           var mapChart2 = vm.echartsInit("mapContainer2");
+          mapOption2.title.text = mapTitleText2;
           mapChart2.setOption(mapOption2);
           backButtons[0].style.display = "none";
           backButtons[1].style.display = "none";
@@ -1800,8 +1982,10 @@
 
         vm.backChina2 = function () {
           var mapChart2 = vm.echartsInit("mapContainer2");
+          mapOption2.title.text = mapTitleText2;
           mapChart2.setOption(mapOption2);
           var mapChart1 = vm.echartsInit("mapContainer1");
+          mapOption1.title.text = mapTitleText1;
           mapChart1.setOption(mapOption1);
           backButtons[1].style.display = "none";
           backButtons[0].style.display = "none";
@@ -1917,11 +2101,12 @@
     var provincesText = ['上海市', '河北省', '山西省', '内蒙古自治区', '辽宁省', '吉林省','黑龙江省',  '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省','河南省', '湖北省', '湖南省', '广东省', '广西壮族自治区', '海南省', '四川省', '贵州省', '云南省', '西藏自治区', '陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '重庆市', '香港特別行政區', '澳门特別行政區'];
 
     //查看各类车车辆热度分布
-    vm.showMachineHeatDetails = function (startDate,endDate,dateType1,dateType,heatType1) {
+    vm.showMachineHeatDetails = function (startDate,endDate,dateType1,dateType,monthDate,heatType1) {
       if(dateType){
         startDate=null;
         endDate=null;
       }
+      var monthDateFormated;
       chinaOption1.title.left = "center";
       chinaOption1.title. textStyle={fontSize: 21};
       chinaOption1.title. subtextStyle={fontSize: 12};
@@ -1966,6 +2151,15 @@
       //判断查询时间段
       if(dateType){
         var filterTerm = dateType;
+      } else if(monthDate){
+        var month = monthDate.getMonth() +1;
+        if(month<10){
+          monthDateFormated = monthDate.getFullYear() +'0'+ month;
+
+        }else{
+          monthDateFormated = ''+monthDate.getFullYear() + month;
+        }
+        filterTerm = monthDateFormated;
       } else {
         if (startDate) {
           var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -1980,7 +2174,7 @@
       }
       //开工热度查询默认查询范围2小时
       if(heatType1==1){
-        filterTerm += "&hourScope=120";
+        filterTerm += "&hourScope=2";
       }
       if(heatType1==1){
       //查询装载机

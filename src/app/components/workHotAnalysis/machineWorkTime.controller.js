@@ -28,6 +28,26 @@
         vm.one = true;
         vm.two = false;
         vm.dateType2 = '';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       } else if(dateType1==2){
         vm.all = true;
         vm.one = false;
@@ -38,6 +58,30 @@
       }
     }
 
+    // var d = new Date("2015/04/01");
+    // d.setMonth(d.getMonth()-6);
+    // console.log(d);
+    // console.log(d.getFullYear());
+    // console.log(d.getMonth());
+    // var a = d.getMonth()+1;
+    // if(a<10){
+    //   a = '0'+a;
+    // }
+    // console.log(''+d.getFullYear()+a);
+    //
+    //
+    //
+    // var d1 = new Date("2016/01/01");
+    // d1.setMonth(d1.getMonth()-6);
+    // console.log(d1);
+    // console.log(d1.getFullYear());
+    // console.log(d1.getMonth());
+    // console.log(d1.getMonth()+1);
+    // var a1 = d1.getMonth()+1;
+    // if(a1<10){
+    //   a1 = '0'+a1;
+    // }
+    // console.log(''+d1.getFullYear()+a1);
 
     vm.change1 = function(){
       var x=document.getElementById("qwert").selectedIndex+3;

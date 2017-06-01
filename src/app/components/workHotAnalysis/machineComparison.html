@@ -19,37 +19,40 @@
           </select>
         </div>
       </div>
-      <div ng-show="machineComparedMngCtrl.otherQuery">
-      <label class="control-label col-md-2">查询时间段:</label>
-      <div class="controls col-md-3">
+      <div ng-show="machineComparedMngCtrl.quarterQuery">
+        <label class="control-label col-md-2">开工季度:</label>
+        <div class="controls col-md-3">
         <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
-          <!--<option value="201704" ng-show="machineComparedMngCtrl.one">2017年第四季度</option>-->
-          <!--<option value="201703" ng-show="machineComparedMngCtrl.one">2017年第三季度</option>-->
-          <option value="201702" ng-show="machineComparedMngCtrl.one">2017年第二季度</option>
-          <option value="201701" ng-show="machineComparedMngCtrl.one">2017年第一季度</option>
-          <option value="201604" ng-show="machineComparedMngCtrl.one">2016年第四季度</option>
-          <option value="201603" ng-show="machineComparedMngCtrl.one">2016年第三季度</option>
-          <option value="201602" ng-show="machineComparedMngCtrl.one">2016年第二季度</option>
-          <option value="201601" ng-show="machineComparedMngCtrl.one">2016年第一季度</option>
-
-          <option value="201705" ng-show="machineComparedMngCtrl.two">2017年五月</option>
-          <option value="201704" ng-show="machineComparedMngCtrl.two">2017年四月</option>
-          <option value="201703" ng-show="machineComparedMngCtrl.two">2017年三月</option>
-          <option value="201702" ng-show="machineComparedMngCtrl.two">2017年二月</option>
-          <option value="201701" ng-show="machineComparedMngCtrl.two">2017年一月</option>
-          <option value="201612" ng-show="machineComparedMngCtrl.two">2016年十二月</option>
-          <option value="201611" ng-show="machineComparedMngCtrl.two">2016年十一月</option>
-          <option value="201610" ng-show="machineComparedMngCtrl.two">2016年十月</option>
-          <option value="201609" ng-show="machineComparedMngCtrl.two">2016年九月</option>
-          <option value="201608" ng-show="machineComparedMngCtrl.two">2016年八月</option>
-          <option value="201607" ng-show="machineComparedMngCtrl.two">2016年七月</option>
-          <option value="201606" ng-show="machineComparedMngCtrl.two">2016年六月</option>
+          <option ng-repeat="date in machineComparedMngCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
         </select>
-      </div>
-
+        </div>
         <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
+                ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
+        </button>
+      </div>
+      <div ng-show="machineComparedMngCtrl.monthQuery">
+        <label class="control-label col-md-2">开工月份:</label>
+        <div class="controls col-md-3">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
+                   ng-model="machineComparedMngCtrl.monthDateDeviceData"
+                   is-open="machineComparedMngCtrl.monthDateOpenStatusDeviceData.opened"
+                   datepicker-options="machineComparedMngCtrl.dateOptions1"
+                   min-date="machineComparedMngCtrl.minDate"
+                   max-date="machineComparedMngCtrl.maxDate"
+                   ng-required="true" current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="machineComparedMngCtrl.monthDateOpenDeviceData($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
         </button>
       </div>
     </div>
@@ -94,9 +97,9 @@
 
 
         <div>
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
+          <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
+                  ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,null,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
           </button>
         </div>
       </div>
@@ -150,7 +153,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
           </button>
         </div>
       </div>
@@ -165,7 +168,7 @@
               平均时长
             </div>
             <ul style="position: absolute;list-style: none;line-height: 24px;">
-              <li>总平均：{{machineComparedMngCtrl.excavatorHours + machineComparedMngCtrl.loaderHours | number:2}}小时</li>
+              <li>总平均：{{(machineComparedMngCtrl.excavatorHours + machineComparedMngCtrl.loaderHours)/2 | number:2}}小时</li>
               <li ng-if="machineComparedMngCtrl.excavatorHours>=machineComparedMngCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
               <li ng-if="machineComparedMngCtrl.excavatorHours<machineComparedMngCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <li ng-if="machineComparedMngCtrl.loaderHours>=machineComparedMngCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
@@ -179,12 +182,12 @@
           <div style="position: relative;">
             <ul style="list-style: none;line-height: 23px;">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales>=machineComparedMngCtrl.beforeTotalSales" >
-                <li>总销售额：</li>
+                <li>总销售台数：</li>
                 <li style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></li>
                 <!--<img ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales" src="assets/images/down.png"/>-->
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales">
-                <li>总销售额：</li>
+                <li>总销售台数：</li>
                 <li style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               </span>
             </ul>
@@ -203,7 +206,7 @@
               平均时长
             </div>
             <ul style="position: absolute;list-style: none;line-height: 24px;">
-              <li>总平均：{{machineComparedMngCtrl.excavatorHours2 + machineComparedMngCtrl.loaderHours2 | number:2}}小时</li>
+              <li>总平均：{{(machineComparedMngCtrl.excavatorHours2 + machineComparedMngCtrl.loaderHours2)/2 | number:2}}小时</li>
               <li ng-if="machineComparedMngCtrl.excavatorHours2>=machineComparedMngCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
               <li ng-if="machineComparedMngCtrl.excavatorHours2<machineComparedMngCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
@@ -216,12 +219,12 @@
           <div style="position: relative;">
             <ul style="list-style: none;line-height: 23px;">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1>=machineComparedMngCtrl.beforeTotalSales1" >
-                <li>总销售额：</li>
+                <li>总销售台数：</li>
                 <li style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></li>
                 <!--<img ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales" src="assets/images/down.png"/>-->
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1<machineComparedMngCtrl.beforeTotalSales1">
-                <li>总销售额：</li>
+                <li>总销售台数：</li>
                 <li style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               </span>
             </ul>
