@@ -684,7 +684,6 @@
   "ECUInactiveMachine":"ECU未激活车辆",
   "SpeedMonitoring":"超速监控",
   "NeutralSlidingMonitoring":"空挡滑行监控",
-<<<<<<< 8a8b53dcfdb94151d8985dc09c76e3eac104660f
   "locationInformation":"位置信息",
   "profitStatistics":"利润统计",
   "incomePerTrip(Yuan)":"每趟收入(元)",
