@@ -10,7 +10,7 @@
     .controller('newFleetController', newFleetController);
 
   /** @ngInject */
-  function newFleetController($rootScope,$scope,$http,$confirm,$uibModalInstance,treeFactory,serviceResource,FLEETINFO_URL, Notification) {
+  function newFleetController($rootScope,$scope,$http,$confirm,$uibModalInstance,treeFactory,serviceResource,FLEET_URL, Notification) {
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     vm.cancel = function () {
@@ -29,7 +29,7 @@
     vm.ok = function () {
       vm.fleet.parentId=vm.org.id;
       vm.fleet.type=4;
-      var rspdata = serviceResource.restAddRequest(FLEETINFO_URL,vm.fleet);
+      var rspdata = serviceResource.restAddRequest(FLEET_URL,vm.fleet);
       rspdata.then(function (data) {
         Notification.success("新建车队成功!");
         $uibModalInstance.close(data.content);

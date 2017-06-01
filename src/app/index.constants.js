@@ -199,7 +199,7 @@
 
 
     //车队管理  CURD LIST PAGE
-    .constant('FLEET_URL', SERVER_BASE_URL + 'fleet/fleet') //CRUD
+    .constant('FLEET_URL', SERVER_BASE_URL + 'fleet/fleetOper') //CRUD
     .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleet/fleetPage') // PAGE
     .constant('FLEET_LIST_URL', SERVER_BASE_URL + 'fleet/fleetList') // LIST
 
@@ -218,7 +218,7 @@
     .constant('FUEL_CONSUMPTION_STATISTICS', SERVER_BASE_URL + 'fleetRecord/fuelConsumptionStatistics')  //统计历史油耗
 
     .constant('PROFIT_STATISTICS_URL', SERVER_BASE_URL + 'fleetRecord/profitStatistics')  //利润统计
-    
+
 
     .constant('FUEL_TYPE_URL', SERVER_BASE_URL + 'fuelConfig/fuelType')   //燃油类型
     .constant('FUEL_CONFIGT_LIST_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigList')   //燃油类型
