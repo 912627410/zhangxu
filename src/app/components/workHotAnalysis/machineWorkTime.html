@@ -49,39 +49,38 @@
           <option value="2">按月</option>
         </select>
     </div>
-    <div ng-show="machineWorkTimeCtrl.all">
-      <div class="col-md-1">
-        <label class="control-label" style= "font-size:15px;">时间段:</label>
-      </div>
+    <div ng-show="machineWorkTimeCtrl.quarterQuery">
+      <label class="control-label col-md-1">时间段:</label>
       <div class="controls col-md-3">
         <select id="qwert" class="form-control" ng-change = "machineWorkTimeCtrl.change1()" ng-model="machineWorkTimeCtrl.dateType2">
-          <!--<option value="201704" ng-show="machineWorkTimeCtrl.one">2017年第四季度</option>-->
-          <!--<option value="201703" ng-show="machineWorkTimeCtrl.one">2017年第三季度</option>-->
-          <option value="201702" ng-show="machineWorkTimeCtrl.one">2017年第二季度</option>
-          <option value="201701" ng-show="machineWorkTimeCtrl.one">2017年第一季度</option>
-          <option value="201604" ng-show="machineWorkTimeCtrl.one">2016年第四季度</option>
-          <option value="201603" ng-show="machineWorkTimeCtrl.one">2016年第三季度</option>
-          <option value="201602" ng-show="machineWorkTimeCtrl.one">2016年第二季度</option>
-          <option value="201601" ng-show="machineWorkTimeCtrl.one">2016年第一季度</option>
-
-          <option value="201705" ng-show="machineWorkTimeCtrl.two">2017年五月</option>
-          <option value="201704" ng-show="machineWorkTimeCtrl.two">2017年四月</option>
-          <option value="201703" ng-show="machineWorkTimeCtrl.two">2017年三月</option>
-          <option value="201702" ng-show="machineWorkTimeCtrl.two">2017年二月</option>
-          <option value="201701" ng-show="machineWorkTimeCtrl.two">2017年一月</option>
-          <option value="201612" ng-show="machineWorkTimeCtrl.two">2016年十二月</option>
-          <option value="201611" ng-show="machineWorkTimeCtrl.two">2016年十一月</option>
-          <option value="201610" ng-show="machineWorkTimeCtrl.two">2016年十月</option>
-          <option value="201609" ng-show="machineWorkTimeCtrl.two">2016年九月</option>
-          <option value="201608" ng-show="machineWorkTimeCtrl.two">2016年八月</option>
-          <option value="201607" ng-show="machineWorkTimeCtrl.two">2016年七月</option>
-          <option value="201606" ng-show="machineWorkTimeCtrl.two">2016年六月</option>
+          <option ng-repeat="date in machineWorkTimeCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
         </select>
+      </div>
     </div>
+    <div ng-show="machineWorkTimeCtrl.monthQuery">
+      <label class="control-label col-md-1">开工月份:</label>
+      <div class="controls col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
+                 ng-model="machineWorkTimeCtrl.monthDateDeviceData"
+                 ng-change="machineWorkTimeCtrl.change2(machineWorkTimeCtrl.monthDateDeviceData)"
+                 is-open="machineWorkTimeCtrl.monthDateOpenStatusDeviceData.opened"
+                 datepicker-options="machineWorkTimeCtrl.dateOptions1"
+                 min-date="machineWorkTimeCtrl.minDate"
+                 max-date="machineWorkTimeCtrl.maxDate"
+                 ng-required="true" current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="machineWorkTimeCtrl.monthDateOpenDeviceData($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+      </div>
     </div>
     <div class="col-md-2">
       <button class="btn btn-warning" type="button" ng-click="machineWorkTimeCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" ng-click="machineWorkTimeCtrl.ok(machineWorkTimeCtrl.machineType,machineWorkTimeCtrl.totalDateType,machineWorkTimeCtrl.averageDateType, machineWorkTimeCtrl.dateType1,machineWorkTimeCtrl.dateType2)">查询</button>
+      <button class="btn btn-primary" type="button" ng-click="machineWorkTimeCtrl.ok(machineWorkTimeCtrl.machineType,machineWorkTimeCtrl.totalDateType,machineWorkTimeCtrl.averageDateType, machineWorkTimeCtrl.dateType1,machineWorkTimeCtrl.dateType2,machineWorkTimeCtrl.monthDateDeviceData)">查询</button>
     </div>
   <!--</div>-->
     <div class="row form-group">
