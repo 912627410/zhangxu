@@ -399,6 +399,15 @@
           }
         }
       })
+      .state('home.activeRate', {
+        url: '/activeRate',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/activeRate.html',
+            controller: 'activeRateController as activeRateCtrl'
+          }
+        }
+      })
     ;
 
     $urlRouterProvider.otherwise('/home');
