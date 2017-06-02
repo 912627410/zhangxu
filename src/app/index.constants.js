@@ -239,6 +239,7 @@
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
 
 
+    .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?produceType=') //获取机器活跃度
   ;
 
 

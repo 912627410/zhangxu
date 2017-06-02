@@ -9,7 +9,7 @@
     .module('GPSCloud')
     .controller('activeRateController',activeRateController);
 
-  function activeRateController($scope, $http) {
+  function activeRateController($scope, $http,GET_ACTIVERATE_URL) {
 
     var vm = this;
     var back = document.getElementById('backProvince');
@@ -35,7 +35,7 @@
     function showChart(_produceType,_machineType,_cycleType,_cycleValue,_province) {
       $http({
         method: 'GET',
-        url: 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?produceType='+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&province='+_province
+        url: GET_ACTIVERATE_URL+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&province='+_province
       }).then(function (rspJson) {
         rspJson = rspJson.data;
 
