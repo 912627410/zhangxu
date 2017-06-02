@@ -1,0 +1,44 @@
+<div class="main-container" id="bardistribution" style="padding: 20px;">
+  <div class="left-container col-md-2" style="">
+    <div class="select-container" style="margin-bottom: 10px">
+      <div class="select-title">产品类型：</div>
+      <ui-select ng-model="produceType.selected">
+        <ui-select-match placeholder="选择一款产品">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getProduceType($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="select-container" style="margin-bottom: 10px">
+      <div class="select-title">汇总周期：</div>
+      <ui-select ng-model="cycleType.selected">
+        <ui-select-match placeholder="选择周期">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getCycleType($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="select-container" style="margin-bottom: 10px">
+      <div class="select-title">开工月份：</div>
+      <ui-select ng-model="cycleValue.selected">
+        <ui-select-match placeholder="选择开工月份">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getCycleValue($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <button class="btn btn-primary" ng-click="activeRateCtrl.customSelect();" style="margin: 10px 0px;width: 100%">车辆开工热度分布</button>
+  </div>
+  <div class="right-container col-md-10" style="">
+    <div id="bardistributionTitle" style="background:#eee;padding: 10px">
+      <em id="workMonth" style="font-style: normal;"></em>
+      <em id="workProvince" style="font-style: normal;"></em>
+      <em id="workType" style="font-style: normal;"></em>
+      <em style="font-style: normal;">活跃度分布（点击视图可查看市区级分布）</em>
+      <span id="backProvince" style="display: none;" ng-click="activeRateCtrl.backProvince();">
+        <a style="display:inline-block;cursor: pointer;">返回到全国</a>
+      </span>
+    </div>
+  <div id="barChartContainer" class="chart-container" style="padding-top:20px;min-height: 500px;"></div>
+  </div>
+</div>
