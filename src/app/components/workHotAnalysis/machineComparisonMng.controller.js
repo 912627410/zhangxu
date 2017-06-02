@@ -268,11 +268,12 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        top: 'bottom',
+        // top: 'bottom',
+        bottom:20,
         right: 20,
         itemGap: 30,
         feature: {
-          // restore: {show: true},
+          restore: {show: true},
           saveAsImage: {show: true}
         },
         iconStyle: {
@@ -368,10 +369,12 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        top: 'bottom',
+        // top: 'bottom',
+        bottom:20,
         right: 20,
         itemGap: 30,
         feature: {
+          restore: {show: true},
           saveAsImage: {show: true}
         },
         iconStyle: {
@@ -464,11 +467,11 @@
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
-                + '车辆数量：' + 0 + ' 台';
+                + '车辆数量：' + 0 + ' 台/天';
             }
             return '';
           }
@@ -635,6 +638,21 @@
         borderColor: '#e6e6e6',
         containLabel: true
       },
+      // dataZoom: [
+      //   // {
+      //   //   id: 'dataZoomX',
+      //   //   type: 'inside',
+      //   //   xAxisIndex: [0],
+      //   //   filterMode: 'none'
+      //   // },
+      //   {
+      //     id: 'dataZoomY',
+      //     type: 'inside',
+      //     yAxisIndex: [0],
+      //     filterMode: 'none'
+      //   }
+      //
+      // ],
       xAxis: {
         type: 'category',
         boundaryGap: true,
@@ -662,7 +680,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:'dataMax',
+        // max:'dataMax',
         minInterval: 1,
         axisLine: {
           show: false
@@ -734,6 +752,23 @@
         borderColor: '#e6e6e6',
         containLabel: true
       },
+      // dataZoom: [
+      //   // {
+      //   //   id: 'dataZoomX',
+      //   //   type: 'inside',
+      //   //   xAxisIndex: [0],
+      //   //   filterMode: 'none'
+      //   // },
+      //   {
+      //     id: 'dataZoomY',
+      //     type: 'slider',
+      //     yAxisIndex: [0],
+      //     filterMode: 'none'
+      //     // filterMode: 'filter'
+      //     // filterMode: 'weakFilter'
+      //     // filterMode: 'empty'
+      //   }
+      // ],
       xAxis: {
         type: 'category',
         boundaryGap: true,
@@ -761,7 +796,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:'dataMax',
+        // max:'dataMax',
         minInterval: 1,
         axisLine: {
           show: false
@@ -796,6 +831,10 @@
     //单一车型查询
     vm.query = function (startDate,endDate,dateType1,dateType,monthDate,machineType1,heatType1) {
       var monthDateFormated;
+      var provinceSales;//省总销售额
+      var beforeProvinceSales;//上周期省总销售额
+      var totalData;//总销售额
+      var beforeTotalData;//上周期总销售额
       if(null==machineType1||null==heatType1) {
         Notification.warning({message: '请选择单一车型状态下查询相关参数'});
         return;
@@ -939,10 +978,14 @@
           for(var a=0;a<data.length;a++){
             total1 += data[a].value;
           }
+          totalData = data;
           vm.totalSales=total1;
+          vm.national = true;
+          vm.allProvince = false;
           //查询上周期的销售总额
           var rspData1 = serviceResource.restCallService(beforeRestCallURL, 'QUERY');
           rspData1.then(function (data1) {
+            beforeTotalData = data1;
             var total2 = 0;
             for(var b=0;b<data1.length;b++){
               total2 += data1[b].value;
@@ -998,13 +1041,28 @@
           $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
             echarts.registerMap(Cname, geoJson);
           });
+          if(heatType1==0){
+            for(var i=0;i<totalData.length;i++){
+              if(param.name==totalData[i].name){
+                vm.provinceSales = totalData[i].value;
+              }
+            }
+            for(var q=0;q<beforeTotalData.length;q++){
+              if(param.name==beforeTotalData[q].name){
+                vm.beforeProvinceSales= beforeTotalData[q].value;
+              }
+            }
+            vm.national = false;
+            vm.allProvince = true;
+          }
+
           var restCallURLCity = restCallURL;
           restCallURLCity += "&provinces=" + param.name;
           var rspDataCity = serviceResource.restCallService(restCallURLCity, 'QUERY');
           rspDataCity.then(function (cityData) {
             var cityMax =100;
-            if(!data.length>0){
-              mapOption1.series[0].data=null;
+            if(!cityData.length>0){
+              cityMap.series[0].data=null;
               // Notification.warning("所选时间段暂无数据！");
             } else {
               cityMax = cityData[0].value;
@@ -1028,6 +1086,8 @@
           mapOption1.title.text = mapTitleText;
           mapOption1.title. textStyle=mapTitleTextstyle;
           mapOption1.title. subtextStyle=mapTitleSubtextstyle;
+          vm.national = true;
+          vm.allProvince = false;
           mapChart1.setOption(mapOption1);
           backButtons[0].style.display = "none";
           //省级地图返回到中国地图再次点击地图下钻
@@ -1048,11 +1108,25 @@
             });
             var restCallURLCity = restCallURL;
             restCallURLCity += "&provinces=" + param.name;
+            if(heatType1==0){
+              for(var i=0;i<totalData.length;i++){
+                if(param.name==totalData[i].name){
+                  vm.provinceSales = totalData[i].value;
+                }
+              }
+              for(var q=0;q<beforeTotalData.length;q++){
+                if(param.name==beforeTotalData[q].name){
+                  vm.beforeProvinceSales= beforeTotalData[q].value;
+                }
+              }
+              vm.national = false;
+              vm.allProvince = true;
+            }
             var rspDataCity = serviceResource.restCallService(restCallURLCity, 'QUERY');
             rspDataCity.then(function (cityData) {
               var cityMax =100;
-              if(!data.length>0){
-                mapOption1.series[0].data=null;
+              if(!cityData.length>0){
+                cityMap.series[0].data=null;
                 // Notification.warning("所选时间段暂无数据！");
               } else {
                 cityMax = cityData[0].value;
@@ -1333,7 +1407,7 @@
           mmuLine.yAxis.name = '开工时长(小时)';
 
         }else if(heatType1==0){
-          mmuLine.title.text = "挖掘机销售热度分布";
+          mmuLine.title.text = "挖掘机销售变化趋势";
           mmuLine.yAxis.name = '车辆数量(台)';
         }
       }
@@ -1372,9 +1446,9 @@
       workHoursYearData1.then(function (data) {
         if(heatType1==1){
           if(machineType1=="1,2,3"){
-            var yearData1 = [null,null];
+            var yearData1 = [,,];
           } else if(machineType1=="A1"){
-            var yearData1 = [null,null,null,null,null];
+            var yearData1 = [,,,,,];
           } else {
             var yearData1 = [];
           }
@@ -1407,7 +1481,7 @@
           mmuLine2.yAxis.name = '开工时长(小时)';
 
         }else if(heatType2==0){
-          mmuLine2.title.text = "挖掘机销售热度分布";
+          mmuLine2.title.text = "挖掘机销售变化趋势";
           mmuLine2.yAxis.name = '车辆数量(台)';
         }
       }
@@ -1482,6 +1556,10 @@
       var monthDateFormated;
       var mapTitleText1;
       var mapTitleText2;
+      var totalData1;//总销售额--左图
+      var beforeTotalData1;//上周期总销售额--左图
+      var totalData2;//总销售额--右图
+      var beforeTotalData2;//上周期总销售额--右图
       if(null==machineType1||null==machineType2||null==heatType1||null==heatType2){
         Notification.warning({message: '请选择相关参数'});
       }else if(machineType1 == machineType2&&heatType1==heatType2){
@@ -1567,6 +1645,7 @@
 
         //查询上周期的销售总额URL--左图
         var beforeRestCallURL3 = restCallURL1;
+        var month3 = monthDateFormated;
         var beforeFilter3;
         if(dateType1==1){
           if(dateType==201701){
@@ -1575,10 +1654,10 @@
             beforeFilter3 = dateType-1;
           }
         } else if(dateType1==2){
-          if(dateType==201701){
+          if(month3==201701){
             beforeFilter3 = 201612;
           }else{
-            beforeFilter3 = dateType-1;
+            beforeFilter3 = month3-1;
           }
         } else if(dateType1==3){
           var startDate3 = new Date();
@@ -1634,10 +1713,10 @@
             beforeFilter4 = dateType-1;
           }
         } else if(dateType1==2){
-          if(dateType==201701){
+          if(month3==201701){
             beforeFilter4 = 201612;
           }else{
-            beforeFilter4 = dateType-1;
+            beforeFilter4 = month3-1;
           }
         } else if(dateType1==3){
           var startDate4 = new Date();
@@ -1757,6 +1836,7 @@
         mapOption2.title. textStyle={fontSize: 21};
         mapOption2.title. subtextStyle={fontSize: 12};
         var zData ;
+        var yData ;
         var rspData1 = serviceResource.restCallService(restCallURL1, 'QUERY');
         rspData1.then(function (data1) {
           if(!data1.length>0){
@@ -1772,6 +1852,11 @@
           zData = data1;
           //计算该查询周期的销售总和--左图
           if(heatType1==0){
+            vm.national = true;
+            vm.allProvince = false;
+            vm.national1 = true;
+            vm.allProvince1 = false;
+            totalData1 = data1;
             var total1 = 0;
             for(var a=0;a<data1.length;a++){
               total1 += data1[a].value;
@@ -1780,6 +1865,7 @@
             //查询上周期的销售总额--左图
             var rspData3 = serviceResource.restCallService(beforeRestCallURL3, 'QUERY');
             rspData3.then(function (data3) {
+              beforeTotalData1 = data3;
               var total2 = 0;
               for(var b=0;b<data3.length;b++){
                 total2 += data3[b].value;
@@ -1799,8 +1885,14 @@
                 }
               }
             }
+            yData = data2;
             //计算该查询周期的销售总和--右图
             if(heatType2==0){
+              vm.national = true;
+              vm.allProvince = false;
+              vm.national1 = true;
+              vm.allProvince1 = false;
+              totalData2 = data2;
               var total1 = 0;
               for(var a=0;a<data2.length;a++){
                 total1 += data2[a].value;
@@ -1809,6 +1901,7 @@
               //查询上周期的销售总额--右图
               var rspData4 = serviceResource.restCallService(beforeRestCallURL4, 'QUERY');
               rspData4.then(function (data4) {
+                beforeTotalData2 = data4;
                 var total2 = 0;
                 for(var b=0;b<data4.length;b++){
                   total2 += data4[b].value;
@@ -1863,7 +1956,7 @@
               }
             }
             mapOption2.visualMap.max=max3;
-            mapOption2.series[0].data=data2;
+            mapOption2.series[0].data=yData;
             mapTitleText2 = mapOption2.title.text;
             mapChart2.setOption(mapOption2);
           }, function (reason) {
@@ -1876,7 +1969,8 @@
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
-          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param);
+          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
+
         })
         mapChart2.on("click", function (param){
           backButtons[1].style.display = "block";
@@ -1904,6 +1998,37 @@
           $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
             echarts.registerMap(Cname, geoJson);
           });
+
+
+          if(heatType1==0){
+            for(var i=0;i<totalData1.length;i++){
+              if(param.name==totalData1[i].name){
+                vm.provinceSales = totalData1[i].value;
+              }
+            }
+            for(var q=0;q<beforeTotalData1.length;q++){
+              if(param.name==beforeTotalData1[q].name){
+                vm.beforeProvinceSales= beforeTotalData1[q].value;
+              }
+            }
+            vm.national = false;
+            vm.allProvince = true;
+          }
+          if(heatType2==0){
+            for(var i=0;i<totalData2.length;i++){
+              if(param.name==totalData2[i].name){
+                vm.provinceSales1 = totalData2[i].value;
+              }
+            }
+            for(var q=0;q<beforeTotalData2.length;q++){
+              if(param.name==beforeTotalData2[q].name){
+                vm.beforeProvinceSales1= beforeTotalData2[q].value;
+              }
+            }
+            vm.national1 = false;
+            vm.allProvince1 = true;
+          }
+
           var cityChart1 = vm.echartsInit("mapContainer1");
           var cityChart2 = vm.echartsInit("mapContainer2");
           var rspDataCity1 = serviceResource.restCallService(restCallURLCity1, 'QUERY');
@@ -1919,9 +2044,9 @@
                 }
               }
             }
-            cityMap1.series[0].data=cityData1;
-            cityMap1.visualMap.max=cityMax1;
-            cityChart1.setOption(cityMap1);
+            // cityMap1.series[0].data=cityData1;
+            // cityMap1.visualMap.max=cityMax1;
+            // cityChart1.setOption(cityMap1);
             var rspDataCity2 = serviceResource.restCallService(restCallURLCity2, 'QUERY');
             rspDataCity2.then(function (cityData2) {
               var cityMax2 =100;
@@ -1935,17 +2060,19 @@
                   }
                 }
               }
+              // cityMap2.series[0].data=cityData2;
+              var cityMax3=100;
+              if(cityMax1>=cityMax2){
+                cityMax3 = cityMax1;
+              }
+              if(cityMax1<cityMax2){
+                cityMax3 = cityMax2;
+              }
+              cityMap1.series[0].data=cityData1;
+              cityMap1.visualMap.max=cityMax3;
+              cityChart1.setOption(cityMap1);
               cityMap2.series[0].data=cityData2;
-              // var cityMax3=100;
-              // if(cityMax1>=cityMax2){
-              //   cityMax3 = cityMax1;
-              // }
-              // if(cityMax1<cityMax2){
-              //   cityMax3 = cityMax2;
-              // }
-              // cityMap1.visualMap.max=cityMax3;
-              cityMap2.visualMap.max=cityMax2;
-              // cityChart1.setOption(cityMap1);
+              cityMap2.visualMap.max=cityMax3;
               cityChart2.setOption(cityMap2);
             }, function (reason) {
               Notification.error("获取数据失败");
@@ -1959,11 +2086,17 @@
 
         var backButtons = document.getElementsByClassName("backChina");
         vm.backChina1 = function () {
+          vm.national = true;
+          vm.allProvince = false;
+          vm.national1 = true;
+          vm.allProvince1 = false;
           var mapChart1 = vm.echartsInit("mapContainer1");
           mapOption1.title.text = mapTitleText1;
+          mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
           var mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.title.text = mapTitleText2;
+          mapOption2.series[0].data=yData;
           mapChart2.setOption(mapOption2);
           backButtons[0].style.display = "none";
           backButtons[1].style.display = "none";
@@ -1971,22 +2104,28 @@
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
 
           });
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
           })
         }
 
         vm.backChina2 = function () {
+          vm.national = true;
+          vm.allProvince = false;
+          vm.national1 = true;
+          vm.allProvince1 = false;
           var mapChart2 = vm.echartsInit("mapContainer2");
+          mapOption2.series[0].data=yData;
           mapOption2.title.text = mapTitleText2;
           mapChart2.setOption(mapOption2);
           var mapChart1 = vm.echartsInit("mapContainer1");
           mapOption1.title.text = mapTitleText1;
+          mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
           backButtons[1].style.display = "none";
           backButtons[0].style.display = "none";
@@ -1994,12 +2133,12 @@
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param)
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
           });
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param)
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
           })
         }
 
@@ -2022,7 +2161,7 @@
     }
 
     //地图下钻显示省份封装
-    function showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param){
+    function showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2){
       if(heatType1==1){
         var cityMap1 = cityOption1;
       } else if(heatType1==0) {
@@ -2046,6 +2185,34 @@
       $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
         echarts.registerMap(Cname, geoJson);
       });
+      if(heatType1==0){
+        for(var i=0;i<totalData1.length;i++){
+          if(param.name==totalData1[i].name){
+            vm.provinceSales = totalData1[i].value;
+          }
+        }
+        for(var q=0;q<beforeTotalData1.length;q++){
+          if(param.name==beforeTotalData1[q].name){
+            vm.beforeProvinceSales= beforeTotalData1[q].value;
+          }
+        }
+        vm.national = false;
+        vm.allProvince = true;
+      }
+      if(heatType2==0){
+        for(var i=0;i<totalData2.length;i++){
+          if(param.name==totalData2[i].name){
+            vm.provinceSales1 = totalData2[i].value;
+          }
+        }
+        for(var q=0;q<beforeTotalData2.length;q++){
+          if(param.name==beforeTotalData2[q].name){
+            vm.beforeProvinceSales1= beforeTotalData2[q].value;
+          }
+        }
+        vm.national1 = false;
+        vm.allProvince1 = true;
+      }
       var cityChart1 = vm.echartsInit("mapContainer1");
       var cityChart2 = vm.echartsInit("mapContainer2");
       var rspDataCity1 = serviceResource.restCallService(restCallURLCity1, 'QUERY');
@@ -2061,9 +2228,9 @@
             }
           }
         }
-        cityMap1.series[0].data=cityData1;
-        cityMap1.visualMap.max=cityMax1;
-        cityChart1.setOption(cityMap1);
+        // cityMap1.series[0].data=cityData1;
+        // cityMap1.visualMap.max=cityMax1;
+        // cityChart1.setOption(cityMap1);
         var rspDataCity2 = serviceResource.restCallService(restCallURLCity2, 'QUERY');
         rspDataCity2.then(function (cityData2) {
           var cityMax2 =100;
@@ -2077,17 +2244,19 @@
               }
             }
           }
+          var cityMax3=100;
+          if(cityMax1>=cityMax2){
+            cityMax3 = cityMax1;
+          }
+          if(cityMax1<cityMax2){
+            cityMax3 = cityMax2;
+          }
+          cityMap1.visualMap.max=cityMax3;
+          cityMap1.series[0].data=cityData1;
+          cityChart1.setOption(cityMap1);
+
+          cityMap2.visualMap.max=cityMax3;
           cityMap2.series[0].data=cityData2;
-          // var cityMax3=100;
-          // if(cityMax1>=cityMax2){
-          //   cityMax3 = cityMax1;
-          // }
-          // if(cityMax1<cityMax2){
-          //   cityMax3 = cityMax2;
-          // }
-          // cityMap1.visualMap.max=cityMax3;
-          cityMap2.visualMap.max=cityMax2;
-          // cityChart1.setOption(cityMap1);
           cityChart2.setOption(cityMap2);
         }, function (reason) {
           Notification.error("获取数据失败");
@@ -2098,8 +2267,8 @@
       });
     }
 
-    var provinces = ['shanghai', 'hebei','shanxi','neimenggu','liaoning','jilin','heilongjiang','jiangsu','zhejiang','anhui','fujian','jiangxi','shandong','henan','hubei','hunan','guangdong','guangxi','hainan','sichuan','guizhou','yunnan','xizang','shanxi1','gansu','qinghai','ningxia','xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen'];
-    var provincesText = ['上海市', '河北省', '山西省', '内蒙古自治区', '辽宁省', '吉林省','黑龙江省',  '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省','河南省', '湖北省', '湖南省', '广东省', '广西壮族自治区', '海南省', '四川省', '贵州省', '云南省', '西藏自治区', '陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '重庆市', '香港特別行政區', '澳门特別行政區'];
+    var provinces = ['shanghai', 'hebei','shanxi','neimenggu','liaoning','jilin','heilongjiang','jiangsu','zhejiang','anhui','fujian','jiangxi','shandong','henan','hubei','hunan','guangdong','guangxi','hainan','sichuan','guizhou','yunnan','xizang','shanxi1','gansu','qinghai','ningxia','xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen', 'taiwan'];
+    var provincesText = ['上海市', '河北省', '山西省', '内蒙古自治区', '辽宁省', '吉林省','黑龙江省',  '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省','河南省', '湖北省', '湖南省', '广东省', '广西壮族自治区', '海南省', '四川省', '贵州省', '云南省', '西藏自治区', '陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '重庆市', '香港特別行政區', '澳門特別行政區', '台湾省'];
 
     //查看各类车车辆热度分布
     vm.showMachineHeatDetails = function (startDate,endDate,dateType1,dateType,monthDate,heatType1) {

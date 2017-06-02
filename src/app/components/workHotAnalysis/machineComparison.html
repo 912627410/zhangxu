@@ -178,7 +178,7 @@
         </div>
         <div ng-show="machineComparedMngCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
           <div style="position: relative;">
-            <ul style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.national" style="list-style: none;line-height: 26px;padding-left: 10px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales>=machineComparedMngCtrl.beforeTotalSales" >
                 <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
                 <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.totalSales-machineComparedMngCtrl.beforeTotalSales}}台</span></li>
@@ -186,8 +186,19 @@
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales">
                  <!--<li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img ng-mouseenter="show = true" ng-mouseleave="show = false" src="assets/images/down.png"/></span></li>-->
                 <!--<li ng-show="show" class="text-center"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales-machineComparedMngCtrl.totalSales}}台</span></li>-->
-                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
                 <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales-machineComparedMngCtrl.totalSales}}台</span></li>
+              </span>
+            </ul>
+
+            <ul ng-show="machineComparedMngCtrl.allProvince" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales>=machineComparedMngCtrl.beforeProvinceSales" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.provinceSales-machineComparedMngCtrl.beforeProvinceSales}}台</span></li>
+              </span>
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales<machineComparedMngCtrl.beforeProvinceSales">
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales-machineComparedMngCtrl.provinceSales}}台</span></li>
               </span>
             </ul>
           </div>
@@ -216,16 +227,28 @@
         </div>
         <div ng-show="machineComparedMngCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
           <div style="position: relative;">
-            <ul style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.national1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1>=machineComparedMngCtrl.beforeTotalSales1" >
                 <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
                 <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.totalSales1-machineComparedMngCtrl.beforeTotalSales1}}台</span></li>
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1<machineComparedMngCtrl.beforeTotalSales1">
-                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
                 <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales1-machineComparedMngCtrl.totalSales1}}台</span></li>
               </span>
             </ul>
+
+            <ul ng-show="machineComparedMngCtrl.allProvince1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales1>=machineComparedMngCtrl.beforeProvinceSales1" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.provinceSales1-machineComparedMngCtrl.beforeProvinceSales1}}台</span></li>
+              </span>
+              <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales1<machineComparedMngCtrl.beforeProvinceSales1">
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales1-machineComparedMngCtrl.provinceSales1}}台</span></li>
+              </span>
+            </ul>
+
           </div>
         </div>
         <a class="backChina"  style="width: 40px; height: 40px;position: absolute;right: 20px;top: 170px;display: none;" ng-click="machineComparedMngCtrl.backChina2();">
@@ -259,7 +282,7 @@
 <div style="margin-top: 15px;">
   <hr>
   <!--<div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示车辆变化趋势</div>-->
-  <div style="width: 100%;height:300px;position: relative; height: 300px;width: 100%;">
+  <div style="width: 100%;height:300px;position: relative;">
     <div id="mmu-container1" class="chart-container" style="width: 65%;height: 300px;position: absolute;left: 0px;top: 0px;"></div>
     <div id="mmu-container2" class="chart-container" style="height: 300px;position: absolute;right: 0px;top: 0px;"></div>
   </div>
