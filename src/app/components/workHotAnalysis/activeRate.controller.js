@@ -83,9 +83,6 @@
               axisLabel: {
                 rotate: 45,
                 interval: 0,
-                textStyle: {
-                  fontSize: 2
-                },
                 formatter:function (value,index) {
                   var _value;
                   _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区/,"");
