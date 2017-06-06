@@ -358,33 +358,6 @@
         }
       })
 
-      .state('home.revenue', {
-        url: '/revenue',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/revenueManagement/revenueMng.html',
-            controller: 'revenueMngController',
-            controllerAs: 'revenueMngController'
-          }
-        }
-      })
-
-      .state('home.cost', {
-        url: '/cost',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/costManagement/costMng.html',
-            controller: 'costMngController',
-            controllerAs: 'costMngController'
-          }
-        }
-      })
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {

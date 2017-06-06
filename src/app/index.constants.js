@@ -210,8 +210,6 @@
     .constant('WORK_POINT_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workPointRecord') //工作纪录
 
     //车队收支  油耗 收入 成本核算
-    .constant('REVENUE_URL', SERVER_BASE_URL + 'fleetRecord/revenue') //收入统计
-    .constant('COST_URL', SERVER_BASE_URL + 'cost/costpage') //成本统计
     .constant('DRIVER_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/driverRecord') //行驶轨迹
 
     .constant('FUEL_CONSUMPTION_QUERY', SERVER_BASE_URL + 'fleetRecord/fuelConsumptionQuery')  //油耗分页查询
