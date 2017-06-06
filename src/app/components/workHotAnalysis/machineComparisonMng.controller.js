@@ -674,7 +674,7 @@
         data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
       yAxis: {
-        name: '开工时长(小时)',
+        name: '月平均开工时长(小时)',
         nameLocation:'middle',
         nameGap:63,
         boundaryGap:true,
@@ -868,13 +868,16 @@
           filterTerm += "&endDate=" + endDateFormated;
         }
       }
-
+      var filterTermProvince = filterTerm;
       //查询开工平均工作时间
       if(heatType1==1){
           //调用封装好的查询平均时间功能--开工热度
           avgWorkHoursQuery(dateType1,filterTerm,startDate,endDate);
           vm.avgHours1 = true;
           vm.avgHours3 = false;
+        //悬浮框的的隐藏和显示-work
+        vm.avgHoursNational = true;
+        vm.avgHoursProvince = false;
       }else if(heatType1==0){
           vm.avgHours1 = false;
           vm.avgHours3 = true;
@@ -898,6 +901,9 @@
         }
         if(machineType1=="A1"){
           filterTerm += "&machineType=" + 2;
+        }
+        if(machineType1=="3"){
+          filterTerm += "&machineType=" + machineType1;
         }
       }
       //销售热度查询判断按某种周期
@@ -944,6 +950,10 @@
         if(machineType1=="A1"){
           filterTerm += "&machineType=" + 2;
           beforeFilter += "&machineType=" + 2;
+        }
+        if(machineType1=="3"){
+          filterTerm += "&machineType=" + machineType1;
+          beforeFilter += "&machineType=" + machineType1;
         }
       }
 
@@ -1017,6 +1027,15 @@
             mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
+        if(machineType1=="3"){
+          if(heatType1==1){
+            mapOption1.title.text = "重机开工热度分布";
+            mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
+          }else if(heatType1==0){
+            mapOption1.title.text = "重机销售热度分布";
+            mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
+          }
+        }
         var mapTitleText = mapOption1.title.text;
         var mapTitleTextstyle = mapOption1.title.textStyle;
         var mapTitleSubtextstyle = mapOption1.title.subtextStyle;
@@ -1052,8 +1071,10 @@
                 vm.beforeProvinceSales= beforeTotalData[q].value;
               }
             }
+            //悬浮框的的隐藏和显示-sales
             vm.national = false;
             vm.allProvince = true;
+
           }
 
           var restCallURLCity = restCallURL;
@@ -1072,6 +1093,10 @@
                 }
               }
             }
+            avgWorkHoursProvinceQuery(dateType1,filterTermProvince,startDate,endDate,param.name);
+            //悬浮框的的隐藏和显示-work
+            vm.avgHoursNational = false;
+            vm.avgHoursProvince = true;
             cityMap.visualMap.max=cityMax;
             cityMap.series[0].data=cityData;
             cityChart.setOption(cityMap);
@@ -1088,6 +1113,9 @@
           mapOption1.title. subtextStyle=mapTitleSubtextstyle;
           vm.national = true;
           vm.allProvince = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational = true;
+          vm.avgHoursProvince = false;
           mapChart1.setOption(mapOption1);
           backButtons[0].style.display = "none";
           //省级地图返回到中国地图再次点击地图下钻
@@ -1136,6 +1164,10 @@
                   }
                 }
               }
+              avgWorkHoursProvinceQuery(dateType1,filterTermProvince,startDate,endDate,param.name);
+              //悬浮框的的隐藏和显示-work
+              vm.avgHoursNational = false;
+              vm.avgHoursProvince = true;
               cityMap.visualMap.max=cityMax;
               cityMap.series[0].data=cityData;
               cityChart.setOption(cityMap);
@@ -1399,12 +1431,243 @@
         });
       }
     }
+
+    //封装查询各种车型的开工平均时长--左图和大地图调用
+    function avgWorkHoursProvinceQuery(dateType1,filterTerm,startDate,endDate,nameProvince){
+      if(dateType1==1){
+        //平均工作时长URL--按季度查询
+        var avgWorkHourQuarter = AVG_WORK_HOUR_QUERY_QUARTER;
+        var quarter1 = filterTerm;//装载机平均时长路径
+        var quarter2 = filterTerm;//挖掘机平均时长路径
+        var quarter3 = filterTerm;//上周期装载机平均时长路径
+        var quarter4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourQuarter1 = avgWorkHourQuarter;
+        avgWorkHourQuarter1 += quarter1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourQuarter2 = avgWorkHourQuarter;
+        avgWorkHourQuarter2 += quarter2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var avgWorkHourQuarter3 = avgWorkHourQuarter;
+        var avgWorkHourQuarter4 = avgWorkHourQuarter;
+        if(quarter3==201701){
+          avgWorkHourQuarter3 += 201604 + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourQuarter4 += 201604 + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        } else {
+          avgWorkHourQuarter3 += (quarter3-1) + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourQuarter4 += (quarter4-1) + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        }
+        var zData = serviceResource.restCallService(avgWorkHourQuarter1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince  = zdata.avgHours;
+        });
+        var zBeforeData = serviceResource.restCallService(avgWorkHourQuarter3, 'GET');
+        zBeforeData.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince  = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourQuarter2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince  = wdata.avgHours;
+        });
+        var wBeforeData = serviceResource.restCallService(avgWorkHourQuarter4, 'GET');
+        wBeforeData.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince  = wdata1.avgHours;
+        });
+      } else if(dateType1==2){
+        // //平均工作时长URL--按月查询
+        var avgWorkHourMonth = AVG_WORK_HOUR_QUERY_MONTH;
+        var month1 = filterTerm;//装载机平均时长路径
+        var month2 = filterTerm;//挖掘机平均时长路径
+        var month3 = filterTerm;//上周期装载机平均时长路径
+        var month4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourMonth1 = avgWorkHourMonth;
+        avgWorkHourMonth1 += month1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourMonth2 = avgWorkHourMonth;
+        avgWorkHourMonth2 += month2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var avgWorkHourMonth3 = avgWorkHourMonth;
+        var avgWorkHourMonth4 = avgWorkHourMonth;
+        if(month3==201701){
+          avgWorkHourMonth3 += 201612 + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourMonth4 += 201612 + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        } else {
+          avgWorkHourMonth3 += (month3-1) + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourMonth4 += (month4-1) + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        }
+        var zData = serviceResource.restCallService(avgWorkHourMonth1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince = zdata.avgHours;
+        });
+        var zData1 = serviceResource.restCallService(avgWorkHourMonth3, 'GET');
+        zData1.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourMonth2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince = wdata.avgHours;
+        });
+        var wData1 = serviceResource.restCallService(avgWorkHourMonth4, 'GET');
+        wData1.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince = wdata1.avgHours;
+        });
+      } else if(dateType1==3){
+        // //平均工作时长URL--按天查询
+        var avgWorkHourDate = AVG_WORK_HOUR_QUERY_DATE;
+        var date1 = filterTerm;//上周期装载机平均时长路径
+        var date2 = filterTerm;//上周期挖掘机平均时长路径
+        var date3 = filterTerm;//上周期装载机平均时长路径
+        var date4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourDate1 = avgWorkHourDate;
+        avgWorkHourDate1 += date1 +  '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourDate2 = avgWorkHourDate;
+        avgWorkHourDate2 += date2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+
+        var startDate1 = new Date();
+        var endDate1 = startDate;
+        var n = startDate1.getDate()-endDate1.getDate();
+        startDate1.setDate(endDate1.getDate()-n);
+        var startDateFormated1 = startDate1.getFullYear() + '-' + (startDate1.getMonth() + 1) + '-' + startDate1.getDate();
+        var endDateFormated1 = endDate1.getFullYear() + '-' + (endDate1.getMonth() + 1) + '-' + endDate1.getDate();
+        var avgWorkHourDate3 = avgWorkHourDate;
+        avgWorkHourDate3 += 'startDate=' + startDateFormated1 + '&endDate='+ endDateFormated1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourDate4 = avgWorkHourDate;
+        avgWorkHourDate4 += 'startDate=' + startDateFormated1 + '&endDate='+ endDateFormated1 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var zData = serviceResource.restCallService(avgWorkHourDate1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince = zdata.avgHours;
+        });
+        var zData1 = serviceResource.restCallService(avgWorkHourDate3, 'GET');
+        zData1.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourDate2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince = wdata.avgHours;
+        });
+        var wData1 = serviceResource.restCallService(avgWorkHourDate4, 'GET');
+        wData1.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince = wdata1.avgHours;
+        });
+      }
+    }
+    //封装查询各种车型的开工平均时长--右图调用
+    function avgWorkHoursProvinceQuery2(dateType1,filterTerm,startDate,endDate,nameProvince){
+      if(dateType1==1){
+        //平均工作时长URL--按季度查询
+        var avgWorkHourQuarter = AVG_WORK_HOUR_QUERY_QUARTER;
+        var quarter1 = filterTerm;//装载机平均时长路径
+        var quarter2 = filterTerm;//挖掘机平均时长路径
+        var quarter3 = filterTerm;//上周期装载机平均时长路径
+        var quarter4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourQuarter1 = avgWorkHourQuarter;
+        avgWorkHourQuarter1 += quarter1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourQuarter2 = avgWorkHourQuarter;
+        avgWorkHourQuarter2 += quarter2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var avgWorkHourQuarter3 = avgWorkHourQuarter;
+        var avgWorkHourQuarter4 = avgWorkHourQuarter;
+        if(quarter3==201701){
+          avgWorkHourQuarter3 += 201604 + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourQuarter4 += 201604 + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        } else {
+          avgWorkHourQuarter3 += (quarter3-1) + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourQuarter4 += (quarter4-1) + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        }
+        var zData = serviceResource.restCallService(avgWorkHourQuarter1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince2  = zdata.avgHours;
+        });
+        var zBeforeData = serviceResource.restCallService(avgWorkHourQuarter3, 'GET');
+        zBeforeData.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince2  = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourQuarter2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince2  = wdata.avgHours;
+        });
+        var wBeforeData = serviceResource.restCallService(avgWorkHourQuarter4, 'GET');
+        wBeforeData.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince2  = wdata1.avgHours;
+        });
+      } else if(dateType1==2){
+        // //平均工作时长URL--按月查询
+        var avgWorkHourMonth = AVG_WORK_HOUR_QUERY_MONTH;
+        var month1 = filterTerm;//装载机平均时长路径
+        var month2 = filterTerm;//挖掘机平均时长路径
+        var month3 = filterTerm;//上周期装载机平均时长路径
+        var month4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourMonth1 = avgWorkHourMonth;
+        avgWorkHourMonth1 += month1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourMonth2 = avgWorkHourMonth;
+        avgWorkHourMonth2 += month2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var avgWorkHourMonth3 = avgWorkHourMonth;
+        var avgWorkHourMonth4 = avgWorkHourMonth;
+        if(month3==201701){
+          avgWorkHourMonth3 += 201612 + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourMonth4 += 201612 + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        } else {
+          avgWorkHourMonth3 += (month3-1) + '&machineType=1&provinces=' + nameProvince;//上周期装载机平均时长路径
+          avgWorkHourMonth4 += (month4-1) + '&machineType=2&provinces=' + nameProvince;//上周期挖掘机平均时长路径
+        }
+        var zData = serviceResource.restCallService(avgWorkHourMonth1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince2 = zdata.avgHours;
+        });
+        var zData1 = serviceResource.restCallService(avgWorkHourMonth3, 'GET');
+        zData1.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince2 = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourMonth2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince2 = wdata.avgHours;
+        });
+        var wData1 = serviceResource.restCallService(avgWorkHourMonth4, 'GET');
+        wData1.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince2 = wdata1.avgHours;
+        });
+      } else if(dateType1==3){
+        // //平均工作时长URL--按天查询
+        var avgWorkHourDate = AVG_WORK_HOUR_QUERY_DATE;
+        var date1 = filterTerm;//上周期装载机平均时长路径
+        var date2 = filterTerm;//上周期挖掘机平均时长路径
+        var date3 = filterTerm;//上周期装载机平均时长路径
+        var date4 = filterTerm;//上周期挖掘机平均时长路径
+        var avgWorkHourDate1 = avgWorkHourDate;
+        avgWorkHourDate1 += date1 +  '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourDate2 = avgWorkHourDate;
+        avgWorkHourDate2 += date2 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+
+        var startDate1 = new Date();
+        var endDate1 = startDate;
+        var n = startDate1.getDate()-endDate1.getDate();
+        startDate1.setDate(endDate1.getDate()-n);
+        var startDateFormated1 = startDate1.getFullYear() + '-' + (startDate1.getMonth() + 1) + '-' + startDate1.getDate();
+        var endDateFormated1 = endDate1.getFullYear() + '-' + (endDate1.getMonth() + 1) + '-' + endDate1.getDate();
+        var avgWorkHourDate3 = avgWorkHourDate;
+        avgWorkHourDate3 += 'startDate=' + startDateFormated1 + '&endDate='+ endDateFormated1 + '&machineType=1&provinces=' + nameProvince;//装载机平均时长路径
+        var avgWorkHourDate4 = avgWorkHourDate;
+        avgWorkHourDate4 += 'startDate=' + startDateFormated1 + '&endDate='+ endDateFormated1 + '&machineType=2&provinces=' + nameProvince;//挖掘机平均时长路径
+        var zData = serviceResource.restCallService(avgWorkHourDate1, 'GET');
+        zData.then(function (zdata) {
+          vm.loaderHoursProvince2 = zdata.avgHours;
+        });
+        var zData1 = serviceResource.restCallService(avgWorkHourDate3, 'GET');
+        zData1.then(function (zdata1) {
+          vm.beforeLoaderHoursProvince2 = zdata1.avgHours;
+        });
+        var wData = serviceResource.restCallService(avgWorkHourDate2, 'GET');
+        wData.then(function (wdata) {
+          vm.excavatorHoursProvince2 = wdata.avgHours;
+        });
+        var wData1 = serviceResource.restCallService(avgWorkHourDate4, 'GET');
+        wData1.then(function (wdata1) {
+          vm.beforeExcavatorHoursProvince2 = wdata1.avgHours;
+        });
+      }
+    }
+
+
     //封装折线图数据查询及生成--左图和大地图调用
     function yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1){
       if(machineType1=="A1"){
         if(heatType1==1){
           mmuLine.title.text = "挖掘机开工变化趋势";
-          mmuLine.yAxis.name = '开工时长(小时)';
+          mmuLine.yAxis.name = '月平均开工时长(小时)';
 
         }else if(heatType1==0){
           mmuLine.title.text = "挖掘机销售变化趋势";
@@ -1414,10 +1677,20 @@
       if(machineType1=="1,2,3"){
         if(heatType1==1){
           mmuLine.title.text = "装载机开工变化趋势";
-          mmuLine.yAxis.name = '开工时长(小时)';
+          mmuLine.yAxis.name = '月平均开工时长(小时)';
 
         }else if(heatType1==0){
           mmuLine.title.text = "装载机销售变化趋势";
+          mmuLine.yAxis.name = '车辆数量(台)';
+        }
+      }
+      if(machineType1=="3"){
+        if(heatType1==1){
+          mmuLine.title.text = "重机开工变化趋势";
+          mmuLine.yAxis.name = '月平均开工时长(小时)';
+
+        }else if(heatType1==0){
+          mmuLine.title.text = "重机销售变化趋势";
           mmuLine.yAxis.name = '车辆数量(台)';
         }
       }
@@ -1430,6 +1703,9 @@
         }else if(machineType1=="A1"){
           YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=2";
           YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=2";
+        }else if(machineType1=="3"){
+          YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=3";
+          YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=3";
         }
       } else if(heatType1==0){
         //判断是哪种车型
@@ -1439,6 +1715,9 @@
         }else if(machineType1=="A1"){
           YearURL1= SALES_YEAR_QUERY + "2016&machineType=2";
           YearURL2= SALES_YEAR_QUERY + "2017&machineType=2";
+        }else if(machineType1=="3"){
+          YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=3";
+          YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=3";
         }
       }
 
@@ -1478,7 +1757,7 @@
       if(machineType2=="A1"){
         if(heatType2==1){
           mmuLine2.title.text = "挖掘机开工变化趋势";
-          mmuLine2.yAxis.name = '开工时长(小时)';
+          mmuLine2.yAxis.name = '月平均开工时长(小时)';
 
         }else if(heatType2==0){
           mmuLine2.title.text = "挖掘机销售变化趋势";
@@ -1488,7 +1767,7 @@
       if(machineType2=="1,2,3"){
         if(heatType2==1){
           mmuLine2.title.text = "装载机开工变化趋势";
-          mmuLine2.yAxis.name = '开工时长(小时)';
+          mmuLine2.yAxis.name = '月平均开工时长(小时)';
 
         }else if(heatType2==0){
           mmuLine2.title.text = "装载机销售变化趋势";
@@ -1669,12 +1948,15 @@
           beforeFilter3 = 'startDate=' + startDateFormated3 + '&endDate='+ endDateFormated3;
         }
 
-
+        var filterTermProvince1=filterTerm1;
         if(heatType1==1){
           //调用封装好的查询平均时间功能--开工热度
           avgWorkHoursQuery(dateType1,filterTerm1,startDate,endDate);
           vm.avgHours1 = true;
           vm.avgHours3 = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational = true;
+          vm.avgHoursProvince = false;
         }else if(heatType1==0){
           vm.avgHours1 = false;
           vm.avgHours3 = true;
@@ -1727,11 +2009,15 @@
           var endDateFormated4 = endDate4.getFullYear() + '-' + (endDate4.getMonth() + 1) + '-' + endDate4.getDate();
           beforeFilter4 = 'startDate=' + startDateFormated4 + '&endDate='+ endDateFormated4;
         }
+        var filterTermProvince2=filterTerm2;
         if(heatType2==1){
           //调用封装好的查询平均时间功能--开工热度
           avgWorkHoursQuery2(dateType1,filterTerm2,startDate,endDate);
           vm.avgHours2 = true;
           vm.avgHours4 = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational2 = true;
+          vm.avgHoursProvince2 = false;
         }else if(heatType2==0){
           vm.avgHours2 = false;
           vm.avgHours4 = true;
@@ -1745,6 +2031,9 @@
         if(machineType1=="A1"){
           filterTerm1 += "&machineType=" + 2;
         }
+        if(machineType1=="3"){
+          filterTerm1 += "&machineType=" + 3;
+        }
 
         } else {
           if(machineType1=="1,2,3"){
@@ -1755,6 +2044,10 @@
             filterTerm1 += "&machineType=" + 2;
             beforeFilter3 += "&machineType=" + 2;
           }
+          if(machineType1=="3"){
+            filterTerm1 += "&machineType=" + 3;
+            beforeFilter3 += "&machineType=" + 3;
+          }
         }
         //判断是哪种车型--右图
         if(heatType2==1){
@@ -1763,6 +2056,9 @@
         }
         if(machineType2=="A1"){
           filterTerm2 += "&machineType=" + 2;
+        }
+        if(machineType2=="3"){
+          filterTerm2 += "&machineType=" + 3;
         }
 
         } else {
@@ -1773,6 +2069,10 @@
           if(machineType2=="A1"){
             filterTerm2 += "&machineType=" + 2;
             beforeFilter4 += "&machineType=" + 2;
+          }
+          if(machineType2=="3"){
+            filterTerm2 += "&machineType=" + 3;
+            beforeFilter4 += "&machineType=" + 3;
           }
         }
         //开工热度查询默认查询范围2小时
@@ -1932,6 +2232,14 @@
                 mapOption1.title.text = "装载机销售热度分布";
                 mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
+            }else if(machineType1=="3"){
+              if(heatType1==1){
+                mapOption1.title.text = "重机开工热度分布";
+                mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
+              }else if(heatType1==0){
+                mapOption1.title.text = "重机销售热度分布";
+                mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
+              }
             }
             mapOption1.visualMap.max=max3;
             mapOption1.series[0].data=zData;
@@ -1954,6 +2262,14 @@
                 mapOption2.title.text = "装载机销售热度分布";
                 mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
+            }else if(machineType2=="3"){
+              if(heatType2==1){
+                mapOption2.title.text = "重机开工热度分布";
+                mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
+              }else if(heatType2==0){
+                mapOption2.title.text = "重机销售热度分布";
+                mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
+              }
             }
             mapOption2.visualMap.max=max3;
             mapOption2.series[0].data=yData;
@@ -1969,6 +2285,8 @@
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
+          avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+          avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
           showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
 
         })
@@ -2068,11 +2386,19 @@
               if(cityMax1<cityMax2){
                 cityMax3 = cityMax2;
               }
+              avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+              avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
               cityMap1.series[0].data=cityData1;
               cityMap1.visualMap.max=cityMax3;
+              //悬浮框的的隐藏和显示-work
+              vm.avgHoursNational = false;
+              vm.avgHoursProvince = true;
               cityChart1.setOption(cityMap1);
               cityMap2.series[0].data=cityData2;
               cityMap2.visualMap.max=cityMax3;
+              //悬浮框的的隐藏和显示-work
+              vm.avgHoursNational2 = false;
+              vm.avgHoursProvince2 = true;
               cityChart2.setOption(cityMap2);
             }, function (reason) {
               Notification.error("获取数据失败");
@@ -2090,6 +2416,12 @@
           vm.allProvince = false;
           vm.national1 = true;
           vm.allProvince1 = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational = true;
+          vm.avgHoursProvince = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational2 = true;
+          vm.avgHoursProvince2 = false;
           var mapChart1 = vm.echartsInit("mapContainer1");
           mapOption1.title.text = mapTitleText1;
           mapOption1.series[0].data=zData;
@@ -2104,12 +2436,16 @@
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
+            avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+            avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
 
           });
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
+            avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+            avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
           })
         }
@@ -2119,6 +2455,12 @@
           vm.allProvince = false;
           vm.national1 = true;
           vm.allProvince1 = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational = true;
+          vm.avgHoursProvince = false;
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational2 = true;
+          vm.avgHoursProvince2 = false;
           var mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.series[0].data=yData;
           mapOption2.title.text = mapTitleText2;
@@ -2133,11 +2475,15 @@
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
+            avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+            avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
           });
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
+            avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
+            avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
           })
         }
@@ -2251,10 +2597,19 @@
           if(cityMax1<cityMax2){
             cityMax3 = cityMax2;
           }
+
+
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational = false;
+          vm.avgHoursProvince = true;
           cityMap1.visualMap.max=cityMax3;
           cityMap1.series[0].data=cityData1;
           cityChart1.setOption(cityMap1);
 
+
+          //悬浮框的的隐藏和显示-work
+          vm.avgHoursNational2 = false;
+          vm.avgHoursProvince2 = true;
           cityMap2.visualMap.max=cityMax3;
           cityMap2.series[0].data=cityData2;
           cityChart2.setOption(cityMap2);
