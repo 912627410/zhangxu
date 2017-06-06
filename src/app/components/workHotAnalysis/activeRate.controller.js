@@ -147,9 +147,8 @@
       });
     }
 
-    // showChart("装载机","","1","201703","山东省");
-    showChart("挖掘机","","1","201703","");
-
+    //_produceType,_machineType,_cycleType,_cycleValue,_province
+    showChart(produceType[0],"",1,cycleValue1[0].replace(/\D/g,""),"");
 
 
 
