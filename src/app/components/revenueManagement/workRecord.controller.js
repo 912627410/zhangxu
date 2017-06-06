@@ -10,7 +10,7 @@
     .controller('workRecordController', workRecordController);
 
   /** @ngInject */
-  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,DRIVER_RECORD_URL,REVENUE_URL, FLEET_PAGE_URL) {
+  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
