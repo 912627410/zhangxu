@@ -251,13 +251,8 @@
     .constant("WORK_HOUR_YEAR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
     .constant("SALES_YEAR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
 
-
-<<<<<<< HEAD
-    .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?produceType=') //获取机器活跃度
     .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
-=======
     .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
->>>>>>> REL1.00
   ;
 
 
