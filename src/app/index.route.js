@@ -390,6 +390,16 @@
           }
         }
       })
+
+      .state('home.modelsCompare', {
+        url: '/modelsCompare',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/modelsCompare.html',
+            controller: 'modelsCompareController as modelsCompareCtrl'
+          }
+        }
+      })
       .state('home.machineWorkTime', {
         url: '/machineWorkTime',
         views: {

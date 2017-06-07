@@ -1,0 +1,277 @@
+<section>
+  <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li>统计分析</li>
+    <li>开工热度分析</li>
+    <li class="active"> 车型热度分布</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row form-group">
+    <div class="col-md-1">
+        <label class="control-label">查询周期：</label>
+      </div>
+    <div class="col-md-2">
+      <select class="form-control" ng-change="modelsCompareCtrl.change(modelsCompareCtrl.dateType1)" ng-model="modelsCompareCtrl.dateType1">
+        <option value="1" ng-selected="true">按季度</option>
+        <option value="2">按月</option>
+        <option value="3">按日期</option>
+      </select>
+    </div>
+    <div ng-show="modelsCompareCtrl.quarterQuery">
+        <label class="control-label col-md-1">开工季度:</label>
+        <div class="controls col-md-2">
+          <select class="form-control" ng-model="modelsCompareCtrl.dateType2">
+            <option value="201702">2017年第二季度</option>
+            <option value="201701">2017年第一季度</option>
+            <option value="201604">2016年第四季度</option>
+            <option value="201603">2016年第三季度</option>
+            <option value="201602">2016年第二季度</option>
+            <option value="201601">2016年第一季度</option>
+            <option value="201504">2015年第四季度</option>
+          </select>
+        </div>
+    </div>
+    <div ng-show="modelsCompareCtrl.monthQuery">
+        <label class="control-label col-md-1">开工月份:</label>
+        <div class="controls col-md-2">
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
+                     ng-model="modelsCompareCtrl.monthDateDeviceData"
+                     is-open="modelsCompareCtrl.monthDateOpenStatusDeviceData.opened"
+                     datepicker-options="modelsCompareCtrl.dateOptions1"
+                     min-date="modelsCompareCtrl.minDate"
+                     max-date="modelsCompareCtrl.maxDate"
+                     ng-required="true" current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="modelsCompareCtrl.monthDateOpenDeviceData($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+      </div>
+    <div>
+      <label class="control-label col-md-1">活跃周期:</label>
+      <div class="controls col-md-2">
+        <select class="form-control" ng-model="modelsCompareCtrl.hour">
+          <option ng-repeat="date in modelsCompareCtrl.hours" value="{{date}}">{{date}}小时</option>
+        </select>
+      </div>
+    </div>
+    <div class="controls col-md-2">
+        <button class="btn btn-warning" type="button" ng-click="modelsCompareCtrl.reset()">{{'reset'|translate}}</button>
+      <span ng-show="modelsCompareCtrl.hidden">
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="row form-group" ng-show="modelsCompareCtrl.dayQuery">
+    <div class="control-group" >
+      <label class="control-label col-md-1">起始日期：</label>
+      <div class="controls col-md-2">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                 ng-model="modelsCompareCtrl.startDateDeviceData"
+                 is-open="modelsCompareCtrl.startDateOpenStatusDeviceData.opened"
+                 datepicker-options="modelsCompareCtrl.dateOptions"
+                 min-date="modelsCompareCtrl.minDate"
+                 max-date="modelsCompareCtrl.maxDate"
+                 ng-required="true" current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="modelsCompareCtrl.startDateOpenDeviceData($event)">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+      </div>
+      <label class="control-label col-md-1">结束日期：</label>
+      <div class="controls col-md-2">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                 ng-model="modelsCompareCtrl.endDateDeviceData"
+                 is-open="modelsCompareCtrl.endDateOpenStatusDeviceData.opened"
+                 datepicker-options="modelsCompareCtrl.dateOptions"
+                 ng-required="true" current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="modelsCompareCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div class="controls col-md-2">
+        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+                ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <label class="control-label col-md-1">产品类型:</label>
+    <div class="controls col-md-2">
+      <select class="form-control" ng-change="modelsCompareCtrl.change1(modelsCompareCtrl.machineType1)" ng-model="modelsCompareCtrl.machineType1">
+        <option value="1">装载机</option>
+        <option value="2">挖掘机</option>
+        <!--<option value="3">重机</option>-->
+        <!--<option ng-repeat="data in modelsCompareCtrl.machineType" value="{{data.value}}">{{data.name}}</option>-->
+      </select>
+    </div>
+
+    <label class="control-label col-md-1">车辆型号:</label>
+    <div class="controls col-md-2">
+      <select class="form-control" ng-model="modelsCompareCtrl.vehicleType1">
+        <option ng-show="modelsCompareCtrl.option1" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
+        <option ng-show="modelsCompareCtrl.option2" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
+        <!--<option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models3" value="{{data.name}}">{{data.name}}</option>-->
+      </select>
+    </div>
+
+    <label class="control-label col-md-1">热度类型:</label>
+    <div class="controls col-md-2">
+      <input type="radio" name="heat1" value="1" ng-checked="true" ng-model="modelsCompareCtrl.heatType1" />开工热度
+      <input type="radio" name="heat1" value="0" ng-model="modelsCompareCtrl.heatType1" />销售热度
+    </div>
+    <div class="col-md-2" ng-show="modelsCompareCtrl.comparedQuery">
+      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()">∨ 车型对比</button>
+    </div>
+    <div class="col-md-2" ng-show="modelsCompareCtrl.singleQuery">
+      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()">∧ 单一车型</button>
+    </div>
+  </div>
+  <div class="row form-group" ng-show="modelsCompareCtrl.comparedType">
+    <label class="control-label col-md-1">产品类型:</label>
+    <div class="controls col-md-2">
+      <select class="form-control" ng-change="modelsCompareCtrl.change2(modelsCompareCtrl.machineType2)" ng-model="modelsCompareCtrl.machineType2">
+        <option value="1">装载机</option>
+        <option value="2">挖掘机</option>
+        <!--<option value="3">重机</option>-->
+      </select>
+    </div>
+    <label class="control-label col-md-1">车辆型号:</label>
+    <div class="controls col-md-2">
+      <select class="form-control" ng-model="modelsCompareCtrl.vehicleType2">
+        <option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
+        <option ng-show="modelsCompareCtrl.option4" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
+        <!--<option ng-show="modelsCompareCtrl.option5" ng-repeat="data in modelsCompareCtrl.models5" value="{{data.name}}">{{data.name}}</option>-->
+      </select>
+    </div>
+
+    <label class="control-label col-md-1">热度类型:</label>
+    <div class="controls col-md-2">
+      <input type="radio" name="heat2" value="1" ng-checked="true" ng-model="modelsCompareCtrl.heatType2" />开工热度
+      <input type="radio" name="heat2" value="0" ng-model="modelsCompareCtrl.heatType2" />销售热度
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" presentation-href="machine:page"
+              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.vehicleType2,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
+      >&nbsp;查&nbsp;询&nbsp;对&nbsp;比</button>
+    </div>
+  </div>
+
+  <!-- map -->
+  <div class="mapBox" style="border: 1px solid #cccccc;height: 850px;width: 99%;position: relative;">
+    <div class="mapContainerBox" style="position: absolute;height: 850px;width: 100%;;left: 0px;">
+      <div class="mapContainer" id="mapContainer1" style="height: 850px;width: 100%;"></div>
+      <div ng-show="modelsCompareCtrl.avgHours1" style="position: absolute;right: 0;top: 75px;width: 190px;height: 75px;border: 1px solid #cccccc;">
+        <div style="position: relative;">
+          <div
+            style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+            平均时长
+          </div>
+          <ul style="position: absolute;list-style: none;line-height: 24px;">
+            <li>总平均：{{(modelsCompareCtrl.excavatorHours + modelsCompareCtrl.loaderHours)/2 | number:2}}小时</li>
+            <li ng-if="modelsCompareCtrl.excavatorHours>=modelsCompareCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+            <li ng-if="modelsCompareCtrl.excavatorHours<modelsCompareCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+            <li ng-if="modelsCompareCtrl.loaderHours>=modelsCompareCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+            <li ng-if="modelsCompareCtrl.loaderHours<modelsCompareCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+          </ul>
+        </div>
+      </div>
+      <div ng-show="modelsCompareCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
+        <div style="position: relative;">
+          <ul ng-show="modelsCompareCtrl.national" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales>=modelsCompareCtrl.beforeTotalSales" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.totalSales-modelsCompareCtrl.beforeTotalSales}}台</span></li>
+              </span>
+            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales<modelsCompareCtrl.beforeTotalSales">
+                 <!--<li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img ng-mouseenter="show = true" ng-mouseleave="show = false" src="assets/images/down.png"/></span></li>-->
+              <!--<li ng-show="show" class="text-center"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales-modelsCompareCtrl.totalSales}}台</span></li>-->
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales-modelsCompareCtrl.totalSales}}台</span></li>
+              </span>
+          </ul>
+
+          <ul ng-show="modelsCompareCtrl.allProvince" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales>=modelsCompareCtrl.beforeProvinceSales" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.provinceSales-modelsCompareCtrl.beforeProvinceSales}}台</span></li>
+              </span>
+            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales<modelsCompareCtrl.beforeProvinceSales">
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeProvinceSales-modelsCompareCtrl.provinceSales}}台</span></li>
+              </span>
+          </ul>
+        </div>
+      </div>
+      <a class="backChina" style="width: 40px; height: 40px;position: absolute;right: 20px;top: 170px;display: none;" ng-click="modelsCompareCtrl.backChina1();">
+        <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+      </a>
+    </div>
+    <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:850px;right: 0px;border-left:1px dashed #cccccc">
+      <div class="mapContainer" id="mapContainer2" style="height: 850px;"></div>
+      <div ng-show="modelsCompareCtrl.avgHours2" id="mapContainerQushi2" style="position: absolute;right: 0;top:75px;width: 190px;height: 75px;border: 1px solid #cccccc;display: none;">
+        <div style="position: relative;">
+          <div
+            style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
+            平均时长
+          </div>
+          <ul style="position: absolute;list-style: none;line-height: 24px;">
+            <li>总平均：{{(modelsCompareCtrl.excavatorHours2 + modelsCompareCtrl.loaderHours2)/2 | number:2}}小时</li>
+            <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+            <li ng-if="modelsCompareCtrl.excavatorHours2<modelsCompareCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+            <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
+            <li ng-if="modelsCompareCtrl.loaderHours2>=modelsCompareCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+            <li ng-if="modelsCompareCtrl.loaderHours2<modelsCompareCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+          </ul>
+        </div>
+      </div>
+      <div ng-show="modelsCompareCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
+        <div style="position: relative;">
+          <ul ng-show="modelsCompareCtrl.national1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales1>=modelsCompareCtrl.beforeTotalSales1" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.totalSales1-modelsCompareCtrl.beforeTotalSales1}}台</span></li>
+              </span>
+            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales1<modelsCompareCtrl.beforeTotalSales1">
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales1-modelsCompareCtrl.totalSales1}}台</span></li>
+              </span>
+          </ul>
+
+          <ul ng-show="modelsCompareCtrl.allProvince1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales1>=modelsCompareCtrl.beforeProvinceSales1" >
+                <li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.provinceSales1-modelsCompareCtrl.beforeProvinceSales1}}台</span></li>
+              </span>
+            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales1<modelsCompareCtrl.beforeProvinceSales1">
+                <li><span>总销售台数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeProvinceSales1-modelsCompareCtrl.provinceSales1}}台</span></li>
+              </span>
+          </ul>
+
+        </div>
+      </div>
+      <a class="backChina"  style="width: 40px; height: 40px;position: absolute;right: 20px;top: 170px;display: none;" ng-click="modelsCompareCtrl.backChina2();">
+        <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+      </a>
+    </div>
+  </div>
+
+</section>
+
