@@ -9,22 +9,56 @@
     .module('GPSCloud')
     .controller('activeRateController',activeRateController);
 
-  function activeRateController($scope,$http,GET_ACTIVERATE_URL) {
+  function activeRateController($scope,$http,GET_ACTIVERATE_URL,GET_MACHINETYPE_URL) {
 
     var vm = this;
     var back = document.getElementById('backProvince');
-    var workMonth = document.getElementById("workMonth");
-    var workProvince = document.getElementById("workProvince");
-    var machineType = document.getElementById("machineType");
+    var time,cycle;
 
-    var produceType = ["挖掘机","装载机","重机"];
+    var produceType = [];
+    var machineType = [];
     var cycleType = ["按月","按季度"];
     var cycleValue1 = ["2017年05月","2017年04月","2017年03月","2017年02月","2017年01月","2016年12月","2016年11月","2016年10月","2016年09月","2016年08月","2016年07月","2016年06月","2016年05月","2016年04月"];
     var cycleValue2 = ["2017年01季度","2016年04季度","2016年03季度","2016年02季度","2016年01季度"];
 
+
+    //get produceType
+    function getSelectProduceType() {
+      $http({
+        method: 'GET',
+        url: GET_MACHINETYPE_URL
+      }).then(function (rspJson) {
+        rspJson = rspJson.data;
+        for(var i=0;i<rspJson.length;i++){
+          produceType[i] = rspJson[i].name;
+        }
+        $scope.produceType.selected = produceType[0];
+      });
+    }
+
+    //get machineType
+    function getSelectMachineType(_produceType){
+      $http({
+        method: 'GET',
+        url: GET_MACHINETYPE_URL+'?type='+_produceType
+      }).then(function (rspJson) {
+        rspJson = rspJson.data;
+        for(var i=0;i<rspJson.length;i++){
+          machineType[i] = rspJson[i].name;
+        }
+        $scope.machineType.selected = machineType[0];
+      })
+    }
+
+
+    getSelectProduceType();
+    getSelectMachineType(2);
+
+    $scope.chartProduceType = produceType[0];
+    $scope.chartMachineType = machineType[0];
     $scope.chartWorkMonth = cycleValue1[0];
     $scope.chartArea = "全国";
-    $scope.chartMachineType = produceType[0];
+
 
 
     //初始化图表
@@ -40,9 +74,6 @@
 
         barChart.setOption(
           {
-            legend: {
-              data: ['No.1', 'No.2', 'No.3', 'No.4', 'No.5', 'No.6']
-            },
             tooltip: {
               trigger: 'axis',
               axisPointer: {
@@ -54,10 +85,10 @@
               },
               formatter: function (params) {
                 var thisArea = params[0].dataIndex;
-                var res = '<div style="display:inline-block;visibility:hidden;margin-right:5px;width:10px;height:10px;"></div>' + '地区：' + params[0].name;
+                var res = '地区：' + params[0].name;
                 for (var i = 0; i < params.length; i++) {
                   if (rspJson.machineCount[i][thisArea].value != undefined) {
-                    res += '<br/>' + '<div style="display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + "型号：" + rspJson.machineCount[i][thisArea].name + '<br/>' + '<div style="display:inline-block; visibility:hidden;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + '机器数量：' + rspJson.machineCount[i][thisArea].value + ' 台' + ' ' + '活跃度：' + rspJson.seriesList[i][thisArea].value + ' %';
+                    res += '<br/>' + "型号：" + rspJson.machineCount[i][thisArea].name + '<br/>' + '活跃度：' + rspJson.seriesList[i][thisArea].value + ' %';
                   } else {
                     res += '';
                   }
@@ -83,7 +114,7 @@
               axisLabel: {
                 rotate: 45,
                 interval: 0,
-                formatter:function (value,index) {
+                formatter:function (value) {
                   var _value;
                   _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区/,"");
                   return _value;
@@ -93,7 +124,7 @@
 
             },
             yAxis: {
-              name: '车辆总数（台）',
+              name: '活跃度（%）',
               type: 'value',
               axisTick: {
                 show: false
@@ -103,41 +134,11 @@
               }
             },
             series: [{
-              name: 'No.1',
+              name: '活跃度',
               type: 'bar',
               stack: '活跃度',
               barWidth: '60%',
-              data: rspJson.machineCount[0]
-            }, {
-              name: 'No.2',
-              type: 'bar',
-              stack: '活跃度',
-              barWidth: '60%',
-              data: rspJson.machineCount[1]
-            }, {
-              name: 'No.3',
-              type: 'bar',
-              stack: '活跃度',
-              barWidth: '60%',
-              data: rspJson.machineCount[2]
-            }, {
-              name: 'No.4',
-              type: 'bar',
-              stack: '活跃度',
-              barWidth: '60%',
-              data: rspJson.machineCount[3]
-            }, {
-              name: 'No.5',
-              type: 'bar',
-              stack: '活跃度',
-              barWidth: '60%',
-              data: rspJson.machineCount[4]
-            }, {
-              name: 'No.6',
-              type: 'bar',
-              stack: '活跃度',
-              barWidth: '60%',
-              data: rspJson.machineCount[5]
+              data: rspJson.seriesList[0]
             }]
           }
         );
@@ -148,7 +149,7 @@
     }
 
     //_produceType,_machineType,_cycleType,_cycleValue,_province
-    showChart(produceType[0],"",1,cycleValue1[0].replace(/\D/g,""),"");
+    showChart("挖掘机",'E665F',1,cycleValue1[0].replace(/\D/g,""),"");
 
 
 
@@ -158,7 +159,8 @@
       if(back.style.display != "inline-block"){
         $scope.chartArea = params.name;
         back.style.display = "inline-block";
-        showChart("挖掘机","",1,201703,params.name);
+        console.log(params);
+        showChart(produceType.selected,params.data.name,cycle,time,params.name);
       }
     });
 
@@ -166,11 +168,14 @@
     //click back
     vm.backProvince = function(){
       back.style.display = "none";
-      showChart("挖掘机","",1,201703,"");
+      showChart("挖掘机",'E665F',1,cycleValue1[0].replace(/\D/g,""),"");
+
       $scope.chartWorkMonth = cycleValue1[0];
       $scope.chartArea = "全国";
-      $scope.chartMachineType = produceType[0];
-      $scope.produceType.selected = produceType[0];
+      $scope.chartProduceType = produceType[0];
+      $scope.chartMachineType = machineType[0];
+      getSelectProduceType();
+      getSelectMachineType(2);
       $scope.cycleType.selected = cycleType[0];
       $scope.cycleValue.selected = cycleValue1[0];
     };
@@ -179,11 +184,13 @@
 
     //ui-select
     $scope.produceType = produceType;
+    $scope.machineType = machineType;
     $scope.cycleType = cycleType;
     $scope.cycleValue = cycleValue1;
 
 
     $scope.produceType.selected = produceType[0];
+    $scope.machineType.selected = machineType[0];
     $scope.cycleType.selected = cycleType[0];
     $scope.cycleValue.selected = cycleValue1[0];
 
@@ -192,6 +199,21 @@
       if (newVal !== oldVal) {
         if ($scope.produceType.indexOf(newVal) === -1) {
           $scope.produceType.unshift(newVal);
+        }
+      }
+      if(produceType.selected == "挖掘机"){
+        getSelectMachineType(2);
+      }else if(produceType.selected == "重机"){
+        getSelectMachineType(3);
+      }else{
+        getSelectMachineType(1);
+      }
+    });
+
+    $scope.$watch('machineType.selected', function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        if ($scope.machineType.indexOf(newVal) === -1) {
+          $scope.machineType.unshift(newVal);
         }
       }
     });
@@ -232,6 +254,14 @@
       return newSupes;
     };
 
+    $scope.getMachineType = function(search) {
+      var newSupes = $scope.machineType.slice();
+      if (search && newSupes.indexOf(search) === -1) {
+        newSupes.unshift(search);
+      }
+      return newSupes;
+    };
+
     $scope.getCycleType = function(search) {
       var newSupes = $scope.cycleType.slice();
       if (search && newSupes.indexOf(search) === -1) {
@@ -250,11 +280,15 @@
 
 
     vm.customSelect = function(){
+      back.style.display = "none";
+
       $scope.chartWorkMonth = $scope.cycleValue.selected;
-      $scope.chartMachineType = $scope.produceType.selected;
+      $scope.chartProduceType = $scope.produceType.selected;
+      $scope.chartMachineType = $scope.machineType.selected;
 
       var _province = '';
       var _produceType;
+      var _machineType;
       var _cycleType;
 
       if($scope.cycleType.selected == "按月"){
@@ -264,13 +298,17 @@
       }
 
       _produceType = $scope.produceType.selected;
+      _machineType = $scope.machineType.selected;
 
       var _cycleValue = $scope.cycleValue.selected.replace(/\D/g,"");  //  \D -> 非数字  g -> 匹配所有
+      time = _cycleValue;
+      cycle = _cycleType;
 
-      showChart(_produceType,"",_cycleType,_cycleValue,_province);
-    }
+      showChart(_produceType,_machineType,_cycleType,_cycleValue,_province);
+    };
 
-
+    time = $scope.cycleValue.selected.replace(/\D/g,"");
+    cycle = 1;
   }
 
 })();

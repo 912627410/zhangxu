@@ -10,6 +10,15 @@
       </ui-select>
     </div>
     <div class="select-container">
+      <div class="select-title">产品型号：</div>
+      <ui-select ng-model="machineType.selected">
+        <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getMachineType($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+    <div class="select-container">
       <div class="select-title">汇总周期：</div>
       <ui-select ng-model="cycleType.selected">
         <ui-select-match placeholder="选择周期">{{$select.selected}}</ui-select-match>
@@ -33,10 +42,11 @@
     <div id="activeRateTitle">
       <em id="workMonth">{{chartWorkMonth}}</em>
       <em id="workProvince">{{chartArea}}</em>
+      <em id="produceType">{{chartProduceType}}</em>
       <em id="machineType">{{chartMachineType}}</em>
       <em>活跃度分布（点击视图可查看市区级分布）</em>
       <span id="backProvince" ng-click="activeRateCtrl.backProvince();">
-        <a>返回到全国</a>
+        <a>重置</a>
       </span>
     </div>
   <div id="barChartContainer"></div>
