@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="controls col-md-2">
-        <button class="btn btn-warning" type="button" >{{'reset'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="modelsCompareCtrl.reset()">{{'reset'|translate}}</button>
       <span ng-show="modelsCompareCtrl.hidden">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
                 ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}</button>
@@ -114,21 +114,20 @@
   <div class="row form-group">
     <label class="control-label col-md-1">产品类型:</label>
     <div class="controls col-md-2">
-      <select class="form-control" ng-change="modelsCompareCtrl.changes(modelsCompareCtrl.machineType1)" ng-model="modelsCompareCtrl.machineType1">
-        <!--<option value="1">装载机</option>-->
-        <!--<option value="2">挖掘机</option>-->
+      <select class="form-control" ng-change="modelsCompareCtrl.change1(modelsCompareCtrl.machineType1)" ng-model="modelsCompareCtrl.machineType1">
+        <option value="1">装载机</option>
+        <option value="2">挖掘机</option>
         <!--<option value="3">重机</option>-->
-        <option ng-repeat="data in modelsCompareCtrl.machineType" value="{{data.value}}">{{data.name}}</option>
+        <!--<option ng-repeat="data in modelsCompareCtrl.machineType" value="{{data.value}}">{{data.name}}</option>-->
       </select>
     </div>
 
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <select class="form-control" ng-model="modelsCompareCtrl.vehicleType1">
-        <!--<option value="789" ng-selected="true">全部</option>-->
         <option ng-show="modelsCompareCtrl.option1" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
         <option ng-show="modelsCompareCtrl.option2" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
-        <option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models3" value="{{data.name}}">{{data.name}}</option>
+        <!--<option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models3" value="{{data.name}}">{{data.name}}</option>-->
       </select>
     </div>
 
@@ -147,16 +146,18 @@
   <div class="row form-group" ng-show="modelsCompareCtrl.comparedType">
     <label class="control-label col-md-1">产品类型:</label>
     <div class="controls col-md-2">
-      <select class="form-control" ng-model="modelsCompareCtrl.machineType2">
+      <select class="form-control" ng-change="modelsCompareCtrl.change2(modelsCompareCtrl.machineType2)" ng-model="modelsCompareCtrl.machineType2">
         <option value="1">装载机</option>
         <option value="2">挖掘机</option>
-        <option value="3">重机</option>
+        <!--<option value="3">重机</option>-->
       </select>
     </div>
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <select class="form-control" ng-model="modelsCompareCtrl.vehicleType2">
-        <option ng-repeat="date in modelsCompareCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
+        <option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
+        <option ng-show="modelsCompareCtrl.option4" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
+        <!--<option ng-show="modelsCompareCtrl.option5" ng-repeat="data in modelsCompareCtrl.models5" value="{{data.name}}">{{data.name}}</option>-->
       </select>
     </div>
 
@@ -173,7 +174,7 @@
   </div>
 
   <!-- map -->
-  <div class="mapBox" style="border: 1px solid #cccccc;height: 850px;width: 99%;position: relative;>
+  <div class="mapBox" style="border: 1px solid #cccccc;height: 850px;width: 99%;position: relative;">
     <div class="mapContainerBox" style="position: absolute;height: 850px;width: 100%;;left: 0px;">
       <div class="mapContainer" id="mapContainer1" style="height: 850px;width: 100%;"></div>
       <div ng-show="modelsCompareCtrl.avgHours1" style="position: absolute;right: 0;top: 75px;width: 190px;height: 75px;border: 1px solid #cccccc;">
@@ -222,7 +223,7 @@
         <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
       </a>
     </div>
-    <div class="mapContainerBox" id="mapContainerBox2" style="position: absolute;display: none;height:850px;right: 0px;border-left:1px dashed #cccccc">
+    <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:850px;right: 0px;border-left:1px dashed #cccccc">
       <div class="mapContainer" id="mapContainer2" style="height: 850px;"></div>
       <div ng-show="modelsCompareCtrl.avgHours2" id="mapContainerQushi2" style="position: absolute;right: 0;top:75px;width: 190px;height: 75px;border: 1px solid #cccccc;display: none;">
         <div style="position: relative;">
