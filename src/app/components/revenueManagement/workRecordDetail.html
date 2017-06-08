@@ -6,7 +6,7 @@
 
 </div>
   <div class="modal-body row">
-    <div class="box-body col-sm-8">
+    <div class="box-body col-sm-7">
       <br>
       <br>
       <div class="table-responsive">
@@ -14,28 +14,28 @@
           <tr ng-repeat="workPointRecord in $data">
             <td class="text-nowrap" data-title="'趟次'">{{$index + 1}}</td>
             <td class="text-nowrap" data-title="'开始地点'" >{{workPointRecord.startPoint}}</td>
-            <td class="text-nowrap" data-title="'时间'" sortable="'workPointRecord.startDate'">{{workPointRecord.startTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'开始时间'" >{{workPointRecord.startTime | date: 'MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'结束地点'" >{{workPointRecord.endPoint}}</td>
-            <td class="text-nowrap" data-title="'时间'" >{{workPointRecord.endTime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'结束时间'" >{{workPointRecord.endTime | date: 'MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'用时'"  >
               <div ng-hide="workPointRecord.endTime ==null || workPointRecord.startTime==null">
                 {{(workPointRecord.endTime - workPointRecord.startTime)/1000/60 | number:2 }}分钟
               </div>
               <div ng-show="workPointRecord.endTime ==null || workPointRecord.startTime==null">0</div>
             </td>
+            <td class="text-nowrap" data-title="'运行里程'">{{workPointRecord.mileage}}KM</td>
           </tr>
         </table>
       </div>
     </div>
-    <div class="map-body col-sm-4">
+    <div class="map-body col-sm-5">
       <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-7 btn-group " role="group" >
+        <div class="col-md-12 btn-group " role="group" >
           <button id="start" class="btn btn-sm" type="button">{{'startAnimation'|translate}}</button>
           <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
           <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
         </div>
       </div>
-      <div class="box-body" id="workRecordDetailMap" style="height:350px;width: 350px;"></div>
+      <div class="box-body" id="workRecordDetailMap" style="height:400px;"></div>
     </div>
   </div>
