@@ -196,7 +196,7 @@
             type: 'spline',
             color: 'rgb(194, 53, 49)',
             yAxis: 1,
-            name: '<b style="font-size: 14px;">总趟数</b>',
+            name: '<b style="font-size: 14px;">平均趟数</b>',
             data: averageRecords
           }]
         };
