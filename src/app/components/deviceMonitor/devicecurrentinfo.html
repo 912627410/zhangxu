@@ -823,6 +823,53 @@
       </div>
     </uib-tab>
 
+    <!--电池统计-->
+    <uib-tab>
+      <uib-tab-heading>
+        {{'batteryMonitor'|translate}}
+      </uib-tab-heading>
+      <div class="modal-body">
+      <div class="box-body">
+      <div class="row">
+        <div class="col-md-2">
+          <label class="control-label">{{'startDate'|translate}}:</label>
+        </div>
+        <div class="col-md-3">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.startDateBatteryData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusBatteryData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenBatteryData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+          </p>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label">{{'endDate'|translate}}:</label>
+        </div>
+        <div class="col-md-3">
+          <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="deviceCurrentInfoCtrl.endDateBatteryData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusBatteryData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenBatteryData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+          </p>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getBatteryData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)">{{'confirm'|translate}}</button>
+        </div>
+
+      </div>
+      <div class="batteryChart-wrapper">
+        <highchart id="batteryIn" config="deviceCurrentInfoCtrl.batteryIn"></highchart>
+      </div>
+      <div class="batteryChart-wrapper">
+        <highchart id="batteryOut" config="deviceCurrentInfoCtrl.batteryOut"></highchart>
+      </div>
+      <div id="battery-info"></div>
+      </div>
+      </div>
+    </uib-tab>
+
+
     <!--远程控制-->
     <uib-tab select="" presentation-href="device:remoteControl" >
       <uib-tab-heading>

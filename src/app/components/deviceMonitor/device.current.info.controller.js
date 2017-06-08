@@ -695,6 +695,160 @@
       )
     }
 
+
+    /*******************电池监控tab***********************/
+    vm.startDateBatteryData = startDate;
+    vm.endDateBatteryData = new Date();
+
+    //date picker
+    vm.startDateOpenStatusBatteryData = {
+      opened: false
+    };
+    vm.endDateOpenStatusBatteryData = {
+      opened: false
+    };
+
+    vm.startDateOpenBatteryData = function ($event) {
+      vm.startDateOpenStatusDeviceWarningData.opened = true;
+    };
+    vm.endDateOpenBatteryData = function ($event) {
+      vm.endDateOpenStatusBatteryData.opened = true;
+    };
+
+    // var batteryData = {
+    //   batteryInfo:[
+    //     [{"name": "0",y: 2},{"name": "6",y: 4},{"name": "12",y: 5},{"name": "18",y: 6}],
+    //     [{"name": "0",y: 2.6},{"name": "6",y: 4.5},{"name": "12",y: 7.9},{"name": "18",y: 6}],
+    //     [{"name": "0",y: 1.1},{"name": "6",y: 1.2},{"name": "12",y: 1.6},{"name": "18",y: 1.6}],
+    //     [{"name": "0",y: 4.2},{"name": "6",y: 5},{"name": "12",y: 5.7},{"name": "18",y: 6.8}],
+    //   ],
+    //   cycleValue: ["0","6","12","18"]
+    // };
+
+    var batteryData = [{
+      name: 'battery1',
+      data: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+        7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+        8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+        7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+        3.0, 3.0]
+    }, {
+      name: 'battery2',
+      data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
+        0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+        0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
+        3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4]
+    }];
+    var startValue, cycleValue;
+    startValue = 2017;
+
+    vm.batteryIn = {
+      options: {
+        chart:{
+          type: 'spline',
+          zoomType: 'x'
+        },
+        title: {
+          text: '电池充电监控'
+        },
+        xAxis: {
+          type: 'datetime'
+        },
+        yAxis: {
+          title: {
+            text: '电压 (V)',
+            rotation:0,
+            align: 'high',
+            y:-20,
+            offset: -10,
+            min: 0
+          }
+        },
+        tooltip: {
+          valueSuffix: 'V'
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle'
+        },
+        plotOptions: {
+          spline: {
+            pointInterval: 3600000, // one hour
+            pointStart: Date.UTC(startValue)
+          },
+          series: {
+            marker:{
+              enabled: false,
+              animation: true
+            }
+          }
+        }
+
+      },
+
+      series: batteryData
+    };
+
+
+
+
+    vm.batteryOut = {
+      options: {
+        chart:{
+          type: 'spline',
+          zoomType: 'x'
+        },
+        title: {
+          text: '电池放电监控'
+        },
+        xAxis: {
+          type: 'datetime'
+        },
+        yAxis: {
+          title: {
+            text: '电压 (V)',
+            rotation:0,
+            align: 'high',
+            y:-20,
+            offset: -10,
+            min: 0
+          }
+        },
+        tooltip: {
+          valueSuffix: 'V'
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle'
+        },
+        plotOptions: {
+          spline: {
+            pointInterval: 3600000, // one hour
+            pointStart: Date.UTC(startValue)
+          },
+          series: {
+            marker:{
+              enabled: false,
+              animation: true
+            }
+          }
+        }
+
+      },
+
+      series: batteryData
+    };
+
+
+
+    vm.getBatteryData = function (page, size, sort, deviceNum, startDate, endDate) {
+
+    };
+
+
+
     /*******************远程控制tab***********************/
     vm.startDateMapData = startDate;
     vm.endDateMapData = new Date();

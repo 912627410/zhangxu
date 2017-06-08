@@ -705,7 +705,7 @@
   "beginPoint": "起点",
   "endPoint": "终点",
   "openMonitor": "开启监控",
-  "closeMonitor": "关闭监控"
-
+  "closeMonitor": "关闭监控",
+  "batteryMonitor": "电池监控"
 
 }
