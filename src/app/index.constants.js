@@ -253,6 +253,7 @@
 
     .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
     .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
+    .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
   ;
 
 
