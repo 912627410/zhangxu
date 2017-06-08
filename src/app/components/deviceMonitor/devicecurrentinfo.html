@@ -854,7 +854,7 @@
           </p>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getBatteryData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateDeviceWarningData)">{{'confirm'|translate}}</button>
+          <button class="btn btn-primary" type="button" ng-click="deviceCurrentInfoCtrl.getBatteryData(0,8,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceWarningData,deviceCurrentInfoCtrl.endDateBatteryData)">{{'confirm'|translate}}</button>
         </div>
 
       </div>
@@ -864,7 +864,32 @@
       <div class="batteryChart-wrapper">
         <highchart id="batteryOut" config="deviceCurrentInfoCtrl.batteryOut"></highchart>
       </div>
-      <div id="battery-info"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv="csv">
+              <tr>
+                <th>电池编号</th>
+                <th>液位1</th>
+                <th>液位2</th>
+                <th>液位3</th>
+                <th>液位4</th>
+                <th>液位5</th>
+                <th>液位6</th>
+              </tr>
+              <tr ng-repeat="x in deviceCurrentInfoCtrl.batteryDataList">
+                <td>{{x.batteryID}}</td>
+                <td>{{x.liquid1}}</td>
+                <td>{{x.liquid2}}</td>
+                <td>{{x.liquid3}}</td>
+                <td>{{x.liquid4}}</td>
+                <td>{{x.liquid5}}</td>
+                <td>{{x.liquid6}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
       </div>
       </div>
     </uib-tab>

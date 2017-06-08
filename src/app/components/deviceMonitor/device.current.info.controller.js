@@ -709,21 +709,104 @@
     };
 
     vm.startDateOpenBatteryData = function ($event) {
-      vm.startDateOpenStatusDeviceWarningData.opened = true;
+      vm.startDateOpenStatusBatteryData.opened = true;
     };
     vm.endDateOpenBatteryData = function ($event) {
       vm.endDateOpenStatusBatteryData.opened = true;
     };
 
-    // var batteryData = {
-    //   batteryInfo:[
-    //     [{"name": "0",y: 2},{"name": "6",y: 4},{"name": "12",y: 5},{"name": "18",y: 6}],
-    //     [{"name": "0",y: 2.6},{"name": "6",y: 4.5},{"name": "12",y: 7.9},{"name": "18",y: 6}],
-    //     [{"name": "0",y: 1.1},{"name": "6",y: 1.2},{"name": "12",y: 1.6},{"name": "18",y: 1.6}],
-    //     [{"name": "0",y: 4.2},{"name": "6",y: 5},{"name": "12",y: 5.7},{"name": "18",y: 6.8}],
-    //   ],
-    //   cycleValue: ["0","6","12","18"]
-    // };
+
+
+    vm.getBatteryData = function (page, size, sort, deviceNum, startDate, endDate) {
+      if (deviceNum) {
+        var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
+      }
+      if (startDate) {
+        var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        if (filterTerm) {
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else {
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      }
+      if (endDate) {
+        var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        if (filterTerm) {
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else {
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      }
+      var batteryDataPromis = serviceResource.queryDeviceWarningData(page, size, sort, filterTerm);
+      batteryDataPromis.then(function (data) {
+          vm.batteryDataList = data.content;
+          vm.batteryDataPage = data.page;
+          vm.batteryDataPageNumber = data.page.number + 1;
+          vm.batteryDataBasePath = '';
+          if (vm.batteryDataList.length == 0) {
+            Notification.warning(languages.findKey('theDeviceDoesNotAlarmThisTimePeriodPleaseReselect'));
+          }
+          else {
+            vm.batteryDataList.forEach(function (batteryData) {
+              // deviceWarningData.warningMsg = serviceResource.getWarningMsg(batteryData, batteryData.deviceType);
+            })
+          }
+        }, function (reason) {
+          // Notification.error(languages.findKey('getTheEquipmentFailureAlarmInformation'));
+        }
+      )
+    };
+
+    vm.batteryDataList = [
+      {
+        "batteryID" : "battery1",
+        "chargingStatus" : "正常",
+        "batteryInstallStatus" : "3",
+        "liquid1" : "正常",
+        "liquid2" : "正常",
+        "liquid3" : "正常",
+        "liquid4" : "正常",
+        "liquid5" : "正常",
+        "liquid6" : "正常"
+      },
+      {
+        "batteryID" : "battery2",
+        "chargingStatus" : "正常",
+        "batteryInstallStatus" : "3",
+        "liquid1" : "正常",
+        "liquid2" : "正常",
+        "liquid3" : "正常",
+        "liquid4" : "正常",
+        "liquid5" : "正常",
+        "liquid6" : "正常"
+      },
+      {
+        "batteryID" : "battery3",
+        "chargingStatus" : "正常",
+        "batteryInstallStatus" : "3",
+        "liquid1" : "正常",
+        "liquid2" : "正常",
+        "liquid3" : "正常",
+        "liquid4" : "正常",
+        "liquid5" : "正常",
+        "liquid6" : "正常"
+      },
+      {
+        "batteryID" : "battery4",
+        "chargingStatus" : "正常",
+        "batteryInstallStatus" : "3",
+        "liquid1" : "正常",
+        "liquid2" : "正常",
+        "liquid3" : "正常",
+        "liquid4" : "正常",
+        "liquid5" : "正常",
+        "liquid6" : "正常"
+      }
+    ];
 
     var batteryData = [{
       name: 'battery1',
