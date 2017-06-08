@@ -443,7 +443,7 @@
       visualMap: {
         type: 'continuous',
         min: 0,
-        max: 200,
+        max: 100,
         left: 20,
         bottom: 15,
         calculable: true,
@@ -1008,7 +1008,9 @@
           });
         }
         mapOption1.series[0].data=data;
-        mapOption1.visualMap.max=max;
+        if(heatType1==0){
+          mapOption1.visualMap.max=max;
+        }
         var mapChart1 = vm.echartsInit('mapContainer1');
         mapOption1.title.left = "center";
         mapOption1.title. textStyle={fontSize: 26};
@@ -1070,6 +1072,7 @@
                 vm.provinceSales = totalData[i].value;
               }
             }
+            vm.beforeProvinceSales = 0;
             for(var q=0;q<beforeTotalData.length;q++){
               if(param.name==beforeTotalData[q].name){
                 vm.beforeProvinceSales= beforeTotalData[q].value;
@@ -1101,7 +1104,9 @@
             //悬浮框的的隐藏和显示-work
             vm.avgHoursNational = false;
             vm.avgHoursProvince = true;
-            cityMap.visualMap.max=cityMax;
+            if(heatType1==0){
+              cityMap.visualMap.max=cityMax;
+            }
             cityMap.series[0].data=cityData;
             cityChart.setOption(cityMap);
           }, function (reason) {
@@ -1172,7 +1177,9 @@
               //悬浮框的的隐藏和显示-work
               vm.avgHoursNational = false;
               vm.avgHoursProvince = true;
-              cityMap.visualMap.max=cityMax;
+              if(heatType1==0){
+                cityMap.visualMap.max=cityMax;
+              }
               cityMap.series[0].data=cityData;
               cityChart.setOption(cityMap);
             }, function (reason) {
@@ -1522,7 +1529,7 @@
         });
       }
     }
-    //封装查询各种车型的开工平均时长--左图和大地图调用
+    //封装查询各种车型的开工平均时长--左图和大地图调用--省份下钻
     function avgWorkHoursProvinceQuery(dateType1,filterTerm,startDate,endDate,nameProvince){
       if(dateType1==1){
         //平均工作时长URL--按季度查询
@@ -1680,7 +1687,7 @@
         });
       }
     }
-    //封装查询各种车型的开工平均时长--右图调用
+    //封装查询各种车型的开工平均时长--右图调用--省份下钻
     function avgWorkHoursProvinceQuery2(dateType1,filterTerm,startDate,endDate,nameProvince){
       if(dateType1==1){
         //平均工作时长URL--按季度查询
@@ -2433,7 +2440,9 @@
                 mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
-            mapOption1.visualMap.max=max3;
+            if(heatType1==0){
+              mapOption1.visualMap.max=max3;
+            }
             mapOption1.series[0].data=zData;
             mapTitleText1 = mapOption1.title.text;
             mapChart1.setOption(mapOption1);
@@ -2463,7 +2472,9 @@
                 mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
-            mapOption2.visualMap.max=max3;
+            if(heatType2==0){
+              mapOption2.visualMap.max=max3;
+            }
             mapOption2.series[0].data=yData;
             mapTitleText2 = mapOption2.title.text;
             mapChart2.setOption(mapOption2);
@@ -2554,9 +2565,6 @@
                 }
               }
             }
-            // cityMap1.series[0].data=cityData1;
-            // cityMap1.visualMap.max=cityMax1;
-            // cityChart1.setOption(cityMap1);
             var rspDataCity2 = serviceResource.restCallService(restCallURLCity2, 'QUERY');
             rspDataCity2.then(function (cityData2) {
               var cityMax2 =100;
@@ -2581,13 +2589,17 @@
               avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
               avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
               cityMap1.series[0].data=cityData1;
-              cityMap1.visualMap.max=cityMax3;
+              if(heatType1==0){
+                cityMap1.visualMap.max=cityMax3;
+              }
               //悬浮框的的隐藏和显示-work
               vm.avgHoursNational = false;
               vm.avgHoursProvince = true;
               cityChart1.setOption(cityMap1);
               cityMap2.series[0].data=cityData2;
-              cityMap2.visualMap.max=cityMax3;
+              if(heatType2==0){
+                cityMap2.visualMap.max=cityMax3;
+              }
               //悬浮框的的隐藏和显示-work
               vm.avgHoursNational2 = false;
               vm.avgHoursProvince2 = true;
@@ -2766,9 +2778,7 @@
             }
           }
         }
-        // cityMap1.series[0].data=cityData1;
-        // cityMap1.visualMap.max=cityMax1;
-        // cityChart1.setOption(cityMap1);
+
         var rspDataCity2 = serviceResource.restCallService(restCallURLCity2, 'QUERY');
         rspDataCity2.then(function (cityData2) {
           var cityMax2 =100;
@@ -2794,7 +2804,9 @@
           //悬浮框的的隐藏和显示-work
           vm.avgHoursNational = false;
           vm.avgHoursProvince = true;
-          cityMap1.visualMap.max=cityMax3;
+          if(heatType1==0){
+            cityMap1.visualMap.max=cityMax3;
+          }
           cityMap1.series[0].data=cityData1;
           cityChart1.setOption(cityMap1);
 
@@ -2802,7 +2814,9 @@
           //悬浮框的的隐藏和显示-work
           vm.avgHoursNational2 = false;
           vm.avgHoursProvince2 = true;
-          cityMap2.visualMap.max=cityMax3;
+          if(heatType2==0){
+            cityMap2.visualMap.max=cityMax3;
+          }
           cityMap2.series[0].data=cityData2;
           cityChart2.setOption(cityMap2);
         }, function (reason) {
@@ -2928,64 +2942,76 @@
       }
       var rspData1 = serviceResource.restCallService(restCallURL2, 'QUERY');
       rspData1.then(function (data3) {
-        var max =100;
+        var maxa =100;
         if(!data3.length>0){
           subMapOption3.series[0].data=null;
           subMapOption6.series[0].data=null;
-          // Notification.warning("挖掘机所选时间段暂无数据！");
         } else {
-          max = data3[0].value;
+          maxa = data3[0].value;
           for(var i=1;i<data3.length;i++){
-            if(max<data3[i].value){
-              max=data3[i].value
+            if(maxa<data3[i].value){
+              maxa=data3[i].value
             }
           }
         }
-        if(heatType1==1) {
-          subMapOption3.series[0].data = data3;
-          subMapOption3.visualMap.max=max;
-          subMapOption3.title.text = "挖掘机开工热度分布";
-          subMap1.setOption(subMapOption3);
-        }else if(heatType1==0){
-          subMapOption6.series[0].data = data3;
-          subMapOption6.visualMap.max=max;
-          subMapOption6.title.text = "挖掘机销售热度分布";
-          subMap1.setOption(subMapOption6);
-        }
-      }, function (reason) {
-        Notification.error("获取数据失败");
-      });
-      var rspData2 = serviceResource.restCallService(restCallURL1, 'QUERY');
-      rspData2.then(function (data1) {
-        var max = 100;
-        if(!data1.length>0){
-          subMapOption1.series[0].data=null;
-          subMapOption4.series[0].data=null;
-          // Notification.warning("装载机所选时间段暂无数据！");
-        } else {
-          max = data1[0].value;
-          for(var i=1;i<data1.length;i++){
-            if(max<data1[i].value){
-              max=data1[i].value
+        var rspData2 = serviceResource.restCallService(restCallURL1, 'QUERY');
+        rspData2.then(function (data1) {
+          var maxb = 100;
+          if(!data1.length>0){
+            subMapOption1.series[0].data=null;
+            subMapOption4.series[0].data=null;
+            // Notification.warning("装载机所选时间段暂无数据！");
+          } else {
+            maxb = data1[0].value;
+            for(var i=1;i<data1.length;i++){
+              if(maxb<data1[i].value){
+                maxb=data1[i].value
+              }
             }
           }
-        }
+          var maxc;
+          if(maxa>=maxb){
+            maxc=maxa;
+          }else{
+            maxc=maxb;
+          }
+          if(heatType1==1) {
+            subMapOption3.series[0].data = data3;
+            // if(heatType1==0){
+            //   subMapOption3.visualMap.max=max;
+            // }
+            subMapOption3.title.text = "挖掘机开工热度分布";
+            subMap1.setOption(subMapOption3);
+          }else if(heatType1==0){
+            subMapOption6.series[0].data = data3;
+            subMapOption6.visualMap.max=maxc;
+            subMapOption6.title.text = "挖掘机销售热度分布";
+            subMap1.setOption(subMapOption6);
+          }
 
-        if(heatType1==1){
-          subMapOption1.series[0].data=data1;
-          subMapOption1.visualMap.max=max;
-          subMapOption1.title.text = "装载机开工热度分布";
-          subMap2.setOption(subMapOption1);
-        }else if(heatType1==0){
-          subMapOption4.series[0].data = data1;
-          subMapOption4.visualMap.max=max;
-          subMapOption4.title.text = "装载机销售热度分布";
-          subMap2.setOption(subMapOption4);
-        }
+
+          if(heatType1==1){
+            subMapOption1.series[0].data=data1;
+            // if(heatType1==0){
+            //   subMapOption1.visualMap.max=max;
+            // }
+            subMapOption1.title.text = "装载机开工热度分布";
+            subMap2.setOption(subMapOption1);
+          }else if(heatType1==0){
+            subMapOption4.series[0].data = data1;
+            subMapOption4.visualMap.max=maxc;
+            subMapOption4.title.text = "装载机销售热度分布";
+            subMap2.setOption(subMapOption4);
+          }
+
+        }, function (reason) {
+          Notification.error("获取数据失败");
+        });
 
       }, function (reason) {
         Notification.error("获取数据失败");
       });
+
       //查询重机
       // var rspData3 = serviceResource.restCallService(restCallURL3, 'QUERY');
       // rspData3.then(function (data2) {
