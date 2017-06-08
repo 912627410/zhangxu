@@ -167,12 +167,22 @@
           },
           yAxis: [{
             title: {
-              text: '总趟数'
+              text: '总趟数',
+              style: {
+                color: 'rgb(124, 181, 236)',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }
             }
 
           },{
             title: {
-              text: '平均趟数'
+              text: '平均趟数',
+              style: {
+                color: 'rgb(194, 53, 49)',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }
             },
             opposite: true,
             min: 0
@@ -180,13 +190,13 @@
           series: [{
             type: 'column',
             color: 'rgb(124, 181, 236)',
-            name: '总趟数',
+            name: '<b style="font-size: 14px;">总趟数</b>',
             data: totalRecords
           },{
             type: 'spline',
             color: 'rgb(194, 53, 49)',
             yAxis: 1,
-            name: '平均趟数',
+            name: '<b style="font-size: 14px;">总趟数</b>',
             data: averageRecords
           }]
         };
