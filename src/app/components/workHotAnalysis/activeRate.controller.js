@@ -21,6 +21,10 @@
     var cycleValue1 = ["2017年05月","2017年04月","2017年03月","2017年02月","2017年01月","2016年12月","2016年11月","2016年10月","2016年09月","2016年08月","2016年07月","2016年06月","2016年05月","2016年04月"];
     var cycleValue2 = ["2017年01季度","2016年04季度","2016年03季度","2016年02季度","2016年01季度"];
 
+    $scope.chartProduceType = produceType[0];
+    $scope.chartMachineType = machineType[0];
+    $scope.chartWorkMonth = cycleValue1[0];
+    $scope.chartArea = "全国";
 
     //get produceType
     function getSelectProduceType() {
@@ -49,16 +53,6 @@
         $scope.machineType.selected = machineType[0];
       })
     }
-
-
-    getSelectProduceType();
-    getSelectMachineType(2);
-
-    $scope.chartProduceType = produceType[0];
-    $scope.chartMachineType = machineType[0];
-    $scope.chartWorkMonth = cycleValue1[0];
-    $scope.chartArea = "全国";
-
 
 
     //初始化图表
@@ -150,7 +144,8 @@
 
     //_produceType,_machineType,_cycleType,_cycleValue,_province
     showChart("挖掘机",'E665F',1,cycleValue1[0].replace(/\D/g,""),"");
-
+    getSelectProduceType();
+    getSelectMachineType(2);
 
 
     //show drill chart
@@ -245,7 +240,6 @@
     });
 
 
-
     $scope.getProduceType = function(search) {
       var newSupes = $scope.produceType.slice();
       if (search && newSupes.indexOf(search) === -1) {
@@ -307,6 +301,7 @@
       showChart(_produceType,_machineType,_cycleType,_cycleValue,_province);
     };
 
+    //DEFAULT SELECT VALUE
     time = $scope.cycleValue.selected.replace(/\D/g,"");
     cycle = 1;
   }
