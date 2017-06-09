@@ -96,8 +96,8 @@
               	<td>{{'Built-inBatteryRealTime'|translate}}</td>
               	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.imitate2/1000 | number:1}}V</td>
               	<td>{{'openCoverState'|translate}}</td>
-              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
-                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
+              	<td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='00'">{{'notOpen'|translate}}</td>
+                <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus=='11'">{{'openCover'|translate}}</td>
                 <td ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
               </tr>
               <tr ng-if="!(deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoDetailsCtrl.deviceinfo.visibleSatelliteNumber==null))">
