@@ -1994,7 +1994,7 @@
         rspData.then(function(data){
           console.log(data);
           if(data.length>0){
-            batteryFormData = data.data;
+            batteryFormData = data;
             vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
             $scope.batteryFormData = batteryFormData;
           }else {
