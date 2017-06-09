@@ -1857,50 +1857,10 @@
       };
 
 
-      // http://iot.nvr-china.com/rest/deviceCharger/currentData?deviceNum=AA002E
-      // http://iot.nvr-china.com/rest/deviceCharger/historyData?deviceNum=AA002E&startDate=2017-06-08&endDate=2017-06-09&chargeType=0
-
-      var batteryFormData = {
-        "deviceNum": "AA002E",
-        "chargingStatus": "0",
-        "batteryLinkType": "0",  // 0 -> 串联  1 -> 两串两并
-        "batteryInstallStatus": "0",
-        "battery1Voltage": 6.39,
-        "battery2Voltage": 12.71,
-        "battery3Voltage": 19.28,
-        "battery4Voltage": 25.7,
-        "deviceCurrentCharger": [
-          {
-            "batteryID": "battery1LiquidLevel",
-            "batteryLiquidLevel1": "0",
-            "batteryLiquidLevel2": "0",
-            "batteryLiquidLevel3": "0",
-            "batteryLiquidLevel4": "0"
-          },
-          {
-            "batteryID": "battery2LiquidLevel",
-            "batteryLiquidLevel1": "0",
-            "batteryLiquidLevel2": "0",
-            "batteryLiquidLevel3": "0"
-          },
-          {
-            "batteryID": "battery3LiquidLevel",
-            "batteryLiquidLevel1": "0",
-            "batteryLiquidLevel2": "0",
-            "batteryLiquidLevel3": "0"
-          },
-          {
-            "batteryID": "battery4LiquidLevel",
-            "batteryLiquidLevel1": "0",
-            "batteryLiquidLevel2": "0",
-            "batteryLiquidLevel3": "0"
-          }
-        ]
-      };
+      var batteryFormData;
 
 
-      vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
-      $scope.batteryFormData = batteryFormData;
+
 
 
       //串联显示3个液位,并联显示6个液位
@@ -2000,11 +1960,11 @@
 
           rspData.then(function(data){
             console.log(data);
-            if(data.content.length>0){
+            if(data.data.length>0){
               if(chargeType == 0){
-                batteryInChartData = data.content;
+                batteryInChartData = data.data;
               }else{
-                batteryOutChartData = data.content;
+                batteryOutChartData = data.data;
               }
             }else {
               Notification.warning("暂无数据！");
@@ -2035,6 +1995,8 @@
           console.log(data);
           if(data.length>0){
             batteryFormData = data.data;
+            vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
+            $scope.batteryFormData = batteryFormData;
           }else {
             Notification.warning("暂无数据！");
           }
