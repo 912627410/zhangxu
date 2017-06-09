@@ -1668,7 +1668,6 @@
             var rspData5 = serviceResource.restCallService(lastYearRestCallURL1, 'QUERY');
             rspData5.then(function (data5) {
               lastYearTotalData1 = data5;
-              console.log('1'+lastYearTotalData1);
               var lastYearTotal1 = 0;
               for(var c=0;c<data5.length;c++){
                 lastYearTotal1 += data5[c].value;
@@ -1732,7 +1731,6 @@
               var rspData6 = serviceResource.restCallService(lastYearRestCallURL2, 'QUERY');
               rspData6.then(function (data6) {
                 lastYearTotalData2 = data6;
-                console.log('2'+lastYearTotalData2);
                 var lastYearTotal2 = 0;
                 for(var c=0;c<data6.length;c++){
                   lastYearTotal2 += data6[c].value;
