@@ -223,7 +223,7 @@
 
     //称重数据
     .constant('WEIGHTDATA_PAGE_URL', SERVER_BASE_URL + 'weightData/weightDataPage')   //称重数据page
-    .constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/')
+    .constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/getWorkAnalysisData')
     .constant('ANALYSIS_POSTGRES', SERVER_BASE_URL + 'analysis/getanalysisdata')
 
 
