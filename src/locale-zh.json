@@ -706,6 +706,8 @@
   "endPoint": "终点",
   "openMonitor": "开启监控",
   "closeMonitor": "关闭监控",
-  "batteryMonitor": "电池监控"
+  "batteryMonitor": "电池监控",
+  "batteryBasicInformation": "电池基本信息",
+  "batteryLiquidLeveInformation": "电池液位信息"
 
 }
