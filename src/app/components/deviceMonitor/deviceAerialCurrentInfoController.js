@@ -990,7 +990,6 @@
             var distabcess2 = lastDistabce;
             var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
             distabcess2 += distances;
-            console.log(distabcess2);
             marker.setLabel({
               offset: new AMap.Pixel(-10, -25),
               content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
@@ -998,7 +997,6 @@
           }, false);
           /*继续移动事件*/
           AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-            console.log(markerMovingControl._currentIndex);
             var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
             lineArr2.unshift(marker.getPosition());
             markerMovingControl._marker.moveAlong(lineArr2, 500);
@@ -1115,10 +1113,8 @@
 
         // device simple data
         vm.getDeviceSimpleData = function(page,size,sort,deviceNum,startDate,endDate){
-          console.log('vm.operatorInfo');
             if (vm.operatorInfo){
 
-              console.log('vm.operatorInfo');
 
                 var queryCondition;
                 if (deviceNum){
@@ -1906,7 +1902,7 @@
           if (endDate) {
             endDate = new Date(endDate.getTime()-1000*3600*24);
             var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-            var endDay = endDate.getDate();
+            var endDay = endDate.getDate()+1;
 
             if(endMonth<10){
               endMonth = '0' + endMonth;
@@ -1932,8 +1928,6 @@
           vm.startMonthValue = startMonth - 1;
           vm.startDayValue = startDay;
 
-          console.log(vm.startMonthValue);
-
           Highcharts.setOptions({
             plotOptions: {
               spline: {
@@ -1954,13 +1948,10 @@
 
           if (queryCondition){
             restCallURL = restCallURL + queryCondition + '&' + 'chargeType' + '=' + chargeType;
-            console.log(restCallURL);
           }
 
           var rspData = serviceResource.restCallService(restCallURL, "GET");
-
           rspData.then(function(data){
-            console.log(data);
             if(data.data.length>0){
               if(chargeType == 0){
                 batteryInChartData = data.data;
@@ -1986,21 +1977,12 @@
 
       var getBatteryFormData = function(deviceNum){
         var restCallURL = BATTERY_FORM_DATA;
-
         restCallURL += '?' + 'deviceNum' + '=' + deviceNum;
-        console.log(restCallURL);
-
         var rspData = serviceResource.restCallService(restCallURL, "GET");
-
         rspData.then(function(data){
-          console.log(data);
-          if(data.length>0){
-            batteryFormData = data;
-            vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
-            $scope.batteryFormData = batteryFormData;
-          }else {
-            Notification.warning("暂无数据！");
-          }
+          batteryFormData = data;
+          vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
+          $scope.batteryFormData = batteryFormData;
         },function(reason){
           serviceResource.handleRsp("获取数据失败",reason);
           vm.deviceInfoList = null;
