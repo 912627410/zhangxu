@@ -1860,12 +1860,12 @@
 
 
       //串联显示3个液位,并联显示6个液位
-      vm.showLiquidLevel = function(){
-        // if(batteryFormData.batteryLinkType == 0){
-        //   return false;
-        // }else{
-        //   return true;
-        // }
+      vm.showLiquidLevel = function(batteryLinkType){
+         if(batteryLinkType == 0){
+           return false;
+         }else{
+           return true;
+         }
         return false;
       };
 
@@ -1952,14 +1952,10 @@
 
           var rspData = serviceResource.restCallService(restCallURL, "GET");
           rspData.then(function(data){
-            if(data.data.length>0){
-              if(chargeType == 0){
-                batteryInChartData = data.data;
-              }else{
-                batteryOutChartData = data.data;
-              }
-            }else {
-              Notification.warning("暂无数据！");
+            if(chargeType == 0){
+              batteryInChartData = data.data;
+            }else{
+              batteryOutChartData = data.data;
             }
           },function(reason){
             serviceResource.handleRsp("获取数据失败",reason);

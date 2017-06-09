@@ -979,7 +979,7 @@
                         <tr>
                           <td>{{batteryFormData.deviceNum}}</td>
                           <td>{{batteryFormData.chargingStatus.replace("1","异常").replace("0","正常")}}</td>
-                          <td>{{batteryFormData.batteryLinkType.replace("1","两串两并").replace("0","串联")}}</td>
+                          <td>{{batteryFormData.batteryLinkType.replace("1","两串两并").replace("0","四节串联")}}</td>
                           <td>{{batteryFormData.batteryInstallStatus.replace("1","异常").replace("0","正常")}}</td>
                         </tr>
                             </table>
@@ -992,18 +992,18 @@
                           <th>液位1</th>
                           <th>液位2</th>
                           <th>液位3</th>
-                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">液位4</th>
-                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">液位5</th>
-                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">液位6</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位4</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位5</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位6</th>
                         </tr>
                         <tr ng-repeat="x in deviceAerialCurrentInfoController.batteryLiquidLevelList">
                           <td>{{x.batteryID.replace("battery","电池").replace("LiquidLevel","")}}</td>
-                          <td>{{x.batteryLiquidLevel1}}</td>
-                          <td>{{x.batteryLiquidLevel2}}</td>
-                          <td>{{x.batteryLiquidLevel3}}</td>
-                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">{{x.batteryLiquidLevel4.replace("1","异常").replace("0","正常")}}</td>
-                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">{{x.batteryLiquidLevel5.replace("1","异常").replace("0","正常")}}</td>
-                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel()">{{x.batteryLiquidLevel6.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{x.batteryLiquidLevel1.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{x.batteryLiquidLevel2.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{x.batteryLiquidLevel3.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel4.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel5.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel6.replace("1","异常").replace("0","正常")}}</td>
                         </tr>
                         </table>
                         </tr>
