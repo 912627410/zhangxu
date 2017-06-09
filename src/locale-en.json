@@ -700,6 +700,7 @@
   "beginPoint": "Start Point",
   "endPoint": "End Point",
   "openMonitor": "Open Monitor",
-  "closeMonitor": "Close Monitor"
+  "closeMonitor": "Close Monitor",
+  "batteryMonitor": "Battery Monitor"
 
 }

@@ -712,6 +712,7 @@
       )
     }
 
+
     /*******************远程控制tab***********************/
     vm.startDateMapData = startDate;
     vm.endDateMapData = new Date();
