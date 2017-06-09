@@ -19,7 +19,7 @@
       </select>
     </div>
     <div ng-show="modelsCompareCtrl.quarterQuery">
-        <label class="control-label col-md-1">开工季度:</label>
+        <label class="control-label col-md-1">查询季度:</label>
         <div class="controls col-md-2">
           <select class="form-control" ng-model="modelsCompareCtrl.dateType2">
             <option value="201702">2017年第二季度</option>
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div ng-show="modelsCompareCtrl.monthQuery">
-        <label class="control-label col-md-1">开工月份:</label>
+        <label class="control-label col-md-1">查询月份:</label>
         <div class="controls col-md-2">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
@@ -53,7 +53,7 @@
           </div>
       </div>
     <div>
-      <label class="control-label col-md-1">活跃周期:</label>
+      <label class="control-label col-md-1">活跃阈值:</label>
       <div class="controls col-md-2">
         <select class="form-control" ng-model="modelsCompareCtrl.hour">
           <option ng-repeat="date in modelsCompareCtrl.hours" value="{{date}}">{{date}}小时</option>
@@ -104,11 +104,11 @@
           </span>
         </p>
       </div>
-      <div class="controls col-md-2">
-        <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}
-        </button>
-      </div>
+      <!--<div class="controls col-md-2">-->
+        <!--<button class="btn btn-primary" type="button" presentation-href="machine:page"-->
+                <!--ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}-->
+        <!--</button>-->
+      <!--</div>-->
     </div>
   </div>
   <div class="row form-group">
@@ -125,6 +125,7 @@
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <select class="form-control" ng-model="modelsCompareCtrl.vehicleType1">
+        <option value="">全部</option>
         <option ng-show="modelsCompareCtrl.option1" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
         <option ng-show="modelsCompareCtrl.option2" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
         <!--<option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models3" value="{{data.name}}">{{data.name}}</option>-->
@@ -155,6 +156,7 @@
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <select class="form-control" ng-model="modelsCompareCtrl.vehicleType2">
+        <option value="">全部</option>
         <option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
         <option ng-show="modelsCompareCtrl.option4" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
         <!--<option ng-show="modelsCompareCtrl.option5" ng-repeat="data in modelsCompareCtrl.models5" value="{{data.name}}">{{data.name}}</option>-->
@@ -177,119 +179,100 @@
   <div class="mapBox" style="border: 1px solid #cccccc;height: 850px;width: 99%;position: relative;">
     <div class="mapContainerBox" style="position: absolute;height: 850px;width: 100%;;left: 0px;">
       <div class="mapContainer" id="mapContainer1" style="height: 850px;width: 100%;"></div>
-      <div ng-show="modelsCompareCtrl.avgHours1" style="position: absolute;right: 0;top: 75px;width: 190px;height: 75px;border: 1px solid #cccccc;">
-        <div style="position: relative;">
-          <div
-            style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-            平均时长
-          </div>
-          <ul style="position: absolute;list-style: none;line-height: 24px;">
+      <span style="display: block;" id="dateWithOut1">
+      <div ng-show="modelsCompareCtrl.avgHours1" style="position: absolute;right: 0px;top: 75px;width: 200px;height: 85px;">
+        <div >
+          <ul style="list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational">
-              <li>总平均：{{(modelsCompareCtrl.excavatorHours + modelsCompareCtrl.loaderHours)/2 | number:2}}小时</li>
-              <li ng-if="modelsCompareCtrl.excavatorHours>=modelsCompareCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.excavatorHours<modelsCompareCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHours>=modelsCompareCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHours<modelsCompareCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li>平均开工时长</li><!--text-align:center  padding-left: 25px;-->
+              <li ng-if="modelsCompareCtrl.excavatorHours>=modelsCompareCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours<modelsCompareCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours>=modelsCompareCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours<modelsCompareCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
             </span>
             <span ng-show="modelsCompareCtrl.avgHoursProvince">
-                <li>总平均：{{(modelsCompareCtrl.excavatorHoursProvince + modelsCompareCtrl.loaderHoursProvince)/2 | number:2}}小时</li>
-                <li ng-if="modelsCompareCtrl.excavatorHoursProvince>=modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="modelsCompareCtrl.excavatorHoursProvince<modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-                <li ng-if="modelsCompareCtrl.loaderHoursProvince>=modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="modelsCompareCtrl.loaderHoursProvince<modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li>平均开工时长</li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince>=modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince<modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince>=modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince<modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--重机-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince>=modelsCompareCtrl.beforeHeavyHoursProvince" style="color: #00bb9c;">重机：{{modelsCompareCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince<modelsCompareCtrl.beforeHeavyHoursProvince" style="color: #eb4f38;">重机：{{modelsCompareCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
-              </span>
+            </span>
           </ul>
         </div>
       </div>
-      <div ng-show="modelsCompareCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;width: 160px;height: 55px;border: 1px solid #cccccc;">
+      <div ng-show="modelsCompareCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 85px;">
         <div style="position: relative;">
-          <ul ng-show="modelsCompareCtrl.national" style="list-style: none;line-height: 26px;padding-left: 10px; ">
-              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales>=modelsCompareCtrl.beforeTotalSales" >
-                <li><span>销售总数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.totalSales-modelsCompareCtrl.beforeTotalSales}}台</span></li>
-              </span>
-            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales<modelsCompareCtrl.beforeTotalSales">
-                 <!--<li><span>总销售台数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img ng-mouseenter="show = true" ng-mouseleave="show = false" src="assets/images/down.png"/></span></li>-->
-              <!--<li ng-show="show" class="text-center"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales-modelsCompareCtrl.totalSales}}台</span></li>-->
-                <li><span>销售总数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales-modelsCompareCtrl.totalSales}}台</span></li>
-              </span>
+          <ul ng-show="modelsCompareCtrl.national" style="list-style: none;line-height: 24px;padding-right: 8px;">
+            <li>销售总数:{{modelsCompareCtrl.totalSales}}台</li>
+            <li ng-if="modelsCompareCtrl.totalSales>=modelsCompareCtrl.beforeTotalSales"><span style="color: #00bb9c;">环比增长:{{modelsCompareCtrl.totalSales-modelsCompareCtrl.beforeTotalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales<modelsCompareCtrl.beforeTotalSales"><span style="color: #eb4f38;">环比下降:{{modelsCompareCtrl.beforeTotalSales-modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales>=modelsCompareCtrl.lastYearTotalSales"><span style="color: #00bb9c;">同比增长:{{modelsCompareCtrl.totalSales-modelsCompareCtrl.lastYearTotalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales<modelsCompareCtrl.lastYearTotalSales"><span style="color: #eb4f38;">同比下降:{{modelsCompareCtrl.lastYearTotalSales-modelsCompareCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
           </ul>
-          <ul ng-show="modelsCompareCtrl.allProvince" style="list-style: none;line-height: 26px;padding-left: 10px; ">
-              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales>=modelsCompareCtrl.beforeProvinceSales" >
-                <li><span>销售总数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.provinceSales-modelsCompareCtrl.beforeProvinceSales}}台</span></li>
-              </span>
-            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales<modelsCompareCtrl.beforeProvinceSales">
-                <li><span>销售总数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeProvinceSales-modelsCompareCtrl.provinceSales}}台</span></li>
-              </span>
+          <ul ng-show="modelsCompareCtrl.allProvince" style="list-style: none;line-height: 24px;padding-right: 8px;">
+            <li>销售总数:&nbsp;{{modelsCompareCtrl.provinceSales}}台</li>
+            <li ng-if="modelsCompareCtrl.provinceSales>=modelsCompareCtrl.beforeProvinceSales"><span style="color: #00bb9c;">环比增长:{{modelsCompareCtrl.provinceSales-modelsCompareCtrl.beforeProvinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales<modelsCompareCtrl.beforeProvinceSales"><span style="color: #eb4f38;">环比下降:{{modelsCompareCtrl.beforeProvinceSales-modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales>=modelsCompareCtrl.lastYearProvinceSales"><span style="color: #00bb9c;">同比增长:{{modelsCompareCtrl.provinceSales-modelsCompareCtrl.lastYearProvinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales<modelsCompareCtrl.lastYearProvinceSales"><span style="color: #eb4f38;">同比下降:{{modelsCompareCtrl.lastYearProvinceSales-modelsCompareCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
           </ul>
         </div>
       </div>
+      </span>
       <a class="backChina" style="width: 40px; height: 40px;position: absolute;right: 20px;top: 170px;display: none;" ng-click="modelsCompareCtrl.backChina1();">
         <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
       </a>
     </div>
     <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:850px;right: 0px;border-left:1px dashed #cccccc">
       <div class="mapContainer" id="mapContainer2" style="height: 850px;"></div>
-      <div ng-show="modelsCompareCtrl.avgHours2" id="mapContainerQushi2" style="position: absolute;right: 0;top:75px;width: 190px;height: 75px;border: 1px solid #cccccc;display: none;">
+      <span style="display: block;" id="dateWithOut2">
+      <div ng-show="modelsCompareCtrl.avgHours2" id="mapContainerQushi2" style="position: absolute;right: 0;top:75px;width: 200px;height: 85px;display: none;">
         <div style="position: relative;">
-          <div
-            style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-            平均时长
-          </div>
-          <ul style="position: absolute;list-style: none;line-height: 24px;">
+          <ul style="position: absolute;list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational2">
-            <li>总平均：{{(modelsCompareCtrl.excavatorHours2 + modelsCompareCtrl.loaderHours2)/2 | number:2}}小时</li>
-            <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-            <li ng-if="modelsCompareCtrl.excavatorHours2<modelsCompareCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-            <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
-            <li ng-if="modelsCompareCtrl.loaderHours2>=modelsCompareCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-            <li ng-if="modelsCompareCtrl.loaderHours2<modelsCompareCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li>平均开工时长</li>
+              <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours2<modelsCompareCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
+              <li ng-if="modelsCompareCtrl.loaderHours2>=modelsCompareCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours2<modelsCompareCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
             </span>
             <span ng-show="modelsCompareCtrl.avgHoursProvince2">
-                <li>总平均：{{(modelsCompareCtrl.excavatorHoursProvince2 + modelsCompareCtrl.loaderHoursProvince2)/2 | number:2}}小时</li>
-                <li ng-if="modelsCompareCtrl.excavatorHoursProvince2>=modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="modelsCompareCtrl.excavatorHoursProvince2<modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-                <li ng-if="modelsCompareCtrl.loaderHoursProvince2>=modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="modelsCompareCtrl.loaderHoursProvince2<modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li>平均开工时长</li>
+                <!--<li>总平均：{{(modelsCompareCtrl.excavatorHoursProvince2 + modelsCompareCtrl.loaderHoursProvince2)/2 | number:2}}小时</li>-->
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2>=modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2<modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince2>=modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince2<modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--重机-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince2>=modelsCompareCtrl.beforeHeavyHoursProvince2" style="color: #00bb9c;">重机：{{modelsCompareCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince2<modelsCompareCtrl.beforeHeavyHoursProvince2" style="color: #eb4f38;">重机：{{modelsCompareCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
-              </span>
+            </span>
           </ul>
         </div>
       </div>
-      <div ng-show="modelsCompareCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;width: 160px;height: 55px;border: 1px solid #cccccc;">
+        <div ng-show="modelsCompareCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 85px;">
         <div style="position: relative;">
-          <ul ng-show="modelsCompareCtrl.national1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
-              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales1>=modelsCompareCtrl.beforeTotalSales1" >
-                <li><span>销售总数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.totalSales1-modelsCompareCtrl.beforeTotalSales1}}台</span></li>
-              </span>
-            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.totalSales1<modelsCompareCtrl.beforeTotalSales1">
-                <li><span>销售总数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeTotalSales1-modelsCompareCtrl.totalSales1}}台</span></li>
-              </span>
+          <ul ng-show="modelsCompareCtrl.national1" style="list-style: none;line-height: 24px;padding-right: 8px;">
+            <li>销售总数:{{modelsCompareCtrl.totalSales1}}台</li>
+            <li ng-if="modelsCompareCtrl.totalSales1>=modelsCompareCtrl.beforeTotalSales1"><span style="color: #00bb9c;">环比增长:{{modelsCompareCtrl.totalSales1-modelsCompareCtrl.beforeTotalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales1<modelsCompareCtrl.beforeTotalSales1"><span style="color: #eb4f38;">环比下降:{{modelsCompareCtrl.beforeTotalSales1-modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales1>=modelsCompareCtrl.lastYearTotalSales1"><span style="color: #00bb9c;">同比增长:{{modelsCompareCtrl.totalSales1-modelsCompareCtrl.lastYearTotalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.totalSales1<modelsCompareCtrl.lastYearTotalSales1"><span style="color: #eb4f38;">同比下降:{{modelsCompareCtrl.lastYearTotalSales1-modelsCompareCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
           </ul>
-
-          <ul ng-show="modelsCompareCtrl.allProvince1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
-              <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales1>=modelsCompareCtrl.beforeProvinceSales1" >
-                <li><span>销售总数：</span><span style="color: #00bb9c;">{{modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{modelsCompareCtrl.provinceSales1-modelsCompareCtrl.beforeProvinceSales1}}台</span></li>
-              </span>
-            <span style= "font-size:15px;" ng-if="modelsCompareCtrl.provinceSales1<modelsCompareCtrl.beforeProvinceSales1">
-                <li><span>销售总数：</span><span style="color: #eb4f38;">{{modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{modelsCompareCtrl.beforeProvinceSales1-modelsCompareCtrl.provinceSales1}}台</span></li>
-              </span>
+          <ul ng-show="modelsCompareCtrl.allProvince1" style="list-style: none;line-height: 24px;padding-right: 8px; ">
+            <li>销售总数:&nbsp;{{modelsCompareCtrl.provinceSales1}}台</li>
+            <li ng-if="modelsCompareCtrl.provinceSales1>=modelsCompareCtrl.beforeProvinceSales1"><span style="color: #00bb9c;">环比增长:{{modelsCompareCtrl.provinceSales1-modelsCompareCtrl.beforeProvinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales1<modelsCompareCtrl.beforeProvinceSales1"><span style="color: #eb4f38;">环比下降:{{modelsCompareCtrl.beforeProvinceSales1-modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales1>=modelsCompareCtrl.lastYearProvinceSales1"><span style="color: #00bb9c;">同比增长:{{modelsCompareCtrl.provinceSales1-modelsCompareCtrl.lastYearProvinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
+            <li ng-if="modelsCompareCtrl.provinceSales1<modelsCompareCtrl.lastYearProvinceSales1"><span style="color: #eb4f38;">同比下降:{{modelsCompareCtrl.lastYearProvinceSales1-modelsCompareCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
           </ul>
-
         </div>
       </div>
+      </span>
       <a class="backChina"  style="width: 40px; height: 40px;position: absolute;right: 20px;top: 170px;display: none;" ng-click="modelsCompareCtrl.backChina2();">
         <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
       </a>
