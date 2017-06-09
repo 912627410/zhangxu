@@ -532,29 +532,46 @@
       //vm.refreshDOM();
     }
 
-    vm.excelExport = function (deviceNum, startDate, endDate) {
+    vm.excelExport = function (deviceNum, versionNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
       }
+
+      if (versionNum){
+        if (filterTerm) {
+          filterTerm+="&versionNum=" + versionNum;
+        }
+        else {
+          filterTerm += "versionNum=" + versionNum;
+        }
+      }
+
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      }else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
+
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      }else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       var restCallURL = DEVCEDATA_EXCELEXPORT;
       if (filterTerm){
