@@ -1865,11 +1865,12 @@
 
       //串联显示3个液位,并联显示6个液位
       vm.showLiquidLevel = function(){
-        if(batteryFormData.batteryLinkType == 0){
-          return false;
-        }else{
-          return true;
-        }
+        // if(batteryFormData.batteryLinkType == 0){
+        //   return false;
+        // }else{
+        //   return true;
+        // }
+        return false;
       };
 
 
