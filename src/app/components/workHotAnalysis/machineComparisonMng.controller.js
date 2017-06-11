@@ -630,6 +630,18 @@
         backgroundColor: 'rgba(219,219,216,0.8)',
         textStyle: {
           color: '#333333'
+        },
+        formatter: function (params) {
+          var thisArea = params[0].dataIndex;
+          var res = params[0].name;
+          for (var i = 0; i < params.length; i++) {
+            if (params[i].value != undefined) {
+              res += '<br/>' + '<div style="display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + params[i].seriesName +'年:' + params[i].value ;
+            } else {
+              res += '';
+            }
+          }
+          return res;
         }
       },
       legend: {
@@ -744,6 +756,18 @@
         backgroundColor: 'rgba(219,219,216,0.8)',
         textStyle: {
           color: '#333333'
+        },formatter: function (params) {
+          var thisArea = params[0].dataIndex;
+
+          var res = params[0].name;
+          for (var i = 0; i < params.length; i++) {
+            if (params[i].value != undefined) {
+              res += '<br/>' + '<div style="display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + params[i].seriesName +'年:' + params[i].value ;
+            } else {
+              res += '';
+            }
+          }
+          return res;
         }
       },
       legend: {
@@ -1910,7 +1934,7 @@
           if(machineType1=="1,2,3"){
             var yearData1 = [,,];
           } else if(machineType1=="A1"){
-            var yearData1 = [,,,,,];
+            var yearData1 = [,,,,,,];
           } else {
             var yearData1 = [];
           }
@@ -1926,9 +1950,13 @@
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
           var yearData2 = [];
+          var date = new Date();
+          var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            var value = data[i].tData;
-            yearData2.push(value);
+            if(data[i].tMonth==month){}else{
+              var value = data[i].tData;
+              yearData2.push(value);
+            }
           }
           mmuLine.series[1].data = yearData2;
           mmuChart1.setOption(mmuLine);
@@ -1996,7 +2024,17 @@
 
       var workHoursYearData1 = serviceResource.restCallService(YearURL1, 'QUERY');//2016
       workHoursYearData1.then(function (data) {
-        var yearData1 = [];
+        if(heatType2==1){
+          if(machineType2=="1,2,3"){
+            var yearData1 = [,,];
+          } else if(machineType2=="A1"){
+            var yearData1 = [,,,,,,];
+          } else {
+            var yearData1 = [];
+          }
+        } else {
+          var yearData1 = [];
+        }
         for(var i=0;i<data.length;i++){
           var value = data[i].tData;
           yearData1.push(value);
@@ -2005,9 +2043,13 @@
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
           var yearData2 = [];
+          var date = new Date();
+          var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            var value = data[i].tData;
-            yearData2.push(value);
+            if(data[i].tMonth==month){}else{
+              var value = data[i].tData;
+              yearData2.push(value);
+            }
           }
           mmuLine2.series[1].data = yearData2;
           mmuChart2.setOption(mmuLine2);
