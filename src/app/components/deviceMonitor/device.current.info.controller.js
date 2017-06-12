@@ -16,7 +16,7 @@
                                        VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
-                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
+                                       GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,MACHINE_STORAGE_URL,deviceinfo, ngTableDefaults, NgTableParams) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
@@ -1767,13 +1767,14 @@
         });
     }
 
+    /**************   数据分析bgein ***************/
     vm.checkedRad = 'DASHBOARD';
     /*初始化图表*/
     vm.initConfig = function (deviceNum) {
       vm.chartConfig = {
         title: {text: '设备工作分析'}
       }
-      vm.workTimeChart={
+      vm.workHoursChart={
         title: {text: '工作时长分析'},
        size: {
          width: 416,
@@ -1787,9 +1788,6 @@
            height: 250
        }
       }
-      //默认显示综合数据分析
-      //loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
-      //loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(vm.startDateMapData), dateFormat(vm.endDateMapData));
     }
     /*状态量选择*/
     vm.selectSensor = function (checkedRad) {
@@ -1819,8 +1817,7 @@
     /*数据分析*/
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
       if (vm.checkedRad == 'DASHBOARD') {
-        loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(startDate), dateFormat(endDate));
-        loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(startDate), dateFormat(endDate));
+        loadWorkChart(deviceNum, vm.workTimeOptModel, dateFormat(startDate), dateFormat(endDate));
       } else {
         if (vm.checkedRad != 'DASHBOARD' && (vm.sensorItem == null || angular.equals({}, vm.sensorItem))) {
           Notification.error("请选择条目！");
@@ -1893,8 +1890,8 @@
       })
     }
     /*加载个工作时间的图表*/
-    var loadWorkTimeChart = function (deviceNum, workTimeOptModel, startDate, endDate) {
-      var reqUrl=ANALYSIS_INFLUX+"getworktime?deviceNum=" + deviceNum + "&model=" + workTimeOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
+    var loadWorkChart = function (deviceNum, workTimeOptModel, startDate, endDate) {
+      var reqUrl=ANALYSIS_GREENPLUM+"/days?deviceNum=" + deviceNum + "&startDate=" + startDate + "&endDate=" + endDate;
       var workTimePromis = serviceResource.restCallService(reqUrl, "QUERY", null);
       workTimePromis.then(function (data) {
         var sensorData = data;
@@ -1902,7 +1899,20 @@
           Notification.error("暂无数据！");
           return;
         }
-        vm.workTimeChart = {
+
+        var locateDateArray = [];
+        var startTimesArray = [];
+        var totalDurationArray = [];
+
+        //根据月份升序排列
+        var result = sensorData.sort(function (a, b) { return a.workDate > b.workDate ? 1 : -1; });
+        for(var i = 0; i < sensorData.length;i++){
+          locateDateArray.push($filter('date')(sensorData[i].workDate, 'yyyy-MM-dd'));
+          startTimesArray.push(sensorData[i].startTimes);
+          totalDurationArray.push(sensorData[i].workHours);
+        }
+
+        vm.startTimesChart = {
           options: {
             chart: {
               type: 'column',
@@ -1910,50 +1920,63 @@
             },
             credits: {
               enabled: false
-            },
+            }
           },
-          series: [],
+          title: {text: '启动次数分析'},
+          //x轴坐标显示
+          xAxis: {
+            categories: locateDateArray
+          },
+          //y轴坐标显示
+          yAxis: {title: {text: '单位/次'}},
+          series: [{
+            name: '启动次数',
+            color: 'rgb(144, 238, 126)',
+            data: startTimesArray
+          }],
+          size: {
+            width: 402,
+            height: 270
+          }
+        };
+
+        vm.workHoursChart = {
+          options: {
+            chart: {
+              type: 'column',
+              zoomType: 'xy'
+            },
+            credits: {
+              enabled: false
+            }
+          },
           title: {text: '工作时长分析'},
           //x轴坐标显示
           xAxis: {
-            title: {text: '日期'},
-            tickInterval: 3600 * 1000 * 24 * workTimeOptModel,
-            labels: {
-              formatter: function () {
-                return $filter('date')(new Date(this.value), 'yy-MM-dd');
-              }
-            }
+            categories: locateDateArray
           },
           //y轴坐标显示
           yAxis: {
-            title: {text: '单位(/h)'},
+            max: 24,
+            tickAmount: 4,
+            title: {text: '单位/H'}
           },
+          series: [{
+            name: '工作时长',
+            color: 'rgb(124, 181, 236)',
+            data: totalDurationArray
+          }],
           size: {
             width: 416,
-            height: 250
+            height: 270
           }
-        }
-        for (var i = 0; i < sensorData.length; i++) {
-          vm.workTimeChart.series.push({
-            name: sensorData[i].name,
-            data: sensorData[i].data,
-            id: sensorData[i].name,
-            tooltip: {
-              headerFormat: '',
-              shared: true,
-              pointFormatter: function () {
-                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd');
-                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + 'H' + '<br>';
-              }
-            }
+        };
 
-          })
-        }
       })
     }
     /*加载启动次数的图表*/
-    var loadStartTimesChart = function (deviceNum, startTimesOptModel, startDate, endDate) {
-      var reqUrl=ANALYSIS_INFLUX+"getstarttimes?deviceNum=" + deviceNum + "&model=" + startTimesOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
+    /*var loadStartTimesChart = function (deviceNum, startTimesOptModel, startDate, endDate) {
+      var reqUrl=ANALYSIS_GREENPLUM+"getstarttimes?deviceNum=" + deviceNum + "&model=" + startTimesOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
       var startTimesPromis = serviceResource.restCallService(reqUrl, "QUERY", null);
       startTimesPromis.then(function (data) {
         var sensorData = data;
@@ -2009,7 +2032,7 @@
           })
         }
       });
-    }
+    }*/
     /*格式化时间函数*/
     var dateFormat = function (date) {
       var startMonth = date.getMonth() + 1;  //getMonth返回的是0-11
@@ -2024,9 +2047,7 @@
         chart.options.chart.zoomType = 'x'
       }
     }
-
-
-
+    /**************   数据分析end ***************/
 
     // 用户画像
     vm.initPortrait = function () {
