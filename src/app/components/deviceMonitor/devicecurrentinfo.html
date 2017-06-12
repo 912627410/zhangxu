@@ -716,9 +716,9 @@
                   <tr>
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
-                    <td>{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
@@ -736,9 +736,11 @@
                   </tr>
                   <tr>
                     <td>{{'vehicleType'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
                     <!--GPRS信号百分比去掉-->
@@ -862,8 +864,8 @@
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{'oilPress'|translate}}</td>
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
 
-                    <td >{{'bindMachineId'|translate}}</td>
-                    <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
 
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
@@ -873,8 +875,8 @@
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">
-                    <td>{{'operationMonitoring'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'operationMonitoring'|translate}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
                   </tr>
                   <!--<tr>-->
                     <!--<td>{{'analogOne'|translate}}</td>-->
@@ -981,7 +983,7 @@
                 <!-- Table -->
                 <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv='csv'>
                   <tr>
-                    <th class="text-nowrap">ID</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">ID</th>
                     <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
                     <th class="text-nowrap">{{'positioningTime'|translate}}</th>
                     <th class="text-nowrap">{{'position'|translate}}</th>
@@ -997,9 +999,9 @@
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&operationMonitoringdeviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
 
-                    <th class="text-nowrap">{{'LEDState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
 
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
                     <th class="text-nowrap">{{'numberOfStarts'|translate}}</th>
@@ -1020,7 +1022,7 @@
                     <th  class="text-nowrap">{{'usableSatelliteNumber'|translate}}</th>
                     <th  class="text-nowrap">{{'locateDuration'|translate}}</th>
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
-                    <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
+                    <th  class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</th>
                     <!-- 中挖新增字段-->
                     <th class="text-nowrap">{{'alertStatus'|translate}}</th>
                     <th class="text-nowrap">{{'flyWheelTeeth'|translate}}</th>
