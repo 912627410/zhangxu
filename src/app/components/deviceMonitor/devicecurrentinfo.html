@@ -1591,6 +1591,7 @@
         </div>
       </div>
     </uib-tab>
+
     <!--数据分析-->
     <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>数据分析</uib-tab-heading>
@@ -1640,21 +1641,17 @@
                     <div class="row">
                       <div class="col-md-6">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
-                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">切换</button>
+                          <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workHoursChart)">切换</button>
                         </label>
-                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
-                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.workTimeOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp;天</label>
-                        <highchart id="workTimeChart" title="平均工作时长"
+                        <highchart id="workHoursChart" title="平均工作时长"
                                    style="height:250px;"
-                                   config="deviceCurrentInfoCtrl.workTimeChart">
+                                   config="deviceCurrentInfoCtrl.workHoursChart">
                         </highchart>
                       </div>
                       <div class="col-md-6">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
                         </label>
-                        <label style="position: absolute;left: 80px;top: 5px;z-index: 99;">
-                          <input class="form-control" type="text" placeholder="单位/天" ng-model="deviceCurrentInfoCtrl.startTimesOptModel" style="width: 50px;height: 25px;display: inline-block;"/>&nbsp;&nbsp; 天</label>
                         <highchart id="startTimesChart" title="平均启动次数"
                                      style="height: 250px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">

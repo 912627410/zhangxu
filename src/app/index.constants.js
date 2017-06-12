@@ -209,7 +209,7 @@
 
     //称重数据
     .constant('WEIGHTDATA_PAGE_URL', SERVER_BASE_URL + 'weightData/weightDataPage')   //称重数据page
-    .constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/')
+    //.constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/')
     .constant('ANALYSIS_POSTGRES', SERVER_BASE_URL + 'analysis/getanalysisdata')
 
 
@@ -254,6 +254,8 @@
     .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
     .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
     .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
+
+    .constant('ANALYSIS_GREENPLUM', 'https://iotserver2.nvr-china.com/slice/rest/analysis')//设备工作状态详情下"数据分析"一栏数据提供
   ;
 
 
