@@ -338,8 +338,8 @@
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <!--协议版本号-->
-                    <td>{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
@@ -360,11 +360,13 @@
                   </tr>
                   <tr>
                     <!--车辆类型-->
-                    <td>{{'vehicleType'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
+                    <td >{{'vehicleType'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <!--车号-->
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <!--ecu和gps绑定状态-->
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus}}</td>
@@ -475,8 +477,8 @@
                     <td >{{'oilPress'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
                     <!--实际绑定车架号-->
-                    <td >{{'bindMachineId'|translate}}</td>
-                    <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
                   </tr>
                   <!--sim卡序列号-->
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
@@ -570,9 +572,9 @@
                     <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <!--运行监控-->
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
-                    <th class="text-nowrap">{{'LEDState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
                     <!--实时工时-->
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
                     <!--启动次数-->
@@ -600,7 +602,7 @@
                     <!--ECU锁车状态-->
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
                     <!--实际绑定车号-->
-                    <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
+                    <th  class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</th>
                     <th  class="text-nowrap">累计里程</th>
                     <th  class="text-nowrap">气压表2</th>
                     <th  class="text-nowrap">机油压力</th>
