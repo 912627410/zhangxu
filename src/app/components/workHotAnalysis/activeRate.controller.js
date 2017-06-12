@@ -80,13 +80,7 @@
               formatter: function (params) {
                 var thisArea = params[0].dataIndex;
                 var res = '地区：' + params[0].name;
-                for (var i = 0; i < params.length; i++) {
-                  if (rspJson.machineCount[i][thisArea].value != undefined) {
-                    res += '<br/>' + "型号：" + rspJson.machineCount[i][thisArea].name + '<br/>' + '活跃度：' + rspJson.seriesList[i][thisArea].value + ' %';
-                  } else {
-                    res += '';
-                  }
-                }
+                res += '<br/>' + '活跃度：' + rspJson.seriesList[thisArea] + ' %';
                 return res;
               }
             },
@@ -132,7 +126,7 @@
               type: 'bar',
               stack: '活跃度',
               barWidth: '60%',
-              data: rspJson.seriesList[0]
+              data: rspJson.seriesList
             }]
           }
         );
