@@ -101,7 +101,7 @@
           var date = {
             key: x,
             value: y
-          }
+          };
           dates.push(date);
         }
         vm.quarter = dates;
@@ -118,18 +118,18 @@
         vm.monthQuery = false;
         vm.monthDateDeviceData = '';
       }
-    }
+    };
 
     vm.change1 = function(){
       var x=document.getElementById("qwert").selectedIndex+3;
       var y=document.getElementsByTagName("option");
       vm.title = y[x].text ;
-    }
+    };
     vm.change2 = function(monthDateDeviceData){
 
       var month = monthDateDeviceData.getMonth() +1;
       vm.title = monthDateDeviceData.getFullYear() +'年'+ month + '月';
-    }
+    };
 
 
     vm.dataList = [];
@@ -482,13 +482,9 @@
           toolbox: {
             feature: {
               dataZoom: {},
-              brush: {
-                type: ['rect', 'polygon', 'clear']
-              },
-              restore: {}
+              saveAsImage: {}
             }
           },
-          brush: {},
           xAxis: {
             // name: '累计作业时间(h)',
             nameLocation: 'middle',
@@ -516,24 +512,6 @@
               }
             }
           },
-          dataZoom: [
-            //底部缩放滑动条
-            // {
-            //     type: 'slider',
-            //     show: true,
-            //     xAxisIndex: [0],
-            //     start: 0,
-            // },
-            {
-              type: 'inside',
-              xAxisIndex: [0],
-              start: 0
-            }, {
-              type: 'inside',
-              yAxisIndex: [0],
-              start: 0
-            }
-          ],
           series: [{
             animation: false,
             data: data[0],
