@@ -1853,12 +1853,6 @@
       };
 
 
-      var batteryFormData;
-
-
-
-
-
       //串联显示3个液位,并联显示6个液位
       vm.showLiquidLevel = function(batteryLinkType){
          if(batteryLinkType == 0){
@@ -1878,6 +1872,7 @@
             queryCondition = "?deviceNum=" + deviceNum;
           }
           if (startDate) {
+            var startYear = startDate.getFullYear();
             var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
             var startDay = startDate.getDate();
 
@@ -1888,7 +1883,7 @@
               startDay = '0' + startDay;
             }
 
-            var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDay;
+            var startDateFormated = startYear + '-' + startMonth + '-' + startDay;
             if (queryCondition) {
               queryCondition += "&startDate=" + startDateFormated
             }
@@ -1901,6 +1896,7 @@
           }
           if (endDate) {
             endDate = new Date(endDate.getTime()-1000*3600*24);
+            var endYear = endDate.getFullYear();
             var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
             var endDay = endDate.getDate()+1;
 
@@ -1911,7 +1907,7 @@
               endDay = '0' + endDay;
             }
 
-            var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDay;
+            var endDateFormated = endYear + '-' + endMonth + '-' + endDay;
             if (queryCondition) {
               queryCondition += "&endDate=" + endDateFormated;
             }
@@ -1923,26 +1919,9 @@
             return;
           }
 
-
-          vm.startYearValue = 2017;
+          vm.startYearValue = startYear;
           vm.startMonthValue = startMonth - 1;
           vm.startDayValue = startDay;
-
-          Highcharts.setOptions({
-            plotOptions: {
-              spline: {
-                pointInterval: 3600000, // one hour
-                pointStart: Date.UTC(33,vm.startMonthValue,vm.startDayValue)
-              },
-              series: {
-                marker:{
-                  enabled: false,
-                  animation: true
-                }
-              }
-            }
-          });
-
 
           var restCallURL = BATTERY_CHART_DATA;
 
@@ -1954,19 +1933,17 @@
           rspData.then(function(data){
             if(chargeType == 0){
               batteryInChartData = data.data;
+              refreshBatteryInChart(batteryInChartData);
             }else{
               batteryOutChartData = data.data;
+              refreshBatteryOutChart(batteryOutChartData);
             }
           },function(reason){
             serviceResource.handleRsp("获取数据失败",reason);
             vm.deviceInfoList = null;
           });
+
         }
-
-
-
-        refreshBatteryChart(batteryInChartData,batteryOutChartData);
-
       };
 
 
@@ -1985,7 +1962,7 @@
         });
       };
 
-      var refreshBatteryChart = function(batteryInChartData,batteryOutChartData){
+      var refreshBatteryInChart = function(batteryInChartData){
         vm.batteryIn = {
           options: {
             chart:{
@@ -2036,7 +2013,9 @@
           series: batteryInChartData
         };
 
+      };
 
+      var refreshBatteryOutChart = function(batteryOutChartData){
         vm.batteryOut = {
           options: {
             chart:{
@@ -2086,7 +2065,7 @@
           },
           series: batteryOutChartData
         };
-      };
+      }
 
     }
 })();
