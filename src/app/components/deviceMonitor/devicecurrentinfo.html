@@ -1639,7 +1639,7 @@
               <div ng-switch="deviceCurrentInfoCtrl.checkedRad">
                 <div ng-switch-when="DASHBOARD">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workHoursChart)">切换</button>
                         </label>
@@ -1648,7 +1648,7 @@
                                    config="deviceCurrentInfoCtrl.workHoursChart">
                         </highchart>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
                         </label>
@@ -1656,15 +1656,6 @@
                                      style="height: 250px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
                         </highchart>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-xs-12">
-                       <!-- <label style="position: absolute;top: 12px;right: 80px;z-index: 99;"><input ng-model="deviceCurrentInfoCtrl.realtimeOptModel"  style="width: 50px;display: inline-block;"/></label>
-                        <highchart id="realtimeChart" title="实时分析"
-                                   style="min-width:850px;height: 250px"
-                                   config="deviceCurrentInfoCtrl.realtimeChart">
-                        </highchart>-->
                       </div>
                     </div>
                 </div>

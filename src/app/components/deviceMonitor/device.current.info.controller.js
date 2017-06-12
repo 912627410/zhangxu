@@ -1777,15 +1777,15 @@
       vm.workHoursChart={
         title: {text: '工作时长分析'},
        size: {
-         width: 416,
-           height: 250
+            width: 760,
+           height: 270
        }
       }
       vm.startTimesChart = {
         title: {text: '启动次数分析'},
        size: {
-         width: 416,
-           height: 250
+           width: 760,
+           height: 270
        }
       }
     }
@@ -1935,7 +1935,7 @@
             data: startTimesArray
           }],
           size: {
-            width: 402,
+            width: 760,
             height: 270
           }
         };
@@ -1967,7 +1967,7 @@
             data: totalDurationArray
           }],
           size: {
-            width: 416,
+            width: 760,
             height: 270
           }
         };
