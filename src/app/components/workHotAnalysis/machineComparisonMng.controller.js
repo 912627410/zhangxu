@@ -254,7 +254,7 @@
 
               if(params.value) {
                 return params.data.name + '<br />'
-                  + name + '：' +  params.data.value + unit +  '<br />'
+                  + name + '：' +  params.data.value.toFixed(1) + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
@@ -466,7 +466,7 @@
 
               if(params.value) {
                 return params.data.name + '<br />'
-                  + name + '：' +  params.data.value + unit +  '<br />'
+                  + name + '：' +  params.data.value.toFixed(1) + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
@@ -632,7 +632,6 @@
           color: '#333333'
         },
         formatter: function (params) {
-          var thisArea = params[0].dataIndex;
           var res = params[0].name;
           for (var i = 0; i < params.length; i++) {
             if (params[i].value != undefined) {
@@ -757,8 +756,6 @@
         textStyle: {
           color: '#333333'
         },formatter: function (params) {
-          var thisArea = params[0].dataIndex;
-
           var res = params[0].name;
           for (var i = 0; i < params.length; i++) {
             if (params[i].value != undefined) {
@@ -1953,7 +1950,7 @@
           var date = new Date();
           var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            if(data[i].tMonth==month){}else{
+            if(data[i].tMonth!=month){
               var value = data[i].tData;
               yearData2.push(value);
             }

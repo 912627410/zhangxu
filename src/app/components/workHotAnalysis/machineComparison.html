@@ -170,23 +170,23 @@
               style="position: absolute; left: 0;top: 0;width: 30px;line-height: 18px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
               平均时长
             </div>
-            <ul style="position: absolute;list-style: none;line-height: 24px;">
+            <ul style="list-style: none;line-height: 24px;">
               <span ng-show="machineComparedMngCtrl.avgHoursNational">
-                <li>总平均：{{(machineComparedMngCtrl.excavatorHours + machineComparedMngCtrl.loaderHours)/2 | number:2}}小时</li>
-                <li ng-if="machineComparedMngCtrl.excavatorHours>=machineComparedMngCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.excavatorHours<machineComparedMngCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHours>=machineComparedMngCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHours<machineComparedMngCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li>总平均：{{(machineComparedMngCtrl.excavatorHours + machineComparedMngCtrl.loaderHours)/2 | number:1}}小时</li>
+                <li ng-if="machineComparedMngCtrl.excavatorHours>=machineComparedMngCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.excavatorHours<machineComparedMngCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHours>=machineComparedMngCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHours<machineComparedMngCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
                 <!--重机-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHours>=machineComparedMngCtrl.beforeHeavyHours" style="color: #00bb9c;">重机：{{machineComparedMngCtrl.heavyHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHours<machineComparedMngCtrl.beforeHeavyHours" style="color: #eb4f38;">重机：{{machineComparedMngCtrl.heavyHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
               </span>
               <span ng-show="machineComparedMngCtrl.avgHoursProvince">
-                <li>总平均：{{(machineComparedMngCtrl.excavatorHoursProvince + machineComparedMngCtrl.loaderHoursProvince)/2 | number:2}}小时</li>
-                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince>=machineComparedMngCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince<machineComparedMngCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHoursProvince>=machineComparedMngCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHoursProvince<machineComparedMngCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li>总平均：{{(machineComparedMngCtrl.excavatorHoursProvince + machineComparedMngCtrl.loaderHoursProvince)/2 | number:1}}小时</li>
+                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince>=machineComparedMngCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince<machineComparedMngCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHoursProvince>=machineComparedMngCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHoursProvince<machineComparedMngCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
                 <!--重机-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHoursProvince>=machineComparedMngCtrl.beforeHeavyHoursProvince" style="color: #00bb9c;">重机：{{machineComparedMngCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHoursProvince<machineComparedMngCtrl.beforeHeavyHoursProvince" style="color: #eb4f38;">重机：{{machineComparedMngCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
@@ -194,29 +194,29 @@
             </ul>
           </div>
         </div>
-        <div ng-show="machineComparedMngCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
+        <div ng-show="machineComparedMngCtrl.avgHours3" style="position: absolute;right: 0px;top: 75px;">
           <div style="position: relative;">
-            <ul ng-show="machineComparedMngCtrl.national" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.national" style="list-style: none;line-height: 26px;padding-left: 8px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales>=machineComparedMngCtrl.beforeTotalSales" >
                 <li><span>销售总数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.totalSales-machineComparedMngCtrl.beforeTotalSales}}台</span></li>
+                <li><span>环比增长:{{machineComparedMngCtrl.totalSales-machineComparedMngCtrl.beforeTotalSales}}台</span></li>
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales<machineComparedMngCtrl.beforeTotalSales">
                  <!--<li><span>总销售台数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img ng-mouseenter="show = true" ng-mouseleave="show = false" src="assets/images/down.png"/></span></li>-->
                 <!--<li ng-show="show" class="text-center"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales-machineComparedMngCtrl.totalSales}}台</span></li>-->
                 <li><span>销售总数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales-machineComparedMngCtrl.totalSales}}台</span></li>
+                <li><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales-machineComparedMngCtrl.totalSales}}台</span></li>
               </span>
             </ul>
 
-            <ul ng-show="machineComparedMngCtrl.allProvince" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.allProvince" style="list-style: none;line-height: 26px;padding-left: 8px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales>=machineComparedMngCtrl.beforeProvinceSales" >
                 <li><span>销售总数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.provinceSales-machineComparedMngCtrl.beforeProvinceSales}}台</span></li>
+                <li><span>环比增长:{{machineComparedMngCtrl.provinceSales-machineComparedMngCtrl.beforeProvinceSales}}台</span></li>
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales<machineComparedMngCtrl.beforeProvinceSales">
                 <li><span>销售总数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.provinceSales}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales-machineComparedMngCtrl.provinceSales}}台</span></li>
+                <li><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales-machineComparedMngCtrl.provinceSales}}台</span></li>
               </span>
             </ul>
           </div>
@@ -235,22 +235,22 @@
             </div>
             <ul style="position: absolute;list-style: none;line-height: 24px;"><!--line-height: 22px;-->
               <span ng-show="machineComparedMngCtrl.avgHoursNational2">
-              <li>总平均：{{(machineComparedMngCtrl.excavatorHours2 + machineComparedMngCtrl.loaderHours2)/2 | number:2}}小时</li>
-              <li ng-if="machineComparedMngCtrl.excavatorHours2>=machineComparedMngCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="machineComparedMngCtrl.excavatorHours2<machineComparedMngCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li>总平均：{{(machineComparedMngCtrl.excavatorHours2 + machineComparedMngCtrl.loaderHours2)/2 | number:1}}小时</li>
+              <li ng-if="machineComparedMngCtrl.excavatorHours2>=machineComparedMngCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="machineComparedMngCtrl.excavatorHours2<machineComparedMngCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
-              <li ng-if="machineComparedMngCtrl.loaderHours2>=machineComparedMngCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="machineComparedMngCtrl.loaderHours2<machineComparedMngCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="machineComparedMngCtrl.loaderHours2>=machineComparedMngCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="machineComparedMngCtrl.loaderHours2<machineComparedMngCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
                 <!--重机-->
               <!--<li ng-if="machineComparedMngCtrl.heavyHours2>=machineComparedMngCtrl.beforeHeavyHours2" style="color: #00bb9c;">重机：{{machineComparedMngCtrl.heavyHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
               <!--<li ng-if="machineComparedMngCtrl.heavyHours2<machineComparedMngCtrl.beforeHeavyHours2" style="color: #eb4f38;">重机：{{machineComparedMngCtrl.heavyHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
               </span>
               <span ng-show="machineComparedMngCtrl.avgHoursProvince2">
-                <li>总平均：{{(machineComparedMngCtrl.excavatorHoursProvince2 + machineComparedMngCtrl.loaderHoursProvince2)/2 | number:2}}小时</li>
-                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince2>=machineComparedMngCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince2<machineComparedMngCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHoursProvince2>=machineComparedMngCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-                <li ng-if="machineComparedMngCtrl.loaderHoursProvince2<machineComparedMngCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li>总平均：{{(machineComparedMngCtrl.excavatorHoursProvince2 + machineComparedMngCtrl.loaderHoursProvince2)/2 | number:1}}小时</li>
+                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince2>=machineComparedMngCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.excavatorHoursProvince2<machineComparedMngCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{machineComparedMngCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHoursProvince2>=machineComparedMngCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{machineComparedMngCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+                <li ng-if="machineComparedMngCtrl.loaderHoursProvince2<machineComparedMngCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{machineComparedMngCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
                 <!--重机-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHoursProvince2>=machineComparedMngCtrl.beforeHeavyHoursProvince2" style="color: #00bb9c;">重机：{{machineComparedMngCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
                 <!--<li ng-if="machineComparedMngCtrl.heavyHoursProvince2<machineComparedMngCtrl.beforeHeavyHoursProvince2" style="color: #eb4f38;">重机：{{machineComparedMngCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
@@ -258,27 +258,27 @@
             </ul>
           </div>
         </div>
-        <div ng-show="machineComparedMngCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;width: 180px;height: 55px;border: 1px solid #cccccc;">
+        <div ng-show="machineComparedMngCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;">
           <div style="position: relative;">
-            <ul ng-show="machineComparedMngCtrl.national1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.national1" style="list-style: none;line-height: 26px;padding-left: 8px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1>=machineComparedMngCtrl.beforeTotalSales1" >
                 <li><span>销售总数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.totalSales1-machineComparedMngCtrl.beforeTotalSales1}}台</span></li>
+                <li><span>环比增长:{{machineComparedMngCtrl.totalSales1-machineComparedMngCtrl.beforeTotalSales1}}台</span></li>
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.totalSales1<machineComparedMngCtrl.beforeTotalSales1">
                 <li><span>销售总数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.totalSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales1-machineComparedMngCtrl.totalSales1}}台</span></li>
+                <li><span>环比下降:{{machineComparedMngCtrl.beforeTotalSales1-machineComparedMngCtrl.totalSales1}}台</span></li>
               </span>
             </ul>
 
-            <ul ng-show="machineComparedMngCtrl.allProvince1" style="list-style: none;line-height: 26px;padding-left: 10px; ">
+            <ul ng-show="machineComparedMngCtrl.allProvince1" style="list-style: none;line-height: 26px;padding-left: 8px; ">
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales1>=machineComparedMngCtrl.beforeProvinceSales1" >
                 <li><span>销售总数：</span><span style="color: #00bb9c;">{{machineComparedMngCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/up.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比增长:{{machineComparedMngCtrl.provinceSales1-machineComparedMngCtrl.beforeProvinceSales1}}台</span></li>
+                <li><span>环比增长:{{machineComparedMngCtrl.provinceSales1-machineComparedMngCtrl.beforeProvinceSales1}}台</span></li>
               </span>
               <span style= "font-size:15px;" ng-if="machineComparedMngCtrl.provinceSales1<machineComparedMngCtrl.beforeProvinceSales1">
                 <li><span>销售总数：</span><span style="color: #eb4f38;">{{machineComparedMngCtrl.provinceSales1}}台<span>&nbsp;</span><img src="assets/images/down.png"/></span></li>
-                <li style="padding-left: 25px;"><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales1-machineComparedMngCtrl.provinceSales1}}台</span></li>
+                <li><span>环比下降:{{machineComparedMngCtrl.beforeProvinceSales1-machineComparedMngCtrl.provinceSales1}}台</span></li>
               </span>
             </ul>
 
