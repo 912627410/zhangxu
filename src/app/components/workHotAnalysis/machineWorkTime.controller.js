@@ -482,9 +482,13 @@
           toolbox: {
             feature: {
               dataZoom: {},
-              saveAsImage: {}
+              brush: {
+                type: ['rect', 'polygon', 'clear']
+              },
+              restore: {}
             }
           },
+          brush: {},
           xAxis: {
             // name: '累计作业时间(h)',
             nameLocation: 'middle',
