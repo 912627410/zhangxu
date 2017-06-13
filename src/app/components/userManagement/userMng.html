@@ -123,11 +123,11 @@
                       ng-click="userMngController.updatePassword(userinfo)">重置密码
               </button>
               <button type="button" class="btn  btn-success  btn-xs"
-                      ng-if="userinfo.status===0" presentation-href="user:oper"
-                      ng-click="userMngController.statusEnable(userinfo,'lg')">启用
+                      ng-if="userinfo.status==0" presentation-href="user:oper"
+                      ng-click="userMngController.statusEnable(userinfo)">启用
               </button>
               <button type="button" class="btn btn-danger btn-xs"
-                      ng-if="userinfo.status===1" presentation-href="user:oper"
+                      ng-if="userinfo.status==1" presentation-href="user:oper"
                       ng-click="userMngController.statusDisable(userinfo)">禁止
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
