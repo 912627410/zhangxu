@@ -71,7 +71,7 @@
 	 "notLocate":"Pending locate",
 	 "protocolType":"Type",
 	 "lastUpdateTime":"Last Update Time",
-	 "currentPosition":"Current Located",
+	 "currentPositioncurrentPosition":"Current Located",
 	 "operation":"Action",
   "state":"State",
   "refresh":"Refresh",
@@ -340,6 +340,7 @@
   "viewDetails":  "View Details",
   "download": "Download",
   "scanQRcode":"Scan QR Download",
-  "comingSoon": "Coming Soon"
+  "comingSoon": "Coming Soon",
+  "noMessage":"N/A"
 
 }
