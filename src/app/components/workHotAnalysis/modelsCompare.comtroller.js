@@ -25,75 +25,110 @@
     vm.dateType2 = "201702";
     vm.hours=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
     vm.hour="2";
+     var machineType = [];//机器类型
+    var loaderModel = ['全部',];//装载机型号
+    var excavatorModel = ['全部',];//挖掘机型号
+    var jukiType = ['全部',];//重机型号
     //获取车型种类
-    // $http.get(GET_MACHINE_TYPE_URL).then(function (type) {
-    //   vm.machineType=type.data;
-    // });
-    //装载机型号
-    $http.get(GET_MACHINE_TYPE_URL+'?type=1').then(function (type1) {
-      vm.models1=type1.data;
-      vm.vehicleType1 = '';
-      vm.vehicleType2 = '';
-      // $scope.vehicleType1=vm.models1;
-      // $scope.vehicleType1.selected =vm.models1[0].name;
-      //页面初始化默认查询2017年第二季度热度范围为2小时的装载机某型号的开工热度分布
-      vm.query(null,null,1,201702,null,2,1,vm.vehicleType1,1);
-    });
-    //挖掘机型号
-    $http.get(GET_MACHINE_TYPE_URL+'?type=2').then(function (type2) {
-      vm.models2=type2.data;
-    });
+    function getMachineTypeSelect(){
+      $http.get(GET_MACHINE_TYPE_URL).then(function (type) {
+        type=type.data;
+        for(var i=0;i<type.length;i++){
+          machineType.push(type[i].name);
+       }
+      });
+    }
+
+    //定义获取装载机型号方法
+    function  getLoaderModelSelect() {
+      $http.get(GET_MACHINE_TYPE_URL+'?type=1').then(function (type1) {
+        type1 = type1.data;
+        for(var i=0;i<type1.length;i++){
+          loaderModel.push(type1[i].name);
+        }
+      });
+    }
+    //定义获取挖掘机型号方法
+    function getExcavatorModelSelect() {
+      $http.get(GET_MACHINE_TYPE_URL+'?type=2').then(function (type2) {
+        type2=type2.data;
+        for(var i=0;i<type2.length;i++){
+          jukiType.push(type2[i].name);
+        }
+      });
+    }
     //重机型号
-    // $http.get(GET_MACHINE_TYPE_URL+'?type=3').then(function (type3) {
-    //   vm.models3=type3.data;
-    // });
+    function getJukiTypeSelect() {
+      $http.get(GET_MACHINE_TYPE_URL+'?type=3').then(function (type3) {
+        type3=type3.data;
+        for(var i=0;i<type3.length;i++){
+          excavatorModel.push(type3[i].name);
+        }
+      });
+    }
+    getMachineTypeSelect();//获取机器类型
+    getLoaderModelSelect();//获取装载机型号
+    getExcavatorModelSelect();//获取挖掘机型号
+    getJukiTypeSelect();//获取重机类型
     vm.machineType1 = "1";
     vm.machineType2 = "1";
-    vm.option1=true;
-    vm.option3=true;
-    $scope.$watch('produceType.selected', function(newVal, oldVal) {
+    $scope.vehicleType1 = loaderModel;
+    $scope.vehicleType1.selected = loaderModel[0];
+    $scope.vehicleType2 = loaderModel;
+    $scope.vehicleType2.selected = loaderModel[0];
+    console.log($scope.vehicleType1);
+    $scope.$watch('vehicleType1.selected', function(newVal, oldVal) {
       if (newVal !== oldVal) {
-        if ($scope.produceType.indexOf(newVal) === -1) {
-          $scope.produceType.unshift(newVal);
+        if ($scope.vehicleType1.indexOf(newVal) === -1) {
+          $scope.vehicleType1.unshift(newVal);
         }
       }
     });
+    $scope.getVehicleType1 = function(search) {
+      var newSupes = $scope.vehicleType1.slice();
+      if (search && newSupes.indexOf(search) === -1) {
+        newSupes.unshift(search);
+      }
+      return newSupes;
+    };
+    $scope.$watch('vehicleType2.selected', function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        if ($scope.vehicleType2.indexOf(newVal) === -1) {
+          $scope.vehicleType2.unshift(newVal);
+        }
+      }
+    });
+    $scope.getVehicleType2 = function(search) {
+      var newSupes = $scope.vehicleType2.slice();
+      if (search && newSupes.indexOf(search) === -1) {
+        newSupes.unshift(search);
+      }
+      return newSupes;
+    };
     //触发选择车辆类型对应的型号--上
     vm.change1 = function(machineType1){
       if(machineType1==1){
-        vm.option1=true;
-        vm.option2=false;
-        vm.option3=false;
-        vm.vehicleType1 = vm.models1[0].name;
+        $scope.vehicleType1 = loaderModel;
+        $scope.vehicleType1.selected = loaderModel[0];
       } else if(machineType1==2){
-        vm.option1=false;
-        vm.option2=true;
-        vm.option3=false;
-        vm.vehicleType1 = vm.models2[0].name;
+        $scope.vehicleType1 = excavatorModel;
+        $scope.vehicleType1.selected = excavatorModel[0];
       }else if(machineType1==3){
-        vm.option1=false;
-        vm.option2=false;
-        vm.option3=true;
-        vm.vehicleType1 = vm.models3[0].name;
+        $scope.vehicleType1 = jukiType;
+        $scope.vehicleType1.selected = jukiType[0];
       }
     }
     //触发选择车辆类型对应的型号--下
     vm.change2 = function(machineType1){
       if(machineType1==1){
-        vm.option3=true;
-        vm.option4=false;
-        vm.option5=false;
-        vm.vehicleType2 = vm.models1[0].name;
+        $scope.vehicleType2 = loaderModel;
+        $scope.vehicleType2.selected = loaderModel[0];
       } else if(machineType1==2){
-        vm.option3=false;
-        vm.option4=true;
-        vm.option5=false;
-        vm.vehicleType2 = vm.models2[0].name;
+        $scope.vehicleType2 = loaderModel;
+        $scope.vehicleType2.selected = loaderModel[0];
       }else if(machineType1==3){
-        vm.option3=false;
-        vm.option4=false;
-        vm.option5=true;
-        vm.vehicleType2 = vm.models3[0].name;
+        $scope.vehicleType2 = jukiType;
+        $scope.vehicleType2.selected = jukiType[0];
       }
     }
     var startDate = new Date();
@@ -702,6 +737,9 @@
         Notification.warning({message: '请选择单一车型状态下查询相关参数'});
         return;
       }
+      if(vehicleType1=='全部'){
+        vehicleType1='';
+      }
       //转换月份和日期格式
       if(monthDate){
         var month = monthDate.getMonth() +1;
@@ -1061,6 +1099,8 @@
       });
 
     }
+    // //页面初始化默认查询2017年第二季度热度范围为2小时的装载机某型号的开工热度分布
+    vm.query(null,null,1,201702,null,2,1,'',1);
     //封装查询各种车型的开工平均时长--左图和大地图调用
     function avgWorkHoursQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1){
 
@@ -1480,7 +1520,12 @@
       }else if(machineType1 == machineType2&&heatType1==heatType2&&vehicleType1==vehicleType2){
         Notification.warning({message: "相同参数类型的数据没有对比意义，请重新选择参数!"});
       }else {
-
+        if(vehicleType1=='全部'){
+          vehicleType1='';
+        }
+        if(vehicleType2=='全部'){
+          vehicleType2='';
+        }
         //转换月份和日期格式
         if(monthDate){
           var month = monthDate.getMonth() +1;

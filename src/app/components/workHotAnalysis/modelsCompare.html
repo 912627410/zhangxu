@@ -64,7 +64,7 @@
         <button class="btn btn-warning" type="button" ng-click="modelsCompareCtrl.reset()">{{'reset'|translate}}</button>
       <span ng-show="modelsCompareCtrl.hidden">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.heatType1)">{{'query'|translate}}</button>
+                ng-click="modelsCompareCtrl.query(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,vehicleType1.selected,modelsCompareCtrl.heatType1)">{{'query'|translate}}</button>
       </span>
     </div>
   </div>
@@ -124,13 +124,15 @@
 
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
-      <select class="form-control" ng-model="modelsCompareCtrl.vehicleType1">
-        <option value="">全部</option>
-        <option ng-show="modelsCompareCtrl.option1" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
-        <option ng-show="modelsCompareCtrl.option2" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
-        <!--<option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models3" value="{{data.name}}">{{data.name}}</option>-->
-      </select>
+      <ui-select ng-model="vehicleType1.selected" >
+        <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getVehicleType1($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
     </div>
+
+
 
     <label class="control-label col-md-1">热度类型:</label>
     <div class="controls col-md-2">
@@ -155,12 +157,12 @@
     </div>
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
-      <select class="form-control" ng-model="modelsCompareCtrl.vehicleType2">
-        <option value="">全部</option>
-        <option ng-show="modelsCompareCtrl.option3" ng-repeat="data in modelsCompareCtrl.models1" value="{{data.name}}">{{data.name}}</option>
-        <option ng-show="modelsCompareCtrl.option4" ng-repeat="data in modelsCompareCtrl.models2" value="{{data.name}}">{{data.name}}</option>
-        <!--<option ng-show="modelsCompareCtrl.option5" ng-repeat="data in modelsCompareCtrl.models5" value="{{data.name}}">{{data.name}}</option>-->
-      </select>
+      <ui-select ng-model="vehicleType2.selected" >
+        <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getVehicleType2($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
     </div>
 
     <label class="control-label col-md-1">热度类型:</label>
@@ -170,7 +172,7 @@
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,modelsCompareCtrl.vehicleType1,modelsCompareCtrl.vehicleType2,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
+              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
       >&nbsp;查&nbsp;询&nbsp;对&nbsp;比</button>
     </div>
   </div>
