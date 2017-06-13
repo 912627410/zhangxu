@@ -101,7 +101,7 @@
           var date = {
             key: x,
             value: y
-          }
+          };
           dates.push(date);
         }
         vm.quarter = dates;
@@ -118,18 +118,18 @@
         vm.monthQuery = false;
         vm.monthDateDeviceData = '';
       }
-    }
+    };
 
     vm.change1 = function(){
       var x=document.getElementById("qwert").selectedIndex+3;
       var y=document.getElementsByTagName("option");
       vm.title = y[x].text ;
-    }
+    };
     vm.change2 = function(monthDateDeviceData){
 
       var month = monthDateDeviceData.getMonth() +1;
       vm.title = monthDateDeviceData.getFullYear() +'年'+ month + '月';
-    }
+    };
 
 
     vm.dataList = [];
@@ -459,14 +459,6 @@
           machine0_1000_p = machine0_1000_p.toFixed(2);
           machine1000_2000_p = machine1000_2000_p.toFixed(2);
           machine2000_4000_p = machine2000_4000_p.toFixed(2);
-
-          //计算日均时间
-          time0_1000 /= machine0_1000;
-          time1000_2000 /= machine1000_2000;
-          time2000_4000 /= machine2000_4000;
-          time0_1000 = time0_1000.toFixed(2);
-          time1000_2000 = time1000_2000.toFixed(2);
-          time2000_4000 = time2000_4000.toFixed(2);
         }
 
         //计算累计作业台数百分比
@@ -490,13 +482,9 @@
           toolbox: {
             feature: {
               dataZoom: {},
-              brush: {
-                type: ['rect', 'polygon', 'clear']
-              },
-              restore: {}
+              saveAsImage: {}
             }
           },
-          brush: {},
           xAxis: {
             // name: '累计作业时间(h)',
             nameLocation: 'middle',
@@ -524,24 +512,6 @@
               }
             }
           },
-          dataZoom: [
-            //底部缩放滑动条
-            // {
-            //     type: 'slider',
-            //     show: true,
-            //     xAxisIndex: [0],
-            //     start: 0,
-            // },
-            {
-              type: 'inside',
-              xAxisIndex: [0],
-              start: 0
-            }, {
-              type: 'inside',
-              yAxisIndex: [0],
-              start: 0
-            }
-          ],
           series: [{
             animation: false,
             data: data[0],
@@ -715,19 +685,19 @@
               coord: [3900, 22]
             }],
             [{
-              name: machine0_1000 + '台(' + machine0_1000_p + '%)\n日均作业：' + time0_1000 + 'h',
+              name: machine0_1000 + '台(' + machine0_1000_p + '%)',
               coord: [200, 20]
             }, {
               coord: [980, 22]
             }],
             [{
-              name: machine1000_2000 + '台(' + machine1000_2000_p + '%)\n日均作业：' + time1000_2000 + 'h',
+              name: machine1000_2000 + '台(' + machine1000_2000_p + '%)',
               coord: [1200, 20]
             }, {
               coord: [1950, 22]
             }],
             [{
-              name: machine2000_4000 + '台(' + machine2000_4000_p + '%)\n日均作业：' + time2000_4000 + 'h',
+              name: machine2000_4000 + '台(' + machine2000_4000_p + '%)',
               coord: [2200, 20]
             }, {
               coord: [2950, 22]
