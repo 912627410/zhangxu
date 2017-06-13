@@ -10,7 +10,7 @@
     .controller('machineComparedMngController', machineComparedMngController);
 
   /** @ngInject */
-  function machineComparedMngController($rootScope, $scope, $http, $filter,Notification,serviceResource,SALES_HEAT_QUERY,START_HEAT_QUERY,
+  function machineComparedMngController($rootScope, $scope, $http, $filter,Notification,serviceResource,SALES_HEAT_QUERY,START_HEAT_QUERY,GET_OWNERSHIP_URL,
                                         AVG_WORK_HOUR_QUERY_MONTH,AVG_WORK_HOUR_QUERY_QUARTER,AVG_WORK_HOUR_QUERY_DATE,SALES_YEAR_QUERY,WORK_HOUR_YEAR_QUERY_DATE) {
     var vm = this;
     var mapChart1;
@@ -254,7 +254,7 @@
 
               if(params.value) {
                 return params.data.name + '<br />'
-                  + name + '：' +  params.data.value + unit +  '<br />'
+                  + name + '：' +  params.data.value.toFixed(1) + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
@@ -466,7 +466,7 @@
 
               if(params.value) {
                 return params.data.name + '<br />'
-                  + name + '：' +  params.data.value + unit +  '<br />'
+                  + name + '：' +  params.data.value.toFixed(1) + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
               }
               return params.name + '<br />'
@@ -603,8 +603,13 @@
     //折线图
     var mmuOption1 = {
       title: {
-        text: '挖掘机开工变化趋势',
-        padding: [10, 20]
+        text: '挖机开工变化趋势',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        },
       },
       toolbox: {
         show: true,
@@ -630,42 +635,37 @@
         backgroundColor: 'rgba(219,219,216,0.8)',
         textStyle: {
           color: '#333333'
+        },
+        formatter: function (params) {
+          var res = params[0].name;
+          for (var i = 0; i < params.length; i++) {
+            if (params[i].value != undefined) {
+              res += '<br/>' + '<div style="display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + params[i].seriesName +':' + params[i].value ;
+            } else {
+              res += '';
+            }
+          }
+          return res;
         }
       },
       legend: {
-        data:['2016','2017']
+        show:true,
+        itemWidth:20,
+        itemGap:3,
+        top:'6%',
+        data:['2016时长','2017时长','2016销量','2017销量']
       },
       grid: {
-        left: '6%',
-        right: 25,
+        left: '3%',
+        right: '3%',
         bottom: '3%',
         borderColor: '#e6e6e6',
         containLabel: true
       },
-      // dataZoom: [
-      //   // {
-      //   //   id: 'dataZoomX',
-      //   //   type: 'inside',
-      //   //   xAxisIndex: [0],
-      //   //   filterMode: 'none'
-      //   // },
-      //   {
-      //     id: 'dataZoomY',
-      //     type: 'inside',
-      //     yAxisIndex: [0],
-      //     filterMode: 'none'
-      //   }
-      //
-      // ],
       xAxis: {
         type: 'category',
         boundaryGap: true,
-        axisLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
+
         axisLabel: {
           show: true,
           textStyle: {
@@ -677,48 +677,77 @@
         },
         data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
-      yAxis: {
-        name: '月平均开工时长(小时)',
-        nameLocation:'middle',
-        nameGap:40,
-        boundaryGap:true,
-        type: 'value',
-        min:0,
-        // max:'dataMax',
-        minInterval: 1,
-        axisLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
-        axisLabel: {
-          show: true,
-          textStyle: {
-            color: '#666666'
+      yAxis: [
+        {
+          name: '月平均开工时长(小时)',
+          nameLocation:'middle',
+          nameGap:35,
+          //   boundaryGap:true,
+          type: 'value',
+          min:0,
+          // max:'dataMax',
+          // minInterval: 1,
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          //   axisLabel: {
+          //     // show: true,
+          //     // textStyle: {
+          //     //   color: '#666666'
+          //     // }
+          //   },
+          //   nameTextStyle: {
+          //     color: '#666666',
+          //     fontSize:6,
+          //   }
+        },{
+          type: 'value',
+          nameLocation:'middle',
+          nameGap:45,
+          boundaryGap:true,
+          name: '车辆保有量(台)',
+          nameRotate:-90,
+          min:0,
+          // interval: 50,
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
           }
-        },
-        nameTextStyle: {
-          color: '#666666',
-          fontSize:14,
         }
-      },
+      ],
       series: [
         {
-          name:'2016',
+          name:'2016时长',
           type: 'line',
+          yAxisIndex: 0,
           data:[0,0,0,0,1546,1886,2141,2545,3138,3612,4024,4221]
         },{
-          name:'2017',
+          name:'2017时长',
           type: 'line',
+          yAxisIndex: 0,
           data:[4380,5362]
+        },{
+          name:'2016销量',
+          type:'bar',
+          yAxisIndex: 1,
+          data:[100,200,300,400,100,500,600,65,450,510]
+        },{
+          name:'2017销量',
+          type:'bar',
+          yAxisIndex: 1,
+          data:[150,250,350,450,150,550,450,165,550,560]
         }
       ]
     };
     var mmuOption2 = {
       title: {
         text: '开工变化趋势',
-        padding: [10, 20]
+        // padding: [10, 20]
       },
       toolbox: {
         show: true,
@@ -744,14 +773,25 @@
         backgroundColor: 'rgba(219,219,216,0.8)',
         textStyle: {
           color: '#333333'
+        },formatter: function (params) {
+          var res = params[0].name;
+          for (var i = 0; i < params.length; i++) {
+            if (params[i].value != undefined) {
+              res += '<br/>' + '<div style="display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:10px;background-color:' + params[i].color + '"></div>' + params[i].seriesName +'年:' + params[i].value ;
+            } else {
+              res += '';
+            }
+          }
+          return res;
         }
       },
       legend: {
+        top:'6%',
         data:['2016','2017']
       },
       grid: {
-        left: '6%',
-        right: 25,
+        left: '3%',
+        right: '3%',
         bottom: '3%',
         borderColor: '#e6e6e6',
         containLabel: true
@@ -813,10 +853,6 @@
           textStyle: {
             color: '#666666'
           }
-        },
-        nameTextStyle: {
-          color: '#666666',
-          fontSize:14
         }
       },
       series: [
@@ -1847,48 +1883,24 @@
     }
     //封装折线图数据查询及生成--左图和大地图调用
     function yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1){
-      if(machineType1=="A1"){
-        if(heatType1==1){
-          mmuLine.title.text = "挖掘机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "挖掘机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType1=="1,2,3"){
-        if(heatType1==1){
-          mmuLine.title.text = "装载机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "装载机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType1=="3"){
-        if(heatType1==1){
-          mmuLine.title.text = "重机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "重机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
 
       if(heatType1==1){
         //判断是哪种车型
         if(machineType1=="1,2,3"){
           var YearURL1 = WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=1";
           var YearURL2 = WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=1";
+          var YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=1";
+          var YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=1";
         }else if(machineType1=="A1"){
           YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=2";
           YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=2";
+          YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=2";
+          YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=2";
         }else if(machineType1=="3"){
           YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=3";
           YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=3";
+          YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=3";
+          YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=3";
         }
       } else if(heatType1==0){
         //判断是哪种车型
@@ -1910,14 +1922,13 @@
           if(machineType1=="1,2,3"){
             var yearData1 = [,,];
           } else if(machineType1=="A1"){
-            var yearData1 = [,,,,,];
+            var yearData1 = [,,,,,,];
           } else {
             var yearData1 = [];
           }
         } else {
           var yearData1 = [];
         }
-
         for(var i=0;i<data.length;i++){
           var value = data[i].tData;
           yearData1.push(value);
@@ -1926,60 +1937,104 @@
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
           var yearData2 = [];
+          var date = new Date();
+          var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            var value = data[i].tData;
-            yearData2.push(value);
+            if(data[i].tMonth!=month){
+              var value = data[i].tData;
+              yearData2.push(value);
+            }
           }
-          mmuLine.series[1].data = yearData2;
-          mmuChart1.setOption(mmuLine);
+          if(heatType1==0){
+            if(machineType1=="A1"){
+              mmuLine.title.text = "挖掘机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType1=="1,2,3"){
+              mmuLine.title.text = "装载机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType1=="3"){
+              mmuLine.title.text = "重机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            mmuLine.series[1].data = yearData2;
+            mmuChart1.setOption(mmuLine);
+          }else{
+            var YearOwnershipData1 = serviceResource.restCallService(YearOwnership1, 'QUERY');//2016
+            YearOwnershipData1.then(function (data1) {
+              if(heatType1==1){
+                if(machineType1=="1,2,3"){
+                  var ownershipData1 = [,,];
+                } else if(machineType1=="A1"){
+                  var ownershipData1 = [,,,,,,];
+                } else {
+                  var ownershipData1 = [];
+                }
+              } else {
+                var ownershipData1 = [];
+              }
+
+              for(var i=0;i<data1.length;i++){
+                var value = data1[i].tData;
+                ownershipData1.push(value);
+              }
+              mmuLine.series[2].data = ownershipData1;
+              var workHoursYearData2 = serviceResource.restCallService(YearOwnership2, 'QUERY');//2017
+              workHoursYearData2.then(function (data2) {
+                var ownershipData2 = [];
+                var date = new Date();
+                var month = (date.getMonth()+1)+'月';
+                for(var i=0;i<data2.length;i++){
+                  if(data2[i].tMonth!=month){
+                    var value = data2[i].tData;
+                    ownershipData2.push(value);
+                  }
+                }
+                mmuLine.series[3].data = ownershipData2;
+                if(machineType1=="A1"){
+                  mmuLine.title.text = "挖掘机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType1=="1,2,3"){
+                  mmuLine.title.text = "装载机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType1=="3"){
+                  mmuLine.title.text = "重机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                mmuLine.series[1].data = yearData2;
+                mmuChart1.setOption(mmuLine);
+              });
+            });
+          }
         });
       });
+
     }
     //封装折线图数据查询及生成--右图调用
     function yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2){
-      if(machineType2=="A1"){
-        if(heatType2==1){
-          mmuLine2.title.text = "挖掘机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "挖掘机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType2=="1,2,3"){
-        if(heatType2==1){
-          mmuLine2.title.text = "装载机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "装载机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType2=="3"){
-        if(heatType2==1){
-          mmuLine2.title.text = "重机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "重机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
 
       if(heatType2==1){
         //判断是哪种车型
         if(machineType2=="1,2,3"){
           var YearURL1 = WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=1";
           var YearURL2 = WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=1";
+          var YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=1";
+          var YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=1";
         }else if(machineType2=="A1"){
           YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=2";
           YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=2";
+          YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=2";
+          YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=2";
         }else if(machineType2=="3"){
           YearURL1= WORK_HOUR_YEAR_QUERY_DATE + "2016&machineType=3";
           YearURL2= WORK_HOUR_YEAR_QUERY_DATE + "2017&machineType=3";
+          YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=3";
+          YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=3";
         }
+
       } else if(heatType2==0){
         //判断是哪种车型
         if(machineType2=="1,2,3"){
@@ -1996,21 +2051,97 @@
 
       var workHoursYearData1 = serviceResource.restCallService(YearURL1, 'QUERY');//2016
       workHoursYearData1.then(function (data) {
-        var yearData1 = [];
+        if(heatType2==1){
+          if(machineType2=="1,2,3"){
+            var yearData3 = [,,];
+          } else if(machineType2=="A1"){
+            var yearData3 = [,,,,,,];
+          } else {
+            var yearData3 = [];
+          }
+        } else {
+          var yearData3 = [];
+        }
         for(var i=0;i<data.length;i++){
           var value = data[i].tData;
-          yearData1.push(value);
+          yearData3.push(value);
         }
-        mmuLine2.series[0].data = yearData1;
+        mmuLine2.series[0].data = yearData3;
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
-          var yearData2 = [];
+          var yearData4 = [];
+          var date = new Date();
+          var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            var value = data[i].tData;
-            yearData2.push(value);
+            if(data[i].tMonth==month){}else{
+              var value = data[i].tData;
+              yearData4.push(value);
+            }
           }
-          mmuLine2.series[1].data = yearData2;
-          mmuChart2.setOption(mmuLine2);
+          if(heatType2==0){
+            if(machineType2=="A1"){
+                mmuLine2.title.text = "挖掘机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType2=="1,2,3"){
+                mmuLine2.title.text = "装载机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType2=="3"){
+                mmuLine2.title.text = "重机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            mmuLine2.series[1].data = yearData4;
+            mmuChart2.setOption(mmuLine2);
+          }else{
+            var YearOwnershipData1 = serviceResource.restCallService(YearOwnership1, 'QUERY');//2016
+            YearOwnershipData1.then(function (data1) {
+              if(heatType2==1){
+                if(machineType2=="1,2,3"){
+                  var ownershipData1 = [,,];
+                } else if(machineType2=="A1"){
+                  var ownershipData1 = [,,,,,,];
+                } else {
+                  var ownershipData1 = [];
+                }
+              } else {
+                var ownershipData1 = [];
+              }
+
+              for(var i=0;i<data1.length;i++){
+                var value = data1[i].tData;
+                ownershipData1.push(value);
+              }
+              mmuLine2.series[2].data = ownershipData1;
+              var workHoursYearData2 = serviceResource.restCallService(YearOwnership2, 'QUERY');//2017
+              workHoursYearData2.then(function (data2) {
+                var ownershipData2 = [];
+                var date = new Date();
+                var month = (date.getMonth()+1)+'月';
+                for(var i=0;i<data2.length;i++){
+                  if(data2[i].tMonth!=month){
+                    var value = data2[i].tData;
+                    ownershipData2.push(value);
+                  }
+                }
+                mmuLine2.series[3].data = ownershipData2;
+                if(machineType2=="A1"){
+                  mmuLine2.title.text = "挖掘机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType2=="1,2,3"){
+                  mmuLine2.title.text = "装载机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType2=="3"){
+                  mmuLine2.title.text = "重机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                mmuLine2.series[1].data = yearData4;
+                mmuChart2.setOption(mmuLine2);
+              });
+            });
+          }
         });
       });
     }
@@ -2693,12 +2824,19 @@
         }
 
         var mmuChart = echarts.init(lineContainerList[0]);
-        var mmuLine = mmuOption1;
+        if(heatType1==1){
+          var mmuLine = mmuOption1;
+        }else{
+          var mmuLine = mmuOption2;
+        }
+        if(heatType2==1){
+          var mmuLine2 = mmuOption1;
+        }else{
+          var mmuLine2 = mmuOption2;
+        }
         var mmuChart2 = echarts.init(lineContainerList[1]);
-        var mmuLine2 = mmuOption2;
         yearInfoLine(machineType1,heatType1,mmuLine,mmuChart);
         yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2);
-
       }
     }
 
