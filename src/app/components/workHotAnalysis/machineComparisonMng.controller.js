@@ -603,7 +603,7 @@
     //折线图
     var mmuOption1 = {
       title: {
-        text: '挖掘机开工变化趋势',
+        text: '挖机开工变化趋势',
         axisPointer: {
           type: 'cross',
           crossStyle: {
@@ -652,6 +652,7 @@
         show:true,
         itemWidth:20,
         itemGap:3,
+        top:'6%',
         data:['2016时长','2017时长','2016销量','2017销量']
       },
       grid: {
@@ -705,7 +706,7 @@
         },{
           type: 'value',
           nameLocation:'middle',
-          nameGap:35,
+          nameGap:45,
           boundaryGap:true,
           name: '车辆保有量(台)',
           nameRotate:-90,
@@ -746,7 +747,7 @@
     var mmuOption2 = {
       title: {
         text: '开工变化趋势',
-        padding: [10, 20]
+        // padding: [10, 20]
       },
       toolbox: {
         show: true,
@@ -785,6 +786,7 @@
         }
       },
       legend: {
+        top:'6%',
         data:['2016','2017']
       },
       grid: {
@@ -1881,36 +1883,6 @@
     }
     //封装折线图数据查询及生成--左图和大地图调用
     function yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1){
-      if(machineType1=="A1"){
-        if(heatType1==1){
-          mmuLine.title.text = "挖掘机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "挖掘机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType1=="1,2,3"){
-        if(heatType1==1){
-          mmuLine.title.text = "装载机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "装载机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType1=="3"){
-        if(heatType1==1){
-          mmuLine.title.text = "重机开工变化趋势";
-          mmuLine.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType1==0){
-          mmuLine.title.text = "重机销售变化趋势";
-          mmuLine.yAxis.name = '车辆数量(台)';
-        }
-      }
 
       if(heatType1==1){
         //判断是哪种车型
@@ -1957,7 +1929,6 @@
         } else {
           var yearData1 = [];
         }
-
         for(var i=0;i<data.length;i++){
           var value = data[i].tData;
           yearData1.push(value);
@@ -1974,8 +1945,20 @@
               yearData2.push(value);
             }
           }
-          mmuLine.series[1].data = yearData2;
           if(heatType1==0){
+            if(machineType1=="A1"){
+              mmuLine.title.text = "挖掘机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType1=="1,2,3"){
+              mmuLine.title.text = "装载机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType1=="3"){
+              mmuLine.title.text = "重机销售变化趋势";
+              mmuLine.yAxis.name = '车辆数量(台)';
+            }
+            mmuLine.series[1].data = yearData2;
             mmuChart1.setOption(mmuLine);
           }else{
             var YearOwnershipData1 = serviceResource.restCallService(YearOwnership1, 'QUERY');//2016
@@ -2009,6 +1992,19 @@
                   }
                 }
                 mmuLine.series[3].data = ownershipData2;
+                if(machineType1=="A1"){
+                  mmuLine.title.text = "挖掘机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType1=="1,2,3"){
+                  mmuLine.title.text = "装载机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType1=="3"){
+                  mmuLine.title.text = "重机开工变化趋势";
+                  mmuLine.yAxis.name = '月平均开工时长(小时)';
+                }
+                mmuLine.series[1].data = yearData2;
                 mmuChart1.setOption(mmuLine);
               });
             });
@@ -2019,36 +2015,6 @@
     }
     //封装折线图数据查询及生成--右图调用
     function yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2){
-      if(machineType2=="A1"){
-        if(heatType2==1){
-          mmuLine2.title.text = "挖掘机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "挖掘机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType2=="1,2,3"){
-        if(heatType2==1){
-          mmuLine2.title.text = "装载机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "装载机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
-      if(machineType2=="3"){
-        if(heatType2==1){
-          mmuLine2.title.text = "重机开工变化趋势";
-          mmuLine2.yAxis.name = '月平均开工时长(小时)';
-
-        }else if(heatType2==0){
-          mmuLine2.title.text = "重机销售变化趋势";
-          mmuLine2.yAxis.name = '车辆数量(台)';
-        }
-      }
 
       if(heatType2==1){
         //判断是哪种车型
@@ -2087,34 +2053,45 @@
       workHoursYearData1.then(function (data) {
         if(heatType2==1){
           if(machineType2=="1,2,3"){
-            var yearData1 = [,,];
+            var yearData3 = [,,];
           } else if(machineType2=="A1"){
-            var yearData1 = [,,,,,,];
+            var yearData3 = [,,,,,,];
           } else {
-            var yearData1 = [];
+            var yearData3 = [];
           }
         } else {
-          var yearData1 = [];
+          var yearData3 = [];
         }
         for(var i=0;i<data.length;i++){
           var value = data[i].tData;
-          yearData1.push(value);
+          yearData3.push(value);
         }
-        mmuLine2.series[0].data = yearData1;
+        mmuLine2.series[0].data = yearData3;
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
-          var yearData2 = [];
+          var yearData4 = [];
           var date = new Date();
           var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
             if(data[i].tMonth==month){}else{
               var value = data[i].tData;
-              yearData2.push(value);
+              yearData4.push(value);
             }
           }
-          mmuLine2.series[1].data = yearData2;
-          mmuChart2.setOption(mmuLine2);
           if(heatType2==0){
+            if(machineType2=="A1"){
+                mmuLine2.title.text = "挖掘机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType2=="1,2,3"){
+                mmuLine2.title.text = "装载机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            if(machineType2=="3"){
+                mmuLine2.title.text = "重机销售变化趋势";
+                mmuLine2.yAxis.name = '车辆数量(台)';
+            }
+            mmuLine2.series[1].data = yearData4;
             mmuChart2.setOption(mmuLine2);
           }else{
             var YearOwnershipData1 = serviceResource.restCallService(YearOwnership1, 'QUERY');//2016
@@ -2148,6 +2125,19 @@
                   }
                 }
                 mmuLine2.series[3].data = ownershipData2;
+                if(machineType2=="A1"){
+                  mmuLine2.title.text = "挖掘机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType2=="1,2,3"){
+                  mmuLine2.title.text = "装载机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                if(machineType2=="3"){
+                  mmuLine2.title.text = "重机开工变化趋势";
+                  mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                }
+                mmuLine2.series[1].data = yearData4;
                 mmuChart2.setOption(mmuLine2);
               });
             });
