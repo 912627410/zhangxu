@@ -185,17 +185,17 @@
           <ul style="list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational">
               <li>平均开工时长</li><!--text-align:center  padding-left: 25px;-->
-              <li ng-if="modelsCompareCtrl.excavatorHours>=modelsCompareCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.excavatorHours<modelsCompareCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHours>=modelsCompareCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHours<modelsCompareCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours>=modelsCompareCtrl.beforeExcavatorHours" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours<modelsCompareCtrl.beforeExcavatorHours" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours>=modelsCompareCtrl.beforeLoaderHours" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours<modelsCompareCtrl.beforeLoaderHours" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
             </span>
             <span ng-show="modelsCompareCtrl.avgHoursProvince">
               <li>平均开工时长</li>
-              <li ng-if="modelsCompareCtrl.excavatorHoursProvince>=modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.excavatorHoursProvince<modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHoursProvince>=modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHoursProvince<modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince>=modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince<modelsCompareCtrl.beforeExcavatorHoursProvince" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince>=modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince<modelsCompareCtrl.beforeLoaderHoursProvince" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--重机-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince>=modelsCompareCtrl.beforeHeavyHoursProvince" style="color: #00bb9c;">重机：{{modelsCompareCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince<modelsCompareCtrl.beforeHeavyHoursProvince" style="color: #eb4f38;">重机：{{modelsCompareCtrl.heavyHoursProvince}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->
@@ -234,19 +234,19 @@
           <ul style="position: absolute;list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational2">
               <li>平均开工时长</li>
-              <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.excavatorHours2<modelsCompareCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHours2<modelsCompareCtrl.beforeExcavatorHours2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--<li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>-->
-              <li ng-if="modelsCompareCtrl.loaderHours2>=modelsCompareCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHours2<modelsCompareCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours2>=modelsCompareCtrl.beforeLoaderHours2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHours2<modelsCompareCtrl.beforeLoaderHours2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHours2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
             </span>
             <span ng-show="modelsCompareCtrl.avgHoursProvince2">
               <li>平均开工时长</li>
                 <!--<li>总平均：{{(modelsCompareCtrl.excavatorHoursProvince2 + modelsCompareCtrl.loaderHoursProvince2)/2 | number:2}}小时</li>-->
-              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2>=modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2<modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHoursProvince2>=modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
-              <li ng-if="modelsCompareCtrl.loaderHoursProvince2<modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince2 | number:1}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2>=modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.excavatorHoursProvince2<modelsCompareCtrl.beforeExcavatorHoursProvince2" style="color: #eb4f38;">挖掘机：{{modelsCompareCtrl.excavatorHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince2>=modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #00bb9c;">装载机：{{modelsCompareCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
+              <li ng-if="modelsCompareCtrl.loaderHoursProvince2<modelsCompareCtrl.beforeLoaderHoursProvince2" style="color: #eb4f38;">装载机：{{modelsCompareCtrl.loaderHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>
               <!--重机-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince2>=modelsCompareCtrl.beforeHeavyHoursProvince2" style="color: #00bb9c;">重机：{{modelsCompareCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>-->
               <!--<li ng-if="modelsCompareCtrl.heavyHoursProvince2<modelsCompareCtrl.beforeHeavyHoursProvince2" style="color: #eb4f38;">重机：{{modelsCompareCtrl.heavyHoursProvince2}}小时<span>&nbsp;</span><img src="assets/images/down.png"/></li>-->

@@ -34,6 +34,8 @@
       vm.models1=type1.data;
       vm.vehicleType1 = '';
       vm.vehicleType2 = '';
+      // $scope.vehicleType1=vm.models1;
+      // $scope.vehicleType1.selected =vm.models1[0].name;
       //页面初始化默认查询2017年第二季度热度范围为2小时的装载机某型号的开工热度分布
       vm.query(null,null,1,201702,null,2,1,vm.vehicleType1,1);
     });
@@ -49,6 +51,13 @@
     vm.machineType2 = "1";
     vm.option1=true;
     vm.option3=true;
+    $scope.$watch('produceType.selected', function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        if ($scope.produceType.indexOf(newVal) === -1) {
+          $scope.produceType.unshift(newVal);
+        }
+      }
+    });
     //触发选择车辆类型对应的型号--上
     vm.change1 = function(machineType1){
       if(machineType1==1){
