@@ -332,6 +332,7 @@
   "viewDetails":  "查看详情",
   "download": "直接下载",
   "scanQRcode": "扫码下载",
-  "comingSoon": "敬请期待"
+  "comingSoon": "敬请期待",
+  "noMessage":"--"
 
 }

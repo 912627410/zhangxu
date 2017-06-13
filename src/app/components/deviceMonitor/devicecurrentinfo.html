@@ -730,16 +730,16 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">{{'noData'|translate}}</td>
                     <td>{{'positioningTime'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">--</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">{{'noMessage'|translate}}</td>
                     <td>{{'returnTime'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
                   <tr>
                     <td>{{'vehicleType'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}} </td>
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> {{'noMessage'|translate}}</td>
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
@@ -834,7 +834,7 @@
                       {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">
-                      --
+                      {{'noMessage'|translate}}
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">
                       {{'noData' |translate}}
@@ -921,8 +921,8 @@
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
                     <td>{{'currentPosition'|translate}}</td>
-                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
-
+                    <td class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.address!=null">{{deviceCurrentInfoCtrl.deviceinfo.address}} {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}} {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+                    <td class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.address == null">{{'noMessage'|translate}} {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}} {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
                   </tr>
                 </table>
 
@@ -1040,9 +1040,9 @@
                     <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')">{{deviceData.id}}</a></td>
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">{{'noMessage'|translate}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">{{'noMessage'|translate}}</td>
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <td ng-cloak class="text-nowrap">{{deviceData.totalDuration | convertToMins }}</td>
 
