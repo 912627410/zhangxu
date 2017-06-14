@@ -88,10 +88,10 @@
                    clear-text="{{'cleanUp'|translate}}"
                    close-text="{{'close'|translate}}"/>
             <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"
-                                    ng-click="machineComparedMngCtrl.endDateOpenDeviceData($event)">
-                              <i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+             <button type="button" class="btn btn-default"
+                 ng-click="machineComparedMngCtrl.endDateOpenDeviceData($event)">
+             <i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
           </p>
         </div>
 
@@ -119,7 +119,7 @@
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.toggle()">∨ 车型对比
+                ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down" style="color: rgb(255, 255, 255);"></span> 车型对比
         </button>
       </div>
     </div>
@@ -139,7 +139,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
+                  ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up" style="color: rgb(255, 255, 255);"></span> 单一车型
           </button>
         </div>
       </div>
@@ -290,7 +290,7 @@
       </div>
     </div>
   </div>
-  <div class="rightBox" style="position: absolute;right: 0px; top: 20px;height: 1200px;width: 33%;"><!--top: 0px;height: 900px;-->
+  <div class="rightBox" style="position: absolute;right: 0px; top: 20px;height: 1230px;width: 33%;"><!--top: 0px;height: 900px;-->
     <div class="row form-group" style="padding:20px 10px;">
       <label class="control-label col-md-3">热度分布</label>
       <div class="controls">

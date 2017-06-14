@@ -38,11 +38,11 @@
        }
       });
     }
-
     //定义获取装载机型号方法
     function  getLoaderModelSelect() {
       $http.get(GET_MACHINE_TYPE_URL+'?type=1').then(function (type1) {
         type1 = type1.data;
+        type1 = _.sortBy(type1,'name');
         for(var i=0;i<type1.length;i++){
           loaderModel.push(type1[i].name);
         }
@@ -52,8 +52,9 @@
     function getExcavatorModelSelect() {
       $http.get(GET_MACHINE_TYPE_URL+'?type=2').then(function (type2) {
         type2=type2.data;
+        type2 = _.sortBy(type2,'name');
         for(var i=0;i<type2.length;i++){
-          jukiType.push(type2[i].name);
+          excavatorModel.push(type2[i].name);
         }
       });
     }
@@ -61,22 +62,23 @@
     function getJukiTypeSelect() {
       $http.get(GET_MACHINE_TYPE_URL+'?type=3').then(function (type3) {
         type3=type3.data;
+        type3 = _.sortBy(type3,'name');
         for(var i=0;i<type3.length;i++){
-          excavatorModel.push(type3[i].name);
+          jukiType.push(type3[i].name);
         }
       });
     }
+
     getMachineTypeSelect();//获取机器类型
     getLoaderModelSelect();//获取装载机型号
     getExcavatorModelSelect();//获取挖掘机型号
     getJukiTypeSelect();//获取重机类型
     vm.machineType1 = "1";
-    vm.machineType2 = "1";
+    vm.machineType2 = "2";
     $scope.vehicleType1 = loaderModel;
     $scope.vehicleType1.selected = loaderModel[0];
-    $scope.vehicleType2 = loaderModel;
-    $scope.vehicleType2.selected = loaderModel[0];
-    console.log($scope.vehicleType1);
+    $scope.vehicleType2 = excavatorModel;
+    $scope.vehicleType2.selected = excavatorModel[0];
     $scope.$watch('vehicleType1.selected', function(newVal, oldVal) {
       if (newVal !== oldVal) {
         if ($scope.vehicleType1.indexOf(newVal) === -1) {
@@ -91,46 +93,49 @@
       }
       return newSupes;
     };
-    $scope.$watch('vehicleType2.selected', function(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        if ($scope.vehicleType2.indexOf(newVal) === -1) {
-          $scope.vehicleType2.unshift(newVal);
-        }
-      }
-    });
-    $scope.getVehicleType2 = function(search) {
-      var newSupes = $scope.vehicleType2.slice();
-      if (search && newSupes.indexOf(search) === -1) {
-        newSupes.unshift(search);
-      }
-      return newSupes;
-    };
+
     //触发选择车辆类型对应的型号--上
     vm.change1 = function(machineType1){
-      if(machineType1==1){
+
+      if(machineType1=='1'){
         $scope.vehicleType1 = loaderModel;
         $scope.vehicleType1.selected = loaderModel[0];
-      } else if(machineType1==2){
+      } else if(machineType1=='2'){
         $scope.vehicleType1 = excavatorModel;
         $scope.vehicleType1.selected = excavatorModel[0];
-      }else if(machineType1==3){
+      }else if(machineType1=='3'){
         $scope.vehicleType1 = jukiType;
         $scope.vehicleType1.selected = jukiType[0];
       }
     }
+    $scope.$watch('vehicleType2.selected', function(newVal2, oldVal2) {
+      if (newVal2 !== oldVal2) {
+        if ($scope.vehicleType2.indexOf(newVal2) === -1) {
+          $scope.vehicleType2.unshift(newVal2);
+        }
+      }
+    });
+    $scope.getVehicleType2 = function(search) {
+      var newSupes2 = $scope.vehicleType2.slice();
+      if (search && newSupes2.indexOf(search) === -1) {
+        newSupes2.unshift(search);
+      }
+      return newSupes2;
+    };
     //触发选择车辆类型对应的型号--下
-    vm.change2 = function(machineType1){
-      if(machineType1==1){
-        $scope.vehicleType2 = loaderModel;
-        $scope.vehicleType2.selected = loaderModel[0];
-      } else if(machineType1==2){
-        $scope.vehicleType2 = loaderModel;
-        $scope.vehicleType2.selected = loaderModel[0];
-      }else if(machineType1==3){
+    vm.change2 = function(machineType2){
+      if(machineType2=='1'){
+        $scope.vehicleType2 = angular.copy(loaderModel);
+        $scope.vehicleType2.selected = angular.copy(loaderModel)[0];
+      } else if(machineType2=='2'){
+        $scope.vehicleType2 = angular.copy(excavatorModel);
+        $scope.vehicleType2.selected = excavatorModel[0];
+      }else if(machineType2=='3'){
         $scope.vehicleType2 = jukiType;
         $scope.vehicleType2.selected = jukiType[0];
       }
     }
+
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
     vm.startDate = startDate;
@@ -232,7 +237,7 @@
               var unit =  '%' ;
               var name = '开工率';
 
-              if(params.value) {
+              if(params.data.value || params.data.count) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
@@ -600,7 +605,7 @@
               var unit =  '%' ;
               var name = '开工率';
 
-              if(params.value) {
+              if(params.data.value || params.data.count) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
                   + '车辆数量：' + params.data.count + ' 台/天';
@@ -1655,8 +1660,6 @@
         mapContainerList[0].style.width = "100%";
         mapContainerList[1].style.width = "100%";
 
-        var mapContainerQushi2 = document.getElementById("mapContainerQushi2");
-        mapContainerQushi2.style.display = "block";
         var mapContainerBox = document.getElementById("mapContainerBox");
         mapContainerBox.style.display = "block";
         //在省份城市情况下直接点击对比查询，隐藏返回箭头

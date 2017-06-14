@@ -652,7 +652,7 @@
         show:true,
         itemWidth:20,
         itemGap:3,
-        top:'6%',
+        top:'7%',
         data:['2016时长','2017时长','2016保有量','2017保有量']
       },
       grid: {
@@ -686,15 +686,15 @@
           type: 'value',
           min:0,
           max:200,
-          interval: 50,
+          interval: 40,
           // max:'dataMax',
           // minInterval: 1,
-          // axisLine: {
-          //   show: false
-          // },
-          // axisTick: {
-          //   show: false
-          // },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
           //   axisLabel: {
           //     // show: true,
           //     // textStyle: {
@@ -709,17 +709,18 @@
           type: 'value',
           nameLocation:'middle',
           nameGap:45,
-          boundaryGap:true,
+          // boundaryGap:true,
           name: '车辆保有量(台)',
           nameRotate:-90,
           min:0,
-          // interval: 50,
-          // axisLine: {
-          //   show: false
-          // },
-          // axisTick: {
-          //   show: false
-          // }
+          max:15000,
+          interval: 3000,
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          }
         }
       ],
       series: [
@@ -842,6 +843,8 @@
         boundaryGap:true,
         type: 'value',
         min:0,
+        max:2500,
+        interval: 500,
         // max:'dataMax',
         minInterval: 1,
         axisLine: {
@@ -2004,10 +2007,14 @@
                 if(machineType1=="A1"){
                   mmuLine.title.text = "挖掘机开工变化趋势";
                   mmuLine.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine.yAxis[1].max=4000;
+                  mmuLine.yAxis[1].interval=800;
                 }
                 if(machineType1=="1,2,3"){
                   mmuLine.title.text = "装载机开工变化趋势";
                   mmuLine.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine.yAxis[1].max=15000;
+                  mmuLine.yAxis[1].interval=3000;
                 }
                 if(machineType1=="3"){
                   mmuLine.title.text = "重机开工变化趋势";
@@ -2140,10 +2147,14 @@
                 if(machineType2=="A1"){
                   mmuLine2.title.text = "挖掘机开工变化趋势";
                   mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine2.yAxis[1].max=4000;
+                  mmuLine2.yAxis[1].interval=800;
                 }
                 if(machineType2=="1,2,3"){
                   mmuLine2.title.text = "装载机开工变化趋势";
                   mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine2.yAxis[1].max=15000;
+                  mmuLine2.yAxis[1].interval=3000;
                 }
                 if(machineType2=="3"){
                   mmuLine2.title.text = "重机开工变化趋势";

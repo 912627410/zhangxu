@@ -125,14 +125,12 @@
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <ui-select ng-model="vehicleType1.selected" >
-        <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
-        <ui-select-choices repeat="type in getVehicleType1($select.search) | filter: $select.search">
-          <div ng-bind="type"></div>
+        <ui-select-match placeholder="请选择型号">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type1 in getVehicleType1($select.search) | filter: $select.search">
+          <div ng-bind="type1"></div>
         </ui-select-choices>
       </ui-select>
     </div>
-
-
 
     <label class="control-label col-md-1">热度类型:</label>
     <div class="controls col-md-2">
@@ -158,9 +156,9 @@
     <label class="control-label col-md-1">车辆型号:</label>
     <div class="controls col-md-2">
       <ui-select ng-model="vehicleType2.selected" >
-        <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
-        <ui-select-choices repeat="type in getVehicleType2($select.search) | filter: $select.search">
-          <div ng-bind="type"></div>
+        <ui-select-match placeholder="请选择型号">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type2 in getVehicleType2($select.search) | filter: $select.search">
+          <div ng-bind="type2"></div>
         </ui-select-choices>
       </ui-select>
     </div>
@@ -183,7 +181,7 @@
       <div class="mapContainer" id="mapContainer1" style="height: 850px;width: 100%;"></div>
       <span style="display: block;" id="dateWithOut1">
       <div ng-show="modelsCompareCtrl.avgHours1" style="position: absolute;right: 0px;top: 75px;">
-        <div >
+        <div style="position: relative;">
           <ul style="list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational">
               <li>平均开工时长</li><!--text-align:center  padding-left: 25px;-->
@@ -231,9 +229,9 @@
     <div class="mapContainerBox" id="mapContainerBox" style="position: absolute;display: none;height:850px;right: 0px;border-left:1px dashed #cccccc">
       <div class="mapContainer" id="mapContainer2" style="height: 850px;"></div>
       <span style="display: block;" id="dateWithOut2">
-      <div ng-show="modelsCompareCtrl.avgHours2" id="mapContainerQushi2" style="position: absolute;right: 0;top:75px;display: none;">
+      <div ng-show="modelsCompareCtrl.avgHours2" style="position: absolute;right: 0px;top:75px;">
         <div style="position: relative;">
-          <ul style="position: absolute;list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
+          <ul style="list-style: none;line-height: 24px;padding-right: 8px;font-size:15px;">
             <span ng-show="modelsCompareCtrl.avgHoursNational2">
               <li>平均开工时长</li>
               <li ng-if="modelsCompareCtrl.excavatorHours2>=modelsCompareCtrl.beforeExcavatorHours2" style="color: #00bb9c;">挖掘机：{{modelsCompareCtrl.excavatorHours2}}小时<span>&nbsp;</span><img src="assets/images/up.png"/></li>
@@ -256,7 +254,7 @@
           </ul>
         </div>
       </div>
-        <div ng-show="modelsCompareCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;">
+      <div ng-show="modelsCompareCtrl.avgHours4" style="position: absolute;right: 0px;top: 75px;">
         <div style="position: relative;">
           <ul ng-show="modelsCompareCtrl.national1" style="list-style: none;line-height: 24px;padding-right: 8px;">
             <li>销售总数:{{modelsCompareCtrl.totalSales1}}台</li>
