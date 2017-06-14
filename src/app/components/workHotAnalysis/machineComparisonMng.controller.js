@@ -652,8 +652,8 @@
         show:true,
         itemWidth:20,
         itemGap:3,
-        top:'6%',
-        data:['2016时长','2017时长','2016销量','2017销量']
+        top:'7%',
+        data:['2016时长','2017时长','2016保有量','2017保有量']
       },
       grid: {
         left: '3%',
@@ -685,6 +685,8 @@
           //   boundaryGap:true,
           type: 'value',
           min:0,
+          max:200,
+          interval: 40,
           // max:'dataMax',
           // minInterval: 1,
           axisLine: {
@@ -707,11 +709,12 @@
           type: 'value',
           nameLocation:'middle',
           nameGap:45,
-          boundaryGap:true,
+          // boundaryGap:true,
           name: '车辆保有量(台)',
           nameRotate:-90,
           min:0,
-          // interval: 50,
+          max:15000,
+          interval: 3000,
           axisLine: {
             show: false
           },
@@ -725,22 +728,22 @@
           name:'2016时长',
           type: 'line',
           yAxisIndex: 0,
-          data:[0,0,0,0,1546,1886,2141,2545,3138,3612,4024,4221]
+          data:[,,22,41,45,56,61,70,81,94,101,121]
         },{
           name:'2017时长',
           type: 'line',
           yAxisIndex: 0,
-          data:[4380,5362]
+          data:[74,74,118,130,145]
         },{
-          name:'2016销量',
+          name:'2016保有量',
           type:'bar',
           yAxisIndex: 1,
-          data:[100,200,300,400,100,500,600,65,450,510]
+          data:[,,1381,1794,2431,2838,3496,3850,4222,4703,5531,6517]
         },{
-          name:'2017销量',
+          name:'2017保有量',
           type:'bar',
           yAxisIndex: 1,
-          data:[150,250,350,450,150,550,450,165,550,560]
+          data:[7318,8201,9106,9669,9778]
         }
       ]
     };
@@ -840,6 +843,8 @@
         boundaryGap:true,
         type: 'value',
         min:0,
+        max:2500,
+        interval: 500,
         // max:'dataMax',
         minInterval: 1,
         axisLine: {
@@ -1245,7 +1250,11 @@
       lineContainerList[0].style.width = "65%";
       lineContainerList[1].style.width = "0%";
       mmuChart1 = echarts.init(lineContainerList[0]);
-      var mmuLine = mmuOption1;
+      if(heatType1==1){
+        var mmuLine = mmuOption1;
+      }else{
+        var mmuLine = mmuOption2;
+      }
 
       yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1);
 
@@ -1882,7 +1891,7 @@
       }
     }
     //封装折线图数据查询及生成--左图和大地图调用
-    function yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1){
+    function yearInfoLine(machineType1,heatType1,mmuLine,mmuChart1,machineType2,heatType2,mmuLine2,mmuChart2){
 
       if(heatType1==1){
         //判断是哪种车型
@@ -1960,6 +1969,9 @@
             }
             mmuLine.series[1].data = yearData2;
             mmuChart1.setOption(mmuLine);
+            if(heatType2){
+              yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2);
+            }
           }else{
             var YearOwnershipData1 = serviceResource.restCallService(YearOwnership1, 'QUERY');//2016
             YearOwnershipData1.then(function (data1) {
@@ -1995,10 +2007,14 @@
                 if(machineType1=="A1"){
                   mmuLine.title.text = "挖掘机开工变化趋势";
                   mmuLine.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine.yAxis[1].max=4000;
+                  mmuLine.yAxis[1].interval=800;
                 }
                 if(machineType1=="1,2,3"){
                   mmuLine.title.text = "装载机开工变化趋势";
                   mmuLine.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine.yAxis[1].max=15000;
+                  mmuLine.yAxis[1].interval=3000;
                 }
                 if(machineType1=="3"){
                   mmuLine.title.text = "重机开工变化趋势";
@@ -2006,6 +2022,9 @@
                 }
                 mmuLine.series[1].data = yearData2;
                 mmuChart1.setOption(mmuLine);
+                if(heatType2){
+                  yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2);
+                }
               });
             });
           }
@@ -2128,10 +2147,14 @@
                 if(machineType2=="A1"){
                   mmuLine2.title.text = "挖掘机开工变化趋势";
                   mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine2.yAxis[1].max=4000;
+                  mmuLine2.yAxis[1].interval=800;
                 }
                 if(machineType2=="1,2,3"){
                   mmuLine2.title.text = "装载机开工变化趋势";
                   mmuLine2.yAxis.name = '月平均开工时长(小时)';
+                  mmuLine2.yAxis[1].max=15000;
+                  mmuLine2.yAxis[1].interval=3000;
                 }
                 if(machineType2=="3"){
                   mmuLine2.title.text = "重机开工变化趋势";
@@ -2835,8 +2858,7 @@
           var mmuLine2 = mmuOption2;
         }
         var mmuChart2 = echarts.init(lineContainerList[1]);
-        yearInfoLine(machineType1,heatType1,mmuLine,mmuChart);
-        yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2);
+        yearInfoLine(machineType1,heatType1,mmuLine,mmuChart,machineType2,heatType2,mmuLine2,mmuChart2);
       }
     }
 
