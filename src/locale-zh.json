@@ -689,6 +689,7 @@
   "oilPrices(Yuan/L)":"油价(元/L)",
   "depreciation(Yuan)":"折旧(元)",
   "wages(Yuan)":"工资(元)",
+  "mileage(KM)":"里程(KM)",
   "shifts":"班次",
   "dayShift":"白班",
   "nightShift":"夜班",

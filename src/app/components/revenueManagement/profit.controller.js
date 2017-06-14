@@ -9,10 +9,13 @@
   .controller('profitController', profitController);
 
   /** @ngInject */
-  function profitController($rootScope, $filter, Notification, serviceResource, PROFIT_STATISTICS_URL) {
+  function profitController($rootScope, $filter, Notification, treeFactory, serviceResource, NgTableParams, ngTableDefaults, PROFIT_STATISTICS_URL, DEFAULT_SIZE_PER_PAGE) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     //初始化查询参数
     vm.profitConfig = {
@@ -63,6 +66,12 @@
       vm.endDateOpenStatus.opened = true;
     };
 
+    //组织树的显示
+    vm.openTreeInfo= function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.org =selectedItem;
+      });
+    };
 
     vm.query = function(profitConfig){
       var restCallURL = PROFIT_STATISTICS_URL;
@@ -70,8 +79,10 @@
       restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
 
       if(null != profitConfig) {
-        if((null == profitConfig.deviceNum || "" == profitConfig.deviceNum) && (null == profitConfig.licenseId || "" == profitConfig.licenseId)) {
-          Notification.warning("请输入设备编号或车号!");
+        if((null == profitConfig.deviceNum || "" == profitConfig.deviceNum)
+          && (null == profitConfig.licenseId || "" == profitConfig.licenseId)
+          && (null == vm.org || null == vm.org.id)) {
+          Notification.warning("请输入设备编号,车号或选择车队!");
           return;
         }
         if(null != profitConfig.deviceNum && "" != profitConfig.deviceNum) {
@@ -80,38 +91,14 @@
         if(null != profitConfig.licenseId && "" != profitConfig.licenseId) {
           restCallURL += "&licenseId=" + $filter('uppercase')(profitConfig.licenseId);
         }
+        if(null != vm.org&&null != vm.org.id) {
+          restCallURL += "&fleetId=" + vm.org.id;
+        }
+
         if(null != profitConfig.incomePerTrip && "" != profitConfig.incomePerTrip) {
           restCallURL += "&incomePerTrip=" + profitConfig.incomePerTrip;
         } else {
           Notification.warning("请输入每趟的收入!");
-          return;
-        }
-
-        if(null != profitConfig.fuelTankVolume && "" != profitConfig.fuelTankVolume) {
-          restCallURL += "&fuelTankVolume=" + profitConfig.fuelTankVolume;
-        } else {
-          Notification.warning("请输入油箱的体积!");
-          return;
-        }
-
-        if(null != profitConfig.oilPrices && "" != profitConfig.oilPrices) {
-          restCallURL += "&oilPrices=" + profitConfig.oilPrices;
-        } else {
-          Notification.warning("请输入油价!");
-          return;
-        }
-
-        if(null != profitConfig.depreciation && "" != profitConfig.depreciation) {
-          restCallURL += "&depreciation=" + profitConfig.depreciation;
-        } else {
-          Notification.warning("请输入折旧!");
-          return;
-        }
-
-        if(null != profitConfig.wages && "" != profitConfig.wages) {
-          restCallURL += "&wages=" + profitConfig.wages;
-        } else {
-          Notification.warning("请输入工资!");
           return;
         }
 
@@ -129,20 +116,17 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         if(data.code == 0) {
-          vm.deviceNum = data.content.deviceNum;
-          vm.licenseId = data.content.licenseId;
-          vm.fuelConsumption = $filter('number')(data.content.fuelConsumption, 2);
-          vm.timesNumber = data.content.timesNumber;
-          vm.profit = $filter('number')(data.content.profit, 2);
+          if(data.content.length == 0) {
+            Notification.warning("查询结果为空！");
+            return;
+          }
+          vm.tableParams = new NgTableParams({
 
-          Notification.success("查询成功!");
+          }, {
+            dataset: data.content
+          });
+
         } else {
-          vm.deviceNum = null;
-          vm.licenseId = null;
-          vm.fuelConsumption = null;
-          vm.timesNumber = null;
-          vm.profit = null;
-
           Notification.error(data.content);
         }
       }, function (reason) {
@@ -155,6 +139,7 @@
     //重置查询框
     vm.reset = function () {
       vm.profitConfig = null;
+      vm.org = null;
       vm.initDate();
     };
 
