@@ -431,8 +431,8 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
                     <!--开盖状态-->
                     <td>{{'openCoverState'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'notOpen'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr ng-if="!(deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
@@ -669,8 +669,8 @@
                     <!--电压-->
                     <td ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
                     <!--开盖状态-->
-                    <td ng-if="deviceData.lockerStatus=='00'">{{'openCover'|translate}}</td>
-                    <td ng-if="deviceData.lockerStatus=='11'">{{'open'|translate}}</td>
+                    <td ng-if="deviceData.lockerStatus=='00'">{{'notOpen'|translate}}</td>
+                    <td ng-if="deviceData.lockerStatus=='11'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
                     <!--可见卫星数-->
                     <td  ng-cloak>{{deviceData.visibleSatelliteNumber}}</td>
