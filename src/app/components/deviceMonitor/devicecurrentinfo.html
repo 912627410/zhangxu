@@ -361,11 +361,11 @@
                   <tr>
                     <!--车辆类型-->
                     <td >{{'vehicleType'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}}</td>
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <!--车号-->
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null"> N/A </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}}</td>
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <!--ecu和gps绑定状态-->
                     <td>{{'ecuLockStatus'|translate}}</td>
@@ -447,7 +447,7 @@
                     <!--定位所用时间-->
                     <td>{{'locateDuration'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">{{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">--</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">{{'noMessage'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">{{'noData' |translate}}</td>
                   </tr>
                   <tr>
@@ -614,10 +614,10 @@
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <!--定位时间-->
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">{{'noMessage'|translate}}</td>
                     <!--位置-->
                     <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">{{'noMessage'|translate}}</td>
                     <!--gpsSpeed 速度-->
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <!--总工时-->
