@@ -8,7 +8,7 @@
   angular
     .module('GPSCloud')
     .constant('malarkey', malarkey)
-    .constant('SYSTEM_VERSION', '1.0.0')    //系统版本号
+    .constant('SYSTEM_VERSION', '1.65')    //系统版本号
     .constant('DEFAULT_SIZE_PER_PAGE', 40)    //默认每页显示纪录数
     .constant('AMAP_QUERY_TIMEOUT_MS', 3000)  //高德地图api调用延时毫秒数
     .constant('DEFAULT_DEVICE_SORT_BY', 'lastDataUploadTime,desc')    //读取设备时的默认排序规则
@@ -244,6 +244,7 @@
     .constant("AVG_WORK_HOUR_QUERY_MONTH",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
     .constant("AVG_WORK_HOUR_QUERY_QUARTER",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
     .constant("AVG_WORK_HOUR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_ALL",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/all?produceType=')  //按车型查询总平均工作小时数
 
     .constant("WORK_DISTRIBUTE_TIME_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workTime')  //机器作业时间分布按照累计作业时间
     .constant("WORK_DISTRIBUTE_DAYS_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workDays')  //机器作业时间分布按照天数
