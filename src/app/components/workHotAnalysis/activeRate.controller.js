@@ -21,10 +21,9 @@
     var cycleValue1 = ["2017年05月","2017年04月","2017年03月","2017年02月","2017年01月","2016年12月","2016年11月","2016年10月","2016年09月","2016年08月","2016年07月","2016年06月","2016年05月","2016年04月"];
     var cycleValue2 = ["2017年01季度","2016年04季度","2016年03季度","2016年02季度","2016年01季度"];
 
-    $scope.chartProduceType = produceType[0];
-    $scope.chartMachineType = machineType[0];
-    $scope.chartWorkMonth = cycleValue1[0];
     $scope.chartArea = "全国";
+    $scope.chartProduceType = '所有类型';
+    $scope.chartWorkMonth = cycleValue1[0];
 
     //get produceType
     function getSelectProduceType() {
@@ -36,7 +35,6 @@
         for(var i=0;i<rspJson.length;i++){
           produceType[i] = rspJson[i].name;
         }
-        $scope.produceType.selected = produceType[0];
       });
     }
 
@@ -50,10 +48,8 @@
         for(var i=0;i<rspJson.length;i++){
           machineType[i] = rspJson[i].name;
         }
-        $scope.machineType.selected = machineType[0];
       })
     }
-
 
     //初始化图表
     var barChart = echarts.init(document.getElementById('barChartContainer'));
@@ -68,19 +64,22 @@
 
         barChart.setOption(
           {
+            legend: {
+              data:['车辆保有量','活跃度']
+            },
             tooltip: {
               trigger: 'axis',
+              snap: true,
               axisPointer: {
-                type: 'shadow'
+                type: 'cross'
               },
-              backgroundColor:'rgba(220, 220, 220, 0.6)',
+              backgroundColor: 'rgba(220, 220, 220, 0.6)',
               textStyle: {
                 color: '#333'
               },
-              formatter: function (params) {
-                var thisArea = params[0].dataIndex;
-                var res = '地区：' + params[0].name;
-                res += '<br/>' + '活跃度：' + rspJson.seriesList[thisArea] + ' %';
+              formatter: function(params) {
+                var res = '地区：' + params.name;
+                res += '<br/>' + '车辆保有量：' + rspJson.ownerShipList[params.dataIndex] + ' 台' + '<br/>' + '活跃度：' + rspJson.activeRateList[params.dataIndex] + ' %';
                 return res;
               }
             },
@@ -91,7 +90,6 @@
               containLabel: true
             },
             xAxis: {
-              name: '',
               type: 'category',
               axisTick: {
                 show: false
@@ -102,32 +100,43 @@
               axisLabel: {
                 rotate: 45,
                 interval: 0,
-                formatter:function (value) {
+                formatter: function(value) {
                   var _value;
-                  _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区/,"");
+                  _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区|特別行政區|市/, "");
                   return _value;
                 }
               },
               data: rspJson.cityName
 
             },
-            yAxis: {
-              name: '活跃度（%）',
+            yAxis: [{
+              name: '车辆保有量（台）',
               type: 'value',
-              axisTick: {
-                show: false
-              },
-              axisLine: {
+              splitLine: {
                 show: false
               }
-            },
+            },{
+              name: '车型活跃度（%）',
+              type: 'value',
+              min: '0',
+              max: '100',
+              splitLine: {
+                show: false
+              }
+            }],
             series: [{
-              name: '活跃度',
+              name: '车辆保有量',
               type: 'bar',
-              stack: '活跃度',
               barWidth: '60%',
-              data: rspJson.seriesList
+              data: rspJson.ownerShipList
+            },{
+              name: '活跃度',
+              type: 'line',
+              smooth: 'ture',
+              yAxisIndex: 1,
+              data: rspJson.activeRateList
             }]
+
           }
         );
 
@@ -137,9 +146,9 @@
     }
 
     //_produceType,_machineType,_cycleType,_cycleValue,_province
-    showChart("挖掘机",'E665F',1,cycleValue1[0].replace(/\D/g,""),"");
     getSelectProduceType();
     getSelectMachineType(2);
+    showChart('','',1,cycleValue1[0].replace(/\D/g,""),"");
 
 
     //show drill chart
@@ -148,8 +157,7 @@
       if(back.style.display != "inline-block"){
         $scope.chartArea = params.name;
         back.style.display = "inline-block";
-        console.log(params);
-        showChart(produceType.selected,params.data.name,cycle,time,params.name);
+        showChart(produceType.selected,machineType.selected,cycle,time,params.name);
       }
     });
 
@@ -157,12 +165,11 @@
     //click back
     vm.backProvince = function(){
       back.style.display = "none";
-      showChart("挖掘机",'E665F',1,cycleValue1[0].replace(/\D/g,""),"");
+      showChart('','',1,cycleValue1[0].replace(/\D/g,""),"");
 
       $scope.chartWorkMonth = cycleValue1[0];
       $scope.chartArea = "全国";
-      $scope.chartProduceType = produceType[0];
-      $scope.chartMachineType = machineType[0];
+      $scope.chartProduceType = '所有类型';
       getSelectProduceType();
       getSelectMachineType(2);
       $scope.cycleType.selected = cycleType[0];
@@ -178,8 +185,8 @@
     $scope.cycleValue = cycleValue1;
 
 
-    $scope.produceType.selected = produceType[0];
-    $scope.machineType.selected = machineType[0];
+    $scope.produceType.selected = '';
+    $scope.machineType.selected = '';
     $scope.cycleType.selected = cycleType[0];
     $scope.cycleValue.selected = cycleValue1[0];
 
@@ -190,12 +197,13 @@
           $scope.produceType.unshift(newVal);
         }
       }
-      if(produceType.selected == "挖掘机"){
-        getSelectMachineType(2);
-      }else if(produceType.selected == "重机"){
-        getSelectMachineType(3);
-      }else{
-        getSelectMachineType(1);
+      switch (produceType.selected){
+        case "装载机":
+          getSelectMachineType(1);
+        case "挖掘机":
+          getSelectMachineType(2);
+        case "重机":
+          getSelectMachineType(3);
       }
     });
 
@@ -270,6 +278,7 @@
     vm.customSelect = function(){
       back.style.display = "none";
 
+      $scope.chartArea = '全国';
       $scope.chartWorkMonth = $scope.cycleValue.selected;
       $scope.chartProduceType = $scope.produceType.selected;
       $scope.chartMachineType = $scope.machineType.selected;

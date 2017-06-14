@@ -1,7 +1,8 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var SERVER_BASE_URL = 'http://192.168.8.190:8014/rest/';
+
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -208,7 +209,7 @@
 
     //称重数据
     .constant('WEIGHTDATA_PAGE_URL', SERVER_BASE_URL + 'weightData/weightDataPage')   //称重数据page
-    .constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/')
+    //.constant('ANALYSIS_INFLUX', SERVER_BASE_URL + 'analysis/')
     .constant('ANALYSIS_POSTGRES', SERVER_BASE_URL + 'analysis/getanalysisdata')
 
 
@@ -238,9 +239,23 @@
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
 
+    .constant("START_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
+    .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
+    .constant("AVG_WORK_HOUR_QUERY_MONTH",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_QUARTER",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
 
+    .constant("WORK_DISTRIBUTE_TIME_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workTime')  //机器作业时间分布按照累计作业时间
+    .constant("WORK_DISTRIBUTE_DAYS_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workDays')  //机器作业时间分布按照天数
+
+    .constant("WORK_HOUR_YEAR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
+    .constant("SALES_YEAR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
+    .constant("GET_OWNERSHIP_URL",'https://iotserver2.nvr-china.com/slice/rest/ownerShip/year?ownerShipYear=')  //获取某年每个月的指定类型的保有量
+    .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
     .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
     .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
+
+    .constant('ANALYSIS_GREENPLUM', 'https://iotserver2.nvr-china.com/slice/rest/analysis')//设备工作状态详情下"数据分析"一栏数据提供
   ;
 
 
