@@ -339,7 +339,6 @@
   "clientDownload": "App Download",
   "viewDetails":  "View Details",
   "download": "Download",
-<<<<<<< HEAD
   "scanQRcode": "Scan QR Download",
   "comingSoon": "Coming Soon",
   "equipmentParameters": "Equipment Parameters",
@@ -727,8 +726,6 @@
   "openMonitor": "Open Monitor",
   "closeMonitor": "Close Monitor",
   "batteryMonitor": "Battery Monitor",
-  "noMessage":"N／A",
-  "scanQRcode":"Scan QR Download",
-  "comingSoon": "Coming Soon"
+  "noMessage":"N/A"
 
 }

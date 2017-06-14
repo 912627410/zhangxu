@@ -707,6 +707,6 @@
   "batteryMonitor": "电池监控",
   "batteryBasicInformation": "电池基本信息",
   "batteryLiquidLeveInformation": "电池液位信息",
-  "noMessage":"--"
+  "noMessage":"N/A"
 
 }

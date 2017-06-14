@@ -338,6 +338,7 @@
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <!--协议版本号-->
+                    <!--GPS协议版本号，实际绑定车号，运行监控，ID,LED状态这几个状态信息对用户不显示，仅仅北谷生产组织下的用户可以查看-->
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
                     <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
 
