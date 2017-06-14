@@ -479,9 +479,9 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
+        bottom:20,
         feature: {
           restore: {show: true},
           saveAsImage: {show: true}
@@ -742,6 +742,7 @@
         },{
           name:'2017保有量',
           type:'bar',
+          barGap:'2%',
           yAxisIndex: 1,
           data:[7318,8201,9106,9669,9778]
         }

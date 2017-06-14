@@ -138,10 +138,10 @@
       <input type="radio" name="heat1" value="0" ng-model="modelsCompareCtrl.heatType1" />销售热度
     </div>
     <div class="col-md-2" ng-show="modelsCompareCtrl.comparedQuery">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()">∨ 车型对比</button>
+      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down" style="color: rgb(255, 255, 255);"></span> 车型对比</button>
     </div>
     <div class="col-md-2" ng-show="modelsCompareCtrl.singleQuery">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()">∧ 单一车型</button>
+      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up" style="color: rgb(255, 255, 255);"></span> 单一车型</button>
     </div>
   </div>
   <div class="row form-group" ng-show="modelsCompareCtrl.comparedType">

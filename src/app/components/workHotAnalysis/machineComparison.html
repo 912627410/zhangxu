@@ -20,7 +20,7 @@
         </div>
       </div>
       <div ng-show="machineComparedMngCtrl.quarterQuery">
-        <label class="control-label col-md-2">开工季度:</label>
+        <label class="control-label col-md-2">查询季度:</label>
         <div class="controls col-md-3">
         <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
           <option ng-repeat="date in machineComparedMngCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
@@ -32,7 +32,7 @@
         </button>
       </div>
       <div ng-show="machineComparedMngCtrl.monthQuery">
-        <label class="control-label col-md-2">开工月份:</label>
+        <label class="control-label col-md-2">查询月份:</label>
         <div class="controls col-md-3">
           <p class="input-group">
             <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
@@ -156,7 +156,7 @@
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">&nbsp;查&nbsp;询&nbsp;对&nbsp;比&nbsp;
           </button>
         </div>
       </div>
