@@ -34,10 +34,11 @@
 
 
     <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
               ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+
     </div>
   </div>
 
