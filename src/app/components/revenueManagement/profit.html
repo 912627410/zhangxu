@@ -12,6 +12,7 @@
 <section class="content form-horizontal">
 
   <div class="row form-group">
+    <!--设备号-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'deviceNum'|translate}}</label>
     </div>
@@ -19,6 +20,7 @@
       <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.deviceNum" />
     </div>
 
+    <!--车号-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'machineNumberAndCarNumber'|translate}}</label>
     </div>
@@ -26,44 +28,33 @@
       <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.licenseId" />
     </div>
 
+    <!--车队-->
+    <div class="col-md-1">
+      <label class="control-label">{{'fleet'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="{{'fleet'|translate}}" ng-model="profitCtrl.org.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="profitCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <!--每趟收入-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'incomePerTrip(Yuan)'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="incomePerTrip" class="form-control " ng-model="profitCtrl.profitConfig.incomePerTrip" />
     </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'fuelTankVolume(L)'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="fuelTankVolume" class="form-control " ng-model="profitCtrl.profitConfig.fuelTankVolume" />
-    </div>
 
-    <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'oilPrices(Yuan/L)'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="oilPrices" class="form-control " ng-model="profitCtrl.profitConfig.oilPrices" />
-    </div>
-
-    <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'depreciation(Yuan)'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="depreciation" class="form-control " ng-model="profitCtrl.profitConfig.depreciation" />
-    </div>
-  </div>
-
-  <div class="row form-group">
-    <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'wages(Yuan)'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="depreciation" class="form-control " ng-model="profitCtrl.profitConfig.wages" />
-    </div>
-
+    <!--开始时间-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'startingTime'|translate}}
       </label>
@@ -82,6 +73,7 @@
       </p>
     </div>
 
+    <!--结束时间-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'endTime'|translate}}</label>
     </div>
@@ -101,6 +93,7 @@
   </div>
 
   <div class="row form-group">
+    <!--班次-->
     <div class="col-md-1">
       <label class="control-label text-nowrap">{{'shifts'|translate}}</label>
     </div>
@@ -111,6 +104,7 @@
         <option value="2" ng-selected="true">{{'allDay'|translate}}</option>
       </select>
     </div>
+
     <div class="col-md-3 col-md-offset-5">
       <button class="btn btn-primary" type="button" ng-click="profitCtrl.reset()" style="margin-left: 10px;">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button" presentation-href="fleet:profit:query" ng-click="profitCtrl.query(profitCtrl.profitConfig)">{{'query'|translate}}</button>
@@ -118,34 +112,18 @@
   </div>
 
   <div class="row " style="padding: 10px;margin-top: 100px;">
-    <div class="table-responsive col-md-6 col-md-offset-3">
-      <table class="table table-condensed table-striped text-nowrap" style="font-size: 18px;">
-        <tr class="row">
-          <td class="text-nowrap col-md-2">{{'deviceNum'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.deviceNum}}</td>
-          <td class="text-nowrap col-md-2">{{'machineNumberAndCarNumber'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.licenseId}}</td>
-        </tr>
-        <tr class="row">
-          <td class="text-nowrap col-md-2">{{'times'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.timesNumber}}</td>
-          <td class="text-nowrap col-md-2">{{'shifts'|translate}}</td>
-          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 1">{{'dayShift'|translate}}</td>
-          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 0">{{'nightShift'|translate}}</td>
-          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type == 2">{{'allDay'|translate}}</td>
-          <td class="text-nowrap col-md-4" ng-if="profitCtrl.profitConfig.type != 0 && profitCtrl.profitConfig.type != 1 && profitCtrl.profitConfig.type != 2"></td>
-        </tr>
-        <tr class="row">
-          <td class="text-nowrap col-md-2">{{'fuelConsumption(L)'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.fuelConsumption}}</td>
-          <td class="text-nowrap col-md-2">{{'depreciation(Yuan)'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.profitConfig.depreciation}}</td>
-        </tr>
-        <tr class="row">
-          <td class="text-nowrap col-md-2">{{'wages(Yuan)'|translate}}</td>
-          <td class="text-nowrap col-md-4">{{profitCtrl.profitConfig.wages}}</td>
-          <td class="text-nowrap col-md-2">{{'profit(Yuan)'|translate}}</td>
-          <td class="text-nowrap col-md-10" colspan="3">{{profitCtrl.profit}}</td>
+    <div class="table-responsive col-md-12">
+      <table ng-table="profitCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="profit in $data">
+          <td class="text-nowrap" data-title="'deviceNum'|translate">{{profit.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">{{profit.licenseId}}</td>
+          <td class="text-nowrap" data-title="'shifts'|translate">{{profit.shifts}}</td>
+          <td class="text-nowrap" data-title="'times'|translate">{{profit.timesNumber}}</td>
+          <td class="text-nowrap" data-title="'fuelConsumption(L)'|translate">{{profit.fuelConsumption | number : 2}}</td>
+          <td class="text-nowrap" data-title="'depreciation(Yuan)'|translate">{{profit.depreciation | number : 2}}</td>
+          <td class="text-nowrap" data-title="'wages(Yuan)'|translate">{{profit.salary | number : 2}}</td>
+          <td class="text-nowrap" data-title="'profit(Yuan)'|translate">{{profit.profit | number : 2}}</td>
+          <td class="text-nowrap" data-title="'mileage(KM)'|translate">{{profit.mileage}}</td>
         </tr>
       </table>
     </div>

@@ -710,6 +710,7 @@
   "oilPrices(Yuan/L)":"Oil Prices(Yuan/L)",
   "depreciation(Yuan)":"Depreciation(Yuan)",
   "wages(Yuan)":"Wages(Yuan)",
+  "mileage(KM)":"Mileage(KM)",
   "shifts":"Shifts",
   "dayShift":"Day Shift",
   "nightShift":"Night Shift",
@@ -727,5 +728,4 @@
   "closeMonitor": "Close Monitor",
   "batteryMonitor": "Battery Monitor",
   "noMessage":"N/A"
-
 }
