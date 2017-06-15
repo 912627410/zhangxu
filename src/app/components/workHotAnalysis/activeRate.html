@@ -13,7 +13,7 @@
       <div class="select-title">产品型号：</div>
       <ui-select ng-model="machineType.selected">
         <ui-select-match placeholder="选择一个型号">{{$select.selected}}</ui-select-match>
-        <ui-select-choices repeat="type in getMachineType($select.search) | filter: $select.search">
+        <ui-select-choices group-by="activeRateCtrl.orderBy" repeat="type in getMachineType($select.search) | filter: $select.search">
           <div ng-bind="type"></div>
         </ui-select-choices>
       </ui-select>

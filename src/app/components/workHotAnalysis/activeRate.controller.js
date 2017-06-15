@@ -190,6 +190,20 @@
     $scope.cycleType.selected = cycleType[0];
     $scope.cycleValue.selected = cycleValue1[0];
 
+    //ui select  Group By
+    vm.orderBy = function(machineType){
+      if(machineType[0] == 'E'){
+        return 'E'
+      }else if(machineType[0] == 'L'){
+        return 'L';
+      }else if(machineType[0] == 'M'){
+        return 'M';
+      }else{
+        return 'other';
+      }
+
+    };
+
 
     $scope.$watch('produceType.selected', function(newVal, oldVal) {
       if (newVal !== oldVal) {
@@ -200,10 +214,13 @@
       switch (produceType.selected){
         case "装载机":
           getSelectMachineType(1);
+          break;
         case "挖掘机":
           getSelectMachineType(2);
+          break;
         case "重机":
           getSelectMachineType(3);
+          break;
       }
     });
 
@@ -225,7 +242,7 @@
         case "按月":
           $scope.cycleValue = cycleValue1;
           $scope.cycleValue.selected = cycleValue1[0];
-              break;
+          break;
         case "按季度":
           $scope.cycleValue = cycleValue2;
           $scope.cycleValue.selected = cycleValue2[0];
