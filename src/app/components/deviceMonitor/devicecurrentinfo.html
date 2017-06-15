@@ -644,9 +644,9 @@
                     <!--gsm信号质量-->
                     <td ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <!--运行监控-->
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()&&userInfo.userdto.organizationDto.id==1">{{deviceData.workMonitor}}</td>
                     <!--led状态-->
-                    <td ng-cloak>{{deviceData.ledStatus}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
                     <!--实时工时-->
                     <td ng-cloak class="text-nowrap">{{deviceData.realTimeDuration | convertToMins}}</td>
                     <!--启动次数-->
@@ -682,7 +682,7 @@
                     <!--ECU锁车状态-->
                     <td  ng-cloak>{{deviceData.ecuLockStatus}}</td>
                     <!--实际绑定车号-->
-                    <td  ng-cloak>{{deviceData.bindMachineId}}</td>
+                    <td  ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.bindMachineId}}</td>
                     <!--累计里程-->
                     <td  ng-cloak>{{deviceData.totalMileage | number:2}}/KM</td>
                     <!--气压表2-->
