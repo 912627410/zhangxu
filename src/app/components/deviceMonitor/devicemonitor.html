@@ -245,7 +245,7 @@
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'">{{'notLocate'|translate}}</span>
           </td>
           <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="(deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1') && deviceinfo.address!=null">{{deviceinfo.address}}</td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="(deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0') || deviceinfo.locateStatus==null || deviceinfo.address==null">--</td>
+          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="(deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0') || deviceinfo.locateStatus==null || deviceinfo.address==null">{{'noMessage'|translate}}</td>
           <td  data-title="'protocolType'|translate" sortable="'machineType'">{{deviceinfo.machineType}}</td>
 
           <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>

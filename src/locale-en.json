@@ -726,6 +726,6 @@
   "endPoint": "End Point",
   "openMonitor": "Open Monitor",
   "closeMonitor": "Close Monitor",
-  "batteryMonitor": "Battery Monitor"
-
+  "batteryMonitor": "Battery Monitor",
+  "noMessage":"N/A"
 }
