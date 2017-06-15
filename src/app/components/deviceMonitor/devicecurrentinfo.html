@@ -1037,7 +1037,7 @@
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
-                    <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')">{{deviceData.id}}</a></td>
+                    <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')" ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.id}}</a></td>
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">{{'noMessage'|translate}}</td>
@@ -1061,8 +1061,8 @@
                     <td ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <td ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
-                    <td ng-cloak>{{deviceData.ledStatus}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()&&userInfo.userdto.organizationDto.id==1">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
 
                     <td ng-cloak class="text-nowrap">{{deviceData.realtimeDuration | convertToMins}}</td>
                     <td ng-cloak>{{deviceData.startTimes}}</td>
@@ -1093,7 +1093,7 @@
                     <td  ng-cloak>{{deviceData.usableSatelliteNumber}}</td>
                     <td  ng-cloak>{{deviceData.locateDuration}}</td>
                     <td  ng-cloak>{{deviceData.ecuLockStatusDesc}}</td>
-                    <td  ng-cloak>{{deviceData.bindMachineId}}</td>
+                    <td  ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.bindMachineId}}</td>
                     <!--总里程 消息结构中没有数据-->
 
                     <!-- 中挖新增字段-->
