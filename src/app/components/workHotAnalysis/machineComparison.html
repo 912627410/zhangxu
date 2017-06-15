@@ -10,7 +10,7 @@
   <div class="leftBox " >
     <div class="row form-group">
       <div class="control-group">
-        <label class="control-label col-md-2">查询周期：</label>
+        <label class="control-label col-md-2">查询周期:</label>
         <div class="controls col-md-3">
           <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
             <option value="1" ng-selected="true">按季度</option>
@@ -108,14 +108,14 @@
     <div class="row form-group" ng-show="machineComparedMngCtrl.only">
       <label class="control-label col-md-2">车辆类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机
-        <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
+        <label style="font-weight:normal"><input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机</label>
+        <label style="font-weight:normal"><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机</label>
         <!--<input type="radio" name="vehicleType" value="3" ng-model="machineComparedMngCtrl.machineType" />重机-->
       </div>
       <label class="control-label col-md-2">热度类型:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度
-        <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度
+        <label style="font-weight:normal"><input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度</label>
+        <label style="font-weight:normal"><input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度</label>
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="machine:page"
@@ -127,14 +127,14 @@
       <div class="row form-group">
         <label class="control-label col-md-2">车辆类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />挖掘机
-          <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
+          <label style="font-weight:normal"><input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1"/>挖掘机</label>
+          <label style="font-weight:normal"><input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1"/>装载机</label>
           <!--<input type="radio" name="vehicleType1" value="3" ng-model="machineComparedMngCtrl.machineType1" />重机-->
         </div>
         <label class="control-label col-md-2">车辆类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />挖掘机
-          <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
+          <label style="font-weight:normal"><input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2"/>挖掘机</label>
+          <label style="font-weight:normal"><input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2"/>装载机</label>
           <!--<input type="radio" name="vehicleType2" value="3" ng-model="machineComparedMngCtrl.machineType2" />重机-->
         </div>
         <div class="col-md-2">
@@ -146,13 +146,13 @@
       <div class="row form-group">
         <label class="control-label col-md-2">热度类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度
-          <input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度
+          <label style="font-weight:normal"><input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度</label>
+          <label style="font-weight:normal"><input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度</label>
         </div>
         <label class="control-label col-md-2">热度类型:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度
-          <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度
+          <label style="font-weight:normal"><input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度</label>
+          <label style="font-weight:normal"><input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度</label>
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="machine:page"
