@@ -210,17 +210,18 @@
         if ($scope.produceType.indexOf(newVal) === -1) {
           $scope.produceType.unshift(newVal);
         }
-      }
-      switch (produceType.selected){
-        case "装载机":
-          getSelectMachineType(1);
-          break;
-        case "挖掘机":
-          getSelectMachineType(2);
-          break;
-        case "重机":
-          getSelectMachineType(3);
-          break;
+        $scope.machineType.selected = '';
+        switch (produceType.selected){
+          case "装载机":
+            getSelectMachineType(1);
+            break;
+          case "挖掘机":
+            getSelectMachineType(2);
+            break;
+          case "重机":
+            getSelectMachineType(3);
+            break;
+        }
       }
     });
 
