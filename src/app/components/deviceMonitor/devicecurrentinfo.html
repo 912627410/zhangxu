@@ -1175,7 +1175,7 @@
                          validator="number" ng-model="deviceCurrentInfoCtrl.returnTimeParam.time" name="returnTime"/>
                 </div>
                 <div class="col-md-3">
-                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</sms-send-btn>
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</button>
                   <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setDefaultReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">恢复默认设置</button>
                 </div>
               </div>

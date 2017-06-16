@@ -1646,7 +1646,6 @@
         restPromise.then(function (data) {
           if (data.code == 0) {
             Notification.success(data.content);
-            vm.initSmsSendBtn();
           }
           else {
             Notification.error(data.content);
