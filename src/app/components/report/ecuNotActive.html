@@ -25,9 +25,9 @@
         <td class="text-nowrap" data-title="'deviceNum'|translate" sortable="'deviceNum'">{{device.deviceNum}}</td>
         <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
 
-        <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'openState'|translate" sortable="'lockerStatus'">{{'notOpen'|translate}}</td>
-        <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'openState'|translate" sortable="'lockerStatus'">{{'openCover'|translate}}</td>
-        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'openState'|translate" sortable="'lockerStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'openCoverState'|translate" sortable="'lockerStatus'">{{'notOpen'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'openCoverState'|translate" sortable="'lockerStatus'">{{'openCover'|translate}}</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'openCoverState'|translate" sortable="'lockerStatus'">-</td>
 
         <td class="text-nowrap" data-title="'totalRunningTimeHour'|translate" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
 

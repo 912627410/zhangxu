@@ -348,13 +348,13 @@
                   <tr>
                     <!--是否定位-->
                     <td>{{'whetherPositioning'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'" class="bg-danger text-danger">{{'notLocate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'" class="bg-danger text-danger">{{'notLocate'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">{{'noData'|translate}}</td>
                     <!--定位时间-->
                     <td>{{'positioningTime'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">未定位</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">未定位</td>
                     <!--回传时间-->
                     <td>{{'returnTime'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -385,13 +385,14 @@
                   <tr>
                     <!--CAN通信状态-->
                     <td>{{'CANCommunicationStatus'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'||deviceCurrentInfoCtrl.deviceinfo.commStatus=='0'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.commStatus=='1'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus==null">{{'noData'|translate}}</td>
                     <!--供电方式-->
                     <td>{{'powerSupplyMode'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01' || deviceCurrentInfoCtrl.deviceinfo.powerType=='0'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='1'" class="bg-warning text-warning">外部电源 </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
@@ -400,7 +401,7 @@
                     <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                     <!--实时工时-->
                     <td>{{'realTimeWorkH'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realTimeDuration | convertToMins}}</td>
                     <!--车载蓄电池电压-->
                     <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
@@ -417,8 +418,8 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
                     <!--acc 开关状态-->
                     <td>{{'ACCState'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">ON</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">OFF</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01' || deviceCurrentInfoCtrl.deviceinfo.accStatus=='1'" class="bg-info text-info">ON</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10' || deviceCurrentInfoCtrl.deviceinfo.accStatus=='0'" class="bg-danger text-danger">OFF</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
@@ -432,11 +433,11 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
                     <!--开盖状态-->
                     <td>{{'openCoverState'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'notOpen'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'openCover'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00' || deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='0'">{{'notOpen'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11' || deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='1'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
-                  <tr ng-if="!(deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
+                  <tr ng-if="!((deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01') && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
                     <!--可见卫星-->
                     <td>{{'visibleSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}</td>
@@ -465,13 +466,13 @@
                   <tr>
                     <!--累计里程-->
                     <td>{{'totalMileage'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage | number:2}}/KM</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.totalMileage | number:2}}KM</td>
                     <!--阶段工作时间-->
                     <td>{{'momentWorkTime'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
                     <!--阶段里程-->
                     <td>{{'momentMileage'|translate}}</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage | number:2}}/KM</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage | number:2}}KM</td>
                   </tr>
                   <tr >
                     <!--机油压力-->
@@ -614,36 +615,40 @@
                     <!--数据回传时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <!--定位时间-->
-                    <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">{{'noMessage'|translate}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='A' || deviceData.locateStatus=='01'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus=='00' || deviceData.locateStatus==null" class="text-nowrap">--</td>
                     <!--位置-->
-                    <td ng-cloak ng-if="deviceData.locateStatus=='A' && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
-                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">{{'noMessage'|translate}}</td>
+                    <td ng-cloak ng-if="(deviceData.locateStatus=='A'|| deviceData.locateStatus=='01') && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus=='00' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
                     <!--gpsSpeed 速度-->
                     <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
                     <!--总工时-->
                     <td ng-cloak class="text-nowrap">{{deviceData.totalDuration | convertToMins }}</td>
                     <!--燃油液位-->
-                    <td ng-cloak>{{deviceData.oilLevel}}%</td>
+                    <td ng-if="deviceData.oilLevel!=null" ng-cloak>{{deviceData.oilLevel}}%</td>
+                    <td ng-if="deviceData.oilLevel==null" ng-cloak></td>
                     <!--发动机转速-->
                     <td ng-cloak>{{deviceData.engineRotate | number:2}}</td>
                     <!--水温-->
                     <td ng-cloak>{{deviceData.engineTemperature}}</td>
                     <!--串口通信状态-->
-                    <td ng-if="deviceData.commStatus=='10'" class="bg-danger text-danger">{{'exception'|translate}}</td>
-                    <td ng-if="deviceData.commStatus=='01'" class="bg-info text-info">{{'normal'|translate}}</td>
+                    <td ng-if="deviceData.commStatus=='10' || deviceData.commStatus=='0'" class="bg-danger text-danger">{{'exception'|translate}}</td>
+                    <td ng-if="deviceData.commStatus=='01' || deviceData.commStatus=='1'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.commStatus==null">{{'noData'|translate}}</td>
                     <!--供电方式-->
                     <td ng-if="deviceData.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
-                    <td ng-if="deviceData.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
+                    <td ng-if="deviceData.powerType=='01' || deviceData.powerType=='0'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
+                    <td ng-if="deviceData.powerType=='1'" class="bg-warning text-warning">外部电源 </td>
                     <td ng-if="deviceData.powerType==null">{{'noData'|translate}}</td>
                     <!--变矩器油温-->
-                    <td ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
+                    <td ng-if="deviceData.oilTemperature!=null" ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
+                    <td ng-if="deviceData.oilTemperature==null" ng-cloak></td>
                     <!--制动气压-->
                     <td ng-cloak>{{deviceData.pressureMeter}}</td>
                     <!--gsm信号质量-->
-                    <td ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
-                    <!--运行监控-->
+                    <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
+                    <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
+                    <!--作业监控-->
                     <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{deviceData.workMonitor}}</td>
                     <!--led状态-->
                     <td ng-cloak>{{deviceData.ledStatus}}</td>
@@ -655,23 +660,27 @@
                     <td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
                     <td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>
+                    <td ng-if="deviceData.lockStatus==null" class="bg-danger text-warning">-</td>
                     <!--ACC状态-->
-                    <td ng-if="deviceData.accStatus=='01'" class="bg-info text-info">ON</td>
-                    <td ng-if="deviceData.accStatus=='10'" class="bg-danger text-danger">OFF</td>
+                    <td ng-if="deviceData.accStatus=='01' || deviceData.accStatus=='1'" class="bg-info text-info">ON</td>
+                    <td ng-if="deviceData.accStatus=='10' || deviceData.accStatus=='0'" class="bg-danger text-danger">OFF</td>
                     <td ng-if="deviceData.accStatus==null">{{'noData'|translate}}</td>
                     <!--发电机状态-->
                     <td ng-if="deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
                     <td ng-if="deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="(deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null">{{'noData'|translate}}</td>
                     <!--GPS电源检测和模拟量1是相同的-->
-                    <td ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
+                    <td ng-if="deviceData.imitate1!=null" ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
+                    <td ng-if="deviceData.imitate1==null" ng-cloak></td>
                     <!--模拟量2-->
-                    <td ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
+                    <td ng-if="deviceData.imitate2!=null" ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
+                    <td ng-if="deviceData.imitate2==null" ng-cloak></td>
                     <!--电压-->
-                    <td ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
+                    <td ng-if="deviceData.batteryVol!=null" ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
+                    <td ng-if="deviceData.batteryVol==null" ng-cloak></td>
                     <!--开盖状态-->
-                    <td ng-if="deviceData.lockerStatus=='00'">{{'notOpen'|translate}}</td>
-                    <td ng-if="deviceData.lockerStatus=='11'">{{'openCover'|translate}}</td>
+                    <td ng-if="deviceData.lockerStatus=='00' || deviceData.lockerStatus=='0'">{{'notOpen'|translate}}</td>
+                    <td ng-if="deviceData.lockerStatus=='11' || deviceData.lockerStatus=='1'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
                     <!--可见卫星数-->
                     <td  ng-cloak>{{deviceData.visibleSatelliteNumber}}</td>
@@ -684,15 +693,19 @@
                     <!--实际绑定车号-->
                     <td  ng-cloak>{{deviceData.bindMachineId}}</td>
                     <!--累计里程-->
-                    <td  ng-cloak>{{deviceData.totalMileage | number:2}}/KM</td>
+                    <td ng-if="deviceData.totalMileage!=null" ng-cloak>{{deviceData.totalMileage | number:2}}/KM</td>
+                    <td ng-if="deviceData.totalMileage==null" ng-cloak></td>
                     <!--气压表2-->
-                    <td  ng-cloak>{{deviceData.pressureMeter2 | number:2}}MPa</td>
+                    <td ng-if="deviceData.pressureMeter2!=null" ng-cloak>{{deviceData.pressureMeter2 | number:2}}MPa</td>
+                    <td ng-if="deviceData.pressureMeter2==null" ng-cloak></td>
                     <!--机油压力-->
-                    <td  ng-cloak>{{deviceData.oilPress}}KPa</td>
+                    <td ng-if="deviceData.oilPress!=null" ng-cloak>{{deviceData.oilPress}}KPa</td>
+                    <td ng-if="deviceData.oilPress==null" ng-cloak></td>
                     <!--阶段工作时间-->
                     <td  ng-cloak>{{deviceData.momentWorkTime | convertToMins}}</td>
                     <!--阶段里程-->
-                    <td  ng-cloak>{{deviceData.momentMileage | number:2}}/KM</td>
+                    <td ng-if="deviceData.momentMileage!=null" ng-cloak>{{deviceData.momentMileage | number:2}}/KM</td>
+                    <td ng-if="deviceData.momentMileage==null" ng-cloak></td>
                   </tr>
                 </table>
               </div>
@@ -890,7 +903,7 @@
           <hr presentation-href="sms:activeLockSms">
           <div class="row" presentation-href="sms:activeLockSms">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
+              <label for="activeMsg" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="activeMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.activeMsg" name="activeMsg"/>
@@ -906,13 +919,13 @@
           </div>
           <div class="row" presentation-href="deviceKeyboard:getBindInputMsg">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <label for="bindKeyboardMsg" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-7">
                 <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.bindKeyboardMsgIdx}} </label>
+                <label class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.bindKeyboardMsgIdx}} </label>
               </div>
 
               <div class="col-md-2">
@@ -923,7 +936,7 @@
 
           <div class="row" presentation-href="sms:unActiveLockSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'LockCar' |translate}}</label>
+              <label for="unActiveMsg" class="col-md-2 control-label text-nowrap">{{'LockCar' |translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unActiveMsg" name="unActiveMsg"/>
@@ -936,13 +949,13 @@
           </div>
           <div class="row" presentation-href="deviceKeyboard:getUnBindInputMsg">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <label for="unbindKeyboardMsg" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-7">
                 <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unbindKeyboardMsgIdx}} </label>
+                <label class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unbindKeyboardMsgIdx}} </label>
               </div>
 
               <div class="col-md-2">
@@ -971,7 +984,7 @@
           </div>
           <div class="row" presentation-href="sms:setIpSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
+              <label for="setIpMsg" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="setIpMsg" class="form-control" placeholder="{{'setTheReturnAddressMessage'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.setIpMsg" name="setIpMsg"/>
@@ -986,7 +999,7 @@
           <hr presentation-href="sms:setStartTimesSMS">
           <div class="row" presentation-href="sms:setStartTimesSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
+              <label for="startTimes" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
                        validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
@@ -995,7 +1008,7 @@
           </div>
           <div class="row" presentation-href="sms:setStartTimesSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
+              <label for="setStartTimesMsg" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="setStartTimesMsg" class="form-control" placeholder="{{'setStartTimesSMS'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.setStartTImesMsg" name="setStartTimesMsg"/>
@@ -1010,7 +1023,7 @@
           <hr presentation-href="sms:setWorkHoursSMS">
           <div class="row" presentation-href="sms:setWorkHoursSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+              <label for="workHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
               <div class="col-md-4">
                 <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
@@ -1019,7 +1032,7 @@
           </div>
           <div class="row" presentation-href="sms:setWorkHoursSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+              <label for="setWorkHoursMsg" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="setWorkHoursMsg" class="form-control" placeholder="{{'setHoursOfWorkHours'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.setWorkHoursMsg" name="setWorkHoursMsg"/>
@@ -1034,26 +1047,26 @@
           <hr presentation-href="sms:setInterSMS">
           <div class="row" presentation-href="sms:setInterSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
+              <label for="secOutPower" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secOutPower" class="form-control" placeholder="{{'externalPowerSupplySec'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
               </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
+              <label for="secLocateInt" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secLocateInt" class="form-control" placeholder="{{'positioningTimeSec'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
               </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
+              <label for="secInnerPower" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
               <div class="col-md-2">
                 <input type="text" id="secInnerPower" class="form-control" placeholder="{{'internalPowerSupplyMinute'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                       validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
               </div>
             </div>
           </div>
           <div class="row" presentation-href="sms:setInterSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'intervalTime'|translate}}</label>
+              <label for="setWorkIntMsg" class="col-md-2 control-label text-nowrap">{{'intervalTime'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="setWorkIntMsg" class="form-control" placeholder="{{'setTheIntervalTimeMessageContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.setWorkIntMsg" name="setWorkIntMsg"/>
@@ -1068,7 +1081,7 @@
           <hr presentation-href="sms:lockSMS">
           <div class="row" presentation-href="sms:lockSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'lockYourCar'|translate}}</label>
+              <label for="lockMsg" class="col-md-2 control-label text-nowrap">{{'lockYourCar'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="lockMsg" class="form-control" placeholder="{{'lockCarSMSContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.lockMsg" name="lockMsg"/>
@@ -1081,13 +1094,13 @@
           </div>
           <div class="row" presentation-href="deviceKeyboard:getLockInputMsg">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <label for="lockKeyboardMsg" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-7">
                 <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.lockKeyboardMsgIdx}} </label>
+                <label class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.lockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
@@ -1098,7 +1111,7 @@
 
           <div class="row" presentation-href="sms:unLockSMS">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'Unlock'|translate}}</label>
+              <label for="unLockMsg" class="col-md-2 control-label text-nowrap">{{'Unlock'|translate}}</label>
               <div class="col-md-8">
                 <input type="text" readonly id="unLockMsg" class="form-control" placeholder="{{'unlockMessageContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unLockMsg" name="unLockMsg"/>
@@ -1111,13 +1124,13 @@
           </div>
           <div class="row" presentation-href="deviceKeyboard:getUnLockInputMsg">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
+              <label for="unLockKeyboardMsg" class="col-md-2 control-label text-nowrap"></label>
               <div class="col-md-7">
                 <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unLockKeyboardMsgIdx}} </label>
+                <label class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unLockKeyboardMsgIdx}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getUnLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewUnLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
@@ -1128,16 +1141,46 @@
           <hr presentation-href="deviceKeyboard:getCancelLockInputMsg">
           <div class="row" presentation-href="deviceKeyboard:getCancelLockInputMsg">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'cancelTheAutomaticLockCar'|translate}}</label>
+              <label for="cancelLockKeyboardMsg" class="col-md-2 control-label text-nowrap">{{'cancelTheAutomaticLockCar'|translate}}</label>
               <div class="col-md-7">
                 <input type="text" readonly id="cancelLockKeyboardMsg" class="form-control" placeholder="{{'cancelTheAutomaticKeyboardLockCarDataContent'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.cancelLockKeyboardMsg" name="cancelLockKeyboardMsg"/>
               </div>
               <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
+                <label class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
               </div>
               <div class="col-md-2">
                 <button class="btn btn-default" type="button"  presentation-href="deviceKeyboard:getCancelLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewCancelLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+              </div>
+            </div>
+          </div>
+
+          <!--矿车MQTT协议 设置上传丶采样时间-->
+          <div presentation-href="fleet:setReturnTime" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">
+            <hr />
+            <div class="row">
+              <div class="form-group">
+                <label class="col-md-2 control-label text-nowrap">时间间隔类型</label>
+                <div class="col-md-3">
+                  <select class="form-control" ng-model="deviceCurrentInfoCtrl.returnTimeParam.name">
+                    <option value="timeBasicInf">产品信息上传时间间隔</option>
+                    <option value="timeWorkingCondition">工况信息上传时间间隔</option>
+                    <option value="timeSampleNormal">工况信息采样时间间隔</option>
+                    <option value="timeSampleRPM">转速采样时间间隔</option>
+                    <option value="timeSampleSpeed">车速采样时间间隔</option>
+                    <option value="timeSampleCurON">瞬时油耗采样时间间隔</option>
+                    <option value="timeSampleLED">状态灯采样时间间隔</option>
+                  </select>
+                </div>
+                <label for="returnTime" class="col-md-1 control-label text-nowrap">时间(秒)</label>
+                <div class="col-md-2">
+                  <input type="text" id="returnTime" class="form-control" placeholder="时间(秒)"
+                         validator="number" ng-model="deviceCurrentInfoCtrl.returnTimeParam.time" name="returnTime"/>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</button>
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setDefaultReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">恢复默认设置</button>
+                </div>
               </div>
             </div>
           </div>
