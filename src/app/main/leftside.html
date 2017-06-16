@@ -216,24 +216,29 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
           <li>
+            <a ui-sref="home.fleetMng" presentation-href="fleet:page">
+              <i class="fa fa-flag-checkered"></i> <span>{{'fleetManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
             <a ui-sref="home.workPoint" presentation-href="fleet:workPoint">
-              <i class="fa fa-flag"></i> <span>{{'workPointMng' | translate}}</span>
+              <i class="fa fa-map-signs"></i> <span>{{'workPointMng' | translate}}</span>
             </a>
           </li>
 
           <li>
             <a ui-sref="home.workRecord" presentation-href="fleet:workRecord">
-              <i class="fa fa-flag"></i> <span>{{'workRecord' | translate}}</span>
+              <i class="fa fa-bar-chart"></i> <span>{{'workRecord' | translate}}</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.workplane" presentation-href="workplane:page">
-              <i class="fa fa-flag"></i> <span>{{'workplaneManagement' | translate}}</span>
+            <a ui-sref="home.fleetMapMonitor">
+              <i class="fa fa-area-chart"></i> <span>{{'mapMonitor' | translate}}</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.fleetMng" presentation-href="fleet:page">
-              <i class="fa fa-flag"></i> <span>{{'fleetManagement' | translate}}</span>
+            <a ui-sref="home.fleetLineMonitor">
+              <i class="fa fa-line-chart"></i> <span>{{'lineMonitor' | translate}}</span>
             </a>
           </li>
           <li>
@@ -241,30 +246,22 @@
               <i class="fa fa-car"></i> <span>{{'fuelconfiguration' | translate}}</span>
             </a>
           </li>
-          <li>
 
-            <a ui-sref="home.machineMove" presentation-href="fleet:page">
-              <i class="fa fa-car"></i> <span>{{'operationMonitoring' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
-              <i class="fa fa-dollar"></i> <span>{{'incomeStatistics' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.cost" presentation-href="cost:page">
-              <i class="fa ion-calculator"></i> <span>{{'costStatistics' | translate}}</span>
-            </a>
-          </li>
+          <!--称重模块暂未启用
           <li>
             <a ui-sref="home.weightData" presentation-href="weightData:page">
               <i class="fa ion-calculator"></i> <span>{{'weightData'|translate}}</span>
             </a>
           </li>
+          -->
           <li>
             <a ui-sref="home.fuelConsumption" presentation-href="fleet:fuelConsumption">
               <i class="fa fa-flask"></i> <span>{{'fuelConsumptionStatistics'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.profit" presentation-href="fleet:profit">
+              <i class="fa fa-rmb"></i> <span>{{'profitStatistics'|translate}}</span>
             </a>
           </li>
         </ul>

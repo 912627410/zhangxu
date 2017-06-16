@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h3 class="modal-title">车队信息
+    <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.cancel()" >关闭
+    </button> <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.confirm()" style="margin-right: 10px;">确定</button>
+  </h3>
+</div>
+
+<section class="content" style="width: 600px;  height:440px; "  >
+  <div class="row">
+    <div class="col-md-12" ng-controller="fleetController as fleetCtrl" >
+      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 580px;  height:420px;">
+        <div class="input-group input-group-sm"  style="padding-top: 10px;padding-left: 25px;  width:60%">
+          <input type="text" class="form-control" ng-model="fleetCtrl.searchText" placeholder="Search" >
+          <span class="input-group-btn">
+                   <button class="btn btn-default" type="button" ng-click="fleetCtrl.search(fleetCtrl.searchText)">搜索</button>
+               </span>
+        </div>
+        <div style="padding-top: 20px;padding-left: 20px; ">
+          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;">选择的车队为：{{fleetCtrl.selectedFleet.label}}</p>
+        </div>
+        <div style="padding-top: 10px;">
+          <abn-tree tree-data="fleetCtrl.my_data" tree-control="fleetTreeController" on-select="fleetCtrl.my_tree_handler(branch); $event.stopPropagation();" expand-level="4"></abn-tree>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

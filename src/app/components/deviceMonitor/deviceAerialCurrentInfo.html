@@ -922,6 +922,99 @@
                 </div>
             </uib-tab>
 
+            <!--电池统计-->
+            <uib-tab presentation-href="device:page">
+            <uib-tab-heading>
+              {{'batteryMonitor'|translate}}
+            </uib-tab-heading>
+            <div class="modal-body">
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="control-label">{{'startDate'|translate}}:</label>
+                  </div>
+                  <div class="col-md-3">
+                    <p class="input-group">
+                      <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateBatteryData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusBatteryData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                      <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.startDateOpenBatteryData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="control-label">{{'endDate'|translate}}:</label>
+                  </div>
+                  <div class="col-md-3">
+                    <p class="input-group">
+                      <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateBatteryData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusBatteryData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                      <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.endDateOpenBatteryData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.refreshPageDateBatteryData(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateBatteryData,deviceAerialCurrentInfoController.endDateBatteryData)">{{'confirm'|translate}}</button>
+                  </div>
+
+                </div>
+                <div class="batteryChart-wrapper">
+                  <highchart id="batteryIn" config="deviceAerialCurrentInfoController.batteryIn"></highchart>
+                </div>
+                <div class="batteryChart-wrapper">
+                  <highchart id="batteryOut" config="deviceAerialCurrentInfoController.batteryOut"></highchart>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row detailMargin">
+                      <table class="table table-striped">
+                        <tr>
+                          <table class="table table-striped">
+                            <caption>{{'batteryBasicInformation'|translate}}</caption>
+                            <tr>
+                          <th>终端编号</th>
+                          <th>充电状态</th>
+                          <th>连接类型</th>
+                          <th>安装状态</th>
+                        </tr>
+                        <tr>
+                          <td>{{batteryFormData.deviceNum}}</td>
+                          <td>{{batteryFormData.chargingStatus.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{batteryFormData.batteryLinkType.replace("1","两串两并").replace("0","四节串联")}}</td>
+                          <td>{{batteryFormData.batteryInstallStatus.replace("1","异常").replace("0","正常")}}</td>
+                        </tr>
+                            </table>
+                          </tr>
+                        <tr>
+                      <table class="table table-striped">
+                        <caption>{{'batteryLiquidLeveInformation'|translate}}</caption>
+                        <tr>
+                          <th>电池编号</th>
+                          <th>液位1</th>
+                          <th>液位2</th>
+                          <th>液位3</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位4</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位5</th>
+                          <th ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">液位6</th>
+                        </tr>
+                        <tr ng-repeat="x in deviceAerialCurrentInfoController.batteryLiquidLevelList">
+                          <td>{{x.batteryID.replace("battery","电池").replace("LiquidLevel","")}}</td>
+                          <td>{{x.batteryLiquidLevel1.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{x.batteryLiquidLevel2.replace("1","异常").replace("0","正常")}}</td>
+                          <td>{{x.batteryLiquidLevel3.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel4.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel5.replace("1","异常").replace("0","正常")}}</td>
+                          <td ng-if="deviceAerialCurrentInfoController.showLiquidLevel(deviceAerialCurrentInfoController.deviceinfo.batteryLinkType)">{{x.batteryLiquidLevel6.replace("1","异常").replace("0","正常")}}</td>
+                        </tr>
+                        </table>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+
             <!--远程控制-->
             <uib-tab select="" presentation-href="device:remoteControl">
                 <uib-tab-heading>

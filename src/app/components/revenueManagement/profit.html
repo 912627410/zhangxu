@@ -1,0 +1,134 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'|translate}}</a></li>
+    <li class="active">{{'profitStatistics'|translate}}</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <div class="row form-group">
+    <!--设备号-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'deviceNum'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.deviceNum" />
+    </div>
+
+    <!--车号-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'machineNumberAndCarNumber'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="profitCtrl.profitConfig.licenseId" />
+    </div>
+
+    <!--车队-->
+    <div class="col-md-1">
+      <label class="control-label">{{'fleet'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="{{'fleet'|translate}}" ng-model="profitCtrl.org.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="profitCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <!--每趟收入-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'incomePerTrip(Yuan)'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="incomePerTrip" class="form-control " ng-model="profitCtrl.profitConfig.incomePerTrip" />
+    </div>
+
+    <!--开始时间-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'startingTime'|translate}}
+      </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="profitCtrl.startDate"
+               is-open="profitCtrl.startDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="profitCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+
+    <!--结束时间-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'endTime'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+               ng-model="profitCtrl.endDate"
+               is-open="profitCtrl.endDateOpenStatus.opened"
+               datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="profitCtrl.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+      </p>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <!--班次-->
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">{{'shifts'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" ng-model="profitCtrl.profitConfig.type">
+        <option value="1">{{'dayShift'|translate}}</option>
+        <option value="0">{{'nightShift'|translate}}</option>
+        <option value="2" ng-selected="true">{{'allDay'|translate}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 col-md-offset-5">
+      <button class="btn btn-primary" type="button" ng-click="profitCtrl.reset()" style="margin-left: 10px;">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="fleet:profit:query" ng-click="profitCtrl.query(profitCtrl.profitConfig)">{{'query'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="row " style="padding: 10px;margin-top: 100px;">
+    <div class="table-responsive col-md-12">
+      <table ng-table="profitCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="profit in $data">
+          <td class="text-nowrap" data-title="'deviceNum'|translate">{{profit.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">{{profit.licenseId}}</td>
+          <td class="text-nowrap" data-title="'shifts'|translate">{{profit.shifts}}</td>
+          <td class="text-nowrap" data-title="'times'|translate">{{profit.timesNumber}}</td>
+          <td class="text-nowrap" data-title="'fuelConsumption(L)'|translate">{{profit.fuelConsumption | number : 2}}</td>
+          <td class="text-nowrap" data-title="'depreciation(Yuan)'|translate">{{profit.depreciation | number : 2}}</td>
+          <td class="text-nowrap" data-title="'wages(Yuan)'|translate">{{profit.salary | number : 2}}</td>
+          <td class="text-nowrap" data-title="'profit(Yuan)'|translate">{{profit.profit | number : 2}}</td>
+          <td class="text-nowrap" data-title="'mileage(KM)'|translate">{{profit.mileage}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+

@@ -91,8 +91,8 @@
     <div class="col-md-1"></div>
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button"  presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">{{'query'|translate}}</button>
       <button class="btn btn-primary" type="button"  ng-click="workRecordCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">{{'query'|translate}}</button>
     </div>
 
 
@@ -102,6 +102,10 @@
   <div class="row" style="margin-bottom: 15px">
     <div class="col-md-12">
       <highchart id="revenueLineChart" config="workRecordCtrl.revenueLineChart"></highchart>
+    </div>
+
+    <div class="col-md-12">
+      <highchart id="totalMachineChart" config="workRecordCtrl.totalMachineChart"></highchart>
     </div>
 
   </div>
@@ -116,22 +120,12 @@
           <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">{{workRecord.licenseId}}</td>
           <td class="text-nowrap" data-title="'equipmentNumber'|translate">{{workRecord.deviceNum}}</td>
           <td class="text-nowrap" data-title="'times'|translate">{{workRecord.records}}</td>
-          <td class="text-nowrap" data-title="'income'|translate">{{workRecord.revenue}}</td>
-          <td class="text-nowrap" data-title="'cost'|translate">{{workRecord.oilCost}}</td>
-          <td class="text-nowrap" data-title="'profit'|translate">{{workRecord.revenue - workRecord.oilCost}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
             <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
           </td>
         </tr>
       </table>
     </div>
-  </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="workRecordCtrl.page.totalElements" ng-change="workRecordCtrl.query(workRecordCtrl.pageNumber-1,null,null,workRecordCtrl.phoneNumber)"
-                    max-size="5" ng-model="workRecordCtrl.pageNumber" items-per-page="workRecordCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
 </section>
 

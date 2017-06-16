@@ -532,29 +532,46 @@
       //vm.refreshDOM();
     }
 
-    vm.excelExport = function (deviceNum, startDate, endDate) {
+    vm.excelExport = function (deviceNum, versionNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
       }
+
+      if (versionNum){
+        if (filterTerm) {
+          filterTerm+="&versionNum=" + versionNum;
+        }
+        else {
+          filterTerm += "versionNum=" + versionNum;
+        }
+      }
+
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      }else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
+
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      }else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       var restCallURL = DEVCEDATA_EXCELEXPORT;
       if (filterTerm){
@@ -694,6 +711,7 @@
         }
       )
     }
+
 
     /*******************远程控制tab***********************/
     vm.startDateMapData = startDate;
@@ -1708,6 +1726,9 @@
           chart: {
             type: 'line',
             zoomType: 'xy',
+          },
+          credits: {
+            enabled: false
           }
         },
         title: {
@@ -1729,6 +1750,7 @@
         },
         series: [{
           name: '工作时长',
+          color: 'rgb(124, 181, 236)',
           data:[]
         }],
         size: {
@@ -1742,6 +1764,9 @@
           chart: {
             type: 'line',
             zoomType: 'xy',
+          },
+          credits: {
+            enabled: false
           }
         },
         title: {
@@ -1761,6 +1786,7 @@
         yAxis: {title: {text: '单位/次'}},
         series: [{
           name: '启动次数',
+          color: 'rgb(144, 238, 126)',
           data:[]
         }],
         size: {
@@ -1774,6 +1800,9 @@
           chart: {
             type: 'scatter',
             zoomType: 'xy'
+          },
+          credits: {
+            enabled: false
           }
         },
         title: {
@@ -1831,8 +1860,7 @@
     /*数据分析*/
     vm.viewReport = function (versionNum, deviceNum, startDate, endDate) {
       if (vm.checkedRad == 'DASHBOARD') {
-        loadWorkTimeChart(deviceNum, vm.workTimeOptModel, dateFormat(startDate), dateFormat(endDate));
-        loadStartTimesChart(deviceNum, vm.startTimesOptModel, dateFormat(startDate), dateFormat(endDate));
+        loadWorkAnalysisChart(deviceNum, dateFormat(startDate) ,dateFormat(endDate));
       } else {
         if (vm.checkedRad != 'DASHBOARD' && (vm.sensorItem == null || angular.equals({}, vm.sensorItem))) {
           Notification.error("请选择条目！");
@@ -1933,76 +1961,33 @@
       })
     }
 
-    /*加载个工作时间的图表*/
-    var loadWorkTimeChart = function (deviceNum, workTimeOptModel, startDate, endDate) {
-      var reqUrl=ANALYSIS_INFLUX+"getworktime?deviceNum=" + deviceNum + "&model=" + workTimeOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
-      var workTimePromis = serviceResource.restCallService(reqUrl, "QUERY", null);
-      workTimePromis.then(function (data) {
+    /**
+     * 加载工作时长, 启动次数的图表
+     * @param deviceNum
+     * @param startDate
+     * @param endDate
+       */
+    var loadWorkAnalysisChart = function (deviceNum, startDate, endDate) {
+      var reqUrl=ANALYSIS_INFLUX+"?deviceNum=" + deviceNum + "&startDate=" + startDate + "&endDate=" + endDate;
+      var promis = serviceResource.restCallService(reqUrl, "QUERY", null);
+      promis.then(function (data) {
         var sensorData = data;
         if (sensorData == null || sensorData.length == 0) {
           Notification.error("暂无数据！");
           return;
         }
-        vm.workTimeChart = {
-          options: {
-            chart: {
-              type: 'column',
-              zoomType: 'xy'
-            },
-            credits: {
-              enabled: false
-            },
-          },
-          series: [],
-          title: {text: '工作时长分析'},
-          //x轴坐标显示
-          xAxis: {
-            title: {text: '日期'},
-            tickInterval: 3600 * 1000 * 24 * workTimeOptModel,
-            labels: {
-              formatter: function () {
-                return $filter('date')(new Date(this.value), 'yy-MM-dd');
-              }
-            }
-          },
-          //y轴坐标显示
-          yAxis: {
-            title: {text: '单位(/h)'},
-          },
-          size: {
-            width: 416,
-            height: 270
-          }
-        }
-        for (var i = 0; i < sensorData.length; i++) {
-          vm.workTimeChart.series.push({
-            name: sensorData[i].name,
-            data: sensorData[i].data,
-            id: sensorData[i].name,
-            tooltip: {
-              headerFormat: '',
-              shared: true,
-              pointFormatter: function () {
-                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd');
-                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + 'H' + '<br>';
-              }
-            }
 
-          })
+        var locateDateArray = [];
+        var startTimesArray = [];
+        var totalDurationArray = [];
+        //根据月份升序排列
+        var result = sensorData.sort(function (a, b) { return a.locateDate > b.locateDate ? 1 : -1; });
+        for(var i = 0; i < sensorData.length;i++){
+          locateDateArray.push($filter('date')(sensorData[i].locateDate, 'yyyy-MM-dd'));
+          startTimesArray.push(sensorData[i].startTimes);
+          totalDurationArray.push(sensorData[i].duration*5/100);
         }
-      })
-    }
 
-    /*加载启动次数的图表*/
-    var loadStartTimesChart = function (deviceNum, startTimesOptModel, startDate, endDate) {
-      var reqUrl=ANALYSIS_INFLUX+"getstarttimes?deviceNum=" + deviceNum + "&model=" + startTimesOptModel + "&startDate=" + startDate + "&endDate=" + endDate;
-      var startTimesPromis = serviceResource.restCallService(reqUrl, "QUERY", null);
-      startTimesPromis.then(function (data) {
-        var sensorData = data;
-        if (sensorData == null || sensorData.length == 0) {
-          Notification.error("暂无数据！");
-          return;
-        }
         vm.startTimesChart = {
           options: {
             chart: {
@@ -2016,42 +2001,54 @@
           title: {text: '启动次数分析'},
           //x轴坐标显示
           xAxis: {
-            title: {
-              text: '日期'
-            },
-            tickInterval: 3600 * 1000 * 24 * startTimesOptModel,
-            labels: {
-              formatter: function () {
-                return $filter('date')(new Date(this.value), 'yy-MM-dd');
-              }
-            }
+            categories: locateDateArray
           },
           //y轴坐标显示
           yAxis: {title: {text: '单位/次'}},
-          series: [],
+          series: [{
+            name: '启动次数',
+            color: 'rgb(144, 238, 126)',
+            data: startTimesArray
+          }],
           size: {
             width: 402,
             height: 270
           }
-        }
-        for (var i = 0; i < sensorData.length; i++) {
-          vm.startTimesChart.series.push({
-            name: sensorData[i].name,
-            data: sensorData[i].data,
-            id: sensorData[i].name,
-            tooltip: {
-              headerFormat: '',
-              shared: true,
-              pointFormatter: function () {
-                var time = $filter('date')(new Date(this.x), 'yyyy-MM-dd');
-                return '<b>日期: </b>' + time + '<br><b>' + this.series.name + ': </b>' + this.y + '次' + '<br>';
-              }
-            }
+        };
 
-          })
-        }
+        vm.workTimeChart = {
+          options: {
+            chart: {
+              type: 'column',
+              zoomType: 'xy'
+            },
+            credits: {
+              enabled: false
+            }
+          },
+          title: {text: '工作时长分析'},
+          //x轴坐标显示
+          xAxis: {
+            categories: locateDateArray
+          },
+          //y轴坐标显示
+          yAxis: {
+            max: 24,
+            tickAmount: 4,
+            title: {text: '单位/H'}
+          },
+          series: [{
+            name: '工作时长',
+            color: 'rgb(124, 181, 236)',
+            data: totalDurationArray
+          }],
+          size: {
+            width: 416,
+            height: 270
+          }
+        };
       });
-    }
+    };
 
     /*格式化时间函数*/
     var dateFormat = function (date) {

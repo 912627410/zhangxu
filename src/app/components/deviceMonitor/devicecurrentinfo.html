@@ -338,8 +338,9 @@
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
                     <!--协议版本号-->
-                    <td>{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <!--GPS协议版本号，实际绑定车号，运行监控，ID,LED状态这几个状态信息对用户不显示，仅仅北谷生产组织下的用户可以查看-->
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
@@ -360,11 +361,13 @@
                   </tr>
                   <tr>
                     <!--车辆类型-->
-                    <td>{{'vehicleType'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
+                    <td >{{'vehicleType'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}}</td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}</td>
                     <!--车号-->
                     <td>{{'machineNumberAndCarNumber'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}}</td>
+                    <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <!--ecu和gps绑定状态-->
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus}}</td>
@@ -446,7 +449,7 @@
                     <!--定位所用时间-->
                     <td>{{'locateDuration'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">{{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">--</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">{{'noMessage'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">{{'noData' |translate}}</td>
                   </tr>
                   <tr>
@@ -476,8 +479,8 @@
                     <td >{{'oilPress'|translate}}</td>
                     <td >{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
                     <!--实际绑定车架号-->
-                    <td >{{'bindMachineId'|translate}}</td>
-                    <td >{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
                   </tr>
                   <!--sim卡序列号-->
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
@@ -536,7 +539,7 @@
             </div>
             <div class="col-md-3">
               <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
-              <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
+              <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
             </div>
           </div>
           <div class="row">
@@ -570,10 +573,10 @@
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
-                    <!--作业监控-->
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
+                    <!--运行监控-->
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
-                    <th class="text-nowrap">{{'LEDState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
                     <!--实时工时-->
                     <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
                     <!--启动次数-->
@@ -601,7 +604,7 @@
                     <!--ECU锁车状态-->
                     <th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>
                     <!--实际绑定车号-->
-                    <th  class="text-nowrap">{{'bindMachineId'|translate}}</th>
+                    <th  class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</th>
                     <th  class="text-nowrap">累计里程</th>
                     <th  class="text-nowrap">气压表2</th>
                     <th  class="text-nowrap">机油压力</th>
@@ -1271,7 +1274,7 @@
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">{{'switching'|translate}}</button>
                         </label>
                         <highchart id="workTimeChart" title="{{'averageWorkingHours'|translate}}"
-                                   style="height:250px;"
+                                   style="height:300px;"
                                    config="deviceCurrentInfoCtrl.workTimeChart">
                         </highchart>
                       </div>
@@ -1280,7 +1283,7 @@
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">{{'switching'|translate}}</button>
                         </label>
                         <highchart id="startTimesChart" title="{{'averageNumberOfStarts'|translate}}"
-                                     style="height: 250px"
+                                     style="height: 300px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
                         </highchart>
                       </div>
@@ -1288,7 +1291,7 @@
                     <div class="row">
                       <div class="col-xs-12">
                         <highchart id="realtimeChart" title="{{'analysisOfMachineSingleWorkHours'|translate}}"
-                                   style="min-width:850px;height: 250px"
+                                   style="min-width:850px;height: 300px"
                                    config="deviceCurrentInfoCtrl.singleWorkHours">
                         </highchart>
                       </div>

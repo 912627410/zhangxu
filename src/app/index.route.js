@@ -295,7 +295,7 @@
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/workPoint.html',
+            templateUrl: 'app/components/fleetMonitor/workPoint.html',
             controller: 'workPointController',
             controllerAs: 'workPointCtrl'
           }
@@ -316,16 +316,30 @@
         }
       })
 
-      .state('home.workplane', {
-        url: '/workplane',
+      .state('home.fleetMapMonitor', {
+        url: '/fleetMapMonitor',
         views: {
           'footer@home':{
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/workplaneMng.html',
-            controller: 'workplaneMngController',
-            controllerAs: 'workplaneMngCtrl'
+            templateUrl: 'app/components/fleetMonitor/fleetMapMonitor.html',
+            controller: 'fleetMapMonitorController',
+            controllerAs: 'fleetMapMonitorCtrl'
+          }
+        }
+      })
+
+      .state('home.fleetLineMonitor', {
+        url: '/fleetLineMonitor',
+        views: {
+          'footer@home':{
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/fleetMonitor/fleetLineMonitor.html',
+            controller: 'fleetLineMonitorController',
+            controllerAs: 'fleetLineMonitorCtrl'
           }
         }
       })
@@ -344,33 +358,6 @@
         }
       })
 
-      .state('home.revenue', {
-        url: '/revenue',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/revenueManagement/revenueMng.html',
-            controller: 'revenueMngController',
-            controllerAs: 'revenueMngController'
-          }
-        }
-      })
-
-      .state('home.cost', {
-        url: '/cost',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/costManagement/costMng.html',
-            controller: 'costMngController',
-            controllerAs: 'costMngController'
-          }
-        }
-      })
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {
@@ -410,6 +397,19 @@
           }
         }
       })
+    .state('home.profit', {
+      url: '/profit',
+      views: {
+        'footer@home':{
+          templateUrl: 'app/main/footer.html'
+        },
+        'rightside@home': {
+          templateUrl: 'app/components/revenueManagement/profit.html',
+          controller: 'profitController',
+          controllerAs: 'profitCtrl'
+        }
+      }
+    })
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {

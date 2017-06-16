@@ -10,7 +10,7 @@
     .controller('workRecordController', workRecordController);
 
   /** @ngInject */
-  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource,DEFAULT_SIZE_PER_PAGE,DRIVER_RECORD_URL,REVENUE_URL, FLEET_PAGE_URL) {
+  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
@@ -96,32 +96,56 @@
     }
 
 
-    //得到收入
+    //工作记录图表
     vm.initChart = function(workRecords) {
-
-
-        var recordDates=new Array();
-        var records=new Array();
-
-        var oilCost=new Array();
-        var amounts=new Array();
-        var profit=new Array();
+        var recordDates=[];  // 时间
+        var totalRecords=[];  // 总趟数
+        var averageRecords=[]; // 平均趟数
+        var recordArr=[];
+        var mileageArr=[];
+        var machineNum = []; // 活跃车数
+        var totalMileage = []; // 总里程数
         //根据月份升序排列
         var result = workRecords.sort(function(a, b) { return a.recordDate > b.recordDate ? 1 : -1;} );//升序
-
-        for(var i=0;i<result.length;i++){
-
-          recordDates[i]= $filter('date')(result[i].recordDate, 'yyyy-MM-dd');
-          records[i]=result[i].records;
-
-          // oilCost[i]=result[i].oilCost;
-          // amounts[i]=result[i].amount;
-          // profit[i]=result[i].profit;
+        var resultLen = result.length;
+        if(resultLen > 0) {
+          for (var i = 1; i < resultLen; i++) {
+            if (result[i].recordDate != result[i - 1].recordDate) {
+              recordDates.push($filter('date')(result[i - 1].recordDate, 'yyyy-MM-dd'));
+              recordArr.push(result[i - 1].records);
+              mileageArr.push(result[i - 1].mileage);
+              totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+              var sum = eval(recordArr.join("+"));
+              totalRecords.push(sum);
+              averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+              machineNum.push(recordArr.length);
+              recordArr = [];
+              mileageArr = [];
+              if (i == resultLen - 1) {
+                recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
+                totalRecords.push(result[i].records);
+                averageRecords.push(result[i].records);
+                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+              }
+            } else {
+              recordArr.push(result[i - 1].records);
+              mileageArr.push(result[i - 1].mileage);
+              if (i == resultLen - 1) {
+                recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
+                recordArr.push(result[i].records);
+                mileageArr.push(result[i].mileage);
+                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                var sum = eval(recordArr.join("+"));
+                totalRecords.push(sum);
+                averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+                machineNum.push(recordArr.length);
+              }
+            }
+          }
         }
 
 
         vm.revenueLineChart = {
-          // $('#revenueLineChart').highcharts({
           options: {
             chart: {
               type: 'line',
@@ -129,27 +153,20 @@
             },
             plotOptions: {
               line: {
-                //dataLabels: {
-                //    enabled: true
-                //},
                 enableMouseTracking: true
               },
               series: {
                 cursor: 'pointer',
                 events: {
                   click: function(e) {
-
-                    // console.log(e.point.category);
-                    //  vm.getCustomers();
                     vm.$apply();
                   }
-
-                  //click: function (e) {
-                  //    alert('Category: ' + e.point.category);
-                  //}
                 }
               }
             }
+          },
+          credits: {
+            enabled:false
           },
           title: {
             text: '工作纪录'
@@ -158,43 +175,112 @@
             text: ''
           },
           xAxis: {
-            categories: recordDates,
-            //categories:[]
+            categories: recordDates
           },
           yAxis: [{
             title: {
-              text: '收入'
+              text: '总趟数',
+              style: {
+                color: 'rgb(124, 181, 236)',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }
             }
 
           },{
             title: {
-              text: '趟数'
+              text: '平均趟数',
+              style: {
+                color: 'rgb(194, 53, 49)',
+                fontWeight: 'bold',
+                fontSize: '14px'
+              }
             },
             opposite: true,
             min: 0
           }],
           series: [{
             type: 'column',
-            name: '收入',
-            // data: []
-            data:amounts
-          },{
-            type: 'column',
-            name: '成本',
-            data: oilCost
+            color: 'rgb(124, 181, 236)',
+            name: '<b style="font-size: 14px;">总趟数</b>',
+            data: totalRecords
           },{
             type: 'spline',
-            name: '利润',
-            data: profit
-          },{
-            type: 'spline',
+            color: 'rgb(194, 53, 49)',
             yAxis: 1,
-            name: '趟次',
-            data: records
+            name: '<b style="font-size: 14px;">平均趟数</b>',
+            data: averageRecords
           }]
-          //    });
         };
 
+
+      vm.totalMachineChart = {
+        options: {
+          chart: {
+            type: 'line',
+            height: 300
+          },
+          plotOptions: {
+            line: {
+              enableMouseTracking: true
+            },
+            series: {
+              cursor: 'pointer',
+              events: {
+                click: function(e) {
+                  vm.$apply();
+                }
+              }
+            }
+          }
+        },
+        credits: {
+          enabled:false
+        },
+        title: {
+          text: ' '
+        },
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: recordDates
+        },
+        yAxis: [{
+          title: {
+            text: '活跃车数(辆)',
+            style: {
+              color: 'rgb(124, 181, 236)',
+              fontWeight: 'bold',
+              fontSize: '14px'
+            }
+          }
+
+        },{
+          title: {
+            text: '总里程数(KM)',
+            style: {
+              color: 'rgb(194, 53, 49)',
+              fontWeight: 'bold',
+              fontSize: '14px'
+            }
+          },
+          opposite: true,
+          min: 0
+        }],
+        series: [{
+          type: 'column',
+          color: 'rgb(194, 53, 49)',
+          yAxis: 1,
+          name: '<b style="font-size: 14px;">总里程数</b>',
+          data: totalMileage
+        },{
+          type: 'spline',
+          color: 'rgb(124, 181, 236)',
+          name: '<b style="font-size: 14px;">活跃车数</b>',
+          data: machineNum
+        }]
+      };
 
     };
 

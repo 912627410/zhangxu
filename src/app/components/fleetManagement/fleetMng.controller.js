@@ -10,14 +10,14 @@
     .controller('fleetMngController', fleetMngController);
 
   /** @ngInject */
-  function fleetMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEETINFO_PAGE_URL, FLEETINFO_URL,DEVCE_MONITOR_PAGED_QUERY) {
+  function fleetMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource ,FLEET_PAGE_URL,FLEET_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, fleet) {
-      var restCallURL = FLEETINFO_PAGE_URL;
+      var restCallURL = FLEET_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 8;
       var sortUrl = sort || "id,desc";
@@ -199,34 +199,5 @@
 
     };
 
-
-    //updateWorkplaneRela
-    vm.updateWorkplaneRela = function (fleet,size) {
-      var modalInstance = $uibModal.open({
-        animation:vm.animationsEnabled,
-        templateUrl: 'app/components/fleetManagement/updateWorkplaneRela.html',
-        controller: 'updateWorkplaneRelaController as updateWorkplaneRelaCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          fleet: function () {
-            return fleet;
-          }
-        }
-      })
-
-      modalInstance.result.then(function (result) {
-        var tabList=vm.tableParams.data;
-        //更新内容
-        for(var i=0;i<tabList.length;i++){
-          if(tabList[i].id==result.id){
-            tabList[i]=result;
-          }
-        }
-
-      }, function () {
-        //取消
-      });
-    }
   }
 })();

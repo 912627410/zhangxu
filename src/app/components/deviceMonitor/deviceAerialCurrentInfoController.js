@@ -6,7 +6,7 @@
 
     /** @ngInject */
     function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
-                                               Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,
+                                               Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE) {
         var vm = this;
@@ -990,7 +990,6 @@
             var distabcess2 = lastDistabce;
             var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
             distabcess2 += distances;
-            console.log(distabcess2);
             marker.setLabel({
               offset: new AMap.Pixel(-10, -25),
               content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
@@ -998,7 +997,6 @@
           }, false);
           /*继续移动事件*/
           AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-            console.log(markerMovingControl._currentIndex);
             var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
             lineArr2.unshift(marker.getPosition());
             markerMovingControl._marker.moveAlong(lineArr2, 500);
@@ -1115,8 +1113,8 @@
 
         // device simple data
         vm.getDeviceSimpleData = function(page,size,sort,deviceNum,startDate,endDate){
-
             if (vm.operatorInfo){
+
 
                 var queryCondition;
                 if (deviceNum){
@@ -1793,6 +1791,281 @@
                 Notification.error(reason.data.message);
             });
         };
+
+
+
+
+
+      //battery data
+      vm.startYearValue = 2017;
+      vm.startMonthValue = 1;
+      vm.startDayValue = 1;
+      var batteryInChartData = [];
+      var batteryOutChartData = [];
+      var batteryFormData;
+
+      var startDate = new Date();
+      startDate.setDate(startDate.getDate()-1);
+      vm.startDate = startDate;
+      vm.endDate = new Date();
+
+      vm.startDateBatteryData = startDate;
+      vm.endDateBatteryData = new Date();
+
+      //date picker
+      vm.startDateOpenStatus = {
+        opened: false
+      };
+      vm.endDateOpenStatus = {
+        opened: false
+      };
+      vm.startDateOpenStatusBatteryData = {
+        opened: false
+      };
+      vm.endDateOpenStatusBatteryData = {
+        opened: false
+      };
+
+      vm.startDateOpen = function($event) {
+        vm.startDateOpenStatus.opened = true;
+      };
+      vm.endDateOpen = function($event) {
+        vm.endDateOpenStatus.opened = true;
+      };
+      vm.startDateOpenBatteryData = function($event) {
+        vm.startDateOpenStatusBatteryData.opened = true;
+      };
+      vm.endDateOpenBatteryData = function($event) {
+        vm.endDateOpenStatusBatteryData.opened = true;
+      };
+
+      vm.maxDate = new Date();
+      vm.dateOptions = {
+        formatYear: 'yyyy',
+        startingDay: 1
+      };
+
+
+      vm.refreshPageDateBatteryData = function(deviceNum,startDate,endDate){
+        getBatteryData(deviceNum,startDate,endDate,0);
+        getBatteryData(deviceNum,startDate,endDate,1);
+        getBatteryFormData(deviceNum);
+      };
+
+
+      //串联显示3个液位,并联显示6个液位
+      vm.showLiquidLevel = function(batteryLinkType){
+         if(batteryLinkType == 0){
+           return false;
+         }else{
+           return true;
+         }
+        return false;
+      };
+
+
+
+      var getBatteryData = function(deviceNum,startDate,endDate,chargeType){
+        if (vm.operatorInfo){
+          var queryCondition;
+          if (deviceNum){
+            queryCondition = "?deviceNum=" + deviceNum;
+          }
+          if (startDate) {
+            var startYear = startDate.getFullYear();
+            var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+            var startDay = startDate.getDate();
+
+            if(startMonth<10){
+              startMonth = '0' + startMonth;
+            }
+            if(startDay<10){
+              startDay = '0' + startDay;
+            }
+
+            var startDateFormated = startYear + '-' + startMonth + '-' + startDay;
+            if (queryCondition) {
+              queryCondition += "&startDate=" + startDateFormated
+            }
+            else {
+              queryCondition += "startDate=" + startDateFormated;
+            }
+          } else {
+            Notification.error("输入的时间格式有误");
+            return;
+          }
+          if (endDate) {
+            endDate = new Date(endDate.getTime()-1000*3600*24);
+            var endYear = endDate.getFullYear();
+            var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+            var endDay = endDate.getDate()+1;
+
+            if(endMonth<10){
+              endMonth = '0' + endMonth;
+            }
+            if(endDay<10){
+              endDay = '0' + endDay;
+            }
+
+            var endDateFormated = endYear + '-' + endMonth + '-' + endDay;
+            if (queryCondition) {
+              queryCondition += "&endDate=" + endDateFormated;
+            }
+            else {
+              queryCondition += "endDate=" + endDateFormated;
+            }
+          } else {
+            Notification.error("输入的时间格式有误");
+            return;
+          }
+
+          vm.startYearValue = startYear;
+          vm.startMonthValue = startMonth - 1;
+          vm.startDayValue = startDay;
+
+          var restCallURL = BATTERY_CHART_DATA;
+
+          if (queryCondition){
+            restCallURL = restCallURL + queryCondition + '&' + 'chargeType' + '=' + chargeType;
+          }
+
+          var rspData = serviceResource.restCallService(restCallURL, "GET");
+          rspData.then(function(data){
+            if(chargeType == 0){
+              batteryInChartData = data.data;
+              refreshBatteryInChart(batteryInChartData);
+            }else{
+              batteryOutChartData = data.data;
+              refreshBatteryOutChart(batteryOutChartData);
+            }
+          },function(reason){
+            serviceResource.handleRsp("获取数据失败",reason);
+            vm.deviceInfoList = null;
+          });
+
+        }
+      };
+
+
+
+      var getBatteryFormData = function(deviceNum){
+        var restCallURL = BATTERY_FORM_DATA;
+        restCallURL += '?' + 'deviceNum' + '=' + deviceNum;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function(data){
+          batteryFormData = data;
+          vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
+          $scope.batteryFormData = batteryFormData;
+        },function(reason){
+          serviceResource.handleRsp("获取数据失败",reason);
+          vm.deviceInfoList = null;
+        });
+      };
+
+      var refreshBatteryInChart = function(batteryInChartData){
+        vm.batteryIn = {
+          options: {
+            chart:{
+              type: 'spline',
+              zoomType: 'x'
+            },
+            title: {
+              text: '电池充电监控'
+            },
+            xAxis: {
+              type: 'datetime',
+              dateTimeLabelFormats: {
+                day: '%Y-%m-%d'
+              }
+            },
+            yAxis: {
+              title: {
+                text: '电压 (V)',
+                rotation:0,
+                align: 'high',
+                y:-20,
+                offset: -10,
+                min: 0
+              }
+            },
+            tooltip: {
+              valueSuffix: 'V'
+            },
+            legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+            },
+            plotOptions: {
+              spline: {
+                pointInterval: 1000 * 30, // 30 second
+                pointStart: Date.UTC(vm.startYearValue,vm.startMonthValue,vm.startDayValue)
+              },
+              series: {
+                marker:{
+                  enabled: false,
+                  animation: true
+                }
+              }
+            }
+
+          },
+          series: batteryInChartData
+        };
+
+      };
+
+      var refreshBatteryOutChart = function(batteryOutChartData){
+        vm.batteryOut = {
+          options: {
+            chart:{
+              type: 'spline',
+              zoomType: 'x'
+            },
+            title: {
+              text: '电池放电监控'
+            },
+            xAxis: {
+              type: 'datetime',
+              dateTimeLabelFormats: {
+                day: '%Y-%m-%d'
+              }
+            },
+            yAxis: {
+              title: {
+                text: '电压 (V)',
+                rotation:0,
+                align: 'high',
+                y:-20,
+                offset: -10,
+                min: 0
+              }
+            },
+            tooltip: {
+              valueSuffix: 'V'
+            },
+            legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+            },
+            plotOptions: {
+              spline: {
+                pointInterval: 1000 * 30, // 30 second
+                pointStart: Date.UTC(vm.startYearValue,vm.startMonthValue,vm.startDayValue)
+              },
+              series: {
+                marker:{
+                  enabled: false,
+                  animation: true
+                }
+              }
+            }
+
+          },
+          series: batteryOutChartData
+        };
+      }
 
     }
 })();

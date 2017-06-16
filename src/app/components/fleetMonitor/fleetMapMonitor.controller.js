@@ -1,28 +1,59 @@
 /**
- * Created by xiaopeng on 17-4-18.
+ * Created by xiaopeng on 17-5-23.
  */
+
 (function () {
   'use strict';
 
   angular
     .module('GPSCloud')
-    .controller('workPointController', workPointController);
+    .controller('fleetMapMonitorController', fleetMapMonitorController);
 
   /** @ngInject */
 
-  function workPointController(WORK_POINT_URL, AMAP_GEO_CODER_URL ,Map , $uibModal,languages,NgTableParams, ngTableDefaults, serviceResource, Notification) {
+  function fleetMapMonitorController(WORK_POINT_URL,$scope,$rootScope,$timeout,fleetTreeFactory, Map, AMAP_GEO_CODER_URL,languages,WEBSOCKET_URL,DEVCE_PAGED_QUERY, serviceResource, Notification) {
     var vm = this;
     vm.workPointList = [];
-
-    vm.circleMap = angular.copy(Map);
+    vm.fleet = $rootScope.fleetChart[0];
+    vm.operatorInfo = $rootScope.userInfo;
+    var fleetMonitorUrl;
     vm.markerMap = angular.copy(Map);
-    //
-    vm.circleEditor = null;
 
-    //
-    vm.operWorkPorint = null;
 
-    ngTableDefaults.settings.counts = [];
+    vm.openFleetTree = function () {
+      fleetTreeFactory.treeShow(function (selectedItem) {
+        vm.fleet =selectedItem;
+        if(fleetMonitorUrl){fleetMonitorUrl.close();}
+
+        vm.initQuery(vm.fleet);
+      });
+    }
+
+
+    //添加车辆marker
+    var addDeviceMarker = function(item) {
+
+      var icon = "assets/images/car_03.png";
+
+      var marker = new AMap.Marker({
+        position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
+        icon: icon,
+        offset: new AMap.Pixel(-26, -15),
+        autoRotation: true
+      });
+
+      // 设置label标签
+      marker.setLabel({
+        offset: new AMap.Pixel(10, -22),//修改label相对于maker的位置
+        content: item.deviceNum
+      });
+
+
+      return marker;
+
+    }
+
+
 
     // create circle
     var createCircle = function (workPoint) {
@@ -53,6 +84,7 @@
 
     }
 
+
     // create circle
     var createMarker = function (workPoint) {
 
@@ -73,7 +105,6 @@
 
     }
 
-
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
 
@@ -86,7 +117,7 @@
         }
 
         var amapScale, toolBar, overView;
-        var localZoomSize = 14;  //默认缩放级别
+        var localZoomSize = 15;  //默认缩放级别
         if (zoomsize) {
           localZoomSize = zoomsize;
         }
@@ -147,21 +178,16 @@
           });
         });
 
-        var clickEventListener = map.on('click', function(e) {
-          document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
-        });
 
         for( var i=0; i <workPointList.length; i ++){
           var workPoint = workPointList[i];
 
           var circle = createCircle(workPoint);
           circle.setMap(map);
-          vm.circleMap.put(vm.workPointList[i].id, circle);
 
 
           var marker = createMarker(workPoint);
           marker.setMap(map);
-          vm.markerMap.put(vm.workPointList[i].id, marker);
 
         }
         vm.map = map;
@@ -171,36 +197,26 @@
     }
 
 
-
-    vm.setDefaultAddress = function () {
-      if (vm.deviceInfoList != null) {
-        vm.deviceInfoList.forEach(function (deviceInfo) {
-          if (deviceInfo.address === languages.findKey('requestingLocationData')+'...') {
-            deviceInfo.address = '--';
-          }
-        })
+    vm.initQuery = function (fleet) {
+      if(fleet == null){
+        Notification.warning("请选择车队");
+        return;
       }
-    }
-
-    vm.initQuery = function (page, size, sort, workPoint) {
       var restCallURL = WORK_POINT_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || 6;
-      var sortUrl = sort || 'id';
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "?page=0&size=1000&sort=id";
+      restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+
 
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
           vm.workPointList = data.content;
 
-          vm.tableParams = new NgTableParams({},
-            {
-              dataset: vm.workPointList
-            });
-          vm.page = data.page;
-          vm.pagenumber = data.page.number + 1;
+          vm.initMap("fleetMonitorMap",null,null, vm.workPointList );
 
-        vm.initMap("workPointMap",null,null, vm.workPointList );
+          $timeout(function () {
+            vm.queryDeviceList(fleet);
+
+          },500)
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
@@ -208,94 +224,75 @@
 
     };
 
+    vm.queryDeviceList = function (fleet) {
+      var restCallURL = DEVCE_PAGED_QUERY;
+      var pageUrl =  0;
+      var sizeUrl =  1000;
+      var sortUrl =  'id';
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+      var restPromise = serviceResource.restCallService(restCallURL, "GET");
+      restPromise.then(function (data) {
+          vm.deviceList = data.content;
 
-    vm.update = function (workPoint) {
-      if(vm.circleEditor){
-        vm.circleEditor.close();
-      }
+          for(var n =0; n <vm.deviceList.length;n++) {
+            var device = vm.deviceList[n];
+            if(device.amaplongitudeNum!=null && device.amaplatitudeNum!=null){
 
+              var deviceMarker = addDeviceMarker(device);
+              vm.markerMap.put(device.deviceNum, deviceMarker);
 
+              deviceMarker.setMap(vm.map);
+            }
 
-      var _circle = vm.circleMap.get(workPoint.id);
-      vm.map.setCenter(_circle.getCenter());
-      vm.circleEditor = new AMap.CircleEditor(vm.map, _circle);
-      vm.operWorkPorint = workPoint.id;
-
-
-      var _marker = vm.markerMap.get(workPoint.id);
-
-      AMap.event.addListener(vm.circleEditor, "move", function (e) {
-
-        var _LngLat =  new AMap.LngLat(e.lnglat.lng,  e.lnglat.lat)
-        _marker.setPosition(_LngLat);
-        document.getElementById("lnglat").value = e.lnglat.lng + ',' + e.lnglat.lat;
-
-      })
-
-
-      vm.circleEditor.open();
-
-    }
-
-
-    vm.save = function (workPoint) {
-
-
-      AMap.event.addListener(vm.circleEditor, "end", function (e) {
-        var circle = e.target;
-        workPoint.longitude = circle.getCenter().getLng();
-        workPoint.latitude = circle.getCenter().getLat();
-        workPoint.radius = circle.getRadius();
-
-        var restPromise = serviceResource.restUpdateRequest(WORK_POINT_URL, workPoint);
-        restPromise.then(function (data) {
-            vm.operWorkPorint = null;
-            Notification.success("save success");
-
-          }, function (reason) {
-            Notification.error(languages.findKey('failedToGetDeviceInformation'));
           }
-        )
-      })
 
-      vm.circleEditor.close();
+          vm.openMonitor();
 
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        }
+      )
+    }
+
+
+    // open
+    vm.openMonitor = function () {
+
+      // websocket monitor
+      fleetMonitorUrl = new WebSocket(WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken);
+
+      fleetMonitorUrl.onerror = function (evt) {
+        Notification.error("WebSocket Error!");
+      };
+
+      fleetMonitorUrl.onmessage = function (evt) {
+        var monitorVo = JSON.parse(evt.data);
+        var newPoint = new AMap.LngLat(monitorVo.longitude, monitorVo.latitude);
+
+        if(vm.markerMap.containsKey(monitorVo.deviceNum)){
+          var marker = vm.markerMap.get(monitorVo.deviceNum);
+          marker.moveTo(newPoint, 500);
+          vm.markerMap.put(monitorVo.deviceNum, marker);
+        }
+
+      };
+
+    }
+
+    vm.closeMonitor = function () {
+      if(fleetMonitorUrl){fleetMonitorUrl.close();}
 
     }
 
 
-    vm.create = function () {
+    vm.initQuery(vm.fleet);
 
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/fleetManagement/newWorkPoint.html',
-        controller: 'newWorkPointController as newWorkPointCtrl',
-        size: 'lg',
-        backdrop: false,
-      });
-
-      modalInstance.result.then(function (result) {
-        var workPoint = result;
-
-        var circle = createCircle(workPoint);
-        circle.setMap(vm.map);
-        vm.circleMap.put(workPoint.id, circle);
-
-        var marker = createMarker(workPoint);
-        marker.setMap(vm.map);
-        vm.markerMap.put(workPoint.id, marker);
-
-
-        vm.tableParams.data.splice(0, 0, result);
-
-      }, function () {
-        //取消
-      });
-
-    }
-
-    vm.initQuery();
-
+    $scope.$on("$destroy",function () {
+      //vm.closeMonitor();
+      fleetMonitorUrl.close();
+    });
 
   }
 })();
+

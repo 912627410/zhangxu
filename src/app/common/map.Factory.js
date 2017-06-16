@@ -26,14 +26,7 @@
       //向Map中增加元素（key, value)
       this.put = function(_key, _value) {
         if (this.containsKey(_key) == true) {
-          if(this.containsValue(_value)){
-            if(this.remove(_key) == true){
-              this.elements.push( {
-                key : _key,
-                value : _value
-              });
-            }
-          }else{
+          if(this.remove(_key) == true){
             this.elements.push( {
               key : _key,
               value : _value
