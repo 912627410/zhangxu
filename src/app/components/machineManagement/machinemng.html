@@ -137,7 +137,7 @@
 
   <div class="box-footer">
     <uib-pagination total-items="machineMngCtrl.page.totalElements"
-                    ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,null)"
+                    ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,machineMngCtrl.machine)"
                     max-size="5" ng-model="machineMngCtrl.pageNumber" items-per-page="machineMngCtrl.page.size"
                     class="pagination-sm" boundary-links="true" rotate="false"
                     first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
