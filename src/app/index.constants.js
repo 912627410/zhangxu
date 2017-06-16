@@ -142,6 +142,7 @@
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
     .constant('SET_FLEET_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setFleetReturnTime')   // 设置车队回传时间
+    .constant('SET_FLEET_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setFleetDefaultReturnTime')   // 设置车队默认的回传时间间隔
 
     //键盘数据相关
     .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')

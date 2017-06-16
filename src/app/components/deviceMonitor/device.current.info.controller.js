@@ -18,7 +18,7 @@
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo,
-                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_FLEET_RETURN_TIME_URL) {
+                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_FLEET_RETURN_TIME_URL, SET_FLEET_DEFAULT_RETURN_TIME_URL) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -1609,31 +1609,75 @@
         });
     }
 
-    //发送回传时间间隔信息
-    vm.sendSetUploadTimeSMS = function (deviceNum, uploadTimeParam) {
-      if(angular.isUndefined(uploadTimeParam)){
+    /**
+     * 设置回传时间间隔
+     * @param deviceNum
+     * @param returnTimeParam
+       */
+    vm.setReturnTime = function (deviceNum, returnTimeParam) {
+      if(angular.isUndefined(returnTimeParam)){
         Notification.error("请检查时间设置!");
         return;
       }
       if (deviceNum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
-      } else {
-        uploadTimeParam.deviceNum = deviceNum;
       }
 
+      if(null == returnTimeParam.name || "" == returnTimeParam.name) {
+        Notification.error("请选择时间间隔类型");
+        return;
+      }
+
+      if(null == returnTimeParam.time || "" == returnTimeParam.time) {
+        Notification.error("请输入时间");
+        return;
+      }
+
+      var restURL = SET_FLEET_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
       $confirm({
-        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
-        title: languages.findKey('SMSConfirmation') + '',
+        text: languages.findKey('确定设置此时间间隔?') + '',
+        title: languages.findKey('时间间隔设置确认') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
       })
       .then(function () {
-        var restPromise = serviceResource.restAddRequest(SET_FLEET_RETURN_TIME_URL, uploadTimeParam);
+        var restPromise = serviceResource.restCallService(restURL, "ADD", null);
         restPromise.then(function (data) {
           if (data.code == 0) {
             Notification.success(data.content);
             vm.initSmsSendBtn();
+          }
+          else {
+            Notification.error(data.content);
+          }
+        }, function (reason) {
+          Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+        })
+      });
+    };
+
+    /**
+     * 设置默认回传时间间隔
+     * @param deviceNum
+     */
+    vm.setDefaultReturnTime = function (deviceNum) {
+      if (deviceNum == null) {
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SET_FLEET_DEFAULT_RETURN_TIME_URL + "?deviceNum="+ deviceNum;
+      $confirm({
+        text: languages.findKey('确定设置为默认的时间间隔?') + '',
+        title: languages.findKey('时间间隔设置确认') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+      .then(function () {
+        var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+        restPromise.then(function (data) {
+          if (data.code == 0) {
+            Notification.success(data.content);
           }
           else {
             Notification.error(data.content);

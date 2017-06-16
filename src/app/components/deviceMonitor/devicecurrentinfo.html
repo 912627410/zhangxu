@@ -1153,59 +1153,34 @@
           </div>
 
           <!--矿车MQTT协议 设置上传丶采样时间-->
-          <!--<div presentation-href="" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">-->
-            <!--<hr />-->
-            <!--<div class="row">-->
-              <!--<div class="form-group">-->
-                <!--<label for="secProductInfoUpload" class="col-md-2 control-label text-nowrap">{{'productInfoUploadSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secProductInfoUpload" class="form-control" placeholder="{{'productInfoUploadSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secProductInfoUpload" name="secProductInfoUpload"/>-->
-                <!--</div>-->
-                <!--<label for="secWorkInfoUpload" class="col-md-2 control-label text-nowrap">{{'workInfoUploadSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secWorkInfoUpload" class="form-control" placeholder="{{'workInfoUploadSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secWorkInfoUpload" name="secWorkInfoUpload"/>-->
-                <!--</div>-->
-                <!--<label for="secWorkInfoSample" class="col-md-2 control-label text-nowrap">{{'workInfoSampleSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secWorkInfoSample" class="form-control" placeholder="{{'workInfoSampleSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secWorkInfoSample" name="secWorkInfoSample"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-              <!--<div class="form-group">-->
-                <!--<label for="secRotatingSpeedSample" class="col-md-2 control-label text-nowrap">{{'rotatingSpeedSampleSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secRotatingSpeedSample" class="form-control" placeholder="{{'rotatingSpeedSampleSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secRotatingSpeedSample" name="secRotatingSpeedSample"/>-->
-                <!--</div>-->
-                <!--<label for="secGPSSpeedSample" class="col-md-2 control-label text-nowrap">{{'gpsSpeedSampleSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secGPSSpeedSample" class="form-control" placeholder="{{'gpsSpeedSampleSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secGPSSpeedSample" name="secGPSSpeedSample"/>-->
-                <!--</div>-->
-                <!--<label for="secFuelConsumptionSample" class="col-md-2 control-label text-nowrap">{{'fuelConsumptionSampleSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secFuelConsumptionSample" class="form-control" placeholder="{{'fuelConsumptionSampleSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secFuelConsumptionSample" name="secFuelConsumptionSample"/>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-              <!--<div class="form-group">-->
-                <!--<label for="secLEDSample" class="col-md-2 control-label text-nowrap">{{'LEDSampleSec'|translate}}</label>-->
-                <!--<div class="col-md-2">-->
-                  <!--<input type="text" id="secLEDSample" class="form-control" placeholder="{{'LEDSampleSec'|translate}}"-->
-                         <!--validator="number" ng-model="deviceCurrentInfoCtrl.uploadTimeParam.secLEDSample" name="secLEDSample"/>-->
-                <!--</div>-->
-                <!--<div class="col-md-offset-6 col-md-2">-->
-                  <!--<sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetUploadTimeSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.uploadTimeParam)">{{'send'|translate}}</sms-send-btn>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
+          <div presentation-href="fleet:setReturnTime" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">
+            <hr />
+            <div class="row">
+              <div class="form-group">
+                <label class="col-md-2 control-label text-nowrap">时间间隔类型</label>
+                <div class="col-md-3">
+                  <select class="form-control" ng-model="deviceCurrentInfoCtrl.returnTimeParam.name">
+                    <option value="timeBasicInf">产品信息上传时间间隔</option>
+                    <option value="timeWorkingCondition">工况信息上传时间间隔</option>
+                    <option value="timeSampleNormal">工况信息采样时间间隔</option>
+                    <option value="timeSampleRPM">转速采样时间间隔</option>
+                    <option value="timeSampleSpeed">车速采样时间间隔</option>
+                    <option value="timeSampleCurON">瞬时油耗采样时间间隔</option>
+                    <option value="timeSampleLED">状态灯采样时间间隔</option>
+                  </select>
+                </div>
+                <label for="returnTime" class="col-md-1 control-label text-nowrap">时间(秒)</label>
+                <div class="col-md-2">
+                  <input type="text" id="returnTime" class="form-control" placeholder="时间(秒)"
+                         validator="number" ng-model="deviceCurrentInfoCtrl.returnTimeParam.time" name="returnTime"/>
+                </div>
+                <div class="col-md-3">
+                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</sms-send-btn>
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setDefaultReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">恢复默认设置</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
