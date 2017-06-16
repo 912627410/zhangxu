@@ -178,24 +178,6 @@
           }
         }
       },
-      dataZoom: [
-        //底部缩放滑动条
-        // {
-        //     type: 'slider',
-        //     show: true,
-        //     xAxisIndex: [0],
-        //     start: 0,
-        // },
-        {
-          type: 'inside',
-          xAxisIndex: [0],
-          start: 0
-        }, {
-          type: 'inside',
-          yAxisIndex: [0],
-          start: 0
-        }
-      ],
       series: [{
         animation: false,
         data: '',
