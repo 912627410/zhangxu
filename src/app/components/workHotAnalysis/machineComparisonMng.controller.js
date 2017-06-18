@@ -1798,7 +1798,6 @@
           YearOwnership1 = GET_OWNERSHIP_URL + "2016&machineType=3";
           YearOwnership2 = GET_OWNERSHIP_URL + "2017&machineType=3";
         }
-
       } else if(heatType2==0){
         //判断是哪种车型
         if(machineType2=="1,2,3"){
