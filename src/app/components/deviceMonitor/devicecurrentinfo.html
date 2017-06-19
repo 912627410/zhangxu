@@ -458,7 +458,8 @@
                       <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol | number:2}}V</td>
                       <!--时速-->
                       <td>{{'mph'|translate}}</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.mph | number:2}}km/H</td>
+                      <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{deviceCurrentInfoCtrl.deviceinfo.mph | number:2}}km/H</td>
+                      <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}km/H</td>
                       <!--气压表2-->
                       <td>{{'pressureMeter'|translate}}</td>
                       <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter2 | number:2}}MPa</td>
@@ -674,8 +675,10 @@
                     <td ng-if="deviceData.imitate1!=null" ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
                     <td ng-if="deviceData.imitate1==null" ng-cloak></td>
                     <!--模拟量2-->
-                    <td ng-if="deviceData.imitate2!=null" ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
-                    <td ng-if="deviceData.imitate2==null" ng-cloak></td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceData.imitate2!=null">{{deviceData.imitate2/1000 | number:1}}V</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001' && deviceData.builtInVoltage!=null">{{deviceData.builtInVoltage/1000 | number:1}}V</td>
+                    <td ng-if="(deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceData.imitate2==null)
+                              ||(deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001' && deviceData.builtInVoltage==null)"></td>
                     <!--电压-->
                     <td ng-if="deviceData.batteryVol!=null" ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
                     <td ng-if="deviceData.batteryVol==null" ng-cloak></td>
