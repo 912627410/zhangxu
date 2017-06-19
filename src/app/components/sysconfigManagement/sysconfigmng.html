@@ -33,11 +33,12 @@
     </div>
 
     <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button"
               presentation-href="config:sysconfigPage"
               ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">{{'query'|translate}}
       </button>
-      <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">{{'reset'|translate}}</button>
+
     </div>
   </div>
 
