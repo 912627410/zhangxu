@@ -1270,33 +1270,33 @@
               <div ng-switch="deviceCurrentInfoCtrl.checkedRad">
                 <div ng-switch-when="DASHBOARD">
                     <div class="row">
-                      <div class="col-md-6">
-                        <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
+                      <div class="col-md-12">
+                        <label style="position: absolute;right: 50px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workTimeChart)">{{'switching'|translate}}</button>
                         </label>
                         <highchart id="workTimeChart" title="{{'averageWorkingHours'|translate}}"
-                                   style="height:300px;"
+                                   style="height:250px;"
                                    config="deviceCurrentInfoCtrl.workTimeChart">
                         </highchart>
                       </div>
-                      <div class="col-md-6">
-                        <label style="position: absolute;right: 60px;top: 5px;z-index: 99;">
+                      <div class="col-md-12">
+                        <label style="position: absolute;right: 50px;top: 5px;z-index: 99;">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">{{'switching'|translate}}</button>
                         </label>
                         <highchart id="startTimesChart" title="{{'averageNumberOfStarts'|translate}}"
-                                     style="height: 300px"
+                                     style="height: 250px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
                         </highchart>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <highchart id="realtimeChart" title="{{'analysisOfMachineSingleWorkHours'|translate}}"
-                                   style="min-width:850px;height: 300px"
-                                   config="deviceCurrentInfoCtrl.singleWorkHours">
-                        </highchart>
-                      </div>
-                    </div>
+                    <!--<div class="row">-->
+                      <!--<div class="col-xs-12">-->
+                        <!--<highchart id="realtimeChart" title="{{'analysisOfMachineSingleWorkHours'|translate}}"-->
+                                   <!--style="min-width:850px;height: 300px"-->
+                                   <!--config="deviceCurrentInfoCtrl.singleWorkHours">-->
+                        <!--</highchart>-->
+                      <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <div ng-switch-when="STATEQUANTITY">
                     <highchart id="simpleChart" title="{{'operationalDataAnalysis'|translate}}" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig" ></highchart>
