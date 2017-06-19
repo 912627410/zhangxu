@@ -1754,7 +1754,7 @@
           data:[]
         }],
         size: {
-          width: 418,
+          width: 760,
           height: 270
         }
       }
@@ -1790,7 +1790,7 @@
           data:[]
         }],
         size: {
-          width: 422,
+          width: 760,
           height: 270
         }
       }
@@ -2011,7 +2011,7 @@
             data: startTimesArray
           }],
           size: {
-            width: 402,
+            width: 760,
             height: 270
           }
         };
@@ -2043,7 +2043,7 @@
             data: totalDurationArray
           }],
           size: {
-            width: 416,
+            width: 760,
             height: 270
           }
         };
