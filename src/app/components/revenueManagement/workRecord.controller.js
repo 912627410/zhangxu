@@ -98,10 +98,13 @@
 
     //工作记录图表
     vm.initChart = function(workRecords) {
-        var recordDates=[];
-        var totalRecords=[];
-        var averageRecords=[];
+        var recordDates=[];  // 时间
+        var totalRecords=[];  // 总趟数
+        var averageRecords=[]; // 平均趟数
         var recordArr=[];
+        var mileageArr=[];
+        var machineNum = []; // 活跃车数
+        var totalMileage = []; // 总里程数
         //根据月份升序排列
         var result = workRecords.sort(function(a, b) { return a.recordDate > b.recordDate ? 1 : -1;} );//升序
         var resultLen = result.length;
@@ -110,23 +113,32 @@
             if (result[i].recordDate != result[i - 1].recordDate) {
               recordDates.push($filter('date')(result[i - 1].recordDate, 'yyyy-MM-dd'));
               recordArr.push(result[i - 1].records);
+              mileageArr.push(result[i - 1].mileage);
+              totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
               var sum = eval(recordArr.join("+"));
               totalRecords.push(sum);
               averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+              machineNum.push(recordArr.length);
               recordArr = [];
+              mileageArr = [];
               if (i == resultLen - 1) {
                 recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 totalRecords.push(result[i].records);
                 averageRecords.push(result[i].records);
+                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
               }
             } else {
               recordArr.push(result[i - 1].records);
+              mileageArr.push(result[i - 1].mileage);
               if (i == resultLen - 1) {
                 recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 recordArr.push(result[i].records);
+                mileageArr.push(result[i].mileage);
+                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
                 var sum = eval(recordArr.join("+"));
                 totalRecords.push(sum);
                 averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
+                machineNum.push(recordArr.length);
               }
             }
           }
@@ -201,6 +213,74 @@
           }]
         };
 
+
+      vm.totalMachineChart = {
+        options: {
+          chart: {
+            type: 'line',
+            height: 300
+          },
+          plotOptions: {
+            line: {
+              enableMouseTracking: true
+            },
+            series: {
+              cursor: 'pointer',
+              events: {
+                click: function(e) {
+                  vm.$apply();
+                }
+              }
+            }
+          }
+        },
+        credits: {
+          enabled:false
+        },
+        title: {
+          text: ' '
+        },
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: recordDates
+        },
+        yAxis: [{
+          title: {
+            text: '活跃车数(辆)',
+            style: {
+              color: 'rgb(124, 181, 236)',
+              fontWeight: 'bold',
+              fontSize: '14px'
+            }
+          }
+
+        },{
+          title: {
+            text: '总里程数(KM)',
+            style: {
+              color: 'rgb(194, 53, 49)',
+              fontWeight: 'bold',
+              fontSize: '14px'
+            }
+          },
+          opposite: true,
+          min: 0
+        }],
+        series: [{
+          type: 'column',
+          color: 'rgb(194, 53, 49)',
+          yAxis: 1,
+          name: '<b style="font-size: 14px;">总里程数</b>',
+          data: totalMileage
+        },{
+          type: 'spline',
+          color: 'rgb(124, 181, 236)',
+          name: '<b style="font-size: 14px;">活跃车数</b>',
+          data: machineNum
+        }]
+      };
 
     };
 
