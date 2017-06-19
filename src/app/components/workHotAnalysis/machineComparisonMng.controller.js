@@ -149,10 +149,12 @@
         vm.dayQuery = true;
         vm.quarterQuery = false;
         vm.monthQuery = false;
+        vm.monthDateDeviceData = null;
         vm.dateType2 = null;
       } else if(dateType1==2){
         vm.dayQuery = false;
         vm.quarterQuery = false;
+        vm.monthDateDeviceData = new Date();
         vm.monthQuery = true;
       } else {
         vm.dayQuery = false;

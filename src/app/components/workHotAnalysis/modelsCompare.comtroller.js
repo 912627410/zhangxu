@@ -16,16 +16,24 @@
     vm.quarterQuery=true;
     vm.monthQuery = false;
     vm.dayQuery = false;
-    vm.comparedQuery = true;
+    vm.comparedQuery = true;//默认显示车型车型对比按钮
     vm.singleQuery = false;
     vm.comparedType = false;
+    vm.cycleQuery = true;//默认显示周期对比按钮
+    vm.comparison = false;//页面初始化时周期对比的行隐藏
+    vm.dateHidden = true;//对比查询时不对比日期查询
     vm.heatType1 = "1";
     vm.hidden = true;
     vm.dateType1 = "1";
     vm.dateType2 = "201702";
+    vm.QuarterType2 = '201701';//默认周期对比的季度为2017第一季度
     vm.hours=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
     vm.hour="2";
-     var machineType = [];//机器类型
+    vm.hour2="2";
+    //设置不同月份比较的月份默认显示时间
+    var now = new Date();
+    var monthDates = new Date( now.getFullYear(), now.getMonth()-1, now.getDate() );
+    var machineType = [];//机器类型
     var loaderModel = ['全部',];//装载机型号
     var excavatorModel = ['全部',];//挖掘机型号
     var jukiType = ['全部',];//重机型号
@@ -149,6 +157,7 @@
         vm.endDateDeviceData = null;
         vm.dateType2 = null;
         vm.monthDateDeviceData = new Date();
+        vm.monthDateDeviceData2 = monthDates;
       }else if(dateType1==3){
         vm.quarterQuery=false;
         vm.monthQuery = false;
@@ -157,6 +166,7 @@
         vm.startDateDeviceData = startDate;
         vm.endDateDeviceData = new Date();
         vm.monthDateDeviceData = null;
+        vm.monthDateDeviceData2 = null;
       }else if(dateType1==1){
         vm.quarterQuery=true;
         vm.monthQuery = false;
@@ -165,6 +175,7 @@
         vm.startDateDeviceData = null;
         vm.endDateDeviceData = null;
         vm.monthDateDeviceData = null;
+        vm.monthDateDeviceData2 = null;
       }
     }
     //单一和对比车型的触发切换
@@ -172,8 +183,16 @@
       vm.comparedQuery=!vm.comparedQuery;
       vm.singleQuery=!vm.singleQuery;
       vm.comparedType = !vm.comparedType;
+      vm.cycleQuery = !vm.cycleQuery;
       vm.hidden = !vm.hidden;
       vm.reset();
+    }
+    vm.toggle2 = function(){
+      vm.comparison = !vm.comparison;
+      vm.comparedQuery = !vm.comparedQuery;
+      vm.cycleQuery = !vm.cycleQuery;
+      vm.hidden = !vm.hidden;
+      vm.dateHidden = !vm.dateHidden;//默认单一周期查询时日期显示
     }
 
     //date picker
@@ -1518,132 +1537,218 @@
     //记录左边地图的名字供相同热度查询时下钻返回调用
     var mapOptionName1;
     var mapOptionName2;
-    //车型对比查询
-    vm.viewResults = function(startDate,endDate,dateType1,dateType2,monthDate,hours,machineType1,machineType2,vehicleType1,vehicleType2,heatType1,heatType2){
+    //车型对比查询--dateType2代表季度周期类型
+    vm.viewResults = function(startDate,endDate,dateType1,dateType2,QuarterType2,monthDate,monthDate2,hours,hours2,machineType1,machineType2,vehicleType1,vehicleType2,heatType1,heatType2){
       if(null==machineType1||null==machineType2||null==heatType1||null==heatType2||null==vehicleType1||null==vehicleType2){
         Notification.warning({message: '请选择相关参数'});
-      }else if(machineType1 == machineType2&&heatType1==heatType2&&vehicleType1==vehicleType2){
-        Notification.warning({message: "相同参数类型的数据没有对比意义，请重新选择参数!"});
-      }else {
+      } else {
         if(vehicleType1=='全部'){
           vehicleType1='';
         }
         if(vehicleType2=='全部'){
           vehicleType2='';
         }
-        //转换月份和日期格式
-        if(monthDate){
-          var month = monthDate.getMonth() +1;
-          if(month<10){
-            var monthDateFormated = monthDate.getFullYear() +'0'+ month;
-          }else{
-            monthDateFormated = ''+monthDate.getFullYear() + month;
+        if(QuarterType2==null){
+          if(machineType1 == machineType2&&heatType1==heatType2&&vehicleType1==vehicleType2){
+            Notification.warning({message: "相同参数类型的数据没有对比意义，请重新选择参数!"});
           }
-        }
-        if(startDate && endDate){
-          var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-          var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-          var lastYearStartDateFormated = (startDate.getFullYear()-1) + '-' + startMonth + '-' + startDate.getDate();
-          var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-          var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-          var lastYearEndDateFormated = (endDate.getFullYear()-1) + '-' + endMonth + '-' + endDate.getDate();
-          //计算查询日期时上周期的起止时间
-          var beforeEndDate = startDate;//上周期的结束时间
-          var beforeStartDate = endDate;//上周期的开始时间
-          var n = beforeStartDate.getDate()-beforeEndDate.getDate();
-          beforeStartDate.setDate(beforeEndDate.getDate()-n);
-          var beforeStartDateFormated = beforeStartDate.getFullYear() + '-' + (beforeStartDate.getMonth() + 1) + '-' + beforeStartDate.getDate();
-          var beforeEndDateFormated = beforeEndDate.getFullYear() + '-' + (beforeEndDate.getMonth() + 1) + '-' + beforeEndDate.getDate();
-        }
-        //开工热度查询判断按某种周期--左图
-        if(heatType1==1){//开工
-          var mapOption1= chinaOption1;
-          var restCallURL1 = START_HEAT_QUERY;
-          if(dateType1==1){
-            restCallURL1 += "quarter?workRateQuarter=" + dateType2 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
-          }
-          if(dateType1==2){
-            restCallURL1 += "month?workRateMonth=" + monthDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
-          }
-          if(dateType1==3){
-            restCallURL1 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
-          }
-
-        }else if(heatType1==0){//销售
-          var mapOption1= chinaOption2;
-          var restCallURL1 = SALES_HEAT_QUERY;//查询周期路径
-          var beforeRestCallURL1 = SALES_HEAT_QUERY;//环比查询周期路径
-          var lastYearRestCallURL1 = SALES_HEAT_QUERY;//同比查询周期路径
-          if(dateType1==1){
-            restCallURL1 += "quarter?salesHeatQuarter=" + dateType2 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            if(dateType2=='201701'){
-              beforeRestCallURL1 += "quarter?salesHeatQuarter=" + 201604 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            }else {
-              beforeRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-1) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            }
-            lastYearRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-100) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-
-          }
-          if(dateType1==2){
-            restCallURL1 += "month?salesHeatMonth=" + monthDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            if(monthDateFormated==201701){
-              beforeRestCallURL1 += "month?salesHeatMonth=" + 201612 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            }else{
-              beforeRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-1) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            }
-            lastYearRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-100) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-
-          }
-          if(dateType1==3) {
-            restCallURL1 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            beforeRestCallURL1 += "date?startDate=" + beforeStartDateFormated + "&endDate=" + beforeEndDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-            lastYearRestCallURL1 += "date?startDate=" + lastYearStartDateFormated + "&endDate=" + lastYearEndDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
-          }
-        }
-        //开工热度查询判断按某种周期--右图
-        if(heatType2==1){//开工
-          var mapOption2= chinaOption1;
-          var restCallURL2 = START_HEAT_QUERY;
-          if(dateType1==1){
-            restCallURL2 += "quarter?workRateQuarter=" + dateType2 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
-          }
-          if(dateType1==2){
+          //同周期不同车型对比路径
+          //转换月份和日期格式
+          if(monthDate){
             var month = monthDate.getMonth() +1;
-            restCallURL2 += "month?workRateMonth=" + monthDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
-          }
-          if(dateType1==3){
-            restCallURL2 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
-          }
-
-        }else if(heatType2==0){//销售
-          var mapOption2= chinaOption2;
-          var restCallURL2 = SALES_HEAT_QUERY;//查询周期路径
-          var beforeRestCallURL2 = SALES_HEAT_QUERY;//环比查询周期路径
-          var lastYearRestCallURL2 = SALES_HEAT_QUERY;//同比查询周期路径
-          if(dateType1==1){
-            restCallURL2 += "quarter?salesHeatQuarter=" + dateType2 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            if(dateType2=='201701'){
-              beforeRestCallURL2 += "quarter?salesHeatQuarter=" + 201604 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            }else {
-              beforeRestCallURL2 += "quarter?salesHeatQuarter=" + (dateType2-1) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            }
-            lastYearRestCallURL2 += "quarter?salesHeatQuarter=" + (dateType2-100) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-          }
-          if(dateType1==2){
-            restCallURL2 += "month?salesHeatMonth=" + monthDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            if(monthDateFormated==201701){
-              beforeRestCallURL2 += "month?salesHeatMonth=" + 201612 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+            if(month<10){
+              var monthDateFormated = monthDate.getFullYear() +'0'+ month;
             }else{
-              beforeRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated-1) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              monthDateFormated = ''+monthDate.getFullYear() + month;
             }
-            lastYearRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated-100) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
           }
-          if(dateType1==3) {
-            restCallURL2 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            beforeRestCallURL2 += "date?startDate=" + beforeStartDateFormated + "&endDate=" + beforeEndDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
-            lastYearRestCallURL2 += "date?startDate=" + lastYearStartDateFormated + "&endDate=" + lastYearEndDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+          if(startDate && endDate){
+            var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+            var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+            var lastYearStartDateFormated = (startDate.getFullYear()-1) + '-' + startMonth + '-' + startDate.getDate();
+            var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+            var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+            var lastYearEndDateFormated = (endDate.getFullYear()-1) + '-' + endMonth + '-' + endDate.getDate();
+            //计算查询日期时上周期的起止时间
+            var beforeEndDate = startDate;//上周期的结束时间
+            var beforeStartDate = endDate;//上周期的开始时间
+            var n = beforeStartDate.getDate()-beforeEndDate.getDate();
+            beforeStartDate.setDate(beforeEndDate.getDate()-n);
+            var beforeStartDateFormated = beforeStartDate.getFullYear() + '-' + (beforeStartDate.getMonth() + 1) + '-' + beforeStartDate.getDate();
+            var beforeEndDateFormated = beforeEndDate.getFullYear() + '-' + (beforeEndDate.getMonth() + 1) + '-' + beforeEndDate.getDate();
+          }
+          //开工热度查询判断按某种周期--左图
+          if(heatType1==1){//开工
+            var mapOption1= chinaOption1;
+            var restCallURL1 = START_HEAT_QUERY;
+            if(dateType1==1){
+              restCallURL1 += "quarter?workRateQuarter=" + dateType2 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
+            }
+            if(dateType1==2){
+              restCallURL1 += "month?workRateMonth=" + monthDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
+            }
+            if(dateType1==3){
+              restCallURL1 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1 + '&hourScope=' + hours;
+            }
+
+          }else if(heatType1==0){//销售
+            var mapOption1= chinaOption2;
+            var restCallURL1 = SALES_HEAT_QUERY;//查询周期路径
+            var beforeRestCallURL1 = SALES_HEAT_QUERY;//环比查询周期路径
+            var lastYearRestCallURL1 = SALES_HEAT_QUERY;//同比查询周期路径
+            if(dateType1==1){
+              restCallURL1 += "quarter?salesHeatQuarter=" + dateType2 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              if(dateType2=='201701'){
+                beforeRestCallURL1 += "quarter?salesHeatQuarter=" + 201604 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              }else {
+                beforeRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-1) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              }
+              lastYearRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-100) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+
+            }
+            if(dateType1==2){
+              restCallURL1 += "month?salesHeatMonth=" + monthDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              if(monthDateFormated==201701){
+                beforeRestCallURL1 += "month?salesHeatMonth=" + 201612 + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              }else{
+                beforeRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-1) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              }
+              lastYearRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-100) + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+
+            }
+            if(dateType1==3) {
+              restCallURL1 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              beforeRestCallURL1 += "date?startDate=" + beforeStartDateFormated + "&endDate=" + beforeEndDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+              lastYearRestCallURL1 += "date?startDate=" + lastYearStartDateFormated + "&endDate=" + lastYearEndDateFormated + '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+            }
+          }
+          //开工热度查询判断按某种周期--右图
+          if(heatType2==1){//开工
+            var mapOption2= chinaOption1;
+            var restCallURL2 = START_HEAT_QUERY;
+            if(dateType1==1){
+              restCallURL2 += "quarter?workRateQuarter=" + dateType2 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
+            }
+            if(dateType1==2){
+              var month = monthDate.getMonth() +1;
+              restCallURL2 += "month?workRateMonth=" + monthDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
+            }
+            if(dateType1==3){
+              restCallURL2 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2 + '&hourScope=' + hours;
+            }
+
+          }else if(heatType2==0){//销售
+            var mapOption2= chinaOption2;
+            var restCallURL2 = SALES_HEAT_QUERY;//查询周期路径
+            var beforeRestCallURL2 = SALES_HEAT_QUERY;//环比查询周期路径
+            var lastYearRestCallURL2 = SALES_HEAT_QUERY;//同比查询周期路径
+            if(dateType1==1){
+              restCallURL2 += "quarter?salesHeatQuarter=" + dateType2 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              if(dateType2=='201701'){
+                beforeRestCallURL2 += "quarter?salesHeatQuarter=" + 201604 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              }else {
+                beforeRestCallURL2 += "quarter?salesHeatQuarter=" + (dateType2-1) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              }
+              lastYearRestCallURL2 += "quarter?salesHeatQuarter=" + (dateType2-100) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+            }
+            if(dateType1==2){
+              restCallURL2 += "month?salesHeatMonth=" + monthDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              if(monthDateFormated==201701){
+                beforeRestCallURL2 += "month?salesHeatMonth=" + 201612 + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              }else{
+                beforeRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated-1) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              }
+              lastYearRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated-100) + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+            }
+            if(dateType1==3) {
+              restCallURL2 += "date?startDate=" + startDateFormated + "&endDate=" + endDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              beforeRestCallURL2 += "date?startDate=" + beforeStartDateFormated + "&endDate=" + beforeEndDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+              lastYearRestCallURL2 += "date?startDate=" + lastYearStartDateFormated + "&endDate=" + lastYearEndDateFormated + '&machineType=' + machineType2 + '&modelType=' + vehicleType2;
+            }
+          }
+        }else{
+          if(dateType2 == QuarterType2&&monthDate==monthDate2&&hours==hours2){
+            Notification.warning({message: "相同参数类型的数据没有对比意义，请重新选择参数!"});
+          }
+          //同车型不同周期对比路径
+          if(dateType1==2){
+            if(monthDate){
+              var month = monthDate.getMonth() +1;
+              if(month<10){
+                var monthDateFormated = monthDate.getFullYear() +'0'+ month;
+              }else{
+                monthDateFormated = ''+monthDate.getFullYear() + month;
+              }
+            }
+            if(monthDate2){
+              var month2 = monthDate.getMonth() +1;
+              if(month2<10){
+                var monthDateFormated2 = monthDate2.getFullYear() +'0'+ month2;
+              }else{
+                monthDateFormated2 = ''+monthDate2.getFullYear() + month2;
+              }
+            }
+          }
+          //车型类型字符串
+          var models = '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+          //拼接请求路径
+          if(heatType1==1){//开工
+            var mapOption1= chinaOption1;//--左图
+            var mapOption2= chinaOption1;//--右图
+            var restCallURL1 = START_HEAT_QUERY;//--左图
+            var restCallURL2 = START_HEAT_QUERY;//--右图
+            if(dateType1==1){
+              restCallURL1 += "quarter?workRateQuarter=" + dateType2 + '&hourScope=' + hours + models;
+              restCallURL2+= "quarter?workRateQuarter=" + QuarterType2 + '&hourScope=' + hours2 + models;
+            }
+            if(dateType1==2){
+              restCallURL1 += "month?workRateMonth=" + monthDateFormated + '&hourScope=' + hours + models;
+              restCallURL2 += "month?workRateMonth=" + monthDateFormated2 + '&hourScope=' + hours2 + models;
+            }
+          }else if(heatType1==0){//销售
+            var mapOption1= chinaOption2;
+            var mapOption2= chinaOption2;
+            var restCallURL1 = SALES_HEAT_QUERY;//查询周期路径--左图
+            var restCallURL2 = SALES_HEAT_QUERY;//查询周期路径--右图
+            var beforeRestCallURL1 = SALES_HEAT_QUERY;//环比查询周期路径--左图
+            var beforeRestCallURL2 = SALES_HEAT_QUERY;//环比查询周期路径--右图
+            var lastYearRestCallURL1 = SALES_HEAT_QUERY;//同比查询周期路径--左图
+            var lastYearRestCallURL2 = SALES_HEAT_QUERY;//同比查询周期路径--右图
+            if(dateType1==1){
+              restCallURL1 += "quarter?salesHeatQuarter=" + dateType2 + models;
+              restCallURL2 += "quarter?salesHeatQuarter=" + QuarterType2 + models;
+              if(dateType2=='201701'){
+                beforeRestCallURL1 += "quarter?salesHeatQuarter=" + 201604 + models;
+              }else {
+                beforeRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-1) + models;
+              }
+              if(QuarterType2=='201701'){
+                beforeRestCallURL2 += "quarter?salesHeatQuarter=" + 201604 + models;
+              }else {
+                beforeRestCallURL2 += "quarter?salesHeatQuarter=" + (QuarterType2-1) + models;
+              }
+              lastYearRestCallURL1 += "quarter?salesHeatQuarter=" + (dateType2-100) + models;
+              lastYearRestCallURL2 += "quarter?salesHeatQuarter=" + (QuarterType2-100) + models;
+            }
+            if(dateType1==2){
+              restCallURL1 += "month?salesHeatMonth=" + monthDateFormated + models;
+              restCallURL2 += "month?salesHeatMonth=" + monthDateFormated2 + models;
+              if(monthDateFormated==201701){
+                beforeRestCallURL1 += "month?salesHeatMonth=" + 201612 + models;
+              }else{
+                beforeRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-1) + models;
+              }
+              if(monthDateFormated2==201701){
+                beforeRestCallURL2 += "month?salesHeatMonth=" + 201612 + models;
+              }else{
+                beforeRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated2-1) + models;
+              }
+              lastYearRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-100) + models;
+              lastYearRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated2-100) + models;
+            }
           }
         }
+
         var totalData1;//总销售额--左图
         var beforeTotalData1;//上周期总销售额--左图
         var lastYearTotalData1;//上年度同周期销售额--左
@@ -1698,8 +1803,6 @@
             vm.avgHours3 = true;
             vm.national = true;
             vm.allProvince = false;
-            // vm.national1 = true;
-            // vm.allProvince1 = false;
             totalData1 = data1;
             var total1 = 0;
             for(var a=0;a<data1.length;a++){
@@ -1800,7 +1903,11 @@
               vm.avgHours4 = false;
               vm.avgHoursNational2 = true;
               vm.avgHoursProvince2 = false;
-              avgWorkHoursQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2);
+              if(QuarterType2==null){
+                avgWorkHoursQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2);
+              }else{
+                avgWorkHoursQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2);
+              }
             }
             if(max1>=max2) {
               max3 = max1;
@@ -1890,7 +1997,11 @@
             avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
           }
           if(heatType2==1){
-            avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+            if(QuarterType2==null){
+              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+            }else {
+              avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+            }
           }
           showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
         })
@@ -1902,7 +2013,11 @@
             avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
           }
           if(heatType2==1){
-            avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+            if(QuarterType2==null){
+              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+            }else {
+              avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+            }
           }
           showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
 
@@ -1958,10 +2073,13 @@
               avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
             }
             if(heatType2==1){
-              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              if(QuarterType2==null){
+                avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              }else {
+                avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+              }
             }
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
-
           })
           mapChart2.on("click", function (param){
             backButtons[0].style.display = "block";
@@ -1970,10 +2088,13 @@
               avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
             }
             if(heatType2==1){
-              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              if(QuarterType2==null){
+                avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              }else {
+                avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+              }
             }
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
-
           })
         }
         //省级地图返回到中国地图
@@ -2026,8 +2147,11 @@
               avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
             }
             if(heatType2==1){
-              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
-
+              if(QuarterType2==null){
+                avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              }else {
+                avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+              }
             }
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
           })
@@ -2038,7 +2162,11 @@
               avgWorkHoursProvinceQuery(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType1,vehicleType1,param.name);
             }
             if(heatType2==1){
-              avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              if(QuarterType2==null){
+                avgWorkHoursProvinceQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2,param.name);
+              }else {
+                avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
+              }
             }
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
           })
@@ -2268,7 +2396,6 @@
       vm.heatType1 = null;
       vm.heatType2 = null;
     }
-
-
+    
   }
 })();
