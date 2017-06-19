@@ -16,13 +16,17 @@
     vm.quarterQuery=true;
     vm.monthQuery = false;
     vm.dayQuery = false;
-    vm.comparedQuery = true;
+    vm.comparedQuery = true;//默认显示车型车型对比按钮
     vm.singleQuery = false;
     vm.comparedType = false;
+    vm.cycleQuery = true;//默认显示周期对比按钮
+    vm.comparison = false;//页面初始化时周期对比的行隐藏
+    vm.dateHidden = !vm.dateHidden;//对比查询时不对比日期查询
     vm.heatType1 = "1";
     vm.hidden = true;
     vm.dateType1 = "1";
     vm.dateType2 = "201702";
+    vm.dateType22 = '201701';//默认周期对比的季度为2017第一季度
     vm.hours=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
     vm.hour="2";
      var machineType = [];//机器类型
@@ -149,6 +153,7 @@
         vm.endDateDeviceData = null;
         vm.dateType2 = null;
         vm.monthDateDeviceData = new Date();
+        vm.monthDateDeviceData2 = new Date();
       }else if(dateType1==3){
         vm.quarterQuery=false;
         vm.monthQuery = false;
@@ -157,6 +162,7 @@
         vm.startDateDeviceData = startDate;
         vm.endDateDeviceData = new Date();
         vm.monthDateDeviceData = null;
+        vm.monthDateDeviceData2 = null;
       }else if(dateType1==1){
         vm.quarterQuery=true;
         vm.monthQuery = false;
@@ -165,6 +171,7 @@
         vm.startDateDeviceData = null;
         vm.endDateDeviceData = null;
         vm.monthDateDeviceData = null;
+        vm.monthDateDeviceData2 = null;
       }
     }
     //单一和对比车型的触发切换
@@ -172,8 +179,16 @@
       vm.comparedQuery=!vm.comparedQuery;
       vm.singleQuery=!vm.singleQuery;
       vm.comparedType = !vm.comparedType;
+      vm.cycleQuery = !vm.cycleQuery;
       vm.hidden = !vm.hidden;
       vm.reset();
+    }
+    vm.toggle2 = function(){
+      vm.comparison = !vm.comparison;
+      vm.comparedQuery = !vm.comparedQuery;
+      vm.cycleQuery = !vm.cycleQuery;
+      vm.hidden = !vm.hidden;
+      vm.dateHidden = true;//默认单一周期查询时日期显示
     }
 
     //date picker
@@ -2262,6 +2277,103 @@
 
     var provinces = ['shanghai', 'hebei','shanxi','neimenggu','liaoning','jilin','heilongjiang','jiangsu','zhejiang','anhui','fujian','jiangxi','shandong','henan','hubei','hunan','guangdong','guangxi','hainan','sichuan','guizhou','yunnan','xizang','shanxi1','gansu','qinghai','ningxia','xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen', 'taiwan'];
     var provincesText = ['上海市', '河北省', '山西省', '内蒙古自治区', '辽宁省', '吉林省','黑龙江省',  '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省','河南省', '湖北省', '湖南省', '广东省', '广西壮族自治区', '海南省', '四川省', '贵州省', '云南省', '西藏自治区', '陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '重庆市', '香港特別行政區', '澳門特別行政區', '台湾省'];
+
+
+
+
+
+
+
+
+    function abc(dataType1,QuarterType,QuarterType2,monthDate,monthDate2,hours,hours2,machineType1,vehicleType1,heatType1){
+
+      if(dataType1==2){
+        if(monthDate){
+          var month = monthDate.getMonth() +1;
+          if(month<10){
+            var monthDateFormated = monthDate.getFullYear() +'0'+ month;
+          }else{
+            monthDateFormated = ''+monthDate.getFullYear() + month;
+          }
+        }
+        if(monthDate2){
+          var month2 = monthDate.getMonth() +1;
+          if(month2<10){
+            var monthDateFormated2 = monthDate2.getFullYear() +'0'+ month2;
+          }else{
+            monthDateFormated2 = ''+monthDate2.getFullYear() + month2;
+          }
+        }
+      }
+      //车型类型字符串
+      var models = '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
+      //拼接请求路径
+      if(heatType1==1){//开工
+        var mapOption1= chinaOption1;//--左图
+        var mapOption2= chinaOption1;//--右图
+        var restCallURL1 = START_HEAT_QUERY;//--左图
+        var restCallURL2 = START_HEAT_QUERY;//--右图
+        if(dateType1==1){
+          restCallURL1 += "quarter?workRateQuarter=" + QuarterType + '&hourScope=' + hours + models;
+          restCallURL2+= "quarter?workRateQuarter=" + QuarterType2 + '&hourScope=' + hours2 + models;
+        }
+        if(dateType1==2){
+          restCallURL1 += "month?workRateMonth=" + monthDateFormated + '&hourScope=' + hours + models;
+          restCallURL2 += "month?workRateMonth=" + monthDateFormated2 + '&hourScope=' + hours2 + models;
+        }
+      }else if(heatType1==0){//销售
+        var mapOption1= chinaOption2;
+        var mapOption2= chinaOption2;
+        var restCallURL1 = SALES_HEAT_QUERY;//查询周期路径--左图
+        var restCallURL2 = SALES_HEAT_QUERY;//查询周期路径--右图
+        var beforeRestCallURL1 = SALES_HEAT_QUERY;//环比查询周期路径--左图
+        var beforeRestCallURL2 = SALES_HEAT_QUERY;//环比查询周期路径--右图
+        var lastYearRestCallURL1 = SALES_HEAT_QUERY;//同比查询周期路径--左图
+        var lastYearRestCallURL2 = SALES_HEAT_QUERY;//同比查询周期路径--右图
+        if(dateType1==1){
+          restCallURL1 += "quarter?salesHeatQuarter=" + QuarterType + models;
+          restCallURL2 += "quarter?salesHeatQuarter=" + QuarterType2 + models;
+          if(QuarterType=='201701'){
+            beforeRestCallURL1 += "quarter?salesHeatQuarter=" + 201604 + models;
+          }else {
+            beforeRestCallURL1 += "quarter?salesHeatQuarter=" + (QuarterType-1) + models;
+          }
+          if(QuarterType2=='201701'){
+            beforeRestCallURL2 += "quarter?salesHeatQuarter=" + 201604 + models;
+          }else {
+            beforeRestCallURL2 += "quarter?salesHeatQuarter=" + (QuarterType2-1) + models;
+          }
+          lastYearRestCallURL1 += "quarter?salesHeatQuarter=" + (QuarterType-100) + models;
+          lastYearRestCallURL2 += "quarter?salesHeatQuarter=" + (QuarterType2-100) + models;
+        }
+        if(dateType1==2){
+          restCallURL1 += "month?salesHeatMonth=" + monthDateFormated + models;
+          restCallURL2 += "month?salesHeatMonth=" + monthDateFormated2 + models;
+          if(monthDateFormated==201701){
+            beforeRestCallURL1 += "month?salesHeatMonth=" + 201612 + models;
+          }else{
+            beforeRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-1) + models;
+        }
+          if(monthDateFormated2==201701){
+            beforeRestCallURL2 += "month?salesHeatMonth=" + 201612 + models;
+          }else{
+            beforeRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated2-1) + models;
+          }
+          lastYearRestCallURL1 += "month?salesHeatMonth=" + (monthDateFormated-100) + models;
+          lastYearRestCallURL2 += "month?salesHeatMonth=" + (monthDateFormated2-100) + models;
+        }
+      }
+
+
+
+    }
+
+
+
+
+
+
+
 
     //重置按钮
     vm.reset = function () {
