@@ -81,7 +81,7 @@
     <div ng-show="modelsCompareCtrl.quarterQuery">
       <label class="control-label col-md-1">查询季度:</label>
       <div class="controls col-md-2">
-        <select class="form-control" ng-model="modelsCompareCtrl.dateType22">
+        <select class="form-control" ng-model="modelsCompareCtrl.QuarterType2">
           <option value="201702">2017年第二季度</option>
           <option value="201701">2017年第一季度</option>
           <option value="201604">2016年第四季度</option>
@@ -115,7 +115,7 @@
     <div>
       <label class="control-label col-md-1">活跃阈值:</label>
       <div class="controls col-md-2">
-        <select class="form-control" ng-model="modelsCompareCtrl.hour">
+        <select class="form-control" ng-model="modelsCompareCtrl.hour2">
           <option ng-repeat="date in modelsCompareCtrl.hours" value="{{date}}">{{date}}小时</option>
         </select>
       </div>
@@ -202,7 +202,7 @@
     </div>
     <div class="col-md-2" ng-show="modelsCompareCtrl.comparison">
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
+              ng-click="modelsCompareCtrl.viewResults(null,null,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.QuarterType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.monthDateDeviceData2,modelsCompareCtrl.hour,modelsCompareCtrl.hour2,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType1,vehicleType1.selected,vehicleType1.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType1)"
       >&nbsp;查&nbsp;询&nbsp;对&nbsp;比&nbsp;</button>
     </div>
   </div>
@@ -232,7 +232,7 @@
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.hour,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
+              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,null,modelsCompareCtrl.monthDateDeviceData,null,modelsCompareCtrl.hour,null,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
       >&nbsp;查&nbsp;询&nbsp;对&nbsp;比&nbsp;</button>
     </div>
   </div>
