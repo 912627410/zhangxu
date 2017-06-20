@@ -201,8 +201,8 @@
       $scope.chartWorkMonth = cycleValue1[0];
       $scope.chartArea = "全国";
       $scope.chartProduceType = '所有类型';
-      getSelectProduceType();
-      getSelectMachineType(2);
+      $scope.produceType.selected = '';
+      $scope.machineType.selected = '';
       $scope.cycleType.selected = cycleType[0];
       $scope.cycleValue.selected = cycleValue1[0];
     };
