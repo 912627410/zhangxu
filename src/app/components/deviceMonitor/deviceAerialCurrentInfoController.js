@@ -852,6 +852,7 @@
             $timeout(function(){
                 //第一个标注
                 var centerAddr;
+                // 若已定位,则标注为定位点;若未定位,则标注为围栏中心点
                 if(1==deviceInfo.locateStatus && null!=deviceInfo.amaplongitudeNum && null!=deviceInfo.amaplatitudeNum){
                     centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
                 } else {
