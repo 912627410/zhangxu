@@ -405,6 +405,7 @@
 
             var map = new AMap.Map(mapId, {
                 resizeEnable: true,
+                scrollWheel: false, // 是否可通过鼠标滚轮缩放浏览
                 center: localCenterAddr,
                 zooms: [4, 18]
             });
@@ -850,8 +851,11 @@
 
             $timeout(function(){
                 //第一个标注
-                if(null!=deviceInfo.amaplongitudeNum && null!=deviceInfo.amaplatitudeNum){
-                    var centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
+                var centerAddr;
+                if(1==deviceInfo.locateStatus && null!=deviceInfo.amaplongitudeNum && null!=deviceInfo.amaplatitudeNum){
+                    centerAddr = [deviceInfo.amaplongitudeNum,deviceInfo.amaplatitudeNum];
+                } else {
+                    centerAddr = [vm.amaplongitudeNum,vm.amaplatitudeNum];
                 }
 
 

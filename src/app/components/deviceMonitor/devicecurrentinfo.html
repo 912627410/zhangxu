@@ -703,7 +703,7 @@
                     <td ng-if="deviceData.oilPress!=null" ng-cloak>{{deviceData.oilPress}}KPa</td>
                     <td ng-if="deviceData.oilPress==null" ng-cloak></td>
                     <!--阶段工作时间-->
-                    <td  ng-cloak>{{deviceData.momentWorkTime | convertToMins}}</td>
+                    <td  ng-cloak class="text-nowrap">{{deviceData.momentWorkTime | convertToMins}}</td>
                     <!--阶段里程-->
                     <td ng-if="deviceData.momentMileage!=null" ng-cloak>{{deviceData.momentMileage | number:2}}/KM</td>
                     <td ng-if="deviceData.momentMileage==null" ng-cloak></td>

@@ -90,7 +90,7 @@
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.liquidLevelSw==null">{{'noData'|translate}}</td>
                                                 <td>{{'electronicFenceStatus'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machine.fenceStatus=='0'" class="bg-warning text-warning">{{'fenceSetlocationIsAbnormal'|translate}}</td>
-                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machine.fenceStatus=='1'" class="bg-info text-info">,{{'fenceSetlocationIsNormal'|translate}}</td>
+                                                <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machine.fenceStatus=='1'" class="bg-info text-info">{{'fenceSetlocationIsNormal'|translate}}</td>
                                                 <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machine.fenceStatus==null" class="bg-danger text-danger">{{'notSetFence'|translate}}</td>
                                             </tr>
                                             <tr>
@@ -1347,7 +1347,9 @@
 
                     <div class="row">
                         <div class="col-md-11">
-                            <label class="text-nowrap">{{'currentAddress'|translate}}:</label> {{deviceAerialCurrentInfoController.deviceinfo.address}}
+                          <label class="text-nowrap">{{'currentAddress'|translate}}:</label>
+                          <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1"> {{deviceAerialCurrentInfoController.deviceinfo.address}}</span>
+                          <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" style="color: red;"> ({{'notLocate' | translate}})</span>
                         </div>
                       <div class="col-md-1" style="float: right">
                         <button type="button" class="btn btn-default" title="{{'returnToMachineLocation'|translate}}" ng-click="deviceAerialCurrentInfoController.backCurrentAdd()">
