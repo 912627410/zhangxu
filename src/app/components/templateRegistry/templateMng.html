@@ -1,0 +1,49 @@
+<section class="content-header " style="margin-left: 1%">
+  <h4>协议模版</h4>
+</section>
+<!-- Main content -->
+<section class="content form-horizontal" style="margin-left: 1%">
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="协议版本号">
+        <span class="input-group-btn"><button type="button" name="search" id="search-btn" class="btn btn-flat"><i
+          class="fa fa-search"></i></button></span>
+      </div>
+    </div>
+    <div class="col-lg-1 col-lg-offset-4">
+      <button ng-click="templateMngController.newTemplate()">新增</button>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12" style="margin-top: 2%">
+      <table ng-table="templateMngController.tableParams" class="table table-condensed table-bordered table-striped"
+             role="grid">
+        <tr ng-repeat="template in $data">
+          <td data-title="'序号'">{{$index+1}}</td>
+          <td data-title="'设备类型'" sortable="'deviceType'">
+            <a href ng-click="templateMngController.currentInfo(template)">{{template.deviceType}}</a>
+          </td>
+          <td data-title="'名称'" sortable="'tName'">{{template.tName}}</td>
+          <td data-title="'状态'" sortable="'status'">{{template.status}}</td>
+          <td data-title="'创建时间'" sortable="'recordTime'">{{template.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td data-title="'更新时间'" sortable="'updateTime'">{{template.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td data-title="'描述'" sortable="'description'">{{template.description}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="templateMngController.page.totalElements"
+                    ng-change="templateMngController.query(templateMngController.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="templateMngController.pageNumber"
+                    items-per-page="templateMngController.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                    next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+  </div>
+
+</section>
+

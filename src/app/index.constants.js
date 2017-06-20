@@ -260,6 +260,8 @@
     .constant('VIEW_SMS_EMCLOUD_URL', SERVER_BASE_URL + 'sms_emcloud/getsms')   //得到短消息内容
     .constant('SEND_SMS_EMCLOUD_URL', SERVER_BASE_URL + 'sms_emcloud/sendsms')   //发送短消息
 
+    //模版url
+    .constant('TEMPLATE_URL', SERVER_BASE_URL + 'template/getAll')   //得到短消息内容
   ;
 
 

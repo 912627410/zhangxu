@@ -13,7 +13,7 @@
     .controller('newTemplateController', newTemplateController);
 
   /** @ngInject */
-  function newTemplateController($rootScope,$scope,$uibModalInstance,jsonData) {
+  function newTemplateController($rootScope,$scope,$state) {
     var vm = this;
     var registerNum;
     var jsonData = jsonData;
@@ -67,9 +67,7 @@
        $uibModalInstance.close(vm.templateItemArr);
     }
 
-    vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
+
 
     vm.converterData = [{
       name:"转化器a",
@@ -81,6 +79,11 @@
       name:"转化器c",
       value:"org.gpscloud.converter.CHexConver3"
     }]
+
+    vm.return=function () {
+      $state.go("home.templateMng");
+    }
+
 
   }
 })();
