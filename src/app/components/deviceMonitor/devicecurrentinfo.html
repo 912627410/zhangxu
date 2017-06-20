@@ -348,13 +348,13 @@
                   <tr>
                     <!--是否定位-->
                     <td>{{'whetherPositioning'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'" class="bg-danger text-danger">{{'notLocate'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='1'" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='0'" class="bg-danger text-danger">{{'notLocate'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">{{'noData'|translate}}</td>
                     <!--定位时间-->
                     <td>{{'positioningTime'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">未定位</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='1'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='0'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">未定位</td>
                     <!--回传时间-->
                     <td>{{'returnTime'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

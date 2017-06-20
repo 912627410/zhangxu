@@ -247,6 +247,8 @@
           categories: recordDates
         },
         yAxis: [{
+          tickInterval: 5,
+          min: 0,
           title: {
             text: '活跃车数(辆)',
             style: {

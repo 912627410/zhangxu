@@ -168,6 +168,7 @@
 
       var map = new AMap.Map("workRecordDetailMap", {
         resizeEnable: true,
+        scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
         center: carPostion,
         zooms: [4, 18]
       });
@@ -175,8 +176,9 @@
       map.setZoom(14);
 
       /*工具条，比例尺，预览插件*/
-      AMap.plugin(['AMap.Scale'], function () {
+      AMap.plugin(['AMap.Scale','AMap.ToolBar'], function () {
         map.addControl(new AMap.Scale());
+        map.addControl(new AMap.ToolBar());
       });
 
       AMap.plugin(["AMap.RangingTool"], function () {
