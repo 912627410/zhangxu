@@ -14,16 +14,47 @@
     var vm = this;
     var back = document.getElementById('backProvince');
     var time,cycle;
+    var startYear = 2016;
 
     var produceType = [];
     var machineType = [];
     var cycleType = ["按月","按季度"];
-    var cycleValue1 = ["2017年05月","2017年04月","2017年03月","2017年02月","2017年01月","2016年12月","2016年11月","2016年10月","2016年09月","2016年08月","2016年07月","2016年06月","2016年05月","2016年04月"];
-    var cycleValue2 = ["2017年01季度","2016年04季度","2016年03季度","2016年02季度","2016年01季度"];
+    var cycleValue1 = getCycleValue1();
+    var cycleValue2 = getCycleValue2();
 
     $scope.chartArea = "全国";
     $scope.chartProduceType = '所有类型';
     $scope.chartWorkMonth = cycleValue1[0];
+
+    //按月
+    function getCycleValue1(){
+      var currentDate = new Date();
+      var length = (currentDate.getFullYear() - startYear) * 12 + currentDate.getMonth();
+      var result = [];
+      for(var i = 0; i < length; i++) {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        var m = currentDate.getMonth() + 1;
+        m = m < 10 ? "0" + m : m;
+        result.push(currentDate.getFullYear() + '年' + m + '月');
+      }
+      return result;
+    };
+
+    //按季度
+    function getCycleValue2(){
+      var currentDate = new Date();
+      var length = (currentDate.getFullYear() - startYear) * 12 + currentDate.getMonth();
+      var result = [];
+      for(var i=0;i<length;i+=3){
+        currentDate.setMonth(currentDate.getMonth() - 3);
+        var q = Math.ceil(currentDate.getMonth() / 3);
+        if(currentDate.getFullYear() > 2015){
+          result.push(currentDate.getFullYear() + '年0' + q + '季度');
+        }
+      }
+      return result;
+    };
+
 
     //get produceType
     function getSelectProduceType() {
