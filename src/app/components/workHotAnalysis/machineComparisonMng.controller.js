@@ -2604,6 +2604,8 @@
           var mmuLine2 = mmuOption2;
         }
         var mmuChart2 = echarts.init(lineContainerList[1]);
+        //折线图图表联动
+        echarts.connect([mmuChart, mmuChart2]);
         yearInfoLine(machineType1,heatType1,mmuLine,mmuChart,machineType2,heatType2,mmuLine2,mmuChart2);
       }
     }
