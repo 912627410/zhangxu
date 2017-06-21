@@ -137,6 +137,10 @@
     bottom: 0px;
     left: 43px;
   }
+  th{
+    white-space:nowrap;
+  }
+
 </style>
 <div class="modal-header">
   <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
@@ -431,10 +435,6 @@
                       <div ng-switch-when="0" class="harWIFNormal" title="{{'harWIF'|translate}}"></div>
                       <div ng-switch-when="1" class="harWFIWarning" title="{{'harWIF'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
-                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
-                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
-                    </td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:31">
@@ -500,6 +500,12 @@
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
                       <div ng-switch-when="0" class="harRBrakePadsNormal" title="{{'harRBrakePads'|translate}}"></div>
                       <div ng-switch-when="1" class="harRBrakePadsWarning" title="{{'harRBrakePads'|translate}}"></div>
+                    </td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
+                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
+                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
                   <!--矿机end -->
@@ -716,12 +722,21 @@
                   <tr>
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
-                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+
+                    <!--定位所用时间-->
+                    <td>{{'locateDuration'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">
+                      {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">
+                      {{'noMessage'|translate}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">
+                      {{'noData' |translate}}
+                    </td>
                   </tr>
                   <tr>
                     <td>{{'whetherPositioning'|translate}}</td>
@@ -747,12 +762,13 @@
                     <!--作用与“锁车状态”重复，删除GPRS信号百分比-->
                     <!--<td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>--> </tr>
                   <tr>
-                    <td>{{'totalRunningTimeHour'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
+
                     <td>{{'fuelLevel'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
                     <td>{{'coolantTemperature'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C</td>
+                    <td>{{'GPRSSignalQuality'|translate}}</td>
+                    <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                   </tr>
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{'torqueConverterOilTemperature'|translate}}</td>
@@ -766,17 +782,8 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
-                  </tr>
-                  <tr>
-                    <td>{{'GPRSSignalQuality'|translate}}</td>
-                    <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
-                    <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
-                    <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
-                    <td>{{'realTimeWorkH'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
-                    <!--增加车载蓄电池电压显示-->
-                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+
+
                   </tr>
                   <tr>
                     <td>{{'numberOfStarts'|translate}}</td>
@@ -815,6 +822,7 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr ng-if="!(deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
+
                     <td>{{'visibleSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
                       {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
@@ -829,16 +837,25 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">
                       {{'noData' |translate}}
                     </td>
-                    <td>{{'locateDuration'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">
-                      {{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">
-                      {{'noMessage'|translate}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">
-                      {{'noData' |translate}}
-                    </td>
+                    <!--增加车载蓄电池电压显示-->
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+                  </tr>
+                  <tr>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
+                    <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
+                    <td>{{'realTimeWorkH'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
+                    <!--运行总时间(小时)-->
+                    <td>{{'totalRunningTimeHour'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
+
                   </tr>
                   <!--车载电压,时速,气压表2,机油压力,累计里程,阶段工作时间,阶段里程，只有矿车的显示-->
                   <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">
@@ -856,27 +873,27 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentWorkTime | convertToMins}} </td>
                     <td>{{'momentMileage'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage | number:2}}/KM</td>
-
                   </tr>
-
-                <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
-                  <tr >
+                  <tr>
+                   <!--机油压力,只有矿车的显示-->
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{'oilPress'|translate}}</td>
                     <td  ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='30'">{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
-
-                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
-                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
-
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
                   </tr>
+                  <!--ECU锁车状态和实际绑定车架号！ ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'"-->
                   <tr ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()">
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{'operationMonitoring'|translate}}</td>
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+
+                    <!--GPS协议版本-->
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum=='A1'||deviceCurrentInfoCtrl.deviceinfo.subVersionNum==null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&(deviceCurrentInfoCtrl.deviceinfo.versionNum!='A1'&&deviceCurrentInfoCtrl.deviceinfo.subVersionNum!=null)">{{deviceCurrentInfoCtrl.deviceinfo.versionNum*1.0 + deviceCurrentInfoCtrl.deviceinfo.subVersionNum*0.01 | number:2}}</td>
+
+                    <!--实际绑定车号-->
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+
+
                   </tr>
                   <!--<tr>-->
                     <!--<td>{{'analogOne'|translate}}</td>-->
