@@ -696,5 +696,6 @@
   "openMonitor": "Open Monitor",
   "closeMonitor": "Close Monitor",
   "batteryMonitor": "Battery Monitor",
-  "noMessage":"N/A"
+  "noMessage":"N/A",
+  "lastReturn100":"The last 100 return information vehicles"
 }

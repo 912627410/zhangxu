@@ -412,10 +412,10 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.startTimes}}</td>
                     <!--锁车状态-->
                     <td>{{'lockedCarStatus'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'Unlock'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'lockYourCar'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
+                    <td deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'Unlock'|translate}}</td>
+                    <td deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>
+                    <td deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'lockYourCar'|translate}}</td>
+                    <td deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>
                     <!--acc 开关状态-->
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01' || deviceCurrentInfoCtrl.deviceinfo.accStatus=='1'" class="bg-info text-info">ON</td>

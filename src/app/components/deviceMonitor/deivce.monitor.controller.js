@@ -22,7 +22,7 @@
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
-        serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,4);
+        serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,3);
       })
     }
 
@@ -50,8 +50,9 @@
     }
 
 
+    //TODO 暂时停用，后续可能会使用   by yalong.shang 2017-06-21
     //读取参数信息
-    vm.getMFList = function() {
+    /*vm.getMFList = function() {
       var search = DEVCE_MF;
       var page = search.page||0;
       var size = search.size||100;
@@ -93,7 +94,7 @@
       },function(reason){
         Notification.error("读取高度类型出错");
       });
-    };
+    };*/
 
 
 
@@ -160,9 +161,9 @@
     }
     else {
       vm.queryDeviceInfo(0, null, null, null);
-       vm.getMFList();
-       vm.getPowerTypeList();
-       vm.getHeightTypeList();
+       // vm.getMFList();
+       // vm.getPowerTypeList();
+       // vm.getHeightTypeList();
     }
 
     //监控
