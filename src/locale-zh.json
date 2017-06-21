@@ -565,7 +565,7 @@
   "CANcommunicationStatus": "CAN通信状态",
   "CANcommunicationInterrupt": "CAN通信中断",
   "CANcommunicationNormal": "CAN通信正常",
-  "mainsVoltage": "市电电压",
+  "mainsVoltage": "电池组电压",
   "PCUinformation": "PCU信息",
   "turtleSpeedButton": "龟速按键",
   "bounceUp": "弹起",

@@ -1937,11 +1937,13 @@
           var rspData = serviceResource.restCallService(restCallURL, "GET");
           rspData.then(function(data){
             if(chargeType == 0){
+
               batteryInChartData = data.data;
-              refreshBatteryInChart(batteryInChartData);
+              refreshBatteryInChart(batteryInChartData,data.time);
             }else{
               batteryOutChartData = data.data;
-              refreshBatteryOutChart(batteryOutChartData);
+
+              refreshBatteryOutChart(batteryOutChartData,data.time);
             }
           },function(reason){
             serviceResource.handleRsp("获取数据失败",reason);
@@ -1967,7 +1969,11 @@
         });
       };
 
-      var refreshBatteryInChart = function(batteryInChartData){
+      var refreshBatteryInChart = function(batteryInChartData,time){
+        batteryInChartData[0].color='#486dff';
+        batteryInChartData[1].color='#46ff2c';
+        batteryInChartData[2].color='#5ec1ff';
+        batteryInChartData[3].color='#32d6ff';
         vm.batteryIn = {
           options: {
             chart:{
@@ -1979,8 +1985,18 @@
             },
             xAxis: {
               type: 'datetime',
-              dateTimeLabelFormats: {
-                day: '%Y-%m-%d'
+              categories:time,
+              title: {
+                enabled: true,
+                text: '日期'
+              },
+              showLastLabel: true,
+              tickInterval:100,
+              shared:true,
+              labels: {
+                formatter: function () {
+                  return $filter('date')(new Date(this.value), 'yyyy-MM-dd HH:mm:ss');
+                }
               }
             },
             yAxis: {
@@ -1994,33 +2010,31 @@
               }
             },
             tooltip: {
-              valueSuffix: 'V'
+              shared: true,
+              formatter:function(){
+                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss'); + '</b>';
+                angular.forEach(this.points, function(data,index,array){
+                  s += '<br/>' + data.series.name + ': ' + data.y + 'V';
+                });
+                return s;
+              }
             },
             legend: {
               layout: 'vertical',
               align: 'right',
               verticalAlign: 'middle'
-            },
-            plotOptions: {
-              spline: {
-                pointInterval: 1000 * 30, // 30 second
-                pointStart: Date.UTC(vm.startYearValue,vm.startMonthValue,vm.startDayValue)
-              },
-              series: {
-                marker:{
-                  enabled: false,
-                  animation: true
-                }
-              }
             }
-
           },
           series: batteryInChartData
         };
 
       };
 
-      var refreshBatteryOutChart = function(batteryOutChartData){
+      var refreshBatteryOutChart = function(batteryOutChartData,time){
+        batteryOutChartData[0].color='#486dff';
+        batteryOutChartData[1].color='#46ff2c';
+        batteryOutChartData[2].color='#5ec1ff';
+        batteryOutChartData[3].color='#32d6ff';
         vm.batteryOut = {
           options: {
             chart:{
@@ -2032,8 +2046,17 @@
             },
             xAxis: {
               type: 'datetime',
-              dateTimeLabelFormats: {
-                day: '%Y-%m-%d'
+              categories:time,
+              title: {
+                enabled: true,
+                text: '日期'
+              },
+              tickInterval:100,
+              showLastLabel: true,
+              labels: {
+                formatter: function () {
+                  return $filter('date')(new Date(this.value), 'yyyy-MM-dd HH:mm:ss');
+                }
               }
             },
             yAxis: {
@@ -2047,26 +2070,20 @@
               }
             },
             tooltip: {
-              valueSuffix: 'V'
+              shared: true,
+              formatter:function(){
+                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss'); + '</b>';
+                angular.forEach(this.points, function(data,index,array){
+                  s += '<br/>' + data.series.name + ': ' + data.y + 'V';
+                });
+                return s;
+              }
             },
             legend: {
               layout: 'vertical',
               align: 'right',
               verticalAlign: 'middle'
-            },
-            plotOptions: {
-              spline: {
-                pointInterval: 1000 * 30, // 30 second
-                pointStart: Date.UTC(vm.startYearValue,vm.startMonthValue,vm.startDayValue)
-              },
-              series: {
-                marker:{
-                  enabled: false,
-                  animation: true
-                }
-              }
             }
-
           },
           series: batteryOutChartData
         };
