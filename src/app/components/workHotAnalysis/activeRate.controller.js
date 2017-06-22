@@ -199,7 +199,7 @@
       if(back.style.display != "inline-block"){
         $scope.chartArea = params.name;
         back.style.display = "inline-block";
-        showChart(produceType.selected,machineType.selected,cycle,time,thresholdValue.selected,params.name);
+        showChart(produceType.selected,machineType.selected,cycle,time,thresholdValue.selected.replace(/\D/g,""),params.name);
       }
     });
 
