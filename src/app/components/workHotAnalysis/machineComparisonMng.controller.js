@@ -2204,8 +2204,8 @@
         var mapContainerBox = document.getElementById("mapContainerBox");
         mapContainerBox.style.display = "block";
         var lineContainerList = document.getElementsByClassName("chart-container");
-        lineContainerList[0].style.width = "50%";
-        lineContainerList[1].style.width = "50%";
+        lineContainerList[0].style.width = "49.5%";
+        lineContainerList[1].style.width = "49.5%";
         //在省份城市情况下直接点击对比查询，隐藏返回箭头
         var backButtons = document.getElementsByClassName("backChina");
         backButtons[0].style.display = "none";
