@@ -698,6 +698,7 @@
   "batteryMonitor": "电池监控",
   "batteryBasicInformation": "电池基本信息",
   "batteryLiquidLeveInformation": "电池液位信息",
-  "noMessage":"N/A"
+  "noMessage":"N/A",
+  "lastReturn100":"最近100台回传信息车辆"
 
 }

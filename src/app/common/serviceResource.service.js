@@ -309,7 +309,7 @@
             resizeEnable: true,
             scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
             center: localCenterAddr,
-            zooms: [4, 18]
+            zooms: [3, 18]
           });
           map.setZoom(localZoomSize);
           map.plugin(['AMap.ToolBar'], function () {
