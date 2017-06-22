@@ -19,12 +19,14 @@
     var produceType = [];
     var machineType = [];
     var cycleType = ["按月","按季度"];
+    var thresholdValue = getthreshold();
     var cycleValue1 = getCycleValue1();
     var cycleValue2 = getCycleValue2();
 
     $scope.chartArea = "全国";
     $scope.chartProduceType = '所有类型';
     $scope.chartWorkMonth = cycleValue1[0];
+    $scope.chartThresholdValue = thresholdValue[1];
 
     //按月
     function getCycleValue1(){
@@ -54,6 +56,15 @@
       }
       return result;
     };
+
+    //活跃阈值范围
+    function getthreshold(){
+      var threshold = [];
+      for (var i = 0;i<23;i++){
+        threshold.push(i+1 +'小时');
+      }
+      return threshold;
+    }
 
 
     //get produceType
@@ -86,10 +97,10 @@
     var barChart = echarts.init(document.getElementById('barChartContainer'));
 
     //display chart
-    function showChart(_produceType,_machineType,_cycleType,_cycleValue,_province) {
+    function showChart(_produceType,_machineType,_cycleType,_cycleValue,_hourScope,_province) {
       $http({
         method: 'GET',
-        url: GET_ACTIVERATE_URL+'produceType='+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&province='+_province
+        url: GET_ACTIVERATE_URL+'produceType='+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&hourScope'+_hourScope +'&province='+_province
       }).then(function (rspJson) {
         rspJson = rspJson.data;
 
@@ -179,7 +190,7 @@
     //_produceType,_machineType,_cycleType,_cycleValue,_province
     getSelectProduceType();
     getSelectMachineType(2);
-    showChart('','',1,cycleValue1[0].replace(/\D/g,""),"");
+    showChart('','',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
 
 
     //show drill chart
@@ -188,7 +199,7 @@
       if(back.style.display != "inline-block"){
         $scope.chartArea = params.name;
         back.style.display = "inline-block";
-        showChart(produceType.selected,machineType.selected,cycle,time,params.name);
+        showChart(produceType.selected,machineType.selected,cycle,time,thresholdValue.selected,params.name);
       }
     });
 
@@ -196,7 +207,7 @@
     //click back
     vm.backProvince = function(){
       back.style.display = "none";
-      showChart('','',1,cycleValue1[0].replace(/\D/g,""),"");
+      showChart('','',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
 
       $scope.chartWorkMonth = cycleValue1[0];
       $scope.chartArea = "全国";
@@ -214,12 +225,13 @@
     $scope.machineType = machineType;
     $scope.cycleType = cycleType;
     $scope.cycleValue = cycleValue1;
-
+    $scope.thresholdValue = thresholdValue;
 
     $scope.produceType.selected = '';
     $scope.machineType.selected = '';
     $scope.cycleType.selected = cycleType[0];
     $scope.cycleValue.selected = cycleValue1[0];
+    $scope.thresholdValue.selected = thresholdValue[1];
 
     //ui select  Group By
     vm.orderBy = function(machineType){
@@ -290,6 +302,14 @@
       }
     });
 
+    $scope.$watch('thresholdValue.selected', function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        if ($scope.thresholdValue.indexOf(newVal) === -1) {
+          $scope.thresholdValue.unshift(newVal);
+        }
+      }
+    });
+
 
     $scope.getProduceType = function(search) {
       var newSupes = $scope.produceType.slice();
@@ -323,6 +343,14 @@
       return newSupes;
     };
 
+    $scope.getThresholdValue = function(search) {
+      var newSupes = $scope.thresholdValue.slice();
+      if (search && newSupes.indexOf(search) === -1) {
+        newSupes.unshift(search);
+      }
+      return newSupes;
+    };
+
 
     vm.customSelect = function(){
       back.style.display = "none";
@@ -331,6 +359,7 @@
       $scope.chartWorkMonth = $scope.cycleValue.selected;
       $scope.chartProduceType = $scope.produceType.selected;
       $scope.chartMachineType = $scope.machineType.selected;
+      $scope.chartThresholdValue = $scope.thresholdValue.selected;
 
       var _province = '';
       var _produceType;
@@ -349,8 +378,9 @@
       var _cycleValue = $scope.cycleValue.selected.replace(/\D/g,"");  //  \D -> 非数字  g -> 匹配所有
       time = _cycleValue;
       cycle = _cycleType;
+      var _hourScope = $scope.thresholdValue.selected.replace(/\D/g,"");
 
-      showChart(_produceType,_machineType,_cycleType,_cycleValue,_province);
+      showChart(_produceType,_machineType,_cycleType,_cycleValue,_hourScope,_province);
     };
 
     //DEFAULT SELECT VALUE
