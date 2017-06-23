@@ -140,7 +140,13 @@
       //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
       //  var title = '';
 
-        title = mapDeviceType(item);
+        //title = mapDeviceType(item);
+        if(item.versionNum == 'A001') {
+          title = "高空车";
+        } else {
+          title = "矿机";
+        }
+
         /*若整机编号为空，则显示终端编号*/
         if(title == null){
           title = item.deviceNum;
