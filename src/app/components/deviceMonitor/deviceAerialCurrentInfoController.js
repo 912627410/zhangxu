@@ -1938,12 +1938,12 @@
           rspData.then(function(data){
             if(chargeType == 0){
 
+              batteryOutChartData = data.data;
+              refreshBatteryOutChart(batteryOutChartData,data.time);
+            }else{
+
               batteryInChartData = data.data;
               refreshBatteryInChart(batteryInChartData,data.time);
-            }else{
-              batteryOutChartData = data.data;
-
-              refreshBatteryOutChart(batteryOutChartData,data.time);
             }
           },function(reason){
             serviceResource.handleRsp("获取数据失败",reason);
