@@ -16,8 +16,8 @@
     var time,cycle;
     var startYear = 2016;
 
-    var produceType = [];
-    var machineType = [];
+    var produceType = ['全部',];
+    var machineType = ['全部',];
     var cycleType = ["按月","按季度"];
     var thresholdValue = getthreshold();
     var cycleValue1 = getCycleValue1();
@@ -74,9 +74,14 @@
         url: GET_MACHINETYPE_URL
       }).then(function (rspJson) {
         rspJson = rspJson.data;
+        rspJson = _.sortBy(rspJson,'name');
+        produceType = ['全部',];
         for(var i=0;i<rspJson.length;i++){
-          produceType[i] = rspJson[i].name;
+          // produceType[i+1] = rspJson[i].name;
+          produceType.push(rspJson[i].name);
         }
+        $scope.produceType = produceType;
+        $scope.produceType.selected = produceType[0];
       });
     }
 
@@ -87,23 +92,52 @@
         url: GET_MACHINETYPE_URL+'?type='+_produceType
       }).then(function (rspJson) {
         rspJson = rspJson.data;
+        rspJson = _.sortBy(rspJson,'name');
+        machineType = ['全部',];
         for(var i=0;i<rspJson.length;i++){
-          machineType[i] = rspJson[i].name;
+          // machineType[i+1] = rspJson[i].name;
+          machineType.push(rspJson[i].name);
         }
+        $scope.machineType = machineType;
+        $scope.machineType.selected = machineType[0];
       })
     }
+    getSelectProduceType();
+
+    $scope.produceType = produceType;
+    $scope.machineType = machineType;
+    $scope.cycleType = cycleType;
+    $scope.cycleValue = cycleValue1;
+    $scope.thresholdValue = thresholdValue;
+
+    $scope.produceType.selected = produceType[0];
+    $scope.machineType.selected = machineType[0];
+    $scope.cycleType.selected = cycleType[0];
+    $scope.cycleValue.selected = cycleValue1[0];
+    $scope.thresholdValue.selected = thresholdValue[1];
 
     //初始化图表
     var barChart = echarts.init(document.getElementById('barChartContainer'));
 
     //display chart
     function showChart(_produceType,_machineType,_cycleType,_cycleValue,_hourScope,_province) {
+      if(_produceType=="全部"){
+        _produceType='';
+      }
+      if(_machineType == "全部"){
+        _machineType = '';
+      }
       $http({
         method: 'GET',
-        url: GET_ACTIVERATE_URL+'produceType='+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&hourScope'+_hourScope +'&province='+_province
+        url: GET_ACTIVERATE_URL+'produceType='+_produceType+'&machineType='+_machineType+'&cycleType='+_cycleType+'&cycleValue='+_cycleValue+'&hourScope='+_hourScope +'&province='+_province
       }).then(function (rspJson) {
         rspJson = rspJson.data;
-
+        if(!rspJson.cityName.length>0){
+          rspJson.cityName = ["山东省","云南省","河北省","山西省","河南省","江苏省","安徽省","贵州省","西藏自治区",
+            "内蒙古自治区","广东省","江西省","湖北省","湖南省","辽宁省","甘肃省","四川省","陕西省",
+            "广西壮族自治区","福建省","浙江省","吉林省","黑龙江省","海南省","北京市","新疆维吾尔自治区",
+            "重庆市","青海省","宁夏回族自治区","天津市","上海市"];
+        }
         barChart.setOption(
           {
             legend: {
@@ -133,12 +167,12 @@
             },
             xAxis: {
               type: 'category',
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
+              // axisTick: {
+              //   show: false
+              // },
+              // axisLine: {
+              //   show: true
+              // },
               axisLabel: {
                 rotate: 45,
                 interval: 0,
@@ -188,9 +222,8 @@
     }
 
     //_produceType,_machineType,_cycleType,_cycleValue,_province
-    getSelectProduceType();
-    getSelectMachineType(2);
-    showChart('','',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
+    //默认初始化查询数据状态
+    showChart('全部','全部',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
 
 
     //show drill chart
@@ -207,13 +240,13 @@
     //click back
     vm.backProvince = function(){
       back.style.display = "none";
-      showChart('','',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
+      showChart('全部','全部',1,cycleValue1[0].replace(/\D/g,""),thresholdValue[1].replace(/\D/g,""),"");
 
       $scope.chartWorkMonth = cycleValue1[0];
       $scope.chartArea = "全国";
       $scope.chartProduceType = '所有类型';
-      $scope.produceType.selected = '';
-      $scope.machineType.selected = '';
+      $scope.produceType.selected = produceType[0];
+      $scope.machineType.selected = machineType[0];
       $scope.cycleType.selected = cycleType[0];
       $scope.cycleValue.selected = cycleValue1[0];
     };
@@ -221,31 +254,6 @@
 
 
     //ui-select
-    $scope.produceType = produceType;
-    $scope.machineType = machineType;
-    $scope.cycleType = cycleType;
-    $scope.cycleValue = cycleValue1;
-    $scope.thresholdValue = thresholdValue;
-
-    $scope.produceType.selected = '';
-    $scope.machineType.selected = '';
-    $scope.cycleType.selected = cycleType[0];
-    $scope.cycleValue.selected = cycleValue1[0];
-    $scope.thresholdValue.selected = thresholdValue[1];
-
-    //ui select  Group By
-    vm.orderBy = function(machineType){
-      if(machineType[0] == 'E'){
-        return 'E'
-      }else if(machineType[0] == 'L'){
-        return 'L';
-      }else if(machineType[0] == 'M'){
-        return 'M';
-      }else{
-        return 'other';
-      }
-
-    };
 
 
     $scope.$watch('produceType.selected', function(newVal, oldVal) {
@@ -253,8 +261,14 @@
         if ($scope.produceType.indexOf(newVal) === -1) {
           $scope.produceType.unshift(newVal);
         }
-        $scope.machineType.selected = '';
-        switch (produceType.selected){
+        $scope.machineType = machineType;
+        $scope.machineType.selected = '全部';
+        switch (newVal){
+          case "全部":
+            machineType = ['全部'];
+            $scope.machineType = machineType;
+            $scope.machineType.selected = machineType[0];
+            break;
           case "装载机":
             getSelectMachineType(1);
             break;
