@@ -1037,7 +1037,7 @@
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
-                    <td><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')" ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.id}}</a></td>
+                    <td ng-if="userInfo.userdto.organizationDto.id==1"><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')" >{{deviceData.id}}</a></td>
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='A'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus==null" class="text-nowrap">{{'noMessage'|translate}}</td>
