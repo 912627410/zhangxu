@@ -36,6 +36,16 @@
         </ui-select-choices>
       </ui-select>
     </div>
+    <div class="select-container">
+      <div class="select-title">活跃阈值：</div>
+      <ui-select ng-model="thresholdValue.selected">
+        <ui-select-match placeholder="选择活跃阈值">{{$select.selected}}</ui-select-match>
+        <ui-select-choices repeat="type in getThresholdValue($select.search) | filter: $select.search">
+          <div ng-bind="type"></div>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
     <button class="btn btn-primary" ng-click="activeRateCtrl.customSelect();">车辆开工热度分布</button>
   </div>
   <div class="right-container col-md-10">
@@ -44,6 +54,7 @@
       <em id="workProvince">{{chartArea}}</em>
       <em id="produceType">{{chartProduceType}}</em>
       <em id="machineType">{{chartMachineType}}</em>
+      <em id="thresholdValue">{{chartThresholdValue}}</em>
       <em>活跃度分布（点击视图可查看市区级分布）</em>
       <span id="backProvince" ng-click="activeRateCtrl.backProvince();">
         <a>重置</a>

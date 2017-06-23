@@ -98,7 +98,7 @@
         <p class="input-group">
           <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
                  ng-model="modelsCompareCtrl.monthDateDeviceData2"
-                 is-open="modelsCompareCtrl.monthDateOpenStatusDeviceData.opened"
+                 is-open="modelsCompareCtrl.monthDateOpenStatusDeviceData2.opened"
                  datepicker-options="modelsCompareCtrl.dateOptions1"
                  min-date="modelsCompareCtrl.minDate"
                  max-date="modelsCompareCtrl.maxDate"
@@ -106,7 +106,7 @@
                  clear-text="{{'cleanUp'|translate}}"
                  close-text="{{'close'|translate}}"/>
           <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="modelsCompareCtrl.monthDateOpenDeviceData($event)">
+                <button type="button" class="btn btn-default" ng-click="modelsCompareCtrl.monthDateOpenDeviceData2($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
               </span>
         </p>
@@ -198,11 +198,10 @@
       </span>
     </div>
     <div class="col-md-2" ng-show="modelsCompareCtrl.singleQuery">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page" ng-click="modelsCompareCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up" style="color: rgb(255, 255, 255);"></span> 单一车型</button>
+      <button class="btn btn-primary" type="button" ng-click="modelsCompareCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up" style="color: rgb(255, 255, 255);"></span> 单一车型</button>
     </div>
     <div class="col-md-2" ng-show="modelsCompareCtrl.comparison">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="modelsCompareCtrl.viewResults(null,null,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.QuarterType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.monthDateDeviceData2,modelsCompareCtrl.hour,modelsCompareCtrl.hour2,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType1,vehicleType1.selected,vehicleType1.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType1)"
+      <button class="btn btn-primary" type="button" ng-click="modelsCompareCtrl.viewResults(null,null,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,modelsCompareCtrl.QuarterType2,modelsCompareCtrl.monthDateDeviceData,modelsCompareCtrl.monthDateDeviceData2,modelsCompareCtrl.hour,modelsCompareCtrl.hour2,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType1,vehicleType1.selected,vehicleType1.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType1,1)"
       >&nbsp;查&nbsp;询&nbsp;对&nbsp;比&nbsp;</button>
     </div>
   </div>
@@ -231,8 +230,7 @@
       <label style="font-weight:normal"><input type="radio" name="heat2" value="0" ng-model="modelsCompareCtrl.heatType2" />销售热度</label>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button" presentation-href="machine:page"
-              ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,null,modelsCompareCtrl.monthDateDeviceData,null,modelsCompareCtrl.hour,null,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2)"
+      <button class="btn btn-primary" type="button" ng-click="modelsCompareCtrl.viewResults(modelsCompareCtrl.startDateDeviceData,modelsCompareCtrl.endDateDeviceData,modelsCompareCtrl.dateType1,modelsCompareCtrl.dateType2,null,modelsCompareCtrl.monthDateDeviceData,null,modelsCompareCtrl.hour,null,modelsCompareCtrl.machineType1,modelsCompareCtrl.machineType2,vehicleType1.selected,vehicleType2.selected,modelsCompareCtrl.heatType1,modelsCompareCtrl.heatType2,2)"
       >&nbsp;查&nbsp;询&nbsp;对&nbsp;比&nbsp;</button>
     </div>
   </div>

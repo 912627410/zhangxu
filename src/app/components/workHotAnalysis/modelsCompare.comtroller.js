@@ -8,7 +8,7 @@
     .module('GPSCloud')
     .controller('modelsCompareController',modelsCompareController);
 
-  function modelsCompareController($scope,$http,Notification,GET_MACHINE_TYPE_URL,START_HEAT_QUERY,SALES_HEAT_QUERY,serviceResource,AVG_WORK_HOUR_QUERY_MONTH,
+  function modelsCompareController($scope,$http,$filter,Notification,GET_MACHINE_TYPE_URL,START_HEAT_QUERY,SALES_HEAT_QUERY,serviceResource,AVG_WORK_HOUR_QUERY_MONTH,
                                    AVG_WORK_HOUR_QUERY_QUARTER,AVG_WORK_HOUR_QUERY_DATE){
 
     var vm = this;
@@ -156,6 +156,7 @@
         vm.startDateDeviceData = null;
         vm.endDateDeviceData = null;
         vm.dateType2 = null;
+        vm.QuarterType2 = null;
         vm.monthDateDeviceData = new Date();
         vm.monthDateDeviceData2 = monthDates;
       }else if(dateType1==3){
@@ -172,6 +173,7 @@
         vm.monthQuery = false;
         vm.dayQuery = false;
         vm.dateType2 = "201702";
+        vm.QuarterType2 = "201701";
         vm.startDateDeviceData = null;
         vm.endDateDeviceData = null;
         vm.monthDateDeviceData = null;
@@ -199,6 +201,9 @@
     vm.monthDateOpenStatusDeviceData = {
       opened: false
     };
+    vm.monthDateOpenStatusDeviceData2 = {
+      opened: false
+    };
     vm.startDateOpenStatusDeviceData = {
       opened: false
     };
@@ -207,6 +212,9 @@
     };
     vm.monthDateOpenDeviceData = function ($event) {
       vm.monthDateOpenStatusDeviceData.opened = true;
+    };
+    vm.monthDateOpenDeviceData2 = function ($event) {
+      vm.monthDateOpenStatusDeviceData2.opened = true;
     };
     vm.startDateOpenDeviceData = function ($event) {
       vm.startDateOpenStatusDeviceData.opened = true;
@@ -235,13 +243,13 @@
       title: {
         text: '车辆开工热度分布',
         textStyle:{
-          fontSize: 26,
+          fontSize: '24',
         },
         subtext: '全国',
         subtextStyle:{
-          fontSize: 17,
+          fontSize: 16,
         },
-        top:'3%',
+        top:'2%',
         left: 'center'
       },
       tooltip: [
@@ -341,14 +349,14 @@
       title: {
         text: '车辆销售热度分布',
         textStyle:{
-          fontSize: 21,
+          fontSize: 24,
         },
         subtext: '全国',
         subtextStyle:{
-          fontSize: 12,
+          fontSize: 16,
         },
-        top:'3%',
-        left: 'left'
+        top:'2%',
+        left: 'center'
       },
       tooltip: [
         {
@@ -906,9 +914,6 @@
         var mapChart1 = vm.echartsInit('mapContainer1');
         mapOption1.series[0].data=data0;
         mapOption1.visualMap.max=max;
-        mapOption1.title.left = "center";
-        mapOption1.title. textStyle={fontSize: 26};
-        mapOption1.title. subtextStyle={fontSize: 17};
         if(machineType1=="2"){
           if(heatType1==1){
             mapOption1.title.text = "挖掘机"+vehicleType1+"开工热度分布";
@@ -1537,8 +1542,11 @@
     //记录左边地图的名字供相同热度查询时下钻返回调用
     var mapOptionName1;
     var mapOptionName2;
+    //定义两个变量同车型不同周期查询时显示时间
+    var dateTypeDisplay1;
+    var dateTypeDisplay2;
     //车型对比查询--dateType2代表季度周期类型
-    vm.viewResults = function(startDate,endDate,dateType1,dateType2,QuarterType2,monthDate,monthDate2,hours,hours2,machineType1,machineType2,vehicleType1,vehicleType2,heatType1,heatType2){
+    vm.viewResults = function(startDate,endDate,dateType1,dateType2,QuarterType2,monthDate,monthDate2,hours,hours2,machineType1,machineType2,vehicleType1,vehicleType2,heatType1,heatType2,type){
       if(null==machineType1||null==machineType2||null==heatType1||null==heatType2||null==vehicleType1||null==vehicleType2){
         Notification.warning({message: '请选择相关参数'});
       } else {
@@ -1548,7 +1556,7 @@
         if(vehicleType2=='全部'){
           vehicleType2='';
         }
-        if(QuarterType2==null){
+        if(type==2){
           if(machineType1 == machineType2&&heatType1==heatType2&&vehicleType1==vehicleType2){
             Notification.warning({message: "相同参数类型的数据没有对比意义，请重新选择参数!"});
           }
@@ -1679,15 +1687,23 @@
               }else{
                 monthDateFormated = ''+monthDate.getFullYear() + month;
               }
+              dateTypeDisplay1 = $filter('limitTo')(monthDateFormated,4)+'年'+$filter('limitTo')(monthDateFormated,-2)+'月'
             }
             if(monthDate2){
-              var month2 = monthDate.getMonth() +1;
+              var month2 = monthDate2.getMonth() +1;
               if(month2<10){
                 var monthDateFormated2 = monthDate2.getFullYear() +'0'+ month2;
               }else{
                 monthDateFormated2 = ''+monthDate2.getFullYear() + month2;
               }
+              dateTypeDisplay2 = $filter('limitTo')(monthDateFormated2,4)+'年'+$filter('limitTo')(monthDateFormated2,-2)+'月'
             }
+          }
+          if(dateType2){
+            dateTypeDisplay1 = $filter('limitTo')(dateType2,4)+'年第'+$filter('limitTo')(dateType2,-2)+'季度'
+          }
+          if(QuarterType2){
+            dateTypeDisplay2 = $filter('limitTo')(QuarterType2,4)+'年第'+$filter('limitTo')(QuarterType2,-2)+'季度'
           }
           //车型类型字符串
           var models = '&machineType=' + machineType1 + '&modelType=' + vehicleType1;
@@ -1903,7 +1919,7 @@
               vm.avgHours4 = false;
               vm.avgHoursNational2 = true;
               vm.avgHoursProvince2 = false;
-              if(QuarterType2==null){
+              if(type==2){
                 avgWorkHoursQuery2(startDateFormated,endDateFormated,beforeStartDateFormated,beforeEndDateFormated,dateType1,dateType2,monthDateFormated,machineType2,vehicleType2);
               }else{
                 avgWorkHoursQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2);
@@ -1916,68 +1932,110 @@
             }
             if(machineType1=="2"){
               if(heatType1==1){
-                mapOption1.title.text = "挖掘机"+vehicleType1+"开工热度分布";
+                if(type==2){
+                  mapOption1.title.text = "挖掘机"+vehicleType1+"开工热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"挖掘机"+vehicleType1+"开工热度分布";
+                }
                 mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType1==0){
-                mapOption1.title.text = "挖掘机"+vehicleType1+"销售热度分布";
+                if(type==2){
+                  mapOption1.title.text = "挖掘机"+vehicleType1+"销售热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"挖掘机"+vehicleType1+"销售热度分布";
+                }
                 mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
             if(machineType1=="1"){
               if(heatType1==1){
-                mapOption1.title.text = "装载机"+vehicleType1+"开工热度分布";
+                if(type==2){
+                  mapOption1.title.text = "装载机"+vehicleType1+"开工热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"装载机"+vehicleType1+"开工热度分布";
+                }
                 mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType1==0){
-                mapOption1.title.text = "装载机"+vehicleType1+"销售热度分布";
+                if(type==2){
+                  mapOption1.title.text = "装载机"+vehicleType1+"销售热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"装载机"+vehicleType1+"销售热度分布";
+                }
                 mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
             if(machineType1=="3"){
               if(heatType1==1){
-                mapOption1.title.text = "重机"+vehicleType1+"开工热度分布";
+                if(type==2){
+                  mapOption1.title.text = "重机"+vehicleType1+"开工热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"重机"+vehicleType1+"开工热度分布";
+                }
                 mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType1==0){
-                mapOption1.title.text = "重机"+vehicleType1+"销售热度分布";
+                if(type==2){
+                  mapOption1.title.text = "重机"+vehicleType1+"销售热度分布";
+                }else{
+                  mapOption1.title.text = dateTypeDisplay1 +'\n'+"重机"+vehicleType1+"销售热度分布";
+                }
                 mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
-            mapOption1.title.left = "center";
-            mapOption1.title. textStyle={fontSize: 26};
-            mapOption1.title. subtextStyle={fontSize: 17};
             mapOptionName1 = mapOption1.title.text;
             mapOption1.series[0].data=zData;
             mapOption1.visualMap.max=max3;
             mapChart1.setOption(mapOption1);
             if(machineType2=="2"){
               if(heatType2==1){
-                mapOption2.title.text = "挖掘机"+vehicleType2+"开工热度分布";
+                if(type==2){
+                  mapOption2.title.text = "挖掘机"+vehicleType2+"开工热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"挖掘机"+vehicleType2+"开工热度分布";
+                }
                 mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType2==0){
-                mapOption2.title.text = "挖掘机"+vehicleType2+"销售热度分布";
+                if(type==2){
+                  mapOption2.title.text = "挖掘机"+vehicleType2+"销售热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"挖掘机"+vehicleType2+"销售热度分布";
+                }
                 mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
             if(machineType2=="1"){
               if(heatType2==1){
-                mapOption2.title.text = "装载机"+vehicleType2+"开工热度分布";
+                if(type==2){
+                  mapOption2.title.text = "装载机"+vehicleType2+"开工热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"装载机"+vehicleType2+"开工热度分布";
+                }
                 mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType2==0){
-                mapOption2.title.text = "装载机"+vehicleType2+"销售热度分布";
+                if(type==2){
+                  mapOption2.title.text = "装载机"+vehicleType2+"销售热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"装载机"+vehicleType2+"销售热度分布";
+                }
                 mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
             if(machineType2=="3"){
               if(heatType2==1){
-                mapOption2.title.text = "重机"+vehicleType2+"开工热度分布";
+                if(type==2){
+                  mapOption2.title.text = "重机"+vehicleType2+"开工热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"重机"+vehicleType2+"开工热度分布";
+                }
                 mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
               }else if(heatType2==0){
-                mapOption2.title.text = "重机"+vehicleType2+"销售热度分布";
+                if(type==2){
+                  mapOption2.title.text = "重机"+vehicleType2+"销售热度分布";
+                }else{
+                  mapOption2.title.text = dateTypeDisplay2 +'\n'+"重机"+vehicleType2+"销售热度分布";
+                }
                 mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
               }
             }
-            mapOption2.title.left = "center";
-            mapOption2.title. textStyle={fontSize: 26};
-            mapOption2.title. subtextStyle={fontSize: 17};
             mapOptionName2 = mapOption2.title.text;
             mapOption2.series[0].data=yData;
             mapOption2.visualMap.max=max3;
@@ -2003,7 +2061,7 @@
               avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
             }
           }
-          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
         })
         //地图下钻
         mapChart2.on("click", function (param){
@@ -2019,7 +2077,7 @@
               avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
             }
           }
-          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+          showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
 
         })
         //省级地图返回到中国地图
@@ -2079,7 +2137,7 @@
                 avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
               }
             }
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
           })
           mapChart2.on("click", function (param){
             backButtons[0].style.display = "block";
@@ -2094,7 +2152,7 @@
                 avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
               }
             }
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
           })
         }
         //省级地图返回到中国地图
@@ -2153,7 +2211,7 @@
                 avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
               }
             }
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
           })
           mapChart2.on("click", function (param){
             backButtons[0].style.display = "block";
@@ -2168,14 +2226,14 @@
                 avgWorkHoursProvinceQuery2(null,null,null,null,dateType1,QuarterType2,monthDateFormated2,machineType2,vehicleType2,param.name);
               }
             }
-            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2);
+            showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type);
           })
         }
       }
     }
 
     //地图下钻显示省份封装
-    function showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2){
+    function showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2,lastYearTotalData1,lastYearTotalData2,type){
       if(heatType1==1){
         var cityMap1 = cityOption1;
       } else if(heatType1==0) {
@@ -2192,9 +2250,17 @@
       restCallURLCity2 += "&provinces=" + param.name;
       var n = getindex(param.name,provincesText);
       var Cname = provinces[n];
-      cityMap1.title.text=param.name;
+      if(type==2){
+        cityMap1.title.text=param.name;
+      }else{
+        cityMap1.title.text=dateTypeDisplay1 + param.name;
+      }
       cityMap1.series[0].mapType=Cname;
-      cityMap2.title.text=param.name;
+      if(type==2){
+        cityMap2.title.text=param.name;
+      }else{
+        cityMap2.title.text=dateTypeDisplay2 + param.name;
+      }
       cityMap2.series[0].mapType=Cname;
       $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
         echarts.registerMap(Cname, geoJson);
@@ -2360,6 +2426,11 @@
             cityMap1.visualMap.max=cityMax3;
           }
           cityMap1.series[0].data=cityData1s;
+          if(type==2){
+            cityMap1.title.text=param.name;
+          }else{
+            cityMap1.title.text=dateTypeDisplay1 + param.name;
+          }
           cityChart1.setOption(cityMap1);
 
           //悬浮框的的隐藏和显示-work
@@ -2370,6 +2441,11 @@
           }
 
           cityMap2.series[0].data=cityData2s;
+          if(type==2){
+            cityMap2.title.text=param.name;
+          }else{
+            cityMap2.title.text=dateTypeDisplay2 + param.name;
+          }
           cityChart2.setOption(cityMap2);
         }, function (reason) {
           Notification.error("获取数据失败");
@@ -2396,6 +2472,6 @@
       vm.heatType1 = null;
       vm.heatType2 = null;
     }
-    
+
   }
 })();
