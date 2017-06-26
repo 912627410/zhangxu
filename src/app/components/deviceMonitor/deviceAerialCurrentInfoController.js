@@ -1879,7 +1879,7 @@
           if (startDate) {
             var startYear = startDate.getFullYear();
             var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-            var startDay = startDate.getDate();
+            var startDay = startDate.getDate()+1;
 
             if(startMonth<10){
               startMonth = '0' + startMonth;
@@ -1946,7 +1946,7 @@
               refreshBatteryInChart(batteryInChartData,data.time);
             }
           },function(reason){
-            serviceResource.handleRsp("获取数据失败",reason);
+            serviceResource.handleRsp("没有数据",reason);
             vm.deviceInfoList = null;
           });
 
@@ -1964,7 +1964,7 @@
           vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
           $scope.batteryFormData = batteryFormData;
         },function(reason){
-          serviceResource.handleRsp("获取数据失败",reason);
+          serviceResource.handleRsp("没有数据！",reason);
           vm.deviceInfoList = null;
         });
       };
