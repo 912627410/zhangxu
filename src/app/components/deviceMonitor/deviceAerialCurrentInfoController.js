@@ -1876,19 +1876,10 @@
           if (deviceNum){
             queryCondition = "?deviceNum=" + deviceNum;
           }
+
           if (startDate) {
-            var startYear = startDate.getFullYear();
             var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-            var startDay = startDate.getDate()+1;
-
-            if(startMonth<10){
-              startMonth = '0' + startMonth;
-            }
-            if(startDay<10){
-              startDay = '0' + startDay;
-            }
-
-            var startDateFormated = startYear + '-' + startMonth + '-' + startDay;
+            var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
             if (queryCondition) {
               queryCondition += "&startDate=" + startDateFormated
             }
@@ -1896,23 +1887,12 @@
               queryCondition += "startDate=" + startDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误");
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
           if (endDate) {
-            endDate = new Date(endDate.getTime()-1000*3600*24);
-            var endYear = endDate.getFullYear();
             var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-            var endDay = endDate.getDate()+1;
-
-            if(endMonth<10){
-              endMonth = '0' + endMonth;
-            }
-            if(endDay<10){
-              endDay = '0' + endDay;
-            }
-
-            var endDateFormated = endYear + '-' + endMonth + '-' + endDay;
+            var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
             if (queryCondition) {
               queryCondition += "&endDate=" + endDateFormated;
             }
@@ -1920,13 +1900,9 @@
               queryCondition += "endDate=" + endDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误");
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
-
-          vm.startYearValue = startYear;
-          vm.startMonthValue = startMonth - 1;
-          vm.startDayValue = startDay;
 
           var restCallURL = BATTERY_CHART_DATA;
 
