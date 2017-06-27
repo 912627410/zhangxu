@@ -79,8 +79,6 @@
       templateItem.description = vm.templateInfo.description;
       templateItem.templateJson = vm.templateJson;
 
-      console.log(templateItem);
-
       var rspPromise = $resource(TEMPLATE_CREATE_URL, {}, {'createTemplate': {method: 'POST', isArray: true}});
       rspPromise.createTemplate(templateItem,function(rspData){
         $state.go("home.templateMng");
