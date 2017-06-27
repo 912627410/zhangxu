@@ -88,7 +88,7 @@
 
     vm.reset = function(){
       vm.templateInfo = [];
-      vm.jsonData = [];
+      vm.templateJson = [];
     };
 
     vm.cancel = function(){

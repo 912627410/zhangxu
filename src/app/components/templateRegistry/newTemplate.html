@@ -1,16 +1,9 @@
-<section class="content-header " style="margin-left: 1%">
-  <div class="row">
-    <div class="col-lg-6">
-      <h3>添加模版</h3>
-    </div>
-    <div class="col-lg-1 col-lg-offset-5" style="margin-top: 2%">
-      <button ng-click="newTemplateCtrl.return()">返回</button>
-    </div>
-  </div>
-  </div>
+<section class="content-header">
+  <h3 class="col-md-10">添加模版</h3>
+  <button class="btn btn-warning text-right" type="button" ng-click="newTemplateCtrl.return()">返回</button>
 </section>
 <!-- Main content -->
-<section class="content form-horizontal" style="margin-left: 2%">
+<section class="content form-horizontal">
   <div class="row">
     <div class="form-horizontal modal-body">
       <div class="box-body col-sm-6">
@@ -37,42 +30,34 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12" style="margin: 20px 0px">
-      <button type="button" class="btn btn-primary" ng-click="newTemplateCtrl.addData()">添加数据点</button>
-    </div>
-  </div>
+  <button type="button" class="btn btn-primary" ng-click="newTemplateCtrl.addData()" style="margin-bottom: 10px">添加数据点</button>
 
-  <div class="row">
-    <div class="table-responsive">
-      <table ng-table="newTemplateCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <thead>
-        <tr>
-          <td class="text-nowrap" align="center">name</td>
-          <td class="text-nowrap" align="center">type</td>
-          <td class="text-nowrap" align="center">length</td>
-          <td class="text-nowrap" align="center">register</td>
-          <td class="text-nowrap" align="center">converter</td>
-          <td class="text-nowrap" align="center">edit</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="x in newTemplateCtrl.templateJson">
-          <td class="text-nowrap" align="center">{{x.name}}</td>
-          <td class="text-nowrap" align="center">{{x.type}}</td>
-          <td class="text-nowrap" align="center">{{x.length}}</td>
-          <td class="text-nowrap" align="center">{{x.register}}</td>
-          <td class="text-nowrap" align="center">{{x.converter}}</td>
-          <td class="text-nowrap" align="center"><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.editData($index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.deleteData($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="table-responsive">
+    <table ng-table="newTemplateCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <thead>
+      <tr>
+        <td class="text-nowrap" align="center">name</td>
+        <td class="text-nowrap" align="center">type</td>
+        <td class="text-nowrap" align="center">length</td>
+        <td class="text-nowrap" align="center">register</td>
+        <td class="text-nowrap" align="center">converter</td>
+        <td class="text-nowrap" align="center">edit</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="x in newTemplateCtrl.templateJson">
+        <td class="text-nowrap" align="center">{{x.name}}</td>
+        <td class="text-nowrap" align="center">{{x.type}}</td>
+        <td class="text-nowrap" align="center">{{x.length}}</td>
+        <td class="text-nowrap" align="center">{{x.register}}</td>
+        <td class="text-nowrap" align="center">{{x.converter}}</td>
+        <td class="text-nowrap" align="center"><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.editData($index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.deleteData($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-
-  <div class="row">
+  <div class="text-right">
     <button class="btn btn-primary" type="button" ng-click="newTemplateCtrl.confirm()">保存</button>
-    <button class="btn btn-danger" type="reset" ng-click="newTemplateCtrl.reset()">清除</button>
-    <button class="btn btn-warning" type="button" ng-click="newTemplateCtrl.cancel()">取消</button>
+    <button class="btn btn-danger" type="reset" ng-click="newTemplateCtrl.reset()">清空数据点</button>
   </div>
 </section>

@@ -31,7 +31,6 @@
         });
 
         modalInstance.result.then(function (result) {
-          console.log(result);
           vm.jsonData.push(result[0]);
         }, function () {
           //取消
@@ -40,7 +39,6 @@
     };
 
     vm.confirm = function (jsonData) {
-     console.log(jsonData);
 
     }
 

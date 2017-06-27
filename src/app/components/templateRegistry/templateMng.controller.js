@@ -27,7 +27,6 @@
       vm.page = data.page;
       vm.pageNumber = data.page.number + 1;
       vm.rspData = data.content;
-      console.log(vm.rspData)
     }, function (reason) {
       Notification.error('获取模版失败');
     })

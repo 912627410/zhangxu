@@ -11,6 +11,7 @@
 
   function addDataController($rootScope,$scope,$uibModalInstance,jsonData) {
     var vm = this;
+    var inputLength = document.getElementsByTagName("input");
 
     if(jsonData==undefined){
       vm.templateInfo = {
@@ -30,23 +31,22 @@
       };
     }
 
-    vm.showCharLengthInputBox = function () {
-
-      if(vm.templateInfo.type=="char"){
-        return true;
-      }else{
-        return false;
+    vm.editable = function () {
+      if(vm.templateInfo.type!=="char"){
+        inputLength[1].setAttribute("readonly","readonly")
+      }else {
+        inputLength[1].removeAttribute("readonly","readonly");
       }
-    };
-
-    vm.ok = function () {
-
       if(vm.templateInfo.type == 'int'){
         vm.templateInfo.length = 4;
       }else if(vm.templateInfo.type == 'short'){
         vm.templateInfo.length = 2;
+      }else {
+        vm.templateInfo.length = null;
       }
+    };
 
+    vm.ok = function () {
       $uibModalInstance.close(vm.templateInfo);
     };
 
