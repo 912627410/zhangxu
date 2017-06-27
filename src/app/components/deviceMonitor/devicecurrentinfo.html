@@ -244,10 +244,6 @@
                       <div ng-switch-when="0" class="harWIFNormal" title="{{'harWIF'|translate}}"></div>
                       <div ng-switch-when="1" class="harWFIWarning" title="{{'harWIF'|translate}}"></div>
                     </td>
-                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
-                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
-                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
-                    </td>
                   </tr>
                   <tr>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:31">
@@ -315,6 +311,12 @@
                       <div ng-switch-when="1" class="harRBrakePadsWarning" title="{{'harRBrakePads'|translate}}"></div>
                     </td>
                   </tr>
+                  <tr>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
+                      <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
+                      <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
+                    </td>
+                  </tr>
                 </table>
               </div>
             </div>
@@ -337,13 +339,15 @@
                     <!--终端编号-->
                     <td>{{'terminalNumber'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
-                    <!--协议版本号-->
-                    <!--GPS协议版本号，实际绑定车号，运行监控，ID,LED状态这几个状态信息对用户不显示，仅仅北谷生产组织下的用户可以查看-->
-                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
-                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+
+                    <!--定位所用时间-->
+                    <td>{{'locateDuration'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">{{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">{{'noMessage'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">{{'noData' |translate}}</td>
                   </tr>
                   <tr>
                     <!--是否定位-->
@@ -372,15 +376,15 @@
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus}}</td>
                   <tr>
-                    <!--运行总时间(小时)-->
-                    <td>{{'totalRunningTimeHour'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
                     <!--燃油液位（油位）-->
                     <td>{{'fuelLevel'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
                     <!--冷却剂温度（水温）-->
                     <td>{{'coolantTemperature'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C</td>
+                    <!--运行总时间(小时)-->
+                    <td>{{'totalRunningTimeHour'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.totalDuration | convertToMins}}</td>
                   </tr>
                   <tr>
                     <!--CAN通信状态-->
@@ -396,12 +400,12 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
                   </tr>
                   <tr>
-                    <!--gprs信号百分比-->
-                    <td>{{'GPRSSignalQuality'|translate}}</td>
-                    <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                     <!--实时工时-->
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realTimeDuration | convertToMins}}</td>
+                    <!--gprs信号百分比-->
+                    <td>{{'GPRSSignalQuality'|translate}}</td>
+                    <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                     <!--车载蓄电池电压-->
                     <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
@@ -446,11 +450,10 @@
                     <td>{{'usableSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">{{'noData' |translate}}</td>
-                    <!--定位所用时间-->
-                    <td>{{'locateDuration'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration!=null && deviceCurrentInfoCtrl.deviceinfo.locateDuration<9999">{{deviceCurrentInfoCtrl.deviceinfo.locateDuration}}/{{'sec'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration>=9999">{{'noMessage'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateDuration==null">{{'noData' |translate}}</td>
+
+                    <!--机油压力-->
+                    <td >{{'oilPress'|translate}}</td>
+                    <td >{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
                   </tr>
                   <tr>
                       <!--车载电压-->
@@ -475,12 +478,16 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.momentMileage | number:2}}KM</td>
                   </tr>
                   <tr >
-                    <!--机油压力-->
-                    <td >{{'oilPress'|translate}}</td>
-                    <td >{{deviceCurrentInfoCtrl.deviceinfo.oilPress}}KPa</td>
+
                     <!--实际绑定车架号-->
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+
+                    <!--协议版本号-->
+                    <!--GPS协议版本号，实际绑定车号，运行监控，ID,LED状态这几个状态信息对用户不显示，仅仅北谷生产组织下的用户可以查看-->
+                    <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+
                   </tr>
                   <!--sim卡序列号-->
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
