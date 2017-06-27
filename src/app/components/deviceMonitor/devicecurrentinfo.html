@@ -902,7 +902,7 @@
 
           <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6" presentation-href="sms:setIpSMS">
               <div class="box box-success">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'setTheReturnAddressMessage'|translate}}</h5>
@@ -914,7 +914,7 @@
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="row" presentation-href="sms:setIpSMS">
+                      <div class="row">
                         <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
                       </div>
                       <div class="row" presentation-href="sms:setIpSMS">
@@ -926,7 +926,7 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="row" presentation-href="sms:setIpSMS">
+                      <div class="row">
                         <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
                       </div>
                       <div class="row" presentation-href="sms:setIpSMS">
@@ -940,7 +940,7 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="row" presentation-href="sms:setIpSMS">
+                      <div class="row" >
                         <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                       </div>
                       <div class="row">
@@ -958,7 +958,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6" presentation-href="sms:setInterSMS">
               <div class="box box-success">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
@@ -968,7 +968,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                  <div class="row" presentation-href="sms:setInterSMS">
+                  <div class="row" >
                     <div class="col-md-3">
                       <div class="row">
                         <label for="secOutPower" class="col-md-7 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
@@ -983,7 +983,7 @@
                       <div class="row">
                         <label for="secLocateInt" class="col-md-7 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
                       </div>
-                      <div class="row" presentation-href="sms:setInterSMS">
+                      <div class="row">
                         <div class="col-md-12">
                           <input type="text" id="secLocateInt" class="form-control"
                                  validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
@@ -1002,10 +1002,10 @@
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <div class="row" presentation-href="sms:setInterSMS">
+                      <div class="row">
                         <label class="col-md-7 control-label text-nowrap">&nbsp;</label>
                       </div>
-                      <div class="row" presentation-href="sms:setInterSMS">
+                      <div class="row">
                         <div class="col-md-12">
                           <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
                                         send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
@@ -1024,7 +1024,7 @@
 
           <div class="row">
 
-            <div class="col-md-3">
+            <div class="col-md-3" presentation-href="sms:setStartTimesSMS">
               <div class="box box-success">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
@@ -1035,10 +1035,10 @@
                 </div>
                 <div class="box-body">
 
-                  <div class="row" presentation-href="sms:setStartTimesSMS">
+                  <div class="row">
                     <label for="startTimes" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
                   </div>
-                  <div class="row" presentation-href="sms:setStartTimesSMS">
+                  <div class="row">
                     <div class="col-md-6">
                       <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
                              validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
@@ -1055,7 +1055,7 @@
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
               <div class="box box-success">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
@@ -1066,7 +1066,7 @@
                 </div>
                 <div class="box-body">
 
-                  <div class="row" presentation-href="sms:setWorkHoursSMS">
+                  <div class="row">
                     <label for="workHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
                   </div>
                   <div class="row" presentation-href="sms:setWorkHoursSMS">
@@ -1087,7 +1087,7 @@
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" presentation-href="sms:activeLockSms">
               <div class="box box-danger">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
@@ -1099,7 +1099,7 @@
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="row" presentation-href="sms:activeLockSms">
+                      <div class="row" >
                         <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                       </div>
                       <div class="row">
@@ -1113,7 +1113,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="row" presentation-href="sms:unActiveLockSMS">
+                      <div class="row">
                         <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                       </div>
                       <div class="row">
@@ -1132,7 +1132,7 @@
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3" presentation-href="sms:lockSMS">
               <div class="box box-danger">
                 <div class="box-header">
                   <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
@@ -1180,7 +1180,7 @@
 
           </div>
 
-          <div class="row">
+          <div class="row" presentation-href="deviceKeyboard:getCancelLockInputMsg">
 
             <div class="col-md-6">
               <div class="box box-danger">
