@@ -93,6 +93,10 @@
          ng-click="machineMngCtrl.uploadMachine('lg')">
         <i class="fa fa-plus"></i> 批量导入
       </a>
+      <a class="btn btn-default pull-right" presentation-href="machine:moveOrg"
+         title="Export Table" ng-click="machineMngCtrl.excelExport(machineMngCtrl.org,machineMngCtrl.machine)" >
+        <i class="glyphicon glyphicon-new-window" ></i> 批量导出
+      </a>
     </div>
   </div>
   <div class="row " style="padding: 10px">
@@ -117,7 +121,13 @@
           <td class="text-nowrap" data-title="'设备号'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'发动机类型'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
           <td class="text-nowrap" data-title="'所属组织'" sortable="'org.label'">{{machine.org.label}}</td>
-          <td class="text-nowrap" data-title="'车辆状态'" sortable="'machineState'">{{machine.machineState}}</td>
+          <td class="text-nowrap" data-title="'创建时间'" sortable="'installTime'">{{machine.installTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'ECU锁车状态'"  ng-switch on="machine.deviceinfo.ecuLockStatus | limitTo:-1" sortable="'deviceinfo.ecuLockStatus'">
+            <div ng-switch-when="0">未绑定</div>
+            <div ng-switch-when="1">已绑定</div>
+            <div ng-switch-default>未绑定</div>
+          </td>
+          <!--<td class="text-nowrap" data-title="'车辆状态'" sortable="'machineState'">{{machine.machineState}}</td>-->
           <td class="text-nowrap" data-title="'操作'">
             <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">修改

@@ -81,7 +81,7 @@
     .constant('MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL', SERVER_BASE_URL + 'machine/uploadTemplateDownload')   //车辆导入模板下载
     .constant('MACHINE_UPLOAD_URL', SERVER_BASE_URL + 'machine/upload')   //车辆批量导入
     .constant('MACHINE_STORAGE_URL',SERVER_BASE_URL+"machine/getStorage")
-
+    .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //车辆管理数据批量导出
     .constant('MACHINEANDDEVCE_ORG_JUDGE', SERVER_BASE_URL + 'machine/machineAndDeviceOrgJudge')   //判断设备所属组织与车辆所属组织是否一致
 
     //系统参数相关
