@@ -992,27 +992,6 @@
       })
     }
 
-    //查询绑定短信的短信内容
-    vm.getActiveLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.activeMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送绑定短信
     vm.sendActiveLockSMS = function (devicenum) {
@@ -1061,27 +1040,6 @@
       return permissions.getPermissions("device:monitorShow");
     }
 
-    //查询解绑短信的短信内容
-    vm.getUnActiveLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.unActiveMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送解绑短信
     vm.sendUnActiveLockSMS = function (devicenum) {
@@ -1127,29 +1085,6 @@
         });
     }
 
-    //查询锁车的短信内容
-    vm.getLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.lockMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
-
-
     //发送锁车短信
     vm.sendLockSMS = function (devicenum) {
       if (devicenum == null) {
@@ -1193,30 +1128,6 @@
           })
         });
     }
-
-
-    //查询解锁短信的短信内容
-    vm.getUnLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.unLockMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
-
 
     //发送解锁短信
     vm.sendUnLockSMS = function (devicenum) {
@@ -1262,147 +1173,6 @@
         });
     }
 
-    vm.viewBindInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.bindKeyboardMsg = data.content;
-            if (data.content) {
-              vm.bindKeyboardMsgIdx = data.content.substr(17, 1) + data.content.substr(22, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
-    }
-
-    vm.viewUnBindInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_UN_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.unbindKeyboardMsg = data.content;
-            if (data.content) {
-              var idxTmp = data.content.substr(5, 1) + data.content.substr(10, 1);
-              vm.unbindKeyboardMsgIdx = 50 - idxTmp;
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
-    }
-
-    vm.viewLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.lockKeyboardMsg = data.content;
-            if (data.content) {
-              vm.lockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
-    }
-
-    vm.viewUnLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_UN_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.unLockKeyboardMsg = data.content;
-            if (data.content) {
-              vm.unLockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
-    }
-
-    vm.viewCancelLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_CANCEL_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.cancelLockKeyboardMsg = data.content;
-            if (data.content) {
-
-              vm.cancelLockTimes = data.content.substr(3, 1) + data.content.substr(8, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
-    }
-
-
-    //查询回传地址
-    vm.getSetIpSMS = function (devicenum, host, port) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
-      ;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setIpMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
-
     //发送回传地址信息
     vm.sendSetIpSMS = function (devicenum, host, port) {
       if (devicenum == null) {
@@ -1439,28 +1209,6 @@
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
-    }
-
-    //查询启动次数信息
-    vm.getSetStartTimesSMS = function (devicenum, startTimes) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setStartTImesMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
     }
 
     //发送启动次数信息
@@ -1500,26 +1248,25 @@
         });
     }
 
-    //查询工作小时信息
-    vm.getSetWorkHoursSMS = function (devicenum, workHours) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setWorkHoursMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+    vm.viewCancelLockInputMsg = function (devicenum) {
+      $confirm({
+        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
+        title: languages.findKey('ViewKeyInputConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
       })
+        .then(function () {
+          var restURL = VIEW_CANCEL_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.cancelLockKeyboardMsg = data.content;
+            if (data.content) {
+              vm.cancelLockTimes = data.content.substr(3, 1) + data.content.substr(8, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
     }
 
     //发送回传地址信息
@@ -1559,31 +1306,6 @@
         });
     }
 
-    //查询间隔信息
-    vm.getSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
-      if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-        Notification.error("请检查时间设置，三个回传时间须全部设置！");
-        return;
-      }
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
-        + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setWorkIntMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
