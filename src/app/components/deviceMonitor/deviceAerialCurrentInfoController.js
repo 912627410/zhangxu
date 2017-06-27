@@ -5,10 +5,10 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
+    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
-                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE) {
+                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -1224,6 +1224,55 @@
 
 
         };
+
+        vm.deviceDataDownload = function (deviceNum, startDate, endDate) {
+          if (deviceNum) {
+            var filterTerm = "deviceNum=" + deviceNum;
+          }else {
+            Notification.error("输入的设备编号有误");
+            return;
+          }
+
+          if (startDate) {
+            filterTerm += "&startDate=" + $filter('date')(startDate, 'yyyy-MM-dd HH:mm:ss');
+
+          }else {
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            return;
+          }
+
+          if (endDate) {
+            filterTerm += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd HH:mm:ss');
+
+          }else {
+            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            return;
+          }
+          var restCallURL = DEVCEDATA_EXCELEXPORT;
+          if (filterTerm){
+            restCallURL += "?";
+            restCallURL += filterTerm;
+          }
+
+          $http({
+            url: restCallURL,
+            method: "GET",
+            responseType: 'arraybuffer'
+          }).success(function (data, status, headers, config) {
+            var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+            var objectUrl = window.URL.createObjectURL(blob);
+
+            var anchor = angular.element('<a/>');
+            anchor.attr({
+              href: objectUrl,
+              target: '_blank',
+              download: deviceNum +'.xls'
+            })[0].click();
+
+          }).error(function (data, status, headers, config) {
+            Notification.error("下载失败!");
+          });
+        }
 
         //warning data
         vm.getDeviceWarningData = function(deviceNum,startDate,endDate){
