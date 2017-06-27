@@ -13,77 +13,94 @@
     .controller('newTemplateController', newTemplateController);
 
   /** @ngInject */
-  function newTemplateController($rootScope,$scope,$state) {
+  function newTemplateController($state,$uibModal,$resource,TEMPLATE_CREATE_URL) {
     var vm = this;
-    var registerNum;
-    var jsonData = jsonData;
     var templateItem = {
-      name:"",
-      alis:"",
-      type:"",
-      length:"",
-      register:"",
-      converter:""
+      tName:"",
+      deviceType:"",
+      description:"",
+      templateJson:[]
+    };
 
-    }
+    vm.templateJson = [];
 
+    vm.addData = function (index) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/templateRegistry/addData.html',
+        controller: 'addDataController as addDataCtrl',
+        backdrop: false,
+        resolve: {
+          jsonData: function () {
+            return vm.templateJson[index];
+          }
+        }
+      });
 
+      modalInstance.result.then(function (result) {
+        vm.templateJson.push(result);
+      }, function () {
+        //取消
+      })
+    };
 
-    vm.show = false;
+    vm.editData = function(index){
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/templateRegistry/addData.html',
+        controller: 'addDataController as addDataCtrl',
+        backdrop: false,
+        resolve: {
+          jsonData: function () {
+            return vm.templateJson[index];
+          }
+        }
+      });
 
-    vm.showCharLengthInputBox = function () {
+      modalInstance.result.then(function (result) {
+        vm.templateJson[index] = result;
+      }, function () {
+        //取消
+      })
+    };
 
-      if(vm.templateInfo.type=="char"){
-        vm.show = true;
-      }else{
-        vm.show = false;
+    vm.deleteData = function (index){
+      for(index;index<vm.templateJson.length;index++){
+        vm.templateJson[index] = vm.templateJson[index+1];
       }
-    }
-    vm.confirm = function (templateInfo) {
-          vm.templateItemArr = [];
-          templateItem.name = templateInfo.name;
-          templateItem.alis = templateInfo.cname;
-          templateItem.type = templateInfo.type;
-          templateItem.converter = templateInfo.converter;
-         //int类型长度为4, short类型长度为2, char类型长度自定义
-          if(templateInfo.type=="int"){
-            templateItem.length = 4;
-          }else if(templateInfo.type=="short"){
-            templateItem.length = 2;
-          }else{
-            templateItem.length = parseInt(templateInfo.length);
-          }
-          //register第一个为1，剩下以2为长度累加
-          if(jsonData.length ==0){
-            templateItem.register = 1;
-          }else{
-            registerNum = jsonData[jsonData.length-1].register;
-            registerNum +=  Math.ceil(templateItem.length/2);
-            templateItem.register = registerNum;
-          }
-          var item = templateItem;
-          vm.templateItemArr.push(item);
-
-       $uibModalInstance.close(vm.templateItemArr);
-    }
+      vm.templateJson.pop();
+    };
 
 
+    vm.confirm = function () {
 
-    vm.converterData = [{
-      name:"转化器a",
-      value:"org.gpscloud.converter.CHexConver1"
-    },{
-      name:"转化器b",
-      value:"org.gpscloud.converter.CHexConver2"
-    },{
-      name:"转化器c",
-      value:"org.gpscloud.converter.CHexConver3"
-    }]
+      templateItem.tName = vm.templateInfo.tName;
+      templateItem.deviceType = vm.templateInfo.deviceType;
+      templateItem.description = vm.templateInfo.description;
+      templateItem.templateJson = vm.templateJson;
+
+      console.log(templateItem);
+
+      var rspPromise = $resource(TEMPLATE_CREATE_URL, {}, {'createTemplate': {method: 'POST', isArray: true}});
+      rspPromise.createTemplate(templateItem,function(rspData){
+        $state.go("home.templateMng");
+      });
+
+    };
+
+    vm.reset = function(){
+      vm.templateInfo = [];
+      vm.jsonData = [];
+    };
+
+    vm.cancel = function(){
+      $state.go("home.templateMng");
+    };
+
 
     vm.return=function () {
       $state.go("home.templateMng");
-    }
-
+    };
 
   }
 })();

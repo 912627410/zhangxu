@@ -23,7 +23,7 @@
         <tr ng-repeat="template in $data">
           <td data-title="'序号'">{{$index+1}}</td>
           <td data-title="'设备类型'" sortable="'deviceType'">
-            <a href ng-click="templateMngController.currentInfo(template)">{{template.deviceType}}</a>
+            <a href ng-click="templateMngController.updateInfo($index)">{{template.deviceType}}</a>
           </td>
           <td data-title="'名称'" sortable="'tName'">{{template.tName}}</td>
           <td data-title="'状态'" sortable="'status'">{{template.status}}</td>

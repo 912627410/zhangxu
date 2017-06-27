@@ -526,11 +526,20 @@
         views:{
           'rightside@home': {
             templateUrl: 'app/components/templateRegistry/newTemplate.html',
-            controller: 'newTemplateController as newTemplateController'
+            controller: 'newTemplateController as newTemplateCtrl'
           }
         }
       })
 
+      .state('home.templateMng.update',{
+        url:'/templateMng/update',
+        views:{
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/updateTemplate.html',
+            controller: 'updateTemplateController as updateTemplateCtrl'
+          }
+        }
+      })
 
     .state('home.templateRegistry', {
       url: '/templateRegistry',

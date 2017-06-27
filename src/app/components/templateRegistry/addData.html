@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h3 class="modal-title">添加数据点</h3>
+</div>
+<form name="newFleetForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label class="control-label col-sm-3">名称</label>
+        <div class="col-sm-5">
+          <input type="text" required="required" ng-model="addDataCtrl.templateInfo.name" class="form-control ng-pristine ng-pending ng-touched">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">类型</label>
+        <div class="col-sm-5">
+          <select name="type" required="required" class="form-control" ng-model="addDataCtrl.templateInfo.type">
+            <option>int</option>
+            <option>short</option>
+            <option>char</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" required="required" ng-show="addDataCtrl.showCharLengthInputBox()">
+        <label class="control-label col-sm-3">长度</label>
+        <div class="col-sm-5">
+          <input type="number" ng-model="addDataCtrl.templateInfo.length" class="form-control ng-pristine ng-pending ng-touched">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">寄存器变量</label>
+        <div class="col-sm-5">
+          <input type="number" required="required" ng-model="addDataCtrl.templateInfo.register" class="form-control ng-pristine ng-pending ng-touched">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">转换器</label>
+        <div class="col-sm-5">
+          <input type="text" required="required" ng-model="addDataCtrl.templateInfo.converter" class="form-control ng-pristine ng-pending ng-touched">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="addDataCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="addDataCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>

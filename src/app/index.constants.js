@@ -262,6 +262,7 @@
 
     //模版url
     .constant('TEMPLATE_URL', SERVER_BASE_URL + 'template/getAll')   //得到短消息内容
+    .constant('TEMPLATE_CREATE_URL', SERVER_BASE_URL + 'template/create')  //添加模版
   ;
 
 
