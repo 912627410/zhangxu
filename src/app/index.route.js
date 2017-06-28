@@ -511,15 +511,36 @@
 
 
 
-      .state('home.VersionInformation', {
-        url: '/templateRegistry',
+      .state('home.templateMng', {
+        url: '/templateMng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/templateRegistry/VersionInformation.html',
-            controller: 'VersionInfoMngController as VersionInfoMngController'
+            templateUrl: 'app/components/templateRegistry/templateMng.html',
+            controller: 'templateMngController as templateMngController'
           }
         }
       })
+
+      .state('home.templateMng.new',{
+          url:'/templateMng/new',
+        views:{
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/newTemplate.html',
+            controller: 'newTemplateController as newTemplateCtrl'
+          }
+        }
+      })
+
+      .state('home.templateMng.update',{
+        url:'/templateMng/update',
+        views:{
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/updateTemplate.html',
+            controller: 'updateTemplateController as updateTemplateCtrl'
+          }
+        }
+      })
+
     .state('home.templateRegistry', {
       url: '/templateRegistry',
       views: {

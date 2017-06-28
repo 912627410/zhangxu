@@ -116,7 +116,7 @@
 
    // load 'en' table on startup
     $translateProvider.preferredLanguage(current_lang_map);
-
+    $translateProvider.useSanitizeValueStrategy('escape');
   }]);
 
 })();

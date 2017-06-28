@@ -13,14 +13,14 @@
   function templateRegistryMngController($rootScope,$scope,$uibModal,$window) {
     var vm = this;
     vm.jsonData = [];
-    vm.versionNumber= $window.sessionStorage["versionNumber"]
+    vm.versionNumber= $window.sessionStorage["versionNumber"];
 
     vm.register = function (size) {
 
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
           templateUrl: 'app/components/templateRegistry/newTemplate.html',
-          controller: 'newTemplateController as newTemplateController',
+          controller: 'newTemplateController as newTemplateCtrl',
           size: size,
           backdrop: false,
           resolve: {
@@ -31,23 +31,16 @@
         });
 
         modalInstance.result.then(function (result) {
-          console.log(result);
-          vm.jsonData.push(result[0])
-          //console.log(vm.jsonData)
+          vm.jsonData.push(result[0]);
         }, function () {
           //取消
         })
 
-    }
+    };
 
     vm.confirm = function (jsonData) {
-     console.log(jsonData);
 
     }
-
-
-
-
 
   }
 })();

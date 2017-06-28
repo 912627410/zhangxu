@@ -1,53 +1,63 @@
-<div class="modal-header">
-  <h3 class="modal-title">新建</h3>
-</div>
-<form class="form-horizontal">
-  <div class="modal-body row">
-    <div class="box-body col-sm-6">
-      <div class="form-group">
-        <label for="name" class="control-label col-sm-3" >名称</label>
-        <div class="col-sm-8">
-          <input  name="name" id="name" class="form-control" ng-model="newTemplateController.templateInfo.name"/>
+<section class="content-header">
+  <h3 class="col-md-10">添加模版</h3>
+  <button class="btn btn-warning text-right" type="button" ng-click="newTemplateCtrl.return()">返回</button>
+</section>
+<!-- Main content -->
+<section class="content form-horizontal">
+  <div class="row">
+    <div class="form-horizontal modal-body">
+      <div class="box-body col-sm-6">
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-3">设备类型 :</label>
+          <div class="col-sm-8">
+            <input name="name" id="name" required="required" class="form-control" ng-model="newTemplateCtrl.templateInfo.deviceType"/>
+          </div>
         </div>
-
-      </div>
-      <div class="form-group">
-        <label for="cname" class="control-label col-sm-3" >中文名称</label>
-        <div class="col-md-8">
-          <input id="cname" name="cname" class="form-control" ng-model="newTemplateController.templateInfo.cname"/>
+        <div class="form-group">
+          <label for="cname" class="control-label col-sm-3">名称 :</label>
+          <div class="col-md-8">
+            <input id="cname" name="cname" required="required" class="form-control" ng-model="newTemplateCtrl.templateInfo.tName"/>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label  class="control-label col-sm-3" >类型</label>
-        <div class="col-sm-8">
-          <select name="type" class="form-control" ng-model="newTemplateController.templateInfo.type"  ng-change="newTemplateController.showCharLengthInputBox()">
-            <option value="int">int</option>
-            <option value="short">short</option>
-            <option value="char">char</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group" ng-show="newTemplateController.show">
-        <label for="charLength"  class="control-label col-sm-5" >请输入长度</label>
-        <div class="col-sm-7">
-          <input value="" class="form-control" id="charLength" ng-model="newTemplateController.templateInfo.length">
+        <div class="form-group">
+          <label class="control-label col-sm-3">描述 :</label>
+          <div class="col-sm-8">
+            <textarea rows="3" id="description" class="form-control" ng-model="newTemplateCtrl.templateInfo.description" name="description"
+                      typeahead-show-hint="true"></textarea>
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label col-sm-3" >转换器</label>
-        <div class="col-sm-8">
-          <select name="type" class="form-control" ng-model="newTemplateController.templateInfo.converter" >
-            <option ng-repeat="x in newTemplateController.converterData" value="{{x.value}}">{{x.name}}</option>
-          </select>
-        </div>
-      </div>
-      <P> </P>
     </div>
-
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="newTemplateController.confirm(newTemplateController.templateInfo)">确定</button>
-    <button class="btn btn-warning" type="button" ng-click="newTemplateController.cancel()">取消</button>
   </div>
 
-</form>
+  <button type="button" class="btn btn-primary" ng-click="newTemplateCtrl.addData()" style="margin-bottom: 10px">添加数据点</button>
+
+  <div class="table-responsive">
+    <table ng-table="newTemplateCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <thead>
+      <tr>
+        <td class="text-nowrap" align="center">name</td>
+        <td class="text-nowrap" align="center">type</td>
+        <td class="text-nowrap" align="center">length</td>
+        <td class="text-nowrap" align="center">register</td>
+        <td class="text-nowrap" align="center">converter</td>
+        <td class="text-nowrap" align="center">edit</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="x in newTemplateCtrl.templateJson">
+        <td class="text-nowrap" align="center">{{x.name}}</td>
+        <td class="text-nowrap" align="center">{{x.type}}</td>
+        <td class="text-nowrap" align="center">{{x.length}}</td>
+        <td class="text-nowrap" align="center">{{x.register}}</td>
+        <td class="text-nowrap" align="center">{{x.converter}}</td>
+        <td class="text-nowrap" align="center"><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.editData($index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span><span style="cursor: pointer; padding: 0px 5px;" ng-click="newTemplateCtrl.deleteData($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-primary" type="button" ng-click="newTemplateCtrl.confirm()">保存</button>
+    <button class="btn btn-danger" type="reset" ng-click="newTemplateCtrl.reset()">清空数据点</button>
+  </div>
+</section>
