@@ -7,7 +7,7 @@
     GPSCloudConfig.config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider,toastrConfig,IdleProvider, KeepaliveProvider) {
+  function config($logProvider, $httpProvider,toastrConfig,IdleProvider, KeepaliveProvider,TitleProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -89,6 +89,11 @@
     //interval(seconds) (integer, default is 10 minutes): Must be greater than 0.
     //This specifies how often the Keepalive event is triggered and the HTTP request is issued.
     //KeepaliveProvider.interval(10); // in seconds
+
+    //keeps track of the document's title and allows it to change.
+    //It also has a more specific feature, which is to display an idle warning message or timed out message in the title.
+    //The text of the aforementioned messages can be customized dynamically.
+    //TitleProvider.enable(false);
 
   }
 
