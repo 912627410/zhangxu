@@ -5,14 +5,6 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="phoneNumber" class="col-sm-2 control-label">配置名</label>
-        <div class="col-sm-10">
-          <input type="text" id="phoneNumber" class="form-control" placeholder="配置名"
-                 ng-model="updateFuelConfigController.fuelConfig.name" name="name"  validator="required"/>
-        </div>
-      </div>
-
-      <div class="form-group">
         <label for="fuelType" class="col-sm-2 control-label">燃油类型</label>
         <div class="col-sm-10">
           <ui-select id="fuelType" name="fuelType" ng-model="updateFuelConfigController.fuelConfig.fuelType" theme="bootstrap"
@@ -31,7 +23,7 @@
           <input type="text" id="price" class="form-control" placeholder="价格"
                  ng-model="updateFuelConfigController.fuelConfig.price" name="price"  validator="required,numberAndDot"/>
         </div>
-        </div>
+      </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">所属组织</label>
         <div class="col-sm-10">
@@ -46,7 +38,22 @@
           </p>
         </div>
       </div>
-
+      <div class="form-group">
+        <label class="col-sm-2 control-label">{{'startDate'|translate}}</label>
+        <div class="col-md-10">
+          <p class="input-group">
+            <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="updateFuelConfigController.fuelConfig.startDate"
+                   is-open="updateFuelConfigController.startDateOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="updateFuelConfigController.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
 
       <i style="color: red" ng-if="null!=updateFuelConfigController.errorMsg">
         {{updateFuelConfigController.errorMsg}}<br/>
