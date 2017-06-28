@@ -13,17 +13,9 @@
 
 
 <!-- Main content -->
-<section class="content">
+<section class="content form-horizontal">
 
-  <div class="row">
-    <div class="col-md-1">
-      <label class="control-label">{{'configurationName'|translate}}</label>
-
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="name" class="form-control " ng-model="fuelConfigMngController.fuelConfig.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-    </div>
-
+  <div class="row form-group">
 
     <div class="col-md-1">
       <label class="control-label">{{'organisation'|translate}}</label>
@@ -42,7 +34,7 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-primary" type="button"  ng-click="fuelConfigMngController.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-warning" type="button"  ng-click="fuelConfigMngController.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button"  presentation-href="fuelConfig:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">{{'query'|translate}}</button>
     </div>
 
@@ -67,12 +59,10 @@
       <div class="table-responsive">
       <table ng-table="fuelConfigMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="fuelConfig in $data">
-
-          <td class="text-nowrap" data-title="'configurationName'|translate" sortable="'name'">{{fuelConfig.name}}</td>
           <td class="text-nowrap" data-title="'fuelType'|translate" sortable="'fuelTypeDesc'">{{fuelConfig.fuelTypeDesc}}</td>
           <td class="text-nowrap" data-title="'price'|translate" sortable="'price'">{{fuelConfig.price}}</td>
           <td class="text-nowrap" data-title="'organisation'|translate" sortable="'statusDesc'">{{fuelConfig.orgEntity.label}}</td>
-          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{fuelConfig.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'startDate'|translate" sortable="'startDate'">{{fuelConfig.startDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{fuelConfig.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
 

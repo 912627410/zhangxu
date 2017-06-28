@@ -28,7 +28,7 @@
       var restCallURL = FUEL_CONFIG_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
+      var sortUrl = sort || "startDate,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != fuelConfig) {

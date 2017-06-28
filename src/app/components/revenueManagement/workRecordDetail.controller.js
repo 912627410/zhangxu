@@ -206,7 +206,7 @@
       });
       marker.setLabel({
         offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
-        content: "行使了 0 米"
+        content: "行驶了 0 米"
       });
       // 绘制轨迹
       var polyline = new AMap.Polyline({
@@ -234,7 +234,7 @@
         lastDistabce += distances;
         marker.setLabel({
           offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+          content: "行驶了: " + lastDistabce + "&nbsp&nbsp" + "米"
         });
         startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
       })
@@ -247,7 +247,7 @@
         lastDistabce = 0;
         marker.setLabel({
           offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+          content: "行驶了: " + lastDistabce + "&nbsp&nbsp" + "米"
         });
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
@@ -261,7 +261,7 @@
         distabcess2 += distances;
         marker.setLabel({
           offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
+          content: "行驶了: " + distabcess2 + "&nbsp&nbsp" + "米"
         });
       }, false);
       /*继续移动事件*/

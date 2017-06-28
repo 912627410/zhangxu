@@ -13,6 +13,18 @@
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.fuelConfig = {};
+    vm.fuelConfig.startDate=new Date();
+    vm.fuelConfig.orgEntity=operatorInfo.userdto.organizationDto;
+
+    // 日期控件相关
+    // date picker
+    vm.startDateOpenStatus = {
+      opened: false
+    };
+
+    vm.startDateOpen = function ($event) {
+      vm.startDateOpenStatus.opened = true;
+    };
 
     //alert(simService.getSimStatusList());
     ////alert(simService.name);
@@ -23,7 +35,7 @@
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
       Notification.error('获取燃油类型失败');
-    })
+    });
 
     vm.ok = function (fuelConfig) {
       var restPromise = serviceResource.restAddRequest(FUEL_CONFIG_OPER_URL, fuelConfig);

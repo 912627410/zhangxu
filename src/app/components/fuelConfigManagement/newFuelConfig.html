@@ -4,28 +4,19 @@
 <form name="newSimForm" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
-        <div class="form-group">
-          <label for="name" class="col-sm-3 control-label">{{'configurationName'|translate}}</label>
-          <div class="col-sm-9">
-            <input type="text" id="name" class="form-control" placeholder="{{'configurationName'|translate}}"
-                   ng-model="newFuelConfigController.fuelConfig.name" name="name"  validator="required"/>
-          </div>
+      <div class="form-group">
+        <label for="fuelType" class="col-sm-3 control-label">{{'fuelType'|translate}}</label>
+        <div class="col-sm-9">
+          <ui-select id="fuelType" name="fuelType" ng-model="newFuelConfigController.fuelConfig.fuelType" theme="bootstrap"
+                     ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="{{'fuelType'|translate}}">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices  repeat="fuelType.value as fuelType in newFuelConfigController.fuelTypeList | propsFilter: {desc: $select.search}" >
+              <div  ng-bind-html="fuelType.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
-
-        <div class="form-group">
-          <label for="fuelType" class="col-sm-3 control-label">{{'fuelType'|translate}}</label>
-          <div class="col-sm-9">
-            <ui-select id="fuelType" name="fuelType" ng-model="newFuelConfigController.fuelConfig.fuelType" theme="bootstrap"
-                       ng-disabled="disabled" validator="required">
-              <ui-select-match allow-clear="true" placeholder="{{'fuelType'|translate}}">{{$select.selected.desc}}
-              </ui-select-match>
-              <ui-select-choices  repeat="fuelType.value as fuelType in newFuelConfigController.fuelTypeList | propsFilter: {desc: $select.search}" >
-                <div  ng-bind-html="fuelType.desc | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-
+      </div>
       <div class="form-group">
         <label for="price" class="col-sm-3 control-label">{{'price'|translate}}</label>
         <div class="col-sm-9">
@@ -33,20 +24,37 @@
                  ng-model="newFuelConfigController.fuelConfig.price" name="price"  validator="required,numberAndDot"/>
         </div>
       </div>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
-          <div class="col-sm-9">
-            <p class="input-group">
-              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
-                     ng-model="newFuelConfigController.fuelConfig.orgEntity.label" name="org" readonly validator="required"/>
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="newFuelConfigController.openTreeInfo()">
-                      <i class="fa fa-sitemap"></i>
-                    </button>
-                  </span>
-            </p>
-          </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
+        <div class="col-sm-9">
+          <p class="input-group">
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
+                   ng-model="newFuelConfigController.fuelConfig.orgEntity.label" name="org" readonly validator="required"/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="newFuelConfigController.openTreeInfo()">
+                    <i class="fa fa-sitemap"></i>
+                  </button>
+                </span>
+          </p>
         </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'startDate'|translate}}</label>
+        <div class="col-md-9">
+          <p class="input-group">
+            <input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="newFuelConfigController.fuelConfig.startDate"
+                   is-open="newFuelConfigController.startDateOpenStatus.opened"
+                   datepicker-options="dateOptions" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="newFuelConfigController.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
 
 
       <i style="color: red" ng-if="null!=newFuelConfigController.errorMsg">
