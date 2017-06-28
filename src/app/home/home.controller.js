@@ -9,7 +9,7 @@
     .controller('HomeController', HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification) {
+  function HomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification,Title) {
     var vm = this;
     var statisticInfo = {
       totalDevices: 0,
@@ -23,6 +23,12 @@
       $rootScope.$state.go( "entry" );
       return;
     }
+
+    // the user has come back from AFK and is doing stuff. if you are warning them, you can use this to hide the dialog
+    $rootScope.$on('IdleEnd', function() {
+      // If the original title was stored or set previously, sets the title to the original value.
+      Title.restore();
+    });
 
     if(permissions.getPermissions("device:homegpsdata")){
 
