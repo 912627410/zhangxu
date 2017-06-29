@@ -15,6 +15,14 @@
     var fleetMonitorUrl;
     vm.fleet = $rootScope.fleetChart[0];
 
+    vm.lineColor = [];
+    for(var i = 0;i < 21;i++) {
+      if(i%10 == 0 ) {
+        vm.lineColor.push("#ff0000");
+      } else {
+        vm.lineColor.push("#999");
+      }
+    }
 
     vm.openFleetTree = function () {
       fleetTreeFactory.treeShow(function (selectedItem) {
@@ -70,10 +78,10 @@
             textBaseline: 'middle',
             top: (idx + 0.5) * 100 / lineList.length + '%',
             text: line.beginPoint.name,
-            left: '3%',
+            left: '2%'
           },{
             textBaseline: 'middle',
-            left: '50%',
+            left: '48%',
             top: (idx + 0.5) * 100 / lineList.length + '%',
             text: line.endPoint.name
           },{
@@ -84,9 +92,16 @@
           });
           //
           vm.option.singleAxis.push({
-            left: 150,
+            left: 100,
             type: 'value',
             boundaryGap: false,
+            splitLine:{
+              show:true,
+              lineStyle:{
+                width: 2,
+                color: vm.lineColor
+              }
+            },
             min: -1,
             max: 1,
             interval: 0.1,
