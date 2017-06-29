@@ -1249,8 +1249,8 @@
 
       //画大地图对应的变化趋势图
       var lineContainerList = document.getElementsByClassName("chart-container");
-      lineContainerList[0].style.width = "65%";
-      lineContainerList[1].style.width = "0%";
+      lineContainerList[0].style.width = "100%";
+      lineContainerList[1].style.display = "none";
       mmuChart1 = echarts.init(lineContainerList[0]);
       if(heatType1==1){
         var mmuLine = mmuOption1;
@@ -2192,6 +2192,8 @@
         }
         //热度对比显示格局样式
         var mapContainerBoxList = document.getElementsByClassName("mapContainerBox");
+        mapContainerBoxList[0].style.display = "inline-block";
+        mapContainerBoxList[1].style.display = "inline-block";
         mapContainerBoxList[0].style.width = "50%";
         mapContainerBoxList[1].style.width = "50%";
 
@@ -2199,13 +2201,10 @@
         mapContainerList[0].style.width = "100%";
         mapContainerList[1].style.width = "100%";
 
-        var mapContainerQushi2 = document.getElementById("mapContainerQushi2");
-        mapContainerQushi2.style.display = "block";
-        var mapContainerBox = document.getElementById("mapContainerBox");
-        mapContainerBox.style.display = "block";
         var lineContainerList = document.getElementsByClassName("chart-container");
-        lineContainerList[0].style.width = "49.5%";
-        lineContainerList[1].style.width = "49.5%";
+        lineContainerList[1].style.display = "inline-block";
+        lineContainerList[0].style.width = "50%";
+        lineContainerList[1].style.width = "50%";
         //在省份城市情况下直接点击对比查询，隐藏返回箭头
         var backButtons = document.getElementsByClassName("backChina");
         backButtons[0].style.display = "none";
