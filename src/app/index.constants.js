@@ -212,6 +212,7 @@
     .constant('WORK_POINT_URL', SERVER_BASE_URL + 'fleetMonitor/workPoint') //作业点
     .constant('WORK_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workRecord') //工作纪录
     .constant('WORK_POINT_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/workPointRecord') //工作纪录
+    .constant('WORK_INITIAL_MONITOR', SERVER_BASE_URL + 'fleetMonitor/workInitialMonitor') // 图形监控初始数据
 
     //车队收支  油耗 收入 成本核算
     .constant('DRIVER_RECORD_URL', SERVER_BASE_URL + 'fleetRecord/driverRecord') //行驶轨迹
