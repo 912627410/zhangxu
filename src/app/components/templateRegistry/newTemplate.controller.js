@@ -38,6 +38,11 @@
       });
 
       modalInstance.result.then(function (result) {
+        if(vm.templateJson.length == 0){
+          result.register = 1;
+        }else{
+          result.register = Math.ceil(vm.templateJson[vm.templateJson.length-1].register + vm.templateJson[vm.templateJson.length-1].type.value / 2);
+        }
         vm.templateJson.push(result);
       }, function () {
         //取消
@@ -59,6 +64,11 @@
 
       modalInstance.result.then(function (result) {
         vm.templateJson[index] = result;
+        if(index < vm.templateJson.length-1){
+          for(index;index<vm.templateJson.length-1;index++){
+            vm.templateJson[index+1].register = Math.ceil(vm.templateJson[index].register + vm.templateJson[index].type.value / 2);
+          }
+        }
       }, function () {
         //取消
       })
@@ -73,6 +83,11 @@
 
 
     vm.confirm = function () {
+
+      for(var i = 0;i<vm.templateJson.length;i++){
+        vm.templateJson[i].length = vm.templateJson[i].type.value;
+        vm.templateJson[i].type = vm.templateJson[i].type.name;
+      }
 
       templateItem.tName = vm.templateInfo.tName;
       templateItem.deviceType = vm.templateInfo.deviceType;
