@@ -199,7 +199,7 @@
 
         //******************远程控制tab**********************]
         vm.serverHost = "iot.nvr-china.com";
-        vm.serverPort = "09999";
+        vm.serverPort = "08090";
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';
         vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
