@@ -26,11 +26,10 @@
       //向Map中增加元素（key, value)
       this.put = function(_key, _value) {
         if (this.containsKey(_key) == true) {
-          if(this.remove(_key) == true){
-            this.elements.push( {
-              key : _key,
-              value : _value
-            });
+          for (var i = 0; i < this.elements.length; i++) {
+            if (this.elements[i].key == _key) {
+              this.elements[i].value = _value;
+            }
           }
         } else {
           this.elements.push( {
@@ -123,6 +122,15 @@
           arr.push(this.elements[i].value);
         }
         return arr;
+      },
+
+      //根据key值获取当前元素的索引
+      this.getIndex = function(_key) {
+        for(var i = 0; i < this.elements.length; i++) {
+          if(this.elements[i].key == _key) {
+            return i;
+          }
+        }
       };
   });
 
