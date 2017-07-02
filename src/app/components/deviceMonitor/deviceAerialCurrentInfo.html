@@ -1204,7 +1204,7 @@
                               <div class="row">
                                 <div class="col-md-4">
                                   <div class="row">
-                                    <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'machineStateSamplingTime'|translate}}</label>
+                                    <label for="vehicleStateCollect" class="col-md-2 control-label text-nowrap">{{'machineStateSamplingTime'|translate}}</label>
                                   </div>
                                   <div class="row" presentation-href="sms:setIpSMS">
                                     <div class="col-md-12">
@@ -1217,12 +1217,12 @@
 
                                 <div class="col-md-4">
                                   <div class="row">
-                                    <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'chargingInformationSamplingTime'|translate}}</label>
+                                    <label for="chargerStateCollect" class="col-md-2 control-label text-nowrap">{{'chargingInformationSamplingTime'|translate}}</label>
                                   </div>
                                   <div class="row" presentation-href="sms:setIpSMS">
                                     <div class="col-md-12">
                                       <input type="text" id="chargerStateCollect" class="form-control"
-                                             ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
+                                             validator="number" ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
                                     </div>
                                   </div>
                                 </div>
@@ -1234,11 +1234,11 @@
                                   <div class="row">
                                     <div class="col-md-12">
 
-
                                       <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                     send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
-                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">{{'send'|translate}}</sms-send-btn>
+                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">
 
+                                      </sms-send-btn>
                                     </div>
                                   </div>
 
