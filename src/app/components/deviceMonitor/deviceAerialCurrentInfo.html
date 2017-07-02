@@ -1058,254 +1058,433 @@
                         </div>
 
                         <hr>
-                        <div class="row">
-                            <div class="form-group">
 
-                                <label ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" for="deviceNum" class="col-md-2 control-label text-nowrap">{{'permanentUnlockPassword'|translate}}</label>
-                                <div ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' || userInfo.userdto.role == 'ROLE_ADMIN'" class="col-md-4">
-                                    <input type="text" readonly id="UnLockPass" ng-mouseover="UnLockPass = deviceUnLockFactor.unlockerPass" class="form-control text-red" placeholder="{{'mouseMovementInputDisplay'|translate}}"
-                                           ng-mouseleave="UnLockPass = null" ng-model="deviceAerialCurrentInfoController.UnLockPass" name="licenseId"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="activeMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.activeMsg" name="activeMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'cancelLockCar'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.unActiveMsg" name="unActiveMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'platformGSMmodemNumber'|translate}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="catPhoneNumber" class="form-control" placeholder="{{'SMSNumber'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.catPhoneNumber" name="catPhoneNumber"/>
-                                </div>
+                      <div class="row">
+                        <!-- 设置回传地址 -->
+                        <div class="col-md-6" presentation-href="sms:setIpSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'setTheReturnAddressMessage'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置GPS设备回传地址"> <i class="fa fa-info" ></i></a>
+                              </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSNumber'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="setPhoneNumberMsg" class="form-control" placeholder="{{'platformGSMmodemNumber'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.setCatPhoneNumberMsg" name="setCatPhoneNumberMsg"/>
+                            <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="row">
+                                    <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
+                                  </div>
+                                  <div class="row" presentation-href="sms:setIpSMS">
+                                    <div class="col-md-12">
+                                      <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
+                                             ng-model="deviceAerialCurrentInfoController.serverHost" name="serverHost"/>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(9,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.catPhoneNumber)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(9,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.catPhoneNumber)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.serverHost" name="serverHost"/>
+                                <div class="col-md-3">
+                                  <div class="row">
+                                    <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
+                                  </div>
+                                  <div class="row" presentation-href="sms:setIpSMS">
+                                    <div class="col-md-12">
+                                      <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
+                                             ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPort"/>
+                                      <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.maxlength">{{'theLongestFive'|translate}}</span>
+                                      <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.minlength">{{'theShortestFour'|translate}}</span>
+                                    </div>
+                                  </div>
                                 </div>
-                                <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
-                                           ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPort"/>
-                                    <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.maxlength">{{'theLongestFive'|translate}}</span>
-                                    <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.minlength">{{'theShortestFour'|translate}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="setIpMsg" class="form-control" placeholder="{{'setTheReturnAddressMessage'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.setIpMsg" name="setIpMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(5,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(5,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
-                                           validator="number" ng-model="deviceAerialCurrentInfoController.startTimes" name="startTimes"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="setStartTimesMsg" class="form-control" placeholder="{{'setStartTimesSMS'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.setStartTImesMsg" name="setStartTimesMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(6,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,deviceAerialCurrentInfoController.startTimes,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(6,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,deviceAerialCurrentInfoController.startTimes,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
+                                <div class="col-md-3">
+                                  <div class="row" >
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                     <!-- <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-primary"
+                                                    ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">
+                                      </sms-send-btn>-->
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.workHours" name="workHours"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="setWorkHoursMsg" class="form-control" placeholder="{{'setHoursOfWorkHours'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.setWorkHoursMsg" name="setWorkHoursMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(7,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,deviceAerialCurrentInfoController.workHours,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(7,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,deviceAerialCurrentInfoController.workHours,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
+                                      <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                    send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(5,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort,null,null,null,null,null,null,null)">{{'send'|translate}}</sms-send-btn>
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
-                                <div class="col-md-2">
-                                    <input type="text" id="secOutPower" class="form-control" placeholder="{{'externalPowerSupplySec'|translate}}"
-                                           validator="number" ng-model="deviceAerialCurrentInfoController.secOutPower" name="secOutPower"/>
-                                </div>
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
-                                <div class="col-md-2">
-                                    <input type="text" id="secLocateInt" class="form-control" placeholder="{{'positioningTimeSec'|translate}}"
-                                           validator="number" ng-model="deviceAerialCurrentInfoController.secLocateInt" name="secLocateInt"/>
-                                </div>
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
-                                <div class="col-md-2">
-                                    <input type="text" id="secInnerPower" class="form-control" placeholder="{{'internalPowerSupplyMinute'|translate}}"
-                                           validator="number" ng-model="deviceAerialCurrentInfoController.secInnerPower" name="secInnerPower"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'intervalTime'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="setWorkIntMsg" class="form-control" placeholder="{{'setTheIntervalTimeMessageContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.setWorkIntMsg" name="setWorkIntMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(8,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(8,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
+                                    </div>
+                                  </div>
 
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'terminalReset'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="terminalReset" class="form-control" placeholder="{{'terminalResetMessageContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.terminalReset" name="terminalReset"/>
                                 </div>
-                                <div class="col-md-2">
-                                    <button c,lass="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(10,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-danger" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(10,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
+                              </div>
                             </div>
-                        </div>
-
-                        <hr>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'lockYourCar'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="lockMsg" class="form-control" placeholder="{{'lockCarSMSContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.lockMsg" name="lockMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" presentation-href="sms:lock"  ng-click="deviceAerialCurrentInfoController.viewSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-danger" type="button"  presentation-href="sms:lock" ng-click="deviceAerialCurrentInfoController.sendSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'Unlock'|translate}}</label>
-                                <div class="col-md-8">
-                                    <input type="text" readonly id="unLockMsg" class="form-control" placeholder="{{'unlockMessageContent'|translate}}"
-                                           ng-model="deviceAerialCurrentInfoController.unLockMsg" name="unLockMsg"/>
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-default" type="button" presentation-href="sms:unlock" ng-click="deviceAerialCurrentInfoController.viewSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                                    <button class="btn btn-default" type="button" presentation-href="sms:unlock" ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--车辆状态采样时间、充电信息采样时间设置begin-->
-                        <hr>
-                        <div class="row">
-                          <div class="form-group">
-                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">{{'machineStateSamplingTime'|translate}}</label>
-                          <div class="col-md-3">
-                            <input type="text" id="vehicleStateCollect" class="form-control" placeholder="{{'theInputRange'|translate}}" validator="number"
-                                   ng-model="deviceAerialCurrentInfoController.vehicleStateCollect" name="vehicleStateCollect"/>
-                          </div>
-                          <label for="deviceNum" class="col-md-3 control-label text-nowrap">{{'chargingInformationSamplingTime'|translate}}</label>
-                          <div class="col-md-3">
-                            <input type="text" id="chargerStateCollect"  class="form-control" placeholder="{{'theInputRange'|translate}}" validator="number"
-                                   ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
                           </div>
                         </div>
-                        </div>
-                        <div class="row">
-                          <div class="form-group">
-                          <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
-                          <div class="col-md-7">
-                            <input type="text" id="setCollectIntMsg" readonly  class="form-control" placeholder="{{'setTheIntervalTimeMessageContent'|translate}}"
-                                   ng-model="deviceAerialCurrentInfoController.setCollectIntMsg" name="setCollectIntMsg"/>
+
+                        <!--  设置回传间隔  -->
+                        <div class="col-md-6" presentation-href="sms:setInterSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置GPS在不同供电情况下的回传频率"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+                              <div class="row" >
+                                <div class="col-md-3">
+                                  <div class="row">
+                                    <label for="secOutPower" class="col-md-7 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" id="secOutPower" class="form-control" validator="number" ng-model="deviceAerialCurrentInfoController.secOutPower" name="secOutPower"/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="row">
+                                    <label for="secLocateInt" class="col-md-7 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" id="secLocateInt" class="form-control"
+                                             validator="number" ng-model="deviceAerialCurrentInfoController.secLocateInt" name="secLocateInt"/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="row">
+                                    <label for="secInnerPower" class="col-md-7 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <input type="text" id="secInnerPower" class="form-control"
+                                             validator="number" ng-model="deviceAerialCurrentInfoController.secInnerPower" name="secInnerPower"/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-3">
+                                  <div class="row">
+                                    <label class="col-md-7 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                    send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
+                                                    class="btn btn-primary"
+                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(8,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower,null)">{{'send'|translate}}
+
+                                      </sms-send-btn>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div class="col-md-2 col-md-offset-1">
-                            <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.viewSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">{{'look'|translate}}</button>
-                            <button class="btn btn-default" type="button" ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">{{'send'|translate}}</button>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <!-- 设置采样时间 -->
+                        <div class="col-md-6" presentation-href="sms:setIpSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <div class="row">
+                                    <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'machineStateSamplingTime'|translate}}</label>
+                                  </div>
+                                  <div class="row" presentation-href="sms:setIpSMS">
+                                    <div class="col-md-12">
+                                      <input type="text" id="vehicleStateCollect" class="form-control"
+                                             ng-model="deviceAerialCurrentInfoController.vehicleStateCollect" name="vehicleStateCollect"/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                                <div class="col-md-4">
+                                  <div class="row">
+                                    <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'chargingInformationSamplingTime'|translate}}</label>
+                                  </div>
+                                  <div class="row" presentation-href="sms:setIpSMS">
+                                    <div class="col-md-12">
+                                      <input type="text" id="chargerStateCollect" class="form-control"
+                                             ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                  <div class="row" >
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+
+
+                                      <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                    send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">{{'send'|translate}}</sms-send-btn>
+
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
+
+                        <!-- 设置 平台短信猫号码-->
+                        <div class="col-md-6" presentation-href="sms:setStartTimesSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'platformGSMmodemNumber'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置GPS启动次数"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+
+
+                              <div class="row">
+                                <div class="col-md-9">
+                                  <input type="text" id="catPhoneNumber" class="form-control"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.catPhoneNumber" name="catPhoneNumber"/>
+                                </div>
+                                <div class="col-md-3">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
+                                                class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendSMS(9,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.catPhoneNumber)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <!--车辆状态采样时间、充电信息采样时间设置end-->
-                    </div>
+
+                      </div>
+
+
+                      <div class="row">
+
+                        <!-- 设置启动次数-->
+                        <div class="col-md-3" presentation-href="sms:setStartTimesSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置GPS启动次数"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+
+                              <div class="row">
+                                <label for="startTimes" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <input type="text" id="startTimes" class="form-control"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.startTimes" name="startTimes"/>
+                                </div>
+                                <div class="col-md-6">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
+                                                class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendSMS(6,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,deviceAerialCurrentInfoController.startTimes,null,null,null,null,null)">{{'send'|translate}}
+
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- 设置工作小时数 -->
+                        <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="设置GPS工作小时数"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+
+                              <div class="row">
+                                <label for="workHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+                              </div>
+                              <div class="row" presentation-href="sms:setWorkHoursSMS">
+                                <div class="col-md-6">
+                                  <input type="text" id="workHours" class="form-control"
+                                         ng-model="deviceAerialCurrentInfoController.workHours" name="workHours"/>
+                                </div>
+                                <div class="col-md-6">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
+                                                class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendSMS(7,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,deviceAerialCurrentInfoController.workHours,null,null,null,null)">{{'send'|translate}}
+                                  </sms-send-btn>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- 绑定-->
+                        <div class="col-md-3" presentation-href="sms:activeLockSms">
+                          <div class="box box-danger">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="将GPS设备与车辆绑定"> <i class="fa fa-info" ></i> </a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="row" >
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                    class="btn btn-danger" presentation-href="sms:activeLockSms"
+
+
+                                        ng-click="deviceAerialCurrentInfoController.sendSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                      </sms-send-btn>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="row">
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
+                                                    class="btn btn-warning" presentation-href="sms:unActiveLockSMS"
+                                                    ng-click="deviceAerialCurrentInfoController.sendSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                      </sms-send-btn>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-3" presentation-href="sms:lockSMS">
+                          <div class="box box-danger">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right" title="通过GPS锁定车辆，锁车后车辆无法启动。"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+                              <div class="row">
+                                <!-- 锁车 -->
+                                <div class="col-md-6">
+                                  <div class="row" presentation-href="sms:lockSMS">
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
+                                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                    class="btn btn-danger"  presentation-href="sms:lockSMS"
+                                                  ng-click="deviceAerialCurrentInfoController.sendSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                      </sms-send-btn>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- 解锁 -->
+                                <div class="col-md-6">
+                                  <div class="row" presentation-href="sms:unLockSMS">
+                                    <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
+                                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                    class="btn btn-warning" presentation-href="sms:unLockSMS"
+                                                    presentation-href="sms:unlock" ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                      </sms-send-btn>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <hr/>
+
+                      <div class="row">
+
+
+
+                        <!-- 重置 -->
+                        <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+                          <div class="box box-success">
+                            <div class="box-header">
+                              <h5 class="box-title text-gray">{{'terminalReset'|translate}}</h5>
+                              <div class="box-tools pull-right">
+                                <a type="button" class="btn" data-toggle="tooltip"
+                                   data-placement="right"> <i class="fa fa-info" ></i></a>
+                              </div>
+                            </div>
+                            <div class="box-body">
+
+                              <div class="row" presentation-href="sms:setWorkHoursSMS">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
+                                                class="btn btn-danger"
+                                                ng-click="deviceAerialCurrentInfoController.sendSMS(10,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                  </sms-send-btn>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+
+
+
+                      </div>
                 </div>
             </uib-tab>
 
