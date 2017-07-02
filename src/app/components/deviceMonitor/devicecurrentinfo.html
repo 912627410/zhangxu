@@ -848,8 +848,6 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
-                    <!--<td ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{'operationMonitoring'|translate}}</td>-->
-                    <!--<td ng-cloak ng-if="userInfo.userdto.role == 'ROLE_SYSADMIN' ">{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>-->
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
                     <!--运行总时间(小时)-->
@@ -1267,9 +1265,9 @@
         <div class="box-body">
           <div class="row">
             <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'equipmentNumber'|translate}}</label>
+              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'deviceNum'|translate}}</label>
               <div class="col-md-4">
-                <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'equipmentNumber'|translate}}"
+                <input type="text" readonly id="deviceNum" class="form-control" placeholder="{{'deviceNum'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum" name="deviceNum"/>
               </div>
               <label for="licenseId" class="col-md-2 control-label text-nowrap">{{'licensePlateNumber'|translate}}</label>
@@ -1283,293 +1281,370 @@
 
           <div class="row">
             <div class="form-group">
-              <label for="enginePassCode" class="col-md-2 control-label text-nowrap">{{'engineCommunicationCode'|translate}}</label>
-
-              <div class="col-md-4">
-                <input type="text" readonly id="enginePassCode" class="form-control" placeholder="{{'engineCommunicationCode'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.enginePassCode" name="enginePassCode"/>
-              </div>
               <label for="phoneNumber" class="col-md-2 control-label text-nowrap">{{'bindSIMNumber'|translate}}</label>
 
               <div class="col-md-4">
                 <input type="text" readonly id="phoneNumber" class="form-control" placeholder="{{'bindSIMNumber'|translate}}"
                        ng-model="deviceCurrentInfoCtrl.deviceUnLockFactor.phoneNumber" name="phoneNumber"/>
               </div>
+              <label for="ecuLockStatus" class="col-md-2 control-label text-nowrap">{{'ecuLockStatus'|translate}}</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="ecuLockStatus" class="form-control"
+                       ng-model="deviceCurrentInfoCtrl.deviceinfo.ecuLockStatus" name="enginePassCode"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="bindMachineId" class="col-md-2 control-label text-nowrap">{{'bindMachineId'|translate}}</label>
+              <div class="col-md-4">
+                <input type="text" readonly id="bindMachineId" class="form-control"
+                       ng-model="deviceCurrentInfoCtrl.deviceinfo.bindMachineId" name="bindMachineId"/>
+              </div>
 
             </div>
           </div>
 
           <!--gps上传上来的绑定设备信息和锁车状态-->
-          <div >
-            <hr>
+          <hr>
+
+          <div class="row">
+
+            <div class="col-md-6" presentation-href="sms:setIpSMS">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'setTheReturnAddressMessage'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="设置GPS设备回传地址"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
+                      </div>
+                      <div class="row" presentation-href="sms:setIpSMS">
+                        <div class="col-md-12">
+                          <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
+                                 ng-model="deviceCurrentInfoCtrl.serverHost" name="serverHost"/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="row">
+                        <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
+                      </div>
+                      <div class="row" presentation-href="sms:setIpSMS">
+                        <div class="col-md-12">
+                          <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
+                                 ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceCurrentInfoCtrl.serverPort" name="serverPort"/>
+                          <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.maxlength">{{'theLongestFive'|translate}}</span>
+                          <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.minlength">{{'theShortestFour'|translate}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="row" >
+                        <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-primary"
+                                        ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">
+                          </sms-send-btn>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6" presentation-href="sms:setInterSMS">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="设置GPS在不同供电情况下的回传频率"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="row" >
+                    <div class="col-md-3">
+                      <div class="row">
+                        <label for="secOutPower" class="col-md-7 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <input type="text" id="secOutPower" class="form-control" validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="row">
+                        <label for="secLocateInt" class="col-md-7 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <input type="text" id="secLocateInt" class="form-control"
+                                 validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="row">
+                        <label for="secInnerPower" class="col-md-7 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <input type="text" id="secInnerPower" class="form-control"
+                                 validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="row">
+                        <label class="col-md-7 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                        class="btn btn-primary"
+                                        ng-click="deviceCurrentInfoCtrl.sendSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">
+                          </sms-send-btn>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-3" presentation-href="sms:setStartTimesSMS">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="设置GPS启动次数"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+                    <label for="startTimes" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
+                             validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
+                    </div>
+                    <div class="col-md-6">
+                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                    class="btn btn-primary"
+                                    ng-click="deviceCurrentInfoCtrl.sendSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">
+                      </sms-send-btn>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="设置GPS工作小时数"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+
+                  <div class="row">
+                    <label for="workHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+                  </div>
+                  <div class="row" presentation-href="sms:setWorkHoursSMS">
+                    <div class="col-md-6">
+                      <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
+                             ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+                    </div>
+                    <div class="col-md-6">
+                      <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                    send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                    class="btn btn-primary"
+                                    ng-click="deviceCurrentInfoCtrl.sendSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">
+                      </sms-send-btn>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3" presentation-href="sms:activeLockSms">
+              <div class="box box-danger">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="将GPS设备与车辆绑定"> <i class="fa fa-info" ></i> </a>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row" >
+                        <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                        class="btn btn-danger" presentation-href="sms:activeLockSms"
+                                        ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+                          </sms-send-btn>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
+                                        class="btn btn-warning" presentation-href="sms:unActiveLockSMS"
+                                        ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+                          </sms-send-btn>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3" presentation-href="sms:lockSMS">
+              <div class="box box-danger">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="通过GPS锁定车辆，锁车后车辆无法启动。"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row" presentation-href="sms:lockSMS">
+                        <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                        class="btn btn-danger"  presentation-href="sms:lockSMS"
+                                        ng-click="deviceCurrentInfoCtrl.sendLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+
+                          </sms-send-btn>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row" presentation-href="sms:unLockSMS">
+                        <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
+                                        send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                        class="btn btn-warning" presentation-href="sms:unLockSMS"
+                                        ng-click="deviceCurrentInfoCtrl.sendUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+                          </sms-send-btn>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row" presentation-href="deviceKeyboard:getCancelLockInputMsg">
+
+            <div class="col-md-6">
+              <div class="box box-danger">
+                <div class="box-header">
+                  <h5 class="box-title text-gray">{{'cancelTheAutomaticLockCar'|translate}}</h5>
+                  <div class="box-tools pull-right">
+                    <a type="button" class="btn" data-toggle="tooltip"
+                       data-placement="right" title="通过键盘取消自动锁车"> <i class="fa fa-info" ></i></a>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <input readonly id="cancelLockKeyboardMsg" class="form-control" placeholder="{{'cancelTheAutomaticKeyboardLockCarDataContent'|translate}}"
+                             ng-model="deviceCurrentInfoCtrl.cancelLockKeyboardMsg" name="cancelLockKeyboardMsg" />
+
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-danger pull-right" type="button"
+                              presentation-href="deviceKeyboard:getCancelLockInputMsg"
+                              ng-click="deviceCurrentInfoCtrl.viewCancelLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--矿车MQTT协议 设置上传丶采样时间-->
+          <div presentation-href="fleet:setReturnTime" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">
+            <hr />
             <div class="row">
               <div class="form-group">
-                <label for="ecuLockStatus" class="col-md-2 control-label text-nowrap">{{'ecuLockStatus'|translate}}</label>
-                <div class="col-md-4">
-                  <input type="text" readonly id="ecuLockStatus" class="form-control"
-                         ng-model="deviceCurrentInfoCtrl.ecuLockStatusDesc" name="enginePassCode"/>
+                <label class="col-md-2 control-label text-nowrap">时间间隔类型</label>
+                <div class="col-md-3">
+                  <select class="form-control" ng-model="deviceCurrentInfoCtrl.returnTimeParam.name">
+                    <option value="timeBasicInf">产品信息上传时间间隔</option>
+                    <option value="timeWorkingCondition">工况信息上传时间间隔</option>
+                    <option value="timeSampleNormal">工况信息采样时间间隔</option>
+                    <option value="timeSampleRPM">转速采样时间间隔</option>
+                    <option value="timeSampleSpeed">车速采样时间间隔</option>
+                    <option value="timeSampleCurON">瞬时油耗采样时间间隔</option>
+                    <option value="timeSampleLED">状态灯采样时间间隔</option>
+                  </select>
                 </div>
-                <label for="bindMachineId" class="col-md-2 control-label text-nowrap">{{'bindMachineId'|translate}}</label>
-                <div class="col-md-4">
-                  <input type="text" readonly id="bindMachineId" class="form-control"
-                         ng-model="deviceCurrentInfoCtrl.deviceinfo.bindMachineId" name="bindMachineId"/>
+                <label for="returnTime" class="col-md-1 control-label text-nowrap">时间(秒)</label>
+                <div class="col-md-2">
+                  <input type="text" id="returnTime" class="form-control" placeholder="时间(秒)"
+                         validator="number" ng-model="deviceCurrentInfoCtrl.returnTimeParam.time" name="returnTime"/>
                 </div>
-
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="sms:activeLockSms">
-          <div class="row" presentation-href="sms:activeLockSms">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'startLockCar'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="activeMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.activeMsg" name="activeMsg"/>
-              </div>
-              <div class="col-md-2">
-                <!--
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.viewSMS(1,deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null)">{{'look'|translate}}</button>
-                -->
-                <button class="btn btn-default" type="button" presentation-href="sms:activeLockSms" ng-click="deviceCurrentInfoCtrl.getActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:activeLockSms" ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="deviceKeyboard:getBindInputMsg">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-7">
-                <input type="text" readonly id="bindKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.bindKeyboardMsg" name="bindKeyboardMsg"/>
-              </div>
-              <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.bindKeyboardMsgIdx}} </label>
-              </div>
-
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getBindInputMsg" ng-click="deviceCurrentInfoCtrl.viewBindInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" presentation-href="sms:unActiveLockSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'LockCar' |translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="unActiveMsg" class="form-control" placeholder="{{'SMSContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.unActiveMsg" name="unActiveMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="sms:unActiveLockSMS" ng-click="deviceCurrentInfoCtrl.getUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:unActiveLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="deviceKeyboard:getUnBindInputMsg">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-7">
-                <input type="text" readonly id="unbindKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.unbindKeyboardMsg" name="unbindKeyboardMsg"/>
-              </div>
-              <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unbindKeyboardMsgIdx}} </label>
-              </div>
-
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getUnBindInputMsg" ng-click="deviceCurrentInfoCtrl.viewUnBindInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-              </div>
-            </div>
-          </div>
-
-
-          <hr presentation-href="sms:setIpSMS">
-          <div class="row" presentation-href="sms:setIpSMS">
-            <div class="form-group">
-              <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
-              <div class="col-md-4">
-                <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.serverHost" name="serverHost"/>
-              </div>
-              <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
-              <div class="col-md-4">
-                <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
-                       ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceCurrentInfoCtrl.serverPort" name="serverPort"/>
-                <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.maxlength">{{'theLongestFive'|translate}}</span>
-                <span class="error text-danger" ng-show="deviceDetailForm.serverPort.$error.minlength">{{'theShortestFour'|translate}}</span>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="sms:setIpSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="setIpMsg" class="form-control" placeholder="{{'setTheReturnAddressMessage'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.setIpMsg" name="setIpMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.getSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="sms:setStartTimesSMS">
-          <div class="row" presentation-href="sms:setStartTimesSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'numberOfStarts'|translate}}</label>
-              <div class="col-md-4">
-                <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
-                       validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="sms:setStartTimesSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'SMSContent'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="setStartTimesMsg" class="form-control" placeholder="{{'setStartTimesSMS'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.setStartTImesMsg" name="setStartTimesMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetStartTimesSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.startTimes)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="sms:setWorkHoursSMS">
-          <div class="row" presentation-href="sms:setWorkHoursSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
-              <div class="col-md-4">
-                <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="sms:setWorkHoursSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="setWorkHoursMsg" class="form-control" placeholder="{{'setHoursOfWorkHours'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.setWorkHoursMsg" name="setWorkHoursMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetWorkHoursSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.workHours)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="sms:setInterSMS">
-          <div class="row" presentation-href="sms:setInterSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'externalPowerSupplySec'|translate}}</label>
-              <div class="col-md-2">
-                <input type="text" id="secOutPower" class="form-control" placeholder="{{'externalPowerSupplySec'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
-              </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'positioningTimeSec'|translate}}</label>
-              <div class="col-md-2">
-                <input type="text" id="secLocateInt" class="form-control" placeholder="{{'positioningTimeSec'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
-              </div>
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'internalPowerSupplyMinute'|translate}}</label>
-              <div class="col-md-2">
-                <input type="text" id="secInnerPower" class="form-control" placeholder="{{'internalPowerSupplyMinute'|translate}}"
-                       validator="number" required ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="sms:setInterSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'intervalTime'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="setWorkIntMsg" class="form-control" placeholder="{{'setTheIntervalTimeMessageContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.setWorkIntMsg" name="setWorkIntMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button"  ng-click="deviceCurrentInfoCtrl.getSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.sendSetInterSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.secOutPower,deviceCurrentInfoCtrl.secLocateInt,deviceCurrentInfoCtrl.secInnerPower)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="sms:lockSMS">
-          <div class="row" presentation-href="sms:lockSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'lockYourCar'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="lockMsg" class="form-control" placeholder="{{'lockCarSMSContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.lockMsg" name="lockMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="sms:lockSMS" ng-click="deviceCurrentInfoCtrl.getLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-danger"  presentation-href="sms:lockSMS" ng-click="deviceCurrentInfoCtrl.sendLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="deviceKeyboard:getLockInputMsg">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-7">
-                <input type="text" readonly id="lockKeyboardMsg" class="form-control" placeholder="{{'BoundContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.lockKeyboardMsg" name="lockKeyboardMsg"/>
-              </div>
-              <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.lockKeyboardMsgIdx}} </label>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row" presentation-href="sms:unLockSMS">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'Unlock'|translate}}</label>
-              <div class="col-md-8">
-                <input type="text" readonly id="unLockMsg" class="form-control" placeholder="{{'unlockMessageContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.unLockMsg" name="unLockMsg"/>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="sms:unLockSMS" ng-click="deviceCurrentInfoCtrl.getUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-                <sms-send-btn type="button" send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"  send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-default" presentation-href="sms:unLockSMS" ng-click="deviceCurrentInfoCtrl.sendUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'send'|translate}}</sms-send-btn>
-              </div>
-            </div>
-          </div>
-          <div class="row" presentation-href="deviceKeyboard:getUnLockInputMsg">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap"></label>
-              <div class="col-md-7">
-                <input type="text" readonly id="unLockKeyboardMsg" class="form-control" placeholder="{{'UnboundContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.unLockKeyboardMsg" name="unLockKeyboardMsg"/>
-              </div>
-              <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.unLockKeyboardMsgIdx}} </label>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button" presentation-href="deviceKeyboard:getUnLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewUnLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
-              </div>
-            </div>
-          </div>
-
-          <hr presentation-href="deviceKeyboard:getCancelLockInputMsg">
-          <div class="row" presentation-href="deviceKeyboard:getCancelLockInputMsg">
-            <div class="form-group">
-              <label for="deviceNum" class="col-md-2 control-label text-nowrap">{{'cancelTheAutomaticLockCar'|translate}}</label>
-              <div class="col-md-7">
-                <input type="text" readonly id="cancelLockKeyboardMsg" class="form-control" placeholder="{{'cancelTheAutomaticKeyboardLockCarDataContent'|translate}}"
-                       ng-model="deviceCurrentInfoCtrl.cancelLockKeyboardMsg" name="cancelLockKeyboardMsg"/>
-              </div>
-              <div class="col-md-1">
-                <label for="deviceNum" class="col-md-2 control-label text-nowrap"> {{deviceCurrentInfoCtrl.cancelLockTimes}} </label>
-              </div>
-              <div class="col-md-2">
-                <button class="btn btn-default" type="button"  presentation-href="deviceKeyboard:getCancelLockInputMsg" ng-click="deviceCurrentInfoCtrl.viewCancelLockInputMsg(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">{{'look'|translate}}</button>
+                <div class="col-md-3">
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</button>
+                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setDefaultReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">恢复默认设置</button>
+                </div>
               </div>
             </div>
           </div>
