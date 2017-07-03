@@ -1248,6 +1248,96 @@
         });
     }
 
+    //查看键盘绑定指令
+    vm.viewBindInputMsg = function (devicenum) {
+      $confirm({
+        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
+        title: languages.findKey('ViewKeyInputConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var restURL = VIEW_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.bindKeyboardMsg = data.content;
+            if (data.content) {
+              vm.bindKeyboardMsgIdx = data.content.substr(17, 1) + data.content.substr(22, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+    }
+
+    //查看键盘解绑指令
+    vm.viewUnBindInputMsg = function (devicenum) {
+      $confirm({
+        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
+        title: languages.findKey('ViewKeyInputConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var restURL = VIEW_UN_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.unbindKeyboardMsg = data.content;
+            if (data.content) {
+              var idxTmp = data.content.substr(5, 1) + data.content.substr(10, 1);
+              vm.unbindKeyboardMsgIdx = 50 - idxTmp;
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+    }
+
+    //查看键盘锁车指令
+    vm.viewLockInputMsg = function (devicenum) {
+      $confirm({
+        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
+        title: languages.findKey('ViewKeyInputConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var restURL = VIEW_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.lockKeyboardMsg = data.content;
+            if (data.content) {
+              vm.lockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+    }
+
+    //查看键盘解锁指令
+    vm.viewUnLockInputMsg = function (devicenum) {
+      $confirm({
+        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
+        title: languages.findKey('ViewKeyInputConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var restURL = VIEW_UN_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            vm.unLockKeyboardMsg = data.content;
+            if (data.content) {
+              vm.unLockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
+          })
+        })
+    }
+
+    //查看键盘取消自动锁车指令
     vm.viewCancelLockInputMsg = function (devicenum) {
       $confirm({
         text: languages.findKey('ConfirmMsgViewKeyInput') + '',
