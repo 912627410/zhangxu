@@ -51,10 +51,10 @@
     };
 
     $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("user")&&null==$cookies.getObject("outstate")){
+      if(null!=$cookies.getObject("IOTUSER")&&null==$cookies.getObject("IOTSTATUS")){
         var userobj = {};
-        userobj.username = $cookies.getObject("user").username;
-        userobj.authtoken = $cookies.getObject("user").authtoken;
+        userobj.username = $cookies.getObject("IOTUSER").username;
+        userobj.authtoken = $cookies.getObject("IOTUSER").authtoken;
         vm.loginBytoken(userobj);
       }else{
         $rootScope.$state.go('home.login');
