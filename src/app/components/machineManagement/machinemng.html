@@ -16,7 +16,7 @@
 <section class="content form-horizontal">
 
   <div class="row form-group">
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">车号</label>
     </div>
     <div class="col-md-3">
@@ -24,7 +24,9 @@
              placeholder="支持模糊查询"/>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-2"></div>
+
+    <div class="col-md-1">
       <label class="control-label">设备编号</label>
     </div>
     <div class="col-md-3">
@@ -42,7 +44,7 @@
   </div>
 
   <div class="row form-group">
-    <div class="col-md-2">
+    <div class="col-md-1">
       <label class="control-label">所属组织</label>
     </div>
     <div class="col-md-3">
@@ -58,6 +60,10 @@
       </p>
     </div>
     <div class="col-md-2">
+      <label class="control-label">包含下级组织:</label>
+      <input type="checkbox" checked="checked" ng-model="machineMngCtrl.querySubOrg"/>
+    </div>
+    <div class="col-md-1">
       <label class="control-label">调拨组织</label>
     </div>
     <div class="col-md-3">
