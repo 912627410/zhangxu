@@ -38,10 +38,10 @@
 
       var cookieDate = {};
       cookieDate.value = 1;
-      $cookies.putObject("outstate", cookieDate);
+      $cookies.putObject("LGSTATUS", cookieDate);
       var expireDate = new Date();
       expireDate.setDate(expireDate.getDate() + 10);//设置cookie保存10天
-      $cookies.putObject("outstate", cookieDate, {'expires': expireDate});
+      $cookies.putObject("LGSTATUS", cookieDate, {'expires': expireDate});
 
 
       //如果http header里面有auth信息的话好像是每次都验证的

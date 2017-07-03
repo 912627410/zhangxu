@@ -59,15 +59,15 @@
     };
 
     $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("user")){
+      if(null!=$cookies.getObject("LGUSER")){
         var user = {};
-        user.username = $cookies.getObject("user").username;
+        user.username = $cookies.getObject("LGUSER").username;
         user.password = '';
         vm.credentials = user;
-        if(null==$cookies.getObject("outstate")){
+        if(null==$cookies.getObject("LGSTATUS")){
           var userobj = {};
-          userobj.username = $cookies.getObject("user").username;
-          userobj.authtoken = $cookies.getObject("user").authtoken;
+          userobj.username = $cookies.getObject("LGUSER").username;
+          userobj.authtoken = $cookies.getObject("LGUSER").authtoken;
           var restCallURL = GET_PASSWORD_URL;
           restCallURL += "?&username=" + userobj.username;
           var rspdata = serviceResource.restCallService(restCallURL,"GET");
@@ -165,14 +165,14 @@
           userdto: data.userinfo
         };
         if(vm.rememberMe){
-          //检测是否存在cookie   user
-          $cookies.remove("user");
+          //检测是否存在cookie   LGUSER
+          $cookies.remove("LGUSER");
           var cookieDate = {};
           cookieDate.username = vm.credentials.username;
           cookieDate.authtoken = userInfo.authtoken;
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
-          $cookies.putObject("user", cookieDate, {'expires': expireDate});
+          $cookies.putObject("LGUSER", cookieDate, {'expires': expireDate});
         }
 
 
@@ -188,7 +188,7 @@
           $rootScope.logo="assets/images/logo.png";
         }
         Notification.success(languages.findKey('loginSuccess'));
-
+        $cookies.remove("LGSTATUS");
 
 
         //监控用户登录超时
