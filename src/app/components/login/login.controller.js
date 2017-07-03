@@ -91,7 +91,6 @@
 
     vm.loginMe = function () {
       vm.createVerifyCode();
-      $cookies.remove("IOTSTATUS");
       var code = vm.code ;
       if($scope.isShow&&null!=code&&""!=code){
         var restCallURL = JUDGE_VERIFYCODE_URL;
@@ -184,6 +183,7 @@
           $rootScope.logo="assets/images/logo2.png";
         }
         Notification.success(languages.findKey('loginSuccess'));
+        $cookies.remove("IOTSTATUS");
 
         // If the original title was stored or set previously, sets the title to the original value.
         Title.restore();
