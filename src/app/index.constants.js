@@ -21,7 +21,7 @@
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder')
     .constant('AMAP_PLACESEARCH_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Autocomplete,AMap.PlaceSearch')
-
+    .constant('GOOLE_MAP_SDK_URL','https://maps.googleapis.com/maps/api/js?key=AIzaSyAuPqfrGN8p4Dax8QBo9KvC3YO-ksoI6LU&libraries=drawing,geometry,places,visualization')
 
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
 
@@ -29,6 +29,7 @@
     .constant('USER_REGISTER_URL', SERVER_BASE_URL + 'user/register')
     .constant('HOME_GPSDATA_URL', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage?search_INSTRING_locateStatus=A,1&page=0&size=100&sort=lastDataUploadTime,desc')       //主页中地图数据,默认前100条
     .constant('HOME_STATISTICS_DATA_URL', SERVER_BASE_URL + 'device/homedata')  //主页的统计数据URL
+    .constant('HOME_GOOGLEMAPGPSDATA_URL', SERVER_BASE_URL + 'device/homegooglemapgpsdata')       //主页中google地图数据
     .constant('DEVCE_PAGED_QUERY', SERVER_BASE_URL + 'device/deviceinfopage')   //分页查询设备信息URL
     .constant('DEVCE_MONITOR_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage')   //分页查询设备监控信息URL
     .constant('DEVCE_MONITOR_SINGL_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfo')   //分页查询设备监控信息URL
