@@ -14,7 +14,7 @@
                            AMAP_URL,HOME_GPSDATA_URL,DEVCE_PAGED_QUERY,DEVCE_MONITOR_PAGED_QUERY,DEFAULT_SIZE_PER_PAGE,DEVCE_DATA_PAGED_QUERY,DEVCE_SIMPLE_DATA_PAGED_QUERY,
                            NOTIFICATION_PAGED_URL,USER_PAGED_URL,DEVCE_WARNING_DATA_PAGED_QUERY,DEFAULT_USER_SORT_BY,DEFAULT_NOTIFICATION_SORT_BY,
                            DEFAULT_DEVICE_SORT_BY,DEFAULT_DEVICE_DATA_SORT_BY,DEFAULT_DEVICE_WARNING_DATA_SORT_BY,DEFAULT_DEVICE_LOCK_DATA_SORT_BY,DEVCE_LOCK_DATA_PAGED_QUERY,AMAP_GEO_CODER_URL,PERMISSIONS_URL,USER_LOGINBYTOKEN_URL,
-                           DEVCE_SIMPLE_GPS_DATA_PAGED_QUERY) {
+                           DEVCE_SIMPLE_GPS_DATA_PAGED_QUERY,HOME_GOOGLEMAPGPSDATA_URL) {
     var restCallService = function(URL,action,params){
       var restCall = $resource(URL);
 
@@ -394,6 +394,41 @@
             }
           }
         })
+      },
+      //查询设备数据更新到google地图
+      refreshGoogleMapWithDeviceInfo:function () {
+        //中心点和默认缩放比例
+        var map = {
+          center: {latitude: 6.115170, longitude:102.355140},
+          zoom: 5,
+          options: {scrollwheel: true, scaleControl: true},
+          markers:[]
+        };
+        if ($rootScope.userInfo) {
+          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL, "QUERY");
+          rspdata.then(function (deviceGPSInfoList) {
+            deviceGPSInfoList.forEach(function (deviceGPSInfo, index, array) {
+              if (deviceGPSInfo != null && deviceGPSInfo.amaplatitudeNum != null && deviceGPSInfo.amaplongitudeNum != null) {
+                map.center.latitude=deviceGPSInfo.amaplatitudeNum;
+                map.center.longitude=deviceGPSInfo.amaplongitudeNum;
+                map.markers.push({
+                  id: index,
+                  latitude: deviceGPSInfo.amaplatitudeNum,
+                  longitude: deviceGPSInfo.amaplongitudeNum,
+                  show: false,
+                  deviceNum: deviceGPSInfo.deviceNum,
+                  lastDataUploadTime: deviceGPSInfo.lastDataUploadTime == null ? '' : $filter('date')(deviceGPSInfo.lastDataUploadTime, 'yyyy-MM-dd HH:mm:ss'),
+                  //totalDuration: deviceGPSInfo.workDuration == null ? '' : $filter('number')(deviceGPSInfo.workDuration, 2),
+                  address: deviceGPSInfo.address
+                })
+              }
+            })
+          }, function (reason) {
+            Notification.error('获取设备信息失败');
+          })
+        }
+
+        return map;
       },
       //登录认证接口--a
       authenticatea:function(credentials){

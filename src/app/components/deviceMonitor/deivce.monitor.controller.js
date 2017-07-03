@@ -12,13 +12,15 @@
 
   function DeviceMonitorController($rootScope, $scope,$http, $uibModal, $timeout, $filter, permissions,$translate,languages,treeFactory,NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY,
                                    DEVCE_HIGHTTYPE,DEVCE_MF,DEVCE_POWERTYPE,
-                                   DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification,DEVCEMONITOR_EXCELEXPORT) {
+                                   DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification,DEVCEMONITOR_EXCELEXPORT,uiGmapGoogleMapApi) {
     var vm = this;
 
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
     vm.querySubOrg = true;
+
+
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
@@ -160,10 +162,20 @@
       $rootScope.$state.go('home.login');
     }
     else {
-      vm.queryDeviceInfo(0, null, null, null);
+      if($rootScope.userInfo.userdto.countryCode== "ZH"){
+        vm.queryDeviceInfo(0, null, null, null);
+      }
+
        // vm.getMFList();
        // vm.getPowerTypeList();
        // vm.getHeightTypeList();
+    }
+    uiGmapGoogleMapApi.then(function(maps) {
+      console.log("init google map success");
+    });
+    if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
+      vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+      vm.queryDeviceInfo(0, null, null, null);
     }
 
     //监控

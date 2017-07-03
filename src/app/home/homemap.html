@@ -1,3 +1,13 @@
+<style type="text/css">
+  .angular-google-map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    min-height: 750px
+  }
+</style>
 <div class="col-xs-12 connectedSortable">
   <div class="box box-danger">
     <div class="box-header text-center">
@@ -7,7 +17,29 @@
       </div><!-- /. tools -->
       <h3 class="box-title">{{'lastReturn100'|translate}}</h3>
     </div><!-- /.box-header -->
-    <div class="box-body" style="min-height: 750px" id="homeMap">
-    </div>
+    <div class="box-body" style="min-height: 750px" id="homeMap"></div>
+    <div ng-if="userInfo!=null && userInfo.userdto.countryCode!='ZH'" ng-controller="HomeMapController as homeMapCtrl">
+        <ui-gmap-google-map center="homeMapCtrl.map.center" zoom="homeMapCtrl.map.zoom" draggable="false"
+                            options="homeMapCtrl.map.options">
+          <ui-gmap-markers models="homeMapCtrl.map.markers" coords="'self'" icon="'icon'">
+            <ui-gmap-windows show="show">
+              <div ng-non-bindable>
+                <div class="info" style="border: none;">
+                  <div class="info-top" style="background: none;">
+                    <div>{{deviceNum}}</div>
+                  </div>
+                  <div class="info-middle" style="background-color: white;">
+                    经度: {{latitude}}<br>
+                    纬度: {{longitude}}<br>
+                    当前位置:{{address}}<br>
+                    更新时间:{{lastDataUploadTime}}<br>
+                  </div>
+                </div>
+              </div>
+            </ui-gmap-windows>
+          </ui-gmap-markers>
+        </ui-gmap-google-map>
+      </div>
+
   </div>
 </div><!-- /.col -->
