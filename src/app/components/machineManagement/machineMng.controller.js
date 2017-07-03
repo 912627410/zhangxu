@@ -16,6 +16,7 @@
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+    vm.querySubOrg = true;//默认选中下级组织查询
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -41,10 +42,6 @@
       if (null != vm.org&&null != vm.org.id && !vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
       }
-
-      // if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
-      //   restCallURL += "&search_EQ_organization.id=" + vm.org.id;
-      // }
 
       if(null != vm.org&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.org.id;
