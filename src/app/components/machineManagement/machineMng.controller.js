@@ -12,7 +12,7 @@
   function machineMngController($rootScope, $scope,$http, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.org = {label: ""};    //所属组织
+    // vm.org = {label: ""};    //所属组织
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -183,7 +183,14 @@
           if (null != machine.licenseId&&machine.licenseId!="") {
             restCallURL += "&search_LIKES_licenseId=" + $filter('uppercase')(machine.licenseId);
           }
-          restCallURL += "&search_EQ_orgEntity.id=" + org.id;
+        }
+
+        if (null != vm.org&&null != vm.org.id && !vm.querySubOrg) {
+          restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+        }
+
+        if(null != vm.org&&vm.querySubOrg){
+          restCallURL += "&parentOrgId=" +vm.org.id;
         }
 
         $http({
@@ -260,7 +267,7 @@
 
     //批量设置为已处理
     vm.batchMoveOrg = function () {
-
+      vm.org = {label: ""};    //所属组织
       if (vm.selected.length == 0) {
         Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
 
