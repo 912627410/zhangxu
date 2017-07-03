@@ -59,15 +59,15 @@
     };
 
     $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("user")){
+      if(null!=$cookies.getObject("IOTUSER")){
         var user = {};
-        user.username = $cookies.getObject("user").username;
+        user.username = $cookies.getObject("IOTUSER").username;
         user.password = '';
         vm.credentials = user;
-        if(null==$cookies.getObject("outstate")){
+        if(null==$cookies.getObject("IOTSTATUS")){
           var userobj = {};
-          userobj.username = $cookies.getObject("user").username;
-          userobj.authtoken = $cookies.getObject("user").authtoken;
+          userobj.username = $cookies.getObject("IOTUSER").username;
+          userobj.authtoken = $cookies.getObject("IOTUSER").authtoken;
           vm.loginBytoken(userobj);
         }
       }
@@ -91,7 +91,7 @@
 
     vm.loginMe = function () {
       vm.createVerifyCode();
-      $cookies.remove("outstate");
+      $cookies.remove("IOTSTATUS");
       var code = vm.code ;
       if($scope.isShow&&null!=code&&""!=code){
         var restCallURL = JUDGE_VERIFYCODE_URL;
@@ -159,16 +159,16 @@
           userdto: data.userinfo
         };
         if(vm.rememberMe){
-          //检测是否存在cookie   user
-          $cookies.remove("user");
+          //检测是否存在cookie  IOTUSER
+          $cookies.remove("IOTUSER");
           var cookieDate = {};
           cookieDate.username = vm.credentials.username;
           cookieDate.authtoken = userInfo.authtoken;
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
-          $cookies.putObject("user", cookieDate, {'expires': expireDate});
+          $cookies.putObject("IOTUSER", cookieDate, {'expires': expireDate});
         }else{
-          $cookies.remove("user");
+          $cookies.remove("IOTUSER");
         }
 
 
