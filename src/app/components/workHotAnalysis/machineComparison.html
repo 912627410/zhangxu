@@ -6,7 +6,7 @@
     <li class="active">开工与销售热度</li>
   </ol>
 </section>
-<div class="container-fluid">
+<div class="container-fluid machineCompared">
   <div class="row">
     <div class="col-md-8 leftBox" >
       <div class="filter-wrapper">
@@ -19,11 +19,13 @@
               <option value="3">按日期</option>
             </select>
           </div>
-          <div class="form-group col-sm-8" ng-show="machineComparedMngCtrl.quarterQuery">
+          <div class="form-group col-sm-5" ng-show="machineComparedMngCtrl.quarterQuery">
             <label class="control-label">查询季度:</label>
             <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
               <option ng-repeat="date in machineComparedMngCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
             </select>
+          </div>
+          <div class="form-group">
             <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
             <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
           </div>
@@ -264,14 +266,16 @@
       </div>
     </div>
     <div class="col-md-4 rightBox"><!--top: 0px;height: 900px;-->
-      <form class="form-inline">
-        <label class="control-label">热度分布</label>
-        <select class="form-control" ng-model="machineComparedMngCtrl.heatType3">
-          <option value="1" ng-selected="true">开工热度分布</option>
-          <option value="0">销售热度分布</option>
-        </select>
-        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.heatType3)">查看</button>
-      </form>
+      <div class="filter-wrapper">
+        <form class="form-inline">
+          <label class="control-label">热度分布</label>
+          <select class="form-control" ng-model="machineComparedMngCtrl.heatType3">
+            <option value="1" ng-selected="true">开工热度分布</option>
+            <option value="0">销售热度分布</option>
+          </select>
+          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.heatType3)">查看</button>
+        </form>
+      </div>
 
       <div id="subMap1" class="row subMap"></div>
 
