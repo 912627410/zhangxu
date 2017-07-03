@@ -38,8 +38,16 @@
 
       }
 
-      if (null != vm.org&&null != vm.org.id) {
+      if (null != vm.org&&null != vm.org.id && !vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      // if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
+      //   restCallURL += "&search_EQ_organization.id=" + vm.org.id;
+      // }
+
+      if(null != vm.org&&vm.querySubOrg){
+        restCallURL += "&parentOrgId=" +vm.org.id;
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
