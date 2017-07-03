@@ -1,22 +1,67 @@
-#machineCompared{
-  position: relative;
-  width: 100%;
-  height: 930px;
+.machineCompared{
   .leftBox{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 65%;
-    height: 900px;
-    padding:20px 10px;
-    .form-group{
-      margin-bottom: 10px;
-    } }
-  .detdistribution{
-    margin-top: 10px;
-    min-height: 150px;
-    //height: 200px;
-    height: 30%;
-    border: 1px solid #EEE;
+
+    .filter-wrapper{
+
+      .filter{
+        margin: 10px 0;
+      }
+
+      .filter-group{
+        min-width: 245px;
+      }
+    }
+
+    .mapContainerBox{
+      float: left;
+
+      .mapContainer{
+        height: 500px;
+        border: 1px solid #ccc;
+      }
+
+      .mapInfo-Container{
+        position: absolute;
+        top: 50px;
+        right: 20px;
+
+        .info-item {
+          background: #C1C1C1;
+          border: 0;
+          padding: 2px;
+          font-size: 12px;
+        }
+      }
+
+      .backChina{
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+    }
+  }
+
+  .rightBox{
+
+    .filter-wrapper{
+      min-height: 100px;
+    }
+
+    .subMap{
+      min-height: 250px;
+      margin-top: -1px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  .bottomBox{
+
+    .chart-container{
+      height:300px;
+      margin-top: 50px;
+      display: inline-block;
+      float: left;
+    }
   }
 }
