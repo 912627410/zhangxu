@@ -13,25 +13,21 @@
       <div class="form-group">
         <label class="control-label col-sm-3">类型</label>
         <div class="col-sm-5">
-          <select name="type" required="required" class="form-control" ng-click="addDataCtrl.editable()" ng-model="addDataCtrl.templateInfo.type">
-            <option>int</option>
-            <option>short</option>
-            <option>char</option>
-          </select>
+          <select name="type" required="required" class="form-control" ng-click="addDataCtrl.editable()" ng-model="selectedType" ng-options="x.name for x in addDataCtrl.templateInfo.type"></select>
         </div>
       </div>
       <div class="form-group" required="required">
         <label class="control-label col-sm-3">长度</label>
         <div class="col-sm-5">
-          <input type="number" ng-model="addDataCtrl.templateInfo.length" class="form-control ng-pristine ng-pending ng-touched" placeholder="number" readonly="readonly">
+          <input type="number" ng-model="selectedType.value" class="form-control ng-pristine ng-pending ng-touched" placeholder="number">
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label col-sm-3">寄存器变量</label>
-        <div class="col-sm-5">
-          <input type="number" required="required" ng-model="addDataCtrl.templateInfo.register" class="form-control ng-pristine ng-pending ng-touched" placeholder="number">
-        </div>
-      </div>
+      <!--<div class="form-group">-->
+        <!--<label class="control-label col-sm-3">寄存器变量</label>-->
+        <!--<div class="col-sm-5">-->
+          <!--<input type="number" required="required" ng-model="addDataCtrl.templateInfo.register" class="form-control ng-pristine ng-pending ng-touched" placeholder="number" readonly="readonly">-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="form-group">
         <label class="control-label col-sm-3">转换器</label>
         <div class="col-sm-5">
