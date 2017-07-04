@@ -25,9 +25,13 @@
     } else {
       serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
-
+    console.log(vm.map)
     vm.refreshMap = function () {
-      serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);
+      if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
+        vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+      }else{
+        serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);
+      }
     }
   }
 })();
