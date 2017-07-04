@@ -302,6 +302,7 @@
             location.reload(false);
           }
           var amapRuler, amapScale, toolBar,overView;
+          var amapRuler, amapScale, toolBar,overView;
           var localZoomSize = 4;  //默认缩放级别
           if (zoomsize){
             localZoomSize = zoomsize;
@@ -399,8 +400,8 @@
       refreshGoogleMapWithDeviceInfo:function () {
         //中心点和默认缩放比例
         var map = {
-          center: {latitude: 6.115170, longitude:102.355140},
-          zoom: 5,
+          center: {latitude: 32.115170, longitude:102.355140},
+          zoom: 4,
           options: {scrollwheel: true, scaleControl: true},
           markers:[]
         };
@@ -409,8 +410,8 @@
           rspdata.then(function (deviceGPSInfoList) {
             deviceGPSInfoList.forEach(function (deviceGPSInfo, index, array) {
               if (deviceGPSInfo != null && deviceGPSInfo.amaplatitudeNum != null && deviceGPSInfo.amaplongitudeNum != null) {
-                map.center.latitude=deviceGPSInfo.amaplatitudeNum;
-                map.center.longitude=deviceGPSInfo.amaplongitudeNum;
+                //map.center.latitude=deviceGPSInfo.amaplatitudeNum;
+                //map.center.longitude=deviceGPSInfo.amaplongitudeNum;
                 map.markers.push({
                   id: index,
                   latitude: deviceGPSInfo.amaplatitudeNum,

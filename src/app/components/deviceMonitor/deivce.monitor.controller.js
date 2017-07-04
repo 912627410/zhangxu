@@ -24,9 +24,15 @@
 
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
-        serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,3);
+        if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
+          vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+        }else{
+          serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,3);
+        }
+
       })
     }
+
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];

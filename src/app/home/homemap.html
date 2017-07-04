@@ -17,8 +17,9 @@
       </div><!-- /. tools -->
       <h3 class="box-title">{{'lastReturn100'|translate}}</h3>
     </div><!-- /.box-header -->
-    <div class="box-body" style="min-height: 750px" id="homeMap"></div>
-    <div ng-if="userInfo!=null && userInfo.userdto.countryCode!='ZH'" ng-controller="HomeMapController as homeMapCtrl">
+    <div style="position: relative;">
+      <div class="box-body" style="min-height: 750px" id="homeMap"></div>
+      <div class="box-body" ng-if="userInfo!=null && userInfo.userdto.countryCode!='ZH'" ng-controller="HomeMapController as homeMapCtrl">
         <ui-gmap-google-map center="homeMapCtrl.map.center" zoom="homeMapCtrl.map.zoom" draggable="false"
                             options="homeMapCtrl.map.options">
           <ui-gmap-markers models="homeMapCtrl.map.markers" coords="'self'" icon="'icon'">
@@ -40,6 +41,8 @@
           </ui-gmap-markers>
         </ui-gmap-google-map>
       </div>
+
+    </div>
 
   </div>
 </div><!-- /.col -->
