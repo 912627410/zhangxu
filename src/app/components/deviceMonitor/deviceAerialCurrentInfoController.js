@@ -1971,7 +1971,7 @@
               refreshBatteryInChart(batteryInChartData,data.time);
             }
           },function(reason){
-            Notification.error("没有数据");
+            Notification.warning("没有数据");
             vm.deviceInfoList = null;
           });
 
@@ -1989,7 +1989,7 @@
           vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
           $scope.batteryFormData = batteryFormData;
         },function(reason){
-          Notification.error("没有数据");
+          Notification.warning("没有数据");
           vm.deviceInfoList = null;
         });
       };
