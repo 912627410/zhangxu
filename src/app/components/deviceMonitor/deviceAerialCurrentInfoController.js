@@ -1971,7 +1971,7 @@
               refreshBatteryInChart(batteryInChartData,data.time);
             }
           },function(reason){
-            serviceResource.handleRsp("没有数据",reason);
+            Notification.warning("没有数据");
             vm.deviceInfoList = null;
           });
 
@@ -1989,9 +1989,24 @@
           vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
           $scope.batteryFormData = batteryFormData;
         },function(reason){
-          serviceResource.handleRsp("没有数据！",reason);
+          Notification.warning("没有数据");
           vm.deviceInfoList = null;
         });
+      };
+
+      vm.batteryIn = {
+        options: {
+          title: {
+            text: '电池充电监控'
+          }
+        }
+      };
+      vm.batteryOut = {
+        options: {
+          title: {
+            text: '电池放电监控'
+          }
+        }
       };
 
       var refreshBatteryInChart = function(batteryInChartData,time){
