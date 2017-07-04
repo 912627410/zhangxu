@@ -182,6 +182,8 @@
   "endAnimation":"End",
   "moveAnimation":"Continue",
   "telecontrol":"Remote Control",
+  "keyboardCtrl": "Keyboard Control",
+  "unActiveCar": "Deactivate",
   "equipmentNumber":"Equipment ID",
   "licensePlateNumber":"License Plate ID",
   "engineCommunicationCode":"Engine Passcode",
