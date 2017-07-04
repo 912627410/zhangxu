@@ -177,6 +177,8 @@
   "endAnimation":"暂停",
   "moveAnimation":"继续",
   "telecontrol":"远程控制",
+  "keyboardCtrl": "密码键盘控制",
+  "unActiveCar": "解绑",
   "equipmentNumber":"设备编号",
   "licensePlateNumber":"绑定车号",
   "engineCommunicationCode":"发动机通讯密码",
