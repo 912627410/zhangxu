@@ -115,13 +115,6 @@
 
     vm.ok = function (machine) {
       var postInfo = machine;
-      if (machine.licenseId.length < 17) {
-        Notification.warning("录入的车号不足17位，请重新录入！");
-        return;
-      } else if(machine.licenseId.length > 17) {
-        Notification.warning("录入的车号超过17位，请重新录入！");
-        return;
-      }
       if (machine.deviceinfo) {
         //条码输入
         if (machine.deviceinfo.deviceNum.length == 26 && vm.deviceNumFromScanner == true && vm.deviceNumContentFromScanner != null & vm.deviceNumContentFromScanner != '') {

@@ -17,7 +17,7 @@
 
           <input type="text" id="licenseId" class="form-control" placeholder="车号"
                  ng-model="updateMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
-                 validator="required" />
+                 validator="required,minlength=17,maxlength=17" />
 
         </div>
 
