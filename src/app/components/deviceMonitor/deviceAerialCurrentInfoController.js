@@ -924,6 +924,7 @@
           var carPostion = lineAttr[0];
           var map = new AMap.Map("deviceDetailMap", {
             resizeEnable: true,
+            scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
             zoom: 17
           });
           /*工具条，比例尺，预览插件*/
@@ -1971,7 +1972,7 @@
               refreshBatteryInChart(batteryInChartData,data.time);
             }
           },function(reason){
-            serviceResource.handleRsp("没有数据",reason);
+            Notification.warning("没有数据");
             vm.deviceInfoList = null;
           });
 
@@ -1989,9 +1990,24 @@
           vm.batteryLiquidLevelList = batteryFormData.deviceCurrentCharger;
           $scope.batteryFormData = batteryFormData;
         },function(reason){
-          serviceResource.handleRsp("没有数据！",reason);
+          Notification.warning("没有数据");
           vm.deviceInfoList = null;
         });
+      };
+
+      vm.batteryIn = {
+        options: {
+          title: {
+            text: '电池充电监控'
+          }
+        }
+      };
+      vm.batteryOut = {
+        options: {
+          title: {
+            text: '电池放电监控'
+          }
+        }
       };
 
       var refreshBatteryInChart = function(batteryInChartData,time){

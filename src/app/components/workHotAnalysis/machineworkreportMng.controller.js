@@ -99,10 +99,10 @@
               show: true
             }
           },
-          roam: true,
-          scaleLimit: {
-            min: 0.5
-          }
+          // roam: true,
+          // scaleLimit: {
+          //   min: 0.5
+          // }
         },
         series: [],
         progressive: 0, //渐进式渲染时每一帧绘制图形数量，设为 0 时不启用渐进式渲染，支持每个系列单独配置。

@@ -73,7 +73,7 @@
         success: ''
       },
       numberAndCharForPass: {
-        error: '密码必须包含字母和数字,长度为6-20',
+        error: '密码必须包含字母和数字,长度至少为6位',
         success: ''
       }
     };

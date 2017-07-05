@@ -102,20 +102,20 @@
             show: true
           }
         },
-        roam: true,
-        scaleLimit: {
-          min: 0.5
-        }
+        // roam: true,
+        // scaleLimit: {
+        //   min: 0.5
+        // }
       },
       series: [
         {
           name: '开工热度',
           type: 'map',
           map: 'china',
-          roam: true,
-          scaleLimit: {
-            min: 0.5
-          },
+          // roam: true,
+          // scaleLimit: {
+          //   min: 0.5
+          // },
           showLegendSymbol: false,
           label: {
             emphasis: {
@@ -260,7 +260,7 @@
               {
                 type: 'map',
                 mapType: Cname,
-                roam: true,
+                // roam: true,
                 label: {
                   emphasis: {
                     show: true

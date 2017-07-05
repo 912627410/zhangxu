@@ -61,20 +61,20 @@
               show : false
             }
           },
-          roam : true,
-          scaleLimit: {
-            min: 0.5
-          }
+          // roam : true,
+          // scaleLimit: {
+          //   min: 0.5
+          // }
         },
         series: [
           {
             name: '待销车',
             type: 'map',
             map: 'china',
-            roam: true,
-            scaleLimit: {
-              min: 0.5
-            },
+            // roam: true,
+            // scaleLimit: {
+            //   min: 0.5
+            // },
             showLegendSymbol:false,
             label: {
               emphasis: {
