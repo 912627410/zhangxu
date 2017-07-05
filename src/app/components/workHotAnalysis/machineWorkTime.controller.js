@@ -140,13 +140,49 @@
         // textAlign: 'center'
         left: 'center'
       },
-      toolbox: {
+      toolbox:{
+        orient:'horizontal',
+        itemSize:20,
+        itemGap:15,
+        right:200,
+        top:'25',
+        showTitle:'true',
         feature: {
-          dataZoom: {},
-          brush: {
-            type: ['rect', 'polygon', 'clear']
+          dataZoom: {
+            show:true,
+            iconStyle:{
+              normal:{
+                textPosition:'top'
+              },
+              emphasis: {
+                textPosition: 'top'
+              }
+            }
           },
-          restore: {}
+          brush: {
+            type: ['rect', 'polygon', 'clear'],
+            iconStyle:{
+              normal:{
+                opacity:0.8,
+                textPosition:'top'
+              },
+              emphasis: {
+                textPosition: 'top'
+              }
+            }
+          },
+          restore: {
+            show:true,
+            iconStyle:{
+              normal:{
+                opacity:0.8,
+                textPosition:'top'
+              },
+              emphasis: {
+                textPosition: 'top'
+              }
+            }
+          }
         }
       },
       brush: {},
