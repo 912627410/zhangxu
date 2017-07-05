@@ -367,7 +367,7 @@
   "last": "Last",
   "next": "Next",
   "disable": "Disable",
-  "passwordIsTooSimplePleaseModify": "Suggested password for the length of 8-20 case letters and numbers mixed, the current password is too simple, please update",
+  "passwordIsTooSimplePleaseModify": "Password should be combination of characters and numbers, minimum size is 6, please update your password accordingly.",
   "workplaneName": "The name of work face",
   "workplaneNO": "Work face NO",
   "TheTotalNumberOfworkplane": "Total number of work face",
