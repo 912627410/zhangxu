@@ -114,12 +114,12 @@
 
 
     vm.ok = function (machine) {
-
-      console.log(machine.engineType);
-
       var postInfo = machine;
-      if (machine.licenseId.length != 17) {
-        Notification.warning("录入的车号有误，请重新录入！");
+      if (machine.licenseId.length < 17) {
+        Notification.warning("录入的车号不足17位，请重新录入！");
+        return;
+      } else if(machine.licenseId.length > 17) {
+        Notification.warning("录入的车号超过17位，请重新录入！");
         return;
       }
       if (machine.deviceinfo) {
@@ -141,9 +141,9 @@
       restPromise.then(function (data) {
           if (data.code === 0) {
             if (data.content.autoSendSMSResult) {
-              Notification.warning("新建车辆信息成功!<br>自动发送激活短信: " + data.content.autoSendSMSResult);
+              Notification.success("新建车辆信息成功!<br>自动发送激活短信: " + data.content.autoSendSMSResult);
             } else {
-              Notification.warning("新建车辆信息成功!");
+              Notification.success("新建车辆信息成功!");
             }
             $uibModalInstance.close(data.content);
           } else {
