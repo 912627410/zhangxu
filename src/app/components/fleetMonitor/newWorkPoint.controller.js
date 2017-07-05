@@ -42,6 +42,7 @@
         var map = new AMap.Map(mapId, {
           resizeEnable: true,
           center: localCenterAddr,
+          scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
           zooms: [1, 18]
         });
 
@@ -51,6 +52,11 @@
         map.plugin(["AMap.Scale"], function () {
           amapScale = new AMap.Scale();
           map.addControl(amapScale);
+        });
+        //在地图中添加ToolBar插件
+        map.plugin(["AMap.ToolBar"], function () {
+          toolBar = new AMap.ToolBar();
+          map.addControl(toolBar);
         });
         //添加地图类型切换插件
         map.plugin(["AMap.MapType"], function () {

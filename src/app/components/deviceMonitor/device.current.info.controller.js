@@ -782,6 +782,7 @@
 
       var map = new AMap.Map("deviceDetailMap", {
         resizeEnable: true,
+        scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
         zooms: [4, 18]
       });
       vm.maps=map;
@@ -2484,6 +2485,7 @@
       var map = new AMap.Map(mapId, {
         resizeEnable: true,
         center: localCenterAddr,
+        scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
         zooms: [4, 18]
       });
       //    alert(555);
@@ -2864,6 +2866,7 @@
           var map = new AMap.Map("deviceDetailMap", {
             resizeEnable: true,
             //center: [116.397428, 39.90923],
+            scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
             zoom: 17
           });
           map.on("complete", completeEventHandler);

@@ -924,6 +924,7 @@
           var carPostion = lineAttr[0];
           var map = new AMap.Map("deviceDetailMap", {
             resizeEnable: true,
+            scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
             zoom: 17
           });
           /*工具条，比例尺，预览插件*/
