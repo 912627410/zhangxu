@@ -36,14 +36,16 @@
         var map = new AMap.Map(mapId, {
           resizeEnable: true,
           center: localCenterAddr,
+          scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
           zooms: [4, 18]
         });
 
         map.setZoom(localZoomSize);
 
         /*工具条，比例尺，预览插件*/
-        AMap.plugin(['AMap.Scale'], function () {
-            map.addControl(new AMap.Scale());
+        AMap.plugin(['AMap.Scale','AMap.ToolBar'], function () {
+          map.addControl(new AMap.Scale());
+          map.addControl(new AMap.ToolBar());
         });
 
         AMap.plugin(["AMap.RangingTool"], function () {
