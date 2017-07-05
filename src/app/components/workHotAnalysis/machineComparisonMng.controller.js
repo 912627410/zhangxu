@@ -279,9 +279,14 @@
           restore: {show: true},
           saveAsImage: {show: true}
         },
-        iconStyle: {
+        iconStyle:{
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
-            color: '#2F4056'
+            textPosition: 'left',
+            textAlign:'right'
           }
         }
       },
