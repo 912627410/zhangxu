@@ -18,7 +18,8 @@
        sendBtnShow: '=',
        sendBtnStatus: '=',
        sendBtnTime: '=',
-       sendDeviceNum: '='
+       sendDeviceNum: '=',
+       btnLabel: '@'
      },
 
      link: function(scope, element, attrs){
@@ -65,7 +66,7 @@
 
 
      },
-     template: '<button ng-disabled="sendBtnStatus"><span ng-if="sendBtnStatus">{{ timerCount }}秒</span><span ng-if="!sendBtnStatus">发送</span></button>'
+     template: '<button ng-disabled="sendBtnStatus"><span ng-if="sendBtnStatus">{{ timerCount }}秒</span><span ng-if="!sendBtnStatus">{{btnLabel}}</span></button>'
    };
 
  }
