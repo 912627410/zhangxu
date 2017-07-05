@@ -264,6 +264,16 @@
 
         }
       })
+      .state('home.machineTypeMng', {
+        url: '/machineTypeMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/machineTypeManagement/machineTypeMng.html',
+            controller: 'machineTypeMngController as machineTypeMngCtrl'
+          }
+
+        }
+      })
       .state('home.priviligeMng', {
         url: '/priviligeMng',
         views: {
