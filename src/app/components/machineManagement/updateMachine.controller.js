@@ -171,9 +171,6 @@
     vm.ok = function (machine,newDeviceNum) {
       //TODO,为了解决提交报400错误,先人为把sim卡中包含的设备信息设为空 by riqian.ma 20160215
 
-      console.log(machine.engineType);
-      console.log(machine.fuelConfig);
-
       var postInfo=machine;
       if (machine.deviceinfo){
         //条码输入

@@ -120,7 +120,7 @@
           </td>
           <td class="text-nowrap" data-title="'车号'" sortable="'licenseId'">
             <a ng-if="machineMngCtrl.validateOperPermission()" href
-               ng-click="machineMngCtrl.updateMachine(machine)">{{machine.licenseId}}</a>
+               ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
             <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
 
           </td>
