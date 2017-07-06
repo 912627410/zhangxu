@@ -52,40 +52,32 @@
         Notification.warning({message: '请选择升级文件', positionY: 'top', positionX: 'center'});
         return;
       }
-
-      var updateDataVo = {
-        devices : vm.updateDevice,
-        fileId : vm.checked
-      };
-      var content = "";//提示内容
-      var index = 0;
-      if(vm.updateDevice.length > 1) {
-        for(var i = 0; i< vm.updateDevice.length; i++){
-          if(vm.updateDevice[i].terminalVersion == vm.updateVersionNum) {
-            content += vm.updateDevice[i].deviceNum + ",";
-          } else {
-            index ++;
-          }
-        }
-        if(content && index == 0) {
-          content += "所选设备的终端软件版本与选择的升级版本相同，不作升级。";
-          vm.confirmUpdate = false;
-        } else if(content && index > 0) {
-          content += "当前的终端软件版本与选择的升级版本相同，不作升级。" + "您确定将选择的其余的设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
-          vm.confirmUpdate = true;
+      var updateDevice = angular.copy(vm.updateDevice);
+      var content = "", count = 0;
+      for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
+        if(updateDevice[i] && updateDevice[i].terminalVersion == vm.updateVersionNum) {
+          content += updateDevice[i].deviceNum + ",";
+          updateDevice.splice(i, 1);
+          flag = false;
         } else {
-          content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
-          vm.confirmUpdate = true;
-        }
-      } else {
-        if(vm.updateDevice[0].terminalVersion == vm.updateVersionNum) {
-          content += vm.updateDevice[0].deviceNum + "当前的终端软件版本与选择的升级版本相同，不作升级。";
-          vm.confirmUpdate = false;
-        } else {
-          content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
-          vm.confirmUpdate = true;
+          count++;
+          flag = true;
         }
       }
+      if(updateDevice.length <=0) {
+        content += "所选设备的终端软件版本与选择的升级版本相同，不作升级。";
+        vm.confirmUpdate = false;
+      } else if(content && count > 0) {
+        content += "当前的终端软件版本与选择的升级版本相同，不作升级。" + "您确定将选择的其余的设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+        vm.confirmUpdate = true;
+      } else {
+        content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
+        vm.confirmUpdate = true;
+      }
+      var updateDataVo = {
+        devices : updateDevice,
+        fileId : vm.checked
+      };
 
       if(vm.updateApplicableProducts != "1") {
         content = "您选择的升级文件不适合当前设备，请重新选择！";
