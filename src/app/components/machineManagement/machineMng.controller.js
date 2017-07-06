@@ -178,15 +178,15 @@
         if (null != machine) {
 
           if (null != machine.deviceNum&&machine.deviceNum!="") {
-            restCallURL += "&search_LIKES_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
+            restCallURL += "&deviceNum=" + $filter('uppercase')(machine.deviceNum);
           }
           if (null != machine.licenseId&&machine.licenseId!="") {
-            restCallURL += "&search_LIKES_licenseId=" + $filter('uppercase')(machine.licenseId);
+            restCallURL += "&licenseId=" + $filter('uppercase')(machine.licenseId);
           }
         }
 
         if (null != vm.org&&null != vm.org.id && !vm.querySubOrg) {
-          restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+          restCallURL += "&orgId=" + vm.org.id;
         }
 
         if(null != vm.org&&vm.querySubOrg){
