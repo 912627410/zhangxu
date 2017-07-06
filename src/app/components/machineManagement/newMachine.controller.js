@@ -222,6 +222,7 @@
           resizeEnable: true,
           center: localCenterAddr,
           zooms: [4, 18],
+          scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
           keyboardEnable: false
         });
         map.setZoom(localZoomSize);
