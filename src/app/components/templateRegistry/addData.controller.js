@@ -41,14 +41,12 @@
 
     }
 
-    // vm.editable = function(){
-    //   var ngInput = document.getElementsByTagName("input");
-    //   if($scope.selectedType == "char"){
-    //     ngInput[1].removeAttribute("readonly");
-    //   }else{
-    //     ngInput[1].setAttribute("readonly","readonly");
-    //   }
-    // };
+    vm.readonly = function(){
+      if($scope.selectedType.name == 'char'){
+        return false;
+      }
+      return true;
+    };
 
     vm.ok = function () {
       vm.templateInfo.type = $scope.selectedType;
