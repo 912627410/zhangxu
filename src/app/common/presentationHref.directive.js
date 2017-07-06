@@ -211,5 +211,19 @@
     };
   });
 
+
+  /**
+   *  time line
+   */
+
+  GPSCloudModule.directive("timeaxisItem", function () {
+    return {
+      require: '^timeaxis',
+      restrict: 'AE',
+      transclude: true,
+      template: '<li ng-class-even="\'timeaxis-inverted\'" ng-transclude ng-style-even="\'machineMaintenanceCtrl.addLength\'"></li>'
+    };
+  });
+
   //end
 })();
