@@ -191,7 +191,8 @@
     .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
 
      //车辆类型管理相关
-    .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型
+    .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型 修改车辆类型
+
 
     // 燃油配置相关
     .constant('FUEL_CONFIG_PAGE_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigpage')   //燃油配置查询
@@ -257,6 +258,8 @@
     .constant('ORG_URL', SERVER_BASE_URL + 'config/organization')   //组织基本信息
     .constant('ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
     .constant('ORG_PARENTID_URL', SERVER_BASE_URL + 'config/getOrgByParentId')   //根据parentId查询组织信息
+
+    .constant('ORG_MACHINE_TYPE_URL', SERVER_BASE_URL + 'config/orgManchineTypeinfo')   //查询组织车辆类型信息,更新组织与车辆类型映射关系
 
 
     //高空车短信 by mariqian 20170306

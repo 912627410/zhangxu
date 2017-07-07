@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h3 class="modal-title">包含车辆类型信息
+  </h3>
+</div>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">类型查询</label>
+
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control " ng-model="orgMachineTypeMngCtrl.machineTypeInfo.typeName" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"  ng-click="orgMachineTypeMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="orgMachineTypeMngCtrl.query(null,10,null,orgMachineTypeMngCtrl.machineTypeInfo)">{{'query'|translate}}</button>
+
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">车辆类型总数:  {{orgMachineTypeMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-10">
+      <button class="btn btn-warning pull-right" type="button" ng-click="orgMachineTypeMngCtrl.cancel()">{{'cancel'|translate}}</button>
+      <button class="btn btn-primary pull-right" type="button"  ng-click="orgMachineTypeMngCtrl.updateOrgMachineType()">{{'update'|translate}}</button>
+
+    </div>
+  </div>
+  <div class="row " style="padding: 10px">
+    <div class="table-responsive">
+      <script id="selectAllHeader" type="text/ng-template">
+        <input type="checkbox" ng-click="orgMachineTypeMngCtrl.updateAllSelection($event)"
+               ng-model="orgMachineTypeMngCtrl.checked">
+      </script>
+      <table ng-table="orgMachineTypeMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="machineTypeInfo in $data">
+          <td class="text-nowrap" style="text-align:center;" data-header="'selectAllHeader'">
+            <input type="checkbox" ng-checked="orgMachineTypeMngCtrl.isSelected(machineTypeInfo.id)"
+                   ng-click="orgMachineTypeMngCtrl.updateSelection($event,machineTypeInfo.id)" ng-model="machineTypeInfo.checked"  >
+          </td>
+
+          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{machineTypeInfo.id}}</td>
+          <td class="text-nowrap" data-title="'车辆类型'" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{machineTypeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <!--<td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{machineTypeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="orgMachineTypeMngCtrl.page.totalElements" ng-change="orgMachineTypeMngCtrl.query(orgMachineTypeMngCtrl.pageNumber-1,10,null,orgMachineTypeMngCtrl.machineTypeInfo)"
+                    max-size="5" ng-model="orgMachineTypeMngCtrl.pageNumber" items-per-page="orgMachineTypeMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+  </div>
+
+</section>
+

@@ -229,5 +229,34 @@
         });
       }
     };
+    //组织下车辆类型管理
+    vm.MachineTypeMng = function (selectedOrg,size) {
+      if(null == vm.selectedOrg) {
+        Notification.warning("请选择更新的组织");
+        return;
+      }
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/orgManagement/orgMachineTypeMng.html',
+        controller: 'orgMachineTypeMngController as orgMachineTypeMngCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          orgInfo: function () {
+            return selectedOrg;
+          },
+
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        // console.log(result);
+        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    };
+
   }
 })();
