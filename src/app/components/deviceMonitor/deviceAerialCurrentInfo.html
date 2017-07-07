@@ -678,7 +678,7 @@
                                             <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
                                             <th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>
                                             <th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>
-                                            <th class="text-nowrap">{{'GSMsignalStrength'|translate}}</th>
+                                            <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                                             <th class="text-nowrap">{{'GPSvisibleSatelliteNumber'|translate}}</th>
                                             <th class="text-nowrap">{{'GPSavailableSatelliteNumber'|translate}}</th>
 
@@ -744,7 +744,7 @@
 
                                             <td ng-cloak>{{deviceData.versionNum}}</td>
                                             <td ng-cloak>{{deviceData.pcuSoftVersion}}</td>
-                                            <td ng-cloak>{{deviceData.gsmsignalStrength/31*100 | number :2}}</td>
+                                            <td ng-cloak>{{deviceData.gsmsignalStrength/31*100 | number :0}}%</td>
                                             <td ng-cloak>{{deviceData.gpssignalStrength}}</td>
                                             <td ng-cloak>{{deviceData.gprssignalStrength}}</td>
 
