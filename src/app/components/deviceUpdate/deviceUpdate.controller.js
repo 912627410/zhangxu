@@ -47,6 +47,7 @@
             });
          vm.page = data.page;
          vm.deviceData_pagenumber = data.page.number + 1;
+         vm.selected = [];
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
@@ -167,6 +168,7 @@
           if(data.code == 0){
             Notification.success(data.content);
             vm.queryDeviceInfo(null, null, null, null);
+            vm.selected = [];
           }else{
             Notification.error(data.message);
           }
