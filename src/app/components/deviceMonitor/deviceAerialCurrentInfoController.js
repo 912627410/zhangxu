@@ -40,36 +40,41 @@
             vm.radius=deviceinfo.machine.radius; //设置的半径
         }
 
-        if (vm.deviceinfo.calibrationStatus!=null){
+        if (vm.deviceinfo.calibrationVisible=='1'){//由于硬件bug,标定状态特定的车改成标定成功。0代表没有bug，1代表有bug，页面需要显示标定成功 by xielong.wang 2017-07-07
+          vm.deviceinfo.calibrationStatus= "标定成功";
+        }else {
+          if (vm.deviceinfo.calibrationStatus!=null){
             switch(vm.deviceinfo.calibrationStatus){
-                case 128:
-                    vm.deviceinfo.calibrationStatus = "满载标定成功,空载未标定";
-                    break;
-                case 64:
-                    vm.deviceinfo.calibrationStatus = "空载标定成功,满载未标定";
-                    break;
-                case 192:
-                    vm.deviceinfo.calibrationStatus = "标定成功（满载和空载）";
-                    break;
-                case 32:
-                    vm.deviceinfo.calibrationStatus = "未标定";
-                    break;
-                case 33:
-                    vm.deviceinfo.calibrationStatus = "失败,压力传感器值过大";
-                    break;
-                case 34:
-                    vm.deviceinfo.calibrationStatus = "失败,压力传感器值过小";
-                    break;
-                case 36:
-                    vm.deviceinfo.calibrationStatus = "失败,角度传感器值过大";
-                    break;
-                case 40:
-                    vm.deviceinfo.calibrationStatus = "失败,角度传感器值过小";
-                    break;
-                default:
-                    vm.deviceinfo.calibrationStatus = "标定失败";
+              case 128:
+                vm.deviceinfo.calibrationStatus = "满载标定成功,空载未标定";
+                break;
+              case 64:
+                vm.deviceinfo.calibrationStatus = "空载标定成功,满载未标定";
+                break;
+              case 192:
+                vm.deviceinfo.calibrationStatus = "标定成功（满载和空载）";
+                break;
+              case 32:
+                vm.deviceinfo.calibrationStatus = "未标定";
+                break;
+              case 33:
+                vm.deviceinfo.calibrationStatus = "失败,压力传感器值过大";
+                break;
+              case 34:
+                vm.deviceinfo.calibrationStatus = "失败,压力传感器值过小";
+                break;
+              case 36:
+                vm.deviceinfo.calibrationStatus = "失败,角度传感器值过大";
+                break;
+              case 40:
+                vm.deviceinfo.calibrationStatus = "失败,角度传感器值过小";
+                break;
+              default:
+                vm.deviceinfo.calibrationStatus = "标定失败";
             }
+          }
         }
+
 
         vm.highchartsPower = {
             options: {
