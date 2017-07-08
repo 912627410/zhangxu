@@ -115,7 +115,7 @@
       return tree;
     };
 
-//生成局部组织树
+    //生成局部组织树
     vm.loadLocalOrgTree = function () {
 
       if(vm.operatorInfo){
@@ -167,7 +167,7 @@
     vm.toggleAnimation = function () {
       vm.animationsEnabled = !vm.animationsEnabled;
     };
-//new org
+    //new org
     vm.addOrg = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -189,7 +189,7 @@
         //取消
       });
     };
-//update org
+    //update org
     vm.updateOrg = function (size) {
       if(null == vm.selectedOrg) {
         Notification.warning("请选择更新的组织");

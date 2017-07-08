@@ -1,5 +1,8 @@
 /**
- * Created by songyutao on 2017/7/3.
+ * @author songyutao
+ * @create 2017-07-04
+ * @email yutao.song@nvr-china.com
+ * @describe 车辆类型管理页面的Js
  */
 
 (function () {
@@ -34,8 +37,8 @@
       //构造查询条件
       var restCallURL = MACHINE_TYPE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || 4;
-      var sortUrl = sort || "id,desc";
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sortUrl = sort || "id,asc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != machineTypeInfo) {
@@ -126,6 +129,31 @@
             vm.tableParams.data[i]=sourceMachineTypeInfo;
           }
         }
+      });
+    };
+
+    //隶属组织管理
+    vm.orgMng = function (machineTypeInfo,size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/machineTypeManagement/machineTypeOrgMng.html',
+        controller: 'machineTypeOrgMngController as machineTypeOrgMngCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          machineTypeInfo: function () {
+            return machineTypeInfo;
+          },
+
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
       });
     };
 

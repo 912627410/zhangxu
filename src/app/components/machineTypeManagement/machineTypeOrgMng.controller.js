@@ -2,7 +2,7 @@
  * @author songyutao
  * @create 2017-07-04
  * @email yutao.song@nvr-china.com
- * @describe 组织与车辆类型模态框页面的Js
+ * @describe 车辆类型与组织模态框页面的Js
  */
 
 (function () {
@@ -10,10 +10,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('orgMachineTypeMngController', orgMachineTypeMngController);
+    .controller('machineTypeOrgMngController', machineTypeOrgMngController);
 
   /** @ngInject */
-  function orgMachineTypeMngController($rootScope,$scope, $uibModal,$uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource,ORG_MACHINE_TYPE_URL, DEFAULT_SIZE_PER_PAGE,orgInfo, MACHINE_TYPE_URL) {
+  function machineTypeOrgMngController($rootScope,$scope, $uibModal,$uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource,MACHINE_TYPE_ORG_URL, DEFAULT_SIZE_PER_PAGE,machineTypeInfo,ORG_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -22,7 +22,7 @@
     vm.selected = []; //选中的设备id
     vm.checked = false;//是否全选标志
 
-    vm.orgInfo = orgInfo;//当前组织用户信息
+    vm.machineTypeInfo = machineTypeInfo;//当前车辆类型信息
     vm.orgMachineTypeInfoList = []; //存放组织车辆类型集合
 
 
@@ -41,7 +41,7 @@
     }
 
     //初始化查询参数
-    vm.machineTypeInfo = {
+    vm.orgInfo = {
       "name": ""
     };
 
@@ -53,23 +53,28 @@
      * @param sort
      * @param machineTypeInfo
      */
-    vm.query = function (page, size, sort, machineTypeInfo) {
+    vm.query = function (page, size, sort, orgInfo) {
       //构造查询条件
-      var restCallURL = MACHINE_TYPE_URL;
+      var restCallURL = ORG_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,asc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != machineTypeInfo) {
-        if (null != machineTypeInfo.typeName && machineTypeInfo.typeName != "") {
-          restCallURL += "&search_LIKE_typeName=" + machineTypeInfo.typeName;
+      if (null != orgInfo) {
+        if (null != orgInfo.label && orgInfo.label != "") {
+          restCallURL += "&search_LIKE_label=" + orgInfo.label;
         }
 
       }
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
+        // queryResult=data;
+        // if(getRoleUserState){
+        //   queryMachinrType()
+        // }else{
+        //   queryState=true;
+        // }
         vm.selected = angular.copy(vm.orgMachineTypeInfoList); //深度copy，绑定默认选中车型
         vm.tableParams = new NgTableParams({},
           {
@@ -84,14 +89,14 @@
 
     //首次查询
     vm.init=function(){
-      var orgMachineTypeUrl = ORG_MACHINE_TYPE_URL;
-      orgMachineTypeUrl += "?orgId=" + vm.orgInfo.id;
+      var orgMachineTypeUrl = MACHINE_TYPE_ORG_URL;
+      orgMachineTypeUrl += "?machineTypeId=" + vm.machineTypeInfo.id;
       //得到设备类型集合
       var orgMachineTypePromise = serviceResource.restCallService(orgMachineTypeUrl, "QUERY");
       orgMachineTypePromise.then(function (data) {
         for (var i = 0; i < data.length; i++) {
           if (null != data[i]) {
-            vm.orgMachineTypeInfoList.push(data[i].machineTypeId);
+            vm.orgMachineTypeInfoList.push(data[i].orgId);
           }
         }
         vm.query(null, 10, null, null);
@@ -104,7 +109,7 @@
      * 重置查询框
      */
     vm.reset = function () {
-      vm.machineTypeInfo = null;
+      vm.orgInfo = null;
     }
 
     //定义input:是选中与否
@@ -124,8 +129,8 @@
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       vm.checked = checkbox.checked;
-      vm.tableParams.data.forEach(function (machineTypeInfo) {
-        updateSelected(action, machineTypeInfo.id);
+      vm.tableParams.data.forEach(function (orgInfo) {
+        updateSelected(action, orgInfo.id);
       })
 
     }
@@ -154,11 +159,11 @@
       vm.otherList = [];
 
       //得到选中和未选中的记录id
-      vm.tableParams.data.forEach(function (machineTypeInfo) {
-        if (vm.selected.indexOf(machineTypeInfo.id) != -1) {
-          vm.addList.push(machineTypeInfo.id);
+      vm.tableParams.data.forEach(function (orgInfo) {
+        if (vm.selected.indexOf(orgInfo.id) != -1) {
+          vm.addList.push(orgInfo.id);
         } else {
-          vm.otherList.push(machineTypeInfo.id);
+          vm.otherList.push(orgInfo.id);
         }
 
       })
@@ -177,8 +182,8 @@
 
       }
 
-      var orgMachineType = {addIds: vm.addList, deleteIds: vm.deleteList ,"id": vm.orgInfo.id };
-      var restPromise = serviceResource.restUpdateRequest(ORG_MACHINE_TYPE_URL, orgMachineType);
+      var orgMachineType = {addIds: vm.addList, deleteIds: vm.deleteList ,"id": vm.machineTypeInfo.id };
+      var restPromise = serviceResource.restUpdateRequest(MACHINE_TYPE_ORG_URL, orgMachineType);
       restPromise.then(function (data) {
 
         if(data.code==0){
