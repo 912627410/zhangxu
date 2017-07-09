@@ -366,7 +366,7 @@
   "last": "最后一页",
   "next": "下一页",
   "disable": "停用",
-  "passwordIsTooSimplePleaseModify": "密码建议为长度为8-20的大小写字母和数字混合,当前密码过于简单，请修改!",
+  "passwordIsTooSimplePleaseModify": "密码建议必须包含字母和数字且长度至少为6位,当前密码不符合规则,请修改!",
   "workplaneName": "作业面名称",
   "workplaneNO": "作业面编号",
   "TheTotalNumberOfworkplane": "作业面总数",
