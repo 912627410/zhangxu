@@ -6,7 +6,7 @@
     .config(validationuleConfig);
 
   /** @ngInject */
-  function validationuleConfig($validationProvider) {
+  function validationuleConfig($validationProvider,$injector) {
     var expression = {
       required: function(value) {
         return !!value;
@@ -36,44 +36,44 @@
 
     var defaultMsg = {
       required: {
-        error: '该字段不能为空',
+        error: 'required',
         success: ''
       },
 
       url: {
-        error: '请输入合法的url',
+        error: 'urlNotLegal',
         success: ''
       },
       email: {
-        error: '请输入合法的邮件地址',
+        error: 'emailNotLegal',
         success: ''
       },
       number: {
-        error: '输入内容只能为数字',
+        error: 'numberOnly',
         success: ''
       },
       numberAndChar: {
-        error: '输入内容只能为数字和字母',
+        error: 'numberAndChar',
         success: ''
       },
       numberAndCharAndDot: {
-        error: '输入内容只能为数字,字母和点',
+        error: 'numberAndCharAndDot',
         success: ''
       },
       numberAndDot: {
-        error: '输入内容只能为数字和点',
+        error: 'numberAndDot',
         success: ''
       },
       minlength: {
-        error: '位数不够',
+        error: 'minlength',
         success: ''
       },
       maxlength: {
-        error: '超出最大允许长度',
+        error: 'maxlength',
         success: ''
       },
       numberAndCharForPass: {
-        error: '密码必须包含字母和数字,长度至少为6位',
+        error: 'numberAndCharForPass',
         success: ''
       }
     };
@@ -133,7 +133,9 @@
 
 
     $validationProvider.setErrorHTML(function (msg) {
-      return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      //return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
+
     });
 
 

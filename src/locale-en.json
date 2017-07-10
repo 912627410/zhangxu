@@ -699,5 +699,15 @@
   "closeMonitor": "Close Monitor",
   "batteryMonitor": "Battery Monitor",
   "noMessage":"N/A",
-  "lastReturn100":"The last 100 return information vehicles"
+  "lastReturn100":"The last 100 return information vehicles",
+  "required":"The field can't be blank",
+  "urlNotLegal":"Please enter a valid url",
+  "emailNotLegal":"Please enter a valid email address",
+  "numberOnly":	"The input can only be numbers",
+  "numberAndChar":"The input can only be numbers and letters",
+  "numberAndCharAndDot":"The input can only be numbers ,letters and points",
+  "numberAndDot":"The input can only be numbers and points",
+  "minlength":"The length is not enough",
+  "maxlength":"Exceed maximum allowable length",
+  "numberAndCharForPass":"The password must contain letters and Numbers,the length at least six"
 }
