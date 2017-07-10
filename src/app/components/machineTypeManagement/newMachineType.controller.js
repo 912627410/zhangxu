@@ -1,5 +1,8 @@
 /**
- * Created by songyutao on 17/7/4.
+ * @author songyutao
+ * @create 2017-07-04
+ * @email yutao.song@nvr-china.com
+ * @describe 车辆类型管理页面的增加车辆类型模态框JS
  */
 (function () {
   'use strict';
