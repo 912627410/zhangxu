@@ -73,8 +73,19 @@
       }
       var rspData = serviceResource.restCallService(restCallURL, "QUERY");
       rspData.then(function (data) {
-
-        vm.machineTypeList = data;
+        if(data.length>0){
+          vm.machineTypeList = data;
+        } else {
+          //在用户的所在组织不存在车辆类型时,默认查询其上级组织拥有的车辆类型
+          if(vm.operatorInfo){
+            var restCallURL1 = USER_MACHINE_TYPE_URL;
+            restCallURL1 += "?orgId="+ vm.operatorInfo.userdto.organizationDto.parentId;
+          }
+          var rspData1 = serviceResource.restCallService(restCallURL1, "QUERY");
+          rspData1.then(function (data1) {
+            vm.machineTypeList = data1;
+          });
+        }
       }, function (reason) {
         vm.machineList = null;
         Notification.error("获取车辆类型数据失败");
