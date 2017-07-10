@@ -28,7 +28,7 @@
 
     .constant('USER_LOGIN_URL', SERVER_BASE_URL + 'user/gettoken')
     .constant('USER_REGISTER_URL', SERVER_BASE_URL + 'user/register')
-    .constant('HOME_GPSDATA_URL', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage?search_INSTRING_locateStatus=A,1&page=0&size=100&sort=lastDataUploadTime,desc')       //主页中地图数据,默认前100条
+    .constant('HOME_GPSDATA_URL', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage?search_INSTRING_locateStatus=A,1,01&page=0&size=100&sort=lastDataUploadTime,desc')       //主页中地图数据,默认前100条
     .constant('HOME_STATISTICS_DATA_URL', SERVER_BASE_URL + 'device/homedata')  //主页的统计数据URL
     .constant('HOME_GOOGLEMAPGPSDATA_URL', SERVER_BASE_URL + 'device/homegooglemapgpsdata')       //主页中google地图数据
     .constant('DEVCE_PAGED_QUERY', SERVER_BASE_URL + 'device/deviceinfopage')   //分页查询设备信息URL

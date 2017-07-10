@@ -10,7 +10,7 @@
     .controller('moveToOtherFleetController', moveToOtherFleetController);
 
   /** @ngInject */
-  function moveToOtherFleetController($rootScope, $scope, $uibModal, $uibModalInstance,$confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEETINFO_PAGE_URL,MACHINE_MOVE_FLEET_URL,machine) {
+  function moveToOtherFleetController($rootScope, $scope, $uibModal, $uibModalInstance,$confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEET_PAGE_URL,MACHINE_MOVE_FLEET_URL,machine) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo = $rootScope.userInfo;
@@ -18,7 +18,7 @@
     ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, fleet) {
-      var restCallURL = FLEETINFO_PAGE_URL;
+      var restCallURL = FLEET_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 5;
       var sortUrl = sort || "id,desc";

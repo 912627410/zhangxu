@@ -378,7 +378,7 @@
             }
             else{
               deviceList.forEach(function(deviceInfo){
-                if ((deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === '1') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+                if ((deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === '1' || deviceInfo.locateStatus === '01') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
 
 
                   // var marker="http://webapi.amap.com/images/marker_sprite.png";

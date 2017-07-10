@@ -933,7 +933,9 @@
           else {
             vm.deviceMapDataList = _.sortBy(deviceMapDataList, "locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
-              lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
+              if(deviceData.locateStatus=="A" || deviceData.locateStatus=="1" || deviceData.locateStatus=="01") {
+                lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
+              }
             })
             for (var i = 0; i < lineArr.length; i++) {
               if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
