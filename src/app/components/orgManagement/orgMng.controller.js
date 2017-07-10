@@ -9,7 +9,7 @@
     .controller('orgMngController', orgMngController);
 
   /** @ngInject */
-  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL) {
+  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedOrg;
@@ -30,8 +30,16 @@
 
     //选中组织事件
     vm.my_tree_handler = function (branch) {
-
-
+      //查询选中组织所拥有的车辆类型
+      var restCallURL = USER_MACHINE_TYPE_URL;
+      if(vm.operatorInfo){
+        restCallURL += "?orgId="+ branch.id;
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+      rspData.then(function (data) {
+        vm.machineType = data;
+      });
+      //查询组织信息
       $scope.$emit("OrgSelectedEvent", branch);
       vm.selectedOrg = branch;
       var restCallURL = QUERY_PARENTORG_URL;
@@ -232,7 +240,7 @@
     //组织下车辆类型管理
     vm.MachineTypeMng = function (selectedOrg,size) {
       if(null == vm.selectedOrg) {
-        Notification.warning("请选择更新的组织");
+        Notification.warning("请选择对应组织");
         return;
       }
       var modalInstance = $uibModal.open({

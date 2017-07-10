@@ -59,6 +59,14 @@
         <td>{{'organizationAbbreviation' | translate}}:</td>
         <td>{{orgMngCtrl.selectedOrg.orgSimpleName}}</td>
       </tr>
+      <tr>
+        <td>车辆类型:</td>
+        <td>
+          <span ng-repeat="machineType in orgMngCtrl.machineType">
+          <span class="label label-info">{{machineType.typeName}}</span>
+          </span>
+        </td>
+      </tr>
       <tr ng-show="orgMngCtrl.isShow">
         <td>{{'legalRepresentative' | translate}}:</td>
         <td>{{orgMngCtrl.selectedOrg.org_legalRepresentative}}</td>

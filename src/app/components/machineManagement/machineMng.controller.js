@@ -77,7 +77,7 @@
         vm.machineTypeList = data;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error("获取车辆类型数据失败");
       });
     }
     vm.getMachineType();
