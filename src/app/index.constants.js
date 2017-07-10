@@ -93,7 +93,7 @@
     .constant('MACHINE_FENCE_CACHE',SERVER_BASE_URL+'machine/cachefence')  //取消电子围栏
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //machineInfoMng导出
     .constant('MACHINE_TRANSPORTINFO_URL', SERVER_BASE_URL + 'machine/getMachineTransportInfos')   //查询车辆运行状态信息
-
+    .constant('USER_MACHINE_TYPE_URL',SERVER_BASE_URL + 'machine/machineType') //通过用户id查询拥有的车辆类型信息
 
 
     //系统参数相关

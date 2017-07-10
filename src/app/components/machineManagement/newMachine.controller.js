@@ -9,9 +9,10 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo,machineTypeInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
+    vm.machineTypeList = machineTypeInfo;//车辆类型
 
     vm.machine = {
       installTime:new Date(),
