@@ -180,13 +180,12 @@
       var orgMachineType = {addIds: vm.addList, deleteIds: vm.deleteList ,"id": vm.orgInfo.id };
       var restPromise = serviceResource.restUpdateRequest(ORG_MACHINE_TYPE_URL, orgMachineType);
       restPromise.then(function (data) {
-
         if(data.code==0){
-          Notification.success("更新用户成功!");
+          Notification.success("更新成功!");
         }
-        $uibModalInstance.close(data.content);
+        $uibModalInstance.close();
       }, function (reason) {
-        Notification.error(" 更新用户出错!");
+        Notification.error(" 更新出错!");
       });
 
 
