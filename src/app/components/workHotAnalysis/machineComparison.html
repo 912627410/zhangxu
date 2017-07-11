@@ -19,15 +19,15 @@
               <option value="3">按日期</option>
             </select>
           </div>
-          <div class="form-group col-sm-5" ng-show="machineComparedMngCtrl.quarterQuery">
+          <div class="form-group col-sm-8" ng-show="machineComparedMngCtrl.quarterQuery">
             <label class="control-label">查询季度:</label>
             <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
               <option ng-repeat="date in machineComparedMngCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
             </select>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
-            <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
+            <div class="button-wrapper">
+              <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
+              <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
+            </div>
           </div>
           <div class="form-group col-sm-8" ng-show="machineComparedMngCtrl.monthQuery">
             <label class="control-label">查询月份:</label>
