@@ -18,7 +18,8 @@
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
       numberAndDot: /^[0-9.]+$/,
       //numberAndCharForPass:/[a-zA-Z0-9_]{8,10}/,
-      numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+      //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+      numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
 
       minlength: function(value, scope, element, attrs, param) {
@@ -72,7 +73,7 @@
         success: ''
       },
       numberAndCharForPass: {
-        error: '密码只能为大小写字母和数字,长度为8-20',
+        error: '密码必须包含字母和数字,长度至少为6位',
         success: ''
       }
     };
