@@ -16,8 +16,8 @@
     var time,cycle;
     var startYear = 2016;
 
-    var produceType = ['全部',];
-    var machineType = ['全部',];
+    var produceType = ['全部'];
+    var machineType = ['全部'];
     var cycleType = ["按月","按季度"];
     var thresholdValue = getthreshold();
     var cycleValue1 = getCycleValue1();
@@ -35,12 +35,12 @@
       var result = [];
       for(var i = 0; i < length; i++) {
         currentDate.setMonth(currentDate.getMonth() - 1);
-        var m = currentDate.getMonth() + 1;
+        var m = currentDate.getMonth()+ 1 ;
         m = m < 10 ? "0" + m : m;
         result.push(currentDate.getFullYear() + '年' + m + '月');
       }
       return result;
-    };
+    }
 
     //按季度
     function getCycleValue2(){
@@ -49,13 +49,11 @@
       var result = [];
       for(var i=0;i<length;i+=3){
         currentDate.setMonth(currentDate.getMonth() - 3);
-        var q = Math.ceil(currentDate.getMonth() / 3);
-        if(currentDate.getFullYear() > 2015){
-          result.push(currentDate.getFullYear() + '年0' + q + '季度');
-        }
+        var q = Math.ceil(currentDate.getMonth() / 3) + 1;
+        result.push(currentDate.getFullYear() + '年0' + q + '季度');
       }
       return result;
-    };
+    }
 
     //活跃阈值范围
     function getthreshold(){
@@ -75,7 +73,7 @@
       }).then(function (rspJson) {
         rspJson = rspJson.data;
         rspJson = _.sortBy(rspJson,'name');
-        produceType = ['全部',];
+        produceType = ['全部'];
         for(var i=0;i<rspJson.length;i++){
           // produceType[i+1] = rspJson[i].name;
           produceType.push(rspJson[i].name);
@@ -93,7 +91,7 @@
       }).then(function (rspJson) {
         rspJson = rspJson.data;
         rspJson = _.sortBy(rspJson,'name');
-        machineType = ['全部',];
+        machineType = ['全部'];
         for(var i=0;i<rspJson.length;i++){
           // machineType[i+1] = rspJson[i].name;
           machineType.push(rspJson[i].name);
