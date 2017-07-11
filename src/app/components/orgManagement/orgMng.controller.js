@@ -257,10 +257,14 @@
         }
       });
 
-      modalInstance.result.then(function (result) {
-        // console.log(result);
+      modalInstance.result.then(function (result,types) {
+        //更新组织拥有车辆类型
+        var restCallURL = USER_MACHINE_TYPE_URL + "?orgId="+ selectedOrg.id;
+        var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+        rspData.then(function (data) {
+          vm.machineType = data;
+        });
         vm.tableParams.data.splice(0, 0, result);
-
       }, function () {
         //取消
       });

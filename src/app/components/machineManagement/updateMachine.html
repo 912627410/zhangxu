@@ -88,9 +88,9 @@
         <div class="col-sm-4">
           <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
                      ng-disabled="disabled" >
-            <ui-select-match placeholder="车辆类型">{{$select.selected.typeName}}
+            <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
             </ui-select-match>
-            <ui-select-choices  repeat="machineType.typeName as machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
+            <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
               <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>

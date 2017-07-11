@@ -13,7 +13,7 @@
     .controller('orgMachineTypeMngController', orgMachineTypeMngController);
 
   /** @ngInject */
-  function orgMachineTypeMngController($rootScope,$scope, $uibModal,$uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource,ORG_MACHINE_TYPE_URL, DEFAULT_SIZE_PER_PAGE,orgInfo, MACHINE_TYPE_URL) {
+  function orgMachineTypeMngController($rootScope,$scope, $uibModal,$uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource,ORG_MACHINE_TYPE_URL, DEFAULT_SIZE_PER_PAGE,orgInfo, MACHINE_TYPE_URL,USER_MACHINE_TYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -184,8 +184,7 @@
         if(data.code==0){
           Notification.success("更新用户成功!");
         }
-
-
+        $uibModalInstance.close(data.content);
       }, function (reason) {
         Notification.error(" 更新用户出错!");
       });

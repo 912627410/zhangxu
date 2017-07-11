@@ -93,7 +93,6 @@
     .constant('MACHINE_FENCE_CACHE',SERVER_BASE_URL+'machine/cachefence')  //取消电子围栏
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //machineInfoMng导出
     .constant('MACHINE_TRANSPORTINFO_URL', SERVER_BASE_URL + 'machine/getMachineTransportInfos')   //查询车辆运行状态信息
-    .constant('USER_MACHINE_TYPE_URL',SERVER_BASE_URL + 'machine/machineType') //通过用户id查询拥有的车辆类型信息
 
 
     //系统参数相关
@@ -193,6 +192,8 @@
      //车辆类型管理相关
     .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型 修改车辆类型
     .constant('MACHINE_TYPE_ORG_URL', SERVER_BASE_URL + 'machineType/machineTypeOrg')   //查询车辆类型与组织关系list,更新车辆类型与组织映射关系
+    .constant('ORG_MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/orgManchineTypeInfo')   //查询组织车辆类型信息,更新组织与车辆类型映射关系
+    .constant('USER_MACHINE_TYPE_URL',SERVER_BASE_URL + 'machineType/machineTypeList') //通过用户所属组织id查询拥有的车辆类型信息
 
 
     // 燃油配置相关
@@ -260,7 +261,6 @@
     .constant('ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
     .constant('ORG_PARENTID_URL', SERVER_BASE_URL + 'config/getOrgByParentId')   //根据parentId查询组织信息
 
-    .constant('ORG_MACHINE_TYPE_URL', SERVER_BASE_URL + 'config/orgManchineTypeinfo')   //查询组织车辆类型信息,更新组织与车辆类型映射关系
 
 
     //高空车短信 by mariqian 20170306
