@@ -701,6 +701,17 @@
   "batteryBasicInformation": "电池基本信息",
   "batteryLiquidLeveInformation": "电池液位信息",
   "noMessage":"N/A",
-  "lastReturn100":"最近100台回传信息车辆"
+  "lastReturn100":"最近100台回传信息车辆",
+  "required":"该字段不可以为空",
+  "urlNotLegal":"请输入合法的url",
+  "emailNotLegal":"请输入合法的邮件地址",
+  "numberOnly":	"输入内容只能为数字",
+  "numberAndChar":"输入内容只能为数字和字母",
+  "numberAndCharAndDot":"输入内容只能为数字,字母和点",
+  "numberAndDot":"输入内容只能为数字和点",
+  "minlength":"位数不够",
+  "maxlength":"超出最大允许长度",
+  "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位"
+
 
 }
