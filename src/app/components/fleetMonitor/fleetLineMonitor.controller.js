@@ -126,7 +126,7 @@
             splitLine:{
               show:true,
               lineStyle:{
-                width: 2,
+                width: 1,
                 type:'dotted',
                 color: vm.lineColor
               }
