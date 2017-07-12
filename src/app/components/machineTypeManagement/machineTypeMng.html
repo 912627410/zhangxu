@@ -1,0 +1,78 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">车辆类型管理</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-1">
+      <label class="control-label">类型查询</label>
+
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control " ng-model="machineTypeMngCtrl.machineTypeInfo.typeName" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"  ng-click="machineTypeMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button"  ng-click="machineTypeMngCtrl.query(null,null,null,machineTypeMngCtrl.machineTypeInfo)">{{'query'|translate}}</button>
+
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">车辆类型总数:  {{machineTypeMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-10">
+
+      <a class="btn btn-default pull-right"
+
+         ng-click="machineTypeMngCtrl.newMachineType()">
+        <i class="fa fa-plus"></i> {{'add'|translate}}
+      </a>
+    </div>
+  </div>
+  <div class="row " style="padding: 10px">
+    <div class="table-responsive">
+      <table ng-table="machineTypeMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="machineTypeInfo in $data">
+
+          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{machineTypeInfo.id}}</td>
+          <td class="text-nowrap" data-title="'车辆类型'" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
+          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{machineTypeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <!--<td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{machineTypeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+          <td class="text-nowrap"  data-title="'operation'|translate" >
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-click="machineTypeMngCtrl.updateMachineType(machineTypeInfo)">{{'alter'|translate}}
+            </button>
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-click="machineTypeMngCtrl.orgMng(machineTypeInfo,'lg')">隶属组织
+            </button>
+          </td>
+
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="machineTypeMngCtrl.page.totalElements" ng-change="machineTypeMngCtrl.query(machineTypeMngCtrl.pageNumber-1,null,null,machineTypeMngCtrl.machineTypeInfo)"
+                    max-size="5" ng-model="machineTypeMngCtrl.pageNumber" items-per-page="machineTypeMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+  </div>
+
+</section>
+

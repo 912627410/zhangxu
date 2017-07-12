@@ -23,8 +23,8 @@
 
       <div class="btn btn-warning" type="button" presentation-href="org:update" ng-click="orgMngCtrl.updateOrg()">{{'alter'|translate}}</div>
       <div class="btn btn-danger" type="button" presentation-href="org:add" ng-click="orgMngCtrl.addOrg()">{{'add'|translate}}</div>
-
-    </div>
+      <div class="btn btn-primary" type="button" presentation-href="org:add" ng-click="orgMngCtrl.MachineTypeMng(orgMngCtrl.selectedOrg,'lg')">管理车辆类型</div>
+   </div>
 
   </div>
   <div class="row" ng-controller="orgMngController">
@@ -58,6 +58,14 @@
       <tr>
         <td>{{'organizationAbbreviation' | translate}}:</td>
         <td>{{orgMngCtrl.selectedOrg.orgSimpleName}}</td>
+      </tr>
+      <tr>
+        <td>车辆类型:</td>
+        <td>
+          <span ng-repeat="machineType in orgMngCtrl.machineType">
+          <span class="label label-info">{{machineType.typeName}}</span>
+          </span>
+        </td>
       </tr>
       <tr ng-show="orgMngCtrl.isShow">
         <td>{{'legalRepresentative' | translate}}:</td>

@@ -55,6 +55,31 @@
       </div>
 
       <div class="form-group">
+        <label class="col-sm-2 control-label padding5">车辆类型</label>
+        <div class="col-sm-4">
+          <ui-select id="machineType" name="machineType" ng-model="newMachineController.machine.machineType.id" theme="bootstrap"
+                     ng-disabled="disabled" >
+            <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineType.id as machineType in newMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
+              <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <label for="machineState" class="col-sm-2 control-label padding5">车辆状态</label>
+        <div class="col-sm-4">
+          <ui-select id="machineState" name="machineState" ng-model="newMachineController.machine.machineState" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
+            <ui-select-choices  repeat="machineState.code as machineState in newMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
+              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="licenseId" class="col-sm-2 control-label padding5">购买价格</label>
         <div class="col-sm-4">
 
@@ -150,16 +175,6 @@
                  ng-model="newMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
         </div>
 
-        <label for="machineState" class="col-sm-2 control-label padding5">车辆状态</label>
-        <div class="col-sm-4">
-          <ui-select id="machineState" name="machineState" ng-model="newMachineController.machine.machineState" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
-            <ui-select-choices  repeat="machineState.code as machineState in newMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
-              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
       </div>
 
     <i style="color: red" ng-if="null!=newMachineController.errorMsg">

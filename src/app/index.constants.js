@@ -97,7 +97,6 @@
     .constant('MACHINE_TRANSPORTINFO_URL', SERVER_BASE_URL + 'machine/getMachineTransportInfos')   //查询车辆运行状态信息
 
 
-
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
     .constant('SYS_CONFIG_LIST_URL', SERVER_BASE_URL + 'config/sysconfigList')//系统参数List
@@ -192,6 +191,13 @@
     .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')   //权限禁止
     .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
 
+     //车辆类型管理相关
+    .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型 修改车辆类型
+    .constant('MACHINE_TYPE_ORG_URL', SERVER_BASE_URL + 'machineType/machineTypeOrg')   //查询车辆类型与组织关系list,更新车辆类型与组织映射关系
+    .constant('ORG_MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/orgManchineTypeInfo')   //查询组织车辆类型信息,更新组织与车辆类型映射关系
+    .constant('USER_MACHINE_TYPE_URL',SERVER_BASE_URL + 'machineType/machineTypeList') //通过用户所属组织id查询拥有的车辆类型信息
+
+
     // 燃油配置相关
     .constant('FUEL_CONFIG_PAGE_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigpage')   //燃油配置查询
     .constant('FUEL_CONFIG_OPER_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfig')   //燃油配置CRUD
@@ -257,6 +263,7 @@
     .constant('ORG_URL', SERVER_BASE_URL + 'config/organization')   //组织基本信息
     .constant('ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
     .constant('ORG_PARENTID_URL', SERVER_BASE_URL + 'config/getOrgByParentId')   //根据parentId查询组织信息
+
 
 
     //高空车短信 by mariqian 20170306
