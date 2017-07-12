@@ -65,73 +65,7 @@
     vm.machineType = "A1";
     vm.heatType = "1";
     vm.dateType1 = "1";
-    vm.dateType2 = "201702";
     vm.heatType3 = "1";
-    var dates = new Array();
-    for(var i=0;i<6;i++){
-      var quarterDate = new Date();
-      if(i==0){
-        var monthDate = quarterDate.getMonth()+1;
-      }else if(i==1){
-        monthDate = quarterDate.getMonth()+1-3;
-      } else if(i==2) {
-        monthDate = quarterDate.getMonth()+1-6;
-      }else if(i==3) {
-        monthDate = quarterDate.getMonth()+1-9;
-      }else if(i==4) {
-        monthDate = quarterDate.getMonth()+1-12;
-      }else if(i==5) {
-        monthDate = quarterDate.getMonth()+1-15;
-      }
-      if(monthDate<=0){
-        if(-11<=monthDate && monthDate<=-9){
-          var year =quarterDate.getFullYear()-1;
-          var value = '01';
-          var value1 = '年第一季度';
-        } else if(-8<=monthDate && monthDate<=-6){
-          year =quarterDate.getFullYear()-1;
-          value = '02';
-          value1 = '年第二季度';
-        } else if(-5<=monthDate && monthDate<=-3){
-          year =quarterDate.getFullYear()-1;
-          value = '03';
-          value1 = '年第三季度';
-        }else if(-2<=monthDate && monthDate<=0){
-          year =quarterDate.getFullYear()-1;
-          value = '04';
-          value1 = '年第四季度';
-        }else if(-14<=monthDate && monthDate<=-12){
-          year =quarterDate.getFullYear()-2;
-          value = '04';
-          value1 = '年第四季度';
-        }
-      } else
-      if(1<=monthDate && monthDate<=3){
-        year =quarterDate.getFullYear();
-        var value = '01';
-        var value1 = '年第一季度';
-      } else if(4<=monthDate && monthDate<=6){
-        year =quarterDate.getFullYear();
-        value = '02';
-        value1 = '年第二季度';
-      } else if(7<=monthDate && monthDate<=9){
-        year =quarterDate.getFullYear();
-        value = '03';
-        value1 = '年第三季度';
-      }else if(10<=monthDate && monthDate<=12){
-        year =quarterDate.getFullYear();
-        value = '04';
-        value1 = '年第四季度';
-      }
-      var x = ''+year+value;
-      var y = year+value1;
-      var date = {
-        key: x,
-        value: y
-      }
-      dates.push(date);
-    }
-    vm.quarter = dates;
     //修改查询单一车型和对比车型的切换
     vm.only=true;
     vm.comtrast=false;
@@ -140,9 +74,6 @@
       vm.contrast=!vm.contrast;
       vm.reset();
     }
-    vm.dayQuery = false;
-    vm.quarterQuery = true;
-    vm.monthQuery = false;
     //触发选择框时间
     vm.change = function (dateType1) {
       if(dateType1==3){
@@ -161,74 +92,40 @@
         vm.quarterQuery = true;
         vm.monthQuery = false;
         var dates = new Array();
-        for(var i=0;i<6;i++){
-          var quarterDate = new Date();
-          if(i==0){
-            var monthDate = quarterDate.getMonth()+1;
-          }else if(i==1){
-            monthDate = quarterDate.getMonth()+1-3;
-          } else if(i==2) {
-            monthDate = quarterDate.getMonth()+1-6;
-          }else if(i==3) {
-            monthDate = quarterDate.getMonth()+1-9;
-          }else if(i==4) {
-            monthDate = quarterDate.getMonth()+1-12;
-          }else if(i==5) {
-            monthDate = quarterDate.getMonth()+1-15;
+        var quarterDate = new Date();
+        //默认生成最近的8个季度周期供用户选择
+        for(var i=0;i<8;i++) {
+          quarterDate.setMonth(quarterDate.getMonth() - 3);
+          var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
+          switch (quarter) {
+            case 1:
+              var key = '01';
+              var value = '年第一季度';
+              break;
+            case 2:
+              key = '02';
+              value = '年第二季度';
+              break;
+            case 3:
+              key = '03';
+              value = '年第三季度';
+              break;
+            case 4:
+              key = '04';
+              value = '年第四季度';
+              break;
           }
-          if(monthDate<=0){
-            if(-11<=monthDate && monthDate<=-9){
-              var year =quarterDate.getFullYear()-1;
-              var value = '01';
-              var value1 = '年第一季度';
-            } else if(-8<=monthDate && monthDate<=-6){
-              year =quarterDate.getFullYear()-1;
-              value = '02';
-              value1 = '年第二季度';
-            } else if(-5<=monthDate && monthDate<=-3){
-              year =quarterDate.getFullYear()-1;
-              value = '03';
-              value1 = '年第三季度';
-            }else if(-2<=monthDate && monthDate<=0){
-              year =quarterDate.getFullYear()-1;
-              value = '04';
-              value1 = '年第四季度';
-            }else if(-14<=monthDate && monthDate<=-12){
-              year =quarterDate.getFullYear()-2;
-              value = '04';
-              value1 = '年第四季度';
-            }
-          } else
-          if(1<=monthDate && monthDate<=3){
-            year =quarterDate.getFullYear();
-            var value = '01';
-            var value1 = '年第一季度';
-          } else if(4<=monthDate && monthDate<=6){
-            year =quarterDate.getFullYear();
-            value = '02';
-            value1 = '年第二季度';
-          } else if(7<=monthDate && monthDate<=9){
-            year =quarterDate.getFullYear();
-            value = '03';
-            value1 = '年第三季度';
-          }else if(10<=monthDate && monthDate<=12){
-            year =quarterDate.getFullYear();
-            value = '04';
-            value1 = '年第四季度';
-          }
-          var x = ''+year+value;
-          var y = year+value1;
           var date = {
-            key: x,
-            value: y
-          }
+            key: '' + quarterDate.getFullYear() + key,
+            value: quarterDate.getFullYear() + value
+          };
           dates.push(date);
         }
         vm.quarter = dates;
-        vm.dateType2 = "201702";
+        vm.dateType2 = dates[0].key;
       }
     }
-
+    vm.change(1);
     //开工热度地图
     var chinaOption1 = {
       title: {

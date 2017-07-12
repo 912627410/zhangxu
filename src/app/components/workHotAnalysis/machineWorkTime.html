@@ -103,9 +103,9 @@
       <table ng-table="machineWorkTimeCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
         <tr ng-repeat="workData in $data">
           <td class="text-nowrap" data-title="'车号'">{{workData.name}}</td>
-          <td class="text-nowrap" data-title="machineWorkTimeCtrl.title+'日平均作业时间(h)'">{{workData.avgHours}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 1" data-title="'累计作业时间(h)'">{{workData.cumulative}}</td>
-          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 2" data-title="'累计作业时间(天)'">{{workData.cumulative}}</td>
+          <td class="text-nowrap" data-title="machineWorkTimeCtrl.title+'日平均作业时间(h)'" sortable="'avgHours'">{{workData.avgHours}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 1" data-title="'累计作业时间(h)'" sortable="'cumulative'">{{workData.cumulative}}</td>
+          <td class="text-nowrap" ng-if="machineWorkTimeCtrl.totalDateType == 2" data-title="'累计作业时间(天)'" sortable="'cumulative'">{{workData.cumulative}}</td>
         </tr>
       </table>
     </div>
