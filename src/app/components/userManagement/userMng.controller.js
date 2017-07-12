@@ -90,23 +90,41 @@
 
 //update userinfo
     vm.updateUserInfo = function (usermnginfo,size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/userManagement/updateUserInfo.html',
-        controller: 'updateUserinfoController as updateUserinfoCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          usermnginfo: function () {
-            return usermnginfo;
+
+      var singlUrl = USERINFO_URL + "?id=" + usermnginfo.id;
+      var userfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      userfoPromis.then(function (data) {
+        var operusermnginfo = data.content;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/userManagement/updateUserInfo.html',
+          controller: 'updateUserinfoController as updateUserinfoCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            usermnginfo: function () {
+              return operusermnginfo;
+            }
           }
-        }
-      });
+        });
 
-      modalInstance.result.then(function (selectedItem) {
+        modalInstance.result.then(function(result) {
 
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
+
+
+      }, function (reason) {
+        Notification.error('获取用户信息失败');
       });
     };
 

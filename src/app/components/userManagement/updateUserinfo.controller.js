@@ -33,7 +33,7 @@
       var restPromise = serviceResource.restUpdateRequest(USERINFO_URL,updatedUser);
       restPromise.then(function (data){
         Notification.success("修改用户信息成功!");
-        $uibModalInstance.close();
+        $uibModalInstance.close(data.content);
       },function(reason){
         Notification.error("修改用户信息出错!");
       });
@@ -41,6 +41,7 @@
     //关闭更新页面
    vm.cancel=function () {
       $uibModalInstance.dismiss('cancel');
+     console.log(vm.OriginalUserInfo)
    }
 
     //组织树的显示

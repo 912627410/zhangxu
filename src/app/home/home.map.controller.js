@@ -25,7 +25,7 @@
     } else {
       serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
-    console.log(vm.map)
+    //console.log(vm.map)
     vm.refreshMap = function () {
       if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
         vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
