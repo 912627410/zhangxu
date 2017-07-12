@@ -34,89 +34,55 @@
       startingDay: 1,
       minMode: 'month'
     };
-    // var dates = new Array();
     vm.change = function(dateType1){
       if(dateType1==1){
-        var dates = new Array();
         vm.quarterQuery = true;
         vm.monthQuery = false;
-        vm.dateType2 = '201702';
-        for(var i=0;i<6;i++){
-          var quarterDate = new Date();
-          if(i==0){
-            var monthDate = quarterDate.getMonth()+1;
-          }else if(i==1){
-            monthDate = quarterDate.getMonth()+1-3;
-          } else if(i==2) {
-            monthDate = quarterDate.getMonth()+1-6;
-          }else if(i==3) {
-            monthDate = quarterDate.getMonth()+1-9;
-          }else if(i==4) {
-            monthDate = quarterDate.getMonth()+1-12;
-          }else if(i==5) {
-            monthDate = quarterDate.getMonth()+1-15;
+        var quarterDate = new Date();
+        var dates = [];
+        //默认生成最近的10个季度周期供用户选择
+        for(var i=0;i<10;i++) {
+          quarterDate.setMonth(quarterDate.getMonth() - 3);
+          var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
+          switch (quarter) {
+            case 1:
+              var key = '01';
+              var value = '年第一季度';
+              break;
+            case 2:
+              key = '02';
+              value = '年第二季度';
+              break;
+            case 3:
+              key = '03';
+              value = '年第三季度';
+              break;
+            case 4:
+              key = '04';
+              value = '年第四季度';
+              break;
           }
-          if(monthDate<=0){
-            if(-11<=monthDate && monthDate<=-9){
-              var year =quarterDate.getFullYear()-1;
-              var value = '01';
-              var value1 = '年第一季度';
-            } else if(-8<=monthDate && monthDate<=-6){
-              year =quarterDate.getFullYear()-1;
-              value = '02';
-              value1 = '年第二季度';
-            } else if(-5<=monthDate && monthDate<=-3){
-              year =quarterDate.getFullYear()-1;
-              value = '03';
-              value1 = '年第三季度';
-            }else if(-2<=monthDate && monthDate<=0){
-              year =quarterDate.getFullYear()-1;
-              value = '04';
-              value1 = '年第四季度';
-            }else if(-14<=monthDate && monthDate<=-12){
-              year =quarterDate.getFullYear()-2;
-              value = '04';
-              value1 = '年第四季度';
-            }
-          } else
-          if(1<=monthDate && monthDate<=3){
-            year =quarterDate.getFullYear();
-            var value = '01';
-            var value1 = '年第一季度';
-          } else if(4<=monthDate && monthDate<=6){
-            year =quarterDate.getFullYear();
-            value = '02';
-            value1 = '年第二季度';
-          } else if(7<=monthDate && monthDate<=9){
-            year =quarterDate.getFullYear();
-            value = '03';
-            value1 = '年第三季度';
-          }else if(10<=monthDate && monthDate<=12){
-            year =quarterDate.getFullYear();
-            value = '04';
-            value1 = '年第四季度';
-          }
-          var x = ''+year+value;
-          var y = year+value1;
           var date = {
-            key: x,
-            value: y
+            key: '' + quarterDate.getFullYear() + key,
+            value: quarterDate.getFullYear() + value
           };
           dates.push(date);
         }
+        vm.dateType2 = dates[0].key;
         vm.quarter = dates;
         vm.monthDateDeviceData = '';
-        vm.title = '2017年第二季度';
+        vm.title = dates[0].value;
       } else if(dateType1==2){
         vm.quarterQuery = false;
         vm.monthQuery = true;
         vm.monthDateDeviceData = new Date();
         vm.dateType2 = '';
-        vm.title = '2017年6月';
+        vm.title = vm.monthDateDeviceData.getFullYear()+'年'+(vm.monthDateDeviceData.getMonth()+1)+'月';
       } else if(dateType1==0){
         vm.quarterQuery = false;
         vm.monthQuery = false;
         vm.monthDateDeviceData = '';
+        vm.title = '';
       }
     };
 
@@ -134,6 +100,8 @@
 
     vm.dataList = [];
     var barChart1 = echarts.init(document.getElementById('barChartContainer'));
+    //设置图形自适应
+    window.onresize = function(){barChart1.resize();}
     var barOption1 = {
       title: {
         text: '机器作业时间分布',
@@ -144,7 +112,7 @@
         orient:'horizontal',
         itemSize:20,
         itemGap:15,
-        right:200,
+        right:120,
         top:'25',
         showTitle:'true',
         feature: {
@@ -352,6 +320,7 @@
         averageDateType = 1;
       }
       if (null == totalDateType || "" == totalDateType) {
+        vm.totalDateType=1;
         totalDateType = 1; //默认为小时
       }
       if (null == dateType1 || "" == dateType1) {
@@ -491,6 +460,8 @@
 
         //初始化
         var barChart = echarts.init(document.getElementById('barChartContainer'));
+        //设置图形自适应
+        window.onresize = function(){barChart.resize();}
         var barOption = {
           title: {
             text: '机器作业时间分布',
@@ -498,12 +469,50 @@
             left: 'center'
           },
           toolbox: {
+            orient:'horizontal',
+            itemSize:20,
+            itemGap:15,
+            right:120,
+            top:'25',
+            showTitle:'true',
             feature: {
-              dataZoom: {},
-              brush: {
-                type: ['rect', 'polygon', 'clear']
+              dataZoom: {
+                show:true,
+                iconStyle:{
+                  normal:{
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
               },
-              restore: {}
+              brush: {
+                type: ['rect', 'polygon', 'clear'],
+                iconStyle:{
+                  normal:{
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
+              },
+              restore: {
+                show :true,
+                iconStyle:{
+                  normal:{
+                    opacity:0.8,
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
+              }
             }
           },
           brush: {},

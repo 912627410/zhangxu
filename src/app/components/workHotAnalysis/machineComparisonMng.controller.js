@@ -14,8 +14,16 @@
                                         AVG_WORK_HOUR_QUERY_MONTH,AVG_WORK_HOUR_QUERY_QUARTER,AVG_WORK_HOUR_QUERY_DATE,SALES_YEAR_QUERY,
                                         WORK_HOUR_YEAR_QUERY_DATE,AVG_WORK_HOUR_QUERY_ALL) {
     var vm = this;
-    var mapChart1;
-    var mapChart2;
+    var mapChart1;//全国地图单独和左侧地图
+    var mapChart2;//全国地图右侧地图
+    var cityChart;//省份下钻单独地图
+    var cityChart1;//省份下钻左侧地图
+    var cityChart2;//省份下钻右侧地图
+    var mmuChart;//折线图左图
+    var mmuChart1;//折线图单独
+    var mmuChart2;//折线图右图
+    var subMap1;//最右侧小地图上
+    var subMap2;//最右侧小地图下
 
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
@@ -65,73 +73,7 @@
     vm.machineType = "A1";
     vm.heatType = "1";
     vm.dateType1 = "1";
-    vm.dateType2 = "201702";
     vm.heatType3 = "1";
-    var dates = new Array();
-    for(var i=0;i<6;i++){
-      var quarterDate = new Date();
-      if(i==0){
-        var monthDate = quarterDate.getMonth()+1;
-      }else if(i==1){
-        monthDate = quarterDate.getMonth()+1-3;
-      } else if(i==2) {
-        monthDate = quarterDate.getMonth()+1-6;
-      }else if(i==3) {
-        monthDate = quarterDate.getMonth()+1-9;
-      }else if(i==4) {
-        monthDate = quarterDate.getMonth()+1-12;
-      }else if(i==5) {
-        monthDate = quarterDate.getMonth()+1-15;
-      }
-      if(monthDate<=0){
-        if(-11<=monthDate && monthDate<=-9){
-          var year =quarterDate.getFullYear()-1;
-          var value = '01';
-          var value1 = '年第一季度';
-        } else if(-8<=monthDate && monthDate<=-6){
-          year =quarterDate.getFullYear()-1;
-          value = '02';
-          value1 = '年第二季度';
-        } else if(-5<=monthDate && monthDate<=-3){
-          year =quarterDate.getFullYear()-1;
-          value = '03';
-          value1 = '年第三季度';
-        }else if(-2<=monthDate && monthDate<=0){
-          year =quarterDate.getFullYear()-1;
-          value = '04';
-          value1 = '年第四季度';
-        }else if(-14<=monthDate && monthDate<=-12){
-          year =quarterDate.getFullYear()-2;
-          value = '04';
-          value1 = '年第四季度';
-        }
-      } else
-      if(1<=monthDate && monthDate<=3){
-        year =quarterDate.getFullYear();
-        var value = '01';
-        var value1 = '年第一季度';
-      } else if(4<=monthDate && monthDate<=6){
-        year =quarterDate.getFullYear();
-        value = '02';
-        value1 = '年第二季度';
-      } else if(7<=monthDate && monthDate<=9){
-        year =quarterDate.getFullYear();
-        value = '03';
-        value1 = '年第三季度';
-      }else if(10<=monthDate && monthDate<=12){
-        year =quarterDate.getFullYear();
-        value = '04';
-        value1 = '年第四季度';
-      }
-      var x = ''+year+value;
-      var y = year+value1;
-      var date = {
-        key: x,
-        value: y
-      }
-      dates.push(date);
-    }
-    vm.quarter = dates;
     //修改查询单一车型和对比车型的切换
     vm.only=true;
     vm.comtrast=false;
@@ -140,9 +82,6 @@
       vm.contrast=!vm.contrast;
       vm.reset();
     }
-    vm.dayQuery = false;
-    vm.quarterQuery = true;
-    vm.monthQuery = false;
     //触发选择框时间
     vm.change = function (dateType1) {
       if(dateType1==3){
@@ -161,74 +100,40 @@
         vm.quarterQuery = true;
         vm.monthQuery = false;
         var dates = new Array();
-        for(var i=0;i<6;i++){
-          var quarterDate = new Date();
-          if(i==0){
-            var monthDate = quarterDate.getMonth()+1;
-          }else if(i==1){
-            monthDate = quarterDate.getMonth()+1-3;
-          } else if(i==2) {
-            monthDate = quarterDate.getMonth()+1-6;
-          }else if(i==3) {
-            monthDate = quarterDate.getMonth()+1-9;
-          }else if(i==4) {
-            monthDate = quarterDate.getMonth()+1-12;
-          }else if(i==5) {
-            monthDate = quarterDate.getMonth()+1-15;
+        var quarterDate = new Date();
+        //默认生成最近的10个季度周期供用户选择
+        for(var i=0;i<10;i++) {
+          quarterDate.setMonth(quarterDate.getMonth() - 3);
+          var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
+          switch (quarter) {
+            case 1:
+              var key = '01';
+              var value = '年第一季度';
+              break;
+            case 2:
+              key = '02';
+              value = '年第二季度';
+              break;
+            case 3:
+              key = '03';
+              value = '年第三季度';
+              break;
+            case 4:
+              key = '04';
+              value = '年第四季度';
+              break;
           }
-          if(monthDate<=0){
-            if(-11<=monthDate && monthDate<=-9){
-              var year =quarterDate.getFullYear()-1;
-              var value = '01';
-              var value1 = '年第一季度';
-            } else if(-8<=monthDate && monthDate<=-6){
-              year =quarterDate.getFullYear()-1;
-              value = '02';
-              value1 = '年第二季度';
-            } else if(-5<=monthDate && monthDate<=-3){
-              year =quarterDate.getFullYear()-1;
-              value = '03';
-              value1 = '年第三季度';
-            }else if(-2<=monthDate && monthDate<=0){
-              year =quarterDate.getFullYear()-1;
-              value = '04';
-              value1 = '年第四季度';
-            }else if(-14<=monthDate && monthDate<=-12){
-              year =quarterDate.getFullYear()-2;
-              value = '04';
-              value1 = '年第四季度';
-            }
-          } else
-          if(1<=monthDate && monthDate<=3){
-            year =quarterDate.getFullYear();
-            var value = '01';
-            var value1 = '年第一季度';
-          } else if(4<=monthDate && monthDate<=6){
-            year =quarterDate.getFullYear();
-            value = '02';
-            value1 = '年第二季度';
-          } else if(7<=monthDate && monthDate<=9){
-            year =quarterDate.getFullYear();
-            value = '03';
-            value1 = '年第三季度';
-          }else if(10<=monthDate && monthDate<=12){
-            year =quarterDate.getFullYear();
-            value = '04';
-            value1 = '年第四季度';
-          }
-          var x = ''+year+value;
-          var y = year+value1;
           var date = {
-            key: x,
-            value: y
-          }
+            key: '' + quarterDate.getFullYear() + key,
+            value: quarterDate.getFullYear() + value
+          };
           dates.push(date);
         }
         vm.quarter = dates;
-        vm.dateType2 = "201702";
+        vm.dateType2 = dates[0].key;
       }
     }
-
+    vm.change(1);
     //开工热度地图
     var chinaOption1 = {
       title: {
@@ -271,7 +176,6 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        // top: 'bottom',
         bottom:20,
         right: 20,
         itemGap: 30,
@@ -286,7 +190,8 @@
           },
           emphasis: {
             textPosition: 'left',
-            textAlign:'right'
+            textAlign:'right',
+            color: '#2F4056'
           }
         }
       },
@@ -386,7 +291,13 @@
           saveAsImage: {show: true}
         },
         iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
             color: '#2F4056'
           }
         }
@@ -487,12 +398,24 @@
       ],
       toolbox: {
         show: true,
+        orient: 'vertical',
+        bottom:20,
         right: 20,
         itemGap: 30,
-        bottom:20,
         feature: {
           restore: {show: true},
           saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
@@ -566,12 +489,24 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        orient: 'vertical',
+        bottom:20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
         feature: {
           restore: {show: true},
           saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
@@ -602,12 +537,12 @@
     };
 
 
-    var subMap1 = vm.echartsInit('subMap1');
-    var subMap2 = vm.echartsInit('subMap2');
+    subMap1 = vm.echartsInit('subMap1');
+    subMap2 = vm.echartsInit('subMap2');
     //重机
     // var subMap3 = vm.echartsInit('subMap3');
 
-    var mmuChart1 = echarts.init(document.getElementById('mmu-container1'));
+    mmuChart1 = echarts.init(document.getElementById('mmu-container1'));
     //折线图
     var mmuOption1 = {
       title: {
@@ -881,7 +816,6 @@
         }
       ]
     };
-    mmuChart1.setOption(mmuOption1);
     //单一车型查询
     vm.query = function (startDate,endDate,dateType1,dateType,monthDate,machineType1,heatType1) {
       var monthDateFormated;
@@ -1061,7 +995,7 @@
         if(heatType1==0){
           mapOption1.visualMap.max=max;
         }
-        var mapChart1 = vm.echartsInit('mapContainer1');
+        mapChart1 = vm.echartsInit('mapContainer1');
         mapOption1.title.left = "center";
         mapOption1.title. textStyle={fontSize: 26};
         mapOption1.title. subtextStyle={fontSize: 17};
@@ -1096,6 +1030,7 @@
         var mapTitleTextstyle = mapOption1.title.textStyle;
         var mapTitleSubtextstyle = mapOption1.title.subtextStyle;
         mapChart1.setOption(mapOption1);
+        vm.onlyMap();
 
         vm.showMachineHeatDetails(startDate,endDate,dateType1,dateType,monthDate,heatType1);
         var backButtons = document.getElementsByClassName("backChina");
@@ -1112,7 +1047,8 @@
           var Cname = provinces[n];
           cityMap.title.text=param.name;
           cityMap.series[0].mapType=Cname;
-          var cityChart = vm.echartsInit('mapContainer1');
+          cityChart = vm.echartsInit('mapContainer1');
+          vm.onlyCity();
           $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
             echarts.registerMap(Cname, geoJson);
           });
@@ -1165,6 +1101,7 @@
         //省级地图返回到中国地图
         vm.backChina1 = function () {
           mapChart1 = vm.echartsInit("mapContainer1");
+          vm.onlyMap();
           mapOption1.title.text = mapTitleText;
           mapOption1.title. textStyle=mapTitleTextstyle;
           mapOption1.title. subtextStyle=mapTitleSubtextstyle;
@@ -1187,7 +1124,8 @@
             var Cname = provinces[n];
             cityMap.title.text=param.name;
             cityMap.series[0].mapType=Cname;
-            var cityChart = vm.echartsInit('mapContainer1');
+            cityChart = vm.echartsInit('mapContainer1');
+            vm.onlyCity();
             $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
               echarts.registerMap(Cname, geoJson);
             });
@@ -1774,6 +1712,7 @@
                 }
                 mmuLine.series[1].data = yearData2;
                 mmuChart1.setOption(mmuLine);
+
                 if(heatType2){
                   yearInfoLine2(machineType2,heatType2,mmuLine2,mmuChart2);
                 }
@@ -2217,6 +2156,7 @@
 
         mapChart1 = vm.echartsInit("mapContainer1");
         mapChart2 = vm.echartsInit("mapContainer2");
+        vm.mapCompare();
         var max1=100;
         var max2=100;
         var mapOption1;
@@ -2392,6 +2332,7 @@
         mapChart1.on("click", function (param){
           backButtons[0].style.display = "block";
           backButtons[1].style.display = "block";
+          vm.cityCompare();
           avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
           // avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
           showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
@@ -2454,8 +2395,9 @@
             vm.allProvince1 = true;
           }
 
-          var cityChart1 = vm.echartsInit("mapContainer1");
-          var cityChart2 = vm.echartsInit("mapContainer2");
+          cityChart1 = vm.echartsInit("mapContainer1");
+          cityChart2 = vm.echartsInit("mapContainer2");
+          vm.cityCompare();
           var rspDataCity1 = serviceResource.restCallService(restCallURLCity1, 'QUERY');
           rspDataCity1.then(function (cityData1) {
             var cityMax1 =100;
@@ -2530,20 +2472,22 @@
           //悬浮框的的隐藏和显示-work
           vm.avgHoursNational2 = true;
           vm.avgHoursProvince2 = false;
-          var mapChart1 = vm.echartsInit("mapContainer1");
+          mapChart1 = vm.echartsInit("mapContainer1");
           mapOption1.title.text = mapTitleText1;
           mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
-          var mapChart2 = vm.echartsInit("mapContainer2");
+          mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.title.text = mapTitleText2;
           mapOption2.series[0].data=yData;
           mapChart2.setOption(mapOption2);
           backButtons[0].style.display = "none";
           backButtons[1].style.display = "none";
+          vm.mapCompare();
           //地图返回后再次下钻
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
+            vm.cityCompare();
             avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
             // avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
@@ -2552,6 +2496,7 @@
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
+            vm.cityCompare();
             avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
             // avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2);
@@ -2569,20 +2514,22 @@
           //悬浮框的的隐藏和显示-work
           vm.avgHoursNational2 = true;
           vm.avgHoursProvince2 = false;
-          var mapChart2 = vm.echartsInit("mapContainer2");
+          mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.series[0].data=yData;
           mapOption2.title.text = mapTitleText2;
           mapChart2.setOption(mapOption2);
-          var mapChart1 = vm.echartsInit("mapContainer1");
+          mapChart1 = vm.echartsInit("mapContainer1");
           mapOption1.title.text = mapTitleText1;
           mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
           backButtons[1].style.display = "none";
           backButtons[0].style.display = "none";
+          vm.mapCompare();
           //地图返回后再次下钻
           mapChart2.on("click", function (param){
             backButtons[1].style.display = "block";
             backButtons[0].style.display = "block";
+            vm.cityCompare();
             avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
             // avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
@@ -2590,13 +2537,14 @@
           mapChart1.on("click", function (param){
             backButtons[0].style.display = "block";
             backButtons[1].style.display = "block";
+            vm.cityCompare();
             avgWorkHoursProvinceQuery(dateType1,filterTermProvince1,startDate,endDate,param.name);
             // avgWorkHoursProvinceQuery2(dateType1,filterTermProvince2,startDate,endDate,param.name);
             showProvince(heatType1,heatType2,restCallURL1,restCallURL2,param,totalData1,beforeTotalData1,totalData2,beforeTotalData2)
           })
         }
 
-        var mmuChart = echarts.init(lineContainerList[0]);
+        mmuChart = echarts.init(lineContainerList[0]);
         if(heatType1==1){
           var mmuLine = mmuOption1;
         }else{
@@ -2607,7 +2555,7 @@
         }else{
           var mmuLine2 = mmuOption2;
         }
-        var mmuChart2 = echarts.init(lineContainerList[1]);
+        mmuChart2 = echarts.init(lineContainerList[1]);
         //折线图图表联动
         echarts.connect([mmuChart, mmuChart2]);
         yearInfoLine(machineType1,heatType1,mmuLine,mmuChart,machineType2,heatType2,mmuLine2,mmuChart2);
@@ -2675,8 +2623,8 @@
         vm.national1 = false;
         vm.allProvince1 = true;
       }
-      var cityChart1 = vm.echartsInit("mapContainer1");
-      var cityChart2 = vm.echartsInit("mapContainer2");
+      cityChart1 = vm.echartsInit("mapContainer1");
+      cityChart2 = vm.echartsInit("mapContainer2");
       var rspDataCity1 = serviceResource.restCallService(restCallURLCity1, 'QUERY');
       rspDataCity1.then(function (cityData1) {
         var cityMax1 =100;
@@ -2968,6 +2916,46 @@
       vm.heatType = null;
     }
 
+    //对比图型城市下钻情况自适应
+    vm.cityCompare = function(){
+      window.onresize = function(){
+        cityChart1.resize();
+        cityChart2.resize();
+        mmuChart.resize();
+        mmuChart2.resize();
+        subMap1.resize();
+        subMap2.resize();
+      }
+    }
+    //对比全国地图情况自适应
+    vm.mapCompare = function(){
+      window.onresize = function(){
+        mapChart1.resize();
+        mapChart2.resize();
+        mmuChart.resize();
+        mmuChart2.resize();
+        subMap1.resize();
+        subMap2.resize();
+      }
+    }
+    //唯一大地图情况下自适应
+    vm.onlyMap = function () {
+      window.onresize = function(){
+        mapChart1.resize();
+        mmuChart1.resize();
+        subMap1.resize();
+        subMap2.resize();
+      }
+    }
+    //唯一省份下钻情况自适应
+    vm.onlyCity = function () {
+      window.onresize = function(){
+        cityChart.resize();
+        mmuChart1.resize();
+        subMap1.resize();
+        subMap2.resize();
+      }
+    }
 
   }
 })();
