@@ -40,8 +40,8 @@
         vm.monthQuery = false;
         var quarterDate = new Date();
         var dates = [];
-        //默认生成最近的8个季度周期供用户选择
-        for(var i=0;i<8;i++) {
+        //默认生成最近的10个季度周期供用户选择
+        for(var i=0;i<10;i++) {
           quarterDate.setMonth(quarterDate.getMonth() - 3);
           var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
           switch (quarter) {
@@ -82,6 +82,7 @@
         vm.quarterQuery = false;
         vm.monthQuery = false;
         vm.monthDateDeviceData = '';
+        vm.title = '';
       }
     };
 
@@ -111,7 +112,7 @@
         orient:'horizontal',
         itemSize:20,
         itemGap:15,
-        right:200,
+        right:120,
         top:'25',
         showTitle:'true',
         feature: {
@@ -468,12 +469,50 @@
             left: 'center'
           },
           toolbox: {
+            orient:'horizontal',
+            itemSize:20,
+            itemGap:15,
+            right:120,
+            top:'25',
+            showTitle:'true',
             feature: {
-              dataZoom: {},
-              brush: {
-                type: ['rect', 'polygon', 'clear']
+              dataZoom: {
+                show:true,
+                iconStyle:{
+                  normal:{
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
               },
-              restore: {}
+              brush: {
+                type: ['rect', 'polygon', 'clear'],
+                iconStyle:{
+                  normal:{
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
+              },
+              restore: {
+                show :true,
+                iconStyle:{
+                  normal:{
+                    opacity:0.8,
+                    textPosition:'top'
+                  },
+                  emphasis:{
+                    textPosition:'top',
+                    color: '#2F4056'
+                  }
+                }
+              }
             }
           },
           brush: {},
