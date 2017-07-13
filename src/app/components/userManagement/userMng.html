@@ -31,7 +31,7 @@
 
     <div class="col-md-4">
       <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button"
+      <button class="btn btn-primary" type="button" presentation-href="system:user:query"
               ng-click="userMngController.query(null,null,null,userMngController.userinfo)">{{'query'|translate}}
       </button>
 
@@ -63,7 +63,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               用户列表
-              <a class="pull-right" type="button" href="" ng-click="userMngController.addUser('md')">
+              <a class="pull-right" type="button" presentation-href="system:user:create" ng-click="userMngController.addUser('md')">
                 <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
@@ -76,7 +76,7 @@
               <div class="row">
                 <div class="col-sm-4">
                     <span>
-                      <a href="javascript:;" ng-class="{true: 'text-red'}[userMngController.selectedUser == userinfo]" ng-click="userMngController.selectUser(userinfo)" class="fa fa-user">
+                      <a href="javascript:;" ng-class="{true: 'text-red'}[userMngController.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="userMngController.selectUser(userinfo)" class="fa fa-user">
                         {{userinfo.lastname}}{{userinfo.firstname}} </a>
                     </span>
                 </div>
@@ -86,23 +86,23 @@
                 <div class="col-sm-4 text-right">
 
                   <button type="button" class="btn btn-success btn-xs"
-                          ng-if="userinfo.status===0" presentation-href="user:oper"
+                          ng-if="userinfo.status===0" presentation-href="system:user:enable"
                           ng-click="userMngController.statusEnable(userinfo,'lg')">{{'enabled'|translate}}
                   </button>
                   <button type="button" class="btn btn-danger btn-xs"
-                          ng-if="userinfo.status===1" presentation-href="user:oper"
+                          ng-if="userinfo.status===1" presentation-href="system:user:enable"
                           ng-click="userMngController.statusDisable(userinfo)">{{'forbidden'|translate}}
                   </button>
-                  <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="system:user:modify"
                           ng-click="userMngController.updateUserInfo(userinfo)">{{'alter'|translate}}
                   </button>
 
                   <button type="button" class="btn btn-default btn-xs"
-                          presentation-href="user:superResetPassword"
+                          presentation-href="system:user:resetPsd"
                           ng-click="userMngController.updatePassword(userinfo)">{{'resetPassword'|translate}}
                   </button>
 
-                  <button type="button" class="btn btn-default btn-xs" presentation-href="operationLog:page"
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="system:user:operationLog"
                           ng-click="userMngController.logQuery(userinfo,'lg')">{{'operationLog'|translate}}
                   </button>
 
@@ -121,7 +121,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               角色列表
-              <a class="pull-right" type="button" href="" ng-click="userMngController.userRoleManage('lg')">
+              <a class="pull-right" type="button" href="" presentation-href="system:user:userRole:set" ng-click="userMngController.userRoleManage('lg')">
                 <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>

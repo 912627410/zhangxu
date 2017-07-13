@@ -92,7 +92,7 @@
 
     <div class="col-md-3">
       <button class="btn btn-primary" type="button"  ng-click="workRecordCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button"  presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fleetMng:workRecord:query" ng-click="workRecordCtrl.query(workRecordCtrl.workRecord)">{{'query'|translate}}</button>
     </div>
 
 
@@ -121,7 +121,7 @@
           <td class="text-nowrap" data-title="'equipmentNumber'|translate">{{workRecord.deviceNum}}</td>
           <td class="text-nowrap" data-title="'times'|translate">{{workRecord.records}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:workRecord:query" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
+            <button type="button" class="btn btn-default btn-xs" ng-click="workRecordCtrl.info(workRecord)">{{'viewDetails'|translate}}</button>
           </td>
         </tr>
       </table>

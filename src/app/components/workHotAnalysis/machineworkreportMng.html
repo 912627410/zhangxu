@@ -83,7 +83,9 @@
 
             <div class="control-group">
               <div class="controls">
-                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'createWorkReport'|translate}}" ng-click="machineworkreportMngController.generateReport();">{{'createWorkReport'|translate}}</button>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'createWorkReport'|translate}}"
+                        presentation-href="statAnalysis:workHeat:workReport:query"
+                        ng-click="machineworkreportMngController.generateReport();">{{'createWorkReport'|translate}}</button>
               </div>
             </div>
           </form>
