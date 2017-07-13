@@ -317,7 +317,6 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        // top: 'bottom',
         bottom:20,
         right: 20,
         itemGap: 30,
@@ -326,7 +325,13 @@
           saveAsImage: {show: true}
         },
         iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
             color: '#2F4056'
           }
         }
@@ -418,7 +423,6 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        // top: 'bottom',
         bottom:20,
         right: 20,
         itemGap: 30,
@@ -427,7 +431,13 @@
           saveAsImage: {show: true}
         },
         iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
             color: '#2F4056'
           }
         }
@@ -684,11 +694,24 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        orient: 'vertical',
+        bottom:20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
         feature: {
-          saveAsImage: {}
+          restore: {show: true},
+          saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
@@ -762,11 +785,24 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        orient: 'vertical',
+        bottom:20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
         feature: {
-          saveAsImage: {}
+          restore: {show: true},
+          saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
