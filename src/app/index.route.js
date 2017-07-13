@@ -274,12 +274,12 @@
 
         }
       })
-      .state('home.priviligeMng', {
-        url: '/priviligeMng',
+      .state('home.privilegeMng', {
+        url: '/privilegeMng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/priviligeManagement/priviligeMng.html',
-            controller: 'priviligeMngController as priviligeMngCtrl'
+            templateUrl: 'app/components/privilegeManagement/privilegeMng.html',
+            controller: 'privilegeMngController as privilegeMngCtrl'
           }
 
 

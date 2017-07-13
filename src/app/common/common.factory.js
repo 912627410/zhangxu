@@ -34,6 +34,25 @@
       }
       return tree;
     }
+
+    factory.recursiveChild = function (list, param) {
+      for (var i = 0; i < list.length; i++) {
+
+        if(list[i].children!=null && list[i].children.length > 0 ){
+          factory.recursiveChild(list[i].children, param);
+        }
+
+        if (list[i][param] != null && list[i][param].length > 0 ) {
+          for(var n=0; n <list[i][param].length; n ++ ){
+            list[i].children.push(list[i][param][n]);
+
+          }
+        }
+
+      }
+
+    }
+
     /**
      *递归函数,获取上级item和当前的item
      * @param treeData

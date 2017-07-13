@@ -1,0 +1,150 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">权限管理</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row form-group">
+
+    <div class="col-md-1">
+      <label class="control-label">权限名称 </label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="permission" class="form-control " ng-model="privilegeMngCtrl.privilegeInfo.remark" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+
+    <div class="col-md-1">
+      <label class="control-label">权限URL</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="permission" class="form-control " ng-model="privilegeMngCtrl.privilegeInfo.permission" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"  ng-click="privilegeMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="privilige:priviligePage"  ng-click="privilegeMngCtrl.query(null,null,null,privilegeMngCtrl.priviligeInfo)">{{'query'|translate}}</button>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              菜单管理
+              <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newMenu('md')" >
+                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+              </a>
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+            <abn-tree tree-data="privilegeMngCtrl.my_data"
+                      tree-control="treeController"
+                      on-select="privilegeMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              权限列表
+              <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newPrivilege('md')" >
+                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+              </a>
+            </h4>
+
+
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="privilegeInfo in privilegeMngCtrl.privList">
+              <div class="row">
+                <div class="col-sm-4">
+                    <span>
+                      <a href="javascript:;" ng-class="{true: 'text-red'}[privilegeMngCtrl.selectedPriv == privilegeInfo]"
+                         ng-click="privilegeMngCtrl.selectPrivilege(privilegeInfo)" class="fa fa-bookmark-o">  {{privilegeInfo.name}} </a>
+                    </span>
+                </div>
+                <div class="col-sm-4">
+                    {{privilegeInfo.permission}}
+                </div>
+                <div class="col-sm-4 text-right">
+
+
+                  <button type="button" class="btn btn-success btn-xs"
+                          ng-if="privilegeInfo.status===0"
+                          ng-click="privilegeMngCtrl.statusEnable(privilegeInfo)">{{'enabled'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs"
+                          ng-if="privilegeInfo.status===1"
+                          ng-click="privilegeMngCtrl.statusDisable(privilegeInfo)">{{'forbidden'|translate}}
+                  </button>
+
+                  <button type="button" class="btn btn-default btn-xs"
+                          presentation-href="privilige:priviligeOper"
+                          ng-click="privilegeMngCtrl.updatePrivilege(privilegeInfo)">{{'alter'|translate}}
+                  </button>
+
+                </div>
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel-group" id="rolePanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              隶属角色列表
+              <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.privilegeRoleManage(privilegeMngCtrl.selectedPriv,'lg')">
+                <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
+              </a>
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="role in privilegeMngCtrl.roleList">
+              <div class="row">
+                <div class="col-sm-12">
+                  {{role.name}}
+                </div>
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</section>
+

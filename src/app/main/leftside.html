@@ -79,7 +79,7 @@
 
       <li>
         <a ng-click="reportMng1=!reportMng1" presentation-href="report:topIdleDeviceReport">
-          <i class="fa ion-stats-bars"></i>
+          <i class="fa fa-bar-chart"></i>
           <span style="width:200px">{{'statisticalAnalysis' | translate}}</span>
           <span class="glyphicon pull-right"
                 ng-class="reportMng1?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -207,7 +207,7 @@
 
       <li>
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
-          <i class="fa fa-car"></i>
+          <i class="fa fa-flag-checkered"></i>
           <span>{{'fleetManagement' | translate}}</span>
           <span class="glyphicon pull-right"
                 ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
@@ -228,7 +228,7 @@
 
           <li>
             <a ui-sref="home.workRecord" presentation-href="fleet:workRecord">
-              <i class="fa fa-bar-chart"></i> <span>{{'workRecord' | translate}}</span>
+              <i class="fa fa-calendar-check-o"></i> <span>{{'workRecord' | translate}}</span>
             </a>
           </li>
           <li>
@@ -278,6 +278,21 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}">
           <li>
+            <a ui-sref="home.privilegeMng" presentation-href="privilige:priviligePage">
+              <i class="fa fa-bookmark-o"></i> <span>{{'priviligeManagement'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.roleMng" presentation-href="role:rolePage">
+              <i class="fa fa-users"></i> <span>{{'roleManagement' | translate}}</span>
+            </a>
+          </li>
+          <li class="treeview" presentation-href="user:page">
+            <a ui-sref="home.userinfomng">
+              <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
             <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
               <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
             </a>
@@ -287,35 +302,19 @@
               <i class="fa fa-gear"></i> <span>{{'equipmentParameters' | translate}}</span>
             </a>
           </li>
-          <li class="treeview" presentation-href="user:page">
-            <a ui-sref="home.userinfomng">
-              <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.orgMng" presentation-href="org:orgMng">
-              <i class="fa fa-users"></i> <span>{{'orgManagement' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-              <i class="fa fa-user"></i> <span>{{'roleManagement' | translate}}</span>
-            </a>
-          </li>
           <li>
             <a ui-sref="home.machineTypeMng" >
               <i class="fa fa-automobile"></i> <span>车辆类型管理</span>
             </a>
           </li>
           <li>
-            <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
-              <i class="fa fa-user"></i> <span>{{'priviligeManagement'|translate}}</span>
+            <a ui-sref="home.orgMng" presentation-href="org:orgMng">
+              <i class="fa fa-sitemap"></i> <span>{{'orgManagement' | translate}}</span>
             </a>
           </li>
-
           <li >
             <a  ui-sref="home.templateMng">
-              <i class="fa fa-gear"></i> <span>{{'templateRegistration'|translate}}</span>
+              <i class="fa fa-pencil-square-o"></i><span>{{'templateRegistration'|translate}}</span>
             </a>
           </li>
         </ul>

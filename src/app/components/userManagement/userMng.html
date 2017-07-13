@@ -1,4 +1,4 @@
-<section class="content-header">
+<section class="content-header" style="overflow: hidden">
   <h1>
     <small></small>
   </h1>
@@ -9,33 +9,27 @@
 </section>
 
 <!-- Main content -->
-<section class="content form-horizontal">
+<section class="content form-horizontal" style="overflow: hidden">
 
   <div class="row form-group">
-    <div class="col-md-2">
-      <label class="control-label">{{'userName'|translate}}</label>
+
+    <div class="col-md-1">
+      <label class="control-label">用户账号</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="ssn" class="form-control " ng-model="userMngController.userinfo.ssn"
              placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
-    <div class="col-md-2">
-      <label class="control-label">{{'state'|translate}}</label>
+    <div class="col-md-1">
+      <label class="control-label">用户姓名</label>
     </div>
     <div class="col-md-3">
-      <ui-select name="status" ng-model="userMngController.userinfo.status" theme="bootstrap"
-                 ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-        </ui-select-match>
-        <ui-select-choices repeat="userinfoStatus in userMngController.userinfoStatusList">
-          <div ng-bind-html="userinfoStatus.desc | highlight: $select.search"></div>
-        </ui-select-choices>
-      </ui-select>
+      <input type="text" name="ssn" class="form-control " ng-model="userMngController.userinfo.firstname"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
-
-    <div class="col-md-2">
+    <div class="col-md-4">
       <button class="btn btn-primary" type="button" ng-click="userMngController.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button"
               ng-click="userMngController.query(null,null,null,userMngController.userinfo)">{{'query'|translate}}
@@ -44,116 +38,108 @@
     </div>
   </div>
 
-  <div class="row form-group">
-    <div class="col-md-2">
-      <label class="control-label">{{'organisation'|translate}}</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="userMngController.org.label" name="org" readonly required/>
-          <span class="input-group-btn">
-             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="userMngController.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-      </p>
-    </div>
-  </div>
+  <br>
+
   <div class="row">
-    <div class="btn-group col-md-1">
-      <span class="label label-info pull-left" style="margin-top: 6px;">{{'totalNumbeOfUsers'|translate}}:  {{userMngController.page.totalElements}}</span>
+    <div class="col-md-3">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'organizationInformation'|translate}}
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+            <abn-tree tree-data="userMngController.my_data"
+                      on-select="userMngController.my_tree_handler(branch); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
-      <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
-                      max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                      first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}" style="margin: 0;"></uib-pagination>
-    </div>
-    <div class="col-md-5 button-group">
-
-      <a class="btn btn-default pull-right"
-         presentation-href="privilige:priviligeOper"
-         ng-click="userMngController.addUser()">
-        <i class="fa fa-plus"></i> {{'add'|translate}}
-      </a>
-
-      <a class="btn btn-default pull-right"
-         presentation-href="privilige:export"
-         ng-click="userMngController.privExport()">
-        <i class="glyphicon glyphicon-new-window"></i> 导出用户权限
-      </a>
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              用户列表
+              <a class="pull-right" type="button" href="" ng-click="userMngController.addUser('md')">
+                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+              </a>
+            </h4>
 
 
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
 
-    </div>
-  </div>
-  <div class="row " style="padding: 10px">
-    <div class="table-responsive userTableBox">
-      <script id="selectAllHeader"  type="text/ng-template">
-        <input type="checkbox" style="height: 11px;" ng-click="userMngController.updateAllSelection($event)"
-               ng-model="userMngController.checked">
-      </script>
-      <div class="userTableBoxLeft">
-        <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-          <tr ng-repeat="userinfo in $data">
-            <td class="text-nowrap" data-header="'selectAllHeader'">
-              <input type="checkbox" ng-checked="userMngController.isSelected(userinfo.id)"
-                     ng-click="userMngController.updateSelection($event,userinfo.id)" ng-model="userinfo.checked">
-            </td>
-            <td class="text-nowrap" data-title="'userName'|translate" sortable="'ssn'">{{userinfo.ssn}}</td>
-          </tr>
-        </table>
-      </div>
+            <li class="list-group-item repeat"  ng-repeat="userinfo in userMngController.userinfoList">
+              <div class="row">
+                <div class="col-sm-4">
+                    <span>
+                      <a href="javascript:;" ng-class="{true: 'text-red'}[userMngController.selectedUser == userinfo]" ng-click="userMngController.selectUser(userinfo)" class="fa fa-user">
+                        {{userinfo.lastname}}{{userinfo.firstname}} </a>
+                    </span>
+                </div>
+                <div class="col-sm-4">
+                  {{userinfo.ssn}}</a>
+                </div>
+                <div class="col-sm-4 text-right">
 
-      <div class="userTableBoxRight">
+                  <button type="button" class="btn btn-success btn-xs"
+                          ng-if="userinfo.status===0" presentation-href="user:oper"
+                          ng-click="userMngController.statusEnable(userinfo,'lg')">{{'enabled'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs"
+                          ng-if="userinfo.status===1" presentation-href="user:oper"
+                          ng-click="userMngController.statusDisable(userinfo)">{{'forbidden'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
+                          ng-click="userMngController.updateUserInfo(userinfo)">{{'alter'|translate}}
+                  </button>
 
-        <table ng-table="userMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-          <tr ng-repeat="userinfo in $data">
-            <td class="text-nowrap" data-title="'userName'|translate" sortable="'ssn'">{{userinfo.ssn}}</td>
-            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'label'">{{userinfo.organizationDto.label}}</td>
-            <td class="text-nowrap" data-title="'phoneNumber'|translate" sortable="'mobile'">{{userinfo.mobile}}</td>
-            <td class="text-nowrap" data-title="'email'|translate" sortable="'email'">{{userinfo.email}}</td>
-            <td class="text-nowrap" data-title="'state'|translate" sortable="'statusDesc'">{{userinfo.statusDesc}}</td>
-            <td class="text-nowrap" data-title="'createTime'|translate" sortable="'typeinDate'">{{userinfo.typeinDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <!--<td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{userinfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+                  <button type="button" class="btn btn-default btn-xs"
+                          presentation-href="user:superResetPassword"
+                          ng-click="userMngController.updatePassword(userinfo)">{{'resetPassword'|translate}}
+                  </button>
 
-            <td class="text-nowrap text-center"  data-title="'operation'|translate" >
-              <button type="button" class="btn btn-default btn-xs"
-                      presentation-href="user:superResetPassword"
-                      ng-click="userMngController.updatePassword(userinfo)">{{'resetPassword'|translate}}
-              </button>
-              <button type="button" class="btn  btn-success  btn-xs"
-                      ng-if="userinfo.status===0" presentation-href="user:oper"
-                      ng-click="userMngController.statusEnable(userinfo,'lg')">{{'enabled'|translate}}
-              </button>
-              <button type="button" class="btn btn-danger btn-xs"
-                      ng-if="userinfo.status===1" presentation-href="user:oper"
-                      ng-click="userMngController.statusDisable(userinfo)">{{'forbidden'|translate}}
-              </button>
-              <button type="button" class="btn btn-default btn-xs" presentation-href="user:oper"
-                      ng-click="userMngController.updateUserInfo(userinfo)">{{'alter'|translate}}
-              </button>
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="operationLog:page"
+                          ng-click="userMngController.logQuery(userinfo,'lg')">{{'operationLog'|translate}}
+                  </button>
 
-              <button type="button" class="btn btn-default btn-xs"  presentation-href="role:roleUserList"
-                      ng-click="userMngController.userRoleManage(userinfo,'lg')">{{'affiliatedRole'|translate}}
-              </button>
+                </div>
+              </div>
 
-              <button type="button" class="btn btn-default btn-xs" presentation-href="operationLog:page"
-                      ng-click="userMngController.logQuery(userinfo,'lg')">{{'operationLog'|translate}}
-              </button>
-            </td>
-          </tr>
-        </table>
+            </li>
+
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col-md-3">
+      <div class="panel-group" id="rolePanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              角色列表
+              <a class="pull-right" type="button" href="" ng-click="userMngController.userRoleManage('lg')">
+                <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
+              </a>
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <treecontrol class="tree-classic"
+                         tree-model="userMngController.roleList"
+                         options = "userMngController.roleTreeOptions">
+              {{node.name}}
+            </treecontrol>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="userMngController.page.totalElements" ng-change="userMngController.query(userMngController.pageNumber-1,null,null,userMngController.userinfo)"
-                    max-size="5" ng-model="userMngController.pageNumber" items-per-page="userMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
-  </div>
+
 
 </section>
 

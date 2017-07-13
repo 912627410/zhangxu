@@ -1,0 +1,59 @@
+<div class="modal-header">
+  <h3 class="modal-title">包含权限信息
+  </h3>
+</div>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">菜单信息</h4>
+          </div>
+          <div class="panel-body" style="height: 400px;overflow:auto;">
+            <abn-tree tree-data="rolePrivilegeMngController.my_data"
+                      tree-control="treeController"
+                      on-select="rolePrivilegeMngController.my_tree_handler(branch); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              权限列表
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 400px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="priv in rolePrivilegeMngController.privList">
+              <div class="row">
+                <div class="col-sm-4">
+                  <input type="checkbox" ng-checked="rolePrivilegeMngController.isSelected(priv.id)"
+                         ng-click="rolePrivilegeMngController.updateSelection($event, priv.id)" ng-model="priv.checked">
+                </div>
+                <div class="col-sm-8">
+                  {{priv.name}}
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="rolePrivilegeMngController.ok()">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="rolePrivilegeMngController.cancel()">取消</button>
+  </div>
+
+</section>
+
