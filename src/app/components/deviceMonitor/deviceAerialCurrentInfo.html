@@ -34,7 +34,7 @@
 </div>
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
         <uib-tabset justified="true">
-            <uib-tab presentation-href="device:page">
+            <uib-tab presentation-href="dashboard:deviceMonitor:currentData:query">
                 <uib-tab-heading>
                   {{'data'|translate}}
                 </uib-tab-heading>
@@ -479,7 +479,7 @@
             </uib-tab>
 
           <!--车辆参数-->
-          <uib-tab ng-if="deviceAerialCurrentInfoController.deviceinfo.parameterValue" select="deviceAerialCurrentInfoController.initParameterTab(deviceAerialCurrentInfoController.deviceinfo)">
+          <uib-tab ng-if="deviceAerialCurrentInfoController.deviceinfo.parameterValue" select="deviceAerialCurrentInfoController.initParameterTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:vehicleParameters:query">
             <uib-tab-heading>
               {{'machineParameters'|translate}}
             </uib-tab-heading>
@@ -574,10 +574,10 @@
             </div>
           </uib-tab>
 
-            <!--历史数据-->
-            <uib-tab presentation-href="device:page">
+          <!--报警数据-->
+            <uib-tab presentation-href="dashboard:deviceMonitor:warningData">
                 <uib-tab-heading>
-                    {{'historicalData'|translate}}
+                  {{'warningData'|translate}}
                 </uib-tab-heading>
                 <div class="modal-body">
                     <div class="box-body">
@@ -614,7 +614,7 @@
                                 </select>
                             </div>
                             <div class="col-md-1">
-                                <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.refreshPageDate(deviceAerialCurrentInfoController.queryType,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDate,deviceAerialCurrentInfoController.endDate)">{{'confirm'|translate}}</button>
+                                <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:warningData:query" ng-click="deviceAerialCurrentInfoController.refreshPageDate(deviceAerialCurrentInfoController.queryType,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDate,deviceAerialCurrentInfoController.endDate)">{{'confirm'|translate}}</button>
                             </div>
                         </div>
                         <div class="row">
@@ -627,10 +627,11 @@
                     </div>
                 </div>
             </uib-tab>
-            <!--数据明细-->
-            <uib-tab presentation-href="device:page">
+
+          <!--历史数据-->
+            <uib-tab presentation-href="dashboard:deviceMonitor:historyData">
                 <uib-tab-heading>
-                    {{'dataDetails'|translate}}
+                  {{'historicalData'|translate}}
                 </uib-tab-heading>
                 <div class="modal-body">
                     <div class="box-body">
@@ -658,8 +659,8 @@
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
-                                <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
+                                <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
+                                <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:export" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
                             </div>
 
                         </div>
@@ -873,7 +874,7 @@
                 </div>
             </uib-tab>
             <!--地图-->
-            <uib-tab select="deviceAerialCurrentInfoController.initMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="device:page">
+            <uib-tab select="deviceAerialCurrentInfoController.initMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:map">
                 <uib-tab-heading>
                     {{'map'|translate}}
                 </uib-tab-heading>
@@ -902,7 +903,7 @@
                             </p>
                         </div>
                         <div class="col-md-1">
-                            <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.getDeviceMapData(0,1000,null,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateMapData,deviceAerialCurrentInfoController.endDateMapData)">{{'confirm'|translate}}</button>
+                            <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:map:query" ng-click="deviceAerialCurrentInfoController.getDeviceMapData(0,1000,null,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateMapData,deviceAerialCurrentInfoController.endDateMapData)">{{'confirm'|translate}}</button>
                         </div>
                         <div class="col-md-3 btn-group">
                             <button id="start" class="btn btn-sm" type="button">{{'startTheAnimation'|translate}}</button>
@@ -924,7 +925,7 @@
             </uib-tab>
 
             <!--电池统计-->
-            <uib-tab presentation-href="device:page">
+            <uib-tab presentation-href="dashboard:deviceMonitor:batteryMonitor">
             <uib-tab-heading>
               {{'batteryMonitor'|translate}}
             </uib-tab-heading>
@@ -1022,7 +1023,7 @@
           </uib-tab>
 
             <!--远程控制-->
-            <uib-tab select="" presentation-href="device:remoteControl">
+            <uib-tab select=""  presentation-href="dashboard:deviceMonitor:remoteControl">
                 <uib-tab-heading>
                     {{'telecontrol'|translate}}
                 </uib-tab-heading>
@@ -1062,7 +1063,7 @@
 
                       <div class="row">
                         <!-- 设置回传地址 -->
-                        <div class="col-md-6" presentation-href="sms:setIpSMS">
+                        <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setIp">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'setTheReturnAddressMessage'|translate}}</h5>
@@ -1124,7 +1125,7 @@
                         </div>
 
                         <!--  设置回传间隔  -->
-                        <div class="col-md-6" presentation-href="sms:setInterSMS">
+                        <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
@@ -1191,7 +1192,7 @@
 
                       <div class="row">
                         <!-- 设置采样时间 -->
-                        <div class="col-md-6" presentation-href="sms:setIpSMS">
+                        <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setIpSMS">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
@@ -1249,7 +1250,7 @@
                         </div>
 
                         <!-- 设置 平台短信猫号码-->
-                        <div class="col-md-6" presentation-href="sms:setStartTimesSMS">
+                        <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimesSMS">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'platformGSMmodemNumber'|translate}}</h5>
@@ -1284,7 +1285,7 @@
                       <div class="row">
 
                         <!-- 设置启动次数-->
-                        <div class="col-md-3" presentation-href="sms:setStartTimesSMS">
+                        <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
@@ -1317,7 +1318,7 @@
                         </div>
 
                         <!-- 设置工作小时数 -->
-                        <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+                        <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
                           <div class="box box-success">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
@@ -1350,7 +1351,7 @@
                         </div>
 
                         <!-- 绑定-->
-                        <div class="col-md-3" presentation-href="sms:activeLockSms">
+                        <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl">
                           <div class="box box-danger">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
@@ -1369,7 +1370,7 @@
                                     <div class="col-md-12">
                                       <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
                                                     send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                    class="btn btn-danger" presentation-href="sms:activeLockSms"
+                                                    class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
 
 
                                         ng-click="deviceAerialCurrentInfoController.sendSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
@@ -1385,7 +1386,7 @@
                                     <div class="col-md-12">
                                       <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
                                                     send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
-                                                    class="btn btn-warning" presentation-href="sms:unActiveLockSMS"
+                                                    class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
                                                     ng-click="deviceAerialCurrentInfoController.sendSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
                                       </sms-send-btn>
                                     </div>
@@ -1398,7 +1399,7 @@
                         </div>
 
 
-                        <div class="col-md-3" presentation-href="sms:lockSMS">
+                        <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl">
                           <div class="box box-danger">
                             <div class="box-header">
                               <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
@@ -1411,14 +1412,14 @@
                               <div class="row">
                                 <!-- 锁车 -->
                                 <div class="col-md-6">
-                                  <div class="row" presentation-href="sms:lockSMS">
+                                  <div class="row" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
                                     <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                                   </div>
                                   <div class="row">
                                     <div class="col-md-12">
                                       <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
                                                     send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                    class="btn btn-danger"  presentation-href="sms:lockSMS"
+                                                    class="btn btn-danger"  presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock"
                                                   ng-click="deviceAerialCurrentInfoController.sendSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
                                       </sms-send-btn>
                                     </div>
@@ -1426,15 +1427,15 @@
                                 </div>
                                 <!-- 解锁 -->
                                 <div class="col-md-6">
-                                  <div class="row" presentation-href="sms:unLockSMS">
+                                  <div class="row" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unLock">
                                     <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                                   </div>
                                   <div class="row">
                                     <div class="col-md-12">
                                       <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
                                                     send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                    class="btn btn-warning" presentation-href="sms:unLockSMS"
-                                                    presentation-href="sms:unlock" ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                                    class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unLock"
+                                                     ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
                                       </sms-send-btn>
                                     </div>
                                   </div>
@@ -1489,7 +1490,7 @@
             </uib-tab>
 
             <!--电子围栏-->
-            <uib-tab select="deviceAerialCurrentInfoController.initScopeMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="device:scopeMapPage">
+            <uib-tab select="deviceAerialCurrentInfoController.initScopeMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:electronicFence">
                 <uib-tab-heading  >
                     {{'electricFence'|translate}}
                 </uib-tab-heading>
@@ -1524,8 +1525,8 @@
                             </p>
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceAerialCurrentInfoController.updateScopeMap()">{{'SetFence'|translate}}</button>
-                            <button class="btn btn-primary" type="button" presentation-href="device:scopeMapOper" ng-click="deviceAerialCurrentInfoController.cacheElectronicFence()">{{'cancelFence'|translate}}</button>
+                            <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:electronicFence:set" ng-click="deviceAerialCurrentInfoController.updateScopeMap()">{{'SetFence'|translate}}</button>
+                            <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:electronicFence:cancel" ng-click="deviceAerialCurrentInfoController.cacheElectronicFence()">{{'cancelFence'|translate}}</button>
                         </div>
 
                     </div>

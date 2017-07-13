@@ -43,14 +43,14 @@
     </div><!-- /.col -->
   </div>
   <uib-tabset justified="true">
-    <uib-tab heading="{{'workPoint'|translate}}" select="workPointCtrl.initPointQuery(null,null,null,workPointCtrl.fleet)">
+    <uib-tab heading="{{'workPoint'|translate}}" select="workPointCtrl.initPointQuery(null,null,null,workPointCtrl.fleet)" presentation-href="fleetMng:workPoint:query">
       <br>
       <div class="row">
         <!--<div class="btn-group col-md-4">-->
           <!--<span>{{'totalNumberOfRecords'|translate}} {{workPointCtrl.page.totalElements}}</span>-->
         <!--</div>-->
         <div class="btn-group col-md-12 right">
-          <a class="btn btn-default pull-right"  presentation-href="fleet:workPoint:add"  ng-click="workPointCtrl.create()">{{'create'|translate}}{{'workPoint'|translate}}</a>
+          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workPoint:create"  ng-click="workPointCtrl.create()">{{'create'|translate}}{{'workPoint'|translate}}</a>
         </div>
       </div>
 
@@ -70,10 +70,10 @@
 
               <td class="text-nowrap" data-title="'operation'|translate">
                 <button type="button" class="btn btn-default btn-xs" ng-hide="workPoint.id==workPointCtrl.operWorkPorint"
-                        presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.update(workPoint)">{{'edit'|translate}}
+                        presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.update(workPoint)">{{'edit'|translate}}
                 </button>
                 <button type="button" class="btn btn-warning btn-xs" ng-show="workPoint.id==workPointCtrl.operWorkPorint"
-                        presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.save(workPoint)">{{'save'|translate}}
+                        presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.save(workPoint)">{{'save'|translate}}
                 </button>
               </td>
             </tr>
@@ -90,14 +90,14 @@
         </uib-pagination>
       </div>
     </uib-tab>
-    <uib-tab heading="{{'workLine'|translate}}" select="workPointCtrl.initLineQuery(null,null,null,workPointCtrl.fleet)">
+    <uib-tab heading="{{'workLine'|translate}}" select="workPointCtrl.initLineQuery(null,null,null,workPointCtrl.fleet)" presentation-href="fleetMng:workLine:query">
       <br>
       <div class="row">
         <!--<div class="btn-group col-md-4">-->
         <!--<span>{{'totalNumberOfRecords'|translate}} {{workPointCtrl.page.totalElements}}</span>-->
         <!--</div>-->
         <div class="btn-group col-md-12 right">
-          <a class="btn btn-default pull-right"  presentation-href="fleet:workPoint:add"  ng-click="workPointCtrl.createLine()">{{'create'|translate}}{{'workLine'|translate}}</a>
+          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workLine:create"  ng-click="workPointCtrl.createLine()">{{'create'|translate}}{{'workLine'|translate}}</a>
         </div>
       </div>
 
@@ -116,13 +116,13 @@
 
               <td class="text-nowrap" data-title="'operation'|translate">
                 <button type="button" class="btn btn-primary btn-xs" ng-show="workLine.ifMonitor == 0"
-                        presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.openMonitor(workLine)">{{'openMonitor'|translate}}
+                        presentation-href="fleetMng:workLine:modify" ng-click="workPointCtrl.openMonitor(workLine)">{{'openMonitor'|translate}}
                 </button>
                 <button type="button" class="btn btn-warning btn-xs" ng-show="workLine.ifMonitor == 1"
-                        presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.closeMonitor(workLine)">{{'closeMonitor'|translate}}
+                        presentation-href="fleetMng:workLine:modify" ng-click="workPointCtrl.closeMonitor(workLine)">{{'closeMonitor'|translate}}
                 </button>
                 <button type="button" class="btn btn-danger btn-xs" ng-show="workLine.status == 1"
-                        presentation-href="fleet:workPoint:update" ng-click="workPointCtrl.remove(workLine)">删除
+                        presentation-href="fleetMng:workLine:disable" ng-click="workPointCtrl.remove(workLine)">删除
                 </button>
               </td>
             </tr>
