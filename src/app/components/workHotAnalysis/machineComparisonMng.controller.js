@@ -74,12 +74,18 @@
     vm.heatType = "1";
     vm.dateType1 = "1";
     vm.heatType3 = "1";
+    vm.queryQuarter = true;
+    vm.queryMonth = true;
+    vm.queryDate = true;
     //修改查询单一车型和对比车型的切换
     vm.only=true;
     vm.comtrast=false;
     vm.toggle = function () {
       vm.only=!vm.only;
       vm.contrast=!vm.contrast;
+      vm.queryMonth = !vm.queryMonth;
+      vm.queryQuarter = !vm.queryQuarter;
+      vm.queryDate = !vm.queryDate;
       vm.reset();
     }
     //触发选择框时间
