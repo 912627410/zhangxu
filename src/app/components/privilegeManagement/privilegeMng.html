@@ -35,7 +35,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  ng-click="privilegeMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="privilige:priviligePage"  ng-click="privilegeMngCtrl.query(null,null,null,privilegeMngCtrl.priviligeInfo)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="system:privilege:query"  ng-click="privilegeMngCtrl.query(null,null,null,privilegeMngCtrl.priviligeInfo)">{{'query'|translate}}</button>
 
     </div>
 
@@ -51,7 +51,7 @@
             <h4 class="panel-title text-center">
               菜单管理
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newMenu('md')" >
-                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+                <i class="fa fa-plus" presentation-href="system:privilege:createMenu"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
           </div>
@@ -71,7 +71,7 @@
             <h4 class="panel-title text-center">
               权限列表
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newPrivilege('md')" >
-                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+                <i class="fa fa-plus" presentation-href="system:privilege:create"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
 
@@ -94,16 +94,16 @@
 
 
                   <button type="button" class="btn btn-success btn-xs"
-                          ng-if="privilegeInfo.status===0"
+                          ng-if="privilegeInfo.status===0" presentation-href="system:privilege:enable"
                           ng-click="privilegeMngCtrl.statusEnable(privilegeInfo)">{{'enabled'|translate}}
                   </button>
                   <button type="button" class="btn btn-danger btn-xs"
-                          ng-if="privilegeInfo.status===1"
+                          ng-if="privilegeInfo.status===1" presentation-href="system:privilege:enable"
                           ng-click="privilegeMngCtrl.statusDisable(privilegeInfo)">{{'forbidden'|translate}}
                   </button>
 
                   <button type="button" class="btn btn-default btn-xs"
-                          presentation-href="privilige:priviligeOper"
+                          presentation-href="privilige:priviligeOper"  presentation-href="system:privilege:modify"
                           ng-click="privilegeMngCtrl.updatePrivilege(privilegeInfo)">{{'alter'|translate}}
                   </button>
 
@@ -123,7 +123,7 @@
             <h4 class="panel-title text-center">
               隶属角色列表
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.privilegeRoleManage(privilegeMngCtrl.selectedPriv,'lg')">
-                <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
+                <i class="fa fa-pencil-square-o" presentation-href="system:privilege:privilegeRole:set"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>
           </div>

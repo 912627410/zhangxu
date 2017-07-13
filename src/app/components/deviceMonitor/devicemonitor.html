@@ -156,7 +156,7 @@
     </div>
     <div class="col-md-offset-7 col-md-2">
       <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:query" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
     </div>
   </div>
   <div class="row">
@@ -169,7 +169,7 @@
       <span>{{'totalNumberOfRecords'|translate}} {{monitorCtrl.page.totalElements}}</span>
     </div>
     <div class="btn-group col-md-8 right">
-      <a class="btn btn-default pull-right"  ng-click="monitorCtrl.excelExport(monitorCtrl.queryOrg)">{{'export'|translate}}</a>
+      <a class="btn btn-default pull-right" presentation-href="dashboard:deviceMonitor:export"  ng-click="monitorCtrl.excelExport(monitorCtrl.queryOrg)">{{'export'|translate}}</a>
     </div>
   </div>
 
@@ -254,7 +254,7 @@
         </div>
         <div class="box-footer">
           <div class="pull-right">
-            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+            <button type="button" class="btn btn-default btn-xs" presentation-href="dashboard:deviceMonitor" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
           </div>
         </div>
       </div>
@@ -289,7 +289,7 @@
           <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
           <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td  data-title="'operation'|translate" >
-            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
+            <button type="button" class="btn btn-default btn-xs" presentation-href="dashboard:deviceMonitor" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
           </td>
         </tr>
       </table>
