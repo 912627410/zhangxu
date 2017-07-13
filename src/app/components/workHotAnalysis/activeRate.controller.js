@@ -116,6 +116,8 @@
 
     //初始化图表
     var barChart = echarts.init(document.getElementById('barChartContainer'));
+    //添加图形自适应功能
+    window.onresize = function(){barChart.resize();}
 
     //display chart
     function showChart(_produceType,_machineType,_cycleType,_cycleValue,_hourScope,_province) {

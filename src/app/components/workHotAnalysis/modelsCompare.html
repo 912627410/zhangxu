@@ -22,15 +22,10 @@
         <label class="control-label col-md-1">查询季度:</label>
         <div class="controls col-md-2">
           <select class="form-control" ng-model="modelsCompareCtrl.dateType2">
-            <option value="201702">2017年第二季度</option>
-            <option value="201701">2017年第一季度</option>
-            <option value="201604">2016年第四季度</option>
-            <option value="201603">2016年第三季度</option>
-            <option value="201602">2016年第二季度</option>
-            <option value="201601">2016年第一季度</option>
-            <option value="201504">2015年第四季度</option>
+            <option ng-repeat="date in modelsCompareCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
           </select>
         </div>
+
     </div>
     <div ng-show="modelsCompareCtrl.monthQuery">
         <label class="control-label col-md-1">查询月份:</label>
@@ -82,13 +77,7 @@
       <label class="control-label col-md-1">查询季度:</label>
       <div class="controls col-md-2">
         <select class="form-control" ng-model="modelsCompareCtrl.QuarterType2">
-          <option value="201702">2017年第二季度</option>
-          <option value="201701">2017年第一季度</option>
-          <option value="201604">2016年第四季度</option>
-          <option value="201603">2016年第三季度</option>
-          <option value="201602">2016年第二季度</option>
-          <option value="201601">2016年第一季度</option>
-          <option value="201504">2015年第四季度</option>
+          <option ng-repeat="date in modelsCompareCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
         </select>
       </div>
     </div>
