@@ -169,17 +169,49 @@
         vm.monthDateDeviceData = null;
         vm.monthDateDeviceData2 = null;
       }else if(dateType1==1){
+        var dates = new Array();
+        var quarterDate = new Date();
+        //默认生成最近的10个季度周期供用户选择
+        for(var i=0;i<10;i++) {
+          quarterDate.setMonth(quarterDate.getMonth() - 3);
+          var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
+          switch (quarter) {
+            case 1:
+              var key = '01';
+              var value = '年第一季度';
+              break;
+            case 2:
+              key = '02';
+              value = '年第二季度';
+              break;
+            case 3:
+              key = '03';
+              value = '年第三季度';
+              break;
+            case 4:
+              key = '04';
+              value = '年第四季度';
+              break;
+          }
+          var date = {
+            key: '' + quarterDate.getFullYear() + key,
+            value: quarterDate.getFullYear() + value
+          };
+          dates.push(date);
+        }
+        vm.quarter = dates;
         vm.quarterQuery=true;
         vm.monthQuery = false;
         vm.dayQuery = false;
-        vm.dateType2 = "201702";
-        vm.QuarterType2 = "201701";
+        vm.dateType2 = dates[0].key;
+        vm.QuarterType2 = dates[1].key;
         vm.startDateDeviceData = null;
         vm.endDateDeviceData = null;
         vm.monthDateDeviceData = null;
         vm.monthDateDeviceData2 = null;
       }
     }
+    vm.change(1);
     //单一和对比车型的触发切换
     vm.toggle = function () {
       vm.comparedQuery=!vm.comparedQuery;
@@ -238,6 +270,11 @@
       var item = echarts.init(document.getElementById(id));
       return item;
     }
+    var mapChart1;//单独地图和左地图
+    var mapChart2;//右地图
+    var cityChart;//单独地图
+    var cityChart1;//城市下钻对比地图左侧
+    var cityChart2;//城市下钻对比地图左侧
     //开工热度地图
     var chinaOption1 = {
       title: {
@@ -280,7 +317,6 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        // top: 'bottom',
         bottom:20,
         right: 20,
         itemGap: 30,
@@ -289,7 +325,13 @@
           saveAsImage: {show: true}
         },
         iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
             color: '#2F4056'
           }
         }
@@ -381,7 +423,6 @@
       toolbox: {
         show: true,
         orient: 'vertical',
-        // top: 'bottom',
         bottom:20,
         right: 20,
         itemGap: 30,
@@ -390,7 +431,13 @@
           saveAsImage: {show: true}
         },
         iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
           emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
             color: '#2F4056'
           }
         }
@@ -647,11 +694,24 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        orient: 'vertical',
+        bottom:20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
         feature: {
-          saveAsImage: {}
+          restore: {show: true},
+          saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
@@ -725,11 +785,24 @@
       ],
       toolbox: {
         show: true,
-        itemSize: 20,
+        orient: 'vertical',
+        bottom:20,
+        right: 20,
         itemGap: 30,
-        top: 'bottom',
         feature: {
-          saveAsImage: {}
+          restore: {show: true},
+          saveAsImage: {show: true}
+        },
+        iconStyle: {
+          normal:{
+            textPosition:'left',
+            textAlign:'right'
+          },
+          emphasis: {
+            textPosition: 'left',
+            textAlign:'right',
+            color: '#2F4056'
+          }
         }
       },
       series: [
@@ -911,7 +984,9 @@
           vm.avgHoursNational = true;
           vm.avgHoursProvince = false;
         }
-        var mapChart1 = vm.echartsInit('mapContainer1');
+        mapChart1 = vm.echartsInit('mapContainer1');
+        //唯一全国地图情况下自适应
+        window.onresize = function(){mapChart1.resize();}
         mapOption1.series[0].data=data0;
         mapOption1.visualMap.max=max;
         if(machineType1=="2"){
@@ -956,7 +1031,9 @@
           var Cname = provinces[n];
           cityMap.title.text=param.name;
           cityMap.series[0].mapType=Cname;
-          var cityChart = vm.echartsInit('mapContainer1');
+          cityChart = vm.echartsInit('mapContainer1');
+          //唯一省份下钻情况下自适应
+          window.onresize = function(){cityChart.resize();}
           $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
             echarts.registerMap(Cname, geoJson);
           });
@@ -1026,6 +1103,8 @@
         //省级地图返回到中国地图
         vm.backChina1 = function () {
           mapChart1 = vm.echartsInit("mapContainer1");
+          //唯一全国地图情况下自适应
+          window.onresize = function(){mapChart1.resize();}
           vm.national = true;
           vm.allProvince = false;
           vm.avgHoursNational = true;
@@ -1061,6 +1140,8 @@
             cityMap.title.text=param.name;
             cityMap.series[0].mapType=Cname;
             var cityChart = vm.echartsInit('mapContainer1');
+            //唯一城市情况下自适应
+            window.onresize = function(){cityChart.resize();}
             $http.get('assets/json/province/'+Cname+'.json').success(function (geoJson){
               echarts.registerMap(Cname, geoJson);
             });
@@ -1788,8 +1869,9 @@
         backButtons[0].style.display = "none";
         backButtons[1].style.display = "none";
 
-        var mapChart1 = vm.echartsInit('mapContainer1');
-        var mapChart2 = vm.echartsInit('mapContainer2');
+        mapChart1 = vm.echartsInit('mapContainer1');
+        mapChart2 = vm.echartsInit('mapContainer2');
+        vm.mapCompare();
         var max1 =100;
         var max2 =100;
         var max3 =100;
@@ -2112,11 +2194,12 @@
               dateWithOut2.style.display = "block";
             }
           }
-          var mapChart2 = vm.echartsInit("mapContainer2");
+          mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.title.text=mapOptionName2;
           mapOption2.series[0].data=yData;
           mapChart2.setOption(mapOption2);
-          var mapChart1 = vm.echartsInit("mapContainer1");
+          mapChart1 = vm.echartsInit("mapContainer1");
+          vm.mapCompare();
           mapOption1.title.text=mapOptionName1;
           mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
@@ -2187,11 +2270,12 @@
               dateWithOut2.style.display = "block";
             }
           }
-          var mapChart2 = vm.echartsInit("mapContainer2");
+          mapChart2 = vm.echartsInit("mapContainer2");
           mapOption2.title.text=mapOptionName2;
           mapOption2.series[0].data=yData;
           mapChart2.setOption(mapOption2);
-          var mapChart1 = vm.echartsInit("mapContainer1");
+          mapChart1 = vm.echartsInit("mapContainer1");
+          vm.mapCompare();
           mapOption1.title.text=mapOptionName1;
           mapOption1.series[0].data=zData;
           mapChart1.setOption(mapOption1);
@@ -2308,8 +2392,13 @@
         vm.national1 = false;
         vm.allProvince1 = true;
       }
-      var cityChart1 = vm.echartsInit("mapContainer1");
-      var cityChart2 = vm.echartsInit("mapContainer2");
+      cityChart1 = vm.echartsInit("mapContainer1");
+      cityChart2 = vm.echartsInit("mapContainer2");
+      //对比图型城市下钻情况自适应
+      window.onresize = function(){
+        cityChart1.resize();
+        cityChart2.resize();
+      }
       var rspDataCity1 = serviceResource.restCallService(restCallURLCity1, 'QUERY');
       rspDataCity1.then(function (cityData1) {
         var cityMax1 =0;
@@ -2472,6 +2561,15 @@
       vm.heatType1 = null;
       vm.heatType2 = null;
     }
+
+    //对比图型全国地图情况自适应
+    vm.mapCompare = function(){
+      window.onresize = function(){
+        mapChart1.resize();
+        mapChart2.resize();
+      }
+    }
+
 
   }
 })();
