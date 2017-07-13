@@ -26,7 +26,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  ng-click="roleMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="system:role:query"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">{{'query'|translate}}</button>
 
     </div>
 
@@ -57,7 +57,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               角色列表
-              <a class="pull-right" type="button" href="" ng-click="roleMngCtrl.newRole()" >
+              <a class="pull-right" type="button" href="" presentation-href="system:role:create" ng-click="roleMngCtrl.newRole()" >
                 <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
@@ -70,16 +70,16 @@
               <div class="row">
                 <div class="col-sm-5">
                   <span>
-                    <a href="javascript:;" ng-class="{true: 'text-red'}[roleMngCtrl.selectedRole == role]" ng-click="roleMngCtrl.selectRole(role)" class="fa fa-user">  {{role.name}} </a>
+                    <a href="javascript:;" ng-class="{true: 'text-red'}[roleMngCtrl.selectedRole == role]" presentation-href="system:role:rolePrivilege:query" ng-click="roleMngCtrl.selectRole(role)" class="fa fa-user">  {{role.name}} </a>
                   </span>
                 </div>
                 <div class="col-sm-7 text-right">
                   <button type="button" class="btn btn-default btn-xs"
-                          presentation-href="role:roleOper"
+                          presentation-href="system:role:modify"
                           ng-click="roleMngCtrl.updateRole(role)">{{'alter'|translate}}
                   </button>
                   <button type="button" class="btn btn-default btn-xs "
-                          presentation-href="role:roleUserOper"
+                          presentation-href="system:role:roleUser:query"
                           ng-click="roleMngCtrl.roleUserManage(role,'lg')">{{'includeUsers'|translate}}
                   </button>
                 </div>
@@ -97,7 +97,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               权限列表
-              <a class="pull-right" type="button" href="" ng-click="roleMngCtrl.rolePrivilegeManage(roleMngCtrl.selectedRole,'lg')">
+              <a class="pull-right" type="button" href="" presentation-href="system:role:rolePrivilege:set" ng-click="roleMngCtrl.rolePrivilegeManage(roleMngCtrl.selectedRole,'lg')">
                 <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>

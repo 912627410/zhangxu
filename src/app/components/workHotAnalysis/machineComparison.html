@@ -51,7 +51,7 @@
 
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
-          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+          <button class="btn btn-primary" type="button" presentation-href="statAnalysis:workHeat:salesHeat:query"
                   ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}
           </button>
 
@@ -71,8 +71,7 @@
         <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度
       </div>
       <div class="col-md-2">
-        <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                ng-click="machineComparedMngCtrl.toggle()">∨ 车型对比
+        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∨ 车型对比
         </button>
       </div>
     </div>
@@ -91,7 +90,7 @@
           <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>中挖
         </div>
         <div class="col-md-2">
-          <button class="btn btn-primary" type="button" presentation-href="machine:page"
+          <button class="btn btn-primary" type="button" presentation-href="statAnalysis:workHeat:salesHeat:query"
                   ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
           </button>
         </div>
@@ -108,8 +107,7 @@
           <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度
         </div>
         <div class="col-md-2">
-          <button class="btn btn-primary" type="button" presentation-href="machine:page"
-                  ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
+          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
           </button>
         </div>
       </div>
@@ -167,7 +165,7 @@
         </select>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-primary" type="button" presentation-href="machine:page"
+        <button class="btn btn-primary" type="button" presentation-href="statAnalysis:workHeat:salesHeat:query"
                 ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType3)">查看
         </button>
       </div>

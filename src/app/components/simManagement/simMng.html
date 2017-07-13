@@ -74,7 +74,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  ng-click="simMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button"  presentation-href="sim:page" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  presentation-href="deviceMng:sim:query" ng-click="simMngCtrl.query(null,null,null,simMngCtrl.sim)">{{'query'|translate}}</button>
 
     </div>
   </div>
@@ -86,11 +86,11 @@
     <div class="col-md-10">
 
 
-      <a class="btn btn-default pull-right" presentation-href="sim:oper"
+      <a class="btn btn-default pull-right" presentation-href="deviceMng:sim:create"
          ng-click="simMngCtrl.newSim()">
         <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
-      <a class="btn btn-default pull-right" presentation-href="sim:oper"
+      <a class="btn btn-default pull-right" presentation-href="deviceMng:sim:import"
          ng-click="simMngCtrl.uploadSim()">
         <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
@@ -115,11 +115,11 @@
           <td class="text-nowrap" data-title="'serviceEndDate'|translate" sortable="'serviceEndDate'">{{sim.serviceEndDate | date:'yyyy-MM-dd'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
 
-            <button type="button" class="btn btn-default btn-xs" presentation-href="sim:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="deviceMng:sim:modify"
                     ng-click="simMngCtrl.updateSim(sim)">{{'alter'| translate}}
             </button>
 
-            <button type="button" class="btn btn-default btn-xs" presentation-href="sim:statusQuery"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="deviceMng:sim:state"
                     ng-click="simMngCtrl.currentSim(sim,'lg')">{{'state'| translate}}
             </button>
 

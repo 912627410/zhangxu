@@ -50,7 +50,9 @@
 
             <div class="control-group">
               <div class="controls">
-                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'车辆开工热度分布'|translate}}" ng-click="workStartMngController.drawWorkHot();">{{'车辆开工热度分布'|translate}}</button>
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'车辆开工热度分布'|translate}}"
+                        presentation-href="statAnalysis:workHeat:workHeat:query"
+                        ng-click="workStartMngController.drawWorkHot();">{{'车辆开工热度分布'|translate}}</button>
               </div>
             </div>
           </form>

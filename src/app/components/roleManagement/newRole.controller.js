@@ -23,7 +23,7 @@
         vm.roleTypeList = data;
 
         // 非系统管理员不能新建系统角色
-        if(!permissions.getPermissions("sys:role:sysRole")){
+        if(!permissions.getPermissions("system:sysRole:create")){
           _.remove(vm.roleTypeList, function (type) {
             return type.value  == 0;
           })
