@@ -11,9 +11,6 @@
 
 
         vm.loadDeviceMF = function(){
-            if (!permissions.getPermissions("config:mfPage")) {
-                return;
-            }
 
             if (vm.operatorInfo){
                 var rspData = serviceResource.getConfigInfo(vm.operatorInfo,DEVCE_MF);
@@ -27,9 +24,6 @@
         };
 
         vm.loadDeviceType = function(){
-            if (!permissions.getPermissions("config:devicetypePage")) {
-                return;
-            }
 
             if (vm.operatorInfo){
                 var rspData = serviceResource.getConfigInfo(vm.operatorInfo,DEVCE_DEVICETYPE);
@@ -43,9 +37,6 @@
         };
 
         vm.loadDevicePowerType = function(){
-            if (!permissions.getPermissions("config:devicepowertypeOper")) {
-                return;
-            }
 
             if (vm.operatorInfo){
                 var rspData = serviceResource.getConfigInfo(vm.operatorInfo,DEVCE_POWERTYPE);
@@ -59,9 +50,6 @@
         };
 
         vm.loadDeviceHeightType = function(){
-            if (!permissions.getPermissions("config:deviceheighttypeOper")) {
-                return;
-            }
 
             if (vm.operatorInfo){
                 var rspData = serviceResource.getConfigInfo(vm.operatorInfo,DEVCE_HIGHTTYPE);

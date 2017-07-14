@@ -37,6 +37,10 @@
 
     factory.recursiveChild = function (list, param) {
       for (var i = 0; i < list.length; i++) {
+        //如果是一级菜单，则不显示菜单上的权限项 ，例如"仪表盘"菜单，不显示"仪表盘"权限
+        if(list[i].parentId == null){
+          list[i][param] = [];
+        }
 
         if(list[i].children!=null && list[i].children.length > 0 ){
           factory.recursiveChild(list[i].children, param);
@@ -44,7 +48,13 @@
 
         if (list[i][param] != null && list[i][param].length > 0 ) {
           for(var n=0; n <list[i][param].length; n ++ ){
-            list[i].children.push(list[i][param][n]);
+            //如果子菜单名不和权限名重复就插入权限
+            var index = _.findIndex(list[i].children, function(node) {
+                return node.name == list[i][param][n].name;
+              });
+            if(index== -1) {
+              list[i].children.push(list[i][param][n]);
+            }
 
           }
         }

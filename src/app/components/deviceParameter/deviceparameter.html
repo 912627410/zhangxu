@@ -100,7 +100,7 @@
     </uib-tab>
 
   <!--驱动类型-->
-  <uib-tab heading="{{'driveType'|translate}}" select="devivceparameterCtrl.loadDevicePowerType()" presentation-href="config:devicepowertypePage">
+  <uib-tab heading="{{'driveType'|translate}}" select="devivceparameterCtrl.loadDevicePowerType()" presentation-href="system:deviceParam:driveType">
         <div class="row" style="padding-top: 10px">
             <div class="col-md-3" ng-repeat="devicePowerType in devivceparameterCtrl.devicePowerTypeList">
                 <div class="box box-success">
@@ -114,9 +114,9 @@
                     <div class="box-footer">
                         <code>
                             <div class="pull-right">
-                                <span ng-if="devicePowerType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="system:deviceParam:deviceModel:modify" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">失效</button></span>
-                                <span ng-if="devicePowerType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="system:deviceParam:deviceModel:modify" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">激活</button></span>
-                                <button type="button" class="btn btn-primary btn-xs" presentation-href="system:deviceParam:deviceModel:modify" ng-click="devivceparameterCtrl.updatePowerType(devicePowerType)">{{'alter'|translate}}</button>
+                                <span ng-if="devicePowerType.status == 1"><button type="button" class="btn btn-warning btn-xs" presentation-href="system:deviceParam:driveType:modify" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">失效</button></span>
+                                <span ng-if="devicePowerType.status == 0"><button type="button" class="btn btn-success btn-xs" presentation-href="system:deviceParam:driveType:modify" ng-click="devivceparameterCtrl.updateDevicePowerTypeStatus(devicePowerType)">激活</button></span>
+                                <button type="button" class="btn btn-primary btn-xs" presentation-href="system:deviceParam:driveType:modify" ng-click="devivceparameterCtrl.updatePowerType(devicePowerType)">{{'alter'|translate}}</button>
                             </div>
                         </code>
                     </div>
@@ -125,7 +125,7 @@
         </div>
         <div class="row">
             <div class="col-md-9"></div>
-            <a class="btn btn-primary" style="width: 15%" presentation-href="system:deviceParam:deviceModel:create" ng-click="devivceparameterCtrl.newPowerType()">
+            <a class="btn btn-primary" style="width: 15%" presentation-href="system:deviceParam:driveType:create" ng-click="devivceparameterCtrl.newPowerType()">
                 <i class="fa fa-plus"></i> {{'add'|translate}}
             </a>
         </div>

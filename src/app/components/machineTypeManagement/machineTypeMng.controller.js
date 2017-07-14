@@ -13,7 +13,7 @@
     .controller('machineTypeMngController', machineTypeMngController);
 
   /** @ngInject */
-  function machineTypeMngController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource,roleService, DEFAULT_SIZE_PER_PAGE, MACHINE_TYPE_URL) {
+  function machineTypeMngController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_TYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;

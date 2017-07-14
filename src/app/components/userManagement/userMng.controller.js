@@ -14,13 +14,6 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    //初始化组织树
-    if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
-      vm.my_data = angular.copy([$rootScope.orgChart[0]]);
-    } else {
-      Notification.error('获取组织机构信息失败');
-    }
-
     // select org
     vm.my_tree_handler = function (branch) {
 
@@ -42,6 +35,14 @@
         Notification.error("获取角色数据失败");
       });
 
+    }
+
+    //初始化组织树
+    if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
+      vm.my_data = angular.copy([$rootScope.orgChart[0]]);
+      vm.my_tree_handler(vm.my_data);
+    } else {
+      Notification.error('获取组织机构信息失败');
     }
 
     // select user
@@ -321,7 +322,5 @@
 
     }
 
-    //首次查询
-    vm.query(null, null, null, null);
   }
 })();

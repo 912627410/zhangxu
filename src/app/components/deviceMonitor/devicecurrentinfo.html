@@ -511,7 +511,7 @@
     </uib-tab>
 
     <!--历史数据-->
-    <uib-tab select=""  presentation-href="dashboard:deviceMonitor:historyData">
+    <uib-tab presentation-href="dashboard:deviceMonitor:historyData">
       <uib-tab-heading>
         {{'historicalData'|translate}}
       </uib-tab-heading>
@@ -853,7 +853,7 @@
     </uib-tab>
 
     <!--远程控制-->
-    <uib-tab select="" presentation-href="device:remoteControl" presentation-href="dashboard:deviceMonitor:remoteControl">
+    <uib-tab select="" presentation-href="dashboard:deviceMonitor:remoteControl">
       <uib-tab-heading>
         {{'telecontrol'|translate}}
       </uib-tab-heading>
@@ -1072,7 +1072,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
@@ -1123,7 +1123,7 @@
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                class="btn btn-danger" presentation-href="sms:activeLockSms"
+                                                class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
                                                 ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
                                   </sms-send-btn>
                                 </div>
@@ -1137,7 +1137,7 @@
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
-                                                class="btn btn-warning" presentation-href="sms:unActiveLockSMS"
+                                                class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
                                                 ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
                                   </sms-send-btn>
                                 </div>
@@ -1149,7 +1149,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
@@ -1165,10 +1165,13 @@
                                 <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                               </div>
                               <div class="row">
+                                <div class="row">
+                                  <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                </div>
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                class="btn btn-danger"  presentation-href="sms:lockSMS"
+                                                class="btn btn-danger"  presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock"
                                                 ng-click="deviceCurrentInfoCtrl.sendLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
 
                                   </sms-send-btn>
@@ -1180,10 +1183,13 @@
                                 <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                               </div>
                               <div class="row">
+                                <div class="row">
+                                  <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                                </div>
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
-                                                class="btn btn-warning" presentation-href="sms:unLockSMS"
+                                                class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unLock"
                                                 ng-click="deviceCurrentInfoCtrl.sendUnLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
                                   </sms-send-btn>
                                 </div>
@@ -1502,7 +1508,7 @@
     </uib-tab>
 
     <!--用户画像-->
-    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait" presentation-href="dashboard:deviceMonitor:userPortrait">
+    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()"  presentation-href="dashboard:deviceMonitor:userPortrait">
       <uib-tab-heading>{{'userPortrait'|translate}}</uib-tab-heading>
       <div class="modal-body"  style="overflow-y: auto; overflow-x:hidden; height:600px;">
 

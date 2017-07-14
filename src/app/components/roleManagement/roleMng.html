@@ -70,7 +70,7 @@
               <div class="row">
                 <div class="col-sm-5">
                   <span>
-                    <a href="javascript:;" ng-class="{true: 'text-red'}[roleMngCtrl.selectedRole == role]" presentation-href="system:role:rolePrivilege:query" ng-click="roleMngCtrl.selectRole(role)" class="fa fa-user">  {{role.name}} </a>
+                    <a href="javascript:;" ng-class="{true: 'text-red'}[roleMngCtrl.selectedRole == role]" presentation-href="system:role:rolePrivilege:query" ng-click="roleMngCtrl.selectRole(role)" class="fa fa-tags">  {{role.name}} </a>
                   </span>
                 </div>
                 <div class="col-sm-7 text-right">
@@ -97,7 +97,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               权限列表
-              <a class="pull-right" type="button" href="" presentation-href="system:role:rolePrivilege:set" ng-click="roleMngCtrl.rolePrivilegeManage(roleMngCtrl.selectedRole,'lg')">
+              <a class="pull-right" type="button" href="" presentation-href="system:role:rolePrivilege:modify" ng-click="roleMngCtrl.rolePrivilegeManage(roleMngCtrl.selectedRole,'lg')">
                 <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>

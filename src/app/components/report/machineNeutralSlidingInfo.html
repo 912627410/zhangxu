@@ -60,7 +60,7 @@
 
     <div class="col-md-3">
       <button class="btn btn-primary" type="button" ng-click="machineNeutralSlidingCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="statAnalysis:machine:transportMonitor:query"
+      <button class="btn btn-primary" type="button" presentation-href="statAnalysis:transport:neutralSliding:query"
               ng-click="machineNeutralSlidingCtrl.query(null, null, null)">{{'query' | translate}}</button>
 
     </div>
@@ -69,9 +69,9 @@
   <div class="MachineTransportInfosBox" >
     <div class="neutralSlide" >
         <div class="pull-right">
-          <button class="btn btn-sm btn-primary" ng-click="machineNeutralSlidingCtrl.neutralSlideReload()"  presentation-href="statAnalysis:machine:transportMonitor:openMonitor"
+          <button class="btn btn-sm btn-primary" ng-click="machineNeutralSlidingCtrl.neutralSlideReload()"  presentation-href="statAnalysis:transport:neutralSliding:openMonitor"
                   ng-if="!machineNeutralSlidingCtrl.neutralSlideMonitor">{{'turnOnRealtimeMonitoring'|translate}}</button>
-          <button class="btn btn-sm btn-warning" ng-click="machineNeutralSlidingCtrl.neutralSlideClose()"  presentation-href="statAnalysis:machine:transportMonitor:openMonitor"
+          <button class="btn btn-sm btn-warning" ng-click="machineNeutralSlidingCtrl.neutralSlideClose()"  presentation-href="statAnalysis:transport:neutralSliding:openMonitor"
                   ng-if="machineNeutralSlidingCtrl.neutralSlideMonitor">{{'turnOffRealtimeMonitoring'|translate}}</button>
         </div>
       <uib-tabset>

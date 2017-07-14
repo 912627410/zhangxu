@@ -78,7 +78,7 @@
 
 
       <li>
-        <a ng-click="reportMng1=!reportMng1" presentation-href="statAnalysis">
+        <a ng-click="reportMng1=!reportMng1" presentation-href="statAnalysis" href="">
           <i class="fa fa-bar-chart"></i>
           <span style="width:200px">{{'statisticalAnalysis' | translate}}</span>
           <span class="glyphicon pull-right"
@@ -87,7 +87,7 @@
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng1}">
 
           <li>
-            <a ng-click="trackRecord=!trackRecord" presentation-href="statAnalysis:workHistory">
+            <a ng-click="trackRecord=!trackRecord" presentation-href="statAnalysis:workHistory" href="">
               <i class="fa ion-document"></i>
               <span>{{'WorkHistoryMng'|translate}}</span>
               <span class="glyphicon pull-right"
@@ -119,8 +119,8 @@
           </li>
 
           <li>
-            <a ng-click="workstart=!workstart" presentation-href="statAnalysis:workHeat">
-              <i class="fa ion-bonfire"></i>
+            <a ng-click="workstart=!workstart" presentation-href="statAnalysis:workHeat" href="">
+              <i class="fa fa-line-chart"></i>
               <span>{{'startHeatAnalysis'|translate}}</span>
               <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
             </a>
@@ -129,13 +129,13 @@
               <li>
                 <a ui-sref="home.workStartmng"
                   presentation-href="statAnalysis:workHeat:workHeat">
-                  <i class="fa ion-fireball"></i> <span>{{'startHeatDistribution'|translate}}</span>
+                  <i class="fa fa-line-chart"></i> <span>{{'startHeatDistribution'|translate}}</span>
                 </a>
               </li>
               <li>
                 <a ui-sref="home.barDistributionmng"
                   presentation-href="statAnalysis:workHeat:arealDistribution">
-                  <i class="fa ion-stats-bars"></i> <span>{{'startAreaDistribution'|translate}}</span>
+                  <i class="fa fa-pie-chart"></i> <span>{{'startAreaDistribution'|translate}}</span>
                 </a>
               </li>
               <li>
@@ -153,15 +153,15 @@
               <li>
                 <a ui-sref="home.machineComparison"
                    presentation-href="statAnalysis:workHeat:salesHeat">
-                  <i class="fa fa-unlink"></i> <span>开工与销售热度</span>
+                  <i class="fa fa-area-chart"></i> <span>开工与销售热度</span>
                 </a>
               </li>
             </ul>
           </li>
 
           <li>
-            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="statAnalysis:machine">
-              <i class="fa fa-car"></i>
+            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="statAnalysis:machine" href="">
+              <i class="fa fa-bar-chart"></i>
               <span>{{'machineStatistics' | translate}}</span>
               <span class="glyphicon pull-right" ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
             </a>
@@ -173,39 +173,40 @@
               </li>
               <li>
                 <a ui-sref="home.attendance" presentation-href="statAnalysis:machine:attendance">
-                  <i class="fa fa-bookmark"></i> <span>{{'machineAttendance' | translate}}</span>
+                  <i class="fa fa-bar-chart"></i> <span>{{'machineAttendance' | translate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a  presentation-href="statAnalysis:transport" ng-click="machineTransportationMonitor=!machineTransportationMonitor" href="">
+              <i class="fa fa-tv"></i> <span>{{'machineTransportationMonitoring'|translate}}</span>
+              <span class="glyphicon pull-right" ng-class="machineTransportationMonitor?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: machineTransportationMonitor}">
+              <li>
+                <a ui-sref="home.machineSpeeding" presentation-href="statAnalysis:transport:overSpeed">
+                  <i class="fa fa-unlink"></i> <span>{{'SpeedMonitoring'|translate}}</span>
                 </a>
               </li>
               <li>
-                <a  presentation-href="statAnalysis:machine:transportMonitor" ng-click="machineTransportationMonitor=!machineTransportationMonitor">
-                  <i class="glyphicon glyphicon-stats"></i> <span>{{'machineTransportationMonitoring'|translate}}</span>
-                  <span class="glyphicon pull-right" ng-class="machineTransportationMonitor?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+                <a ui-sref="home.machineNeutralSliding" presentation-href="statAnalysis:transport:neutralSliding">
+                  <i class="fa fa-bookmark"></i> <span>{{'NeutralSlidingMonitoring'|translate}}</span>
                 </a>
-                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: machineTransportationMonitor}">
-                  <li>
-                    <a ui-sref="home.machineSpeeding">
-                      <i class="fa fa-unlink"></i> <span>{{'SpeedMonitoring'|translate}}</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.machineNeutralSliding">
-                      <i class="fa fa-bookmark"></i> <span>{{'NeutralSlidingMonitoring'|translate}}</span>
-                    </a>
-                  </li>
-                </ul>
               </li>
             </ul>
           </li>
 
           <li>
             <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:cluster">
-              <i class="fa ion-gear-b"></i> <span>{{'machineClustering'|translate}}</span>
+              <i class="fa fa-search-plus"></i> <span>{{'machineClustering'|translate}}</span>
             </a>
           </li>
 
           <li>
             <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
-              <i class="fa ion-gear-b"></i> <span>短信发送统计</span>
+              <i class="fa fa-pie-chart"></i> <span>短信发送统计</span>
             </a>
           </li>
 
@@ -228,7 +229,7 @@
             </a>
           </li>
           <li>
-            <a ui-sref="home.workPoint" presentation-href="fleet:workPoint">
+            <a ui-sref="home.workPoint" presentation-href="fleetMng:workPoint">
               <i class="fa fa-map-signs"></i> <span>{{'workPointMng' | translate}}</span>
             </a>
           </li>
@@ -249,7 +250,7 @@
             </a>
           </li>
           <li>
-            <a ui-sref="home.fuelConfig" presentation-href="fleet:oil">
+            <a ui-sref="home.fuelConfig" presentation-href="fleetMng:oil">
               <i class="fa fa-car"></i> <span>{{'fuelconfiguration' | translate}}</span>
             </a>
           </li>
@@ -286,17 +287,22 @@
         <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}">
           <li>
             <a ui-sref="home.privilegeMng" presentation-href="system:privilege">
-              <i class="fa fa-bookmark-o"></i> <span>{{'priviligeManagement'|translate}}</span>
+              <i class="fa fa-tag"></i> <span>{{'priviligeManagement'|translate}}</span>
             </a>
           </li>
           <li>
             <a ui-sref="home.roleMng" presentation-href="system:role">
-              <i class="fa fa-users"></i> <span>{{'roleManagement' | translate}}</span>
+              <i class="fa fa-tags"></i> <span>{{'roleManagement' | translate}}</span>
             </a>
           </li>
           <li class="treeview" presentation-href="system:user">
             <a ui-sref="home.userinfomng">
               <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.orgMng" presentation-href="system:org">
+              <i class="fa fa-sitemap"></i> <span>{{'orgManagement' | translate}}</span>
             </a>
           </li>
           <li>
@@ -311,12 +317,7 @@
           </li>
           <li>
             <a ui-sref="home.machineTypeMng" >
-              <i class="fa fa-automobile"></i> <span>车辆类型管理</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.orgMng" presentation-href="system:org">
-              <i class="fa fa-sitemap"></i> <span>{{'orgManagement' | translate}}</span>
+              <i class="fa fa-automobile"></i> <span>车型管理</span>
             </a>
           </li>
           <li >

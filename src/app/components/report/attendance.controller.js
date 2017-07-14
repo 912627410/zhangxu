@@ -153,7 +153,7 @@
         vm.attendanceChart.series[0].data = dataList;
 
       }, function (reason) {
-        Notification.error(reason.data.message);
+        Notification.warning(reason.data.message);
       });
 
     }

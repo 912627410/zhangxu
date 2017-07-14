@@ -81,16 +81,14 @@
 
             <li class="list-group-item repeat"  ng-repeat="privilegeInfo in privilegeMngCtrl.privList">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                     <span>
                       <a href="javascript:;" ng-class="{true: 'text-red'}[privilegeMngCtrl.selectedPriv == privilegeInfo]"
-                         ng-click="privilegeMngCtrl.selectPrivilege(privilegeInfo)" class="fa fa-bookmark-o">  {{privilegeInfo.name}} </a>
+                         ng-click="privilegeMngCtrl.selectPrivilege(privilegeInfo)" class="fa fa-tag">  {{privilegeInfo.name}} </a>
                     </span>
                 </div>
-                <div class="col-sm-4">
-                    {{privilegeInfo.permission}}
-                </div>
-                <div class="col-sm-4 text-right">
+
+                <div class="col-sm-5 text-right">
 
 
                   <button type="button" class="btn btn-success btn-xs"
@@ -102,8 +100,7 @@
                           ng-click="privilegeMngCtrl.statusDisable(privilegeInfo)">{{'forbidden'|translate}}
                   </button>
 
-                  <button type="button" class="btn btn-default btn-xs"
-                          presentation-href="privilige:priviligeOper"  presentation-href="system:privilege:modify"
+                  <button type="button" class="btn btn-default btn-xs"  presentation-href="system:privilege:modify"
                           ng-click="privilegeMngCtrl.updatePrivilege(privilegeInfo)">{{'alter'|translate}}
                   </button>
 
@@ -123,7 +120,7 @@
             <h4 class="panel-title text-center">
               隶属角色列表
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.privilegeRoleManage(privilegeMngCtrl.selectedPriv,'lg')">
-                <i class="fa fa-pencil-square-o" presentation-href="system:privilege:privilegeRole:set"></i> <span>{{'alter' | translate}}</span>
+                <i class="fa fa-pencil-square-o" presentation-href="system:privilege:privilegeRole:modify"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>
           </div>
@@ -132,7 +129,7 @@
             <li class="list-group-item repeat"  ng-repeat="role in privilegeMngCtrl.roleList">
               <div class="row">
                 <div class="col-sm-12">
-                  {{role.name}}
+                  <i class="fa fa-tags"></i> <span>{{role.name}}</span>
                 </div>
               </div>
 

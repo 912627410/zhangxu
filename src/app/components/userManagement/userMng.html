@@ -74,16 +74,16 @@
 
             <li class="list-group-item repeat"  ng-repeat="userinfo in userMngController.userinfoList">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <span>
                       <a href="javascript:;" ng-class="{true: 'text-red'}[userMngController.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="userMngController.selectUser(userinfo)" class="fa fa-user">
                         {{userinfo.lastname}}{{userinfo.firstname}} </a>
                     </span>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   {{userinfo.ssn}}</a>
                 </div>
-                <div class="col-sm-4 text-right">
+                <div class="col-sm-6 text-right">
 
                   <button type="button" class="btn btn-success btn-xs"
                           ng-if="userinfo.status===0" presentation-href="system:user:enable"
@@ -121,7 +121,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               角色列表
-              <a class="pull-right" type="button" href="" presentation-href="system:user:userRole:set" ng-click="userMngController.userRoleManage('lg')">
+              <a class="pull-right" type="button" href="" presentation-href="system:user:userRole:modify" ng-click="userMngController.userRoleManage('lg')">
                 <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
               </a>
             </h4>

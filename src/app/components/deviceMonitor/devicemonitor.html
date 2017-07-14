@@ -264,8 +264,8 @@
       <table ng-table="monitorCtrl.tableParams"  class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
         <tr ng-repeat="deviceinfo in $data">
 
-          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" >
-            <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
+          <td data-title="'terminalno'|translate" sortable="'deviceNum'" >
+            <a href = '' ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
           </td>
           <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
           <td  data-title="'workingHours'|translate" >
