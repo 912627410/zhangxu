@@ -28,7 +28,7 @@
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-click="fleetMngCtrl.reset()">{{'reset'|translate}}</button>
 
-      <button class="btn btn-primary" type="button" presentation-href="fleet:page"
+      <button class="btn btn-primary" type="button" presentation-href="fleetMng:fleet:query"
               ng-click="fleetMngCtrl.query(null,null,null,fleetMngCtrl.org)">{{'query'|translate}}
       </button>
     </div>
@@ -39,8 +39,7 @@
     </div>
     <div class="col-md-9">
 
-      <a presentation-href="machine:oper" class="btn btn-default pull-right"
-         ng-click="fleetMngCtrl.newFleet('xs')">
+      <a presentation-href="fleetMng:fleet:create" class="btn btn-default pull-right" ng-click="fleetMngCtrl.newFleet('xs')">
         <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
 
@@ -69,10 +68,10 @@
                ng-click="fleetMngCtrl.updateWorkplane(fleet.workplaneVo,'lg')">{{fleet.workplaneVo.name}}</a>
           </td>
           <td class="text-nowrap" align="center" data-title="'operation'|translate" >
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleetMng:fleet:modify"
                     ng-click="fleetMngCtrl.updateFleet(fleet,'lg','update')">{{'alter'|translate}}
             </button>
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fleet:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleetMng:fleet:move"
                     ng-click="fleetMngCtrl.fleetMachineMng(fleet,'lg')">{{'machineTransfer'|translate}}
             </button>
           </td>

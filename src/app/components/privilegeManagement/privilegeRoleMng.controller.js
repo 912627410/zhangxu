@@ -3,37 +3,37 @@
 
   angular
     .module('GPSCloud')
-    .controller('roleUserMngController', roleUserMngController);
+    .controller('privilegeRoleMngController', privilegeRoleMngController);
 
   /** @ngInject */
-  function roleUserMngController($rootScope,  $uibModalInstance, ROLE_USER_URL, Notification, serviceResource,roleInfo,USER_PAGE_URL) {
+  function privilegeRoleMngController($rootScope, $uibModalInstance,  Notification, serviceResource, ROLE_URL,
+                                      PRIVILEGE_ROLE_URL, privilegeInfo) {
     var vm = this;
-    vm.roleInfo = roleInfo;
     vm.selected = [];
+    vm.privilegeInfo =privilegeInfo ;
 
-    //
-    vm.getRoleUsers = function (roleInfo) {
-      var roleUserUrl = ROLE_USER_URL;
-      roleUserUrl += "?roleId=" + roleInfo.id;
+    vm.init = function (privilege) {
+
+      vm.selectedPriv = privilege;
+
+      var roleUserUrl = PRIVILEGE_ROLE_URL;
+      roleUserUrl += "?privilegeId=" + privilege.id;
       var roleUserPromise = serviceResource.restCallService(roleUserUrl, "GET");
       roleUserPromise.then(function (data) {
-        for (var i = 0; i < data.content.length; i++) {
-          if (null != data.content[i]) {
-            vm.selected.push(data.content[i].userinfoId);
-          }
+        for(var j=0;j < data.content.length; j++){
+          vm.selected.push(data.content[j].id);
         }
-
       }, function (reason) {
         Notification.error('获取权限状态失败');
       })
-    }
 
+    }
 
     //初始化组织树
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = angular.copy([$rootScope.orgChart[0]]);
 
-      vm.getRoleUsers(vm.roleInfo);
+      vm.init(vm.privilegeInfo);
     } else {
       Notification.error('获取组织机构信息失败');
     }
@@ -41,26 +41,21 @@
     // select org
     vm.my_tree_handler = function (branch) {
 
-      var restCallURL = USER_PAGE_URL;
-      var pageUrl = 0;
-      var sizeUrl = 10000;
-      var sortUrl = "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      var restCallURL = ROLE_URL;
       if (null != branch && null != branch.id) {
-        restCallURL += "&search_EQ_organization.id=" + branch.id;
+        restCallURL += "?search_EQ_organization.id=" + branch.id;
       }
 
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
 
-        vm.userinfoList = data.content;
+        vm.roleList = data.content;
 
       }, function (reason) {
         Notification.error("获取角色数据失败");
       });
 
     }
-
 
     vm.isSelected = function (userId) {
       return vm.selected.indexOf(userId) >= 0;
@@ -92,13 +87,13 @@
     //
     vm.ok = function () {
 
-      var rspUrl = ROLE_USER_URL;
-      rspUrl +="?roleId=" + vm.roleInfo.id + "&userList=" + vm.selected;
+      var rspUrl = PRIVILEGE_ROLE_URL;
+      rspUrl +="?privilegeId=" + vm.privilegeInfo.id + "&roleList=" + vm.selected;
       var promise = serviceResource.restCallService(rspUrl, "UPDATE");
       promise.then(function (data) {
 
         if(data.code ==0){
-          Notification.success("修改角色权限成功");
+          Notification.success("修改权限角色成功");
           $uibModalInstance.close(data.content);
 
         }

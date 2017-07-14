@@ -6,212 +6,108 @@
     .controller('userRoleMngController', userRoleMngController);
 
   /** @ngInject */
-  function userRoleMngController($rootScope, $scope, $confirm, $uibModalInstance, NgTableParams, ngTableDefaults, Notification, serviceResource, userService, DEFAULT_SIZE_PER_PAGE, ROLE_PAGE_URL,
-                                 USER_ROLE_OPER_URL, USER_ROLE_LIST_URL, userinfo,$timeout) {
+  function userRoleMngController($rootScope,  $uibModalInstance,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
     var vm = this;
-    vm.org = {label: ""};    //组织
-    vm.operatorInfo = $rootScope.userInfo;
-    vm.checked = false;//是否全选标志
-    vm.selected = []; //选中的设备id
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
-
-    vm.userinfoRoleList = []; //存放用户角色集合
+    vm.selected = [];
     vm.userinfo = userinfo;
-    vm.roleList;
-    vm.deleteList = [];
-    vm.addList = [];
-    vm.otherList = [];
 
+    vm.querySysRole = function () {
+      var roleUrl = ROLE_URL + "?search_EQ_type=0";
+      var rolePromise = serviceResource.restCallService(roleUrl, "GET");
+      rolePromise.then(function (data) {
+        vm.sysRoleList = data.content;
+      })
+    }
 
-    /**
-     * 分页查询用户信息
-     * @param page
-     * @param size
-     * @param sort
-     * @param priviligeInfo
-     */
-    vm.query = function (page, size, sort, roleInfo) {
-      //构造查询条件
-      var restCallURL = ROLE_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+    vm.queryUserRole = function (user){
+      //查询用户角色列表
+      var roleUserUrl = USER_ROLE_URL;
+      roleUserUrl += "?userinfoId=" + user.id;
+      //得到角色用户信息
+      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "GET");
+      roleUserPromise.then(function (data) {
 
-      if (null != roleInfo) {
-        if (null != roleInfo.name && roleInfo.name != "") {
-          restCallURL += "&search_LIKE_name=" + roleInfo.name;
+        vm.userRoleList = data.content;
+        for(var j=0;j < vm.userRoleList.length; j++){
+          vm.selected.push(vm.userRoleList[j].id);
         }
+      })
 
+    }
+
+    //初始化组织树
+    if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
+      vm.my_data = angular.copy([$rootScope.orgChart[0]]);
+      vm.queryUserRole(vm.userinfo);
+      vm.querySysRole();
+    } else {
+      Notification.error('获取组织机构信息失败');
+    }
+
+    // select org
+    vm.my_tree_handler = function (branch) {
+
+      var restCallURL = ROLE_URL;
+      if (null != branch && null != branch.id) {
+        restCallURL += "?search_EQ_organization.id=" + branch.id;
       }
+
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-        queryResult=data;
 
-        if(getUserRoleState){
-          queryFn();
-        }else{
-          queryState=true;
-        }
-      }, function () {
+        vm.roleList = data.content;
+
+      }, function (reason) {
         Notification.error("获取角色数据失败");
       });
+
     }
 
-
-    var getUserRoleState,queryState,queryResult;
-    function queryFn(){
-      vm.selected = angular.copy(vm.userinfoRoleList); //深度copy
-      vm.roleList = queryResult.content;
-      vm.tableParams = new NgTableParams({},
-        {
-          dataset: queryResult.content
-        });
-      vm.page = queryResult.page;
-      vm.pageNumber = queryResult.page.number + 1;
-    }
-
-    vm.getUserRole = function () {
-      var roleUserUrl = USER_ROLE_LIST_URL;
-      roleUserUrl += "?userinfoId=" + vm.userinfo.id;
-      //得到角色用户信息
-      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "QUERY");
-      roleUserPromise.then(function (data) {
-        //vm.roleUserinfoList= data;
-
-        for (var i = 0; i < data.length; i++) {
-          if (null != data[i]) {
-            vm.userinfoRoleList.push(data[i].roleId);
-          }
-        }
-        if(queryState){
-          queryFn();
-        }else{
-          getUserRoleState=true;
-        }
-      })
-    }
-
-
-
-
-    //首次查询
-    vm.init=function(){
-      $LAB.script().wait(function () {
-        vm.getUserRole();
-        var timer=$timeout(function(){
-          vm.query(null, 10, null, null);
-        },200);
-
-      })
-    }
-
-    vm.init();
-
-
-
-    /**
-     * 重置查询框
-     */
-    vm.reset = function () {
-      vm.roleInfo = null;
-    }
-
-
+    //关闭
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
 
+    vm.isSelected = function (roleId) {
+      return vm.selected.indexOf(roleId) >= 0;
+    }
 
-    var updateSelected = function (action, id) {
-      if (action == 'add' && vm.selected.indexOf(id) == -1) {
-        vm.selected.push(id);
+    // single select
+    vm.updateSelection = function ($event, roleId, status) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, roleId);
+    }
+
+    var updateSelected = function (action, roleId) {
+      if (action == 'add' && vm.selected.indexOf(roleId) == -1) {
+        vm.selected.push(roleId);
       }
-      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
-        var idx = vm.selected.indexOf(id);
+      if (action == 'remove' && vm.selected.indexOf(roleId) != -1) {
+        var idx = vm.selected.indexOf(roleId);
         vm.selected.splice(idx, 1);
-
       }
     }
 
-    vm.updateSelection = function ($event, id) {
 
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
+    // submit
+    vm.ok = function () {
 
-      //如果有一个不选中,则全选为false
-      if (checkbox.checked == false && vm.checked) {
-        vm.checked = false;
-      }
-      updateSelected(action, id);
-    }
+      var rspUrl = USER_ROLE_URL;
+      rspUrl +="?userinfoId=" + vm.userinfo.id + "&roleIdList=" + vm.selected;
+      var promise = serviceResource.restCallService(rspUrl, "UPDATE");
+      promise.then(function (data) {
 
-
-    vm.updateAllSelection = function ($event) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      vm.checked = checkbox.checked;
-      // alert(action);
-      vm.tableParams.data.forEach(function (userinfo) {
-        updateSelected(action, userinfo.id);
-      })
-
-    }
-
-    vm.isSelected = function (id) {
-
-      //    console.log(vm.selected);
-      return vm.selected.indexOf(id) >= 0;
-    }
-
-
-
-
-    //批量设置为已处理
-    vm.updateUserRole = function () {
-
-
-      //得到选中和未选中的记录id
-      vm.tableParams.data.forEach(function (roleInfo) {
-        if (vm.selected.indexOf(roleInfo.id) != -1) {
-          vm.addList.push(roleInfo.id);
-        } else {
-          vm.otherList.push(roleInfo.id);
+        if(data.code ==0){
+          Notification.success("修改用户角色成功");
+          $uibModalInstance.close(data.content);
         }
-
-      })
-
-      //判断原来是否已经选中,如果是的话,不再传输
-      for (var i = 0; i < vm.userinfoRoleList.length; i++) {
-        var id = vm.userinfoRoleList[i];
-        if (vm.addList.indexOf(id) != -1) {
-          var idx = vm.addList.indexOf(id);
-          vm.addList.splice(idx, 1);
-          //    addList.push(vm.roleUserinfoList[j]);
-        }
-
-        if (vm.otherList.indexOf(id) != -1) {
-          vm.deleteList.push(id);
-        }
-
-      }
-
-      var roleUsers = {addIds: vm.addList, deleteIds: vm.deleteList, "id": vm.userinfo.id};
-      var restPromise = serviceResource.restUpdateRequest(USER_ROLE_OPER_URL, roleUsers);
-      restPromise.then(function (data) {
-
-        if(data.code==0){
-          Notification.success("更新所属角色成功!");
-        }
-
 
       }, function (reason) {
-        Notification.error(" 更新所属角色出错!");
+        Notification.error("修改失败");
       });
-
-
-    };
+    }
 
   }
 })();

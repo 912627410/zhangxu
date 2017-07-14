@@ -35,7 +35,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="machine:page"
+      <button class="btn btn-primary" type="button" presentation-href="machineMng:machine:query"
               ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
       </button>
 
@@ -78,7 +78,7 @@
     </div>
 
     <div class="col-md-2">
-      <button class="btn btn-warning" type="button" presentation-href="machine:moveOrg" ng-click="machineMngCtrl.batchMoveOrg()">{{'transfer'|translate}}</button>
+      <button class="btn btn-warning" type="button" presentation-href="machineMng:machine:move" ng-click="machineMngCtrl.batchMoveOrg()">{{'transfer'|translate}}</button>
 
     </div>
 
@@ -90,16 +90,13 @@
     <div class="col-md-9">
 
 
-      <a presentation-href="machine:oper" class="btn btn-default pull-right"
-         ng-click="machineMngCtrl.newMachine('lg')">
+      <a presentation-href="machineMng:machine:create" class="btn btn-default pull-right" ng-click="machineMngCtrl.newMachine('lg')">
         <i class="fa fa-plus"></i>{{'add'|translate}}
       </a>
-      <a class="btn btn-default pull-right" presentation-href="machine:upload"
-         ng-click="machineMngCtrl.uploadMachine('lg')">
+      <a class="btn btn-default pull-right" presentation-href="machineMng:machine:import" ng-click="machineMngCtrl.uploadMachine('lg')">
         <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
       </a>
-      <a class="btn btn-default pull-right" presentation-href="machine:export"
-         title="Export Table" ng-click="machineMngCtrl.excelExport(machineMngCtrl.org)" >
+      <a class="btn btn-default pull-right" presentation-href="machineMng:machine:export" title="Export Table" ng-click="machineMngCtrl.excelExport(machineMngCtrl.org)" >
         <i class="glyphicon glyphicon-new-window" ></i> {{'batchExport'|translate}}
       </a>
     </div>
@@ -133,13 +130,13 @@
           <td class="text-nowrap" data-title="'allocateTime'|translate" sortable="'moveTime'">{{machine.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
 
-            <button type="button" class="btn btn-default btn-xs" presentation-href="machine:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
                     ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{'alter'| translate}}
             </button>
-            <button type="button" class="btn btn-danger btn-xs" presentation-href="machine:oper"
+            <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
                     ng-click="machineMngCtrl.removeDevice(machine)">{{'relieve'| translate}}
             </button>
-            <button type="button" class="btn btn-warning btn-xs" presentation-href="machine:oper"
+            <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
                     ng-click="machineMngCtrl.allocationlog(machine,'lg')">{{'transferLog'| translate}}
             </button>
           </td>

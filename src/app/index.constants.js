@@ -118,7 +118,7 @@
     .constant('ENGINE_TYPE_LIST_URL', SERVER_BASE_URL + 'config/enginetype')   //发动机类型集合
     .constant('MACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'config/machineState')   //车辆状态集合
 
-    .constant('DEIVCIE_TYPE_LIST_URL', SERVER_BASE_URL + 'deviceType/deviceTypeList')   //设备类型集合
+    .constant('DEIVCIE_TYPE_LIST_URL', SERVER_BASE_URL + 'config/devicetype')   //设备类型集合
     .constant('DEIVCIE_PROTOCAL_TYPE_LIST_URL', SERVER_BASE_URL + 'device/protocalTypeList')   //设备协议类型集合
     .constant('DEIVCIE_NOT_REGISTER_LIST_URL', SERVER_BASE_URL + 'device/notRegisterList')   //设备协议类型集合
     .constant('DEIVCIE_MOVE_ORG_URL', SERVER_BASE_URL + 'device/moveOrg')   //设备调拨
@@ -161,35 +161,29 @@
 
     .constant('DEVCE_CHARGER_DATA', SERVER_BASE_URL + 'deviceCharger/deviceChargerData')  //市电电压
 
+    //菜单相关
+    .constant('MENU_URL', SERVER_BASE_URL + 'menu/menu')                     //菜单基本CRUD信息
+    .constant('ROLE_MENU_LIST_URL', SERVER_BASE_URL + 'menu/roleMenuList')   //查询角色下的菜单权限项
 
-    .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
-
-    //角色相关
-    .constant('ROLE_PAGE_URL', SERVER_BASE_URL + 'role/rolePage')   //角色的分页信息
-    .constant('ROLE_OPER_URL', SERVER_BASE_URL + 'role/roleOper')   //角色基本CRUD信息
-    .constant('ROLE_USER_LIST_URL', SERVER_BASE_URL + 'role/roleUserinfoList')   //角色用户信息
-    .constant('ROLE_USER_OPER_URL', SERVER_BASE_URL + 'role/roleUserinfoOper')   //角色用户更新
-    .constant('ROLE_PRIVILAGE_LIST_URL', SERVER_BASE_URL + 'role/rolePriviligeList')   //角色权限信息
-    .constant('ROLE_PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'role/rolePriviligeOper')   //角色权限更新
-
-    .constant('USER_ROLE_LIST_URL', SERVER_BASE_URL + 'role/userinfoRoleList')   //角色用户信息
-    .constant('USER_ROLE_OPER_URL', SERVER_BASE_URL + 'role/userinfoRoleOper')   //角色用户更新
-    .constant('PRIVILAGE_ROLE_LIST_URL', SERVER_BASE_URL + 'role/priviligeRoleList')   //角色权限信息
-    .constant('PRIVILAGE_ROLE_OPER_URL', SERVER_BASE_URL + 'role/priviligeRoleOper')   //角色权限更新
 
     //权限相关
-    .constant('PRIVILAGE_PAGE_URL', SERVER_BASE_URL + 'privilige/priviligePage')   //权限的分页信息
-    .constant('PRIVILAGE_OPER_URL', SERVER_BASE_URL + 'privilige/priviligeOper')   //权限基本CRUD信息
-    .constant('PRIVILAGE_STATUS_URL', SERVER_BASE_URL + 'privilige/statusList')   //权限状态信息
-    .constant('PRIVILAGE_STATUS_DISABLE_URL', SERVER_BASE_URL + 'privilige/statusDisable')   //权限禁止
-    .constant('PRIVILAGE_STATUS_ENABLE_URL', SERVER_BASE_URL + 'privilige/statusEnable')   //权限启用
-    .constant('USER_PRIV_EXPORT_URL', SERVER_BASE_URL + 'privilige/userPrivExport')   //用户权限导出
+    .constant('PRIVILEGE_URL', SERVER_BASE_URL + 'privilege/privilege')               //权限基本CRUD信息
+    .constant('PRIVILEGE_ROLE_URL', SERVER_BASE_URL + 'role/privilegeRole')           //权限隶属角色UR
+    .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')                //登陆用户的权限信息
+    .constant('USER_PRIV_EXPORT_URL', SERVER_BASE_URL + 'privilege/userPrivExport')   //用户权限导出
+
+    //角色相关
+    .constant('ROLE_URL', SERVER_BASE_URL + 'role/role')                      //角色的基本CRUD
+    .constant('ROLE_TYPE_URL', SERVER_BASE_URL + 'role/roleType')             //角色类型查询
+    .constant('ROLE_USER_URL', SERVER_BASE_URL + 'role/roleUser')             //角色用户UR
+    .constant('ROLE_PRIVILEGE_URL', SERVER_BASE_URL + 'role/rolePrivilege')   //角色权限UR
 
     //用户相关
-    .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')   //用户信息分页
-    .constant('USER_STATUS_URL', SERVER_BASE_URL + 'user/statusList')   //权限状态信息
-    .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')   //权限禁止
-    .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')   //权限启用
+    .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')               //用户信息分页
+    .constant('USER_ROLE_URL', SERVER_BASE_URL + 'role/userRole')                   //用户角色UR
+    .constant('USER_STATUS_URL', SERVER_BASE_URL + 'user/statusList')               //用户状态信息
+    .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')    //用户禁止
+    .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')      //用户启用
 
      //车辆类型管理相关
     .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型 修改车辆类型

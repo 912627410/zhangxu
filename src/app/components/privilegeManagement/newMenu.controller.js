@@ -6,13 +6,13 @@
 
   angular
     .module('GPSCloud')
-    .controller('newPriviligeController', newPriviligeController);
+    .controller('newMenuController', newMenuController);
 
   /** @ngInject */
-  function newPriviligeController($scope, $uibModalInstance,PRIVILAGE_OPER_URL, serviceResource, Notification) {
+  function newMenuController($scope, $uibModalInstance,PRIVILAGE_OPER_URL, serviceResource, Notification, parentMenu) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
-
+    vm.parentMenu = parentMenu;
     vm.priviligeInfo = {};
 
 

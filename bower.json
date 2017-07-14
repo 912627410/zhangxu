@@ -26,6 +26,7 @@
     "angular-ui-notification": "~0.1.0",
     "angular-validation-match": "~1.7.1",
     "angular-bootstrap-nav-tree": "*",
+    "angular-tree-control": "^0.2.28",
     "angular-underscore": "~0.5.0",
     "underscore": "~1.8.3",
     "ng-idle": "~1.1.1",
@@ -42,7 +43,6 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-translate-storage-cookie": "^2.11.0",
     "moment": "^2.15.1",
-    "ztree": "^3.5.0",
     "echarts":"3.4.0",
     "angular-websocket":"2.0.0",
     "angular-google-maps":"2.4.0"
@@ -63,9 +63,6 @@
       ]
     },
     "jquery": {
-      "main": []
-    },
-    "ztree": {
       "main": []
     },
     "labjs": {

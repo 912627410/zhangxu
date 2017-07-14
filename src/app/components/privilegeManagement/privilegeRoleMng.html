@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'affiliatedInformation'|translate}}
+  </h3>
+</div>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'organizationInformation'|translate}}
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 400px">
+            <abn-tree tree-data="privilegeRoleMngController.my_data"
+                      on-select="privilegeRoleMngController.my_tree_handler(branch); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              用户列表
+            </h4>
+
+          </div>
+          <div class="panel-body" style="height: 400px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="role in privilegeRoleMngController.roleList">
+              <div class="row">
+                <div class="col-sm-4">
+                  <input type="checkbox" ng-checked="privilegeRoleMngController.isSelected(role.id)"
+                         ng-click="privilegeRoleMngController.updateSelection($event, role.id)" ng-model="priv.checked">
+                </div>
+                <div class="col-sm-8">
+                  <i class="fa fa-tags"></i> <span>{{role.name}}</span>
+                </div>
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="privilegeRoleMngController.ok()">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="privilegeRoleMngController.cancel()">取消</button>
+  </div>
+
+
+</section>
+

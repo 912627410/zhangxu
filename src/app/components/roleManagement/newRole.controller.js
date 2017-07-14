@@ -9,27 +9,46 @@
     .controller('newRoleController', newRoleController);
 
   /** @ngInject */
-  function newRoleController($scope, $uibModalInstance,ROLE_OPER_URL,treeFactory, serviceResource,roleService, Notification) {
+  function newRoleController($scope, $uibModalInstance,ROLE_URL,treeFactory, serviceResource,ROLE_TYPE_URL, Notification,permissions) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
-    vm.roleInfo = {};
-      vm.orgTypeList;
+    vm.roleInfo = {type:1};
+    //默认自定义角色
 
-      var promise = roleService.queryOrgTypeList();
+    // 初始化新建角色页面查询角色类型列表
+    vm.init = function () {
+      var promise = serviceResource.restCallService(ROLE_TYPE_URL, "QUERY");
       promise.then(function (data) {
-          vm.orgTypeList = data;
-          //    console.log(vm.userinfoStatusList);
+        vm.roleTypeList = data;
+
+        // 非系统管理员不能新建系统角色
+        if(!permissions.getPermissions("system:sysRole:create")){
+          _.remove(vm.roleTypeList, function (type) {
+            return type.value  == 0;
+          })
+        }
+        // // 默认添加自定义角色
+        // vm.roleInfo.type = _.find(vm.roleTypeList, function (type) {
+        //   return type.value  == 1;
+        // })
+
       }, function (reason) {
-          Notification.error('获取组织类型失败');
+        Notification.error('获取组织类型失败');
       })
 
+    }
 
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.roleInfo.organizationDto=selectedItem;
+      });
+    }
+
+    //提交
     vm.ok = function (roleInfo) {
-
-        roleInfo.type=roleInfo.type.value;
-
-     var restPromise = serviceResource.restAddRequest(ROLE_OPER_URL, roleInfo);
+     var restPromise = serviceResource.restAddRequest(ROLE_URL, roleInfo);
       restPromise.then(function (data) {
         if(data.code===0){
           Notification.success("新建角色信息成功!");
@@ -41,20 +60,13 @@
       }, function (reason) {
           vm.errorMsg=reason.data.message;
           Notification.error(reason.data.message);
-      }
-
-      );
+      });
     };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
 
-    //组织树的显示
-    vm.openTreeInfo=function() {
-      treeFactory.treeShow(function (selectedItem) {
-        vm.roleInfo.organizationDto=selectedItem;
-      });
-    }
+    vm.init();
   }
 })();

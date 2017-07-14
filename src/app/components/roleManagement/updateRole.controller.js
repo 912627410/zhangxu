@@ -9,39 +9,37 @@
     .controller('updateRoleController', updateRoleController);
 
   /** @ngInject */
-  function updateRoleController($uibModalInstance,ROLE_OPER_URL,treeFactory,serviceResource, roleService,Notification,roleInfo) {
+  function updateRoleController($uibModalInstance,ROLE_URL,treeFactory,serviceResource,permissions, ROLE_TYPE_URL,Notification,roleInfo) {
     var vm = this;
     vm.roleInfo=roleInfo;
 
-    vm.roleInfo.type={value:roleInfo.type,desc:roleInfo.typeDesc};
+    // 初始化新建角色页面查询角色类型列表
+    vm.init = function () {
+      var promise = serviceResource.restCallService(ROLE_TYPE_URL, "QUERY");
+      promise.then(function (data) {
+        vm.roleTypeList = data;
 
-    vm.orgTypeList;
+        // 非系统管理员不能新建系统角色
+        if(!permissions.getPermissions("system:sysRole:create")){
+          _.remove(vm.roleTypeList, function (type) {
+            return type.value  == 0;
+          })
+        }
 
-    var promise = roleService.queryOrgTypeList();
-    promise.then(function (data) {
-      vm.orgTypeList = data;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取组织类型失败');
-    })
+      }, function (reason) {
+        Notification.error('获取角色类型失败');
+      })
+
+    }
 
     vm.ok = function (roleInfo) {
-      for(var i=0;i<vm.orgTypeList.length;i++){
-        if(vm.orgTypeList[i].desc==roleInfo.type.desc){
-          console.log("1111");
-          roleInfo.type=vm.orgTypeList[i].value;
-          break;
-        }
-      }
-
 
       if(roleInfo.type==null){
         Notification.error('类型为空');
         return;
       }
 
-
-      var restPromise = serviceResource.restUpdateRequest(ROLE_OPER_URL,roleInfo);
+      var restPromise = serviceResource.restUpdateRequest(ROLE_URL,roleInfo);
       restPromise.then(function (data){
 
         if(data.code===0){
@@ -66,5 +64,7 @@
         vm.roleInfo.organizationDto=selectedItem;
       });
     }
+
+    vm.init();
   }
 })();

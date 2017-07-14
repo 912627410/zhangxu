@@ -320,9 +320,6 @@
     };
 
 
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("device:oper");
-    }
 
     //导出至Excel
     vm.excelExport=function (org) {

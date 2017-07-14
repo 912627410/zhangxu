@@ -35,7 +35,7 @@
 
     <div class="col-md-2">
       <button class="btn btn-warning" type="button"  ng-click="fuelConfigMngController.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button"  presentation-href="fuelConfig:page" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button"  presentation-href="fleetMng:oil:query" ng-click="fuelConfigMngController.query(null,null,null,fuelConfigMngController.fuelConfig)">{{'query'|translate}}</button>
     </div>
 
 
@@ -49,8 +49,7 @@
     <div class="col-md-10">
 
 
-      <a class="btn btn-default pull-right" presentation-href="sim:oper"
-         ng-click="fuelConfigMngController.newFuelConfig()">
+      <a class="btn btn-default pull-right" presentation-href="fleetMng:oil:create" ng-click="fuelConfigMngController.newFuelConfig()">
         <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
     </div>
@@ -66,7 +65,7 @@
           <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{fuelConfig.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'operation'|translate">
 
-            <button type="button" class="btn btn-default btn-xs" presentation-href="fuelConfig:oper"
+            <button type="button" class="btn btn-default btn-xs" presentation-href="fleetMng:oil:modify"
                     ng-click="fuelConfigMngController.updateFuelConfig(fuelConfig)">{{'alter'|translate}}
             </button>
           </td>

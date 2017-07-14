@@ -1,70 +1,83 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{'affiliatedInformation'|translate}}
+  <h3 class="modal-title">{{userRoleMngController.userinfo.lastname}}{{userRoleMngController.userinfo.firstname}}{{'roleManagement'|translate}}
   </h3>
 </div>
 
 <!-- Main content -->
 <section class="content">
-  <div class="row">
-  <div class="col-md-2">
-    <label class="control-label">{{'roleName'|translate}}</label>
+  <uib-tabset justified="true">
 
-  </div>
-  <div class="col-md-4">
-    <input type="text" name="name" class="form-control " ng-model="userRoleMngController.roleInfo.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-  </div>
+    <uib-tab>
+      <uib-tab-heading>自定义角色</uib-tab-heading>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="panel-group" id="orgPanel">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h4 class="panel-title text-center">
+                  {{'organizationInformation'|translate}}
+                </h4>
+              </div>
+              <div class="panel-body" style="height: 400px">
+                <abn-tree tree-data="userRoleMngController.my_data"
+                          on-select="userRoleMngController.my_tree_handler(branch); $event.stopPropagation();"
+                          expand-level="2"></abn-tree>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="panel-group" id="userPanel">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h4 class="panel-title text-center">
+                  {{'roleManagement'|translate}}
+                </h4>
 
 
+              </div>
+              <div class="panel-body" style="height: 400px;overflow:auto;">
 
-  <div class="col-md-4">
-    <button class="btn btn-primary" type="button"  ng-click="userRoleMngController.reset()">{{'reset'|translate}}</button>
-    <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="userRoleMngController.query(null,10,null,userRoleMngController.roleInfo)">{{'query'|translate}}</button>
+                <li class="list-group-item repeat"  ng-repeat="role in userRoleMngController.roleList">
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <input type="checkbox" ng-checked="userRoleMngController.isSelected(role.id)"
+                             ng-click="userRoleMngController.updateSelection($event, role.id)" ng-model="role.checked">
+                    </div>
+                    <div class="col-sm-5">{{role.name}}</div>
+                  </div>
 
-  </div>
+                </li>
 
-
-</div>
-
-  </div>
-  <div class="row">
-    <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">{{'totalNumbeOfUsers'|translate}}:  {{userRoleMngController.page.totalElements}}</span>
-    </div>
-    <div class="col-md-10">
-      <button class="btn btn-warning pull-right" type="button" ng-click="userRoleMngController.cancel()">{{'cancel'|translate}}</button>
-      <button class="btn btn-primary pull-right" type="button" presentation-href="role:roleUserOper" ng-click="userRoleMngController.updateUserRole()">{{'update'|translate}}</button>
-
-    </div>
-  </div>
-  <div class="row " style="padding: 10px">
-      <div class="table-responsive">
-        <script id="selectAllHeader" type="text/ng-template">
-          <input type="checkbox" ng-click="userRoleMngController.updateAllSelection($event)"
-                 ng-model="userRoleMngController.checked">
-        </script>
-      <table ng-table="userRoleMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <tr ng-repeat="roleInfo in $data">
-          <td class="text-nowrap" data-header="'selectAllHeader'">
-            <input type="checkbox" ng-checked="userRoleMngController.isSelected(roleInfo.id)"
-                   ng-click="userRoleMngController.updateSelection($event,roleInfo.id)" ng-model="roleInfo.checked" >
-          </td>
-          <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{roleInfo.id}}</td>
-          <td class="text-nowrap" data-title="'roleName'|translate" sortable="'name'">{{roleInfo.name}}</td>
-
-          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        </tr>
-      </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="userRoleMngController.page.totalElements" ng-change="userRoleMngController.query(userRoleMngController.pageNumber-1,10,null,userRoleMngController.userinfo)"
-                    max-size="5" ng-model="userRoleMngController.pageNumber" items-per-page="userRoleMngController.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
-  </div>
+    </uib-tab>
+    <uib-tab>
+      <uib-tab-heading>系统角色</uib-tab-heading>
 
+      <div class="row " style="padding: 10px">
+        <li class="list-group-item repeat"  ng-repeat="sysRole in userRoleMngController.sysRoleList">
+          <div class="row">
+            <div class="col-sm-2">
+              <input type="checkbox" ng-checked="userRoleMngController.isSelected(sysRole.id)"
+                     ng-click="userRoleMngController.updateSelection($event, sysRole.id)" ng-model="role.checked">
+            </div>
+            <div class="col-sm-5">
+              {{sysRole.name}}
+            </div>
+          </div>
+        </li>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="userRoleMngController.ok()">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="userRoleMngController.cancel()">取消</button>
+  </div>
 
 
 </section>
