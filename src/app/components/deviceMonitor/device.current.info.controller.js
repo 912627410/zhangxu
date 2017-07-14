@@ -806,8 +806,8 @@
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_03.png",
-        offset: new AMap.Pixel(-26, -13),
+        icon: "assets/images/car_right5_1.png",
+        offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
       marker.setLabel({
@@ -933,9 +933,7 @@
           else {
             vm.deviceMapDataList = _.sortBy(deviceMapDataList, "locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
-              if(deviceData.locateStatus=="A" || deviceData.locateStatus=="1" || deviceData.locateStatus=="01") {
-                lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
-              }
+              lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
             })
             for (var i = 0; i < lineArr.length; i++) {
               if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
@@ -2895,8 +2893,8 @@
               map: map,
               position: carPostion,
               //icon: "http://code.mapabc.com/images/car_03.png",
-              icon: "assets/images/car_03.png",
-              offset: new AMap.Pixel(-26, -13),
+              icon: "assets/images/car_right5_1.png",
+              offset: new AMap.Pixel(-26, -18),
               autoRotation: true
             });
             // 绘制轨迹
