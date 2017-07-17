@@ -58,10 +58,10 @@
       restCallURL += "&startDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
       restCallURL += "&endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
       if(null!=workRecord){
-        if(null!= workRecord.deviceNum){
+        if(null!= workRecord.deviceNum && ""!= workRecord.deviceNum){
           restCallURL += "&deviceNum=" +$filter('uppercase')(workRecord.deviceNum);
         }
-        if(null!= workRecord.licenseId){
+        if(null!= workRecord.licenseId && ""!= workRecord.licenseId){
           restCallURL += "&licenseId=" +$filter('uppercase')(workRecord.licenseId);
         }
       }
@@ -119,14 +119,15 @@
               totalRecords.push(sum);
               averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
               machineNum.push(recordArr.length);
-              recordArr = [];
-              mileageArr = [];
               if (i == resultLen - 1) {
                 recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 totalRecords.push(result[i].records);
                 averageRecords.push(result[i].records);
                 totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                machineNum.push(1);
               }
+              recordArr = [];
+              mileageArr = [];
             } else {
               recordArr.push(result[i - 1].records);
               mileageArr.push(result[i - 1].mileage);
