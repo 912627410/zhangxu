@@ -1,9 +1,6 @@
 /**
  * Created by mengwei on 17-7-17.
  */
-/**
- * Created by shuangshan on 16/1/21.
- */
 (function () {
   'use strict';
 
