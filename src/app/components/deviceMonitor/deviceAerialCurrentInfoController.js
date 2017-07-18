@@ -214,8 +214,7 @@
         //vm.secOutPower =
         //secLocateInt
         //secInnerPower
-        //判断用户是否有权限
-        if (permissions.getPermissions("device:remoteControl")) {
+
           ////读取初始化设备时需要的信息
           var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
 
@@ -227,7 +226,7 @@
           }, function (reason) {
             Notification.error('获取信息失败');
           })
-        }
+
         //检查短信参数
         vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
             if (type == null || devicenum == null) {
@@ -849,10 +848,6 @@
 
         //默认显示当前设备的最新地址
         vm.initScopeMapTab = function(deviceInfo){
-
-            if (!permissions.getPermissions("device:scopeMapPage")) {
-                return;
-            }
 
             $timeout(function(){
                 //第一个标注
