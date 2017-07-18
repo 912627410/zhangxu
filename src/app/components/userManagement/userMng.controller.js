@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function userMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,
-                             USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL ) {
+                             USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 

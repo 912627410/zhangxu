@@ -17,7 +17,7 @@
 
           <input type="text" id="licenseId" class="form-control" placeholder="{{'machineNumberAndCarNumber'|translate}}"
                  ng-model="updateMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
-                 validator="required" />
+                 validator="required" ng-readonly="updateMachineController.roleSwitch"/>
 
         </div>
 
@@ -25,12 +25,12 @@
         <div class="col-sm-2" style="padding-right: 0px;">
           <input type="text" id="deviceNum" name="deviceNum"  class="form-control" style="padding: 6px 10px;" placeholder="手工输入6位号码或扫条码"
                  ng-model="updateMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
-                 ng-minlength='6' ng-maxlength='26' ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)"/>
+                 ng-minlength='6' ng-maxlength='26' ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)" ng-readonly="updateMachineController.roleSwitch"/>
           <label class="text-blue" ng-if="updateMachineController.deviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.deviceNumContentFromScanner}}</label>
           <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">最长26位</span>
           <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">最短6位</span>
         </div>
-        <div class="col-sm-2 padding5">
+        <div class="col-sm-2 padding5" ng-hide="updateMachineController.roleSwitch">
           <div class="checkbox">
             <label>
               <input type="checkbox" name="newDeviceChk" ng-model="updateMachineController.newDeviceChk" id="newDeviceChk">
@@ -61,7 +61,7 @@
 
 
           <ui-select id="engineType" name="engineType" ng-model="updateMachineController.machine.engineType.id" theme="bootstrap"
-                     ng-disabled="disabled" >
+                     ng-disabled="updateMachineController.disableSwitch">
             <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in updateMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
@@ -75,7 +75,7 @@
             <input type="text" id="org" class="form-control" placeholder="所属组织"
                    ng-model="updateMachineController.machine.org.label" name="org" readonly validator="required"/>
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="updateMachineController.openTreeInfo()">
+                    <button type="button" class="btn btn-default" ng-click="updateMachineController.openTreeInfo()" ng-disabled="updateMachineController.disableSwitch">
                       <i class="fa fa-sitemap"></i>
                     </button>
                   </span>
@@ -87,7 +87,7 @@
         <label class="col-sm-2 control-label padding5">车辆类型</label>
         <div class="col-sm-4">
           <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
-                     ng-disabled="disabled" >
+                     ng-disabled="updateMachineController.disableSwitch" >
             <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
             </ui-select-match>
             <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
@@ -99,7 +99,7 @@
         <label for="machineState" class="col-sm-2 control-label padding5">车辆状态</label>
         <div class="col-sm-4">
           <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
-                     ng-disabled="disabled">
+                     ng-disabled="updateMachineController.disableSwitch">
             <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
