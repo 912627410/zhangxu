@@ -14,6 +14,7 @@
   function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, commonFactory,$window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,FLEET_LIST_URL,$confirm, Notification, serviceResource, permissions, Idle, Title,languages) {
     var vm = this;
     var userInfo;
+    var roleInfo;
     var rootParent = {id: 0}; //默认根节点为0
     vm.rememberMe = true;
     var count = 0;
@@ -125,6 +126,11 @@
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+
+        var roleInfoList = $filter("array2obj")(data.roleInfos, "name");
+        $rootScope.roleInfoList = roleInfoList;
+        $window.sessionStorage["roleInfoList"] = JSON.stringify(roleInfoList);
+
         if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
           $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 
@@ -176,6 +182,11 @@
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
         $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+
+        var roleInfoList = $filter("array2obj")(data.roleInfos, "name");
+        $rootScope.roleInfoList = roleInfoList;
+        $window.sessionStorage["roleInfoList"] = JSON.stringify(roleInfoList);
+
         if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
           $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 

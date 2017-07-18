@@ -50,6 +50,11 @@
       $rootScope.permissionList = JSON.parse($window.sessionStorage["permissionList"]);
     }
 
+    //角色列表
+    if ($window.sessionStorage["roleInfoList"]) {
+      $rootScope.roleInfoList = JSON.parse($window.sessionStorage["roleInfoList"]);
+    }
+
 
     //判断是否登录
     if ($rootScope.userInfo){
