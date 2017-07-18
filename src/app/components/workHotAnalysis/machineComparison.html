@@ -11,7 +11,7 @@
     <div class="col-md-8 leftBox" >
       <div class="filter-wrapper">
         <form class="form-inline filter">
-          <div class="form-group col-sm-4">
+          <div class="form-group col-sm-3">
             <label class="control-label">查询周期:</label>
             <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
               <option value="1" ng-selected="true">按季度</option>
@@ -53,67 +53,68 @@
               <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
             </span>
           </div>
-        </form>
-        <form class="form-inline filter" ng-show="machineComparedMngCtrl.dayQuery">
-          <div class="form-group" >
-            <label class="control-label">起始日期：</label>
-            <div class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                     ng-model="machineComparedMngCtrl.startDateDeviceData"
-                     is-open="machineComparedMngCtrl.startDateOpenStatusDeviceData.opened"
-                     datepicker-options="machineComparedMngCtrl.dateOptions"
-                     min-date="machineComparedMngCtrl.minDate"
-                     max-date="machineComparedMngCtrl.maxDate"
-                     ng-required="true" current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}"/>
-              <span class="input-group-btn">
+          <div class="form-group col-sm-8" ng-show="machineComparedMngCtrl.dayQuery">
+            <form>
+            <div class="form-group" >
+              <label class="control-label">起始：</label>
+              <div class="input-group">
+                <input type="text" class="form-control" style="width: 100px" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="machineComparedMngCtrl.startDateDeviceData"
+                       is-open="machineComparedMngCtrl.startDateOpenStatusDeviceData.opened"
+                       datepicker-options="machineComparedMngCtrl.dateOptions"
+                       min-date="machineComparedMngCtrl.minDate"
+                       max-date="machineComparedMngCtrl.maxDate"
+                       ng-required="true" current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"/>
+                <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="machineComparedMngCtrl.startDateOpenDeviceData($event)">
                 <i class="glyphicon glyphicon-calendar"></i></button>
             </span>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">结束日期：</label>
-            <div class="input-group">
-              <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                     ng-model="machineComparedMngCtrl.endDateDeviceData"
-                     is-open="machineComparedMngCtrl.endDateOpenStatusDeviceData.opened"
-                     datepicker-options="machineComparedMngCtrl.dateOptions"
-                     ng-required="true" current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}"/>
-              <span class="input-group-btn">
+            <div class="form-group">
+              <label class="control-label">结束：</label>
+              <div class="input-group">
+                <input type="text" class="form-control"  style="width: 100px" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="machineComparedMngCtrl.endDateDeviceData"
+                       is-open="machineComparedMngCtrl.endDateOpenStatusDeviceData.opened"
+                       datepicker-options="machineComparedMngCtrl.dateOptions"
+                       ng-required="true" current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"/>
+                <span class="input-group-btn">
              <button type="button" class="btn btn-default"
                      ng-click="machineComparedMngCtrl.endDateOpenDeviceData($event)">
              <i class="glyphicon glyphicon-calendar"></i></button>
             </span>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
-            <span ng-show="machineComparedMngCtrl.queryDate">
+            <div class="form-group">
+              <button class="btn btn-warning" type="button" ng-click="machineComparedMngCtrl.reset()">{{'reset'|translate}}</button>
+              <span ng-show="machineComparedMngCtrl.queryDate">
              <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,null,null,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
             </span>
+            </div>
+            </form>
           </div>
-        </form>
-        <form class="form-inline filter" ng-show="machineComparedMngCtrl.only">
-          <div class="form-group col-sm-4">
-            <label class="control-label">车辆类型:</label>
-            <label style="font-weight:normal"><input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机</label>
-            <label style="font-weight:normal"><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机</label>
-            <!--<input type="radio" name="vehicleType" value="3" ng-model="machineComparedMngCtrl.machineType" />重机-->
-          </div>
-          <div class="form-group col-sm-5">
-            <label class="control-label">热度类型:</label>
-            <label  style="font-weight:normal"><input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度</label>
-            <label style="font-weight:normal"><input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度</label>
-          </div>
-          <div class="form-group col-sm-3">
-            <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down"></span>车型对比</button>
-          </div>
-        </form>
-        <form class="form-inline filter" ng-show="machineComparedMngCtrl.contrast">
+          <form class="form-inline filter" ng-show="machineComparedMngCtrl.only">
+            <div class="form-group col-sm-4">
+              <label class="control-label">车辆类型:</label>
+              <label style="font-weight:normal"><input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机</label>
+              <label style="font-weight:normal"><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机</label>
+              <!--<input type="radio" name="vehicleType" value="3" ng-model="machineComparedMngCtrl.machineType" />重机-->
+            </div>
+            <div class="form-group col-sm-5">
+              <label class="control-label">热度类型:</label>
+              <label  style="font-weight:normal"><input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度</label>
+              <label style="font-weight:normal"><input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度</label>
+            </div>
+            <div class="form-group col-sm-3">
+              <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down"></span>车型对比</button>
+            </div>
+          </form>
+          <form class="form-inline filter" ng-show="machineComparedMngCtrl.contrast">
           <div class="form-group">
             <div class="col-sm-6 filter-group">
             <label class="control-label">车辆类型:</label>
@@ -144,6 +145,7 @@
             <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up"></span>单一车型</button>
             <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查询对比</button>
           </form>
+        </form>
         </form>
       </div>
       <div class="row">
