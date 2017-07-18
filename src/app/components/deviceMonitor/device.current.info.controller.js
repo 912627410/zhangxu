@@ -11,9 +11,7 @@
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $resource, $interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, Notification,
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS,
-                                       AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL,
-                                       VIEW_BIND_INPUT_MSG_URL, VIEW_UN_BIND_INPUT_MSG_URL, VIEW_LOCK_INPUT_MSG_URL, VIEW_UN_LOCK_INPUT_MSG_URL,
-                                       VIEW_CANCEL_LOCK_INPUT_MSG_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
+                                       AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,DEVCEDATA_EXCELEXPORT,
@@ -1387,132 +1385,120 @@
     }
 
     vm.viewBindInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-            var content = vm.XReplace(data.content);
-            if(content.substr(content.length-1,1).indexOf("-")==0){
-                content = content.substring(0,content.length-1);
-            }
-            vm.bindKeyboardMsg = content;
-            if (data.content) {
-              vm.bindKeyboardMsgIdx = data.content.substr(17, 1) + data.content.substr(22, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
+      vm.queryCode = 1;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode:function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.bindKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
 
     }
 
     vm.viewUnBindInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_UN_BIND_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-            var content = vm.XReplace(data.content);
-            if(content.substr(content.length-1,1).indexOf("-")==0){
-              content = content.substring(0,content.length-1);
-            }
-            vm.unbindKeyboardMsg = content;
-            if (data.content) {
-              var idxTmp = data.content.substr(5, 1) + data.content.substr(10, 1);
-              vm.unbindKeyboardMsgIdx = 50 - idxTmp;
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
+      vm.queryCode = 2;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode:function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.unbindKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
     }
 
     vm.viewLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-            var content = vm.XReplace(data.content);
-            if(content.substr(content.length-1,1).indexOf("-")==0){
-              content = content.substring(0,content.length-1);
-            }
-
-            vm.lockKeyboardMsg = content;
-            if (data.content) {
-              vm.lockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
+      vm.queryCode = 3;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode:function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.lockKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
 
     }
 
     vm.viewUnLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_UN_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-            var content = vm.XReplace(data.content);
-            if(content.substr(content.length-1,1).indexOf("-")==0){
-              content = content.substring(0,content.length-1);
-            }
-            vm.unLockKeyboardMsg = content;
-            if (data.content) {
-              vm.unLockKeyboardMsgIdx = data.content.substr(5, 1) + data.content.substr(10, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
-
+      vm.queryCode = 4;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode:function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.unLockKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
     }
 
     vm.viewCancelLockInputMsg = function (devicenum) {
-      $confirm({
-        text: languages.findKey('ConfirmMsgViewKeyInput') + '',
-        title: languages.findKey('ViewKeyInputConfirmation') + '',
-        ok: languages.findKey('confirm') + '',
-        cancel: languages.findKey('cancel') + ''
-      })
-        .then(function () {
-          var restURL = VIEW_CANCEL_LOCK_INPUT_MSG_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-
-            vm.cancelLockKeyboardMsg = data.content;
-            if (data.content) {
-
-              vm.cancelLockTimes = data.content.substr(3, 1) + data.content.substr(8, 1);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-          })
-        })
+      vm.queryCode = 5;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode:function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.cancelLockKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
 
     }
 
