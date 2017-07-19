@@ -69,11 +69,14 @@
               <td class="text-nowrap" data-title="'radius'|translate" >{{workPoint.radius}}</td>
 
               <td class="text-nowrap" data-title="'operation'|translate">
-                <button type="button" class="btn btn-default btn-xs" ng-hide="workPoint.id==workPointCtrl.operWorkPorint"
-                        presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.update(workPoint)">{{'edit'|translate}}
-                </button>
-                <button type="button" class="btn btn-warning btn-xs" ng-show="workPoint.id==workPointCtrl.operWorkPorint"
-                        presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.save(workPoint)">{{'save'|translate}}
+                <!--<button type="button" class="btn btn-default btn-xs" ng-hide="workPoint.id==workPointCtrl.operWorkPorint"-->
+                        <!--presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.update(workPoint)">{{'edit'|translate}}-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-warning btn-xs" ng-show="workPoint.id==workPointCtrl.operWorkPorint"-->
+                        <!--presentation-href="fleetMng:workPoint:modify" ng-click="workPointCtrl.save(workPoint)">{{'save'|translate}}-->
+                <!--</button>-->
+                <button type="button" class="btn btn-warning btn-xs" presentation-href="fleetMng:workPoint:modify"
+                        ng-click="workPointCtrl.updateInModal(workPoint)">{{'alter'|translate}}
                 </button>
               </td>
             </tr>
