@@ -19,6 +19,7 @@
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+    vm.querySubOrg = true;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -41,8 +42,12 @@
 
       }
 
-      if (null != vm.org&&null != vm.org.id) {
+      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
+        restCallURL += "&parentOrgId=" +vm.org.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -62,7 +67,7 @@
       });
     };
 
-    vm.query();
+    vm.query(null,null,null,null);
 
 
     //查询当前用户拥有的车辆类型明细
