@@ -162,6 +162,7 @@
 <form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
   <!--设备监控-->
   <uib-tabset justified="true">
+    <!--数据-->
     <uib-tab>
       <uib-tab-heading>
         {{'data'|translate}}
@@ -1014,7 +1015,7 @@
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
-                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&operationMonitoringdeviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</th>
 
                     <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
 
