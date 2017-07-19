@@ -862,10 +862,9 @@
         var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
         var lastYearEndDateFormated = (endDate.getFullYear()-1) + '-' + endMonth + '-' + endDate.getDate();
         //计算查询日期时上周期的起止时间
-        var beforeEndDate = startDate;//上周期的结束时间
-        var beforeStartDate = endDate;//上周期的开始时间
-        var n = beforeStartDate.getDate()-beforeEndDate.getDate();
-        beforeStartDate.setDate(beforeEndDate.getDate()-n);
+        var n = endDate-startDate;//n为开始时间和结束时间相差的毫秒数
+        var beforeEndDate = new Date(startDate-24*60*60*1000);//上周期的结束时间
+        var beforeStartDate = new Date(beforeEndDate - n);//上周期的开始时间
         var beforeStartDateFormated = beforeStartDate.getFullYear() + '-' + (beforeStartDate.getMonth() + 1) + '-' + beforeStartDate.getDate();
         var beforeEndDateFormated = beforeEndDate.getFullYear() + '-' + (beforeEndDate.getMonth() + 1) + '-' + beforeEndDate.getDate();
       }
