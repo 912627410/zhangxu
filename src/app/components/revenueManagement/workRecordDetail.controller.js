@@ -202,8 +202,8 @@
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_right5_1.png",
-        offset: new AMap.Pixel(-40, -25),
+        icon: "assets/images/mine_car1.png",
+        offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
       marker.setLabel({
