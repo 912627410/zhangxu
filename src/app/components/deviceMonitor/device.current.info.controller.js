@@ -806,7 +806,7 @@
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_right5_1.png",
+        icon: "assets/images/mine_car1.png",
         offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
@@ -2893,7 +2893,7 @@
               map: map,
               position: carPostion,
               //icon: "http://code.mapabc.com/images/car_03.png",
-              icon: "assets/images/car_right5_1.png",
+              icon: "assets/images/mine_car1.png",
               offset: new AMap.Pixel(-26, -18),
               autoRotation: true
             });

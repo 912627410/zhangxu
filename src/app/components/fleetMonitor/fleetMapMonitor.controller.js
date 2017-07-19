@@ -37,12 +37,12 @@
     //添加车辆marker
     var addDeviceMarker = function(item) {
 
-      var icon = "assets/images/car_right5_1.png";
+      var icon = "assets/images/mine_car1.png";
 
       var marker = new AMap.Marker({
         position: new AMap.LngLat(item.amaplongitudeNum, item.amaplatitudeNum), //基点位置
         icon: icon,
-        offset: new AMap.Pixel(-26, -15),
+        offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
 
