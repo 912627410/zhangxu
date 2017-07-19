@@ -22,6 +22,8 @@
     var thresholdValue = getthreshold();
     var cycleValue1 = getCycleValue1();
     var cycleValue2 = getCycleValue2();
+    $scope.cycleTypeHidden1 = true;//默认显示开工月份周期
+    $scope.cycleTypeHidden2 = false;//默认隐藏开工季度周期
 
     $scope.chartArea = "全国";
     $scope.chartProduceType = '所有类型';
@@ -300,10 +302,14 @@
         case "按月":
           $scope.cycleValue = cycleValue1;
           $scope.cycleValue.selected = cycleValue1[0];
+          $scope.cycleTypeHidden1 = true;//显示开工月份周期
+          $scope.cycleTypeHidden2 = false;//隐藏开工季度周期
           break;
         case "按季度":
           $scope.cycleValue = cycleValue2;
           $scope.cycleValue.selected = cycleValue2[0];
+          $scope.cycleTypeHidden1 = false;//隐藏开工月份周期
+          $scope.cycleTypeHidden2 = true;//显示开工季度周期
           break;
       }
     });

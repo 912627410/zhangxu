@@ -28,9 +28,12 @@
       </ui-select>
     </div>
     <div class="select-container">
-      <div class="select-title">开工月份：</div>
+      <div class="select-title">
+        <span ng-show="cycleTypeHidden1">开工月份：</span>
+        <span ng-show="cycleTypeHidden2">开工季度：</span>
+      </div>
       <ui-select ng-model="cycleValue.selected">
-        <ui-select-match placeholder="选择开工月份">{{$select.selected}}</ui-select-match>
+        <ui-select-match placeholder="选择开工周期" >{{$select.selected}}</ui-select-match>
         <ui-select-choices repeat="type in getCycleValue($select.search) | filter: $select.search">
           <div ng-bind="type"></div>
         </ui-select-choices>

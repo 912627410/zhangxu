@@ -1346,10 +1346,10 @@
         avgWorkHourDate2 += date2 + '&machineType=2';//挖掘机平均时长路径
         var avgWorkHourDate5 = avgWorkHourDate;
         avgWorkHourDate5 += date5 + '&machineType=3';//重机平均时长路径
-        //n为环比查询间隔天数
-        var n = endDate.getDate()-startDate.getDate();
+        //n为开始时间和结束时间相差的毫秒数
+        var n = endDate-startDate;
         var endDate1 = new Date(startDate-24*60*60*1000);
-        var startDate1 = new Date(endDate1 - n*24*60*60*1000);
+        var startDate1 = new Date(endDate1 - n);
         var startDateFormated1 = startDate1.getFullYear() + '-' + (startDate1.getMonth() + 1) + '-' + startDate1.getDate();
         var endDateFormated1 = endDate1.getFullYear() + '-' + (endDate1.getMonth() + 1) + '-' + endDate1.getDate();
         var avgWorkHourDate3 = avgWorkHourDate;
@@ -1536,10 +1536,10 @@
         var avgWorkHourDate5 = avgWorkHourDate;
         avgWorkHourDate5 += date5 + '&machineType=3&provinces=' + nameProvince;//挖掘机平均时长路径
 
-        var startDate1 = new Date();
-        var endDate1 = startDate;
-        var n = startDate1.getDate()-endDate1.getDate();
-        startDate1.setDate(endDate1.getDate()-n);
+        //n为开始时间和结束时间相差的毫秒数
+        var n = endDate-startDate;
+        var endDate1 = new Date(startDate-24*60*60*1000);
+        var startDate1 = new Date(endDate1 - n);
         var startDateFormated1 = startDate1.getFullYear() + '-' + (startDate1.getMonth() + 1) + '-' + startDate1.getDate();
         var endDateFormated1 = endDate1.getFullYear() + '-' + (endDate1.getMonth() + 1) + '-' + endDate1.getDate();
         var avgWorkHourDate3 = avgWorkHourDate;
