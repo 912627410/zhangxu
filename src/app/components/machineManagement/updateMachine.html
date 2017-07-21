@@ -59,10 +59,19 @@
         <label class="col-sm-2 control-label padding5">发动机类型</label>
         <div class="col-sm-4">
 
+          <!--车队用户只可以查看不可以修改的字段-->
+          <ui-select id="engineType" name="engineType" ng-model="updateMachineController.machine.engineType.id" theme="bootstrap"
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
+            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
+            </ui-select-match>
+            <ui-select-choices  repeat="engineType.id as engineType in updateMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
+              <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
 
           <ui-select id="engineType" name="engineType" ng-model="updateMachineController.machine.engineType.id" theme="bootstrap"
-                     ng-disabled="updateMachineController.disableSwitch">
-            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
+            <ui-select-match  placeholder="发动机类型">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in updateMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
               <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
@@ -87,8 +96,17 @@
         <label class="col-sm-2 control-label padding5">车辆类型</label>
         <div class="col-sm-4">
           <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
-                     ng-disabled="updateMachineController.disableSwitch" >
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
             <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
+              <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+
+          <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
+            <ui-select-match  placeholder="车辆类型">{{$select.selected.typeName}}
             </ui-select-match>
             <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
               <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
@@ -99,7 +117,16 @@
         <label for="machineState" class="col-sm-2 control-label padding5">车辆状态</label>
         <div class="col-sm-4">
           <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
-                     ng-disabled="updateMachineController.disableSwitch">
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
+            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
+              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+
+          <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
+                     ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
             <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >

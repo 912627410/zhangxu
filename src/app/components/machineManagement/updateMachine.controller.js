@@ -14,10 +14,14 @@
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
     vm.machineTypeList = machineTypeInfo;
+    vm.clearSwitchOne = true;
+    vm.clearSwitchTwice = false;
 
     if (roles.getRoles("车队")) {
       vm.roleSwitch = true;
       vm.disableSwitch = "disable";
+      vm.clearSwitchOne = false;
+      vm.clearSwitchTwice = true;
     }
 
 
