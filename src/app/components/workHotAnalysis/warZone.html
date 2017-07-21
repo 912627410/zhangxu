@@ -1,0 +1,64 @@
+<section>
+  <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li>统计分析</li>
+    <li>开工热度分析</li>
+    <li class="active">战区统计</li>
+  </ol>
+</section>
+<div class="container-fluid warzone" ng-controller="warZoneController">
+  <form class="form-inline col-md-12 text-center" style="margin-bottom: 20px">
+    <div class="form-group">
+    <label>周期类型：</label>
+    <select class="form-control" ng-model="query_cycle_type">
+      <option ng-repeat="value in cycle_type">{{value}}</option>
+    </select>
+    </div>
+    <div class="form-group">
+    <label>周期值：</label>
+    <select class="form-control" ng-model="query_cycle_value">
+      <option ng-repeat="value in cycle_value">{{value}}</option>
+    </select>
+      </div>
+      <div class="form-group">
+    <label>活跃阈值（小时）：</label>
+    <input class="form-control" ng-model="query_hour" placeholder="1~23" type="number" min="1" max="23">
+        </div>
+    <button class="btn btn-primary" ng-click="query()">查询</button>
+  </form>
+  <form class="form-inline col-md-12">
+    <div class="form-group col-md-6 text-center">
+      <label>设备类型：</label>
+      <select class="form-control" ng-model="query_product_type1">
+        <option ng-repeat="value in product_type">{{value}}</option>
+      </select>
+      <label>统计类型：</label>
+      <select class="form-control" ng-model="query_statistical_type1">
+        <option ng-repeat="value in statistical_type">{{value}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6 text-center">
+      <label>设备类型：</label>
+      <select class="form-control" ng-model="query_product_type2">
+        <option ng-repeat="value in product_type">{{value}}</option>
+      </select>
+      <label>统计类型：</label>
+      <select class="form-control" ng-model="query_statistical_type2">
+        <option ng-repeat="value in statistical_type">{{value}}</option>
+      </select>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-6 mapchart" style="height: 500px;"></div>
+    <div class="col-md-6 mapchart" style="height: 500px;"></div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-6 text-center">{{query_product_type1}} 开工热度</div>
+    <div class="col-md-6 text-center">{{query_product_type2}} 销售热度</div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 barchart" style="height: 350px"></div>
+    <div class="col-md-6 barchart" style="height: 350px"></div>
+  </div>
+</div>

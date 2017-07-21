@@ -1,0 +1,136 @@
+<div class="container machineMaintenance" ng-controller="machineMaintenanceController">
+  <div class="row search-wrapper">
+    <form class="form-inline">
+      <div class="form-group">
+        <label>设备号: </label>
+        <input class="form-control" placeholder="请注入设备号">
+      </div>
+      <button class="btn btn-default" ng-click="click()">确定</button>
+      <div class="form-group">
+        <label>车号: </label>
+        <input class="form-control" placeholder="请注入车号">
+      </div>
+      <button class="btn btn-default" ng-click="click()">确定</button>
+    </form>
+  </div>
+  <!--<form class="form-inline checkbox-wrapper">-->
+    <!--<div class="checkbox check-all">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="checked">-->
+        <!--<span>全选</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="a" ng-checked="checked">-->
+        <!--<span>车辆下线日期 (1)</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="b" ng-checked="checked">-->
+        <!--<span>运抵经销商处</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="c" ng-checked="checked">-->
+        <!--<span>销售日期 (1)</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="d" ng-checked="checked">-->
+        <!--<span>累计运行时间</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="e" ng-checked="checked">-->
+        <!--<span>保养事件 (2)</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="f" ng-checked="checked">-->
+        <!--<span>维修事件</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<div class="checkbox check-label">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="g" ng-checked="checked">-->
+        <!--<span>生日事件</span>-->
+      <!--</label>-->
+    <!--</div>-->
+  <!--</form>-->
+
+  <!--<form class="form-inline checkbox-wrapper">-->
+    <!--<div class="checkbox check-all">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-model="checked">-->
+        <!--<span>全选</span>-->
+      <!--</label>-->
+    <!--</div>-->
+    <!--<checkbox ng-repeat="type in typeArray()" checked-type="{{type}}">-->
+      <!--<label>-->
+        <!--<input type="checkbox" ng-click="hide(type)" ng-checked="checked">-->
+        <!--<span>{{type}}</span>-->
+      <!--</label>-->
+    <!--</checkbox>-->
+  <!--</form>-->
+
+
+
+  <div class="row">
+    <div class="col-md-11 timeaxis-wrapper" >
+      <ul class="timeaxis">
+      <li class="timeaxis-item" ng-class="{'hide-item':ss(item),'b':b,'c':c}" ng-repeat="item in items">
+        <div class="timeaxis-point">
+          <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+        <div class="timeaxis-panel">
+          <div class="item title">{{item.title}}</div>
+          <div class="item time"><i class="fa fa-clock-o" aria-hidden="true"></i>{{item.time}}</div>
+          <div class="item">保养地点: {{item.area}}</div>
+          <div class="item">车辆状态: {{item.status}}</div>
+          <div class="item">保养详情: {{item.description}}</div>
+        </div>
+      </li>
+    </ul>
+    </div>
+  </div>
+
+
+  <form class="form-inline checkbox-wrapper">
+    <div class="checkbox check-all">
+      <label>
+        <input type="checkbox" ng-model="checked">
+        <span>全选</span>
+      </label>
+    </div>
+    <checkbox ng-repeat="type in typeArray()" checked-type="{{type}}">
+      <label>
+        <input type="checkbox" ng-click="filter(type)" ng-checked="checked">
+        <span>{{type}}</span>
+      </label>
+    </checkbox>
+  </form>
+
+
+
+<div class="row aaa" style="margin: 20px 0">
+  <timeline>
+    <timeline-event ng-repeat="event in events" event-type="{{event.type}}">
+      <timeline-icon class="{{event.iconClass}}"><i class="fa fa-star" aria-hidden="true"></i></timeline-icon>
+      <timeline-panel class="{{even.panelClass}}">
+        <timeline-title>{{event.title}}</timeline-title>
+        <timeline-time>{{event.time}}</timeline-time>
+        <timeline-content>{{event.content}}</timeline-content>
+      </timeline-panel>
+    </timeline-event>
+  </timeline>
+</div>
+
+
+
+</div>

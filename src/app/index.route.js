@@ -390,7 +390,24 @@
           }
         }
       })
-
+      .state('home.warZone', {
+        url: '/warZone',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/warZone.html',
+            controller: 'warZoneController as warZoneCtrl'
+          }
+        }
+      })
+      .state('home.machineMaintenance', {
+        url: '/machineMaintenance',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/machineMaintenance.html',
+            controller: 'machineMaintenanceController as machineMaintenanceCtrl'
+          }
+        }
+      })
       .state('home.modelsCompare', {
         url: '/modelsCompare',
         views: {

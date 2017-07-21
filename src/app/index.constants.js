@@ -257,6 +257,10 @@
     .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
 
     .constant('ANALYSIS_GREENPLUM', 'https://iotserver2.nvr-china.com/slice/rest/analysis')//设备工作状态详情下"数据分析"一栏数据提供
+
+    .constant('WAR_ZONE_QUERY', 'https://iotserver2.nvr-china.com/slice/rest/LGWarZone/') //战区统计查询
+    // .constant('WAR_ZONE_QUERY','http://192.168.11.10:8080/slice/rest/LGWarZone/') //战区统计查询
+
   ;
 
 
