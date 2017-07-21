@@ -105,6 +105,8 @@
 
     vm.addPoint = function () {
 
+      var lnglat = new AMap.LngLat(vm.workPoint.longitude, vm.workPoint.latitude);
+      vm.map.setCenter(lnglat);
 
       vm.circle = new AMap.Circle({
         center: [vm.workPoint.longitude, vm.workPoint.latitude],// 圆心位置
