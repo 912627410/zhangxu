@@ -1,0 +1,219 @@
+@tl-black: rgb(0,0,0,1);
+
+
+.machineMaintenance {
+  /** 搜索框样式 **/
+  .search-wrapper{
+    margin: 10px 48px;
+  }
+
+
+
+  /** checkbox样式 **/
+  .checkbox-wrapper{
+    margin: 10px 40px;
+    padding: 10px;
+
+    .checkbox{
+      margin-right: 10px;
+    }
+
+  }
+
+
+  /** 时间轴样式 **/
+  .timeaxis-wrapper {
+    margin: 0 40px;
+    overflow: auto;
+
+    .timeaxis {
+      padding: 0;
+      list-style: none;
+      height: 400px;
+      position: relative;
+      display: inline-flex;
+      overflow: auto;
+
+      li {
+        float: left;
+        width: 140px;
+
+        /*轴线点设置*/
+        .timeaxis-point {
+          text-align: center;
+          width: 32px;
+          height: 32px;
+          top: 195px;
+          margin-left: 54px;
+          border-radius: 30px;
+          background-color: #E45E5E;
+          position: absolute;
+
+          i{
+            font-size: 18px;
+            vertical-align: baseline;
+            color: #fff;
+            display: inline;
+            line-height: 34px;
+          }
+        }
+
+        .timeaxis-panel {
+          background-color: #fff;
+          float: left;
+          top: 50px;
+          border: 1px solid #d4d4d4;
+          border-radius: 2px;
+          width: 100%;
+          height: 120px;
+          position: relative;
+          padding: 5px 5px;
+          -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+          overflow: auto;
+
+          .item {
+            word-wrap: break-word;
+            font-size: 12px;
+          }
+
+          .title{
+            font-weight: bold;
+            border-bottom: 2px solid #F1F1F1;
+          }
+
+          .time{
+            color: #c1c1c1;
+          }
+
+        }
+
+        ::-webkit-scrollbar {
+          width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background-color: #C1C1C1;
+          border-radius: 50px;
+        }
+
+
+      }
+
+      li:nth-child(even) .timeaxis-panel {
+        top: 250px;
+      }
+
+    }
+
+    /*时间轴线设置*/
+    .timeaxis:before {
+      position: absolute;
+      content: " ";
+      height: 1px;
+      background-color: #00ced1;
+      top: 210px;
+      width: 100%;
+    }
+
+    timeaxis-item{
+      margin: 0 10px;
+    }
+
+  }
+
+
+  ::-webkit-scrollbar {
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #F1F1F1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #C1C1C1;
+    border-radius: 2px;
+  }
+
+
+  timeline{
+    position: relative;
+    display: block;
+  }
+
+
+
+  #timeline {
+    list-style-type: none;
+    padding: 0;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: auto;
+    margin: 20px;
+    height: 400px;
+    cursor: move;
+
+    .timeline-event {
+      position: relative;
+      height: 150px;
+      width: 180px;
+      margin: 10px;
+      background-color: fade(@tl-black,2%);
+      overflow: auto;
+      -webkit-box-shadow: 0 1px 5px fade(@tl-black,20%);
+      box-shadow: 0 1px 5px fade(@tl-black,20%);
+
+      .timeline-icon{
+        text-align: center;
+      }
+
+      .timeline-panel {
+        padding: 10px;
+        word-wrap: break-word;
+
+      }
+
+    }
+
+    timeline-event:before{
+      position: absolute;
+      content:'';
+      width: 200px;
+      height: 3px;
+      top: 50%;
+      background-color: lighten(@tl-black,80%);
+    }
+
+    timeline-event:after{
+      position: absolute;
+      content: '';
+      width: 26px;
+      height: 26px;
+      margin-left: 90px;
+      top: 47%;
+      border-radius: 50%;
+      background-color: lighten(@tl-black,80%);
+    }
+
+    .timeline-inverted {
+      top: 220px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: fade(@tl-black,2%);
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: lighten(@tl-black,75%);
+      border-radius: 50px;
+    }
+
+  }
+
+
+}
