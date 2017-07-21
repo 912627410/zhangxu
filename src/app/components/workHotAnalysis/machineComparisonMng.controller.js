@@ -25,8 +25,7 @@
     var subMap1;//最右侧小地图上
     var subMap2;//最右侧小地图下
 
-    var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
+    var startDate = new Date(new Date()-5*24*60*60*1000);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
@@ -928,10 +927,10 @@
             beforeFilter = monthDateFormated-1;
           }
         } else if(dateType1==3){
-          var startDate1 = new Date();
-          var endDate1 = startDate;
-          var n = startDate1.getDate()-endDate1.getDate();
-          startDate1.setDate(endDate1.getDate()-n);
+          //n为开始时间和结束时间相差的毫秒数
+          var n = endDate-startDate;
+          var endDate1 = new Date(startDate-24*60*60*1000);
+          var startDate1 = new Date(endDate1 - n);
           var startDateFormated1 = startDate1.getFullYear() + '-' + (startDate1.getMonth() + 1) + '-' + startDate1.getDate();
           var endDateFormated1 = endDate1.getFullYear() + '-' + (endDate1.getMonth() + 1) + '-' + endDate1.getDate();
           beforeFilter = 'startDate=' + startDateFormated1 + '&endDate='+ endDateFormated1;
@@ -1035,6 +1034,7 @@
         var mapTitleText = mapOption1.title.text;
         var mapTitleTextstyle = mapOption1.title.textStyle;
         var mapTitleSubtextstyle = mapOption1.title.subtextStyle;
+        var mapData = mapOption1.series[0].data;
         mapChart1.setOption(mapOption1);
         vm.onlyMap();
 
@@ -1059,15 +1059,22 @@
             echarts.registerMap(Cname, geoJson);
           });
           if(heatType1==0){
+            var judge = false;
             for(var i=0;i<totalData.length;i++){
               if(param.name==totalData[i].name){
+                judge = true;
                 vm.provinceSales = totalData[i].value;
+                break;
               }
+            }
+            if(!judge){
+              vm.provinceSales = undefined;
             }
             vm.beforeProvinceSales = 0;
             for(var q=0;q<beforeTotalData.length;q++){
               if(param.name==beforeTotalData[q].name){
                 vm.beforeProvinceSales= beforeTotalData[q].value;
+                break;
               }
             }
             //悬浮框的的隐藏和显示-sales
@@ -1111,6 +1118,7 @@
           mapOption1.title.text = mapTitleText;
           mapOption1.title. textStyle=mapTitleTextstyle;
           mapOption1.title. subtextStyle=mapTitleSubtextstyle;
+          mapOption1.series[0].data = mapData;
           vm.national = true;
           vm.allProvince = false;
           //悬浮框的的隐藏和显示-work
@@ -1138,16 +1146,25 @@
             var restCallURLCity = restCallURL;
             restCallURLCity += "&provinces=" + param.name;
             if(heatType1==0){
+              var judge = false;
               for(var i=0;i<totalData.length;i++){
                 if(param.name==totalData[i].name){
+                  judge = true;
                   vm.provinceSales = totalData[i].value;
+                  break;
                 }
               }
+              if(!judge){
+                vm.provinceSales = undefined;
+              }
+              vm.beforeProvinceSales = 0;
               for(var q=0;q<beforeTotalData.length;q++){
                 if(param.name==beforeTotalData[q].name){
                   vm.beforeProvinceSales= beforeTotalData[q].value;
+                  break;
                 }
               }
+              //悬浮框的的隐藏和显示-sales
               vm.national = false;
               vm.allProvince = true;
             }
@@ -1402,7 +1419,7 @@
       var avgWorkHourProvinceAll = AVG_WORK_HOUR_QUERY_ALL+ '1,2&cycleType=';
       if(dateType1==1){
         //按季度查询总平均开工小时
-        avgWorkHourProvinceAll += dateType1 + '&cycleValue=' + filterTerm + '&provinces='+ nameProvince;
+        avgWorkHourProvinceAll += dateType1 + '&cycleValue=' + filterTerm + '&province='+ nameProvince;
         //平均工作时长URL--按季度查询
         var avgWorkHourQuarter = AVG_WORK_HOUR_QUERY_QUARTER;
         var quarter1 = filterTerm;//装载机平均时长路径
@@ -1461,7 +1478,7 @@
         });
       } else if(dateType1==2){
         //按月份查询总平均开工小时
-        avgWorkHourProvinceAll += dateType1 + '&cycleValue=' + filterTerm + '&provinces='+ nameProvince;
+        avgWorkHourProvinceAll += dateType1 + '&cycleValue=' + filterTerm + '&province='+ nameProvince;
         // //平均工作时长URL--按月查询
         var avgWorkHourMonth = AVG_WORK_HOUR_QUERY_MONTH;
         var month1 = filterTerm;//装载机平均时长路径
@@ -1520,7 +1537,7 @@
         });
       } else if(dateType1==3){
         //按日期查询总平均开工小时
-        avgWorkHourProvinceAll  += dateType1 +'&'+ filterTerm + '&provinces='+ nameProvince;
+        avgWorkHourProvinceAll  += dateType1 +'&'+ filterTerm + '&province='+ nameProvince;
         //平均工作时长URL--按天查询
         var avgWorkHourDate = AVG_WORK_HOUR_QUERY_DATE;
         var date1 = filterTerm;//装载机平均时长路径
@@ -1988,10 +2005,10 @@
             beforeFilter3 = month3-1;
           }
         } else if(dateType1==3){
-          var startDate3 = new Date();
-          var endDate3 = startDate;
-          var n = startDate3.getDate()-endDate3.getDate();
-          startDate3.setDate(endDate3.getDate()-n);
+          //n为开始时间和结束时间相差的毫秒数
+          var n = endDate-startDate;
+          var endDate3 = new Date(startDate-24*60*60*1000);
+          var startDate3 = new Date(endDate3 - n);
           var startDateFormated3 = startDate3.getFullYear() + '-' + (startDate3.getMonth() + 1) + '-' + startDate3.getDate();
           var endDateFormated3 = endDate3.getFullYear() + '-' + (endDate3.getMonth() + 1) + '-' + endDate3.getDate();
           beforeFilter3 = 'startDate=' + startDateFormated3 + '&endDate='+ endDateFormated3;
@@ -2050,10 +2067,10 @@
             beforeFilter4 = month3-1;
           }
         } else if(dateType1==3){
-          var startDate4 = new Date();
-          var endDate4 = startDate;
-          var n = startDate4.getDate()-endDate4.getDate();
-          startDate4.setDate(endDate4.getDate()-n);
+          //n为开始时间和结束时间相差的毫秒数
+          var n = endDate-startDate;
+          var endDate4 = new Date(startDate-24*60*60*1000);
+          var startDate4 = new Date(endDate4 - n);
           var startDateFormated4 = startDate4.getFullYear() + '-' + (startDate4.getMonth() + 1) + '-' + startDate4.getDate();
           var endDateFormated4 = endDate4.getFullYear() + '-' + (endDate4.getMonth() + 1) + '-' + endDate4.getDate();
           beforeFilter4 = 'startDate=' + startDateFormated4 + '&endDate='+ endDateFormated4;
@@ -2373,28 +2390,42 @@
 
 
           if(heatType1==0){
+            var judge1 = false;
             for(var i=0;i<totalData1.length;i++){
               if(param.name==totalData1[i].name){
+                judge1 = true;
                 vm.provinceSales = totalData1[i].value;
+                break;
               }
+            }
+            if(!judge1){
+              vm.provinceSales = undefined;
             }
             for(var q=0;q<beforeTotalData1.length;q++){
               if(param.name==beforeTotalData1[q].name){
                 vm.beforeProvinceSales= beforeTotalData1[q].value;
+                break;
               }
             }
             vm.national = false;
             vm.allProvince = true;
           }
           if(heatType2==0){
+            var judge2 = false;
             for(var i=0;i<totalData2.length;i++){
               if(param.name==totalData2[i].name){
+                judge2 = true;
                 vm.provinceSales1 = totalData2[i].value;
+                break;
               }
+            }
+            if(!judge2){
+              vm.provinceSales1 = undefined;
             }
             for(var q=0;q<beforeTotalData2.length;q++){
               if(param.name==beforeTotalData2[q].name){
                 vm.beforeProvinceSales1= beforeTotalData2[q].value;
+                break;
               }
             }
             vm.national1 = false;
@@ -2602,28 +2633,42 @@
         echarts.registerMap(Cname, geoJson);
       });
       if(heatType1==0){
+        var judge1 = false;
         for(var i=0;i<totalData1.length;i++){
           if(param.name==totalData1[i].name){
+            judge1 = true;
             vm.provinceSales = totalData1[i].value;
+            break;
           }
+        }
+        if(!judge1){
+          vm.provinceSales = undefined;
         }
         for(var q=0;q<beforeTotalData1.length;q++){
           if(param.name==beforeTotalData1[q].name){
             vm.beforeProvinceSales= beforeTotalData1[q].value;
+            break;
           }
         }
         vm.national = false;
         vm.allProvince = true;
       }
       if(heatType2==0){
+        var judge2 = false;
         for(var i=0;i<totalData2.length;i++){
           if(param.name==totalData2[i].name){
+            judge2 = true;
             vm.provinceSales1 = totalData2[i].value;
+            break;
           }
+        }
+        if(!judge2){
+          vm.provinceSales1 = undefined;
         }
         for(var q=0;q<beforeTotalData2.length;q++){
           if(param.name==beforeTotalData2[q].name){
             vm.beforeProvinceSales1= beforeTotalData2[q].value;
+            break;
           }
         }
         vm.national1 = false;
