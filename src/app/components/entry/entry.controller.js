@@ -70,7 +70,7 @@
         }else{
           $rootScope.logo="assets/images/logo2.png";
         }
-        Notification.success(languages.findKey('loginSuccess'));
+        //Notification.success(languages.findKey('loginSuccess'));
 
         //判断用户类别
         if (userInfo.tenantType!=null && userInfo.tenantType!=''){

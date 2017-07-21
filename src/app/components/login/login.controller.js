@@ -147,7 +147,7 @@
         }else{
           $rootScope.logo="assets/images/logo2.png";
         }
-        Notification.success(languages.findKey('loginSuccess'));
+        //Notification.success(languages.findKey('loginSuccess'));
 
         //监控用户登录超时
         Idle.watch();
@@ -222,7 +222,7 @@
         }else{
           $rootScope.logo="assets/images/logo2.png";
         }
-        Notification.success(languages.findKey('loginSuccess'));
+        //Notification.success(languages.findKey('loginSuccess'));
         $cookies.remove("IOTSTATUS");
 
         Title.restore();
