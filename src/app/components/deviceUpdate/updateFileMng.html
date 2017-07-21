@@ -1,0 +1,71 @@
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li class="active">升级文件管理</li>
+  </ol>
+</section>
+<section class="content form-horizontal">
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">版本号</label>
+    </div>
+    <div class="col-md-2">
+      <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
+      <input type="text" name="queryVersionNum" class="form-control" ng-model="updateFileMngCtrl.queryVersionNum" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询" style="padding-left: 42px;"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">文件名</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">适用对象</label>
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" id="applicableProducts" ng-model="updateFileMngCtrl.queryApplicableProducts">
+        <option value="1">GPS自身</option>
+        <option value="2">显示器</option>
+        <option value="3">控制器</option>
+      </select>
+    </div>
+    <div class="col-md-3 text-center">
+      <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">查询</button>
+      <button class="btn btn-default" type="button" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>上传</button>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">版本总数:  {{updateFileMngCtrl.page.totalElements}}</span>
+    </div>
+  </div>
+  <div class="row " style="padding-top: 10px">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table ng-table="updateFileMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="updateFile in $data">
+            <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{updateFile.id}}</td>
+            <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
+            <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">GPS自身</td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">显示器</td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
+            <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap text-center" data-title="'操作'">
+              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)">修改</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+    <uib-pagination total-items="updateFileMngCtrl.page.totalElements" ng-change="updateFileMngCtrl.query(updateFileMngCtrl.pageNumber-1,null,null,updateFileMngCtrl.versionNum)" max-size="15" ng-model="updateFileMngCtrl.pageNumber" items-per-page="updateFileMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </div>
+</section>
