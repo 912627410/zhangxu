@@ -49,9 +49,23 @@
     $stateProvider
       .state('selectApp', {
         url: '/selectApp',
-        templateUrl: 'app/main/selectApp.html',
-        controller: 'selectAppController',
-        controllerAs:'selectAppCtr'
+        views: {
+          '@': {
+            template: '<div ui-view="topbar"></div><div ui-view="main"></div>'
+          },
+          'topbar@selectApp': {
+            templateUrl: 'app/main/rentalPlatform/rentalPlatformTopbar.html',
+            controller:'rentalPlatformTopbarController',
+            controllerAs: 'rentalPlatformTopbarCtr'
+          },
+          'main@selectApp': {
+            templateUrl: 'app/main/selectApp.html',
+            controller: 'selectAppController',
+            controllerAs:'selectAppCtr'
+          }
+
+        }
+
       })
 
 
@@ -81,7 +95,7 @@
             templateUrl: 'app/main/mainframe.html'
           },
           'topbar@home': {
-            templateUrl: 'app/main/topBar.html',
+            templateUrl: 'app/main/topbar.html',
             controller: 'MainController',
             controllerAs: 'mainCtrl'
           },
