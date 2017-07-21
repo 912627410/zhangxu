@@ -55,7 +55,7 @@
       //停止监控用户登录超时
       Idle.unwatch();
 
-      $rootScope.$state.go('home.login');
+      $rootScope.$state.go('login');
       Notification.success(languages.findKey('successfulExit'));
 
     }

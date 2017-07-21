@@ -165,7 +165,7 @@
     }
 
     if (userInfo == null) {
-      $rootScope.$state.go('home.login');
+      $rootScope.$state.go('login');
     }
     else {
       if($rootScope.userInfo.userdto.countryCode== "ZH"){

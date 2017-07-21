@@ -14,7 +14,6 @@
   function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, commonFactory,$window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,FLEET_LIST_URL,$confirm, Notification, serviceResource, permissions, Idle, Title,languages) {
     var vm = this;
     var userInfo;
-    var roleInfo;
     var rootParent = {id: 0}; //默认根节点为0
     vm.rememberMe = true;
     var count = 0;
@@ -23,8 +22,14 @@
       token:'',
       value:''
     }
-    var userinfo
-    //通过后台返回的结构生成json tree
+
+    /**
+     * 通过后台返回的结构生成json tree
+     * @param array
+     * @param parent
+     * @param tree
+     * @returns {Array|*}
+     */
     vm.unflatten = function (array, parent, tree) {
       tree = typeof tree !== 'undefined' ? tree : [];
       parent = typeof parent !== 'undefined' ? parent : {id: 0};
@@ -33,21 +38,13 @@
         return child.parentId == parent.id;
       });
 
-      // alert("parent.id=="+parent.id);
-
       if (!_.isEmpty(children)) {
-        //alert("1.children.tree=="+JSON.stringify(children));
-        //alert("2.parent.id =="+parent.id );
         //判断是否是根节点
-        // if( parent.id == rootParent.id ){
         if (parent.id == 0) {
-          //alert("3.rootParent.id =="+rootParent.id );
-          //alert("4.rootParent.tree=="+JSON.stringify(children));
           tree = children;
 
         } else {
           parent['children'] = children
-          // alert("5. tree=="+JSON.stringify(children));
         }
         _.each(children, function (child) {
           vm.unflatten(array, child, null)
@@ -59,25 +56,30 @@
       return tree;
     };
 
+    /**
+     * 当页面加载完,根据token自动登录
+     */
     $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("IOTUSER")){
-        var user = {};
-        user.username = $cookies.getObject("IOTUSER").username;
-        user.password = '';
-        vm.credentials = user;
-        if(null==$cookies.getObject("IOTSTATUS")){
-          var userobj = {};
-          userobj.username = $cookies.getObject("IOTUSER").username;
-          userobj.authtoken = $cookies.getObject("IOTUSER").authtoken;
-          vm.loginBytoken(userobj);
-        }
+      if(null!=$cookies.getObject("IOTUSER")&&null==$cookies.getObject("IOTSTATUS")){
+        var userobj = {};
+        userobj.username = $cookies.getObject("IOTUSER").username;
+        userobj.authtoken = $cookies.getObject("IOTUSER").authtoken;
+        vm.loginBytoken(userobj);
+      }else{
+        $rootScope.$state.go('login');
       }
     });
 
+    /**
+     * 当用户名改变的时候清空密码
+     */
     vm.reset= function () {
       vm.credentials.password = null;
     }
 
+    /**
+     * 创建验证码
+     */
     vm.createVerifyCode = function () {
       var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
       rspdata.then(function (data) {
@@ -89,7 +91,9 @@
       })
     }
 
-
+    /**
+     * 登录函数
+     */
     vm.loginMe = function () {
       vm.createVerifyCode();
       var code = vm.code ;
@@ -112,14 +116,20 @@
           }
     }
 
+    /**
+     * 按照token方式登录
+     * @param userobj
+     */
     vm.loginBytoken = function (userobj) {
       vm.createVerifyCode();
       var rspPromise = serviceResource.authenticateb(userobj);
       rspPromise.then(function (response) {
+        //存用户信息
         var data = response.data;
         userInfo = {
           authtoken: data.token,
-          userdto: data.userinfo
+          userdto: data.userinfo,
+          tenantType:data.userinfo.organizationDto.tenantType
         };
         var passwordPattenStatus=data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
@@ -141,8 +151,25 @@
 
         //监控用户登录超时
         Idle.watch();
-        vm.getPermission();
 
+        //判断用户类别
+        if (userInfo.tenantType!=null && userInfo.tenantType!=''){
+          var userTypes =userInfo.tenantType.split(",");
+
+          if (userTypes.length>=2){
+            //如果多种类型的用户,给出选择框进入系统
+            $rootScope.$state.go('selectApp');
+            return ;
+          }
+          //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
+          if(userInfo.tenantType=='2'){
+            //直接转入到租赁页面
+            $rootScope.$state.go('rental');
+            return ;
+          }
+        }
+
+        vm.getPermission();
       }, function (reason) {
         Notification.error(languages.findKey('loginFailure'));
         count = count + 1;
@@ -153,16 +180,20 @@
       });
     }
 
-
+    /**
+     * 用户验证
+     */
     vm.userverify = function () {
-
       var rspPromise = serviceResource.authenticatea(vm.credentials);
       rspPromise.then(function (response) {
+        //存用户信息
         var data = response.data;
         userInfo = {
           authtoken: data.token,
-          userdto: data.userinfo
+          userdto: data.userinfo,
+          tenantType:data.userinfo.organizationDto.tenantType
         };
+        //记住我
         if(vm.rememberMe){
           //检测是否存在cookie  IOTUSER
           $cookies.remove("IOTUSER");
@@ -175,8 +206,6 @@
         }else{
           $cookies.remove("IOTUSER");
         }
-
-
         var passwordPattenStatus=data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
         $http.defaults.headers.common['token'] = data.token;
@@ -196,14 +225,29 @@
         Notification.success(languages.findKey('loginSuccess'));
         $cookies.remove("IOTSTATUS");
 
-        // If the original title was stored or set previously, sets the title to the original value.
         Title.restore();
 
         //监控用户登录超时
         Idle.watch();
+
+        //验证用户类别
+        if (userInfo.tenantType!=null && userInfo.tenantType!=''){
+          var userTypes =userInfo.tenantType.split(",");
+
+          if (userTypes.length>=2){
+            //如果多种类型的用户,给出选择框进入系统
+            $rootScope.$state.go('selectApp');
+            return ;
+          }
+          //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
+          if(userInfo.tenantType=='2'){
+            //直接转入到租赁页面
+            $rootScope.$state.go('rental');
+            return ;
+          }
+        }
+
         vm.getPermission(passwordPattenStatus);
-
-
       }, function (reason) {
         Notification.error(languages.findKey('loginFailure'));
         count = count + 1;
@@ -214,9 +258,15 @@
       });
     }
 
+    /**
+     * 获取权限列表
+     * @param passwordPattenStatus
+     */
     vm.getPermission = function (passwordPattenStatus) {
       var rspData = serviceResource.getPermission();
       rspData.then(function (data) {
+
+
         var permissionList = $filter("array2obj")(data.content, "permission");
         $rootScope.permissionList = permissionList;
         $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
@@ -281,7 +331,9 @@
       });
     }
 
-    //读取组织结构信息
+    /**
+     * 读取组织结构信息
+     */
     vm.getOrg = function () {
       var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
       rspData.then(function (data) {
@@ -316,6 +368,9 @@
       });
     }
 
+    /**
+     * 获取车队组织结构
+     */
     vm.getFleet = function () {
       var rspData = serviceResource.restCallService(FLEET_LIST_URL, "GET");
       rspData.then(function (data) {
@@ -330,6 +385,9 @@
       });
     }
 
+    /**
+     * 获取消息列表
+     */
     vm.getNotification = function () {
       //读取未处理的提醒消息
       var notificationPromis = serviceResource.queryNotification(0, null, null, "processStatus=0");
@@ -360,6 +418,9 @@
 
     }
 
+    /**
+     *改变验证码
+     */
     vm.changeVerifyCode = function () {
       var yzmImg = document.getElementById("yzmImg");
       var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
@@ -375,6 +436,9 @@
 
     }
 
+    /**
+     * 校验验证码
+     */
     vm.validate =  function () {
       var code = vm.code ;
       if(null!=code&&""!=code){
@@ -394,6 +458,11 @@
       }
 
     }
+
+    /**
+     * 防止验证码被复制
+     * @type {NodeList}
+     */
     var codebox = document.getElementsByClassName("login-box-body")
     if (typeof(codebox.onselectstart) != "undefined") {
       codebox.onselectstart = new Function("return false");
@@ -401,5 +470,6 @@
       codebox.onmousedown = new Function("return false");
       codebox.onmouseup = new Function("return true");
     }
+
   }
 })();
