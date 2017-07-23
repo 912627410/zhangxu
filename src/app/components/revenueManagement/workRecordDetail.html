@@ -23,7 +23,8 @@
               </div>
               <div ng-show="workPointRecord.endTime ==null || workPointRecord.startTime==null">0</div>
             </td>
-            <td class="text-nowrap" data-title="'运行里程'">{{workPointRecord.mileage}}KM</td>
+            <td class="text-nowrap" data-title="'运行里程'" ng-if="workPointRecord.mileage!=null">{{workPointRecord.mileage}}KM</td>
+            <td class="text-nowrap" data-title="'运行里程'" ng-if="workPointRecord.mileage==null"></td>
           </tr>
         </table>
       </div>
