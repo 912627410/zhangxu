@@ -100,6 +100,7 @@
         vm.quarterQuery = false;
         vm.monthDateDeviceData = new Date();
         vm.monthQuery = true;
+        vm.dateType2 = null;
       } else {
         vm.dayQuery = false;
         vm.quarterQuery = true;
@@ -2744,7 +2745,7 @@
 
     //查看各类车车辆热度分布
     vm.showMachineHeatDetails = function (startDate,endDate,dateType1,dateType,monthDate,heatType1) {
-      if(dateType){
+      if(dateType || monthDate){
         startDate=null;
         endDate=null;
       }
