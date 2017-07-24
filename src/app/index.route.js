@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,12 +7,98 @@
 
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
+
+    //自动登录入口,默认视图
     $stateProvider
-      .state('home', {
-        url: '/home',
+      .state('entry', {
+        url: '/entry',
         views: {
           '': {
-            templateUrl: 'app/main/mainframe.html'
+            templateUrl: 'app/components/entry/entry.html',
+            controller: 'entryController',
+            controllerAs: 'entryCtrl'
+          }
+        }
+      })
+
+    //登录页面
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        views: {
+          '@': {
+            template: '<div ui-view="topbar"></div><div ui-view="main"></div><div ui-view="footer"></div>'
+          },
+          'topbar@login': {
+            templateUrl: 'app/components/login/topBar.html',
+            controller:'TopBarController',
+            controllerAs: 'TopBarCtrl'
+          },
+          'main@login': {
+            templateUrl: 'app/components/login/login.html',
+            controller: 'LoginController',
+            controllerAs: 'loginCtrl'
+          },
+          'footer@login': {
+            templateUrl: 'app/components/login/footer.html'
+          },
+        }
+      })
+
+    //选择系统界面
+    $stateProvider
+      .state('selectApp', {
+        url: '/selectApp',
+        views: {
+          '@': {
+            template: '<div ui-view="topbar"></div><div ui-view="main"></div>'
+          },
+          'topbar@selectApp': {
+            templateUrl: 'app/main/selectAppTopBar.html',
+            controller:'selectAppTopBarController',
+            controllerAs:'selectAppTopBarCtr'
+          },
+          'main@selectApp': {
+            templateUrl: 'app/main/selectApp.html',
+            controller: 'selectAppController',
+            controllerAs:'selectAppCtr'
+          }
+
+        }
+
+      })
+
+    //租赁系统
+    $stateProvider
+      .state('rental', {
+        url: '/rental/:index',
+        views: {
+          '@': {
+            templateUrl: 'app/main/rentalPlatform/rentalPlatform.html',
+            controller: 'rentalPlatformController'
+          },
+          'topbar@rental': {
+            templateUrl: 'app/main/rentalPlatform/rentalPlatformTopbar.html',
+            controller: 'rentalPlatformTopbarController',
+            controllerAs: 'rentalPlatformTopbarCtr'
+          },
+          'main@rental': {
+            templateUrl: 'app/main/rentalPlatform/machineMng.html',
+            controller: 'rentalMachineMngController',
+            controllerAs: 'rentalMachineMngCtr'
+          }
+        }
+      })
+
+    //物联网系统
+    $stateProvider
+      .state('home', {
+        url: '/home/:index',
+        views: {
+          '': {
+            templateUrl: 'app/main/mainframe.html',
+            controller: 'MainController',
+            controllerAs: 'mainCtrl'
           },
           'topbar@home': {
             templateUrl: 'app/main/topbar.html',
@@ -38,7 +124,7 @@
             controller: 'HomeController',
             controllerAs: 'homeCtrl'
           },
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'reportChart@home': {
@@ -48,34 +134,11 @@
           },
         }
       })
-      .state('entry',{
-        url:'/entry',
-        views: {
-          '': {
-            templateUrl: 'app/components/entry/entry.html',
-            controller: 'entryController',
-            controllerAs: 'entryCtrl'
-          }
-        }
-      })
-      .state('home.login', {
-        url: '/login',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/widefooter.html'
-          },
-          'main@home': {
-            templateUrl: 'app/components/login/login.html',
-            controller: 'LoginController',
-            controllerAs: 'loginCtrl'
-          }
-        }
-      })
       .state('home.appDownloadPage', {
         url: '/appDownloadPage',
         views: {
-          'footer@home':{
-            templateUrl: 'app/main/widefooter.html'
+          'footer@home': {
+            templateUrl: 'app/main/footer.html'
           },
           'main@home': {
             templateUrl: 'app/components/appManagement/appDownloadPage.html'
@@ -85,8 +148,8 @@
       .state('home.register', {
         url: '/register',
         views: {
-          'footer@home':{
-            templateUrl: 'app/main/widefooter.html'
+          'footer@home': {
+            templateUrl: 'app/main/footer.html'
           },
           'main@home': {
             templateUrl: 'app/components/register/register.html',
@@ -234,7 +297,7 @@
       .state('home.monitor', {
         url: '/monitor',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -288,7 +351,7 @@
       .state('home.machineMove', {
         url: '/machineMove',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -301,7 +364,7 @@
       .state('home.workPoint', {
         url: '/workPoint',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -311,11 +374,10 @@
           }
         }
       })
-
       .state('home.workRecord', {
         url: '/workRecord',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -325,11 +387,10 @@
           }
         }
       })
-
       .state('home.fleetMapMonitor', {
         url: '/fleetMapMonitor',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -339,11 +400,10 @@
           }
         }
       })
-
       .state('home.fleetLineMonitor', {
         url: '/fleetLineMonitor',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -353,11 +413,10 @@
           }
         }
       })
-
       .state('home.fleetMng', {
         url: '/fleetMng',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -367,11 +426,10 @@
           }
         }
       })
-
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -384,7 +442,7 @@
       .state('home.weightData', {
         url: '/weightData',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -397,7 +455,7 @@
       .state('home.fuelConsumption', {
         url: '/fuelConsumption',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -407,23 +465,23 @@
           }
         }
       })
-    .state('home.profit', {
-      url: '/profit',
-      views: {
-        'footer@home':{
-          templateUrl: 'app/main/footer.html'
-        },
-        'rightside@home': {
-          templateUrl: 'app/components/revenueManagement/profit.html',
-          controller: 'profitController',
-          controllerAs: 'profitCtrl'
+      .state('home.profit', {
+        url: '/profit',
+        views: {
+          'footer@home': {
+            templateUrl: 'app/main/footer.html'
+          },
+          'rightside@home': {
+            templateUrl: 'app/components/revenueManagement/profit.html',
+            controller: 'profitController',
+            controllerAs: 'profitCtrl'
+          }
         }
-      }
-    })
+      })
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -432,18 +490,15 @@
           }
         }
       })
-      .state('home.deviceparameter',{
-      url: '/deviceparameter',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/deviceParameter/deviceparameter.html',
-          controller: 'devivceparameterController as devivceparameterCtrl'
+      .state('home.deviceparameter', {
+        url: '/deviceparameter',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceParameter/deviceparameter.html',
+            controller: 'devivceparameterController as devivceparameterCtrl'
+          }
         }
-      }
-    })
-
-
-
+      })
       .state('home.trackRecordAnalyzemng', {
         url: '/trackRecordAnalyzemng',
         views: {
@@ -498,7 +553,6 @@
           }
         }
       })
-
       .state('home.machineworklive', {
         url: '/machineworklivemng',
         views: {
@@ -508,7 +562,6 @@
           }
         }
       })
-
       .state('home.MachineClustering', {
         url: '/MachineClusteringmng',
         views: {
@@ -518,9 +571,6 @@
           }
         }
       })
-
-
-
       .state('home.templateMng', {
         url: '/templateMng',
         views: {
@@ -530,51 +580,46 @@
           }
         }
       })
-
-      .state('home.templateMng.new',{
-          url:'/templateMng/new',
-        views:{
+      .state('home.templateMng.new', {
+        url: '/templateMng/new',
+        views: {
           'rightside@home': {
             templateUrl: 'app/components/templateRegistry/newTemplate.html',
             controller: 'newTemplateController as newTemplateCtrl'
           }
         }
       })
-
-      .state('home.templateMng.update',{
-        url:'/templateMng/update',
-        views:{
+      .state('home.templateMng.update', {
+        url: '/templateMng/update',
+        views: {
           'rightside@home': {
             templateUrl: 'app/components/templateRegistry/updateTemplate.html',
             controller: 'updateTemplateController as updateTemplateCtrl'
           }
         }
       })
-
-    .state('home.templateRegistry', {
-      url: '/templateRegistry',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/templateRegistry/templateRegistry.html',
-          controller: 'templateRegistryMngController as templateRegistryMngController'
+      .state('home.templateRegistry', {
+        url: '/templateRegistry',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/templateRegistry/templateRegistry.html',
+            controller: 'templateRegistryMngController as templateRegistryMngController'
+          }
         }
-      }
-    })
-    .state('home.machineComparison', {
-      url: '/machineComparison',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/workHotAnalysis/machineComparison.html',
-          controller: 'machineComparedMngController as machineComparedMngCtrl'
+      })
+      .state('home.machineComparison', {
+        url: '/machineComparison',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/workHotAnalysis/machineComparison.html',
+            controller: 'machineComparedMngController as machineComparedMngCtrl'
+          }
         }
-      }
-    })
+      })
 
-
-
-
-    ;
+    //默认去尝试自动登录
     $urlRouterProvider.otherwise('/entry');
+
   }
 
 })();

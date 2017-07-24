@@ -1,0 +1,18 @@
+<body class="hold-transition login-page" ui-view="selectApp.main">
+  <div _box="1" class="register-entrance">
+    <p class="re-tit">请选择登录平台</p>
+    <div class="re-types person" type="button">
+      <div _type="person" class="re-type person" ng-click="selectAppCtr.selectIot()">
+        <div class="re-type-img"><i class="fa fa-cloud-upload fa-5x"></i></div>
+        <p class="re-type-name">物联网平台</p>
+        <p class="re-type-des">物联网平台</p>
+      </div>
+      <div class="re-type company" type="button" ng-click="selectAppCtr.selectRental()">
+        <div class="re-type-img"><i class="fa fa-car fa-5x"></i></div>
+        <p class="re-type-name">租赁平台</p>
+        <p class="re-type-des">租赁平台</p>
+      </div>
+    </div>
+    <!--<p class="re-tip">联系方式88888。</p>-->
+  </div>
+</body>
