@@ -108,7 +108,13 @@
         //根据月份升序排列
         var result = workRecords.sort(function(a, b) { return a.recordDate > b.recordDate ? 1 : -1;} );//升序
         var resultLen = result.length;
-        if(resultLen > 0) {
+        if(resultLen == 1) {
+          recordDates.push($filter('date')(result[0].recordDate, 'yyyy-MM-dd'));
+          totalRecords.push(result[0].records);
+          averageRecords.push(result[0].records);
+          machineNum.push(1);
+          totalMileage.push(result[0].mileage);
+        }else if(resultLen > 1) {
           for (var i = 1; i < resultLen; i++) {
             if (result[i].recordDate != result[i - 1].recordDate) {
               recordDates.push($filter('date')(result[i - 1].recordDate, 'yyyy-MM-dd'));
