@@ -81,6 +81,11 @@
             templateUrl: 'app/main/rentalPlatform/rentalPlatformTopbar.html',
             controller: 'rentalPlatformTopbarController',
             controllerAs: 'rentalPlatformTopbarCtr'
+          },
+          'main@rental': {
+            templateUrl: 'app/main/rentalPlatform/machineMng.html',
+            controller: 'rentalMachineMngController',
+            controllerAs: 'rentalMachineMngCtr'
           }
         }
       })
