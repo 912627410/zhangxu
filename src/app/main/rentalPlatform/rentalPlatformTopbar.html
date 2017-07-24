@@ -1,21 +1,53 @@
-<header class="main-header">
+<header class="renatlHeader">
   <a class="logo navbar-static-top">
     <img src='assets/images/logo2.png' height="40">
   </a>
   <nav class="navbar navbar-static-top">
-    <a class="sidebar-toggle center" role="button" ng-click="TopBarCtrl.changeLanguage('zh')">
-      <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
+    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')">-->
+      <!--<img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文-->
+    <!--</a>-->
+    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')">-->
+      <!--<img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English-->
+    <!--</a>-->
+
+    <a class="sidebar-toggle center"  ng-click="">
+    {{'vehicleManagement'|translate}}
     </a>
-    <a class="sidebar-toggle center" role="button" ng-click="TopBarCtrl.changeLanguage('en')">
-      <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
+    <a class="sidebar-toggle center"  ng-click="">
+    {{'fleetManagement' | translate}}
+    </a>
+    <a class="sidebar-toggle center"  ng-click="">
+      {{'profitStatistics'|translate}}
     </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+        <li class=" " style="width: 160px;">
+          <div class="search-box">
+            <form class="search-form" ng-click="" href="">
+              <input class="form-control search-input" type="text"  placeholder="Search">
+              <button class="btn btn-link search-btn">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+              </span>
+            </form>
+          </div>
+
+        </li>
+        <li class=" ">
+          <a ng-click="" href="">Profile</a>
+        </li>
+        <li class=" ">
+          <a ng-click="" href="">Setting</a>
+        </li>
         <li class="user user-menu">
           <a ng-click="rentalPlatformTopbarCtr.logout()" href="">{{'logout'|translate}}</a>
         </li>
+
         </li>
       </ul>
     </div>
   </nav>
 </header>
+
+
+

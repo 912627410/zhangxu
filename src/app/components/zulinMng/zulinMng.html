@@ -1,0 +1,41 @@
+<header class="main-header" style="height:50px">
+  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl">
+    <img ng-src='{{logo}}' alt= '{{userInfo.userdto.organizationDto.label | translate}}'  height="40" >
+  </a>
+
+  <nav class="navbar navbar-static-top" role="navigation">
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li class="user user-menu" ng-if="userInfo == null">
+          <a ui-sref="home.login">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>{{ 'login' | translate }}</span>
+          </a>
+        </li>
+        <li ui-sref="home.profile" role="button" ng-if="userInfo">
+          <a>
+            <i class="glyphicon glyphicon-user" >
+              <span>{{userInfo.userdto.ssn}}
+              </span>
+            </i>
+          </a>
+        </li>
+        <li ui-sref="home.login" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="body">
+  <div class="page1">
+    <h3>abababababab</h3>
+  </div>
+  <div class="page2">
+    <h2>
+      cdcdcdcdcd
+    </h2>
+  </div>
+</div>
+
+
+
+
