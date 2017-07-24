@@ -14,7 +14,8 @@
     var statisticInfo = {
       totalDevices: 0,
       totalWarningDevices: 0,
-      totalAbnormalDevices: 0
+      totalAbnormalDevices: 0,
+      notificationNumber:0
     };
 
    // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
@@ -41,7 +42,8 @@
           statisticInfo.totalWarningDevices += deviceAlertStatics.deviceNumber
         })
 
-        statisticInfo.totalAbnormalDevices = data.deviceAbnormalStatics.deviceNumber
+        statisticInfo.totalAbnormalDevices = data.deviceAbnormalStatics.deviceNumber;
+        statisticInfo.notificationNumber = $rootScope.notificationNumber;
       }, function (reason) {
         Notification.error('获取设备信息失败');
       })

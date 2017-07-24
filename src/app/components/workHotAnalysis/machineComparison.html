@@ -8,10 +8,10 @@
     </ol>
   </section>
   <div class="container-fluid machineCompared">
-    <div class=" filter-wrapper">
-      <div class="form-inline form-group filter">
-        <form class="form-inline filter">
-          <div class="form-group col-sm-2">
+    <div >
+      <div class="col-md-8 leftBox">
+        <div class="row form-group">
+          <div class="form-inline col-md-3">
             <label class="control-label">查询周期:</label>
             <select class="form-control" ng-change="machineComparedMngCtrl.change(machineComparedMngCtrl.dateType1)" ng-model="machineComparedMngCtrl.dateType1">
               <option value="1" ng-selected="true">按季度</option>
@@ -19,7 +19,7 @@
               <option value="3">按日期</option>
             </select>
           </div>
-          <div class="form-group col-sm-5" ng-show="machineComparedMngCtrl.quarterQuery">
+          <div class="form-inline col-md-5" ng-show="machineComparedMngCtrl.quarterQuery">
             <label class="control-label">查询季度:</label>
             <select class="form-control" ng-model="machineComparedMngCtrl.dateType2">
               <option ng-repeat="date in machineComparedMngCtrl.quarter" value="{{date.key}}">{{date.value}}</option>
@@ -31,7 +31,7 @@
               </span>
                 </span>
           </div>
-          <div class="form-group col-sm-5" ng-show="machineComparedMngCtrl.monthQuery">
+          <div class="form-inline col-md-5" ng-show="machineComparedMngCtrl.monthQuery">
             <label class="control-label">查询月份:</label>
             <div class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomMonth}}"
@@ -53,7 +53,7 @@
               <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.query(null,null,machineComparedMngCtrl.dateType1,null,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType,machineComparedMngCtrl.heatType)">{{'query'|translate}}</button>
             </span>
           </div>
-          <div class="form-group col-sm-6" ng-show="machineComparedMngCtrl.dayQuery">
+          <div class="form-inline col-md-6" ng-show="machineComparedMngCtrl.dayQuery">
             <div class="form-group" >
               <label class="control-label">起始：</label>
               <div class="input-group">
@@ -96,7 +96,60 @@
             </span>
             </div>
           </div>
-          <div class="form-group col-sm-4">
+        </div>
+        <div class="row form-group" ng-show="machineComparedMngCtrl.only">
+          <div class="form-inline col-md-3" >
+            <label class="control-label">车辆类型:</label>
+            <label style="font-weight:normal"><input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机</label>
+            <label style="font-weight:normal"><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机</label>
+            <!--<input type="radio" name="vehicleType" value="3" ng-model="machineComparedMngCtrl.machineType" />重机-->
+          </div>
+          <div class="form-inline col-md-5">
+            <label class="control-label">热度类型:</label>
+            <label  style="font-weight:normal"><input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度</label>
+            <label style="font-weight:normal"><input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度</label>
+          </div>
+          <div class="form-inline col-md-3">
+            <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down"></span>车型对比</button>
+          </div>
+        </div>
+        <div ng-show="machineComparedMngCtrl.contrast">
+          <div class="row form-group">
+            <div class="form-inline col-md-3">
+                <label class="control-label">车辆类型:</label>
+                <label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2"/>挖掘机</label>
+                <label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2"/>装载机</label>
+                <!--<label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="3" ng-model="machineComparedMngCtrl.machineType2" />重机</label>-->
+            </div>
+            <div class="col-md-4 ">
+              <label class="control-label">车辆类型:</label>
+              <label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1"/>挖掘机</label>
+              <label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1"/>装载机</label>
+              <!--<label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="3" ng-model="machineComparedMngCtrl.machineType1" />重机</label>-->
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="form-inline col-md-3">
+               <label class="control-label">热度类型:</label>
+               <label  style="font-weight:normal"><input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度</label>
+               <label  style="font-weight:normal"><input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度</label>
+            </div>
+            <div class=" col-md-4 ">
+              <label class="control-label">热度类型:</label>
+              <label  style="font-weight:normal"><input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度</label>
+              <label  style="font-weight:normal"><input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度</label>
+            </div>
+            <form class="col-md-3">
+              <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up"></span>单一车型</button>
+              <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查询对比</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-4 rightBox">
+        <div>
+          <div class="form-inline ">
             <label class="control-label">热度分布</label>
             <select class="form-control" ng-model="machineComparedMngCtrl.heatType3">
               <option value="1" ng-selected="true">开工热度分布</option>
@@ -104,55 +157,7 @@
             </select>
             <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.heatType3)">查看</button>
           </div>
-        </form>
-      </div>
-      <div class="form-inline form-group filter" ng-show="machineComparedMngCtrl.only">
-        <div class="form-group col-sm-4">
-          <label class="control-label">车辆类型:</label>
-          <label style="font-weight:normal"><input type="radio" name="vehicleType" value="A1" ng-checked="true" ng-model="machineComparedMngCtrl.machineType" />挖掘机</label>
-          <label style="font-weight:normal"><input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机</label>
-          <!--<input type="radio" name="vehicleType" value="3" ng-model="machineComparedMngCtrl.machineType" />重机-->
         </div>
-        <div class="form-group col-sm-5">
-          <label class="control-label">热度类型:</label>
-          <label  style="font-weight:normal"><input type="radio" name="heat" value="1" ng-checked="true" ng-model="machineComparedMngCtrl.heatType" />开工热度</label>
-          <label style="font-weight:normal"><input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度</label>
-        </div>
-        <div class="form-group col-sm-3">
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-down"></span>车型对比</button>
-        </div>
-      </div>
-      <div class="form-inline form-group filter" ng-show="machineComparedMngCtrl.contrast">
-        <div class="form-group">
-          <div class="col-sm-6 filter-group">
-            <label class="control-label">车辆类型:</label>
-            <label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1"/>挖掘机</label>
-            <label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1"/>装载机</label>
-            <!--<label  style="font-weight:normal"><input type="radio" name="vehicleType1" value="3" ng-model="machineComparedMngCtrl.machineType1" />重机</label>-->
-          </div>
-          <div class="col-sm-6 filter-group">
-            <label class="control-label">车辆类型:</label>
-            <label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2"/>挖掘机</label>
-            <label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2"/>装载机</label>
-            <!--<label  style="font-weight:normal"><input type="radio" name="vehicleType2" value="3" ng-model="machineComparedMngCtrl.machineType2" />重机</label>-->
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-6 filter-group">
-            <label class="control-label">热度类型:</label>
-            <label  style="font-weight:normal"><input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度</label>
-            <label  style="font-weight:normal"><input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度</label>
-          </div>
-          <div class="col-sm-6 filter-group">
-            <label class="control-label">热度类型:</label>
-            <label  style="font-weight:normal"><input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度</label>
-            <label  style="font-weight:normal"><input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度</label>
-          </div>
-        </div>
-        <form class="form-group">
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()"><span class="glyphicon glyphicon-chevron-up"></span>单一车型</button>
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查询对比</button>
-        </form>
       </div>
     </div>
     <div >
@@ -292,4 +297,8 @@
     </div>
   </div>
 </div>
+
+
+
+
 
