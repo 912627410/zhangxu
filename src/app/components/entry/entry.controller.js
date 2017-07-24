@@ -73,6 +73,19 @@
 
         vm.getPermission();
 
+      }, function (reason) {
+        //Notification.error(languages.findKey('loginFailure'));
+      });
+    };
+
+
+    vm.getPermission = function (passwordPattenStatus) {
+      var rspData = serviceResource.getPermission();
+      rspData.then(function (data) {
+        var permissionList = $filter("array2obj")(data.content, "permission");
+        $rootScope.permissionList = permissionList;
+        $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
+
         vm.getOrg();
 
         //验证用户类别
@@ -93,19 +106,6 @@
         }
 
         $rootScope.$state.go('home');
-
-      }, function (reason) {
-        //Notification.error(languages.findKey('loginFailure'));
-      });
-    };
-
-
-    vm.getPermission = function (passwordPattenStatus) {
-      var rspData = serviceResource.getPermission();
-      rspData.then(function (data) {
-        var permissionList = $filter("array2obj")(data.content, "permission");
-        $rootScope.permissionList = permissionList;
-        $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
       }, function (reason) {
       });
     }
