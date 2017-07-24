@@ -1063,8 +1063,21 @@
 
                     <hr>
 
+                  <div class="panel-group" id="smsCtrl" presentation-href="dashboard:deviceMonitor:remoteControl">
+                    <div class="panel panel-success">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a ng-click="smsCtrl = !smsCtrl" href="">
+                            <div class="row">
+                              <div class="col-md-12 text-center">{{'telecontrol'|translate}}</div>
+                            </div>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="smsCtrlContent" class="panel-collapse collapse"  ng-class="{in: smsCtrl}">
+                        <div class="panel-body">
 
-                  <div class="row">
+                        <div class="row">
                     <!-- 设置回传地址 -->
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setIp">
                       <div class="box box-success">
@@ -1081,7 +1094,7 @@
                               <div class="row">
                                 <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
                                          ng-model="deviceAerialCurrentInfoController.serverHost" name="serverHost"/>
@@ -1093,7 +1106,7 @@
                               <div class="row">
                                 <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row" >
                                 <div class="col-md-12">
                                   <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
                                          ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPort"/>
@@ -1109,10 +1122,6 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                 <!-- <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
-                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-primary"
-                                                ng-click="deviceCurrentInfoCtrl.sendSetIpSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.serverHost,deviceCurrentInfoCtrl.serverPort)">
-                                  </sms-send-btn>-->
 
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
@@ -1191,11 +1200,8 @@
                       </div>
                     </div>
 
-                  </div>
-
-                  <div class="row">
                     <!-- 设置采样时间 -->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setIpSMS">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
@@ -1210,7 +1216,7 @@
                               <div class="row">
                                 <label for="vehicleStateCollect" class="col-md-2 control-label text-nowrap">{{'machineStateSamplingTime'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="vehicleStateCollect" class="form-control"
                                          ng-model="deviceAerialCurrentInfoController.vehicleStateCollect" name="vehicleStateCollect"/>
@@ -1223,7 +1229,7 @@
                               <div class="row">
                                 <label for="chargerStateCollect" class="col-md-2 control-label text-nowrap">{{'chargingInformationSamplingTime'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="chargerStateCollect" class="form-control"
                                          validator="number" ng-model="deviceAerialCurrentInfoController.chargerStateCollect" name="chargerStateCollect"/>
@@ -1253,18 +1259,19 @@
                     </div>
 
                     <!-- 设置 平台短信猫号码-->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimesSMS">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSmsCat">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'platformGSMmodemNumber'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
-                               data-placement="right" title="设置GPS启动次数"> <i class="fa fa-info" ></i></a>
+                               data-placement="right" title="设置平台短信猫号码"> <i class="fa fa-info" ></i></a>
                           </div>
                         </div>
                         <div class="box-body">
-
-
+                          <div class="row">
+                            <label for="vehicleStateCollect" class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                          </div>
                           <div class="row">
                             <div class="col-md-9">
                               <input type="text" id="catPhoneNumber" class="form-control"
@@ -1281,11 +1288,6 @@
                         </div>
                       </div>
                     </div>
-
-                  </div>
-
-
-                  <div class="row">
 
                     <!-- 设置启动次数-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes">
@@ -1335,7 +1337,7 @@
                           <div class="row">
                             <label for="workHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
                           </div>
-                          <div class="row" presentation-href="sms:setWorkHoursSMS">
+                          <div class="row">
                             <div class="col-md-6">
                               <input type="text" id="workHours" class="form-control"
                                      ng-model="deviceAerialCurrentInfoController.workHours" name="workHours"/>
@@ -1354,7 +1356,7 @@
                     </div>
 
                     <!-- 绑定-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
@@ -1401,8 +1403,8 @@
                       </div>
                     </div>
 
-
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl">
+                    <!-- 锁车-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
@@ -1449,16 +1451,8 @@
                       </div>
                     </div>
 
-                  </div>
-
-                  <hr/>
-
-                  <div class="row">
-
-
-
                     <!-- 重置 -->
-                    <div class="col-md-3" presentation-href="sms:setWorkHoursSMS">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:reset">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'terminalReset'|translate}}</h5>
@@ -1469,7 +1463,12 @@
                         </div>
                         <div class="box-body">
 
-                          <div class="row" presentation-href="sms:setWorkHoursSMS">
+                          <div class="row">
+                            <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                          </div>
+
+                          <div class="row">
+
                             <div class="col-md-12">
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
@@ -1483,12 +1482,13 @@
                       </div>
                     </div>
 
+                        </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-
-
-
-                  </div>
+                </div>
             </div>
         </uib-tab>
 
@@ -1504,20 +1504,8 @@
                         <label class="control-label text-nowrap">{{'address'|translate}}:</label>
                     </div>
                     <div class="col-md-4">
-                            <ui-select name="newAddress" ng-model="deviceAerialCurrentInfoController.newAddress" theme="bootstrap"
-                                       ng-disabled="disabled"  on-select="deviceAerialCurrentInfoController.onSelectCallback($item, $model)">
-                                <ui-select-match allow-clear="true" placeholder="{{'inputAddress'|translate}}">{{$select.selected.name}}
-                                </ui-select-match>
-                                <ui-select-choices repeat="locationInfo.name as locationInfo in deviceAerialCurrentInfoController.locationList|  propsFilter: {name: $select.search, address: $select.search}"
-                                                   refresh="deviceAerialCurrentInfoController.refreshLocationList($select.search)"
-                                                   refresh-delay="0">
-
-                                    <div ng-bind-html="locationInfo.name | highlight: $select.search"></div>
-                                    <small>
-                                      {{'address'|translate}}: {{locationInfo.district}} <span ng-bind-html="''+locationInfo.address | highlight: $select.search"></span>
-                                    </small>
-                                </ui-select-choices>
-                            </ui-select>
+                      <input type="text" id="tipinput" class="form-control"
+                             placeholder="{{'search'|translate}}" name="tipinput" style="width: 200px;"/>
                     </div>
                     <div class="col-md-1">
                         <label class="control-label text-nowrap">{{'radius'|translate}}:</label>
@@ -1535,11 +1523,17 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-11">
-                      <label class="text-nowrap">{{'currentAddress'|translate}}:</label>
-                      <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1"> {{deviceAerialCurrentInfoController.deviceinfo.address}}</span>
-                      <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" style="color: red;"> ({{'notLocate' | translate}})</span>
-                    </div>
+                  <div class="col-md-6">
+                    <label class="text-nowrap">{{'currentAddress'|translate}}:</label>
+                    <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1"> {{deviceAerialCurrentInfoController.deviceinfo.address}}</span>
+                    <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" style="color: red;"> ({{'notLocate' | translate}})</span>
+                  </div>
+                  <div class="col-md-5">
+                    <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+                    {{'longitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplongitudeNum}}</span>
+                    &nbsp;&nbsp;
+                    {{'latitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplatitudeNum}}</span>
+                  </div>
                   <div class="col-md-1" style="float: right">
                     <button type="button" class="btn btn-default" title="{{'returnToMachineLocation'|translate}}" ng-click="deviceAerialCurrentInfoController.backCurrentAdd()">
                       <span class="glyphicon glyphicon-send"></span>
@@ -1552,21 +1546,12 @@
                       <span style="color: red;"> {{deviceAerialCurrentInfoController.selectAddress}}</span>
                     </div>
                 </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
-                  {{'longitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplongitudeNum}}</span>
-                  &nbsp;&nbsp;
-                  {{'latitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplatitudeNum}}</span>
-                </div>
-              </div>
-                <br/>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="box-body" style="height: 600px" id="deviceScopeMap"></div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-body" style="height: 600px" id="deviceScopeMap"></div>
                     </div>
+                </div>
                 </div>
         </uib-tab>
 
