@@ -47,7 +47,7 @@
     function getMap1Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope' + hourScope +'&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
         if(statisticalType == 1){
           data.sort(compare('workRate'));
@@ -171,7 +171,7 @@
     function getMap2Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope' + hourScope +'&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
         if(statisticalType == 1){
           data.sort(compare('workRate'));
