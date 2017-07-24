@@ -11,16 +11,16 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope,$scope, $http,$cookies,$filter,$stateParams, commonFactory,$window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL,SYS_CONFIG_LIST_URL,PERMISSIONS_URL,GET_VERIFYCODE_URL,JUDGE_VERIFYCODE_URL,FLEET_LIST_URL,$confirm, Notification, serviceResource, permissions, Idle, Title,languages) {
+  function LoginController($rootScope, $scope, $http, $cookies, $filter, $stateParams, commonFactory, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, PERMISSIONS_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, FLEET_LIST_URL, $confirm, Notification, serviceResource, permissions, Idle, Title, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
     vm.rememberMe = true;
     var count = 0;
     $scope.isShow = false;
-    var verifyCodeInfo ={
-      token:'',
-      value:''
+    var verifyCodeInfo = {
+      token: '',
+      value: ''
     }
 
     /**
@@ -59,13 +59,13 @@
     /**
      * 当页面加载完,根据token自动登录
      */
-    $scope.$on('$viewContentLoaded', function(){
-      if(null!=$cookies.getObject("IOTUSER")&&null==$cookies.getObject("IOTSTATUS")){
+    $scope.$on('$viewContentLoaded', function () {
+      if (null != $cookies.getObject("IOTUSER") && null == $cookies.getObject("IOTSTATUS")) {
         var userobj = {};
         userobj.username = $cookies.getObject("IOTUSER").username;
         userobj.authtoken = $cookies.getObject("IOTUSER").authtoken;
         vm.loginBytoken(userobj);
-      }else{
+      } else {
         $rootScope.$state.go('login');
       }
     });
@@ -73,7 +73,7 @@
     /**
      * 当用户名改变的时候清空密码
      */
-    vm.reset= function () {
+    vm.reset = function () {
       vm.credentials.password = null;
     }
 
@@ -81,11 +81,11 @@
      * 创建验证码
      */
     vm.createVerifyCode = function () {
-      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL, "GET");
       rspdata.then(function (data) {
-        verifyCodeInfo ={
-          token:data.token,
-          value:data.verifyCode
+        verifyCodeInfo = {
+          token: data.token,
+          value: data.verifyCode
         }
         vm.verifyCode = verifyCodeInfo.value;
       })
@@ -96,24 +96,24 @@
      */
     vm.loginMe = function () {
       vm.createVerifyCode();
-      var code = vm.code ;
-      if($scope.isShow&&null!=code&&""!=code){
+      var code = vm.code;
+      if ($scope.isShow && null != code && "" != code) {
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
-          if(data.code==0){
+          if (data.code == 0) {
             Notification.error("验证码输入错误！请重新输入！！");
           }
-          if(data.code==1){
+          if (data.code == 1) {
             vm.userverify();
           }
         })
-      }else if(!$scope.isShow){
-            vm.userverify();
-          }else {
-            Notification.error("请输入验证码！！");
-          }
+      } else if (!$scope.isShow) {
+        vm.userverify();
+      } else {
+        Notification.error("请输入验证码！！");
+      }
     }
 
     /**
@@ -129,9 +129,9 @@
         userInfo = {
           authtoken: data.token,
           userdto: data.userinfo,
-          tenantType:data.userinfo.organizationDto.tenantType
+          tenantType: data.userinfo.organizationDto.tenantType
         };
-        var passwordPattenStatus=data.passwordPattenStatus;
+        var passwordPattenStatus = data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
@@ -141,42 +141,22 @@
         $rootScope.roleInfoList = roleInfoList;
         $window.sessionStorage["roleInfoList"] = JSON.stringify(roleInfoList);
 
-        if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
-          $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+        if (userInfo.userdto.organizationDto.logo != null && userInfo.userdto.organizationDto.logo != "") {
+          $rootScope.logo = "assets/images/" + $rootScope.userInfo.userdto.organizationDto.logo;
 
-        }else{
-          $rootScope.logo="assets/images/logo2.png";
+        } else {
+          $rootScope.logo = "assets/images/logo2.png";
         }
         //Notification.success(languages.findKey('loginSuccess'));
 
         //监控用户登录超时
         Idle.watch();
+
         vm.getPermission();
-
-        //判断用户类别
-        if (userInfo.tenantType!=null && userInfo.tenantType!=''){
-          var userTypes =userInfo.tenantType.split(",");
-
-          if (userTypes.length>=2){
-            //如果多种类型的用户,给出选择框进入系统
-            $rootScope.$state.go('selectApp');
-            return ;
-          }
-          //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
-          if(userInfo.tenantType=='2'){
-            //直接转入到租赁页面
-            $rootScope.$state.go('rental');
-            return ;
-          }
-
-        }
-
-        $rootScope.$state.go('home');
-
       }, function (reason) {
-        Notification.error(languages.findKey('loginFailure'));
+        //Notification.error(languages.findKey('loginFailure'));
         count = count + 1;
-        if(count == 2){
+        if (count == 2) {
           $scope.isShow = true;
         }
         vm.changeVerifyCode();
@@ -194,10 +174,10 @@
         userInfo = {
           authtoken: data.token,
           userdto: data.userinfo,
-          tenantType:data.userinfo.organizationDto.tenantType
+          tenantType: data.userinfo.organizationDto.tenantType
         };
         //记住我
-        if(vm.rememberMe){
+        if (vm.rememberMe) {
           //检测是否存在cookie  IOTUSER
           $cookies.remove("IOTUSER");
           var cookieDate = {};
@@ -206,10 +186,10 @@
           var expireDate = new Date();
           expireDate.setDate(expireDate.getDate() + 5);//设置cookie保存5天
           $cookies.putObject("IOTUSER", cookieDate, {'expires': expireDate});
-        }else{
+        } else {
           $cookies.remove("IOTUSER");
         }
-        var passwordPattenStatus=data.passwordPattenStatus;
+        var passwordPattenStatus = data.passwordPattenStatus;
         //获取token和用户信息,存放到缓存中去
         $http.defaults.headers.common['token'] = data.token;
         $rootScope.userInfo = userInfo;
@@ -219,11 +199,11 @@
         $rootScope.roleInfoList = roleInfoList;
         $window.sessionStorage["roleInfoList"] = JSON.stringify(roleInfoList);
 
-        if(userInfo.userdto.organizationDto.logo!=null && userInfo.userdto.organizationDto.logo!=""){
-          $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
+        if (userInfo.userdto.organizationDto.logo != null && userInfo.userdto.organizationDto.logo != "") {
+          $rootScope.logo = "assets/images/" + $rootScope.userInfo.userdto.organizationDto.logo;
 
-        }else{
-          $rootScope.logo="assets/images/logo2.png";
+        } else {
+          $rootScope.logo = "assets/images/logo2.png";
         }
         //Notification.success(languages.findKey('loginSuccess'));
         $cookies.remove("IOTSTATUS");
@@ -235,29 +215,10 @@
 
         vm.getPermission(passwordPattenStatus);
 
-        //验证用户类别
-        if (userInfo.tenantType!=null && userInfo.tenantType!=''){
-          var userTypes =userInfo.tenantType.split(",");
-
-          if (userTypes.length>=2){
-            //如果多种类型的用户,给出选择框进入系统
-            $rootScope.$state.go('selectApp');
-            return;
-          }
-          //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
-          if(userInfo.tenantType=='2'){
-            //直接转入到租赁页面
-            $rootScope.$state.go('rental');
-            return;
-          }
-        }
-
-        $rootScope.$state.go('home');
-
       }, function (reason) {
         Notification.error(languages.findKey('loginFailure'));
         count = count + 1;
-        if(count == 2){
+        if (count == 2) {
           $scope.isShow = true;
         }
         vm.changeVerifyCode();
@@ -271,8 +232,6 @@
     vm.getPermission = function (passwordPattenStatus) {
       var rspData = serviceResource.getPermission();
       rspData.then(function (data) {
-
-
         var permissionList = $filter("array2obj")(data.content, "permission");
         $rootScope.permissionList = permissionList;
         $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
@@ -287,10 +246,9 @@
           vm.getNotification();
         }
 
-
         //读取小挖型号参数
         var smallExcavatorURL = SYS_CONFIG_URL + "?name=SMALL_EXCAVATOR_MODEL";
-        var smallExcavatorPromis = serviceResource.restCallService(smallExcavatorURL,"GET");
+        var smallExcavatorPromis = serviceResource.restCallService(smallExcavatorURL, "GET");
         smallExcavatorPromis.then(function (data) {
             $window.sessionStorage["SMALL_EXCAVATOR_MODEL"] = data.value;
             $rootScope.SMALL_EXCAVATOR_MODEL = data.value;
@@ -301,7 +259,7 @@
 
         //读取所有系统参数，放到rootscope中供其它controller使用
         var sysconfigUrl = SYS_CONFIG_LIST_URL;
-        var sysconfigPromis = serviceResource.restCallService(sysconfigUrl,"QUERY");
+        var sysconfigPromis = serviceResource.restCallService(sysconfigUrl, "QUERY");
         sysconfigPromis.then(function (data) {
             $window.sessionStorage["SYSCONFIG"] = data;
             $rootScope.SYSCONFIG = data;
@@ -311,27 +269,40 @@
         );
 
         //加载故障代码描述对照表(小挖)
-        $http.get('warningDtc.json').success(function(data){
-          $rootScope.warningDataDtc=data;
-          $window.sessionStorage["warningDataDtc"]=JSON.stringify(data);
+        $http.get('warningDtc.json').success(function (data) {
+          $rootScope.warningDataDtc = data;
+          $window.sessionStorage["warningDataDtc"] = JSON.stringify(data);
 
         });
 
         //加载sensor列表
-        $http.get('sensor.json').success(function(data){
-          $rootScope.sensor=data;
-          $window.sessionStorage["sensor"]=JSON.stringify(data);
+        $http.get('sensor.json').success(function (data) {
+          $rootScope.sensor = data;
+          $window.sessionStorage["sensor"] = JSON.stringify(data);
         });
 
-
-
         //判断是否需要提示修改密码
-        if(passwordPattenStatus==false){
+        if (passwordPattenStatus == false) {
           Notification.error({message: languages.findKey('passwordIsTooSimplePleaseModify'), positionX: 'center'});
 
         }
 
-        //$rootScope.$state.go('home');
+        //验证用户类别
+        if (userInfo.tenantType != null && userInfo.tenantType != '') {
+          var userTypes = userInfo.tenantType.split(",");
+
+          if (userTypes.length >= 2) {
+            //如果多种类型的用户,给出选择框进入系统
+            $rootScope.$state.go('selectApp');
+          }
+          //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
+          if (userInfo.tenantType == '2') {
+            //直接转入到租赁页面
+            $rootScope.$state.go('rental',{index: 'rental'});
+          }
+        }
+
+        $rootScope.$state.go('home',{index: 'home'});
 
       }, function (reason) {
       });
@@ -348,8 +319,6 @@
         if (null != userInfo.userdto.organizationDto) {
           orgParent.id = userInfo.userdto.organizationDto.id;
           rootParent.id = orgParent.id;
-
-          //userInfo.userdto.organizationDto.parentId=0;
         }
 
         //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
@@ -363,10 +332,7 @@
           }
         }
 
-        // alert("orgParent.id==="+orgParent.id);
         $rootScope.orgChart = vm.unflatten(list);
-
-
 
         $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
       }, function (reason) {
@@ -429,34 +395,34 @@
      */
     vm.changeVerifyCode = function () {
       var yzmImg = document.getElementById("yzmImg");
-      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL,"GET");
+      var rspdata = serviceResource.restCallService(GET_VERIFYCODE_URL, "GET");
       rspdata.then(function (data) {
-        verifyCodeInfo ={
-          token:data.token,
-          value:data.verifyCode
+        verifyCodeInfo = {
+          token: data.token,
+          value: data.verifyCode
         }
         vm.verifyCode = verifyCodeInfo.value;
       })
 
-      document.getElementById("verifyCode").value="";
+      document.getElementById("verifyCode").value = "";
 
     }
 
     /**
      * 校验验证码
      */
-    vm.validate =  function () {
-      var code = vm.code ;
-      if(null!=code&&""!=code){
+    vm.validate = function () {
+      var code = vm.code;
+      if (null != code && "" != code) {
         var restCallURL = JUDGE_VERIFYCODE_URL;
         restCallURL += "?&token=" + verifyCodeInfo.token + '&code=' + code;
         var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
-          if(data.code==0){
+          if (data.code == 0) {
             Notification.error("验证码输入错误！请重新输入！!");
             $scope.disabled = true;
           }
-          if(data.code==1){
+          if (data.code == 1) {
             Notification.success("验证码输入正确!");
 
           }

@@ -6,15 +6,35 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $cookies,$scope,$window,$http,$uibModal,permissions,Notification,Idle, Keepalive,$translate,languages) {
+  function MainController($rootScope, $cookies,$scope,$window,$http,$uibModal,permissions,Notification,Idle,$stateParams, Keepalive,$translate,languages) {
     var vm = this;
     vm.profileFormHided = true;
-    //$rootScope.logo="assets/images/logo.png";
-
     var userInfo=$rootScope.userInfo;
+
+    //如果用户为空进入登录页面
+    if (userInfo == null) {
+      $rootScope.$state.go("entry");
+    }
+
+    if ( $stateParams.index!='sHome' ){
+      //验证用户类别
+      if (userInfo.tenantType != null && userInfo.tenantType != '') {
+        var userTypes = userInfo.tenantType.split(",");
+
+        if (userTypes.length >= 2) {
+          //如果多种类型的用户,给出选择框进入系统
+          $rootScope.$state.go('selectApp');
+        }
+        //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
+        if (userInfo.tenantType == '2') {
+          //直接转入到租赁页面
+          $rootScope.$state.go('rental',{index: 'rental'});
+        }
+      }
+    }
+
     if(null!=userInfo&&null!=userInfo.userdto&&null!=userInfo.userdto.organizationDto&&
       null!=userInfo.userdto.organizationDto.logo&& userInfo.userdto.organizationDto.logo!=""){
-        // $rootScope.logo=userInfo.userdto.organizationDto.logo;
         $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
 
     }
@@ -47,11 +67,6 @@
       //如果http header里面有auth信息的话好像是每次都验证的
       $http.defaults.headers.common['token'] = null;
 
-      //发送消息清除地图上的点
-      //$scope.$emit('mapObject', {
-      //    AMap: AMap,
-      //    map: map
-      //});
       //停止监控用户登录超时
       Idle.unwatch();
 

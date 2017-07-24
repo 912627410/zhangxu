@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('rentalPlatformTopbarController', rentalPlatformTopbarController);
+    .controller('selectAppTopBarController', selectAppTopBarController);
 
   /** @ngInject */
-  function rentalPlatformTopbarController($rootScope, $cookies, $scope, $window, $http,  $stateParams, permissions, Notification, Idle, $translate, languages) {
+  function selectAppTopBarController($rootScope, $cookies, $scope, $window, $http, $uibModal, $stateParams, permissions, Notification, Idle, Keepalive, $translate, languages) {
     var vm = this;
     vm.logout = function () {
       $rootScope.logo = "assets/images/logo2.png";

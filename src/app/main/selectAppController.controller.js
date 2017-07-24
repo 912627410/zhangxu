@@ -6,12 +6,12 @@
     .controller('selectAppController', selectAppController);
 
   /** @ngInject */
-  function selectAppController($rootScope, $cookies, $scope) {
+  function selectAppController($rootScope, $cookies, $scope, $state, $stateParams) {
+    var vm = this;
 
-    var vm =this;
     var userInfo = $rootScope.userInfo;
     //如果用户为空进入登录页面
-    if (userInfo == null) {
+    if (userInfo == null || userInfo.tenantType==null) {
       $rootScope.$state.go("entry");
     }
 
@@ -24,20 +24,24 @@
         $rootScope.$state.go('selectApp');
       }
       //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
+      if (userInfo.tenantType == '1' || userInfo.tenantType == null ||userInfo.tenantType == '') {
+        //直接转入到租赁页面
+        $rootScope.$state.go('home',{index: 'home'});
+      }
+      //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
       if (userInfo.tenantType == '2') {
         //直接转入到租赁页面
-        $rootScope.$state.go('rental');
+        $rootScope.$state.go('rental',{index: 'rental'});
       }
     }
 
     vm.selectRental = function () {
-      console.log('rental')
-      $rootScope.$state.go('rental');
+      $rootScope.$state.go('rental',{index: 'sRental'},{location:true,inherit:true});
 
     }
 
-    vm.selectIto = function () {
-      $rootScope.$state.go('home');
+    vm.selectIot = function () {
+      $rootScope.$state.go('home',{index: 'sHome'},{location:true,inherit:true});
     }
 
 

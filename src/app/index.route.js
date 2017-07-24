@@ -54,9 +54,9 @@
             template: '<div ui-view="topbar"></div><div ui-view="main"></div>'
           },
           'topbar@selectApp': {
-            templateUrl: 'app/main/rentalPlatform/rentalPlatformTopbar.html',
-            controller:'rentalPlatformTopbarController',
-            controllerAs: 'rentalPlatformTopbarCtr'
+            templateUrl: 'app/main/selectAppTopBar.html',
+            controller:'selectAppTopBarController',
+            controllerAs:'selectAppTopBarCtr'
           },
           'main@selectApp': {
             templateUrl: 'app/main/selectApp.html',
@@ -68,11 +68,10 @@
 
       })
 
-
     //租赁系统
     $stateProvider
       .state('rental', {
-        url: '/rental',
+        url: '/rental/:index',
         views: {
           '@': {
             templateUrl: 'app/main/rentalPlatform/rentalPlatform.html',
@@ -89,10 +88,12 @@
     //物联网系统
     $stateProvider
       .state('home', {
-        url: '/home',
+        url: '/home/:index',
         views: {
           '': {
-            templateUrl: 'app/main/mainframe.html'
+            templateUrl: 'app/main/mainframe.html',
+            controller: 'MainController',
+            controllerAs: 'mainCtrl'
           },
           'topbar@home': {
             templateUrl: 'app/main/topbar.html',
