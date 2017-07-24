@@ -71,7 +71,7 @@
     //租赁系统
     $stateProvider
       .state('rental', {
-        url: '/rental/:index',
+        url: '/rental',
         views: {
           '@': {
             templateUrl: 'app/main/rentalPlatform/rentalPlatform.html',
@@ -93,7 +93,7 @@
     //物联网系统
     $stateProvider
       .state('home', {
-        url: '/home/:index',
+        url: '/home',
         views: {
           '': {
             templateUrl: 'app/main/mainframe.html',
