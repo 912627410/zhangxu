@@ -60,9 +60,9 @@
             formatter: function(params){
               var tooltip;
               if(data[1].salesRate == undefined){
-                tooltip = params.data.name + '</br>' + '开工率：' + data[params.dataIndex].workRate + '%' + '</br>'+ '车辆数量：' + data[params.dataIndex].machineCount + ' 辆';
+                tooltip = params.data.name + '</br>' + '开工率：' + data[params.dataIndex].workRate + '%' + '</br>'+ '车辆数量：' + data[params.dataIndex].machineCount + '台/天';
               }else{
-                tooltip = params.data.name + '</br>' + '销售数：' + data[params.dataIndex].salesRate + ' 辆';
+                tooltip = params.data.name + '</br>' + '销售数：' + data[params.dataIndex].salesRate + '台';
               }
               return tooltip;
             }
@@ -184,9 +184,9 @@
             formatter: function(params){
               var tooltip;
               if(data[1].salesRate == undefined){
-                tooltip = params.data.name + '</br>' + '开工率：' + data[params.dataIndex].workRate + '%' + '</br>'+ '车辆数量：' + data[params.dataIndex].machineCount + ' 辆';
+                tooltip = params.data.name + '</br>' + '开工率：' + data[params.dataIndex].workRate + '%' + '</br>'+ '车辆数量：' + data[params.dataIndex].machineCount + ' 台/天';
               }else{
-                tooltip = params.data.name + '</br>' + '销售数：' + data[params.dataIndex].salesRate + ' 辆';
+                tooltip = params.data.name + '</br>' + '销售数：' + data[params.dataIndex].salesRate + ' 台';
               }
               return tooltip;
             }
