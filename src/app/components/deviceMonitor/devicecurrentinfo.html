@@ -581,7 +581,7 @@
                     <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <!--运行监控-->
-                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.validateMonitorShowPermission()&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
                     <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
                     <!--实时工时-->
@@ -659,7 +659,7 @@
                     <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
                     <!--作业监控-->
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()&&userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{deviceData.workMonitor}}</td>
                     <!--led状态-->
                     <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
                     <!--实时工时-->
