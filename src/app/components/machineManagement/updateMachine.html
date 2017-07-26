@@ -127,7 +127,7 @@
 
           <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
-            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
+            <ui-select-match  placeholder="车辆状态">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
               <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>

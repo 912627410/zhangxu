@@ -243,9 +243,10 @@
         if (permissions.getPermissions("fleetMng:fleet:query")) {
           vm.getFleet();
         }
-        if (permissions.getPermissions("user:notification")) {
+        // 报警信息权限暂未定义
+       // if (permissions.getPermissions("user:notification")) {
           vm.getNotification();
-        }
+       // }
 
         //读取小挖型号参数
         var smallExcavatorURL = SYS_CONFIG_URL + "?name=SMALL_EXCAVATOR_MODEL";

@@ -1038,10 +1038,6 @@
         });
     }
 
-    vm.validateMonitorShowPermission = function () {
-      return permissions.getPermissions("device:monitorShow");
-    }
-
 
     //发送解绑短信
     vm.sendUnActiveLockSMS = function (devicenum) {

@@ -251,10 +251,7 @@
      });
    }
 
-
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("device:monitorPage");
-    }
+    
 
     //导出至Excel
     vm.excelExport=function (queryOrg) {
