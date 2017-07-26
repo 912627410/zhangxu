@@ -18,13 +18,18 @@
     //自适应高度
     var windowHeight = $window.innerHeight; //获取窗口高度
     windowHeight = windowHeight - 50 - 15 - 90 - 15 - 5;//50 topBar的高,15间距,90msgBox高,15间距,5 预留
-    var leftMapBoxHeight = windowHeight / 4;
     vm.mapBox = {
       "min-height": windowHeight + "px"
     }
+    //右边栏自适应
+    var leftMapBoxHeight = windowHeight *(2/8);
+    var leftMapBoxHeight2 = windowHeight *(5/8);
     vm.leftMapBox = {
-      "min-height": leftMapBoxHeight + "px",
-      "width": "90%"
+      "min-height": leftMapBoxHeight + "px"
+    }
+    vm.leftMapBox2 = {
+      "border": "dashed",
+      "min-height": leftMapBoxHeight2 + "px"
     }
     //初始化地图
     serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
