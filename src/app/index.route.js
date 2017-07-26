@@ -102,8 +102,8 @@
           },
           'topbar@home': {
             templateUrl: 'app/main/topbar.html',
-            controller: 'MainController',
-            controllerAs: 'mainCtrl'
+            controller: 'homeTopbarController',
+            controllerAs: 'homeTopbarCtl'
           },
           'main@home': {
             templateUrl: 'app/home/home.html'
