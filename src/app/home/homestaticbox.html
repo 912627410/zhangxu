@@ -9,7 +9,7 @@
       <div class="icon">
         <i class="ion ion-bag"></i>
       </div>
-      <a ui-sref="home.monitor" class="small-box-footer">
+      <a ui-sref="home.monitor" class="small-box-footer"  presentation-href="dashboard:deviceMonitor" >
         {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
     </div>
@@ -24,12 +24,10 @@
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
-      <a ui-sref="home.deviceinfoMng" class="small-box-footer" presentation-href="device:page" ng-if="homeCtrl.validateDeviceOperPermission()">
+      <a ui-sref="home.deviceinfoMng" class="small-box-footer" presentation-href="deviceMng" >
          {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
 
-
-      <span class="small-box-footer" ng-if="!homeCtrl.validateDeviceOperPermission()">{{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i></span>
     </div>
   </div><!-- ./col -->
   <div class="col-lg-3 col-xs-6">

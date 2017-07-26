@@ -13,9 +13,6 @@
     var vm = this;
     vm.deviceinfo = deviceinfo;
 
-    vm.validateMonitorShowPermission=function(){
-      return permissions.getPermissions("device:monitorShow");
-    }
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
