@@ -10,7 +10,7 @@
     .controller('machineWorkTimeController', machineWorkTimeController);
 
   /** @ngInject */
-  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY,serviceResource, NgTableParams, ngTableDefaults) {
+  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification,$uibModal, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY,serviceResource, NgTableParams, ngTableDefaults,DEVCE_MONITOR_SINGL_QUERY,languages) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
@@ -803,6 +803,31 @@
     };
 
     // vm.ok('1,2,3', 1,1, 0, null);
+    //点击车号的超链接
+    vm.currentInfo = function (licenseId, size) {
+
+      var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + 1001 + "&licenseId=" + licenseId;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+          vm.deviceinfoMonitor = data.content;
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+            controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+            size: size,
+            resolve: { //用来向controller传数据
+              deviceinfo: function () {
+                return vm.deviceinfoMonitor;
+              }
+            }
+          });
+
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        }
+      )
+    };
 
   }
 })();
