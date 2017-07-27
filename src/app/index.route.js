@@ -31,7 +31,7 @@
           },
           'topbar@login': {
             templateUrl: 'app/components/login/topBar.html',
-            controller:'TopBarController',
+            controller: 'TopBarController',
             controllerAs: 'TopBarCtrl'
           },
           'main@login': {
@@ -55,13 +55,13 @@
           },
           'topbar@selectApp': {
             templateUrl: 'app/main/selectAppTopBar.html',
-            controller:'selectAppTopBarController',
-            controllerAs:'selectAppTopBarCtr'
+            controller: 'selectAppTopBarController',
+            controllerAs: 'selectAppTopBarCtr'
           },
           'main@selectApp': {
             templateUrl: 'app/main/selectApp.html',
             controller: 'selectAppController',
-            controllerAs:'selectAppCtr'
+            controllerAs: 'selectAppCtr'
           }
 
         }
@@ -86,6 +86,26 @@
             templateUrl: 'app/main/rentalPlatform/machineMng.html',
             controller: 'rentalMachineMngController',
             controllerAs: 'rentalMachineMngCtr'
+          }
+        }
+      })
+      .state('rental.machineHistoryData', {
+        url: '/machineHistoryData',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/machineMng/machineHistoryData.html',
+            controller: 'machineHistoryDataController',
+            controllerAs: 'machineHistoryDataCtr'
+          }
+        }
+      })
+      .state('rental.machineLifeCycle', {
+        url: '/machineLifeCycle',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/machineMng/machineLifeCycle.html',
+            controller: 'machineLifeCycleController',
+            controllerAs: 'machineLifeCycleCtr'
           }
         }
       })

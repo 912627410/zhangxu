@@ -17,19 +17,15 @@
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
     //自适应高度
     var windowHeight = $window.innerHeight; //获取窗口高度
-    windowHeight = windowHeight - 50 - 15 - 90 - 15 - 5;//50 topBar的高,15间距,90msgBox高,15间距,5 预留
-    vm.mapBox = {
-      "min-height": windowHeight + "px"
+    var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 5;//50 topBar的高,15间距,90msgBox高,15间距,5 预留
+    //baseBox自适应高度
+    vm.baseBoxContainer = {
+      "min-height": baseBoxContainerHeight + "px"
     }
-    //右边栏自适应
-    var leftMapBoxHeight = windowHeight *(2/8);
-    var leftMapBoxHeight2 = windowHeight *(5/8);
-    vm.leftMapBox = {
-      "min-height": leftMapBoxHeight + "px"
-    }
-    vm.leftMapBox2 = {
-      "border": "dashed",
-      "min-height": leftMapBoxHeight2 + "px"
+    var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+    //地图的自适应高度
+    vm.baseBoxMapContainer = {
+      "min-height": baseBoxMapContainerHeight + "px"
     }
     //初始化地图
     serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
