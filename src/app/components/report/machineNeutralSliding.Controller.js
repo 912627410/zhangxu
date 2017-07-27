@@ -12,9 +12,12 @@
   function machineNeutralSlidingController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
-    var wsNeutralSlide;
     vm.operatorInfo = $rootScope.userInfo;
     vm.neutralSlideMonitor = false; // 空档滑行实时监控开关
+
+    var wsNeutralSlide;//websocket实例
+    var lockReconnect = false;//避免重复连接
+    var wsUrl = WEBSOCKET_URL + "webSocketServer/neutralSlideRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
 
     ngTableDefaults.params.count = 15;
     ngTableDefaults.settings.counts = [];
@@ -207,23 +210,34 @@
       vm.initDate();
     };
 
+    vm.createWebSocket = function(url) {
+      try {
+        wsNeutralSlide = new WebSocket(url);
+        initEventHandle();
+      } catch (e) {
+        reconnect(url);
+      }
+    };
 
-    /**
-     * 开启空档滑行实时监控
-     */
-    vm.neutralSlideReload = function () {
-      wsNeutralSlide = new WebSocket(WEBSOCKET_URL + "webSocketServer/neutralSlideRealTimeMonitor?token=" + vm.operatorInfo.authtoken);
-
-      wsNeutralSlide.onopen = function() {
-        Notification.success("开启成功,请打开图表");
-        vm.neutralSlideMonitor  = true;
+    var initEventHandle = function() {
+      wsNeutralSlide.onclose = function () {
+        reconnect(wsUrl);
       };
+      wsNeutralSlide.onerror = function () {
+        Notification.error("wsNeutralSlide WebSocketError!");
+        reconnect(wsUrl);
+      };
+      wsNeutralSlide.onopen = function () {
+        //心跳检测重置
+        heartCheck.reset().start();
 
-
-      wsNeutralSlide.onerror = function (evt) {
-        Notification.error("NeutralSlide WebSocketError!");
+        Notification.success("开启成功,请打开图表");
+        vm.neutralSlideMonitor = true;
       };
       wsNeutralSlide.onmessage = function (evt) {
+        //如果获取到消息，心跳检测重置
+        //拿到任何消息都说明当前连接是正常的
+        heartCheck.reset().start();
 
         var obj = JSON.parse(evt.data);
         var data = {
@@ -235,9 +249,41 @@
         };
         vm.neutralSlideConfig.series[0].data.push(data);
         $scope.$apply();
+      }
+    };
 
-      };
+    var reconnect = function(url) {
+      if(lockReconnect) return;
+      lockReconnect = true;
+      //没连接上会一直重连，设置延迟避免请求过多
+      setTimeout(function () {
+        vm.createWebSocket(url);
+        lockReconnect = false;
+      }, 2000);
+    };
 
+    //心跳检测
+    var heartCheck = {
+      timeout: 60000,//60秒
+      timeoutObj: null,
+      reset: function(){
+        clearTimeout(this.timeoutObj);
+        return this;
+      },
+      start: function(){
+        this.timeoutObj = setTimeout(function(){
+          //这里发送一个心跳，后端收到后，返回一个心跳消息，
+          //onmessage拿到返回的心跳就说明连接正常
+          wsNeutralSlide.send("HeartBeat");
+        }, this.timeout)
+      }
+    };
+
+    /**
+     * 开启空档滑行实时监控
+     */
+    vm.neutralSlideReload = function () {
+      vm.createWebSocket(wsUrl);
     };
 
     /**
@@ -250,15 +296,22 @@
       wsNeutralSlide.onclose = function () {
         Notification.warning("空档滑行实时监控关闭成功");
         vm.neutralSlideMonitor = false;
-      }
+      };
+      heartCheck.reset();
     };
 
 
     /**
-     * 关闭当前页面, 停止实时监控
+     * 关闭当前页面,如果开启实时监控,则停止实时监控
      */
     $scope.$on("$destroy",function () {
-      wsNeutralSlide.close();
+      if(vm.neutralSlideMonitor) {
+        wsNeutralSlide.close();
+        wsNeutralSlide.onclose = function () {
+          vm.neutralSlideMonitor = false;
+        }
+      }
+      heartCheck.reset();
     });
 
   }

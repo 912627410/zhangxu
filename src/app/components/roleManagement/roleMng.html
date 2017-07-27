@@ -24,65 +24,94 @@
       <input type="text" name="name" class="form-control " ng-model="roleMngCtrl.roleInfo.name" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
 
-
-
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"  ng-click="roleMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="role:rolePage"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">{{'query'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="system:role:query"  ng-click="roleMngCtrl.query(null,null,null,roleMngCtrl.roleInfo)">{{'query'|translate}}</button>
 
     </div>
 
-
   </div>
+  <br>
+
   <div class="row">
-    <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">{{'totalNumberOfRoles'|translate}}:  {{roleMngCtrl.page.totalElements}}</span>
-    </div>
-    <div class="col-md-10">
-
-      <a class="btn btn-default pull-right"
-         presentation-href="role:roleOper"
-         ng-click="roleMngCtrl.newRole()">
-        <i class="fa fa-plus"></i> {{'add'|translate}}
-      </a>
-    </div>
-  </div>
-  <div class="row " style="padding: 10px">
-      <div class="table-responsive">
-      <table ng-table="roleMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-        <tr ng-repeat="roleInfo in $data">
-
-          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{roleInfo.id}}</td>
-          <td class="text-nowrap" data-title="'roleName'|translate" sortable="'name'">{{roleInfo.name}}</td>
-          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'label'">{{roleInfo.organizationDto.label}}</td>
-          <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{roleInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'type'|translate" sortable="'typeDesc'">{{roleInfo.typeDesc}}</td>
-          <td class="text-nowrap"  data-title="'operation'|translate" >
-            <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="role:roleOper"
-                    ng-click="roleMngCtrl.updateRole(roleInfo)">{{'alter'|translate}}
-            </button>
-            <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="role:roleUserOper"
-                    ng-click="roleMngCtrl.roleUserManage(roleInfo,'lg')">{{'includeUsers'|translate}}
-            </button>
-            <button type="button" class="btn btn-default btn-xs"
-                    presentation-href="role:rolePermissionOper"
-                    ng-click="roleMngCtrl.rolePriviligeManage(roleInfo,'lg')">{{'includePrivilige'|translate}}
-            </button>
-          </td>
-
-        </tr>
-      </table>
+    <div class="col-md-3">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'organizationInformation'|translate}}
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+            <abn-tree tree-data="roleMngCtrl.my_data"
+                      tree-control="treeController"
+                      on-select="roleMngCtrl.my_tree_handler(branch.id); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
       </div>
     </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="roleMngCtrl.page.totalElements" ng-change="roleMngCtrl.query(roleMngCtrl.pageNumber-1,null,null,roleMngCtrl.roleInfo)"
-                    max-size="5" ng-model="roleMngCtrl.pageNumber" items-per-page="roleMngCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+    <div class="col-md-6">
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              角色列表
+              <a class="pull-right" type="button" href="" presentation-href="system:role:create" ng-click="roleMngCtrl.newRole()" >
+                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+              </a>
+            </h4>
+
+
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="role in roleMngCtrl.roleList">
+              <div class="row">
+                <div class="col-sm-5">
+                  <span>
+                    <a href="javascript:;" ng-class="{true: 'text-red'}[roleMngCtrl.selectedRole == role]" presentation-href="system:role:rolePrivilege:query" ng-click="roleMngCtrl.selectRole(role)" class="fa fa-tags">  {{role.name}} </a>
+                  </span>
+                </div>
+                <div class="col-sm-7 text-right">
+                  <button type="button" class="btn btn-default btn-xs"
+                          presentation-href="system:role:modify"
+                          ng-click="roleMngCtrl.updateRole(role)">{{'alter'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs "
+                          presentation-href="system:role:roleUser:query"
+                          ng-click="roleMngCtrl.roleUserManage(role,'lg')">{{'includeUsers'|translate}}
+                  </button>
+                </div>
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel-group" id="rolePanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              权限列表
+              <a class="pull-right" type="button" href="" presentation-href="system:role:rolePrivilege:modify" ng-click="roleMngCtrl.rolePrivilegeManage(roleMngCtrl.selectedRole,'lg')">
+                <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
+              </a>
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <treecontrol class="tree-classic" tree-model="roleMngCtrl.menuList">
+              {{node.name}}
+            </treecontrol>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </section>

@@ -62,8 +62,8 @@
               	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.pressureMeter}}</td>
               	<td>{{'GPRSSignalQuality'|translate}}</td>
               	<td ng-cloak>{{(deviceCurrentInfoDetailsCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
-              	<td ng-if="deviceCurrentInfoDetailsCtrl.validateMonitorShowPermission()">{{'operationMonitoring'|translate}}</td>
-              	<td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.validateMonitorShowPermission()">{{deviceCurrentInfoDetailsCtrl.deviceinfo.workMonitor}}</td>
+              	<td >{{'operationMonitoring'|translate}}</td>
+              	<td ng-cloak >{{deviceCurrentInfoDetailsCtrl.deviceinfo.workMonitor}}</td>
               	<!-- <td>{{'operationMonitoring'|translate}}</td>
               	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.workMonitor}}</td> -->
               </tr>

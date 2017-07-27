@@ -264,7 +264,7 @@
 
     };
 
-
+    //在当前页面修改
     vm.update = function (workPoint) {
       if(vm.circleEditor){
         vm.circleEditor.close();
@@ -287,6 +287,30 @@
       })
 
       vm.circleEditor.open();
+
+    }
+
+    // 在模态框修改
+    vm.updateInModal = function (workPoint) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/fleetMonitor/updateWorkPoint.html',
+        controller: 'updateWorkPointController as updateWorkPointCtrl',
+        size: 'lg',
+        backdrop: false,
+        resolve: {
+          workPoint: workPoint
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.initPointQuery(null,null,null,vm.fleet);
+
+      }, function () {
+        //取消
+      });
+
 
     }
 

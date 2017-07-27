@@ -9,13 +9,17 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
+  function machineMngController($rootScope, $scope, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
+                                treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
+                                MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
+                                MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT,USER_MACHINE_TYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.org = {label: ""};    //所属组织
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+    vm.querySubOrg = true;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -38,8 +42,12 @@
 
       }
 
-      if (null != vm.org&&null != vm.org.id) {
+      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
+        restCallURL += "&parentOrgId=" +vm.org.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -59,7 +67,36 @@
       });
     };
 
-    vm.query();
+    vm.query(null,null,null,null);
+
+
+    //查询当前用户拥有的车辆类型明细
+    vm.getMachineType = function(){
+      var restCallURL = USER_MACHINE_TYPE_URL;
+      if(vm.operatorInfo){
+        restCallURL += "?orgId="+ vm.operatorInfo.userdto.organizationDto.id;
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+      rspData.then(function (data) {
+        if(data.length>0){
+          vm.machineTypeList = data;
+        } else {
+          //在用户的所在组织不存在车辆类型时,默认查询其上级组织拥有的车辆类型
+          if(vm.operatorInfo){
+            var restCallURL1 = USER_MACHINE_TYPE_URL;
+            restCallURL1 += "?orgId="+ vm.operatorInfo.userdto.organizationDto.parentId;
+          }
+          var rspData1 = serviceResource.restCallService(restCallURL1, "QUERY");
+          rspData1.then(function (data1) {
+            vm.machineTypeList = data1;
+          });
+        }
+      }, function (reason) {
+        vm.machineList = null;
+        Notification.error("获取车辆类型数据失败");
+      });
+    }
+    vm.getMachineType();
 
     //重置查询框
     vm.reset = function () {
@@ -81,6 +118,9 @@
         resolve: {
           operatorInfo: function () {
             return vm.operatorInfo;
+          },
+          machineTypeInfo: function () {
+            return vm.machineTypeList;
           }
         }
       });
@@ -111,6 +151,9 @@
           resolve: {
             machine: function () {
               return operMachine;
+            },
+            machineTypeInfo: function () {
+              return vm.machineTypeList;
             }
           }
         });

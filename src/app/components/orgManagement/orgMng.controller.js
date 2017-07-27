@@ -9,7 +9,7 @@
     .controller('orgMngController', orgMngController);
 
   /** @ngInject */
-  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL) {
+  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedOrg;
@@ -30,8 +30,16 @@
 
     //选中组织事件
     vm.my_tree_handler = function (branch) {
-
-
+      //查询选中组织所拥有的车辆类型
+      var restCallURL = USER_MACHINE_TYPE_URL;
+      if(vm.operatorInfo){
+        restCallURL += "?orgId="+ branch.id;
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+      rspData.then(function (data) {
+        vm.machineType = data;
+      });
+      //查询组织信息
       $scope.$emit("OrgSelectedEvent", branch);
       vm.selectedOrg = branch;
       var restCallURL = QUERY_PARENTORG_URL;
@@ -115,7 +123,7 @@
       return tree;
     };
 
-//生成局部组织树
+    //生成局部组织树
     vm.loadLocalOrgTree = function () {
 
       if(vm.operatorInfo){
@@ -167,7 +175,7 @@
     vm.toggleAnimation = function () {
       vm.animationsEnabled = !vm.animationsEnabled;
     };
-//new org
+    //new org
     vm.addOrg = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -189,7 +197,7 @@
         //取消
       });
     };
-//update org
+    //update org
     vm.updateOrg = function (size) {
       if(null == vm.selectedOrg) {
         Notification.warning("请选择更新的组织");
@@ -229,5 +237,37 @@
         });
       }
     };
+    //组织下车辆类型管理
+    vm.MachineTypeMng = function (selectedOrg,size) {
+      if(null == vm.selectedOrg) {
+        Notification.warning("请选择对应组织");
+        return;
+      }
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/orgManagement/orgMachineTypeMng.html',
+        controller: 'orgMachineTypeMngController as orgMachineTypeMngCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          orgInfo: function () {
+            return selectedOrg;
+          },
+
+        }
+      });
+
+      modalInstance.result.then(function () {
+        //更新组织拥有车辆类型
+        var restCallURL = USER_MACHINE_TYPE_URL + "?orgId="+ selectedOrg.id;
+        var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+        rspData.then(function (data) {
+          vm.machineType = data;
+        });
+      }, function () {
+        //取消
+      });
+    };
+
   }
 })();

@@ -35,7 +35,7 @@
     <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-click="sysconfigMngCtrl.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button"
-              presentation-href="config:sysconfigPage"
+              presentation-href="system:config:query"
               ng-click="sysconfigMngCtrl.query(null,null,null,sysconfigMngCtrl.sysconfig)">{{'query'|translate}}
       </button>
 
@@ -59,7 +59,7 @@
     </div>
     <div class="col-md-9">
       <a class="btn btn-default pull-right"
-         presentation-href="config:sysconfigOper"
+         presentation-href="system:config:create"
          ng-click="sysconfigMngCtrl.newSysconfig()">
         <i class="fa fa-plus"></i> {{'add'|translate}}
       </a>
@@ -77,7 +77,7 @@
           <div title="{{sysconfig.description}}">{{sysconfig.description| limitTo: 15}}{{sysconfig.description.length > 15? '...' : ''}}</div></td>
         <td class="text-nowrap" data-title="'operation'|translate" align="center">
           <button type="button" class="btn btn-default btn-xs"
-                  presentation-href="config:sysconfigOper"
+                  presentation-href="system:config:modify"
                   ng-click="sysconfigMngCtrl.updateSysconfig(sysconfig)">{{'alter'|translate}}
           </button>
         </td>

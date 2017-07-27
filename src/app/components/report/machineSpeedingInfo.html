@@ -60,7 +60,7 @@
 
     <div class="col-md-3">
       <button class="btn btn-primary" type="button" ng-click="machineSpeedingCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" presentation-href="statistical:machine:transport:query"
+      <button class="btn btn-primary" type="button" presentation-href="statAnalysis:transport:overSpeed:query"
               ng-click="machineSpeedingCtrl.query(null, null, null)">{{'query' | translate}}</button>
 
     </div>
@@ -69,9 +69,9 @@
   <div class="MachineTransportInfosBox" style="position:relative;width: 100%;">
     <div class="overSpeed" >
         <div class="pull-right">
-          <button class="btn btn-sm btn-primary" ng-click="machineSpeedingCtrl.speedAlertReload()" presentation-href="statistical:machine:transport:monitor"
+          <button class="btn btn-sm btn-primary" ng-click="machineSpeedingCtrl.speedAlertReload()" presentation-href="statAnalysis:transport:overSpeed:openMonitor"
                   ng-if="!machineSpeedingCtrl.speedAlertMonitor">{{'turnOnRealtimeMonitoring'|translate}}</button>
-          <button class="btn btn-sm btn-warning" ng-click="machineSpeedingCtrl.speedAlertClose()"  presentation-href="statistical:machine:transport:monitor"
+          <button class="btn btn-sm btn-warning" ng-click="machineSpeedingCtrl.speedAlertClose()"  presentation-href="statAnalysis:transport:overSpeed:openMonitor"
                   ng-if="machineSpeedingCtrl.speedAlertMonitor">{{'turnOffRealtimeMonitoring'|translate}}</button>
         </div>
       <uib-tabset>

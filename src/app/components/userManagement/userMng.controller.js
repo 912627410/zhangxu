@@ -9,39 +9,65 @@
     .controller('userMngController', userMngController);
 
   /** @ngInject */
-  function userMngController($rootScope,$scope,$confirm,$uibModal,Notification,treeFactory,NgTableParams,ngTableDefaults,serviceResource,
-                             USERINFO_URL,userService,$http,
-                             DEFAULT_SIZE_PER_PAGE,USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL ) {
+  function userMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,
+                             USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
-    vm.userinfoStatusList;
-    vm.org = {label: ""};
-    vm.orgs = {label: ""};
+    // select org
+    vm.my_tree_handler = function (branch) {
 
-    var promise = userService.queryStatusList();
-    promise.then(function (data) {
-      vm.userinfoStatusList = data;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取权限状态失败');
-    })
+      var restCallURL = USER_PAGE_URL;
+      var pageUrl = 0;
+      var sizeUrl = 10000;
+      var sortUrl = "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      if (null != branch && null != branch.id) {
+        restCallURL += "&search_EQ_organization.id=" + branch.id;
+      }
 
-    //组织树的显示
-    vm.openTreeInfo=function() {
-      treeFactory.treeShow(function(selectedItem){
-        vm.org =selectedItem;
+      var promise = serviceResource.restCallService(restCallURL, "GET");
+      promise.then(function (data) {
+
+        vm.userinfoList = data.content;
+
+      }, function (reason) {
+        Notification.error("获取角色数据失败");
       });
+
     }
 
-    vm.animationsEnabled = true;
-    vm.toggleAnimation = function () {
-      vm.animationsEnabled = !vm.animationsEnabled;
-    };
+    //初始化组织树
+    if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
+      vm.my_data = angular.copy([$rootScope.orgChart[0]]);
+      vm.my_tree_handler(vm.my_data);
+    } else {
+      Notification.error('获取组织机构信息失败');
+    }
 
-//new user
+    // select user
+    vm.roleTreeOptions = {
+      nodeChildren: "privileges"
+    }
+
+    vm.selectUser = function (user) {
+
+      vm.selectedUser = user;
+
+      var roleUserUrl = USER_ROLE_URL;
+      roleUserUrl += "?userinfoId=" + user.id;
+      //得到角色用户信息
+      var roleUserPromise = serviceResource.restCallService(roleUserUrl, "GET");
+      roleUserPromise.then(function (data) {
+
+        vm.roleList = commonFactory.unflatten(data.content);
+
+      })
+
+    }
+
+
+    //new user
     vm.addUser = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -65,7 +91,7 @@
       });
     };
 
-//change password
+    //change password
     vm.updatePassword = function (usermnginfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -88,39 +114,53 @@
     };
 
 
-//update userinfo
+    //update userinfo
     vm.updateUserInfo = function (usermnginfo,size) {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/userManagement/updateUserInfo.html',
-        controller: 'updateUserinfoController as updateUserinfoCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          usermnginfo: function () {
-            return usermnginfo;
+
+      var singlUrl = USERINFO_URL + "?id=" + usermnginfo.id;
+      var userfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      userfoPromis.then(function (data) {
+        var operusermnginfo = data.content;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/userManagement/updateUserInfo.html',
+          controller: 'updateUserinfoController as updateUserinfoCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            usermnginfo: function () {
+              return operusermnginfo;
+            }
           }
-        }
-      });
+        });
 
-      modalInstance.result.then(function (selectedItem) {
+        modalInstance.result.then(function(result) {
 
-      }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
+
+
+      }, function (reason) {
+        Notification.error('获取用户信息失败');
       });
     };
 
+
     vm.query = function (page, size, sort, userinfo) {
 
-      //console.log(vm.checked);
-      vm.checked = false; //每次查询,全选默认为false
-
-      // console.log(vm.checked);
-      vm.selected = []; //选中的设备id为空
       //构造查询条件
       var restCallURL = USER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || 10000;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
@@ -129,40 +169,28 @@
           restCallURL += "&search_LIKE_ssn=" + userinfo.ssn;
         }
 
-        if (null != userinfo.status) {
-          restCallURL += "&search_EQ_status=" + userinfo.status.value;
+        if (null != userinfo.firstname) {
+          restCallURL += "&search_LIKE_firstname=" + userinfo.firstname;
         }
 
-      }
-
-      if (null != vm.org && null != vm.org.id) {
-        restCallURL += "&search_EQ_organization.id=" + vm.org.id;
       }
 
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
 
         vm.userinfoList = data.content;
-        vm.tableParams = new NgTableParams({},
-          {
-            dataset: data.content
-          });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
+
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error("获取用户数据失败");
       });
     }
 
-    //首次查询
-    vm.query(null, null, null, null);
 
     /**
      * 重置查询框
      */
     vm.reset = function () {
       vm.userinfo = null;
-      vm.org = null;
     }
 
     vm.statusDisable = function (userinfo) {
@@ -193,19 +221,24 @@
     };
 
     vm.updateTable=function(content){
-      for(var i=0;i<vm.tableParams.data.length;i++){
-        if(vm.tableParams.data[i].id==content.id){
-          vm.tableParams.data[i]=content;
+      for(var i=0;i<vm.userinfoList.length;i++){
+        if(vm.userinfoList[i].id==content.id){
+          vm.userinfoList[i]=content;
         }
       }
     }
 
 
     /**
-     * 隶属角色管理
+     * user角色管理
      * @param size
      */
-    vm.userRoleManage = function (userinfo,size) {
+    vm.userRoleManage = function (size) {
+
+      if(vm.selectedUser==null){
+        Notification.warning("请先选择用户再进行操作");
+        return;
+      }
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -215,14 +248,13 @@
         backdrop: false,
         resolve: {
           userinfo: function () {
-            return userinfo;
+            return vm.selectedUser;
           }
         }
       });
 
       modalInstance.result.then(function (result) {
-        // console.log(result);
-//        vm.tableParams.data.splice(0, 0, result);
+        vm.selectUser(vm.selectedUser);
 
       }, function () {
         //取消
@@ -255,56 +287,6 @@
     };
     //
 
-    vm.selectAll = false;//是否全选标志
-    vm.selected = []; //选中的设备id
-
-    var updateSelected = function (action, id) {
-      if (action == 'add' && vm.selected.indexOf(id) == -1) {
-        vm.selected.push(id);
-      }
-      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
-        var idx = vm.selected.indexOf(id);
-        vm.selected.splice(idx, 1);
-
-      }
-    }
-
-    vm.updateSelection = function ($event, id, status) {
-
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      updateSelected(action, id);
-    }
-
-
-    vm.updateAllSelection = function ($event) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      vm.tableParams.data.forEach(function (user) {
-        updateSelected(action, user.id);
-      })
-
-    }
-
-    vm.isSelected = function (id) {
-
-      return vm.selected.indexOf(id) >= 0;
-    }
-
-    vm.checkAll = function () {
-      var operStatus = false;
-      if (vm.selectAll) {
-        operStatus = false;
-        vm.selectAll = false;
-      } else {
-        operStatus = true;
-        vm.selectAll = true;
-      }
-
-      vm.userinfoList.forEach(function (user) {
-        user.checked = operStatus;
-      })
-    }
 
     vm.privExport = function () {
 
@@ -338,7 +320,7 @@
         Notification.warning({message: '请选择要导出的用户', positionY: 'top', positionX: 'center'});
       }
 
-
     }
+
   }
 })();

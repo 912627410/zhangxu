@@ -58,10 +58,10 @@
       restCallURL += "&startDate="+$filter('date')(vm.startDate,'yyyy-MM-dd');
       restCallURL += "&endDate="+$filter('date')(vm.endDate,'yyyy-MM-dd');
       if(null!=workRecord){
-        if(null!= workRecord.deviceNum){
+        if(null!= workRecord.deviceNum && ""!= workRecord.deviceNum){
           restCallURL += "&deviceNum=" +$filter('uppercase')(workRecord.deviceNum);
         }
-        if(null!= workRecord.licenseId){
+        if(null!= workRecord.licenseId && ""!= workRecord.licenseId){
           restCallURL += "&licenseId=" +$filter('uppercase')(workRecord.licenseId);
         }
       }
@@ -108,33 +108,58 @@
         //根据月份升序排列
         var result = workRecords.sort(function(a, b) { return a.recordDate > b.recordDate ? 1 : -1;} );//升序
         var resultLen = result.length;
-        if(resultLen > 0) {
+        if(resultLen == 1) {
+          recordDates.push($filter('date')(result[0].recordDate, 'yyyy-MM-dd'));
+          totalRecords.push(result[0].records);
+          averageRecords.push(result[0].records);
+          machineNum.push(1);
+          totalMileage.push(result[0].mileage);
+        }else if(resultLen > 1) {
           for (var i = 1; i < resultLen; i++) {
             if (result[i].recordDate != result[i - 1].recordDate) {
               recordDates.push($filter('date')(result[i - 1].recordDate, 'yyyy-MM-dd'));
               recordArr.push(result[i - 1].records);
-              mileageArr.push(result[i - 1].mileage);
-              totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+              if(result[i - 1].mileage != null) {
+                mileageArr.push(result[i - 1].mileage);
+              }
+              if(mileageArr.length != 0) {
+                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+              } else {
+                totalMileage.push(null);
+              }
               var sum = eval(recordArr.join("+"));
               totalRecords.push(sum);
               averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
               machineNum.push(recordArr.length);
-              recordArr = [];
-              mileageArr = [];
               if (i == resultLen - 1) {
                 recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 totalRecords.push(result[i].records);
                 averageRecords.push(result[i].records);
-                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                if(mileageArr.length != 0) {
+                  totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                } else {
+                  totalMileage.push(null);
+                }
+                machineNum.push(1);
               }
+              recordArr = [];
+              mileageArr = [];
             } else {
               recordArr.push(result[i - 1].records);
-              mileageArr.push(result[i - 1].mileage);
+              if(result[i - 1].mileage != null) {
+                mileageArr.push(result[i - 1].mileage);
+              }
               if (i == resultLen - 1) {
                 recordDates.push($filter('date')(result[i].recordDate, 'yyyy-MM-dd'));
                 recordArr.push(result[i].records);
-                mileageArr.push(result[i].mileage);
-                totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                if(result[i].mileage != null) {
+                  mileageArr.push(result[i].mileage);
+                }
+                if(mileageArr.length != 0) {
+                  totalMileage.push(parseFloat(eval(mileageArr.join("+")).toFixed(2)));
+                } else {
+                  totalMileage.push(null);
+                }
                 var sum = eval(recordArr.join("+"));
                 totalRecords.push(sum);
                 averageRecords.push(Math.round((sum / recordArr.length) * 100) / 100);
@@ -159,7 +184,7 @@
                 cursor: 'pointer',
                 events: {
                   click: function(e) {
-                    vm.$apply();
+                    // vm.$apply();
                   }
                 }
               }
@@ -228,7 +253,7 @@
               cursor: 'pointer',
               events: {
                 click: function(e) {
-                  vm.$apply();
+                  // vm.$apply();
                 }
               }
             }

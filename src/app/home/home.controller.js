@@ -30,7 +30,7 @@
       Title.restore();
     });
 
-    if(permissions.getPermissions("device:homegpsdata")){
+    if(permissions.getPermissions("dashboard:deviceMonitor")){
 
 
       var rspdata = serviceResource.restCallService(HOME_STATISTICS_DATA_URL, "GET");
@@ -54,10 +54,6 @@
     }
     vm.statisticInfo = statisticInfo;
 
-
-    vm.validateDeviceOperPermission=function(){
-      return permissions.getPermissions("device:page");
-    }
 
 
 

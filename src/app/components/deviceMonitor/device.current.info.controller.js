@@ -806,8 +806,8 @@
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_03.png",
-        offset: new AMap.Pixel(-26, -13),
+        icon: "assets/images/mine_car1.png",
+        offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
       marker.setLabel({
@@ -979,8 +979,7 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-    if (permissions.getPermissions("device:remoteControl")) {
-
+    vm.getDeviceUnlockFactor = function () {
       ////读取初始化设备时需要的信息
       var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
       var rspData = serviceResource.restCallService(restURL, "GET");
@@ -991,7 +990,9 @@
       }, function (reason) {
         Notification.error(languages.findKey('getInformationFailed'));
       })
-    }
+    };
+
+    vm.getDeviceUnlockFactor();
 
 
     //发送绑定短信
@@ -1035,10 +1036,6 @@
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
-    }
-
-    vm.validateMonitorShowPermission = function () {
-      return permissions.getPermissions("device:monitorShow");
     }
 
 
@@ -2814,10 +2811,6 @@
     //默认显示当前设备的最新地址
     vm.initScopeMapTab = function(deviceInfo){
 
-    if (!permissions.getPermissions("device:scopeMapPage")) {
-      return;
-    }
-
     $timeout(function(){
       //第一个标注
       if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
@@ -2893,8 +2886,8 @@
               map: map,
               position: carPostion,
               //icon: "http://code.mapabc.com/images/car_03.png",
-              icon: "assets/images/car_03.png",
-              offset: new AMap.Pixel(-26, -13),
+              icon: "assets/images/mine_car1.png",
+              offset: new AMap.Pixel(-26, -18),
               autoRotation: true
             });
             // 绘制轨迹

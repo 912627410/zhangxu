@@ -9,10 +9,20 @@
     .controller('updateMachineController', updateMachineController);
 
   /** @ngInject */
-  function updateMachineController($rootScope,$scope,$http,$confirm,$timeout,$uibModalInstance,treeFactory,machineService,DEIVCIE_FETCH_UNUSED_URL,AMAP_PLACESEARCH_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine) {
+  function updateMachineController($rootScope,$scope,$http,$confirm,$timeout,$uibModalInstance,treeFactory,machineService,DEIVCIE_FETCH_UNUSED_URL,AMAP_PLACESEARCH_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL,serviceResource, Notification,machine,machineTypeInfo,roles) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
+    vm.machineTypeList = machineTypeInfo;
+    vm.clearSwitchOne = true;
+    vm.clearSwitchTwice = false;
+
+    if (roles.getRoles("车队")) {
+      vm.roleSwitch = true;
+      vm.disableSwitch = "disable";
+      vm.clearSwitchOne = false;
+      vm.clearSwitchTwice = true;
+    }
 
 
     var salaryTypePromise = machineService.getSalaryTypeList();
