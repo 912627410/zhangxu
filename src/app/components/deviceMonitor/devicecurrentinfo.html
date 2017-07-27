@@ -822,26 +822,7 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
-                  <tr ng-if="!(deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
 
-                    <td>{{'visibleSatelliteNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
-                      {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">
-                      {{'noData' |translate}}
-                    </td>
-                    <td>{{'usableSatelliteNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">
-                      {{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">
-                      {{'noData' |translate}}
-                    </td>
-                    <!--增加车载蓄电池电压显示-->
-                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
-                  </tr>
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
@@ -932,6 +913,25 @@
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">
                     <td>{{'simCardSerialNum'|translate}}</td>
                     <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
+                  </tr>
+                  <tr>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">{{'visibleSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">
+                      {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">
+                      {{'noData' |translate}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">{{'usableSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">
+                      {{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}
+                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">
+                      {{'noData' |translate}}
+                    </td>
+                    <!--增加车载蓄电池电压显示-->
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
                   </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
