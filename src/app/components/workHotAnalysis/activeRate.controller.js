@@ -176,11 +176,11 @@
               //   show: true
               // },
               axisLabel: {
-                rotate: 45,
+                rotate: 15,
                 interval: 0,
                 formatter: function(value) {
                   var _value;
-                  _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区|特別行政區|市/, "");
+                  _value = value.replace(/省|回族自治区|壮族自治区|维吾尔自治区|自治区|特別行政區|市|自治州|地区|自治县/, "");
                   return _value;
                 }
               },
