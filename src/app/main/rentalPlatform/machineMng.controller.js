@@ -43,5 +43,9 @@
     };
 
 
+    $scope.navs = ['Machine management','Fleet management','JIFEJIOWJG','FERGERFERGERG','grgehg'];
+
+
+
   }
 })();
