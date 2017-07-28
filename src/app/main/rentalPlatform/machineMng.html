@@ -1,5 +1,4 @@
 <div class="machine-content">
-
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
     <nav-btn>
@@ -11,101 +10,126 @@
     </nav-btn>
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-                <span class="info-box-icon bg-red">
+        <div class="info-box  bg-red">
+                <span class="info-box-icon">
                   <i class="fa fa-odnoklassniki-square"></i></span>
           </span>
           <div class="info-box-content">
             <span class="info-box-text">围栏报警</span>
             <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description" style="cursor: pointer;text-decoration: none;color: currentColor;">
+                   More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
           </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-orange"><i class="fa fa-cab"></i></span>
-
+        <div class="info-box bg-orange">
+          <span class="info-box-icon"><i class="fa fa-cab"></i></span>
           <div class="info-box-content">
             <span class="info-box-text">车辆报警</span>
             <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              <a>More Info <i class="fa fa-arrow-circle-right"></i></a>
+           </span>
           </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-yellow"><i class="fa fa-automobile"></i></span>
+        <div class="info-box bg-yellow">
+          <span class="info-box-icon"><i class="fa fa-automobile"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">保养提醒</span>
             <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
           </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-bolt"></i></span>
+        <div class="info-box bg-green">
+          <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">离线提醒</span>
             <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
           </div>
         </div>
       </div>
     </div>
-    <div class="row map-box-container">
+    <div class="row base-box-container">
       <div class="col-md-8 col-sm-6 col-xs-12">
-        <div class="row" id="homeMap" ng-style="rentalMachineMngCtr.mapBox"></div>
+        <div class="box box-success base-left-map-box-container">
+          <div class="box-header with-border">
+            <i class="fa fa-cloud"></i>
+            <h3 class="box-title">机器预览</h3>
+            <div class="box-tools pull-right">
+              <button class="btn btn-danger btn-sm refresh-btn" title="刷新"><i class="fa fa-refresh"></i></button>
+            </div>
+          </div>
+          <div class="box-body no-padding">
+            <div id="homeMap" ng-style="rentalMachineMngCtr.baseBoxMapContainer"></div>
+          </div>
+        </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-          <div class="row left-map-box-container">
-            <div class="info-box bg-aqua">
+        <div class="info-box bg-aqua">
             <span class="info-box-icon">
               <i class="ion ion-ios-pricetag-outline"></i>
             </span>
-              <div class="info-box-content">
-                <span class="info-box-text">Vehicles</span>
-                <span class="info-box-number">5,200</span>
+          <div class="info-box-content">
+            <span class="info-box-text">Vehicles</span>
+            <span class="info-box-number">5,200</span>
 
-                <div class="progress">
-                  <div class="progress-bar" style="width: 50%"></div>
-                </div>
-                <span class="progress-description">
+            <div class="progress">
+              <div class="progress-bar" style="width: 50%"></div>
+            </div>
+            <span class="progress-description">
                     50% Increase in 30 Days
                   </span>
-              </div>
-            </div>
-          </div>
-          <div class="row left-map-box-container">
-            <div class="info-box bg-purple">
-              <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">rents</span>
-                <span class="info-box-number">90%</span>
-
-                <div class="progress">
-                  <div class="progress-bar" style="width: 20%"></div>
-                </div>
-                <span class="progress-description">
-                    20% Increase in 30 Days
-                  </span>
-              </div>
-            </div>
           </div>
         </div>
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox2">
-          <div class="row left-map-box-container">
+        <div class="info-box bg-purple">
+          <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">rents</span>
+            <span class="info-box-number">90%</span>
+
+            <div class="progress">
+              <div class="progress-bar" style="width: 20%"></div>
+            </div>
+            <span class="progress-description">
+                    20% Increase in 30 Days
+                  </span>
           </div>
+        </div>
+        <div>
         </div>
       </div>
     </div>
   </div>
   <!--currentLocation end-->
 
-
   <!--currentState begin-->
-  <!--<div id="currentState" class="container-fluid">
+  <div id="currentState" class="container-fluid">
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
@@ -148,9 +172,9 @@
         </div>
       </div>
     </div>
-    <div class="row map-box-container">
+    <div class="row base-box-container">
       <div class="col-md-8 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.mapBox">
+        <div class="row" ng-style="rentalMachineMngCtr.baseBoxContainer">
           currentState
           <div class="row">
             <ul ng-repeat="anchor in rentalMachineMngCtr.anchorList" style="float: left">
@@ -160,29 +184,22 @@
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           11
-
         </div>
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           22
-
         </div>
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           33
-
-
         </div>
       </div>
     </div>
-  </div>-->
+  </div>
   <!--currentState end-->
 
   <!--alarmInfo begin-->
-  <!--<div id="alarmInfo" class="container-fluid">
+  <div id="alarmInfo" class="container-fluid">
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
@@ -225,9 +242,9 @@
         </div>
       </div>
     </div>
-    <div class="row map-box-container">
+    <div class="row base-box-container">
       <div class="col-md-8 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.mapBox">
+        <div class="row" ng-style="rentalMachineMngCtr.baseBoxContainer">
           alarmInfo
           <div class="row">
             <ul ng-repeat="anchor in rentalMachineMngCtr.anchorList" style="float: left">
@@ -237,24 +254,17 @@
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           11
-
         </div>
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           22
-
         </div>
-        <div class="row" ng-style="rentalMachineMngCtr.leftMapBox">
-
+        <div class="row">
           33
-
-
         </div>
       </div>
     </div>
-  </div>-->
+  </div>
   <!--alarmInfo end-->
 </div>
