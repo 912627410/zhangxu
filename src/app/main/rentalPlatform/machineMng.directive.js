@@ -25,17 +25,23 @@
         restrict: 'AE',
         replace: true,
         transclude: true,
-        template:'<div class="nav-title" ng-click="navOpen()" ng-class="navActive" ng-transclude></div>',
+        template:'<div class="nav-title" ng-click="navOpen()" ng-class="navActive"><span class="btn-icon-1" ng-class="iconActive1"></span><span class="btn-icon-2" ng-class="iconActive2"></span><span class="btn-icon-3" ng-class="iconActive3"></span></div>',
         link: function(scope,element,attr,ontroller){
           scope.navOpen = function(){
             if(scope.navOpenStyle !== 'nav-list-open' ){
               scope.navActive = 'nav-active';
               scope.navOpenStyle = 'nav-list-open';
               scope.navOverlay = 'nav-overlay';
+              scope.iconActive1 = 'icon-active-1';
+              scope.iconActive2 = 'icon-active-2';
+              scope.iconActive3 = 'icon-active-3';
             }else{
               scope.navOpenStyle = '';
               scope.navOverlay = '';
               scope.navActive = '';
+              scope.iconActive1 = '';
+              scope.iconActive2 = '';
+              scope.iconActive3 = '';
             }
 
           }
@@ -60,6 +66,9 @@
             scope.navOpenStyle = '';
             scope.navOverlay = '';
             scope.navActive = '';
+            scope.iconActive1 = '';
+            scope.iconActive2 = '';
+            scope.iconActive3 = '';
           }
         }
       }
