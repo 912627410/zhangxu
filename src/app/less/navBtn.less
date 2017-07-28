@@ -1,4 +1,16 @@
 .nav-container{
+
+  //default style
+  @nav-white: rgba(255,255,255,1);
+  @nav-black: rgba(0,0,0,1);
+  @nav-yellow: rgba(255,200,0,1);
+  .nav-animate{
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+
+  //nav style
   width: 250px;
   position: fixed;
   top: 100px;
@@ -18,26 +30,24 @@
     right: 0;
     z-index: 1;
     cursor: pointer;
-    box-shadow: 0px 0px 16px rgba(0,0,0,0.4);
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 16px fade(@nav-black,40%);
+    .nav-animate;
+
 
     span{
+      //less bug 高度不确定
       //@offset-w:1px;
       //@offset-h:10px;
       //top: calc(~"50% - @{offset-w}");
       //left: calc(~"50% - @{offset-h}");
+      content: '';
       top: 29px;
       left: 20px;
-      content: '';
       width: 20px;
       height: 2px;
-      background-color: #fff;
+      background-color: @nav-white;
       position: absolute;
-      -webkit-transition: all 0.2s ease-in-out;
-      -moz-transition: all 0.2s ease-in-out;
-      transition: all 0.2s ease-in-out;
+      .nav-animate;
     }
 
     .btn-icon-1{
@@ -75,8 +85,8 @@
     height: calc(~"100%  + @{offset}");
   }
 
-
   .nav-list{
+    color: @nav-white;
     list-style-type: none;
     display: block;
     top: 60px;
@@ -84,21 +94,49 @@
     z-index: 2;
     position: relative;
     visibility: hidden;
-    -webkit-transition: all 0.2s ease-in-out;
-    -moz-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    .nav-animate;
 
     .nav-btn-link{
       height:42px;
-      color: #fff;
       font-size: 16px;
       cursor: pointer;
+      .nav-animate;
 
-      i{
+      .link{
+        color: fade(@nav-white,0);
         position: absolute;
-        right: 18px;
-        font-size: 28px;
+        right: 120px;
       }
+
+      .link-active{
+        color: @nav-white;
+        right: 80px;
+        .nav-animate;
+
+      }
+
+      .link-icon{
+        position: absolute;
+        right: 0;
+        padding: 2px 20px;
+        font-size: 20px;
+        color: fade(@nav-white,0);
+        .nav-animate;
+
+      }
+
+      .link-icon-active{
+        color: @nav-white;
+      }
+
+      .link-active:hover{
+        color: @nav-yellow;
+      }
+
+      .link-icon-active:hover{
+        color: @nav-yellow;
+      }
+
     }
   }
 
@@ -106,19 +144,16 @@
     visibility: visible;
   }
 
-  .nav-btn-link:hover{
-    color: #FFC800;
-  }
-
-
   .nav-overlay{
     position: fixed;
     z-index: -1;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: fade(@nav-black,80%);
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    .nav-animate;
+
   }
 
 }

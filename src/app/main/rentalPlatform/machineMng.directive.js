@@ -35,6 +35,8 @@
               scope.iconActive1 = 'icon-active-1';
               scope.iconActive2 = 'icon-active-2';
               scope.iconActive3 = 'icon-active-3';
+              scope.linkActive = 'link-active';
+              scope.linkIconActive = 'link-icon-active';
             }else{
               scope.navOpenStyle = '';
               scope.navOverlay = '';
@@ -42,6 +44,8 @@
               scope.iconActive1 = '';
               scope.iconActive2 = '';
               scope.iconActive3 = '';
+              scope.linkActive = '';
+              scope.linkIconActive = '';
             }
 
           }
@@ -69,6 +73,8 @@
             scope.iconActive1 = '';
             scope.iconActive2 = '';
             scope.iconActive3 = '';
+            scope.linkActive = '';
+            scope.linkIconActive = '';
           }
         }
       }
@@ -84,7 +90,7 @@
         restrict: 'AE',
         replace: true,
         transclude: true,
-        template:'<li class="nav-btn-link" ng-repeat="item in navs">{{item}}<i class="fa fa-bus" aria-hidden="true"></i></li>'
+        template:'<li class="nav-btn-link" ng-repeat="item in navs"><span class="link" ng-class="linkActive">{{item.title}}</span><i class="link-icon fa {{item.icon}}" ng-class="linkIconActive" aria-hidden="true"></i></li>'
       }
 
     });
