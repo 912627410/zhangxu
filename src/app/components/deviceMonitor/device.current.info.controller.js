@@ -723,18 +723,6 @@
       opened: false
     };
 
-    /**
-     *  地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
-     * @param deviceInfo
-     */
-    vm.initMapTab = function (deviceInfo) {
-      $timeout(function () {
-        var deviceInfoList = new Array();
-        deviceInfoList.push(deviceInfo);
-        var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 4, centerAddr);
-      })
-    };
 
     /**
      *
@@ -2428,11 +2416,14 @@
         }
       }]
     }
-    vm.trackMileage = 0;
 
-    //默认显示当前设备的最新地址
+    /**
+     * 地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
+     * @param deviceInfo
+     */
     vm.initMapTab = function(deviceInfo){
       $timeout(function(){
+        vm.trackMileage = 0;
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         //    alert("deviceInfo.amaplongitudeNum=="+deviceInfo.amaplongitudeNum+", deviceInfo.amaplatitudeNum="+deviceInfo.amaplatitudeNum)
