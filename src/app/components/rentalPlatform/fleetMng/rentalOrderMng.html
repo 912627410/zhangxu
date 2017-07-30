@@ -1,7 +1,7 @@
 <div class="machine-content">
   <section class="content-header">
     <h1>
-      车辆信息
+      订单管理
       <small></small>
     </h1>
   </section>
@@ -9,14 +9,15 @@
   <div class="container-fluid">
     <!--totalSummary begin-->
     <div id="totalSummary" class="row info-box-container">
+
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  bg-red">
+        <div class="info-box  bg-aqua">
                 <span class="info-box-icon">
-                  <i class="fa fa-automobile"></i></span>
+                  <i class="ion ion-bag"></i></span>
           </span>
           <div class="info-box-content">
-            <span class="info-box-text">车辆总数</span>
-            <span class="info-box-number">410</span>
+            <span class="info-box-text">订单总数</span>
+            <span class="info-box-number">420</span>
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
@@ -28,10 +29,10 @@
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-orange">
-          <span class="info-box-icon"><i class="fa fa-cab"></i></span>
+          <span class="info-box-icon"><i class="fa fa-book"></i></span>
           <div class="info-box-content">
-            <span class="info-box-text">车辆报警</span>
-            <span class="info-box-number">410</span>
+            <span class="info-box-text">当前订单</span>
+            <span class="info-box-number">210</span>
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
@@ -41,38 +42,34 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-yellow">
+        <div class="info-box bg-green">
+          <span class="info-box-icon"><i class="fa fa-navicon"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">计划订单</span>
+            <span class="info-box-number">42</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-red">
           <span class="info-box-icon"><i class="fa fa-automobile"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">保养提醒</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
-            </div>
-            <span class="progress-description">
-              More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-green">
-          <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
+            <span class="info-box-text ">新增订单</span>
 
-          <div class="info-box-content">
-            <span class="info-box-text">离线提醒</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
-            </div>
-            <span class="progress-description">
-              More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
           </div>
         </div>
       </div>
+
     </div>
     <!--totalSummary end-->
 
@@ -141,16 +138,16 @@
       </script>
       <div class="table-responsive">
 
-        <table ng-table="rentalFleetMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="machine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
-              <input type="checkbox" ng-checked="rentalFleetMngController.isSelected(machine.id)"
-                     ng-click="rentalFleetMngController.updateSelection($event,machine.id)" ng-model="machine.checked">
+              <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
+                     ng-click="rentalOrderMngController.updateSelection($event,machine.id)" ng-model="machine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-              <a ng-if="rentalFleetMngController.validateOperPermission()" href
-                 ng-click="rentalFleetMngController.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
-              <span ng-if="!rentalFleetMngController.validateOperPermission()">{{machine.licenseId}}</span>
+              <a ng-if="rentalOrderMngController.validateOperPermission()" href
+                 ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
+              <span ng-if="!rentalOrderMngController.validateOperPermission()">{{machine.licenseId}}</span>
 
             </td>
 
@@ -178,9 +175,9 @@
       </div>
 
       <div >
-        <uib-pagination total-items="rentalFleetMngController.page.totalElements"
-                        ng-change="rentalFleetMngController.query(rentalFleetMngController.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="rentalFleetMngController.pageNumber" items-per-page="rentalFleetMngController.page.size"
+        <uib-pagination total-items="rentalOrderMngController.page.totalElements"
+                        ng-change="rentalOrderMngController.query(rentalOrderMngController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="rentalOrderMngController.pageNumber" items-per-page="rentalOrderMngController.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
       </div>

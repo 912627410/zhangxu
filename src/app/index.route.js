@@ -120,6 +120,17 @@
           }
         }
       })
+      //租赁订单管理
+      .state('rental.order', {
+        url: '/order',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrderMng.html',
+            controller: 'rentalOrderMngController',
+            controllerAs: 'rentalOrderMngController'
+          }
+        }
+      })
 
     //物联网系统
     $stateProvider
