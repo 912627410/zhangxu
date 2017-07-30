@@ -100,12 +100,23 @@
         }
       })
       .state('rental.machineLifeCycle', {
-        url: '/machineLifeCycle',
+      url: '/machineLifeCycle',
+      views: {
+        'main@rental': {
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineLifeCycle.html',
+          controller: 'machineLifeCycleController',
+          controllerAs: 'machineLifeCycleCtr'
+        }
+      }
+    })
+      //租赁车队管理
+      .state('rental.fleet', {
+        url: '/fleet',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/machineMng/machineLifeCycle.html',
-            controller: 'machineLifeCycleController',
-            controllerAs: 'machineLifeCycleCtr'
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMng.html',
+            controller: 'rentalFleetMngController',
+            controllerAs: 'rentalFleetMngController'
           }
         }
       })
