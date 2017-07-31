@@ -38,6 +38,7 @@
       $anchorScroll();
     };
 
+    $scope.navs = [{"title":"currentLocation","icon":"fa-map"}, {"title":"currentState","icon":"fa-signal"}, {"title":"alarmInfo","icon":"fa-exclamation-triangle"}];
 
   }
 })();
