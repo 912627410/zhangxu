@@ -1,13 +1,15 @@
 <div class="machine-content">
+
+  <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="rentalMachineMngCtr.gotoAnchor(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>
+
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
-    <nav-btn>
-      <nav-title></nav-title>
-      <nav-list>
-        <nav-item ng-click="rentalMachineMngCtr.gotoAnchor(item.title)"></nav-item>
-      </nav-list>
-      <nav-overlay></nav-overlay>
-    </nav-btn>
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  bg-red">
@@ -131,43 +133,54 @@
   <!--currentState begin-->
   <div id="currentState" class="container-fluid">
     <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-                  <span class="info-box-icon bg-green">
-                    <i class="fa fa-flag-o"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Machine
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Rent
+          </div>
+          <div class="machine-small-box-content-two">
+            <div class="machine-small-box-content-1">
+              <h5>Not Rent</h5>
+              <p>150</p>
+            </div>
 
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
+            <div class="machine-small-box-content-2">
+              <h5>Rented</h5>
+              <p>150</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Repair
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Stopped
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
           </div>
         </div>
       </div>
@@ -175,23 +188,7 @@
     <div class="row base-box-container">
       <div class="col-md-8 col-sm-6 col-xs-12">
         <div class="row" ng-style="rentalMachineMngCtr.baseBoxContainer">
-          currentState
-          <div class="row">
-            <ul ng-repeat="anchor in rentalMachineMngCtr.anchorList" style="float: left">
-              <li ng-click="rentalMachineMngCtr.gotoAnchor(anchor)">{{anchor}}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="row">
-          11
-        </div>
-        <div class="row">
-          22
-        </div>
-        <div class="row">
-          33
+
         </div>
       </div>
     </div>
