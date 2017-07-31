@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -28,6 +28,25 @@
       $location.hash(x);
       $anchorScroll();
     };
+
+    //加载品牌信息
+    var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
+    deviceManufactureListPromise.then(function (data) {
+      vm.deviceManufactureList= data.content;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取厂家失败');
+    })
+
+    //加载高度信息
+    var deviceHeightTypeListPromise = rentalService.getDeviceHeightTypeList();
+    deviceHeightTypeListPromise.then(function (data) {
+      vm.deviceHeightTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取高度失败');
+    })
+
+
 
 
     vm.query = function (page, size, sort, machine) {

@@ -100,29 +100,29 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label for="firstname" class="col-md-1 control-label">高度</label>
+        <label class="col-md-1 control-label">高度</label>
         <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
+          <ui-select name="deviceHeightType" ng-model="rentalFleetMngController.machine.deviceHeightType" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
             </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
+            <ui-select-choices repeat="deviceHeightType in rentalFleetMngController.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
-        <label for="firstname" class="col-md-1 control-label">品牌</label>
-        <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
+        <label  class="col-md-1 control-label">品牌</label>
+          <div class="col-md-1">
+          <ui-select name="deviceManufacture" ng-model="rentalFleetMngController.machine.deviceManufacture" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            <ui-select-match allow-clear="true" placeholder="品牌">{{$select.selected.name}}
             </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
+            <ui-select-choices repeat="deviceManufacture in rentalFleetMngController.deviceManufactureList">
+              <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
 
           <button class="btn btn-primary" type="button"
                   ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
