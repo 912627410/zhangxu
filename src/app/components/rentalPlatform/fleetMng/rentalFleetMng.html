@@ -89,14 +89,25 @@
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
-        <label for="firstname" class="col-md-1 control-label">类型</label>
+        <label  class="col-md-1 control-label">类型</label>
         <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
+          <ui-select name="deviceType" ng-model="rentalFleetMngController.machine.deviceType" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
             </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
+            <ui-select-choices repeat="deviceType in rentalFleetMngController.deviceTypeList">
+              <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-1 control-label">驱动</label>
+        <div class="col-md-1">
+          <ui-select name="devicePowerType" ng-model="rentalFleetMngController.machine.devicePowerType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="devicePowerType in rentalFleetMngController.devicePowerTypeList">
+              <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -155,10 +166,10 @@
             </td>
 
             <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-            <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-            <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">{{machine.machineState }}</td>
-            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
-            <td class="text-nowrap" data-title="'vehicleType'|translate" sortable="'typeName'">{{machine.machineType.typeName}}</td>
+            <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'deviceType.name'">{{machine.deviceType.name}}</td>
+            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'deviceHeightType.name'">{{machine.deviceHeightType.name }}</td>
+            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'devicePowerType.name'">{{machine.devicePowerType.name}}</td>
+            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'deviceManufacture.name'">{{machine.deviceManufacture.name}}</td>
 
             <td class="text-nowrap" data-title="'operation'|translate">
 

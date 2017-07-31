@@ -9,7 +9,7 @@
     .factory('rentalService', rentalService);
 
   /** @ngInject */
-  function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, FUEL_CONFIGT_LIST_URL, MACHINE_STATE_LIST_URL) {
+  function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE) {
 
 
 
@@ -22,11 +22,11 @@
       getDeviceHeightTypeList: function () {
         return serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
       },
-      getUpkeepPriceTypeList: function () {
-        return serviceResource.restCallService(MACHINE_UPKEETP_PRICE_TYPE_URL, "QUERY");
+      getDeviceTypeList: function () {
+        return serviceResource.restCallService(DEVCE_DEVICETYPE, "GET");
       },
-      getMachineStateList: function () {
-        return serviceResource.restCallService(MACHINE_STATE_LIST_URL,"QUERY");
+      getDevicePowerTypeList: function () {
+        return serviceResource.restCallService(DEVCE_POWERTYPE,"GET");
       }
     };
 

@@ -46,6 +46,22 @@
       Notification.error('获取高度失败');
     })
 
+  //加载车辆类型信息
+    var deviceTypeListPromise = rentalService.getDeviceTypeList();
+    deviceTypeListPromise.then(function (data) {
+      vm.deviceTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取类型失败');
+    })
+
+  //加载车辆驱动信息
+    var devicePowerTypeListPromise = rentalService.getDevicePowerTypeList();
+    devicePowerTypeListPromise.then(function (data) {
+      vm.devicePowerTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取驱动类型失败');
+    })
+
 
 
 
