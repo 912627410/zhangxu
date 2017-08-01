@@ -1,0 +1,460 @@
+<div class="profit-content" ng-controller="profitStatisticsController as profitStatisticsCtr">
+<!--Income statistics-->
+  <div id="income" class="container-fluid">
+    <nav-btn>
+      <nav-title></nav-title>
+      <nav-list>
+        <nav-item ng-click="profitStatisticsCtr.gotoAnchor(item.title)"></nav-item>
+      </nav-list>
+      <nav-overlay></nav-overlay>
+    </nav-btn>
+    <div class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box    ">
+          <h4>Machine</h4>
+          <section>
+            <span>
+              Total
+            </span>
+            <div>
+              1024
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Add New Data</h4>
+          <section>
+            <p>Add new Data</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Edit Data</h4>
+          <section>
+            <p>Edit Data</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Delete Data</h4>
+          <section>
+            <P>
+              Delete Data
+            </P>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row searchLine">
+      <div class="left col-md-1">Cost</div>
+      <div class="center col-md-9 ">
+        <div class="row">
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Type</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.type"
+                      ng-options="type as y for y in profitStatisticsCtr.typeList ">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-3 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.height"
+                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.Brand"
+                      ng-options="Brand as y for y  in profitStatisticsCtr.BrandList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">SIM</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.sim"
+                      ng-options="sim as y for y   in profitStatisticsCtr.simList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="right col-md-1">
+        <div type="button" class="bg-orange searchButton">Search</div>
+      </div>
+    </div>
+    <div class="row incomePic">
+      <div class="col-md-4 leftSelect">
+        <div class=" top ">
+          <label class="col-md-4"><input type="radio">订单</label>
+          <label class="col-md-4"><input type="radio">车辆</label>
+          <label class="col-md-4"><input type="radio">车型</label>
+        </div>
+        <div class="liBox">
+          <ul>
+            <li>11111111111</li>
+            <li>22222222222</li>
+            <li>33333333333</li>
+            <li>44444444444</li>
+            <li>55555555555</li>
+            <li>66666666666</li>
+            <li>77777777777</li>
+            <li>88888888888</li>
+            <li>99999999999</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 rightEchart">
+        <div id="incomeLine"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--Cost statistics-->
+  <div id="Cost" class="container-fluid">
+    <div class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box    ">
+          <h4>Machine</h4>
+          <section>
+            <span>
+              Total
+            </span>
+            <div>
+              1024
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Add New Data</h4>
+          <section>
+            <p>Add new Data</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Edit Data</h4>
+          <section>
+            <p>Edit Data</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Delete Data</h4>
+          <section>
+            <P>
+              Delete Data
+            </P>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row searchLine">
+      <div class="left col-md-1">Cost</div>
+      <div class="center col-md-9 ">
+        <div class="row">
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Type</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.type"
+                      ng-options="type as y for y in profitStatisticsCtr.typeList ">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-3 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.height"
+                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.Brand"
+                      ng-options="Brand as y for y  in profitStatisticsCtr.BrandList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">SIM</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.sim"
+                      ng-options="sim as y for y  in profitStatisticsCtr.simList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="right col-md-1">
+        <div type="button" class="bg-orange searchButton">Search</div>
+      </div>
+    </div>
+    <div class="row costPic">
+      <div class="leftTable col-md-8">
+        <table>
+          <table ng-table="profitStatisticsCtr.table" class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="table in $data">
+              <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{table.machineNumber}}</td>
+              <td class="text-nowrap" data-title="'sim'|translate" sortable="'sim'">{{table.sim}}</td>
+              <td class="text-nowrap" data-title="'type'|translate" sortable="'type'">{{table.tupe}}</td>
+              <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'highlyType'">{{table.height}}KM/H</td>
+            </tr>
+            <tr style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+          </table>
+        </table>
+      </div>
+      <div class="rightPic col-md-4">
+        <div id="topPie" style=" height: 50%;"></div>
+        <div id="bottomPie"  style=" height: 50%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--profit statistics-->
+  <div id="profit">
+    <div class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box    ">
+          <h4>Order</h4>
+          <section>
+            <div>
+              Total
+            </div>
+            <div>
+              <b>
+                1024
+              </b>
+            </div>
+
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Current Order</h4>
+          <section>
+            <div>
+              Total
+            </div>
+            <div>
+              <b>
+                848
+              </b>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Edit Data</h4>
+          <section>
+            <div>
+              Total
+            </div>
+            <div>
+              <b>
+                666666
+              </b>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>Add New Order</h4>
+          <section>
+            <P>
+              Add New Order
+            </P>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row searchLine">
+      <div class="left col-md-1">Cost</div>
+      <div class="center col-md-9 ">
+        <div class="row">
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Type</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.type"
+                      ng-options="type as y for y in profitStatisticsCtr.typeList ">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-3 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.height"
+                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.Brand"
+                      ng-options="Brand as y for y  in profitStatisticsCtr.BrandList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">SIM</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.sim"
+                      ng-options="sim as y for y  in profitStatisticsCtr.simList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="right col-md-1">
+        <div type="button" class="bg-orange searchButton">Search</div>
+      </div>
+    </div>
+    <div class="profitPic">
+      <div class="profitBar" id="profitBar"></div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
+

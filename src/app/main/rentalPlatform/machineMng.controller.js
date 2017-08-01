@@ -11,7 +11,9 @@
   /** @ngInject */
   function rentalMachineMngController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource) {
     var vm = this;
-    ngTableDefaults.params.count = 14;
+
+    ngTableDefaults.params.count = 12;
+
     ngTableDefaults.settings.counts = [];
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -25,6 +27,7 @@
     }];
     //自适应高度
     var windowHeight = $window.innerHeight; //获取窗口高度
+
     function adjustWindow(windowHeight) {
       var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
       //baseBox自适应高度
@@ -36,6 +39,7 @@
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
+
     }
     adjustWindow(windowHeight);
     //初始化地图
@@ -48,6 +52,7 @@
       $location.hash(x);
       $anchorScroll();
     }
+
     /**
      * 监听窗口大小改变后重新自适应高度
      */
@@ -55,6 +60,7 @@
       barChart.resize({height : barChartHeight});
       adjustWindow(newv);
     })
+
 
     vm.simpleList = [{
       name1: "H05024202",
@@ -140,23 +146,11 @@
       name4: 3305258695,
       name5: 3305258695,
       name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
     }
     ]
+
     vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
+
 
     var barChartHeight = windowHeight - 50 - 15 - 90 - 15 - 7 - 45 - 90 - 90 + 'px';
 
@@ -198,6 +192,9 @@
     };
 
     barChart.setOption(option);
+
+
+    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
 
   }
 })();

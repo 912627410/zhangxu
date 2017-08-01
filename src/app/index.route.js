@@ -131,6 +131,16 @@
           }
         }
       })
+      .state('rental.profitStatistics', {
+        url: '/profitStatistics',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/profitStatistics/profitStatistics.html',
+            controller: 'profitStatisticsController',
+            controllerAs: 'profitStatisticsCtr'
+          }
+        }
+      })
 
     //物联网系统
     $stateProvider
