@@ -19,6 +19,32 @@
 
     }
 
+  /**
+   * window resize listener
+   */
+  GPSCloudModule.directive('resize',  function ($window) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        scope.height = $window.innerHeight;
+        function onResize(){
+          // uncomment for only fire when $window.innerWidth change
+          if (scope.width !== $window.innerWidth)
+          {
+            scope.height = $window.innerHeight;
+            scope.$digest();
+          }
+        };
+
+        function cleanUp() {
+          angular.element($window).off('resize', onResize);
+        }
+
+        angular.element($window).on('resize', onResize);
+        scope.$on('$destroy', cleanUp);
+      }
+    }});
+
 
   /**隐藏左侧栏*/
   GPSCloudModule.directive('toggels', function () {
