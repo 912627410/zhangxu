@@ -46,7 +46,7 @@
       var updateDevice = angular.copy(vm.updateDevice);
       var content = "", count = 0;
       for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
-        if(updateDevice[i] && updateDevice[i].terminalVersion == vm.updateVersionNum) {
+        if(updateDevice[i] && updateDevice[i].gpsSoftVersion == vm.updateVersionNum) {
           content += updateDevice[i].deviceNum + ",";
           updateDevice.splice(i, 1);
           flag = false;

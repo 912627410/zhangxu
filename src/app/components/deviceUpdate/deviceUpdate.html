@@ -86,7 +86,7 @@
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
             <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
             <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion!=null">VER{{deviceinfo.terminalVersion/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion!=null">VER{{deviceinfo.gpsSoftVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion==null"></td>
             <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.updatingVersion!=null">VER{{deviceinfo.deviceUpdate.updatingVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.updatingVersion==null"></td>
