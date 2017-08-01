@@ -11,7 +11,7 @@
   /** @ngInject */
   function rentalMachineMngController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource) {
     var vm = this;
-    ngTableDefaults.params.count = 14;
+    ngTableDefaults.params.count = 12;
     ngTableDefaults.settings.counts = [];
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -56,20 +56,6 @@
     })
 
     vm.simpleList = [{
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
       name1: "H05024202",
       name2: null,
       name3: 3305258695,
