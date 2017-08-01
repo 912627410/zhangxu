@@ -52,6 +52,7 @@
      * 监听窗口大小改变后重新自适应高度
      */
     $scope.$watch('height', function(old, newv){
+      barChart.resize({height : barChartHeight});
       adjustWindow(newv);
     })
 
@@ -156,6 +157,47 @@
     }
     ]
     vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
+
+    var barChartHeight = windowHeight - 50 - 15 - 90 - 15 - 7 - 45 - 90 - 90 + 'px';
+
+    var barChart = echarts.init(document.getElementById('machineBarChart'),'',{width : 'auto',height : barChartHeight});
+
+    var option = {
+      color: ['#3398DB'],
+      tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+          type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis : [
+        {
+          type : 'category',
+          data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        }
+      ],
+      yAxis : [
+        {
+          type : 'value'
+        }
+      ],
+      series : [
+        {
+          name:'直接访问',
+          type:'bar',
+          barWidth: '60%',
+          data:[10, 52, 200, 334, 390, 330, 220]
+        }
+      ]
+    };
+
+    barChart.setOption(option);
 
   }
 })();
