@@ -29,9 +29,10 @@
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
-          <li>urrentLocation1</li>
-          <li>urrentLocation2</li>
-          <li>urrentLocation3</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.order')">订单管理</li>
+          <li>车队管理</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.fleet')">车辆信息</li>
+          <li>维修保养</li>
         </ul>
       </div>
 

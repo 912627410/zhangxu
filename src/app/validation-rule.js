@@ -92,29 +92,6 @@
       }
     });
 
-    $validationProvider.setExpression({
-        abc: function(value, scope, element, attrs) {
-
-          var params = {deviceNum: "c"};
-          return $http.get(
-            "rest/device/fetchUnused",
-            {params: params}
-          ).then(function(response) {
-            alert(response.data);
-          });
-
-
-          $validationProvider.setDefaultMsg({
-            abc: {
-              error: 'Foo must equal ' + attrs.validfoo
-            }
-          });
-
-          //alert(attrs.validfoo);
-          return value === attrs.validfoo;
-        }
-      }
-    );
 
     $validationProvider.setExpression({
         mock: function(value, scope, element, attrs) {

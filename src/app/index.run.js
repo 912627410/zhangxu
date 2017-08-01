@@ -11,6 +11,8 @@
     $rootScope.SYSTEM_VERSION = SYSTEM_VERSION;
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    console.log($window.sessionStorage["userInfo"]);
+
     //当前登录用户信息保存在session里面
     if ($window.sessionStorage["userInfo"]) {
       $rootScope.userInfo = JSON.parse($window.sessionStorage["userInfo"]);

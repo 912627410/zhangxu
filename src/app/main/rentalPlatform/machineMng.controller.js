@@ -9,15 +9,23 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($scope, $window, $location, $anchorScroll, serviceResource) {
+  function rentalMachineMngController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource) {
     var vm = this;
+    ngTableDefaults.params.count = 20;
+    ngTableDefaults.settings.counts = [];
     //定义偏移量
     $anchorScroll.yOffset = 50;
     //定义页面的喵点
-    vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
+    $scope.navs = [{
+      "title": "currentLocation", "icon": "fa-map"
+    }, {
+      "title": "currentState", "icon": "fa-signal"
+    }, {
+      "title": "alarmInfo", "icon": "fa-exclamation-triangle"
+    }];
     //自适应高度
     var windowHeight = $window.innerHeight; //获取窗口高度
-    var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 5;//50 topBar的高,15间距,90msgBox高,15间距,5 预留
+    var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
     //baseBox自适应高度
     vm.baseBoxContainer = {
       "min-height": baseBoxContainerHeight + "px"
@@ -36,9 +44,95 @@
     vm.gotoAnchor = function (x) {
       $location.hash(x);
       $anchorScroll();
-    };
+    }
 
-    $scope.navs = [{"title":"currentLocation","icon":"fa-map"}, {"title":"currentState","icon":"fa-signal"}, {"title":"alarmInfo","icon":"fa-exclamation-triangle"}];
+    vm.simpleList = [{
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }, {
+      name1: "H05024202",
+      name2: null,
+      name3: 3305258695,
+      name4: 3305258695,
+      name5: 3305258695,
+      name6: 3305258695
+    }
+    ]
 
+    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
   }
 })();
