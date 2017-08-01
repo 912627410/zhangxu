@@ -292,10 +292,10 @@
       })
     }
 
-    function getBar1Data(produceType, statisticalType){
+    function getBar1Data(produceType, hourScope, statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + produceType + '&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
 
         var zoneList = getZoneList(),
@@ -393,10 +393,10 @@
       })
     }
 
-    function getBar2Data(produceType,statisticalType){
+    function getBar2Data(produceType, hourScope, statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ produceType +'&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
 
         var zoneList = getZoneList(),
@@ -494,8 +494,8 @@
       })
     }
 
-    getBar1Data(1,1);
-    getBar2Data(1,2);
+    getBar1Data(1,2,1);
+    getBar2Data(1,2,2);
 
     $scope.query = function(){
       $http.get('assets/json/warzone.json').success(function(data) {
@@ -534,8 +534,8 @@
         if($scope.query_cycle_type)
         getMap1Data(_product_type1,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type1);
         getMap2Data(_product_type2,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type2);
-        getBar1Data(_product_type1,1);
-        getBar2Data(_product_type2,2);
+        getBar1Data(_product_type1,$scope.query_hour,1);
+        getBar2Data(_product_type2,$scope.query_hour,2);
       })
     };
 
