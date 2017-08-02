@@ -370,9 +370,6 @@
       });
     };
 
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("machine:oper");
-    }
 
     vm.allocationlog = function (machine,size) {
 
