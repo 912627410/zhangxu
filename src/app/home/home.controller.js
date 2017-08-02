@@ -13,11 +13,10 @@
     var vm = this;
     var statisticInfo = {
       totalDevices: 0,
-      totalWarningDevices: 0,
-      totalAbnormalDevices: 0,
-      notificationNumber:0
+      notificationNumber: 0,
+      totalAbnormalDevices: 0
     };
-
+    vm.statisticInfo = statisticInfo;
    // console.log("$rootScope.permissionList =="+$rootScope.permissionList );
   //  console.log("$rootScope.userInfo =="+$rootScope.userInfo );
     if ($rootScope.userInfo==null) {
@@ -43,7 +42,15 @@
         })
 
         statisticInfo.totalAbnormalDevices = data.deviceAbnormalStatics.deviceNumber;
-        statisticInfo.notificationNumber = $rootScope.notificationNumber;
+        //statisticInfo.notificationNumber = $rootScope.notificationNumber;
+        //读取未处理的提醒消息
+        var notificationPromis = serviceResource.queryNotification(0, null, null, "processStatus=0");
+        notificationPromis.then(function (data) {
+          statisticInfo.notificationNumber = data.page.totalElements;
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetRemindInformation'));
+          }
+        );
       }, function (reason) {
         Notification.error('获取设备信息失败');
       })
