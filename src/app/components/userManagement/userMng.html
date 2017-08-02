@@ -63,7 +63,7 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               用户列表
-              <a class="pull-right" type="button" presentation-href="system:user:create" ng-click="userMngController.addUser('md')">
+              <a class="pull-right" type="button" href="" presentation-href="system:user:create" ng-click="userMngController.addUser('md')">
                 <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
@@ -77,7 +77,7 @@
                 <div class="col-sm-3">
                     <span>
                       <a href="javascript:;" ng-class="{true: 'text-red'}[userMngController.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="userMngController.selectUser(userinfo)" class="fa fa-user">
-                        {{userinfo.lastname}}{{userinfo.firstname}} </a>
+                        &nbsp;{{userinfo.lastname}}{{userinfo.firstname}} </a>
                     </span>
                 </div>
                 <div class="col-sm-3">
@@ -128,11 +128,21 @@
           </div>
           <div class="panel-body" style="height: 800px;overflow:auto;">
 
-            <treecontrol class="tree-classic"
-                         tree-model="userMngController.roleList"
-                         options = "userMngController.roleTreeOptions">
-              {{node.name}}
-            </treecontrol>
+            <li class="list-group-item repeat"  ng-repeat="role in userMngController.roleList">
+              <div class="row">
+                <div class="col-sm-8">
+                  <span>
+                    <a href="javascript:;" style="text-decoration : none" ng-class="{true: 'fa fa-folder',false: 'fa fa-folder-open'}[role.tree == '']"
+                       ng-click="userMngController.selectRole(role)">&nbsp;{{role.name}} </a>
+                  </span>
+                  <treecontrol class="tree-classic" tree-model="role.tree">
+                    {{node.name}}
+                  </treecontrol>
+                </div>
+
+              </div>
+
+            </li>
 
           </div>
         </div>
