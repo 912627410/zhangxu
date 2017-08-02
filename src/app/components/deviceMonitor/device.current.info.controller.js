@@ -832,6 +832,7 @@
       })
       /*开始事件*/
       AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
+        lastDistabce = 0;
         vm.trackMileage = 0;
         $scope.$apply();
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
