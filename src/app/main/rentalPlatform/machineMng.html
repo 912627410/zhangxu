@@ -1,4 +1,6 @@
-<div class="machine-content">
+
+<div class="machine-content" resize>
+
 
   <nav-btn>
     <nav-title></nav-title>
@@ -22,7 +24,7 @@
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
-            <span class="progress-description" style="cursor: pointer;text-decoration: none;color: currentColor;">
+            <span class="progress-description mouse-cursor">
                    More Info <i class="fa fa-arrow-circle-right"></i>
             </span>
           </div>
@@ -37,7 +39,7 @@
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
-            <span class="progress-description">
+            <span class="progress-description  mouse-cursor">
               <a>More Info <i class="fa fa-arrow-circle-right"></i></a>
            </span>
           </div>
@@ -53,7 +55,7 @@
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
-            <span class="progress-description">
+            <span class="progress-description  mouse-cursor">
               More Info <i class="fa fa-arrow-circle-right"></i>
             </span>
           </div>
@@ -69,7 +71,7 @@
             <div class="progress">
               <div class="progress-bar"></div>
             </div>
-            <span class="progress-description">
+            <span class="progress-description  mouse-cursor">
               More Info <i class="fa fa-arrow-circle-right"></i>
             </span>
           </div>
@@ -123,8 +125,7 @@
                   </span>
           </div>
         </div>
-        <div>
-        </div>
+        <div id="machineBarChart"></div>
       </div>
     </div>
   </div>
@@ -189,16 +190,39 @@
       <div class="col-lg-12">
         <div class="search-box-btn">
           <div class="row form-group table-form-group tab-content-search"><!--搜索框-->
-            <div class="col-lg-2 col-md-2">
-              Current Status
-            </div>
-            <div class="col-lg-8 col-md-8" style="border: solid">
-            </div>
-            <div class="col-lg-1 col-md-1" style="padding-left: 40px;">
-              <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
-            </div>
-            <div class="col-lg-1 col-md-1">
-              <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+
+            <div class="col-lg-12 col-md-12">
+              <div class="tab-content-search-head">
+                Current Status
+              </div>
+              <div class="tab-content-search-box">
+                <label>车号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>设备号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>订单号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>类型:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>状态:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>地区:</label>
+                <input/>
+              </div>
+              <div class="search-box-button">
+                <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
+                <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+              </div>
             </div>
           </div>
           <div class="row table-responsive "><!--表格框-->
@@ -215,10 +239,13 @@
             </table>
           </div>
           <div class="row"><!--分页框-->
-            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false" total-items=""
+
+
+            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                            total-items="100"
                             ng-change=""
-                            max-size="10" ng-model=""
-                            items-per-page=""
+                            max-size="5" ng-model="1"
+                            items-per-page="12"
                             first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
                             next-text="{{'nextPage'|translate}}"
                             previous-text="{{'previousPage'|translate}}">
@@ -233,58 +260,154 @@
   <!--alarmInfo begin-->
   <div id="alarmInfo" class="container-fluid">
     <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green">
-            <i class="fa fa-flag-o"></i>
-          </span>
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
 
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green">
-            <i class="fa fa-flag-o"></i>
-          </span>
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green">
-            <i class="fa fa-flag-o"></i>
-          </span>
-          <div class="info-box-content">
-            <span class="info-box-text">Bookmarks</span>
-            <span class="info-box-number">410</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row base-box-container">
-      <div class="col-md-8 col-sm-6 col-xs-12">
-        <div class="row" ng-style="rentalMachineMngCtr.baseBoxContainer">
-          alarmInfo
+      <div class="col-lg-3 col-md-3">
+        <div class="widget style1 red-bg">
           <div class="row">
-            <ul ng-repeat="anchor in rentalMachineMngCtr.anchorList" style="float: left">
-              <li ng-click="rentalMachineMngCtr.gotoAnchor(anchor)">{{anchor}}</li>
-            </ul>
+            <div class="col-xs-4 text-center">
+              <i class="fa fa-trophy fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> Today income </span>
+              <h2 class="font-bold">$ 4,232</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3">
+        <div class="widget style1 navy-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-cloud fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> Today degrees </span>
+              <h2 class="font-bold">26'C</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="widget style1 lazur-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-envelope-o fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> New messages </span>
+              <h2 class="font-bold">260</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-3">
+        <div class="widget style1 yellow-bg">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-music fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+              <span> New albums </span>
+              <h2 class="font-bold">12</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row base-box-container" ng-style="rentalMachineMngCtr.baseBoxContainer"
+         style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-4">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{'type'|translate}}</h3>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>{{'allpendingmessages'|translate}}
+                    <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-unlink"></i>{{'longTimeNotConnectedDevices'|translate}}
+                    <span
+                      class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-cog"></i> {{'maintenanceToRemind'|translate}}
+                    <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-map"></i>{{'locationToRemind'|translate}}
+                    <span class="label label-danger pull-right">{{notificationCtrl.locationNotificationNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-check-square-o"></i>{{'allMessages'|translate}}
+                    <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-8">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{'content'|translate}}</h3>
+              <div class="box-tools pull-right">
+                <input type="text" class="input-sm" ng-model="" placeholder="{{'reminderContent'|translate}}">
+                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <div class="mailbox-controls">
+                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                  {{'checkAll'|translate}}
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm" ng-click="">
+                    {{'markedAsAlreadyProcessed'|translate}}
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <tbody>
+                  <th>{{'select'|translate}}</th>
+                  <th>{{'content'|translate}}</th>
+                  <th>{{'generateTime'|translate}}</th>
+                  <th>{{'operation'|translate}}</th>
+                  <tr ng-repeat="notification in notificationCtrl.notificationList">
+                    <td><input type="checkbox" ng-model="notification.checked"></td>
+                    <td class="mailbox-subject"></td>
+                    <td class="mailbox-date"></td>
+                    <td>
+                      <button type="button" class="btn btn-default btn-xs" ng-click=""></button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer no-padding">
+              <div class="mailbox-controls">
+                <uib-pagination class="pagination-sm" boundary-links="true" rotate="false"
+                                total-items="" ng-change="" max-size="5" ng-model="" items-per-page=""
+                                first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                                next-text="{{'nextPage'|translate}}"
+                                previous-text="{{'previousPage'|translate}}">
+                </uib-pagination>
+              </div>
+            </div>
           </div>
         </div>
       </div>

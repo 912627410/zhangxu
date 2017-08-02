@@ -1,4 +1,120 @@
-<div style="padding-top: 100px">
-  machineHistoryData
-</div>
+<div class="machine-content" resize>
+  <div class="container-fluid">
+    <div class="row info-box-container">
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Rent
+          </div>
+          <div class="machine-small-box-content-two">
+            <div class="machine-small-box-content-1 machine-small-box-content-1-cover">
+              <h5>Not Rent</h5>
+              <p>150</p>
+            </div>
 
+            <div class="machine-small-box-content-2">
+              <div>JianCha:88%</div>
+              <div>ZhiBi:12%</div>
+              <div>QvBi:33%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua ">
+          <div class="machine-small-box-title">
+            JianCha
+          </div>
+          <div class="machine-small-box-content machine-small-box-content-cover">
+            <ui>
+              <li>①</li>
+              <li>②</li>
+              <li>③</li>
+            </ui>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            ZhiBi
+          </div>
+          <div class="machine-small-box-content machine-small-box-content-cover">
+            <ui>
+              <li>①</li>
+              <li>②</li>
+              <li>③</li>
+            </ui>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            QvBi
+          </div>
+          <div class="machine-small-box-content machine-small-box-content-cover">
+            <ui>
+              <li>①</li>
+              <li>②</li>
+              <li>③</li>
+            </ui>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row base-box-container" ng-style="machineHistoryDataCtr.baseBoxContainer">
+      <div class="col-lg-12">
+        <div class="search-box-btn">
+          <div class="row form-group table-form-group tab-content-search"><!--搜索框-->
+            <div class="col-lg-12 col-md-12 history-tab-content-search" style="padding-top: 20px;padding-bottom: 20px;">
+              <div class="tab-content-search-head">
+                History Data
+              </div>
+              <div class="tab-content-search-box">
+                <label>车号:</label>
+                <input/>
+              </div>
+              <div class="tab-content-search-box">
+                <label>设备号:</label>
+                <input/>
+              </div>
+              <div class="tab-content-search-box">
+                <label>订单号:</label>
+                <input/>
+              </div>
+              <div class="tab-content-search-box">
+                <label>类型:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div class="tab-content-search-box">
+                <label>状态:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div class="search-box-button">
+                <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
+                <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <uib-tabset justified="true">
+              <uib-tab select="" ng-click="machineHistoryDataCtr.current='A'">
+                <uib-tab-heading>
+                  图示
+                </uib-tab-heading>
+                <div ng-include="'app/components/rentalPlatform/machineMng/machineHistoryChart.html'"></div>
+              </uib-tab>
+              <uib-tab select="" ng-click="machineHistoryDataCtr.current='B'">
+                <uib-tab-heading>
+                  数据
+                </uib-tab-heading>
+                <div ng-include="'app/components/rentalPlatform/machineMng/machineHistoryInfo.html'"></div>
+              </uib-tab>
+            </uib-tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -16,9 +16,9 @@
       </span>
       <div ng-show="submenuShow" ng-mouseleave="submenuShow=false">
         <ul>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental')">urrentLocation</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineHistoryData')">history</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineLifeCycle')">alarmInfo</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental')">CurrentLocation</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineHistoryData')">History</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineLifeCycle')">LifeCycle</li>
         </ul>
       </div>
 
@@ -37,13 +37,13 @@
       </div>
 
     </a>
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow2=false">
+    <a class="sidebar-toggle center" role="button"  ui-sref="rental.profitStatistics" ng-mouseleave="submenuShow2=false">
       <span ng-mouseover="submenuShow2=true" ng-init="submenuShow2=false">
          {{'profitStatistics'|translate}}
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li>urrentLocation4</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.profitStatistics')">urrentLocation4</li>
           <li>urrentLocation5</li>
           <li>urrentLocation6</li>
         </ul>
