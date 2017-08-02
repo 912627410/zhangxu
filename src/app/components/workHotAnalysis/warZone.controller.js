@@ -115,40 +115,55 @@
               name: data[0].warZone,
               value: 0,
               itemStyle: {
-                emphasis:{
+                normal:{
                   areaColor: mapColor[0]
+                },
+                emphasis:{
+
                 }
               }
             }, {
               name: data[1].warZone,
               value: 1,
               itemStyle: {
-                emphasis:{
+                normal:{
                   areaColor: mapColor[1]
+                },
+                emphasis:{
+
                 }
               }
             }, {
               name: data[2].warZone,
               value: 2,
               itemStyle: {
-                emphasis:{
+                normal:{
                   areaColor: mapColor[2]
+                },
+                emphasis:{
+
                 }
               }
             }, {
               name: data[3].warZone,
               value: 3,
               itemStyle: {
-                emphasis:{
+                normal:{
                   areaColor: mapColor[3]
+                },
+                emphasis:{
+
                 }
               }
             }, {
               name: data[4].warZone,
               value: 4,
               itemStyle: {
-                emphasis:{
+                normal:{
                   areaColor: mapColor[4]
+                },
+                emphasis:{
+
                 }
               }
             }, {
@@ -353,7 +368,7 @@
           yAxis : [
             {
               type : 'value',
-              name: '活跃度(%)'
+              name: '开工率(%)'
             }
           ],
           series : [
@@ -453,7 +468,7 @@
           ],
           yAxis : [
             {
-              name: '车辆数量（辆）',
+              name: '销售数（辆）',
               type : 'value'
             }
           ],

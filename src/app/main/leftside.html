@@ -222,7 +222,7 @@
 
                   <li>
                     <a ui-sref="home.machineComparison">
-                      <i class="fa fa-shopping-cart"></i> <span>开工与销售热度</span>
+                      <i class="fa fa-arrows-h"></i> <span>开工与销售热度</span>
                     </a>
                   </li>
                   <li>
@@ -296,7 +296,7 @@
             </li>
             <li>
               <a ng-click="datacenter=!datacenter" presentation-href="dataAnalysis:datacenter">
-                <i class="glyphicon glyphicon-minus-sign"></i>
+                <i class="fa fa-database"></i>
                 <span>数据中心</span>
                 <span class="glyphicon pull-right" ng-class="datacenter?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
               </a>
@@ -310,7 +310,7 @@
                 <li>
                   <a ui-sref="home.dataAnalysis({role:'dataAnalysis:interfacedata',menuType:'b1'})"
                      presentation-href="dataAnalysis:interfacedata">
-                    <i class="fa ion-compose"></i> <span>接口数据监控</span>
+                    <i class="fa  fa-check-circle-o"></i> <span>接口数据监控</span>
                   </a>
                 </li>
                 <li>
@@ -377,7 +377,7 @@
 
       <li>
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
-          <i class="fa fa-car"></i>
+          <i class="fa  fa-flag"></i>
           <span>车队管理</span>
           <span class="glyphicon pull-right"
                 ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
@@ -387,7 +387,7 @@
           <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
             <li>
               <a ui-sref="home.workplane" presentation-href="workplane:page">
-                <i class="fa fa-flag"></i> <span>作业面管理</span>
+                <i class="fa  fa-flag-checkered"></i> <span>作业面管理</span>
               </a>
             </li>
             <li>
@@ -397,18 +397,18 @@
             </li>
             <li>
               <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-                <i class="fa fa-car"></i> <span>燃油配置</span>
+                <i class="fa  fa-usd"></i> <span>燃油配置</span>
               </a>
             </li>
             <li>
 
               <a ui-sref="home.machineMove" presentation-href="fleet:page">
-                <i class="fa fa-car"></i> <span>作业监控</span>
+                <i class="glyphicon glyphicon-time"></i> <span>作业监控</span>
               </a>
             </li>
             <li>
               <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
-                <i class="fa fa-dollar"></i> <span>收入统计</span>
+                <i class="fa fa-rmb"></i> <span>收入统计</span>
               </a>
             </li>
             <li>
@@ -451,12 +451,12 @@
             </li>
             <li>
               <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-                <i class="fa fa-user"></i> <span>角色管理</span>
+                <i class="fa  fa-users"></i> <span>角色管理</span>
               </a>
             </li>
             <li>
               <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
-                <i class="fa fa-user"></i> <span>权限管理</span>
+                <i class="fa  fa-lock"></i> <span>权限管理</span>
               </a>
             </li>
           </ul>

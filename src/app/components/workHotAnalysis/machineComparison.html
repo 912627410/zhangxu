@@ -124,11 +124,12 @@
           <div class="col-md-4 rightBox">
             <div>
               <div class="form-inline ">
-                <label class="control-label">热度分布</label>
+                <label class="control-label">热度分布:&nbsp;&nbsp;</label>
                 <select class="form-control" ng-model="machineComparedMngCtrl.heatType3">
                   <option value="1" ng-selected="true">开工热度分布</option>
                   <option value="0">销售热度分布</option>
                 </select>
+                &nbsp;&nbsp;
                 <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.startDateDeviceData,machineComparedMngCtrl.endDateDeviceData,machineComparedMngCtrl.dateType1,machineComparedMngCtrl.dateType2,machineComparedMngCtrl.monthDateDeviceData,machineComparedMngCtrl.heatType3)">查看</button>
               </div>
             </div>
