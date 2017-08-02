@@ -109,6 +109,18 @@
         }
       }
     })
+      //租赁车辆管理
+      .state('rental.machine', {
+        url: '/rentalMachine',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMachineMng.html',
+            controller: 'rentalFleetMachineMngController',
+            controllerAs: 'rentalFleetMachineMngController'
+          }
+        }
+      })
+
       //租赁车队管理
       .state('rental.fleet', {
         url: '/fleet',
@@ -120,6 +132,19 @@
           }
         }
       })
+
+      //租赁订单管理
+      .state('rental.newFleet', {
+        url: '/newFleet',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFleetMng.html',
+            controller: 'newRentalFleetController',
+            controllerAs: 'newRentalFleetController'
+          }
+        }
+      })
+
       //租赁订单管理
       .state('rental.order', {
         url: '/order',
@@ -131,6 +156,8 @@
           }
         }
       })
+
+
 
     //物联网系统
     $stateProvider

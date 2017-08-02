@@ -110,8 +110,8 @@
 
 
     $validationProvider.setErrorHTML(function (msg) {
-      //return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
-      return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
+      return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      //return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
 
     });
 

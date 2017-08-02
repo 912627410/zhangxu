@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('rentalFleetMngController', rentalFleetMngController);
+    .controller('rentalFleetMachineMngController', rentalFleetMachineMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,FLEET_PAGE_URL) {
+  function rentalFleetMachineMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -64,27 +64,36 @@
 
 
 
-    vm.query = function (page, size, sort, fleet) {
-      var restCallURL = FLEET_PAGE_URL;
+
+    vm.query = function (page, size, sort, machine) {
+      var restCallURL = MACHINE_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || 8;
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != fleet) {
+      if (null != machine) {
 
-        if (null != fleet.id&&fleet.id!="") {
-          restCallURL += "&search_LIKE_id=" + $filter('uppercase')(fleet.id);
+        if (null != machine.deviceNum&&machine.deviceNum!="") {
+          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
         }
-        if (null != fleet.label&&fleet.label!="") {
-          restCallURL += "&search_LIKE_label=" + $filter('uppercase')(fleet.label);
+        if (null != machine.licenseId&&machine.licenseId!="") {
+          restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
         }
 
       }
 
+      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
+        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
+      }
+
+      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
+        restCallURL += "&parentOrgId=" +vm.org.id;
+      }
+
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        vm.fleetList=data.content;
+
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -94,11 +103,14 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        vm.machineList = null;
+        Notification.error("获取车辆数据失败");
       });
     };
 
-    vm.query();
+console.log("333111");
+
+    vm.query(null,null,null,null);
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");

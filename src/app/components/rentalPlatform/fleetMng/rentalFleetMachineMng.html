@@ -1,0 +1,207 @@
+<div class="machine-content">
+  <section class="content-header">
+    <h1>
+      车辆信息
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+    <!--totalSummary begin-->
+    <div id="totalSummary" class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  bg-red">
+                <span class="info-box-icon">
+                  <i class="fa fa-automobile"></i></span>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">车辆总数</span>
+            <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description" style="cursor: pointer;text-decoration: none;color: currentColor;">
+                   More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-orange">
+          <span class="info-box-icon"><i class="fa fa-cab"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">车辆报警</span>
+            <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              <a>More Info <i class="fa fa-arrow-circle-right"></i></a>
+           </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-yellow">
+          <span class="info-box-icon"><i class="fa fa-automobile"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">保养提醒</span>
+            <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-green">
+          <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">离线提醒</span>
+            <span class="info-box-number">410</span>
+            <div class="progress">
+              <div class="progress-bar"></div>
+            </div>
+            <span class="progress-description">
+              More Info <i class="fa fa-arrow-circle-right"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--totalSummary end-->
+
+    <!--machineInfo begin-->
+
+    <div id="machineInfo" class="row info-box-container">
+    <form class="form-horizontal" role="form">
+
+      <div class="form-group">
+
+        <label class="col-md-1 control-label">{{'machineNumber'| translate}}</label>
+        <div class="col-md-2">
+          <input type="text" name="licenseId" class="form-control"  ng-model="machineMngCtrl.machine.licenseId"
+                 placeholder="{{'supportfuzzyqueries'|translate}}"/>
+        </div>
+
+        <label  class="col-md-1 control-label">类型</label>
+        <div class="col-md-1">
+          <ui-select name="deviceType" ng-model="rentalMachineMngController.machine.deviceType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceType in rentalMachineMngController.deviceTypeList">
+              <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-1 control-label">驱动</label>
+        <div class="col-md-1">
+          <ui-select name="devicePowerType" ng-model="rentalMachineMngController.machine.devicePowerType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="devicePowerType in rentalMachineMngController.devicePowerTypeList">
+              <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-md-1 control-label">高度</label>
+        <div class="col-md-1">
+          <ui-select name="deviceHeightType" ng-model="rentalMachineMngController.machine.deviceHeightType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceHeightType in rentalMachineMngController.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label  class="col-md-1 control-label">品牌</label>
+          <div class="col-md-1">
+          <ui-select name="deviceManufacture" ng-model="rentalMachineMngController.machine.deviceManufacture" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="品牌">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceManufacture in rentalMachineMngController.deviceManufactureList">
+              <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="col-md-1">
+
+          <button class="btn btn-primary" type="button"
+                  ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
+          </button>
+          <button class="btn btn-default" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+        </div>
+      </div>
+
+    </form>
+      </div>
+
+    <div class="row form-group" style="padding: 10px">
+      <script id="selectAllHeader" type="text/ng-template">
+        <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
+               ng-model="machineMngCtrl.checked">
+      </script>
+      <div class="table-responsive">
+
+        <table ng-table="rentalFleetMachineMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="machine in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="rentalFleetMachineMngController.isSelected(machine.id)"
+                     ng-click="rentalFleetMachineMngController.updateSelection($event,machine.id)" ng-model="machine.checked">
+            </td>
+            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+              <a ng-if="rentalFleetMachineMngController.validateOperPermission()" href
+                 ng-click="rentalFleetMachineMngController.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
+              <span ng-if="!rentalFleetMachineMngController.validateOperPermission()">{{machine.licenseId}}</span>
+
+            </td>
+
+            <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'deviceType.name'">{{machine.deviceType.name}}</td>
+            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'deviceHeightType.name'">{{machine.deviceHeightType.name }}</td>
+            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'devicePowerType.name'">{{machine.devicePowerType.name}}</td>
+            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'deviceManufacture.name'">{{machine.deviceManufacture.name}}</td>
+
+            <td class="text-nowrap" data-title="'operation'|translate">
+
+              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                      ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{'alter'| translate}}
+              </button>
+              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                      ng-click="machineMngCtrl.removeDevice(machine)">{{'relieve'| translate}}
+              </button>
+              <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
+                      ng-click="machineMngCtrl.allocationlog(machine,'lg')">{{'transferLog'| translate}}
+              </button>
+            </td>
+          </tr>
+        </table>
+
+
+      </div>
+
+
+
+      <div >
+        <uib-pagination total-items="rentalFleetMachineMngController.page.totalElements"
+                        ng-change="rentalFleetMachineMngController.query(rentalFleetMachineMngController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="rentalFleetMachineMngController.pageNumber" items-per-page="rentalFleetMachineMngController.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </div>
+
+
+    </div>
+
+    <!--machineInfo end-->
+  </div>
+</div>
