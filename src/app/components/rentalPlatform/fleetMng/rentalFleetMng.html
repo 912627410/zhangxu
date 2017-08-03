@@ -154,6 +154,9 @@
                 <div class="box">
                   <div class="box-header with-border">
                     <h3 class="box-title">{{fleet.label}}</h3>
+                      <button class="btn btn-primary pull-right" type="button"
+                              ng-click="rentalFleetMngController.updateFleet(fleet,'lg','update')">{{'edit'|translate}}
+                    </button>
                   </div>
                   <!-- /.box-header -->
                   <div style="height: 300px;overflow: scroll">

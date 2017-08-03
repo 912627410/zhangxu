@@ -133,7 +133,7 @@
         }
       })
 
-      //租赁订单管理
+      //租赁车队新增管理
       .state('rental.newFleet', {
         url: '/newFleet',
         views: {
@@ -141,6 +141,17 @@
             templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFleetMng.html',
             controller: 'newRentalFleetController',
             controllerAs: 'newRentalFleetController'
+          }
+        }
+      })
+      //租赁车队修改管理
+      .state('rental.updateFleet', {
+        url: '/updateFleet',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalFleetMng.html',
+            controller: 'updateRentalFleetController',
+            controllerAs: 'updateRentalFleetController'
           }
         }
       })
