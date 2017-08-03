@@ -1,0 +1,76 @@
+<div class="modal-header">
+  <h3 class="modal-title">详细信息({{deviceIntervalDetailCtrl.deviceNum}})
+    <button class="btn btn-warning pull-right" type="button" ng-click="deviceIntervalDetailCtrl.cancel()">{{'close'|translate}}</button>
+  </h3>
+</div>
+<!-- Main content -->
+<section class="content form-horizontal">
+  <div class="row">
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">开始时间: </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="deviceIntervalDetailCtrl.queryDate.startDate"
+               is-open="deviceIntervalDetailCtrl.startDateOpenStatus"
+               datepicker-options="deviceIntervalDetailCtrl.dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="deviceIntervalDetailCtrl.startDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">结束时间: </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="deviceIntervalDetailCtrl.queryDate.endDate"
+               is-open="deviceIntervalDetailCtrl.endDateOpenStatus"
+               datepicker-options="deviceIntervalDetailCtrl.dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="deviceIntervalDetailCtrl.endDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"
+              ng-click="deviceIntervalDetailCtrl.query()">查询
+      </button>
+
+      <button class="btn btn-warning" type="button" ng-click="deviceIntervalDetailCtrl.reset()">重置
+      </button>
+
+    </div>
+  </div>
+
+  <br>
+  <div class="main-container">
+    <div id="analysisDetailChart"  class="chart-container" style="padding-top:20px;min-height: 500px;width: 100%;"></div>
+  </div>
+
+
+</section>
+

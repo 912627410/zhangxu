@@ -261,6 +261,11 @@
     .constant('WAR_ZONE_QUERY', 'https://iotserver2.nvr-china.com/slice/rest/LGWarZone/') //战区统计查询
     // .constant('WAR_ZONE_QUERY','http://192.168.11.10:8080/slice/rest/LGWarZone/') //战区统计查询
 
+    //设备分析
+    .constant('INTERVAL_SIGNAL_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/intervalAndSignal') //上传频率与信号质量
+    .constant('DEVICE_ANALYSIS_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/deviceAnalysisDetail') //设备分析明细
+
+
   ;
 
 

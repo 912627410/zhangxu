@@ -76,15 +76,15 @@
       </li>
 
       <li>
-        <a ng-click="reportMng=!reportMng" presentation-href="report:topIdleDeviceReport">
-          <i class="fa ion-stats-bars"></i>
+        <a ng-click="reportMng=!reportMng" href="" presentation-href="report:topIdleDeviceReport">
+          <i class="fa fa-bar-chart"></i>
           <span style="width:200px">统计分析</span>
           <span class="glyphicon pull-right"
                 ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
         </a>
         <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng}">
           <li>
-            <a ng-click="erecord=!erecord" presentation-href="dataAnalysis:tope-record">
+            <a ng-click="erecord=!erecord" href="" presentation-href="dataAnalysis:tope-record">
               <i class="fa ion-briefcase"></i>
               <span>机器电子档案</span>
               <span class="glyphicon pull-right" ng-class="erecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -112,7 +112,7 @@
           </li>
 
             <li>
-              <a ng-click="MachineManagement=!MachineManagement"  presentation-href="dataAnalysis:testmachinemanager">
+              <a ng-click="MachineManagement=!MachineManagement" href="" presentation-href="dataAnalysis:testmachinemanager">
                 <i class="fa ion-clipboard"></i>
                 <span>试验机管理</span>
                 <span class="glyphicon pull-right"
@@ -142,7 +142,7 @@
             </li>
 
             <li>
-              <a ng-click="trackRecord=!trackRecord" presentation-href="dataAnalysis:toptrackrecord">
+              <a ng-click="trackRecord=!trackRecord" href="" presentation-href="dataAnalysis:toptrackrecord">
                 <i class="fa ion-document"></i>
                 <span>工作履历管理</span>
                 <span class="glyphicon pull-right"
@@ -189,8 +189,8 @@
             </li>
 
             <li>
-              <a ng-click="workstart=!workstart" presentation-href="dataAnalysis:topworkstart">
-                <i class="fa ion-bonfire"></i>
+              <a ng-click="workstart=!workstart" href="" presentation-href="dataAnalysis:topworkstart">
+                <i class="fa fa-line-chart"></i>
                 <span>开工热度分析</span>
                 <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
               </a>
@@ -262,7 +262,7 @@
 
 
             <li>
-              <a ng-click="omission=!omission" presentation-href="dataAnalysis:topomissionstatistic">
+              <a ng-click="omission=!omission" href="" presentation-href="dataAnalysis:topomissionstatistic">
                 <i class="glyphicon glyphicon-minus-sign"></i>
                 <span>虚报漏报识别</span>
                 <span class="glyphicon pull-right" ng-class="omission?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -295,7 +295,11 @@
                 </ul>
             </li>
             <li>
+<<<<<<< 09dffc29ca4288b565cc1ff87ee6e6636b91dfd6
               <a ng-click="datacenter=!datacenter" presentation-href="dataAnalysis:datacenter">
+=======
+              <a ng-click="datacenter=!datacenter" href="" presentation-href="dataAnalysis:datacenter">
+>>>>>>> 设备信号质量分析功能
                 <i class="fa fa-database"></i>
                 <span>数据中心</span>
                 <span class="glyphicon pull-right" ng-class="datacenter?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -330,7 +334,7 @@
             </li>-->
 
           <li>
-            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="dataAnalysis:vehicleStatistics">
+            <a ng-click="vehicleStatistics=!vehicleStatistics" href="" presentation-href="dataAnalysis:vehicleStatistics">
               <i class="fa fa-car"></i>
               <span>车辆统计</span>
               <span class="glyphicon pull-right" ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
@@ -359,17 +363,33 @@
             </ul>
           </li>
 
+          <li>
+            <a ng-click="deviceAnalysis=!deviceAnalysis" href="" presentation-href="report:deviceAnalysis">
+              <i class="fa fa-feed"></i>
+              <span>设备信号分析</span>
+              <span class="glyphicon pull-right" ng-class="deviceAnalysis?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: deviceAnalysis}">
+              <li>
+                <a ui-sref="home.intervalAndSignal" href="">
+                  <i class="fa fa-unlink"></i><span>上传频率与信号质量</span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clustering',menuType:'w'})"
                  presentation-href="dataAnalysis:clustering">
-                <i class="fa ion-gear-b"></i> <span>机器聚类探索</span>
+                <i class="fa fa-search-plus"></i> <span>机器聚类探索</span>
               </a>
             </li>
 
 
             <li>
               <a ui-sref="home.smsSendReport" presentation-href="report:smsSendReport">
-                <i class="fa fa-bookmark"></i> <span>短信发送统计</span>
+                <i class="fa fa-envelope"></i> <span>短信发送统计</span>
               </a>
             </li>
           </ul>
@@ -377,7 +397,11 @@
 
       <li>
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
+<<<<<<< 09dffc29ca4288b565cc1ff87ee6e6636b91dfd6
           <i class="fa  fa-flag"></i>
+=======
+          <i class="fa fa-flag-checkered"></i>
+>>>>>>> 设备信号质量分析功能
           <span>车队管理</span>
           <span class="glyphicon pull-right"
                 ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
@@ -386,24 +410,24 @@
         </a>
           <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
             <li>
-              <a ui-sref="home.workplane" presentation-href="workplane:page">
-                <i class="fa  fa-flag-checkered"></i> <span>作业面管理</span>
-              </a>
-            </li>
-            <li>
               <a ui-sref="home.fleetMng" presentation-href="fleet:page">
                 <i class="fa fa-flag"></i> <span>车队管理</span>
               </a>
             </li>
             <li>
+              <a ui-sref="home.workplane" presentation-href="workplane:page">
+                <i class="fa fa-map-signs"></i> <span>作业面管理</span>
+              </a>
+            </li>
+            <li>
               <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-                <i class="fa  fa-usd"></i> <span>燃油配置</span>
+                <i class="fa fa-flask"></i> <span>燃油配置</span>
               </a>
             </li>
             <li>
 
               <a ui-sref="home.machineMove" presentation-href="fleet:page">
-                <i class="glyphicon glyphicon-time"></i> <span>作业监控</span>
+                <i class="fa fa-area-chart"></i> <span>作业监控</span>
               </a>
             </li>
             <li>
@@ -446,17 +470,17 @@
             </li>
             <li>
               <a ui-sref="home.orgMng" presentation-href="org:orgMng">
-                <i class="fa fa-users"></i> <span>组织管理</span>
+                <i class="fa fa-sitemap"></i> <span>组织管理</span>
               </a>
             </li>
             <li>
               <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-                <i class="fa  fa-users"></i> <span>角色管理</span>
+                <i class="fa fa-tags"></i> <span>角色管理</span>
               </a>
             </li>
             <li>
               <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
-                <i class="fa  fa-lock"></i> <span>权限管理</span>
+                <i class="fa fa-tag"></i> <span>权限管理</span>
               </a>
             </li>
           </ul>
