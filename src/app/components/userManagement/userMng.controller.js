@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function userMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,
-                             USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL ) {
+                             USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL,ROLE_MENU_LIST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -60,9 +60,43 @@
       var roleUserPromise = serviceResource.restCallService(roleUserUrl, "GET");
       roleUserPromise.then(function (data) {
 
-        vm.roleList = commonFactory.unflatten(data.content);
+        vm.roleList = [];
+        angular.forEach(data.content, function (role) {
+          var newRoleView = {
+            id: role.id,
+            name: role.name,
+            tree: ''
+          }
+
+          vm.roleList.push(newRoleView);
+        })
+
 
       })
+
+    }
+
+    //点击角色查询包含权限
+    vm.selectRole = function (role) {
+
+      if(role.tree!= ''){
+        role.tree = '';
+      }else {
+        var restUrl = ROLE_MENU_LIST_URL;
+        restUrl += "?roleId=" + role.id;
+        //得到角色Menu信息
+        var roleUserPromise = serviceResource.restCallService(restUrl, "GET");
+        roleUserPromise.then(function (data) {
+
+          var menuList = commonFactory.unflatten(data.content);
+
+          // 将权限项放到child里
+          commonFactory.recursiveChild(menuList, "privileges");
+
+          role.tree = menuList;
+
+        })
+      }
 
     }
 
@@ -84,7 +118,7 @@
 
       modalInstance.result.then(function (result) {
         // console.log(result);
-        vm.tableParams.data.splice(0, 0, result);
+        vm.userinfoList.splice(0, 0, result);
 
       }, function () {
         //取消
@@ -107,7 +141,7 @@
       });
 
       modalInstance.result.then(function (selectedItem) {
-        vm.selected = selectedItem;
+
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });
@@ -136,7 +170,7 @@
 
         modalInstance.result.then(function(result) {
 
-          var tabList=vm.tableParams.data;
+          var tabList=vm.userinfoList;
           //更新内容
           for(var i=0;i<tabList.length;i++){
             if(tabList[i].id==result.id){

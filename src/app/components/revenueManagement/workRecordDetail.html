@@ -23,17 +23,21 @@
               </div>
               <div ng-show="workPointRecord.endTime ==null || workPointRecord.startTime==null">0</div>
             </td>
-            <td class="text-nowrap" data-title="'运行里程'">{{workPointRecord.mileage}}KM</td>
+            <td class="text-nowrap" data-title="'运行里程'" ng-if="workPointRecord.mileage!=null">{{workPointRecord.mileage}}KM</td>
+            <td class="text-nowrap" data-title="'运行里程'" ng-if="workPointRecord.mileage==null"></td>
           </tr>
         </table>
       </div>
     </div>
     <div class="map-body col-sm-5">
       <div class="row">
-        <div class="col-md-12 btn-group " role="group" >
+        <div class="col-md-8 btn-group " role="group" >
           <button id="start" class="btn btn-sm" type="button">{{'startAnimation'|translate}}</button>
           <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
           <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
+        </div>
+        <div class="col-md-4 text-right" style="font-size: 16px;padding-right: 20px;">
+          行使了 <span style="color: red;font-weight: bold;">{{workRecordDetailCtrl.trackMileage}}</span> 米
         </div>
       </div>
       <div class="box-body" id="workRecordDetailMap" style="height:400px;"></div>

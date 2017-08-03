@@ -165,7 +165,7 @@
     }
 
     if (userInfo == null) {
-      $rootScope.$state.go('home.login');
+      $rootScope.$state.go('login');
     }
     else {
       if($rootScope.userInfo.userdto.countryCode== "ZH"){
@@ -251,10 +251,7 @@
      });
    }
 
-
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("device:monitorPage");
-    }
+    
 
     //导出至Excel
     vm.excelExport=function (queryOrg) {

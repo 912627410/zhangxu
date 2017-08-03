@@ -84,6 +84,13 @@
         "map/js/china.js"
       ]
     },
+    "angular-animate": {
+      "main": [
+        "angular-animate.js",
+        "angular-animate.min.js"
+      ]
+    },
+
     "angular-underscore": {
       "dependencies": {
         "angular": ">=1.2.1",

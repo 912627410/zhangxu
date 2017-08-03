@@ -581,8 +581,7 @@
                     <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <!--运行监控-->
-                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.validateMonitorShowPermission()
-                      &&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
                     <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
                     <!--实时工时-->
@@ -660,8 +659,7 @@
                     <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
                     <!--作业监控-->
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.validateMonitorShowPermission()&&userInfo.userdto.organizationDto.id==1
-                      &&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{deviceData.workMonitor}}</td>
                     <!--led状态-->
                     <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
                     <!--实时工时-->
@@ -842,7 +840,10 @@
           </div>
         </div>
 
-        <div ng-show="deviceCurrentInfoCtrl.lnglatShow">
+        <div ng-show="deviceCurrentInfoCtrl.lnglatShow" class="text-right" style="line-height: 34px;">
+          <span style="font-size: 16px;padding: 0 10px;">
+            行使了 <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> 米
+          </span>
           <input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right"/>
         </div>
 
@@ -938,7 +939,7 @@
                               <div class="row">
                                 <label for="serverHost" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="serverHost" class="form-control" placeholder="{{'returnAddress'|translate}}"
                                          ng-model="deviceCurrentInfoCtrl.serverHost" name="serverHost"/>
@@ -950,7 +951,7 @@
                               <div class="row">
                                 <label for="serverPort" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
                               </div>
-                              <div class="row" presentation-href="sms:setIpSMS">
+                              <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="serverPort" class="form-control" placeholder="{{'portNumber'|translate}}"
                                          ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceCurrentInfoCtrl.serverPort" name="serverPort"/>
@@ -1163,13 +1164,10 @@
                         <div class="box-body">
                           <div class="row">
                             <div class="col-md-6">
-                              <div class="row" presentation-href="sms:lockSMS">
+                              <div class="row">
                                 <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                               </div>
                               <div class="row">
-                                <div class="row">
-                                  <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
-                                </div>
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
@@ -1181,13 +1179,10 @@
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="row" presentation-href="sms:unLockSMS">
+                              <div class="row">
                                 <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
                               </div>
                               <div class="row">
-                                <div class="row">
-                                  <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
-                                </div>
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"

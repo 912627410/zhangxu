@@ -723,18 +723,6 @@
       opened: false
     };
 
-    /**
-     *  地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
-     * @param deviceInfo
-     */
-    vm.initMapTab = function (deviceInfo) {
-      $timeout(function () {
-        var deviceInfoList = new Array();
-        deviceInfoList.push(deviceInfo);
-        var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 4, centerAddr);
-      })
-    };
 
     /**
      *
@@ -806,13 +794,9 @@
       marker = new AMap.Marker({
         map: map,
         position: carPostion,
-        icon: "assets/images/car_right5_1.png",
+        icon: "assets/images/mine_car1.png",
         offset: new AMap.Pixel(-26, -18),
         autoRotation: true
-      });
-      marker.setLabel({
-        offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
-        content: "行使了 0 米"
       });
       // 绘制轨迹
       var polyline = new AMap.Polyline({
@@ -838,10 +822,8 @@
         markerMovingControl._currentIndex++;
         var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
         lastDistabce += distances;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = lastDistabce;
+        $scope.$apply();
         startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
       })
       /*小车每一移动一部就会触发事件*/
@@ -851,10 +833,8 @@
       /*开始事件*/
       AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
         lastDistabce = 0;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = 0;
+        $scope.$apply();
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
         markerMovingControl._marker.moveAlong(lineAttr, 500);
@@ -865,10 +845,8 @@
         var distabcess2 = lastDistabce;
         var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
         distabcess2 += distances;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = distabcess2;
+        $scope.$apply();
       }, false);
       /*继续移动事件*/
       AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
@@ -979,8 +957,7 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-    if (permissions.getPermissions("device:remoteControl")) {
-
+    vm.getDeviceUnlockFactor = function () {
       ////读取初始化设备时需要的信息
       var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
       var rspData = serviceResource.restCallService(restURL, "GET");
@@ -991,7 +968,9 @@
       }, function (reason) {
         Notification.error(languages.findKey('getInformationFailed'));
       })
-    }
+    };
+
+    vm.getDeviceUnlockFactor();
 
 
     //发送绑定短信
@@ -1035,10 +1014,6 @@
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
-    }
-
-    vm.validateMonitorShowPermission = function () {
-      return permissions.getPermissions("device:monitorShow");
     }
 
 
@@ -2443,9 +2418,13 @@
       }]
     }
 
-    //默认显示当前设备的最新地址
+    /**
+     * 地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
+     * @param deviceInfo
+     */
     vm.initMapTab = function(deviceInfo){
       $timeout(function(){
+        vm.trackMileage = 0;
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         //    alert("deviceInfo.amaplongitudeNum=="+deviceInfo.amaplongitudeNum+", deviceInfo.amaplatitudeNum="+deviceInfo.amaplatitudeNum)
@@ -2814,10 +2793,6 @@
     //默认显示当前设备的最新地址
     vm.initScopeMapTab = function(deviceInfo){
 
-    if (!permissions.getPermissions("device:scopeMapPage")) {
-      return;
-    }
-
     $timeout(function(){
       //第一个标注
       if(null!=deviceInfo.amaplongitudeNum&null!=deviceInfo.amaplatitudeNum){
@@ -2893,7 +2868,7 @@
               map: map,
               position: carPostion,
               //icon: "http://code.mapabc.com/images/car_03.png",
-              icon: "assets/images/car_right5_1.png",
+              icon: "assets/images/mine_car1.png",
               offset: new AMap.Pixel(-26, -18),
               autoRotation: true
             });

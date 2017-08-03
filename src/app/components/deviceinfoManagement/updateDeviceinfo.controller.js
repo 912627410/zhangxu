@@ -52,7 +52,7 @@
     };
 
     //得到设备类型集合
-    var deviceTypeData = serviceResource.restCallService(DEIVCIE_TYPE_LIST_URL, "QUERY");
+    var deviceTypeData = serviceResource.restCallService(DEIVCIE_TYPE_LIST_URL, "GET");
     deviceTypeData.then(function (data) {
       vm.deviceTypeList = data;
     }, function (reason) {

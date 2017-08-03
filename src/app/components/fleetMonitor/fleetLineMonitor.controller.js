@@ -12,8 +12,11 @@
   function fleetLineMonitorController($rootScope,$scope,$filter,WORK_LINE_URL,WORK_INITIAL_MONITOR,Map,fleetTreeFactory, WEBSOCKET_URL,Notification,serviceResource,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    var fleetMonitorUrl;
     vm.fleet = $rootScope.fleetChart[0];
+
+    var ws;//websocket实例
+    var lockReconnect = false;//避免重复连接
+    var wsUrl = WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
 
     vm.lineColor = [];
     for(var i = 0;i < 21;i++) {
@@ -27,7 +30,9 @@
     vm.openFleetTree = function () {
       fleetTreeFactory.treeShow(function (selectedItem) {
         vm.fleet =selectedItem;
-        if(fleetMonitorUrl){fleetMonitorUrl.close();}
+        if(ws){
+          closeWebSocket();
+        }
         vm.initMonitorQuery();
       });
     }
@@ -186,23 +191,69 @@
         return ;
       }
 
-      // websocket monitor
-      fleetMonitorUrl = new WebSocket(WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken);
+      vm.createWebSocket(wsUrl);
 
-      fleetMonitorUrl.onerror = function (evt) {
-        Notification.error("WebSocket Error!");
+    };
+
+    vm.createWebSocket = function(url) {
+      try {
+        ws = new WebSocket(url);
+        initEventHandle();
+      } catch (e) {
+        reconnect(url);
+      }
+    };
+
+    var initEventHandle = function() {
+      ws.onclose = function () {
+        reconnect(wsUrl);
       };
+      ws.onerror = function () {
+        Notification.error("WebSocket Error!");
+        reconnect(wsUrl);
+      };
+      ws.onopen = function () {
+        //心跳检测重置
+        heartCheck.reset().start();
+      };
+      ws.onmessage = function (evt) {
+        //如果获取到消息，心跳检测重置
+        //拿到任何消息都说明当前连接是正常的
+        heartCheck.reset().start();
 
-
-      fleetMonitorUrl.onmessage = function (evt) {
         var monitorVo = JSON.parse(evt.data);
-        if(monitorVo.fleet != vm.fleet.id ){
+        if(monitorVo.fleet != vm.fleet.id) {
           return;
         }
-
         vm.updateChart(monitorVo);
-      };
+      }
+    };
 
+    var reconnect = function(url) {
+      if(lockReconnect) return;
+      lockReconnect = true;
+      //没连接上会一直重连，设置延迟避免请求过多
+      setTimeout(function () {
+        vm.createWebSocket(url);
+        lockReconnect = false;
+      }, 2000);
+    };
+
+    //心跳检测
+    var heartCheck = {
+      timeout: 60000,//60秒
+      timeoutObj: null,
+      reset: function(){
+        clearTimeout(this.timeoutObj);
+        return this;
+      },
+      start: function(){
+        this.timeoutObj = setTimeout(function(){
+          //这里发送一个心跳，后端收到后，返回一个心跳消息，
+          //onmessage拿到返回的心跳就说明连接正常
+          ws.send("HeartBeat");
+        }, this.timeout)
+      }
     };
 
     /**
@@ -313,8 +364,14 @@
 
 
     $scope.$on("$destroy",function () {
-      if(fleetMonitorUrl){fleetMonitorUrl.close();}
+      closeWebSocket();
     });
+
+    var closeWebSocket = function() {
+      ws.close();
+      ws.onclose = function () { };
+      heartCheck.reset();
+    };
 
     vm.initLineQuery(vm.fleet);
 
