@@ -267,6 +267,8 @@
     //模版url
     .constant('TEMPLATE_URL', SERVER_BASE_URL + 'template/getAll')   //得到短消息内容
     .constant('TEMPLATE_CREATE_URL', SERVER_BASE_URL + 'template/create')  //添加模版
+    .constant('RENTAL_HOME_MAP_GPSDATA_URL',SERVER_BASE_URL + 'rental/homeMapData')//租赁平台首页地图数据
+
   ;
 
 
