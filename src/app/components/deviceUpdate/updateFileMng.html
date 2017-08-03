@@ -4,7 +4,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">升级文件管理</li>
+    <li class="active">升级文件</li>
   </ol>
 </section>
 <section class="content form-horizontal">
@@ -33,9 +33,9 @@
       </select>
     </div>
     <div class="col-md-3 text-center">
-      <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()">重置</button>
-      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">查询</button>
-      <button class="btn btn-default" type="button" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>上传</button>
+      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.reset()">重置</button>
+      <button class="btn btn-primary" type="button" presentation-href="upgrade:upgradeFile:query" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">查询</button>
+      <button class="btn btn-default" type="button" presentation-href="upgrade:upgradeFile:upload" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>上传</button>
     </div>
   </div>
   <div class="row form-group">
@@ -58,7 +58,7 @@
             <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
             <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
-              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)">修改</button>
+              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)" presentation-href="upgrade:upgradeFile:modify">修改</button>
             </td>
           </tr>
         </table>

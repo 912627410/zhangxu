@@ -4,7 +4,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">设备升级记录</li>
+    <li class="active">升级记录</li>
   </ol>
 </section>
 <section class="content form-horizontal">
@@ -16,7 +16,7 @@
       <input type="text" name="queryDeviceNum" class="form-control" ng-model="updateRecordCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? updateRecordCtrl.query(0,null,null,updateRecordCtrl.record) : null" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-2 text-center"><!--col-md-offset-6-->
-      <button class="btn btn-primary" type="button" ng-click="updateRecordCtrl.query(0,null,null,updateRecordCtrl.record)" >查询</button>
+      <button class="btn btn-primary" type="button" ng-click="updateRecordCtrl.query(0,null,null,updateRecordCtrl.record)" presentation-href="upgrade:updateRecord:query" >查询</button>
       <button class="btn btn-primary" type="button"  ng-click="updateRecordCtrl.reset()" style="margin: 0 12px;">重置</button>
     </div>
   </div>
