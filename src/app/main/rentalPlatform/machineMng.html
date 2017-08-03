@@ -85,7 +85,7 @@
             <i class="fa fa-cloud"></i>
             <h3 class="box-title">机器预览</h3>
             <div class="box-tools pull-right">
-              <button class="btn btn-danger btn-sm refresh-btn" title="刷新"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-danger btn-sm refresh-btn" title="刷新" ng-click="rentalMachineMngCtr.loadHomeDeviceData()"><i class="fa fa-refresh"></i></button>
             </div>
           </div>
           <div class="box-body no-padding">
@@ -215,10 +215,6 @@
                 <label>状态:</label>
                 <input style="width: 100px"/>
               </div>
-              <div  class="tab-content-search-box">
-                <label>地区:</label>
-                <input/>
-              </div>
               <div class="search-box-button">
                 <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
                 <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
@@ -244,7 +240,7 @@
             <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
                             total-items="100"
                             ng-change=""
-                            max-size="5" ng-model="1"
+                            max-size="5" ng-model="rentalMachineMngCtr.currentPage"
                             items-per-page="12"
                             first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
                             next-text="{{'nextPage'|translate}}"
@@ -362,7 +358,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">{{'content'|translate}}</h3>
               <div class="box-tools pull-right">
-                <input type="text" class="input-sm" ng-model="" placeholder="{{'reminderContent'|translate}}">
+                <input type="text" class="input-sm" placeholder="{{'reminderContent'|translate}}">
                 <button type="button" class="btn btn-default btn-sm" ng-click="">
                   <i class="fa fa-search"></i>
                 </button>
@@ -401,7 +397,7 @@
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
                 <uib-pagination class="pagination-sm" boundary-links="true" rotate="false"
-                                total-items="" ng-change="" max-size="5" ng-model="" items-per-page=""
+                                total-items="" ng-change="" max-size="5" ng-model="vm.currentPage" items-per-page=""
                                 first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
                                 next-text="{{'nextPage'|translate}}"
                                 previous-text="{{'previousPage'|translate}}">

@@ -108,7 +108,7 @@
     };
 
 
-//添加带文本的点标记覆盖物
+    //添加带文本的点标记覆盖物
     var addMarkerModel = function(mapObj,item, icon) {
       var mapObj = mapObj;
       //实例化信息窗体
@@ -124,56 +124,30 @@
         icon:new AMap.Icon({
           image: icon,
           imageOffset: new AMap.Pixel(-15, -10)
-        })//复杂图标
-       // offset: new AMap.Pixel(-108, 124), //相对于基点的偏移位置
-        // draggable: true,  //是否可拖动
-        //  content: markerInfoLayer   //自定义点标记覆盖物内容
+        })
       });
-      // marker.setMap(mapObj);  //在地图上添加点
+
       AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
-
-        var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
-        var title = '';
-        var contentInfo = "终端编号：" + item.deviceNum + "</br>当前位置：" + item.address + "<br/>数据更新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>坐标:<br/>工作时间:"+item.totalDuration+"<br/>";
-
-      //  var title = '<span style="font-size:11px;color:#F00;">数据更新时间:' + item.lastDataUploadTime + '</span>';
-      //  var title = '';
-
-        //title = mapDeviceType(item);
+        //title内容
+        var title ='';
         if(item.versionNum == 'A001') {
-          title = "高空车";
+          title = "高空车:"+(item.machineLicenseId==null?"":item.machineLicenseId);
         } else {
-          title = "矿机";
+          title = "矿机:"+(item.machineLicenseId==null?"":item.machineLicenseId);
         }
-
         /*若整机编号为空，则显示终端编号*/
         if(title == null){
           title = item.deviceNum;
         }
-
-
-
-
-       // var contentInfo = "终端编号：" + item.deviceNum +"<br/>工作时间:"+item.totalDuration+ "<br/>维度: "+item.amaplatitudeNum+"<br/> 经度: "+item.amaplongitudeNum+"<br/>当前位置：" + item.address + "<br/>更 新时间：" + $filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss') + "<br/>";
-
+        //窗体内容
         var contentInfo="";
-        //contentInfo += languages.findKey('terminalNumber')+"：" + item.deviceNum +"<br/>";
         contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
-
         contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
-
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
-
-
-        //contentInfo += "<a href='../../Equipment/EquipmentDetail/" + item.TerminalEquipmentId + "' class='btn btn-xs btn-primary'>详细信息</a>";
-        //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"showFence('" + item.TNum + "');\">查看围栏</a>";
-        //contentInfo += "<a href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"setFence('" + item.TNum + "'," + item.G_Lng + "," + item.G_Lat + ");\">设置围栏</a>";
-        //contentInfo += "<a style='display:none;' href='javascript:void(0);' class='btn btn-xs btn-primary'  onclick=\"endEddit();\" id='saveFence'>保存设置</a>";
         var info = createInfoWindow(title, contentInfo,mapObj);
-
         //设置窗体内容
         infoWindow.setContent(info);
       });
@@ -270,14 +244,12 @@
         $rootScope.userInfo.authtoken ="Basic "+ btoa($rootScope.userInfo.userdto.ssn+":"+newpassword);
         $window.sessionStorage["userInfo"] = JSON.stringify($rootScope.userInfo);
       },
-
       getPermission:function(){
       if($rootScope.userInfo){
         var rspdata= restCallService(PERMISSIONS_URL,"GET");
         return rspdata;
       }
       },
-
       //高德地图逆向地理编码(坐标->地址)
       getAddressFromXY: function(lnglatXY,callback){
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -295,7 +267,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-        refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
+      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -375,19 +347,13 @@
                 map.clearMap();
                 Notification.error(languages.findKey('failedToGetDeviceInformation'));
               })
-            }
-            else{
+            }else{
               deviceList.forEach(function(deviceInfo){
-                if ((deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === '1' || deviceInfo.locateStatus === '01') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
-
-
-                  // var marker="http://webapi.amap.com/images/marker_sprite.png";
+                if ((deviceInfo.locateStatus =='A' || deviceInfo.locateStatus == '1' ) && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   var marker="assets/images/orangeMarker.png";
-                  if(deviceInfo.accStatus=='01'){
+                  if(deviceInfo.accStatus=='01' || deviceInfo.machineStatus=='1'){
                     marker="assets/images/greenMarker.png";
                   }
-
-
                   addMarkerModel(map,deviceInfo,marker);
                 }
               })
@@ -575,12 +541,10 @@
       restUpdateRequest:function(URL,params){
         return restCallService(URL,"UPDATE",params);
       },
-
       //添加数据通用接口
       restAddRequest:function(URL,params){
         return restCallService(URL,"ADD",params);
       },
-
       //根据车架号判断车型
       //00 - 无特定类型
       //01 - 小挖
@@ -598,7 +562,6 @@
         }
         return null;
       },
-
       //TODO 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
       //00 - 无特定类型
       //01 - 小挖
@@ -644,7 +607,6 @@
         return hourMins;
         }
       },
-
       getWarningMsg:function(deviceWarningData,deviceType){
         if(deviceType){
           var warningMsg = $rootScope.warningDataDtc[deviceWarningData.spn+deviceWarningData.fmi];
@@ -840,7 +802,8 @@
       convertGSMSing: function (value) {
         var singValue = value / 31 * 100;
         return singValue.toFixed(2);
-      }
+      },
+      //租赁平台首页地图数据
     }
   }
 
