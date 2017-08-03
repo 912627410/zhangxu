@@ -431,7 +431,7 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11' || deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='1'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus==null">{{'noData'|translate}}</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">
                     <!--发电机状态-->
                     <td>{{'generatorState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
@@ -581,7 +581,7 @@
                     <!--gsm信号质量-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <!--运行监控-->
-                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{'operationMonitoring'|translate}}</th>
+                    <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
                     <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
                     <!--实时工时-->
@@ -594,9 +594,9 @@
                     <!--ACC状态-->
                     <th class="text-nowrap">{{'ACCState'|translate}}</th>
                     <!--发电机状态-->
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{'generatorState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'generatorState'|translate}}</th>
                     <!--GPS电源检测和模拟量1是相同的-->
-                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{'GPSPowerDetection'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'GPSPowerDetection'|translate}}</th>
                     <!--模拟量2-->
                     <th class="text-nowrap">{{'Built-inBatteryRealTime'|translate}}</th>
                     <!--电压-->
@@ -659,7 +659,7 @@
                     <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
                     <!--作业监控-->
-                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'">{{deviceData.workMonitor}}</td>
+                    <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{deviceData.workMonitor}}</td>
                     <!--led状态-->
                     <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
                     <!--实时工时-->
@@ -677,12 +677,12 @@
                     <td ng-if="deviceData.accStatus=='10' || deviceData.accStatus=='0'" class="bg-danger text-danger">OFF</td>
                     <td ng-if="deviceData.accStatus==null">{{'noData'|translate}}</td>
                     <!--发电机状态-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&((deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null)">{{'noData'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&((deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null)">{{'noData'|translate}}</td>
                     <!--GPS电源检测和模拟量1是相同的-->
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceData.imitate1!=null" ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceData.imitate1==null" ng-cloak></td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.imitate1!=null" ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.imitate1==null" ng-cloak></td>
                     <!--模拟量2-->
                     <td ng-if="deviceData.imitate2!=null" ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
                     <td ng-if="deviceData.imitate2==null" ng-cloak></td>
@@ -1354,7 +1354,7 @@
 
 
           <!--矿车MQTT协议 设置上传丶采样时间-->
-          <div presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">
+          <div presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'||deviceCurrentInfoCtrl.deviceinfo.versionNum=='1002'">
             <hr />
             <div class="row">
               <div class="form-group">
