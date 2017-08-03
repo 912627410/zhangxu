@@ -637,24 +637,6 @@
         }
       })
 
-    .state('home.templateRegistry', {
-      url: '/templateRegistry',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/templateRegistry/templateRegistry.html',
-          controller: 'templateRegistryMngController as templateRegistryMngController'
-        }
-      }
-    })
-    .state('home.machineComparison', {
-      url: '/machineComparison',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/workHotAnalysis/machineComparison.html',
-          controller: 'machineComparedMngController as machineComparedMngCtrl'
-        }
-      }
-    })
     .state('home.deviceUpdate', {
       url: '/deviceUpdate',
       views: {
