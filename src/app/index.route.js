@@ -157,6 +157,16 @@
           }
         }
       })
+      //
+      .state('home.intervalAndSignal', {
+        url: '/intervalAndSignal',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceAnalysis/intervalAndSignal.html',
+            controller: 'intervalAndSignalController as intervalAndSignalCtrl'
+          }
+        }
+      })
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {

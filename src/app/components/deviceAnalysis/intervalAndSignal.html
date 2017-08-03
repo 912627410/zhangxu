@@ -1,0 +1,104 @@
+<section>
+  <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
+    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+    <li>统计分析</li>
+    <li>设备信号分析</li>
+    <li class="active">上传频率与信号质量</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">开始时间: </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="intervalAndSignalCtrl.queryDate.startDate"
+               is-open="intervalAndSignalCtrl.startDateOpenStatus"
+               datepicker-options="intervalAndSignalCtrl.dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="intervalAndSignalCtrl.startDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label text-nowrap">结束时间: </label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="intervalAndSignalCtrl.queryDate.endDate"
+               is-open="intervalAndSignalCtrl.endDateOpenStatus"
+               datepicker-options="intervalAndSignalCtrl.dateOptions"
+               ng-required="true"
+               current-text="今天"
+               clear-text="清除"
+               close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="intervalAndSignalCtrl.endDateOpen($event)">
+            <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"
+              ng-click="intervalAndSignalCtrl.query(intervalAndSignalCtrl.queryDate)">查询
+      </button>
+
+      <button class="btn btn-warning" type="button" ng-click="intervalAndSignalCtrl.reset()">重置
+      </button>
+
+    </div>
+  </div>
+
+  <br>
+  <!--散点图-->
+  <div class="main-container">
+    <div id="analysisChart" class="chart-container" style="padding-top:20px;min-height: 500px;width: 100%;"></div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-12 text-right">
+      <!--<a class="btn btn-primary" type="button" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="机器作业时间分布.csv">导出</a>-->
+      <a class="btn btn-primary" type="button" title="Export Table" data="intervalAndSignalCtrl.dataList" report-fields="{deviceNum: '设备编号', signals: '信号质量', interval: '上传频率'}" filename="'上传频率与信号质量分布'" ng-json-export-excel>导出</a>
+    </div>
+  </div>
+  <div class="row " style="padding: 20px">
+    <div class="table-responsive">
+      <table ng-table="intervalAndSignalCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
+        <tr ng-repeat="device in $data">
+          <td class="text-nowrap" data-title="'设备编号'">
+            <a href  ng-click="intervalAndSignalCtrl.currentInfo(device.deviceNum,'lg')">{{device.deviceNum}}</a>
+          </td>
+          <td class="text-nowrap" data-title="'信号质量'" sortable="'signals'">{{device.signals}}</td>
+          <td class="text-nowrap" data-title="'上传频率'" sortable="'interval'">{{device.interval}}</td>
+          <td class="text-nowrap" data-title="'操作'">
+            <button type="button" class="btn btn-default" ng-click="intervalAndSignalCtrl.detail(device.deviceNum)">详细信息
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--</div>-->
+</section>
