@@ -1,6 +1,14 @@
-<div class="profit-content" ng-controller="profitStatisticsController as profitStatisticsCtr">
+<div class="profit-content" ng-controller="profitStatisticsController as profitStatisticsCtr" resize>
+
+  <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="profitStatisticsCtr.gotoAnchor(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>
 <!--Income statistics-->
-  <div id="income" class="container-fluid">
+  <div id="income" class="container-fluid  profitItem ">
     <nav-btn>
       <nav-title></nav-title>
       <nav-list>
@@ -8,7 +16,7 @@
       </nav-list>
       <nav-overlay></nav-overlay>
     </nav-btn>
-    <div class="row info-box-container">
+    <div class="row info-box-container ">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box    ">
           <h4>Machine</h4>
@@ -67,9 +75,9 @@
           <div class="col-md-3 item" >
             <div class="row">
               <label class="col-md-4">Height</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.height"
-                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
                 <option value="">请选择...</option>
               </select>
             </div>
@@ -84,41 +92,54 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">SIM</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.sim"
-                      ng-options="sim as y for y   in profitStatisticsCtr.simList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
         </div>
 
       </div>
       <div class="right col-md-1">
-        <div type="button" class="bg-orange searchButton">Search</div>
+        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
       </div>
     </div>
     <div class="row incomePic">
       <div class="col-md-4 leftSelect">
         <div class=" top ">
-          <label class="col-md-4"><input type="radio">订单</label>
-          <label class="col-md-4"><input type="radio">车辆</label>
-          <label class="col-md-4"><input type="radio">车型</label>
+          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="order" ng-checked="true">订单</label>
+          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="machine">车辆</label>
+          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="models">车型</label>
         </div>
-        <div class="liBox">
-          <ul>
-            <li>11111111111</li>
-            <li>22222222222</li>
-            <li>33333333333</li>
-            <li>44444444444</li>
-            <li>55555555555</li>
-            <li>66666666666</li>
-            <li>77777777777</li>
-            <li>88888888888</li>
-            <li>99999999999</li>
+        <div class="liBox" ng-switch="costShowType" ng-init="costShowType=order" >
+          <!--<ul ng-switch-when="order">-->
+            <ul ng-switch-default>
+            <li><a>57937394647694</a></li>
+            <li><a>57937394647695</a></li>
+            <li><a>57937394647696</a></li>
+            <li><a>57937394647697</a></li>
+            <li><a>57937394647698</a></li>
+            <li><a>57937394647699</a></li>
+            <li><a>57937394647700</a></li>
+            <li><a>57937394647701</a></li>
+            <li><a>57937394647702</a></li>
+          </ul>
+          <ul ng-switch-when="machine">
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+          </ul>
+          <ul ng-switch-when="models">
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
+            <li><a>2222222222222</a></li>
           </ul>
         </div>
       </div>
@@ -129,11 +150,11 @@
   </div>
 
   <!--Cost statistics-->
-  <div id="Cost" class="container-fluid">
+  <div id="Cost" class="container-fluid profitItem">
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box    ">
-          <h4>Machine</h4>
+          <h4>围栏机器</h4>
           <section>
             <span>
               Total
@@ -146,26 +167,26 @@
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Add New Data</h4>
+          <h4>车辆相关</h4>
           <section>
-            <p>Add new Data</p>
+            <p>折旧/维修/保养/配件/人工</p>
           </section>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Edit Data</h4>
+          <h4>管理费用</h4>
           <section>
-            <p>Edit Data</p>
+            <p>管理费用</p>
           </section>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Delete Data</h4>
+          <h4>财务费用</h4>
           <section>
             <P>
-              Delete Data
+              财务费用
             </P>
           </section>
         </div>
@@ -189,10 +210,11 @@
           <div class="col-md-3 item" >
             <div class="row">
               <label class="col-md-4">Height</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.height"
-                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
                 <option value="">请选择...</option>
+              </select>
               </select>
             </div>
           </div>
@@ -206,21 +228,11 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">SIM</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.sim"
-                      ng-options="sim as y for y  in profitStatisticsCtr.simList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
         </div>
 
       </div>
       <div class="right col-md-1">
-        <div type="button" class="bg-orange searchButton">Search</div>
+        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
       </div>
     </div>
     <div class="row costPic">
@@ -328,14 +340,14 @@
         </table>
       </div>
       <div class="rightPic col-md-4">
-        <div id="topPie" style=" height: 50%;"></div>
-        <div id="bottomPie"  style=" height: 50%;"></div>
+        <div id="topPie" ></div>
+        <div id="bottomPie"  ></div>
       </div>
     </div>
   </div>
 
   <!--profit statistics-->
-  <div id="profit">
+  <div id="profit" class="container-fluid profitItem">
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box    ">
@@ -370,26 +382,27 @@
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Edit Data</h4>
+          <h4>Planned order</h4>
           <section>
             <div>
               Total
             </div>
             <div>
               <b>
-                666666
+                999
               </b>
             </div>
           </section>
+
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
           <h4>Add New Order</h4>
           <section>
-            <P>
+            <div>
               Add New Order
-            </P>
+            </div>
           </section>
         </div>
       </div>
@@ -412,9 +425,9 @@
           <div class="col-md-3 item" >
             <div class="row">
               <label class="col-md-4">Height</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.height"
-                      ng-options="height as y for y in profitStatisticsCtr.heightList">
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="profitStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
                 <option value="">请选择...</option>
               </select>
             </div>
@@ -429,24 +442,14 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">SIM</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.sim"
-                      ng-options="sim as y for y  in profitStatisticsCtr.simList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
         </div>
 
       </div>
       <div class="right col-md-1">
-        <div type="button" class="bg-orange searchButton">Search</div>
+        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
       </div>
     </div>
-    <div class="profitPic">
+    <div class="row profitPic">
       <div class="profitBar" id="profitBar"></div>
     </div>
   </div>

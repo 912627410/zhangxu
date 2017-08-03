@@ -9,20 +9,70 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope) {
-
+  function profitStatisticsController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource,DEVCE_HIGHTTYPE) {
     var vm = this;
-    vm.type = 'all';
-    vm.typeList = ['all','one','two'];
 
-    vm.height = 'all';
-    vm.heightList = ['8','6','4'];
+
+    //定义偏移量
+    $anchorScroll.yOffset = 50;
+    //定义页面的喵点
+    $scope.navs = [{
+      "title": "income", "icon": "fa-map"
+    }, {
+      "title": "Cost", "icon": "fa-signal"
+    }, {
+      "title": "profit", "icon": "fa-exclamation-triangle"
+    }];
+
+    //自适应高度
+    var windowHeight = $window.innerHeight; //获取窗口高度
+    console.log(windowHeight)
+
+    var profitItem= document.getElementsByClassName('profitItem');
+    for(var i = 0;i<profitItem.length;i++){
+      profitItem[i].style.height = windowHeight + 'px';
+    }
+
+
+    window.onresize = function(){
+      lineChart.resize();
+      topPie.resize();
+      bottomPie.resize();
+      profitBar.resize();
+
+    }
+
+
+
+    /**
+     * 去到某个喵点
+     * @param 喵点id
+     */
+    vm.gotoAnchor = function (x) {
+      $location.hash(x);
+      $anchorScroll();
+    }
+
+
+    vm.type = 'all';
+    vm.typeList = ['All','剪叉','直臂','曲臂'];
+
+    var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
+    var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
+    deviceHeightTypeData.then(function (data) {
+      vm.deviceHeightTypeList = data.content;
+    }, function (reason) {
+      Notification.error('获取高度类型失败');
+    })
 
     vm.Brand = 'all'
-    vm.BrandList = ['1','2','3'];
+    vm.BrandList = ['brand1','brand2','brand3'];
 
-    vm.sim = 'all';
-    vm.simList = ['1111','2222','33333'];
+
+
+    vm.search = function () {
+
+    }
 
 
     //income
@@ -95,45 +145,18 @@
       legend: {
         orient: 'vertical',
         x: 'left',
-        data:['直达','营销广告','搜索引擎','邮件营销','联盟广告','视频广告','百度','谷歌','必应','其他']
+        data:['贷款额','还款额','其他']
       },
       series: [
         {
           name:'访问来源',
           type:'pie',
           selectedMode: 'single',
-          radius: [0, '30%'],
-
-          label: {
-            normal: {
-              position: 'inner'
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
+          radius: '60%',
           data:[
-            {value:335, name:'直达', selected:true},
-            {value:679, name:'营销广告'},
-            {value:1548, name:'搜索引擎'}
-          ]
-        },
-        {
-          name:'访问来源',
-          type:'pie',
-          radius: ['40%', '55%'],
-
-          data:[
-            {value:335, name:'直达'},
-            {value:310, name:'邮件营销'},
-            {value:234, name:'联盟广告'},
-            {value:135, name:'视频广告'},
-            {value:1048, name:'百度'},
-            {value:251, name:'谷歌'},
-            {value:147, name:'必应'},
-            {value:102, name:'其他'}
+            {value:335, name:'贷款额', selected:true},
+            {value:679, name:'还款额'},
+            {value:1548, name:'其他'}
           ]
         }
       ]
@@ -143,8 +166,8 @@
     var bottomPie = echarts.init(document.getElementById('bottomPie'));
     var bottomPieoption = {
       title : {
-        text: '某站点用户访问来源',
-        subtext: '纯属虚构',
+        text: '成本相关',
+        subtext: '',
         x:'center'
       },
       tooltip : {
@@ -154,7 +177,7 @@
       legend: {
         orient: 'vertical',
         left: 'left',
-        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        data: ['折旧','维修','保养','配件','人工']
       },
       series : [
         {
@@ -163,11 +186,11 @@
           radius : '55%',
           center: ['50%', '60%'],
           data:[
-            {value:335, name:'直接访问'},
-            {value:310, name:'邮件营销'},
-            {value:234, name:'联盟广告'},
-            {value:135, name:'视频广告'},
-            {value:1548, name:'搜索引擎'}
+            {value:335, name:'折旧'},
+            {value:310, name:'维修'},
+            {value:234, name:'保养'},
+            {value:135, name:'配件'},
+            {value:1548, name:'人工'}
           ],
           itemStyle: {
             emphasis: {
