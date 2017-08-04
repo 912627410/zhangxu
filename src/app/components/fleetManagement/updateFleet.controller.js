@@ -10,9 +10,10 @@
     .controller('updateFleetController', updateFleetController);
 
   /** @ngInject */
-  function updateFleetController($rootScope,$scope,$http,$confirm,treeFactory,$uibModalInstance,FLEET_URL,serviceResource, Notification,fleet,type) {
+  function updateFleetController($rootScope,treeFactory,$uibModalInstance,FLEET_URL,serviceResource, Notification,fleet,type,parentOrg) {
     var vm = this;
-    vm.fleet = fleet;
+    vm.fleet = angular.copy(fleet);
+    vm.fleet.parentOrg = angular.copy(parentOrg);
     vm.operatorInfo =$rootScope.userInfo;
     vm.type =type;
     vm.cancel = function () {
@@ -22,8 +23,8 @@
     //组织树的显示
     vm.openTreeInfo=function() {
       treeFactory.treeShow(function (selectedItem) {
+        vm.fleet.parentOrg = selectedItem;
         vm.fleet.parentId = selectedItem.id;
-        vm.fleet.parentLabel=selectedItem.label;
       });
     }
 

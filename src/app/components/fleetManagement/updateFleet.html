@@ -32,18 +32,33 @@
                  validator="required" />
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-hide="updateFleetCtrl.type=='update'">
         <label class="col-sm-2 control-label">{{'parentOrganization'| translate}}</label>
         <div class="col-md-4">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="{{'parentOrganization'| translate}}" ng-model="updateFleetCtrl.fleet.parentLabel" name="org" readonly required/>
-          <span class="input-group-btn" ng-if="updateFleetCtrl.type=='update'">
-          <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="updateFleetCtrl.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
+            <input type="text" class="form-control" placeholder="{{'parentOrganization'| translate}}" ng-model="updateFleetCtrl.fleet.parentOrg.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+              <button type="button" class="btn btn-default" ng-click="updateFleetCtrl.openTreeInfo()" disabled>
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group" ng-if="updateFleetCtrl.type=='update'">
+        <label class="col-sm-2 control-label">{{'parentOrganization'| translate}}</label>
+        <div class="col-md-4">
+          <p class="input-group">
+
+            <input type="text" class="form-control" placeholder="{{'parentOrganization'| translate}}" ng-model="updateFleetCtrl.fleet.parentOrg.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+              <button type="button" class="btn btn-default" ng-click="updateFleetCtrl.openTreeInfo()">
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </span>
           </p>
         </div>
       </div>

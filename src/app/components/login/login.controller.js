@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $scope, $http, $cookies, $filter, $stateParams, commonFactory, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, PERMISSIONS_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, FLEET_LIST_URL, $confirm, Notification, serviceResource, permissions, Idle, Title, languages) {
+  function LoginController($rootScope, $scope, $http, $cookies, $filter, $stateParams, commonFactory, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, PERMISSIONS_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, FLEET_TREE_URL, $confirm, Notification, serviceResource, permissions, Idle, Title, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -239,7 +239,7 @@
 
         vm.getOrg();
 
-        if (permissions.getPermissions("fleetMng:fleet:query")) {
+        if (permissions.getPermissions("fleetMng")) {
           vm.getFleet();
         }
         // 报警信息权限暂未定义
@@ -346,7 +346,7 @@
      * 获取车队组织结构
      */
     vm.getFleet = function () {
-      var rspData = serviceResource.restCallService(FLEET_LIST_URL, "GET");
+      var rspData = serviceResource.restCallService(FLEET_TREE_URL, "GET");
       rspData.then(function (data) {
 
         var fleetList = data.content;
