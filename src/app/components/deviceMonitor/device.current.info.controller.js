@@ -966,11 +966,10 @@
         var licenseId = vm.deviceUnLockFactor.licenseId;
         //具体格式请参考短信激活文档
       }, function (reason) {
-        Notification.error(languages.findKey('getInformationFailed'));
+        Notification.error(languages.findKey('failedToObtainRemoteControlInformation'));
       })
     };
 
-    vm.getDeviceUnlockFactor();
 
 
     //发送绑定短信
