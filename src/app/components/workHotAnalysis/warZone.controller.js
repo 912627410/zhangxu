@@ -27,7 +27,7 @@
 
     //default
     $scope.query_cycle_type = '按月查询';
-    $scope.query_cycle_value = '201706';
+    $scope.query_cycle_value = timeList.getMonth();
     $scope.query_hour = 2;
     $scope.query_statistical_type1 = '开工热度';
     $scope.query_statistical_type2 = '销售热度';
@@ -37,8 +37,8 @@
 
     $http.get('assets/json/warzone.json').success(function(data){
       echarts.registerMap('warZone', data);
-      getMap1_Data('1','1','201706','2','1');
-      getMap2_Data('1','1','201706','2','2');
+      getMap1_Data('1','1',timeList.getMonth(),'2','1');
+      getMap2_Data('1','1',timeList.getMonth(),'2','2');
     });
 
     function getMap1_Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
@@ -319,7 +319,11 @@
           var temp = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
           for(var i = 0;i<6;i++){
             for(var j = 0;j<4;j++){
-              temp[i][j] = data[i].quarterData[j].rate;
+              if(data[i].quarterData[j] !== undefined) {
+                temp[i][j] = data[i].quarterData[j].rate;
+              }else {
+                temp[i][j] = 0
+              }
             }
           }
           return temp
@@ -541,7 +545,7 @@
         if(newVal == '按月查询'){
           $scope.cycle_value = timeList.monthList(2017,1)
         }else if(newVal == '按季度查询'){
-          $scope.cycle_value = timeList.quarterList(2015,10)
+          $scope.cycle_value = timeList.quarterList(2016,4)
         }
       }
     });
@@ -553,22 +557,6 @@
         return value2 - value1;
       }
     }
-    var startYear = 2017, startMonth = 2;
-    var i = 0;
-
-    var time = new Date();
-    console.log(time.getMonth());
-
-    var length = (time.getFullYear() - startYear) * 12 + time.getMonth() - startMonth + 1;
-    var result = [];
-    for(i;i<length;i+=3){
-      time.setMonth(time.getMonth() - 3);
-      var q = Math.ceil(time.getMonth() / 3) + 1;
-      result.push(time.getFullYear() + '0' + q);
-    }
-
-    console.log(result);
-    console.log(length);
 
   }
 

@@ -194,6 +194,17 @@
   GPSCloudFactory.factory('timeList',function(){
     var i = 0;
     var list = {
+      //上个月份 201705
+      getMonth: function(){
+        var time = new Date();
+        time.setMonth(time.getMonth() + 1);
+        var y = time.getFullYear();
+        var m = time.getMonth() - 1;
+        var temp;
+        m = m < 10 ? '0' + m : m;
+        temp = y + '' + m;
+        return temp;
+      },
       //按月份 [..,201612,201701, 201702,..]
       monthList: function(startYear, startMonth){
         var time = new Date();
