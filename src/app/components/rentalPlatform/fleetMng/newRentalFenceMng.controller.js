@@ -7,10 +7,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('newWorkPointController', newWorkPointController);
+    .controller('newRentalFenceController', newRentalFenceController);
 
   /** @ngInject */
-  function newWorkPointController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL, $uibModalInstance,languages,fleet) {
+  function newRentalFenceController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL,languages,fleet) {
     var vm = this;
     vm.workPoint = {
       longitude: null,
@@ -183,7 +183,6 @@
     }
 
     vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
 
     }
 

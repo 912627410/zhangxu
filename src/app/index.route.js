@@ -167,6 +167,29 @@
           }
         }
       })
+      //租赁围栏管理
+      .state('rental.fence', {
+        url: '/fence',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFenceMng.html',
+            controller: 'rentalFenceMngController',
+            controllerAs: 'rentalFenceMngController'
+          }
+        }
+      })
+
+      //租赁围栏添加管理
+      .state('rental.newFence', {
+        url: '/newFence',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFenceMng.html',
+            controller: 'newRentalFenceController',
+            controllerAs: 'newRentalFenceController'
+          }
+        }
+      })
       .state('rental.profitStatistics', {
         url: '/profitStatistics',
         views: {
