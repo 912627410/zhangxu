@@ -73,49 +73,14 @@
         trigger: 'item'
       },
       toolbox: {
-        orient:'horizontal',
-        itemSize:20,
-        itemGap:15,
-        right:120,
-        top:'25',
-        showTitle:'true',
+        right:140,
         feature: {
-          dataZoom: {
-            show:true,
-            iconStyle:{
-              normal:{
-                textPosition:'top'
-              },
-              emphasis:{
-                textPosition:'top',
-                color: '#2F4056'
-              }
-            }
-          },
-          brush: {
-            type: ['rect', 'polygon', 'clear'],
-            iconStyle:{
-              normal:{
-                textPosition:'top'
-              },
-              emphasis:{
-                textPosition:'top',
-                color: '#2F4056'
-              }
-            }
-          },
-          restore: {
-            show :true,
-            iconStyle:{
-              normal:{
-                opacity:0.8,
-                textPosition:'top'
-              },
-              emphasis:{
-                textPosition:'top',
-                color: '#2F4056'
-              }
-            }
+          dataView: {show: true, readOnly: false},
+          magicType: {show: false, type: ['line', 'bar']},
+          restore: {show: true},
+          saveAsImage: {show: true},
+          brush:{
+            type: ['rect', 'polygon','clear']
           }
         }
       },
@@ -152,7 +117,7 @@
         {
           zlevel: 1,
           type: 'scatter',
-          symbolSize: 8,
+          symbolSize: 4,
           itemStyle :{
             normal: {
               color: '#104E8B'

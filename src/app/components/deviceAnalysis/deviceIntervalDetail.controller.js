@@ -141,7 +141,7 @@
         angular.forEach(datas, function (data) {
 
           var signal = data.uploadTimes >0 ?  data.gsmSignals/data.uploadTimes : 0;
-          var interval = data.uploadTimes >0 ?  data.totalDuration/data.uploadTimes : 0;
+          var interval = data.uploadTimes >0 ?  data.totalDuration*3/data.uploadTimes : 0;
 
           vm.option.xAxis.data.push(new Date(data.recordTime));
           vm.option.series[0].data.push($filter('number')(interval,3));
