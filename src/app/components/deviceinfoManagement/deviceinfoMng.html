@@ -102,21 +102,21 @@
     <div class="col-md-9">
 
 
-      <a class="btn btn-default pull-right" presentation-href="deviceMng:gps:create"
+      <button class="btn btn-default pull-right " presentation-href="deviceMng:gps:create"
          ng-click="deviceinfoMngCtrl.newDeviceinfo()">
         <i class="fa fa-plus"></i> {{'add'|translate}}
-      </a>
-      <a class="btn btn-default pull-right" presentation-href="deviceMng:gps:import"
+      </button>
+      <button class="btn btn-default pull-right" presentation-href="deviceMng:gps:import"
 
          ng-click="deviceinfoMngCtrl.uploadDeviceinfo('lg')">
         <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
-      </a>
+      </button>
 
 
-      <a class="btn btn-default pull-right" presentation-href="deviceMng:gps:export"
+      <button class="btn btn-default pull-right" presentation-href="deviceMng:gps:export"
        title="Export Table" ng-click="deviceinfoMngCtrl.excelExport(deviceinfoMngCtrl.org)" >
         <i class="glyphicon glyphicon-new-window" ></i> {{'batchExport'|translate}}
-      </a>
+      </button>
 
     </div>
   </div>

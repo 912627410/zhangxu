@@ -1,11 +1,11 @@
 <div class="modal-header">
-  <h3 class="modal-title">新建设备</h3>
+  <h3 class="modal-title">{{'newDevice'|translate}}</h3>
 </div>
 <form name="newDeviceForm" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="deviceNum" class="col-sm-2 control-label">设备编号</label>
+        <label for="deviceNum" class="col-sm-2 control-label">{{'deviceNum'|translate}}</label>
         <div class="col-sm-10">
           <input type="text" id="deviceNum" class="form-control" placeholder="手工输入6位号码或扫条码" ng-minlength='6' ng-maxlength='26'
                  ng-model="newDeviceinfoController.deviceinfo.deviceNum" name="deviceNum" typeahead-show-hint="false"
@@ -26,7 +26,7 @@
         </div>
       </div>-->
       <div class="form-group">
-        <label class="col-sm-2 control-label">SIM卡号</label>
+        <label class="col-sm-2 control-label">{{'SIMCardNumber'|translate}}</label>
         <div class="col-sm-10">
           <ui-select name="phoneNumber" ng-model="newDeviceinfoController.deviceinfo.sim" theme="bootstrap"
                      ng-disabled="disabled" validator="required">
@@ -42,7 +42,7 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">协议类型</label>
+        <label class="col-sm-2 control-label">{{'protocalTypeDescribe'|translate}}</label>
         <div class="col-sm-10">
           <select validator="required" name="deviceMF" required class="form-control"
                   ng-model="newDeviceinfoController.deviceinfo.protocalType"
@@ -53,7 +53,7 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">类型</label>
+        <label class="col-sm-2 control-label">{{'type'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceType" ng-options="deviceType.id as deviceType.name for deviceType in newDeviceinfoController.deviceTypeList">
             <option value="">请选择...</option>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">生产厂家</label>
+        <label class="col-sm-2 control-label">{{'Manufacturer'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceManufacture" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceManufacture" ng-options="deviceMF.id as deviceMF.name for deviceMF in newDeviceinfoController.deviceMFList">
             <option value="">请选择...</option>
@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="devicepowertype" class="col-sm-2 control-label">驱动类型</label>
+        <label for="devicepowertype" class="col-sm-2 control-label">{{'driveType'|translate}}</label>
         <div class="col-sm-10">
           <select id="devicePowerType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.devicePowerType" ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in newDeviceinfoController.devicePowerTypeList">
             <option value="">请选择...</option>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">高度</label>
+        <label class="col-sm-2 control-label">{{'highlyType'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceHeightType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceHeightType" ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in newDeviceinfoController.deviceHeightTypeList">
             <option value="">请选择...</option>
@@ -86,7 +86,7 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">生产日期</label>
+        <label class="col-sm-2 control-label">{{'produceDate'|translate}}</label>
         <div class="col-sm-10">
           <p class="input-group">
             <input validator="required" type="text" name="produceDate" class="form-control"
@@ -113,9 +113,9 @@
   <div class="modal-footer">
 
     <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" presentation-href="deviceMng:sim:create"
-            ng-click="newDeviceinfoController.ok(newDeviceinfoController.deviceinfo)">保存
+            ng-click="newDeviceinfoController.ok(newDeviceinfoController.deviceinfo)">{{'save'|translate}}
     </button>
-    <button class="btn btn-warning" type="button" ng-click="newDeviceinfoController.cancel()">取消</button>
+    <button class="btn btn-warning" type="button" ng-click="newDeviceinfoController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>
 
