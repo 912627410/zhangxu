@@ -723,18 +723,6 @@
       opened: false
     };
 
-    /**
-     *  地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
-     * @param deviceInfo
-     */
-    vm.initMapTab = function (deviceInfo) {
-      $timeout(function () {
-        var deviceInfoList = new Array();
-        deviceInfoList.push(deviceInfo);
-        var centerAddr = [deviceInfo.longitudeNum, deviceInfo.latitudeNum];
-        serviceResource.refreshMapWithDeviceInfo("deviceDetailMap", deviceInfoList, 4, centerAddr);
-      })
-    };
 
     /**
      *
@@ -810,10 +798,6 @@
         offset: new AMap.Pixel(-26, -18),
         autoRotation: true
       });
-      marker.setLabel({
-        offset: new AMap.Pixel(-10, -25),//修改label相对于maker的位置
-        content: "行使了 0 米"
-      });
       // 绘制轨迹
       var polyline = new AMap.Polyline({
         map: map,
@@ -838,10 +822,8 @@
         markerMovingControl._currentIndex++;
         var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
         lastDistabce += distances;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = lastDistabce;
+        $scope.$apply();
         startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
       })
       /*小车每一移动一部就会触发事件*/
@@ -851,10 +833,8 @@
       /*开始事件*/
       AMap.event.addDomListener(document.getElementById('start'), 'click', function () {
         lastDistabce = 0;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = 0;
+        $scope.$apply();
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
         markerMovingControl._marker.moveAlong(lineAttr, 500);
@@ -865,10 +845,8 @@
         var distabcess2 = lastDistabce;
         var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
         distabcess2 += distances;
-        marker.setLabel({
-          offset: new AMap.Pixel(-10, -25),
-          content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
-        });
+        vm.trackMileage = distabcess2;
+        $scope.$apply();
       }, false);
       /*继续移动事件*/
       AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
@@ -2440,9 +2418,13 @@
       }]
     }
 
-    //默认显示当前设备的最新地址
+    /**
+     * 地图tab,请求该设备一段时间内的数据用于绘制轨迹，默认显示当前设备的最新地址
+     * @param deviceInfo
+     */
     vm.initMapTab = function(deviceInfo){
       $timeout(function(){
+        vm.trackMileage = 0;
         var deviceInfoList = new Array();
         deviceInfoList.push(deviceInfo);
         //    alert("deviceInfo.amaplongitudeNum=="+deviceInfo.amaplongitudeNum+", deviceInfo.amaplatitudeNum="+deviceInfo.amaplatitudeNum)

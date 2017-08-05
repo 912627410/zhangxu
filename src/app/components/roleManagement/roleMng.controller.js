@@ -102,7 +102,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.my_tree_handler(result.id)
+        vm.my_tree_handler(result.organizationDto.id)
       }, function () {
       });
     };

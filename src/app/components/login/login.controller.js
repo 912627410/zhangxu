@@ -237,9 +237,8 @@
         $rootScope.permissionList = permissionList;
         $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
 
-        if (permissions.getPermissions("system:org:query")) {
-          vm.getOrg();
-        }
+        vm.getOrg();
+
         if (permissions.getPermissions("fleetMng:fleet:query")) {
           vm.getFleet();
         }

@@ -114,13 +114,7 @@
             <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
                    ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-            <a ng-if="machineMngCtrl.validateOperPermission()" href
-               ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
-            <span ng-if="!machineMngCtrl.validateOperPermission()">{{machine.licenseId}}</span>
-
-          </td>
-
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
           <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
           <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
           <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">{{machine.machineState }}</td>

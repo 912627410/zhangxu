@@ -754,6 +754,37 @@
         }
       })
 
+    .state('home.deviceUpdate', {
+      url: '/deviceUpdate',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/deviceUpdate/deviceUpdate.html',
+          controller: 'deviceUpdateController as deviceUpdateCtrl'
+        }
+      }
+    })
+    .state('home.updateFileMng', {
+      url: '/updateFileMng',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/deviceUpdate/updateFileMng.html',
+          controller: 'updateFileMngController as updateFileMngCtrl'
+        }
+      }
+    })
+    .state('home.updateRecord', {
+      url: '/updateRecord',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/deviceUpdate/updateRecord.html',
+          controller: 'updateRecordController as updateRecordCtrl'
+        }
+      }
+    })
+
+
+
+    ;
     //默认去尝试自动登录
     $urlRouterProvider.otherwise('/entry');
 
