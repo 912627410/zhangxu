@@ -25,7 +25,7 @@
     </a>
     <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow1=false">
       <span ng-mouseover="submenuShow1=true" ng-init="submenuShow1=false">
-          {{'fleetManagement' | translate}}
+          租赁管理
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
@@ -34,6 +34,7 @@
           <li ng-click="rentalPlatformTopbarCtr.goState('rental.fence')">围栏管理</li>
           <li ng-click="rentalPlatformTopbarCtr.goState('rental.machine')">车辆信息</li>
           <li>维修保养</li>
+          <li ng-click="rentalPlatformTopbarCtr.goState('rental.customer')">客户信息</li>
         </ul>
       </div>
 

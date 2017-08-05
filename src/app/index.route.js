@@ -190,6 +190,30 @@
           }
         }
       })
+      //租赁客户管理
+      .state('rental.customer', {
+        url: '/customer',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerMng.html',
+            controller: 'rentalCustomerMngController',
+            controllerAs: 'rentalCustomerMngController'
+          }
+        }
+      })
+      //添加租赁客户信息
+      .state('rental.newCustomer', {
+        url: '/newCustomer',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+            controller: 'newRentalCustomerController',
+            controllerAs: 'newRentalCustomerController'
+          }
+        }
+      })
+
+
       .state('rental.profitStatistics', {
         url: '/profitStatistics',
         views: {

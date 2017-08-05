@@ -269,6 +269,10 @@
     .constant('TEMPLATE_CREATE_URL', SERVER_BASE_URL + 'template/create')  //添加模版
     .constant('RENTAL_HOME_MAP_GPSDATA_URL',SERVER_BASE_URL + 'rental/homeMapData')//租赁平台首页地图数据
 
+    //租赁客户信息
+    .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
+    .constant('RENTAL_CUSTOMER_URL',SERVER_BASE_URL + 'rental/customer/customer')//租赁平台维护客户信息
+
   ;
 
 

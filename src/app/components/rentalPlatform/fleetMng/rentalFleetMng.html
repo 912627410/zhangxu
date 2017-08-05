@@ -38,7 +38,7 @@
         <div class="info-box bg-orange">
           <span class="info-box-icon"><i class="fa fa-cab"></i></span>
           <div class="info-box-content">
-            <span class="info-box-text">车辆报警</span>
+            <span class="info-box-text">车辆总数</span>
             <span class="info-box-number">410</span>
             <div class="progress">
               <div class="progress-bar"></div>
@@ -86,56 +86,12 @@
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
-          <label class="col-md-1 control-label">类型</label>
+          <label class="col-md-1 control-label">车号</label>
           <div class="col-md-1">
-            <ui-select name="deviceType" ng-model="rentalFleetMngController.machine.deviceType" theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-              </ui-select-match>
-              <ui-select-choices repeat="deviceType in rentalFleetMngController.deviceTypeList">
-                <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
+            <input type="text" name="licenseId" class="form-control" ng-model="machineMngCtrl.machine.licenseId"
+                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
-          <label class="col-md-1 control-label">驱动</label>
-          <div class="col-md-1">
-            <ui-select name="devicePowerType" ng-model="rentalFleetMngController.machine.devicePowerType"
-                       theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="devicePowerType in rentalFleetMngController.devicePowerTypeList">
-                <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <label class="col-md-1 control-label">高度</label>
-          <div class="col-md-1">
-            <ui-select name="deviceHeightType" ng-model="rentalFleetMngController.machine.deviceHeightType"
-                       theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="deviceHeightType in rentalFleetMngController.deviceHeightTypeList">
-                <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <label class="col-md-1 control-label">品牌</label>
-          <div class="col-md-1">
-            <ui-select name="deviceManufacture" ng-model="rentalFleetMngController.machine.deviceManufacture"
-                       theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="品牌">{{$select.selected.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="deviceManufacture in rentalFleetMngController.deviceManufactureList">
-                <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <div class="col-md-1">
-
-            <button class="btn btn-primary" type="button"
+            <button class="btn btn-primary " type="button"
                     ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
             </button>
             <button class="btn btn-default" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}

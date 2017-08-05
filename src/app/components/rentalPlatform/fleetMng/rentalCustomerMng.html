@@ -1,7 +1,7 @@
 <div class="machine-content">
   <section class="content-header">
     <h1>
-      订单管理
+      客户管理
       <small></small>
     </h1>
   </section>
@@ -16,7 +16,7 @@
                   <i class="ion ion-bag"></i></span>
           </span>
           <div class="info-box-content">
-            <span class="info-box-text">订单总数</span>
+            <span class="info-box-text">客户总数</span>
             <span class="info-box-number">420</span>
             <div class="progress">
               <div class="progress-bar"></div>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="col-md-1 ">
-        <a class="info-box btn btn-app  bg-blue " ui-sref="rental.newFleet">
+        <a class="info-box btn btn-app  bg-blue " ui-sref="rental.newCustomer">
           <i class="glyphicon glyphicon-plus btn-lg"></i> 新增
         </a>
       </div>
@@ -75,51 +75,41 @@
 
       <div class="form-group">
 
-        <label class="col-md-1 control-label">{{'machineNumber'| translate}}</label>
+        <label class="col-md-1 control-label">客户名</label>
         <div class="col-md-2">
-          <input type="text" name="licenseId" class="form-control"  ng-model="machineMngCtrl.machine.licenseId"
-                 placeholder="{{'supportfuzzyqueries'|translate}}"/>
+          <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
+                 placeholder="客户名"/>
         </div>
 
-        <label for="firstname" class="col-md-1 control-label">类型</label>
-        <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-            </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+        <label class="col-md-1 control-label">手机号</label>
+        <div class="col-md-2">
+          <input type="text" name="phone" class="form-control"  ng-model="rentalCustomerMngController.customer.phone"
+                 placeholder="手机号"/>
         </div>
-        <label for="firstname" class="col-md-1 control-label">高度</label>
-        <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-            </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+
+        <label class="col-md-2 control-label">{{'organisation'|translate}}:</label>
+        <div class="col-md-2">
+          <p class="input-group">
+
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </p>
         </div>
-        <label for="firstname" class="col-md-1 control-label">品牌</label>
         <div class="col-md-1">
-          <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-            </ui-select-match>
-            <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-              <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+          <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+          <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
         </div>
         <div class="col-md-2">
 
           <button class="btn btn-primary" type="button"
-                  ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
+                  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.machine)">{{'query'|translate}}
           </button>
-          <button class="btn btn-default" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+          <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
 
@@ -128,8 +118,8 @@
 
     <div class="row form-group" style="padding: 10px">
       <script id="selectAllHeader" type="text/ng-template">
-        <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
-               ng-model="machineMngCtrl.checked">
+        <input type="checkbox" ng-click="rentalCustomerMngController.updateAllSelection($event)"
+               ng-model="rentalCustomerMngController.checked">
       </script>
       <div class="table-responsive">
 
@@ -155,13 +145,13 @@
             <td class="text-nowrap" data-title="'operation'|translate">
 
               <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="machineMngCtrl.updateMachine(machine,'lg')">{{'alter'| translate}}
+                      ng-click="rentalCustomerMngController.updateMachine(machine,'lg')">{{'alter'| translate}}
               </button>
               <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="machineMngCtrl.removeDevice(machine)">{{'relieve'| translate}}
+                      ng-click="rentalCustomerMngController.removeDevice(machine)">{{'relieve'| translate}}
               </button>
               <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
-                      ng-click="machineMngCtrl.allocationlog(machine,'lg')">{{'transferLog'| translate}}
+                      ng-click="rentalCustomerMngController.allocationlog(machine,'lg')">{{'transferLog'| translate}}
               </button>
             </td>
           </tr>
