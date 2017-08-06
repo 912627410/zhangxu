@@ -1,0 +1,123 @@
+<div class="machine-content" resize>
+  <!--currentState begin-->
+  <div id="currentState" class="container-fluid">
+    <div class="row info-box-container">
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Machine
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Rent
+          </div>
+          <div class="machine-small-box-content-two">
+            <div class="machine-small-box-content-1">
+              <h5>Not Rent</h5>
+              <p>150</p>
+            </div>
+
+            <div class="machine-small-box-content-2">
+              <h5>Rented</h5>
+              <p>150</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Repair
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-12">
+        <div class="machine-small-box machine-bg-aqua">
+          <div class="machine-small-box-title">
+            Stopped
+          </div>
+          <div class="machine-small-box-content">
+            <h5>Total</h5>
+            <p>150</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row base-box-container" ng-style="rentalMachineMngCtr.baseBoxContainer">
+      <div class="col-lg-12">
+        <div class="search-box-btn">
+          <div class="row form-group table-form-group tab-content-search"><!--搜索框-->
+
+            <div class="col-lg-12 col-md-12">
+              <div class="tab-content-search-head">
+                Current Status
+              </div>
+              <div class="tab-content-search-box">
+                <label>车号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>设备号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>订单号:</label>
+                <input/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>类型:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div  class="tab-content-search-box">
+                <label>状态:</label>
+                <input style="width: 100px"/>
+              </div>
+              <div class="search-box-button">
+                <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
+                <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="row table-responsive "><!--表格框-->
+            <table ng-table="machineCurrentStatusCtr.customConfigParams"
+                   class="table table-condensed table-bordered table-striped">
+              <tr ng-repeat="row in $data">
+                <td data-title="'name1'" sortable="'name'">{{row.name1}}</td>
+                <td data-title="'name2'" sortable="'name'">{{row.name2}}</td>
+                <td data-title="'name3'" sortable="'name'">{{row.name3}}</td>
+                <td data-title="'name4'" sortable="'name'">{{row.name4}}</td>
+                <td data-title="'name5'" sortable="'age'">{{row.name5}}</td>
+                <td data-title="'name6'" sortable="'money'">{{row.name6}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="row"><!--分页框-->
+
+
+            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                            total-items="100"
+                            ng-change=""
+                            max-size="5" ng-model="rentalMachineMngCtr.currentPage"
+                            items-per-page="12"
+                            first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                            next-text="{{'nextPage'|translate}}"
+                            previous-text="{{'previousPage'|translate}}">
+            </uib-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--currentState end-->
+</div>

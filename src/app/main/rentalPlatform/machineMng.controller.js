@@ -12,19 +12,13 @@
   function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages,serviceResource,Notification, RENTAL_HOME_MAP_GPSDATA_URL) {
     var vm = this;
     vm.currentPage = 1;
-    //表格中每页展示多少条数据
-    ngTableDefaults.params.count = 12;
-    //取消ng-table的默认分页
-    ngTableDefaults.settings.counts = [];
-    //定义喵点偏移量
-    $anchorScroll.yOffset = 50;
-    //定义页面的喵点
+    //定义页面导航
     $scope.navs = [{
       "title": "currentLocation", "icon": "fa-map"
     }, {
-      "title": "currentState", "icon": "fa-signal"
+      "title": "currentStatus", "icon": "fa-signal"
     }, {
-      "title": "alarmInfo", "icon": "fa-exclamation-triangle"
+      "title": "machineAlarmInfo", "icon": "fa-exclamation-triangle"
     }];
     /**
      * 自适应高度函数
@@ -50,21 +44,22 @@
     vm.loadHomeDeviceData = function () {
       var rspdata = serviceResource.restCallService(RENTAL_HOME_MAP_GPSDATA_URL, "GET");
       rspdata.then(function (data) {
-        serviceResource.refreshMapWithDeviceInfo("homeMap", data.content, 4,null);
+        vm.drawPointAggregation("homeMap", data.content, 4);
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
-
     }
-    vm.loadHomeDeviceData();
     /**
-     * 去到某个喵点
-     * @param 喵点title
+     * 点聚合绘制
+     * @param mapId 页面上地图的id
+     * @param pointArray 点集合
+     * @param zone 缩放级别
      */
-    vm.gotoAnchor = function (anchor) {
-      $location.hash(anchor);
-      $anchorScroll();
-    }
+    vm.drawPointAggregation = function (mapId, pointArray, zone) {
+
+    };
+
+    vm.loadHomeDeviceData();
 
     /**
      * 监听窗口大小改变后重新自适应高度
@@ -128,96 +123,6 @@
 
     barChart.setOption(option);
 
-    vm.simpleList = [{
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }
-    ]
-
-    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
-
-    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
 
   }
 })();

@@ -89,6 +89,28 @@
           }
         }
       })
+      //车辆管理当前状态
+      .state('rental.machineCurrentStatus', {
+      url: '/machineCurrentStatus',
+      views: {
+        'main@rental': {
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineCurrentStatus.html',
+          controller: 'machineCurrentStatusController',
+          controllerAs: 'machineCurrentStatusCtr'
+        }
+      }
+    })
+      //车辆管理报警消息
+      .state('rental.machineAlarmInfo', {
+      url: '/machineAlarmInfo',
+      views: {
+        'main@rental': {
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineAlarmInfo.html',
+          controller: 'machineAlarmInfoController',
+          controllerAs: 'machineAlarmInfoCtr'
+        }
+      }
+    })
       .state('rental.machineHistoryData', {
         url: '/machineHistoryData',
         views: {
@@ -99,16 +121,7 @@
           }
         }
       })
-      .state('rental.machineLifeCycle', {
-      url: '/machineLifeCycle',
-      views: {
-        'main@rental': {
-          templateUrl: 'app/components/rentalPlatform/machineMng/machineLifeCycle.html',
-          controller: 'machineLifeCycleController',
-          controllerAs: 'machineLifeCycleCtr'
-        }
-      }
-    })
+
       //租赁车辆管理
       .state('rental.machine', {
         url: '/rentalMachine',
