@@ -15,19 +15,6 @@
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    //定义偏移量
-    $anchorScroll.yOffset = 50;
-    //定义页面的喵点
-    vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
-
-    /**
-     * 去到某个喵点
-     * @param 喵点id
-     */
-    vm.gotoAnchor = function (x) {
-      $location.hash(x);
-      $anchorScroll();
-    };
 
 
     //组织树的显示
@@ -52,6 +39,9 @@
           restCallURL += "&search_LIKE_name=" + $filter('uppercase')(customer.name);
         }
 
+        if (null != customer.name&&customer.name!="") {
+          restCallURL += "&search_LIKE_phone=" + customer.phone;
+        }
       }
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
@@ -75,7 +65,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error("获取客户数据失败");
       });
     };
 
