@@ -9,17 +9,17 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages,serviceResource,Notification, RENTAL_HOME_MAP_GPSDATA_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, AMAP_GEO_CODER_URL) {
     var vm = this;
-    vm.currentPage = 1;
     //定义页面导航
     $scope.navs = [{
-      "title": "currentLocation", "icon": "fa-map"
+      "title": "rental", "alias": "当前位置", "icon": "fa-map"
     }, {
-      "title": "currentStatus", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
     }, {
-      "title": "machineAlarmInfo", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
+    vm.rightBoxBottomHeight=20;
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -36,10 +36,17 @@
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
+      var rightBoxTopHeight=baseBoxContainerHeight/2;
+      //地图的右边自适应高度
+      vm.rightBoxTopHeight = {
+        "min-height": rightBoxTopHeight + "px"
+      }
+      vm.rightBoxBottomHeight=rightBoxTopHeight;
     }
+    //初始化高度
     vm.adjustWindow($window.innerHeight);
     /**
-     * 初始化地图
+     * 初始化地图数据
      */
     vm.loadHomeDeviceData = function () {
       var rspdata = serviceResource.restCallService(RENTAL_HOME_MAP_GPSDATA_URL, "GET");
@@ -54,11 +61,15 @@
      * @param mapId 页面上地图的id
      * @param pointArray 点集合
      * @param zone 缩放级别
+     * @param
      */
     vm.drawPointAggregation = function (mapId, pointArray, zone) {
+      //点聚合方式和自定义弹出框
+      serviceResource.refreshMapWithDeviceInfo(mapId,pointArray,zone,[104.06,30.83],true,function () {
 
+      });
     };
-
+    //加载地图设备数据
     vm.loadHomeDeviceData();
 
     /**
@@ -66,7 +77,8 @@
      */
     $scope.$watch('height', function (oldHeight, newHeight) {
       vm.adjustWindow(newHeight);
-      barChart.resize({height: barChartHeight});
+      barChart.resize({height: vm.rightBoxBottomHeight});
+      console.log(oldHeight,newHeight)
     })
 
     /**
@@ -78,12 +90,17 @@
       return 0;
     }
 
-
-    var barChartHeight = $window.innerHeight - 50 - 15 - 90 - 15 - 7 - 45 - 90 - 90 + 'px';
+    /**
+     * 名称转到某个视图
+     * @param view 视图名称
+     */
+    vm.gotoView = function (view) {
+      $rootScope.$state.go(view);
+    }
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: barChartHeight
+      height: vm.rightBoxBottomHeight -10+ 'px'
     });
 
     var option = {
@@ -120,9 +137,7 @@
         }
       ]
     };
-
     barChart.setOption(option);
-
 
   }
 })();

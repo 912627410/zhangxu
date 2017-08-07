@@ -1,89 +1,102 @@
 <div class="machine-content" resize>
 
-  <nav-btn>
-    <nav-title></nav-title>
-    <nav-list>
-      <nav-item ng-click="rentalMachineMngCtr.gotoAnchor(item.title)"></nav-item>
-    </nav-list>
-    <nav-overlay></nav-overlay>
-  </nav-btn>
+  <!-- <nav-btn>
+     <nav-title></nav-title>
+     <nav-list>
+       <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
+     </nav-list>
+     <nav-overlay></nav-overlay>
+   </nav-btn>-->
 
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  bg-red">
-                <span class="info-box-icon">
-                  <i class="fa fa-odnoklassniki-square"></i></span>
-          </span>
+        <div class="info-box  box-light">
           <div class="info-box-content">
-            <span class="info-box-text">围栏报警</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
-            </div>
-            <span class="progress-description mouse-cursor">
-                   More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-orange">
-          <span class="info-box-icon"><i class="fa fa-cab"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">车辆报警</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
-            </div>
-            <span class="progress-description  mouse-cursor">
-              <a>More Info <i class="fa fa-arrow-circle-right"></i></a>
-           </span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-yellow">
-          <span class="info-box-icon"><i class="fa fa-automobile"></i></span>
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">围栏报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
 
-          <div class="info-box-content">
-            <span class="info-box-text">保养提醒</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
+              <div class="col-lg-8">
+                a
+              </div>
             </div>
-            <span class="progress-description  mouse-cursor">
-              More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
           </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box bg-green">
-          <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
-
+        <div class="info-box  box-light">
           <div class="info-box-content">
-            <span class="info-box-text">离线提醒</span>
-            <span class="info-box-number">410</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">车辆报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
+
+              <div class="col-lg-8">
+                b
+              </div>
             </div>
-            <span class="progress-description  mouse-cursor">
-              More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">保养提醒</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
+
+              <div class="col-lg-8">
+                c
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">离线报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
+
+              <div class="col-lg-8">
+                d
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="row base-box-container">
-      <div class="col-md-8 col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="box box-success base-left-map-box-container">
           <div class="box-header with-border">
             <i class="fa fa-cloud"></i>
             <h3 class="box-title">机器预览</h3>
             <div class="box-tools pull-right">
-              <button class="btn btn-danger btn-sm refresh-btn" title="刷新" ng-click="rentalMachineMngCtr.loadHomeDeviceData()"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-danger btn-sm refresh-btn" title="刷新"
+                      ng-click="rentalMachineMngCtr.loadHomeDeviceData()"><i class="fa fa-refresh"></i></button>
             </div>
           </div>
           <div class="box-body no-padding">
@@ -91,36 +104,10 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="info-box bg-aqua">
-            <span class="info-box-icon">
-              <i class="ion ion-ios-pricetag-outline"></i>
-            </span>
-          <div class="info-box-content">
-            <span class="info-box-text">Vehicles</span>
-            <span class="info-box-number">5,200</span>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box box-light" style="margin-bottom: 0px;">
+          <div class="info-box-content" ng-style="rentalMachineMngCtr.rightBoxTopHeight">
 
-            <div class="progress">
-              <div class="progress-bar" style="width: 50%"></div>
-            </div>
-            <span class="progress-description">
-                    50% Increase in 30 Days
-                  </span>
-          </div>
-        </div>
-        <div class="info-box bg-purple">
-          <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
-
-          <div class="info-box-content">
-            <span class="info-box-text">rents</span>
-            <span class="info-box-number">90%</span>
-
-            <div class="progress">
-              <div class="progress-bar" style="width: 20%"></div>
-            </div>
-            <span class="progress-description">
-                    20% Increase in 30 Days
-                  </span>
           </div>
         </div>
         <div id="machineBarChart"></div>
