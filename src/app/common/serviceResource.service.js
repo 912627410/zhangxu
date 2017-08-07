@@ -109,7 +109,7 @@
 
 
     //添加带文本的点标记覆盖物
-    var addMarkerModel = function(mapObj,item, icon) {
+    var addMarkerModel = function(mapObj,item, icon,callback) {
       var mapObj = mapObj;
       //实例化信息窗体
       var infoWindow = new AMap.InfoWindow({
@@ -147,7 +147,7 @@
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
-        var info = createInfoWindow(title, contentInfo,mapObj);
+        var info = createInfoWindow(title, contentInfo,mapObj,callback);
         //设置窗体内容
         infoWindow.setContent(info);
       });
@@ -181,7 +181,12 @@
         middle.style.backgroundColor = 'white';
         mcont.innerHTML = content;
         titleA.innerHTML="终端编号:"+item.deviceNum;
-        titleA.onclick =  Viewdetails;
+        if (callback){
+          titleA.onclick =  callback;
+        }else {
+          titleA.onclick =  Viewdetails;
+        }
+
 
         middle.appendChild(titleA);
         middle.appendChild(mcont);
@@ -236,7 +241,25 @@
         )
       }
 
+      return marker;
     };
+
+    /**
+     * 点聚合方式展示数据
+     * @param map
+     * @param markers
+     */
+    function aggregationShow(map, markers) {
+      var sts = [{
+        url: "http://a.amap.com/jsapi_demos/static/images/blue.png",
+        size: new AMap.Size(32, 32),
+        offset: new AMap.Pixel(-16, -16)
+      }];
+      new AMap.MarkerClusterer(map, markers, {
+        styles: sts,
+        gridSize: 80
+      });
+    }
 
     return {
       restCallService:restCallService,
@@ -267,7 +290,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr) {
+      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr,aggregation,callback) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -327,6 +350,7 @@
               var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
               rspdata.then(function (data) {
                 var deviceGPSInfo = data.content;  //返回的数组列表
+                var markers =[];
                 for (var i = 0; i < deviceGPSInfo.length; i++) {
                   if (deviceGPSInfo[i].amaplatitudeNum != null) {
                     var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
@@ -340,23 +364,33 @@
                     if(deviceGPSInfo[i].accStatus=='01'){
                       marker="assets/images/greenMarker.png";
                     }
-                    addMarkerModel(map,deviceGPSInfo[i],marker);
+                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback));
                   }
+                }
+                //是否以点聚合的方式显示
+                if(aggregation){
+                  aggregationShow(map, markers);
                 }
               }, function (reason) {
                 map.clearMap();
                 Notification.error(languages.findKey('failedToGetDeviceInformation'));
               })
             }else{
+              var markers =[];
               deviceList.forEach(function(deviceInfo){
                 if ((deviceInfo.locateStatus =='A' || deviceInfo.locateStatus == '1' ) && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   var marker="assets/images/orangeMarker.png";
                   if(deviceInfo.accStatus=='01' || deviceInfo.machineStatus=='1'){
                     marker="assets/images/greenMarker.png";
                   }
-                  addMarkerModel(map,deviceInfo,marker);
+                  markers.push(addMarkerModel(map,deviceInfo,marker,callback));
                 }
               })
+              //是否以点聚合的方式显示
+              if(aggregation){
+                aggregationShow(map, markers);
+              }
+
             }
           }
         })

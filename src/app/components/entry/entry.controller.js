@@ -75,6 +75,7 @@
 
       }, function (reason) {
         //Notification.error(languages.findKey('loginFailure'));
+        $rootScope.$state.go('login');
       });
     };
 

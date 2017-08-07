@@ -1,0 +1,212 @@
+<div class="profit-content" ng-controller="costStatisticsController as costStatisticsCtr" resize>
+
+  <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="costStatisticsCtr.gotoAnchor(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>
+  <!--Cost statistics-->
+  <div id="Cost" class="container-fluid profitItem">
+    <div class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box    ">
+          <h4>围栏机器</h4>
+          <section>
+            <span>
+              Total
+            </span>
+            <div>
+              1024
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>车辆相关</h4>
+          <section>
+            <p>折旧/维修/保养/配件/人工</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>管理费用</h4>
+          <section>
+            <p>管理费用</p>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>财务费用</h4>
+          <section>
+            <P>
+              财务费用
+            </P>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row searchLine">
+      <div class="left col-md-1">Cost</div>
+      <div class="center col-md-9 ">
+        <div class="row">
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Type</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="costStatisticsCtr.type"
+                      ng-options="type as y for y in costStatisticsCtr.typeList ">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-3 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="costStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
+                <option value="">请选择...</option>
+              </select>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="costStatisticsCtr.Brand"
+                      ng-options="Brand as y for y  in costStatisticsCtr.BrandList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="right col-md-1">
+        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.search()">Search</button>
+      </div>
+    </div>
+    <div class="row costPic">
+      <div class="leftTable col-md-8">
+        <table>
+          <table ng-table="costStatisticsCtr.table" class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="table in $data">
+              <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{table.machineNumber}}</td>
+              <td class="text-nowrap" data-title="'sim'|translate" sortable="'sim'">{{table.sim}}</td>
+              <td class="text-nowrap" data-title="'type'|translate" sortable="'type'">{{table.tupe}}</td>
+              <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'highlyType'">{{table.height}}KM/H</td>
+            </tr>
+            <tr style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr  style="height: 30px;">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+          </table>
+        </table>
+      </div>
+      <div class="rightPic col-md-4">
+        <div id="topPie" ></div>
+        <div id="bottomPie"  ></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+

@@ -9,23 +9,17 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages,serviceResource,Notification, RENTAL_HOME_MAP_GPSDATA_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, AMAP_GEO_CODER_URL) {
     var vm = this;
-    vm.currentPage = 1;
-    //表格中每页展示多少条数据
-    ngTableDefaults.params.count = 12;
-    //取消ng-table的默认分页
-    ngTableDefaults.settings.counts = [];
-    //定义喵点偏移量
-    $anchorScroll.yOffset = 50;
-    //定义页面的喵点
+    //定义页面导航
     $scope.navs = [{
-      "title": "currentLocation", "icon": "fa-map"
+      "title": "rental", "alias": "当前位置", "icon": "fa-map"
     }, {
-      "title": "currentState", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
     }, {
-      "title": "alarmInfo", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
+    vm.rightBoxBottomHeight=20;
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -42,36 +36,48 @@
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
+      var rightBoxTopHeight=baseBoxContainerHeight/2;
+      //地图的右边自适应高度
+      vm.rightBoxTopHeight = {
+        "min-height": rightBoxTopHeight + "px"
+      }
+      vm.rightBoxBottomHeight=rightBoxTopHeight;
     }
+    //初始化高度
     vm.adjustWindow($window.innerHeight);
     /**
-     * 初始化地图
+     * 初始化地图数据
      */
     vm.loadHomeDeviceData = function () {
       var rspdata = serviceResource.restCallService(RENTAL_HOME_MAP_GPSDATA_URL, "GET");
       rspdata.then(function (data) {
-        serviceResource.refreshMapWithDeviceInfo("homeMap", data.content, 4,null);
+        vm.drawPointAggregation("homeMap", data.content, 4);
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
-
     }
-    vm.loadHomeDeviceData();
     /**
-     * 去到某个喵点
-     * @param 喵点title
+     * 点聚合绘制
+     * @param mapId 页面上地图的id
+     * @param pointArray 点集合
+     * @param zone 缩放级别
+     * @param
      */
-    vm.gotoAnchor = function (anchor) {
-      $location.hash(anchor);
-      $anchorScroll();
-    }
+    vm.drawPointAggregation = function (mapId, pointArray, zone) {
+      //点聚合方式和自定义弹出框
+      serviceResource.refreshMapWithDeviceInfo(mapId,pointArray,zone,[104.06,30.83],true,function () {
+
+      });
+    };
+    //加载地图设备数据
+    vm.loadHomeDeviceData();
 
     /**
      * 监听窗口大小改变后重新自适应高度
      */
     $scope.$watch('height', function (oldHeight, newHeight) {
       vm.adjustWindow(newHeight);
-      barChart.resize({height: barChartHeight});
+      barChart.resize({height: vm.rightBoxBottomHeight});
     })
 
     /**
@@ -83,12 +89,17 @@
       return 0;
     }
 
-
-    var barChartHeight = $window.innerHeight - 50 - 15 - 90 - 15 - 7 - 45 - 90 - 90 + 'px';
+    /**
+     * 名称转到某个视图
+     * @param view 视图名称
+     */
+    vm.gotoView = function (view) {
+      $rootScope.$state.go(view);
+    }
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: barChartHeight
+      height: vm.rightBoxBottomHeight -10+ 'px'
     });
 
     var option = {
@@ -125,99 +136,7 @@
         }
       ]
     };
-
     barChart.setOption(option);
-
-    vm.simpleList = [{
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }
-    ]
-
-    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
-
-    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
 
   }
 })();
