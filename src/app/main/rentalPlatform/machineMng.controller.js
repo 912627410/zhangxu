@@ -78,7 +78,6 @@
     $scope.$watch('height', function (oldHeight, newHeight) {
       vm.adjustWindow(newHeight);
       barChart.resize({height: vm.rightBoxBottomHeight});
-      console.log(oldHeight,newHeight)
     })
 
     /**
