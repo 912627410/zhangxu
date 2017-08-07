@@ -40,7 +40,7 @@
     <!--machineInfo begin-->
 
     <div id="machineInfo" class="row info-box-container">
-    <form class="form-horizontal" role="form">
+    <form name="queryForm" class="form-horizontal" role="form">
 
       <div class="form-group">
 
@@ -52,8 +52,8 @@
 
         <label class="col-md-1 control-label">手机号</label>
         <div class="col-md-2">
-          <input type="text" name="phone" class="form-control"  ng-model="rentalCustomerMngController.customer.phone"
-                 placeholder="手机号"/>
+          <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
+                 placeholder="手机号" />
         </div>
 
         <label class="col-md-2 control-label">{{'organisation'|translate}}:</label>
@@ -75,8 +75,7 @@
         </div>
         <div class="col-md-2">
 
-          <button class="btn btn-primary" type="button"
-                  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.machine)">{{'query'|translate}}
+          <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
           </button>
           <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
         </div>
@@ -112,10 +111,10 @@
 
 
               <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="rentalCustomerMngController.removeDevice(machine)">{{'alter'| translate}}
+                      ng-click="rentalCustomerMngController.update(customer.id)">{{'alter'| translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalCustomerMngController.updateMachine(machine,'lg')">查看
+                      ng-click="rentalCustomerMngController.view(customer.id)">查看
               </button>
             </td>
           </tr>

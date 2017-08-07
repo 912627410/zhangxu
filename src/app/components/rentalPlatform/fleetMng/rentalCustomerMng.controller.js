@@ -9,7 +9,7 @@
     .controller('rentalCustomerMngController', rentalCustomerMngController);
 
   /** @ngInject */
-  function rentalCustomerMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL) {
+  function rentalCustomerMngController($scope, $window, $location,$state,$filter, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -36,11 +36,11 @@
       if (null != customer) {
 
         if (null != customer.name&&customer.name!="") {
-          restCallURL += "&search_LIKE_name=" + $filter('uppercase')(customer.name);
+          restCallURL += "&search_LIKE_name=" + customer.name;
         }
 
-        if (null != customer.name&&customer.name!="") {
-          restCallURL += "&search_LIKE_phone=" + customer.phone;
+        if (null != customer.mobile&&customer.mobile!="") {
+          restCallURL += "&search_LIKE_mobile=" + customer.mobile;
         }
       }
 
@@ -75,5 +75,28 @@
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
     }
+
+    //重置查询框
+    vm.reset = function () {
+      vm.customer = null;
+      vm.org=null;
+      vm.querySubOrg=false;
+    }
+
+    /**
+     * 跳转到更新页面
+     * @param id
+     */
+    vm.update=function(id){
+      $state.go('rental.updateCustomer', {id: id});
+    }
+ /**
+     * 跳转到查看页面
+     * @param id
+     */
+    vm.view=function(id){
+      $state.go('rental.viewCustomer', {id: id});
+    }
+
   }
 })();
