@@ -7,19 +7,12 @@
     </nav-list>
     <nav-overlay></nav-overlay>
   </nav-btn>
-<!--Income statistics-->
-  <div id="income" class="container-fluid  profitItem ">
-    <nav-btn>
-      <nav-title></nav-title>
-      <nav-list>
-        <nav-item ng-click="profitStatisticsCtr.gotoAnchor(item.title)"></nav-item>
-      </nav-list>
-      <nav-overlay></nav-overlay>
-    </nav-btn>
+  <!--profit statistics-->
+  <div id="profit" class="container-fluid profitItem">
     <div class="row info-box-container ">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box    ">
-          <h4>Machine</h4>
+          <h4>车辆总数</h4>
           <section>
             <span>
               Total
@@ -32,36 +25,36 @@
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Add New Data</h4>
+          <h4>订单总数</h4>
           <section>
-            <p>Add new Data</p>
+            <span>Total</span>
+            <div>21</div>
           </section>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Edit Data</h4>
+          <h4>累计利润 </h4>
           <section>
-            <p>Edit Data</p>
+            <span>54.321（元）</span>
+            <div><i>↑</i>12%</div>
           </section>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box ">
-          <h4>Delete Data</h4>
+          <h4>新增利润</h4>
           <section>
-            <P>
-              Delete Data
-            </P>
+            <span>52.1（元）</span>
+            <div><i>↑</i>6%</div>
           </section>
         </div>
       </div>
     </div>
     <div class="row searchLine">
-      <div class="left col-md-1">Cost</div>
-      <div class="center col-md-9 ">
+      <div class="center">
         <div class="row">
-          <div class="col-md-3 item">
+          <div class="col-md-2 item">
             <div class="row">
               <label class="col-md-4">Type</label>
               <select name="type"  class="form-control col-md-8"
@@ -72,7 +65,7 @@
             </div>
 
           </div>
-          <div class="col-md-3 item" >
+          <div class="col-md-2 item" >
             <div class="row">
               <label class="col-md-4">Height</label>
               <select name="deviceHeightType"  class="form-control col-md-8"
@@ -82,7 +75,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-3 item">
+          <div class="col-md-2 item">
             <div class="row">
               <label class="col-md-4">Brand</label>
               <select name="type"  class="form-control col-md-8"
@@ -92,361 +85,32 @@
               </select>
             </div>
           </div>
-        </div>
-
-      </div>
-      <div class="right col-md-1">
-        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
-      </div>
-    </div>
-    <div class="row incomePic">
-      <div class="col-md-4 leftSelect">
-        <div class=" top ">
-          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="order" ng-checked="true">订单</label>
-          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="machine">车辆</label>
-          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="models">车型</label>
-        </div>
-        <div class="liBox" ng-switch="costShowType" ng-init="costShowType=order" >
-          <!--<ul ng-switch-when="order">-->
-            <ul ng-switch-default>
-            <li><a>57937394647694</a></li>
-            <li><a>57937394647695</a></li>
-            <li><a>57937394647696</a></li>
-            <li><a>57937394647697</a></li>
-            <li><a>57937394647698</a></li>
-            <li><a>57937394647699</a></li>
-            <li><a>57937394647700</a></li>
-            <li><a>57937394647701</a></li>
-            <li><a>57937394647702</a></li>
-          </ul>
-          <ul ng-switch-when="machine">
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-          </ul>
-          <ul ng-switch-when="models">
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-            <li><a>2222222222222</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-8 rightEchart">
-        <div id="incomeLine"></div>
-      </div>
-    </div>
-  </div>
-
-  <!--Cost statistics-->
-  <div id="Cost" class="container-fluid profitItem">
-    <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box    ">
-          <h4>围栏机器</h4>
-          <section>
-            <span>
-              Total
-            </span>
-            <div>
-              1024
-            </div>
-          </section>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>车辆相关</h4>
-          <section>
-            <p>折旧/维修/保养/配件/人工</p>
-          </section>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>管理费用</h4>
-          <section>
-            <p>管理费用</p>
-          </section>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>财务费用</h4>
-          <section>
-            <P>
-              财务费用
-            </P>
-          </section>
-        </div>
-      </div>
-    </div>
-    <div class="row searchLine">
-      <div class="left col-md-1">Cost</div>
-      <div class="center col-md-9 ">
-        <div class="row">
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">Type</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.type"
-                      ng-options="type as y for y in profitStatisticsCtr.typeList ">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-
-          </div>
-          <div class="col-md-3 item" >
-            <div class="row">
-              <label class="col-md-4">Height</label>
-              <select name="deviceHeightType"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.deviceinfo.deviceHeightType"
-                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
-                <option value="">请选择...</option>
-              </select>
-              </select>
+          <div class="form-inline item col-md-3">
+            <div class="form-group">
+              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'startDate'|translate}}:</label>
+              <div class="input-group" style="float: left;">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="profitStatisticsCtr.startDateDeviceData" is-open="profitStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="profitStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
             </div>
           </div>
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">Brand</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.Brand"
-                      ng-options="Brand as y for y  in profitStatisticsCtr.BrandList">
-                <option value="">请选择...</option>
-              </select>
+          <div class="form-inline item col-md-3">
+            <div class="form-group">
+              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'endDate'|translate}}:</label>
+              <div class="input-group" style="float: left;">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="profitStatisticsCtr.endDateDeviceData" is-open="profitStatisticsCtr.endDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="profitStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
-      <div class="right col-md-1">
-        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
-      </div>
-    </div>
-    <div class="row costPic">
-      <div class="leftTable col-md-8">
-        <table>
-          <table ng-table="profitStatisticsCtr.table" class="table table-condensed table-bordered table-striped text-nowrap">
-            <tr ng-repeat="table in $data">
-              <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{table.machineNumber}}</td>
-              <td class="text-nowrap" data-title="'sim'|translate" sortable="'sim'">{{table.sim}}</td>
-              <td class="text-nowrap" data-title="'type'|translate" sortable="'type'">{{table.tupe}}</td>
-              <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'highlyType'">{{table.height}}KM/H</td>
-            </tr>
-            <tr style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr  style="height: 30px;">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-
-          </table>
-        </table>
-      </div>
-      <div class="rightPic col-md-4">
-        <div id="topPie" ></div>
-        <div id="bottomPie"  ></div>
-      </div>
-    </div>
-  </div>
-
-  <!--profit statistics-->
-  <div id="profit" class="container-fluid profitItem">
-    <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box    ">
-          <h4>Order</h4>
-          <section>
-            <div>
-              Total
-            </div>
-            <div>
-              <b>
-                1024
-              </b>
-            </div>
-
-          </section>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>Current Order</h4>
-          <section>
-            <div>
-              Total
-            </div>
-            <div>
-              <b>
-                848
-              </b>
-            </div>
-          </section>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>Planned order</h4>
-          <section>
-            <div>
-              Total
-            </div>
-            <div>
-              <b>
-                999
-              </b>
-            </div>
-          </section>
 
         </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box ">
-          <h4>Add New Order</h4>
-          <section>
-            <div>
-              Add New Order
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-    <div class="row searchLine">
-      <div class="left col-md-1">Cost</div>
-      <div class="center col-md-9 ">
-        <div class="row">
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">Type</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.type"
-                      ng-options="type as y for y in profitStatisticsCtr.typeList ">
-                <option value="">请选择...</option>
-              </select>
-            </div>
 
-          </div>
-          <div class="col-md-3 item" >
-            <div class="row">
-              <label class="col-md-4">Height</label>
-              <select name="deviceHeightType"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.deviceinfo.deviceHeightType"
-                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-3 item">
-            <div class="row">
-              <label class="col-md-4">Brand</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="profitStatisticsCtr.Brand"
-                      ng-options="Brand as y for y  in profitStatisticsCtr.BrandList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="right col-md-1">
-        <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.search()">Search</button>
       </div>
     </div>
     <div class="row profitPic">

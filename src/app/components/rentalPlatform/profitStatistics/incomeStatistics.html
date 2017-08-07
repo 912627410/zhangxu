@@ -1,0 +1,168 @@
+<div class="profit-content" ng-controller="incomeStatisticsController as incomeStatisticsCtr" resize>
+
+  <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="incomeStatisticsCtr.gotoAnchor(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>
+  <!--Income statistics-->
+  <div id="income" class="container-fluid  profitItem ">
+    <nav-btn>
+      <nav-title></nav-title>
+      <nav-list>
+        <nav-item ng-click="incomeStatisticsCtr.gotoAnchor(item.title)"></nav-item>
+      </nav-list>
+      <nav-overlay></nav-overlay>
+    </nav-btn>
+    <div class="row info-box-container ">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box    ">
+          <h4>车辆总数</h4>
+          <section>
+            <span>
+              Total
+            </span>
+            <div>
+              1024
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>订单总数</h4>
+          <section>
+            <span>Total</span>
+            <div>21</div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>累计收入 </h4>
+          <section>
+            <span>54.321（元）</span>
+            <div><i>↑</i>12%</div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box ">
+          <h4>新增收入</h4>
+          <section>
+            <span>52.1（元）</span>
+            <div><i>↑</i>6%</div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row searchLine">
+      <div class="center">
+        <div class="row">
+          <div class="col-md-2 item">
+            <div class="row">
+              <label class="col-md-4">Type</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="incomeStatisticsCtr.type"
+                      ng-options="type as y for y in incomeStatisticsCtr.typeList ">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-md-2 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="incomeStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="type"  class="form-control col-md-8"
+                      ng-model="incomeStatisticsCtr.Brand"
+                      ng-options="Brand as y for y  in incomeStatisticsCtr.BrandList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-inline item col-md-3">
+            <div class="form-group">
+              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'startDate'|translate}}:</label>
+              <div class="input-group" style="float: left;">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="incomeStatisticsCtr.startDateDeviceData" is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-inline item col-md-3">
+            <div class="form-group">
+              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'endDate'|translate}}:</label>
+              <div class="input-group" style="float: left;">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="incomeStatisticsCtr.endDateDeviceData" is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+    <div class="row incomePic">
+      <div class="col-md-4 leftSelect">
+        <div class=" top ">
+          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="order" ng-checked="true">订单</label>
+          <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="machine">车辆</label>
+          <div class="right col-md-3">
+            <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="incomeStatisticsCtr.search()">Search</button>
+          </div>
+        </div>
+        <div class="liBox" ng-switch="costShowType" ng-init="costShowType=order" >
+          <!--<ul ng-switch-when="order">-->
+          <ul ng-switch-default>
+            <li><a>57937394647694</a></li>
+            <li><a>57937394647695</a></li>
+            <li><a>57937394647696</a></li>
+            <li><a>57937394647697</a></li>
+            <li><a>57937394647698</a></li>
+            <li><a>57937394647699</a></li>
+            <li><a>57937394647700</a></li>
+            <li><a>57937394647701</a></li>
+            <li><a>57937394647702</a></li>
+          </ul>
+          <ul ng-switch-when="machine">
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+            <li><a>111111111111111</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8 rightEchart">
+        <div id="incomeLine"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+

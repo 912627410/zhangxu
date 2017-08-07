@@ -225,8 +225,26 @@
           }
         }
       })
-
-
+      .state('rental.incomeStatistics', {
+        url: '/incomeStatistics',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/profitStatistics/incomeStatistics.html',
+            controller: 'incomeStatisticsController',
+            controllerAs: 'incomeStatisticsCtr'
+          }
+        }
+      })
+      .state('rental.costStatistics', {
+        url: '/costStatistics',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/profitStatistics/costStatistics.html',
+            controller: 'costStatisticsController',
+            controllerAs: 'costStatisticsCtr'
+          }
+        }
+      })
       .state('rental.profitStatistics', {
         url: '/profitStatistics',
         views: {
