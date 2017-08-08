@@ -10,47 +10,59 @@
     <!--<img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English-->
     <!--</a>-->
 
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow=false">
-      <span ng-mouseover="submenuShow=true" ng-init="submenuShow=false">
+    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseleave="submenuShow=false">-->
+      <!--<span ng-mouseover="submenuShow=true" ng-init="submenuShow=false">-->
+         <!--{{'vehicleManagement'|translate}}-->
+      <!--</span>-->
+      <!--<div ng-show="submenuShow" ng-mouseleave="submenuShow=false">-->
+        <!--<ul>-->
+          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental')">当前位置</li>-->
+          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental.machineCurrentStatus')">当前状态</li>-->
+          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental.machineAlarmInfo')">报警信息</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</a>-->
+
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseover="submenuShow=true"  ng-mouseleave="submenuShow=false">
+      <span ng-init="submenuShow=false">
          {{'vehicleManagement'|translate}}
       </span>
       <div ng-show="submenuShow" ng-mouseleave="submenuShow=false">
         <ul>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental')">当前位置</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineCurrentStatus')">当前状态</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineAlarmInfo')">报警信息</li>
+          <li ><a ui-sref="rental">当前位置</a></li>
+          <li ><a ui-sref="rental.machineCurrentStatus">当前状态</a></li>
+          <li ><a ui-sref="rental.machineAlarmInfo">报警信息</a></li>
         </ul>
       </div>
+    </div>
 
-    </a>
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow1=false">
-      <span ng-mouseover="submenuShow1=true" ng-init="submenuShow1=false">
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(1)" ng-mouseover="submenuShow1=true" ng-mouseleave="submenuShow1=false">
+      <span  ng-init="submenuShow1=false">
           租赁管理
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.order')">订单管理</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.fleet')">车队管理</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.fence')">围栏管理</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machine')">车辆信息</li>
-          <li>维修保养</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.customer')">客户信息</li>
+          <li ng-click=""><a ui-sref="rental.order">订单管理</a></li>
+          <li ng-click=""><a ui-sref="rental.fleet">车队管理</a></li>
+          <li ng-click=""><a ui-sref="rental.fence">围栏管理</a></li>
+          <li ng-click=""><a ui-sref="rental.machine">车辆信息</a></li>
+          <li><a ui-sref="">维修保养</a></li>
+          <li ng-click=""><a ui-sref="rental.customer">客户信息</a></li>
         </ul>
       </div>
-
-    </a>
-    <a class="sidebar-toggle center" role="button"  ng-mouseleave="submenuShow2=false">
+    </div>
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(2)" ng-mouseover="submenuShow2=true" ng-mouseleave="submenuShow2=false">
       <span ng-mouseover="submenuShow2=true" ng-init="submenuShow2=false">
          {{'profitStatistics'|translate}}
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li  ng-click="rentalPlatformTopbarCtr.goState('rental.incomeStatistics')">收入统计</li>
-          <li  ng-click="rentalPlatformTopbarCtr.goState('rental.costStatistics')">成本统计</li>
-          <li  ng-click="rentalPlatformTopbarCtr.goState('rental.profitStatistics')">利润统计</li>
+          <li  ng-click=""><a ui-sref="rental.incomeStatistics">收入统计</a></li>
+          <li  ng-click=""><a ui-sref="rental.costStatistics">成本统计</a></li>
+          <li  ng-click=""><a ui-sref="rental.profitStatistics">利润统计</a></li>
         </ul>
       </div>
-    </a>
+    </div>
     <a class="settingBox">
       <span ng-click="settingItemShow=true" ng-init="settingItemShow=false" ng-hide="settingItemShow"><i
         class="fa fa-bars"></i></span>

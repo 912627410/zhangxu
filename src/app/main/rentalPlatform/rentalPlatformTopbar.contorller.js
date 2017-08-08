@@ -49,21 +49,21 @@
     }
 
 
-    vm.goState=function (route) {
-      $rootScope.$state.go(route);
+
+
+    var topButtons = document.getElementsByClassName('sidebar-toggle');
+    topButtons[0].style.backgroundColor = 'rgba(0,163,156,0.5)';
+    vm.topButtonClick = function (a) {
+      for(var i = 0;i<topButtons.length;i++){
+        if(i == a){
+          topButtons[i].style.backgroundColor = 'rgba(0,163,156,0.5)';
+        }
+        else{
+          topButtons[i].style.backgroundColor = '#262626';
+        }
+      }
     }
 
-    // var topButtons = document.getElementsByClassName('sidebar-toggle');
-    // vm.topButtonClick = function (a) {
-    //   for(var i= 0;i++;i<topButtons.length){
-    //     if(topButtons[i]==a){
-    //       topButtons[i].style.borderBottom = '5px solid #00a39c';
-    //     }else (
-    //       topButtons[i].style.borderBottom = '5px solid #383838'
-    //     )
-    //   }
-    //
-    // }
   }
 
 })();
