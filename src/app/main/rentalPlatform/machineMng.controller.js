@@ -20,6 +20,7 @@
       "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
     vm.rightBoxBottomHeight=20;
+    vm.rightBoxTopHeightTemp=20;
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -37,9 +38,10 @@
       }
 
       var rightBoxTopHeight=baseBoxContainerHeight/2;
+      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
-        "min-height": rightBoxTopHeight-20 + "px"
+        "min-height": vm.rightBoxTopHeightTemp+ "px"
       }
       vm.rightBoxBottomHeight=rightBoxTopHeight;
     }
@@ -192,11 +194,10 @@
     homePie.setOption(homePieoption);
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
-    middlePicBox.style.height = vm.rightBoxBottomHeight -10+ 'px';
-    console.log(vm.rightBoxBottomHeight)
+    middlePicBox.style.height = vm.rightBoxTopHeightTemp -10+ 'px';
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
-    var lineHeight = vm.rightBoxBottomHeight -30 ;
+    var lineHeight = vm.rightBoxTopHeightTemp -30 ;
     machineNumlis[0].style.lineHeight = (lineHeight/3) + 'px';
     machineNumlis[1].style.lineHeight = (lineHeight/3) + 'px';
     machineNumlis[2].style.lineHeight = (lineHeight/3) + 'px';
