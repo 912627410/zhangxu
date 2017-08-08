@@ -225,6 +225,32 @@
           }
         }
       })
+
+      //修改租赁客户信息
+      .state('rental.updateCustomer', {
+        url: '/updateCustomer/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
+            controller: 'updateRentalCustomerController',
+            controllerAs: 'updateRentalCustomerController'
+          }
+        }
+      })
+
+      //查看租赁客户信息
+      .state('rental.viewCustomer', {
+        url: '/viewCustomer/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalCustomerMng.html',
+            controller: 'viewRentalCustomerController',
+            controllerAs: 'viewRentalCustomerController'
+          }
+        }
+      })
+
+
       .state('rental.incomeStatistics', {
         url: '/incomeStatistics',
         views: {
