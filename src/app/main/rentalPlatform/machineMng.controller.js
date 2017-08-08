@@ -138,5 +138,67 @@
     };
     barChart.setOption(option);
 
+    var homePie = echarts.init(document.getElementById('homePie'), '', {
+      width: 'auto',
+      height: vm.rightBoxBottomHeight -10+ 'px'
+    });
+    var homePieoption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+      },
+      series: [
+        {
+          name:'访问来源',
+          type:'pie',
+          selectedMode: 'single',
+          radius: [0, '30%'],
+
+          label: {
+            normal: {
+              position: 'inner'
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data:[
+            {value:335, name:'直达', selected:true},
+            {value:679, name:'营销广告'},
+            {value:1548, name:'搜索引擎'}
+          ]
+        },
+        {
+          name:'访问来源',
+          type:'pie',
+          radius: ['40%', '55%'],
+
+          data:[
+            {value:335, name:'直达'},
+            {value:310, name:'邮件营销'},
+            {value:234, name:'联盟广告'},
+            {value:135, name:'视频广告'},
+            {value:1048, name:'百度'},
+            {value:251, name:'谷歌'},
+            {value:147, name:'必应'},
+            {value:102, name:'其他'}
+          ]
+        }
+      ]
+    };
+    homePie.setOption(homePieoption);
+
+    var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
+    middlePicBox.style.height = vm.rightBoxBottomHeight -10+ 'px';
+    console.log(vm.rightBoxBottomHeight)
+
+    var machineNumlis = document.getElementsByClassName('machineNumlis');
+    var lineHeight = vm.rightBoxBottomHeight -30 ;
+    machineNumlis[0].style.lineHeight = (lineHeight/3) + 'px';
+    machineNumlis[1].style.lineHeight = (lineHeight/3) + 'px';
+    machineNumlis[2].style.lineHeight = (lineHeight/3) + 'px';
+
   }
 })();

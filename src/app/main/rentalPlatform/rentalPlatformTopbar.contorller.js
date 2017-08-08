@@ -52,6 +52,18 @@
     vm.goState=function (route) {
       $rootScope.$state.go(route);
     }
+
+    // var topButtons = document.getElementsByClassName('sidebar-toggle');
+    // vm.topButtonClick = function (a) {
+    //   for(var i= 0;i++;i<topButtons.length){
+    //     if(topButtons[i]==a){
+    //       topButtons[i].style.borderBottom = '5px solid #00a39c';
+    //     }else (
+    //       topButtons[i].style.borderBottom = '5px solid #383838'
+    //     )
+    //   }
+    //
+    // }
   }
 
 })();
