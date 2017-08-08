@@ -39,7 +39,7 @@
       var rightBoxTopHeight=baseBoxContainerHeight/2;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
-        "min-height": rightBoxTopHeight + "px"
+        "min-height": rightBoxTopHeight-20 + "px"
       }
       vm.rightBoxBottomHeight=rightBoxTopHeight;
     }
@@ -99,11 +99,12 @@
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: vm.rightBoxBottomHeight -10+ 'px'
+      height: vm.rightBoxBottomHeight -20+ 'px'
     });
 
     var option = {
       color: ['#3398DB'],
+      backgroundColor:'#ffffff',
       tooltip: {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
