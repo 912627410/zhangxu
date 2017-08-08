@@ -214,18 +214,19 @@
         //vm.secOutPower =
         //secLocateInt
         //secInnerPower
+      vm.getDeviceUnlockFactor = function () {
+        ////读取初始化设备时需要的信息
+        var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
 
-          ////读取初始化设备时需要的信息
-          var restURL = DEIVCIE_UNLOCK_FACTOR_URL + "?deviceNum=" + vm.deviceinfo.deviceNum;
-
-          var rspData = serviceResource.restCallService(restURL, "GET");
-          rspData.then(function (data) {
-            vm.deviceUnLockFactor = data.content;
-            var licenseId = vm.deviceUnLockFactor.licenseId;
-            //具体格式请参考短信激活文档
-          }, function (reason) {
-            Notification.error('获取信息失败');
-          })
+        var rspData = serviceResource.restCallService(restURL, "GET");
+        rspData.then(function (data) {
+          vm.deviceUnLockFactor = data.content;
+          var licenseId = vm.deviceUnLockFactor.licenseId;
+          //具体格式请参考短信激活文档
+        }, function (reason) {
+          Notification.error('获取信息失败');
+        })
+      }
 
         //检查短信参数
         vm.checkParam = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt,secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
@@ -526,7 +527,6 @@
 
         //查询设备数据并更新地图 mapid是DOM中地图放置位置的id
         vm.refreshScopeMapWithDeviceInfo=function (mapId,deviceInfo,zoomsize,centeraddr) {
-            var marker, circle, circleEditor;
             //保存之前的标注
             var beforMarkers = [];
             $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
@@ -550,7 +550,7 @@
                       }
                     });
 
-                    //vm.initScopeMapTab(deviceinfo);
+                    vm.echoFence(map);
 
                 });
 
@@ -560,40 +560,48 @@
                   vm.addMarkerModelEmcloud(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
                 }
 
-                //回显围栏坐标
-                if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
-                  var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
-
-                  circle = createCircle(lnglatXY);
-                  circle.setMap(map);
-
-                  var circleEditor = new AMap.CircleEditor(map, circle);
-
-                  AMap.event.addListener(circleEditor, "move", function (e) {
-                    var location = [e.lnglat.lng, e.lnglat.lat];
-                    var geocoder = new AMap.Geocoder({
-
-                    });
-                    geocoder.getAddress(location, function (status, result) {
-                      if(status === 'complete' && result.info === 'OK') {
-                        vm.updateLocationInfo(result.regeocode.formattedAddress, location);
-                      }
-                    });
-                  });
-
-                  AMap.event.addListener(circleEditor, "adjust" ,function (e) {
-                    vm.radius = e.radius;
-                    $scope.$apply();
-                  });
-
-                  circleEditor.open();
-
-                }
+                vm.echoFence(map);
 
 
 
             })
         };
+
+          /**
+           * 回显电子围栏
+           * @param map map
+             */
+          vm.echoFence = function(map) {
+            //回显围栏坐标
+            if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
+              var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
+
+              var circle = createCircle(lnglatXY);
+              circle.setMap(map);
+
+              var circleEditor = new AMap.CircleEditor(map, circle);
+
+              AMap.event.addListener(circleEditor, "move", function (e) {
+                var location = [e.lnglat.lng, e.lnglat.lat];
+                var geocoder = new AMap.Geocoder({
+
+                });
+                geocoder.getAddress(location, function (status, result) {
+                  if(status === 'complete' && result.info === 'OK') {
+                    vm.updateLocationInfo(result.regeocode.formattedAddress, location);
+                  }
+                });
+              });
+
+              AMap.event.addListener(circleEditor, "adjust" ,function (e) {
+                vm.radius = e.radius;
+                $scope.$apply();
+              });
+
+              circleEditor.open();
+
+            }
+          };
 
       vm.addMarkerModelEmcloud = function (mapObj, item, icon) {
         var mapObj = mapObj;
