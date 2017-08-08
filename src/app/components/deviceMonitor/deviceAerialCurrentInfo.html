@@ -96,9 +96,9 @@
                                             <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machine.fenceStatus==null" class="bg-danger text-danger">{{'notSetFence'|translate}}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{'whetherToActivated'|translate}}</td>
-                                            <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='10'" class="bg-info text-info">{{'activated'|translate}}</td>
-                                            <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='00'" class="bg-warning text-warning">{{'inactivated'|translate}}</td>
+                                            <td>{{'whetherToBind'|translate}}</td>
+                                            <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='10'" class="bg-info text-info">{{'bind'|translate}}</td>
+                                            <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='00'" class="bg-warning text-warning">{{'unbind'|translate}}</td>
                                             <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus==null ||(deviceAerialCurrentInfoController.deviceinfo.lockStatus!='10'&& deviceAerialCurrentInfoController.deviceinfo.lockStatus!='00')">{{'noData'|translate}}</td>
                                             <td>{{'positioningState'|translate}}</td>
                                             <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
@@ -1026,7 +1026,7 @@
       </uib-tab>
 
       <!--远程控制-->
-      <uib-tab select=""  presentation-href="dashboard:deviceMonitor:remoteControl">
+      <uib-tab select="deviceAerialCurrentInfoController.getDeviceUnlockFactor()"  presentation-href="dashboard:deviceMonitor:remoteControl">
             <uib-tab-heading>
                 {{'telecontrol'|translate}}
             </uib-tab-heading>
