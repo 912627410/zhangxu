@@ -115,7 +115,6 @@
       var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
         offset: new AMap.Pixel(15, -43)//-113, -140
-
       });
 
       var marker = new AMap.Marker({
@@ -257,7 +256,7 @@
       }];
       new AMap.MarkerClusterer(map, markers, {
         styles: sts,
-        gridSize: 80
+        gridSize: 40
       });
     }
 
@@ -383,7 +382,8 @@
                   if(deviceInfo.accStatus=='01' || deviceInfo.machineStatus=='1'){
                     marker="assets/images/greenMarker.png";
                   }
-                  markers.push(addMarkerModel(map,deviceInfo,marker,callback));
+                  var markerPoint=addMarkerModel(map,deviceInfo,marker,callback);
+                  markers.push(markerPoint);
                 }
               })
               //是否以点聚合的方式显示
