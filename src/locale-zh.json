@@ -334,7 +334,6 @@
   "deviceNum": "设备编号",
   "sim": "SIM",
   "simSerialNumber": "SIM序列号",
-  "transfer": "调拨",
   "allocateTime": "调拨时间",
   "totalNumberOfDevices": "设备总数",
   "allotOrganization": "调拨组织",
@@ -711,7 +710,15 @@
   "numberAndDot":"输入内容只能为数字和点",
   "minlength":"位数不够",
   "maxlength":"超出最大允许长度",
-  "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位"
+  "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位",
+  "alarmInformation":"报警信息",
+  "rentalMng":"租赁管理",
+  "orderMng":"订单管理",
+  "fenceMng":"围栏管理",
+  "machineInfo":"车辆信息",
+  "maintenance":"维修保养",
+  "customerInfo":"客户信息",
+  "assetMng":"资产管理"
 
 
 }

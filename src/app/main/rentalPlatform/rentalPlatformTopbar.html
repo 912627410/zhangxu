@@ -29,37 +29,37 @@
       </span>
       <div ng-show="submenuShow" ng-mouseleave="submenuShow=false">
         <ul>
-          <li ><a ui-sref="rental">当前位置</a></li>
-          <li ><a ui-sref="rental.machineCurrentStatus">当前状态</a></li>
-          <li ><a ui-sref="rental.machineAlarmInfo">报警信息</a></li>
+          <li ><a ui-sref="rental">{{'currentPosition'| translate}}</a></li>
+          <li ><a ui-sref="rental.machineCurrentStatus">{{'currentState'| translate}}</a></li>
+          <li ><a ui-sref="rental.machineAlarmInfo">{{'alarmInformation'| translate}}</a></li>
         </ul>
       </div>
     </div>
 
     <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(1)" ng-mouseover="submenuShow1=true" ng-mouseleave="submenuShow1=false">
       <span  ng-init="submenuShow1=false">
-          租赁管理
+          {{'rentalMng'| translate}}
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
-          <li ng-click=""><a ui-sref="rental.order">订单管理</a></li>
-          <li ng-click=""><a ui-sref="rental.fleet">车队管理</a></li>
-          <li ng-click=""><a ui-sref="rental.fence">围栏管理</a></li>
-          <li ng-click=""><a ui-sref="rental.machine">车辆信息</a></li>
-          <li><a ui-sref="">维修保养</a></li>
-          <li ng-click=""><a ui-sref="rental.customer">客户信息</a></li>
+          <li ng-click=""><a ui-sref="rental.order">{{'orderMng'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.fleet">{{'fleetManagement'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.fence">{{'fenceMng'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.machine">{{'machineInfo'| translate}}</a></li>
+          <li><a >{{'maintenance'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
         </ul>
       </div>
     </div>
     <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(2)" ng-mouseover="submenuShow2=true" ng-mouseleave="submenuShow2=false">
       <span ng-mouseover="submenuShow2=true" ng-init="submenuShow2=false">
-         {{'profitStatistics'|translate}}
+         {{'assetMng'|translate}}
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li  ng-click=""><a ui-sref="rental.incomeStatistics">收入统计</a></li>
-          <li  ng-click=""><a ui-sref="rental.costStatistics">成本统计</a></li>
-          <li  ng-click=""><a ui-sref="rental.profitStatistics">利润统计</a></li>
+          <li  ng-click=""><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
+          <li  ng-click=""><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
+          <li  ng-click=""><a ui-sref="rental.profitStatistics">{{'profitStatistics'| translate}}</a></li>
         </ul>
       </div>
     </div>
