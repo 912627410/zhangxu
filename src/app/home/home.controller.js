@@ -9,8 +9,15 @@
     .controller('HomeController', HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification,Title) {
+  function HomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification,Title,roles) {
     var vm = this;
+    vm.fleetUserShow = false;
+    vm.userShow = true;
+
+    if (roles.getRoles("车队")) {
+      vm.fleetUserShow = true;
+      vm.userShow = false;
+    }
     var statisticInfo = {
       totalDevices: 0,
       totalWarningDevices: 0,
