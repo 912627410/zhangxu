@@ -739,6 +739,7 @@
                                         <td ng-if="deviceData.deviceCode!=null && deviceData.deviceCode>=32&& deviceData.deviceCode<=47" class="text-nowrap">电动驱动型小剪叉车（柯蒂斯方案）</td>
                                         <td ng-if="deviceData.deviceCode!=null && deviceData.deviceCode>=48&& deviceData.deviceCode<=63" class="text-nowrap">电动驱动型小剪叉车（ZAPI方案）</td>
                                         -->
+                                        <td ng-if="deviceData.deviceCode !== null && deviceData.deviceCode !== number"></td>
                                         <td ng-if="deviceData.deviceCode==null">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                                         <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
