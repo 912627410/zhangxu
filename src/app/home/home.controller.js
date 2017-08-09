@@ -24,7 +24,7 @@
       return;
     }
 
-    if(permissions.getPermissions("device:homegpsdata")){
+    if(permissions.getPermissions("device:homedata")){
 
 
       var rspdata = serviceResource.restCallService(HOME_STATISTICS_DATA_URL, "GET");
