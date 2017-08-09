@@ -739,11 +739,10 @@
                                         <td ng-if="deviceData.deviceCode!=null && deviceData.deviceCode>=32&& deviceData.deviceCode<=47" class="text-nowrap">电动驱动型小剪叉车（柯蒂斯方案）</td>
                                         <td ng-if="deviceData.deviceCode!=null && deviceData.deviceCode>=48&& deviceData.deviceCode<=63" class="text-nowrap">电动驱动型小剪叉车（ZAPI方案）</td>
                                         -->
-                                        <td ng-if="deviceData.deviceCode !== null && deviceData.deviceCode !== number"></td>
-                                        <td ng-if="deviceData.deviceCode==null">{{'noData'|translate}}</td>
+                                        <td ng-if="!deviceData.deviceCode>=0&&!deviceData.deviceCode<=31">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                                         <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
-                                        <td ng-if="deviceData.machineStatus==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.machineStatus!==1&&deviceData.machineStatus!==0">{{'noData'|translate}}</td>
                                         <td ng-cloak>{{deviceData.builtInVoltage}}v</td>
 
                                         <td ng-cloak>{{deviceData.versionNum}}</td>
@@ -771,7 +770,7 @@
 
                                         <td ng-if="deviceData.chassisUp==1" class="bg-info text-info">{{'open'|translate}}</td>
                                         <td ng-if="deviceData.chassisUp==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
-                                        <td ng-if="deviceData.chassisUp==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.chassisUp !== 1 && deviceData.chassisUp !== 0">{{'noData'|translate}}</td>
                                         <!--液驱都显示正常 by lixiaopeng 2016/7/18-->
                                         <td ng-if="deviceData.deviceCode>=0 && deviceData.deviceCode<=15" class="bg-info text-info">{{'normal'|translate}}</td>
                                         <td ng-if="deviceData.deviceCode>=16 && deviceData.deviceCode<=31 && deviceData.leftBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
@@ -779,10 +778,10 @@
                                         <td ng-if="deviceData.deviceCode<0 || deviceData.deviceCode>31 || deviceData.leftBrake==null">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.upLimit==1" class="bg-info text-info">{{'notReachTheLimit'|translate}}</td>
                                         <td ng-if="deviceData.upLimit==0" class="bg-warning text-warning">{{'alreadyReachTheLimit'|translate}}</td>
-                                        <td ng-if="deviceData.upLimit==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.upLimit !== 1 && deviceData.upLimit !== 0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.chassisDown==1" class="bg-info text-info">{{'open'|translate}}</td>
                                         <td ng-if="deviceData.chassisDown==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
-                                        <td ng-if="deviceData.chassisDown==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.chassisDown !== 1 && deviceData.chassisDown !== 0">{{'noData'|translate}}</td>
                                         <!--液驱都显示正常 by lixiaopeng 2016/7/18-->
                                         <td ng-if="deviceData.deviceCode>=0 && deviceData.deviceCode<=15" class="bg-info text-info">{{'normal'|translate}}</td>
                                         <td ng-if="deviceData.deviceCode>=16 && deviceData.deviceCode<=31 && deviceData.rightBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
@@ -790,47 +789,47 @@
                                         <td ng-if="deviceData.deviceCode<0 || deviceData.deviceCode>31 || deviceData.rightBrake==null">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.downLimit==1" class="bg-info text-info">{{'putAway'|translate}}</td>
                                         <td ng-if="deviceData.downLimit==0" class="bg-warning text-warning">{{'raising'|translate}}</td>
-                                        <td ng-if="deviceData.downLimit==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.downLimit !== 1 && deviceData.downLimit !== 0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.key==1" class="bg-info text-info">{{'platformControl'|translate}}</td>
                                         <td ng-if="deviceData.key==0" class="bg-warning text-warning">{{'offlineControl'|translate}}</td>
-                                        <td ng-if="deviceData.key==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.key !== 1 && deviceData.key !== 0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.pothole==1" class="bg-info text-info">{{'open'|translate}}</td>
                                         <td ng-if="deviceData.pothole==0" class="bg-danger text-danger">{{'shut'|translate}}</td>
-                                        <td ng-if="deviceData.pothole==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.pothole !== 1 && deviceData.pothole !== 0">{{'noData'|translate}}</td>
 
                                         <td ng-if="deviceData.fetForward==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetForward==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetForward==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetForward !== 0 && deviceData.fetForward !== 1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetUp==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetUp==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetUp==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetUp!==0&&deviceData.fetUp!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetRigth==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetRigth==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetRigth==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetRigth!==0&&deviceData.fetRigth!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetReverse==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetReverse==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetReverse==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetReverse!==0&&deviceData.fetReverse!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetDown==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetDown==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetDown==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetDown!==0&&deviceData.fetDown!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetLeft==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetLeft==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetLeft==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetLeft!==0&&deviceData.fetLeft!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetBrakes==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetBrakes==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetBrakes==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetBrakes!==1&&deviceData.fetBrakes!==0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetHorn==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetHorn==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetHorn==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetHorn!==0&&deviceData.fetHorn!==1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetParallel==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetParallel==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetParallel==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetParallel !== 1 && deviceData.fetParallel !== 1">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetMCE==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetMCE==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetMCE==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetMCE!==1&&deviceData.fetMCE!==0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetMCE2==1" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetMCE2==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                                        <td ng-if="deviceData.fetMCE2==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.fetMCE2!==1&&deviceData.fetMCE2!==0">{{'noData'|translate}}</td>
                                         <td ng-if="deviceData.fetAlarm==1 && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="bg-info text-info">{{'yes'|translate}}</td>
                                         <td ng-if="deviceData.fetAlarm==0 && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="bg-warning text-warning">{{'no'|translate}}</td>
                                         <td ng-if="deviceData.fetAlarm==null && (deviceData.deviceCode==null || deviceData.deviceCode>=16)" class="text-nowrap">{{'noData'|translate}}</td>
@@ -851,7 +850,7 @@
                                         <td ng-cloak>{{deviceData.maxStandSpeedPercent}}%</td>
                                         <td ng-if="deviceData.liquidLevelSw==1" class="bg-info text-info">{{'normal'|translate}}</td>
                                         <td ng-if="deviceData.liquidLevelSw==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
-                                        <td ng-if="deviceData.liquidLevelSw==null">{{'noData'|translate}}</td>
+                                        <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">{{'noData'|translate}}</td>
 
                                         <td  ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
