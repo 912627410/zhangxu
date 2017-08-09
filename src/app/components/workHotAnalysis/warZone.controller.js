@@ -8,11 +8,9 @@
   angular.module('GPSCloud')
     .controller('warZoneController',warZoneController);
 
-  function warZoneController($scope,WAR_ZONE_QUERY,$http){
+  function warZoneController($scope,WAR_ZONE_QUERY,$http,timeList){
 
-    var
-      // mapColor = ['rgb(195, 54, 45)','rgb(217, 88, 80)','rgb(235, 129, 70)','rgb(255, 178, 72)','rgb(242, 214, 67)','rgb(235, 219, 164)'],
-      mapColor = ['rgba(42, 93, 123, 1)','rgba(42, 93, 123,0.84)','rgba(42, 93, 123, 0.68)','rgba(42, 93, 123, 0.52)','rgba(42, 93, 123, 0.36)','rgba(42, 93, 123, 0.2)'],
+    var mapColor = ['rgba(42, 93, 123, 1)','rgba(42, 93, 123,0.84)','rgba(42, 93, 123, 0.68)','rgba(42, 93, 123, 0.52)','rgba(42, 93, 123, 0.36)','rgba(42, 93, 123, 0.2)'],
       mapChartList = document.getElementsByClassName('mapchart'),
       barChartList = document.getElementsByClassName('barchart'),
       mapChart1 = echarts.init(mapChartList[0]),
@@ -22,15 +20,14 @@
       mapChartOption,
       barChartOption;
 
-
     $scope.cycle_type = ['按月查询','按季度查询'];
     $scope.statistical_type = ['开工热度','销售热度'];
     $scope.product_type = ['挖掘机','装载机','重机'];
-    $scope.cycle_value = ["201706","201705","201704","201703","201702","201701"];
+    $scope.cycle_value = timeList.monthList(2017,1);
 
     //default
     $scope.query_cycle_type = '按月查询';
-    $scope.query_cycle_value = '201706';
+    $scope.query_cycle_value = timeList.getMonth();
     $scope.query_hour = 2;
     $scope.query_statistical_type1 = '开工热度';
     $scope.query_statistical_type2 = '销售热度';
@@ -40,11 +37,11 @@
 
     $http.get('assets/json/warzone.json').success(function(data){
       echarts.registerMap('warZone', data);
-      getMap1Data('1','1','201706','2','1');
-      getMap2Data('1','1','201706','2','2');
+      getMap1_Data('1','1',timeList.getMonth(),'2','1');
+      getMap2_Data('1','1',timeList.getMonth(),'2','2');
     });
 
-    function getMap1Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
+    function getMap1_Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
         url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
@@ -183,7 +180,7 @@
       })
     }
 
-    function getMap2Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
+    function getMap2_Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
         url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
@@ -307,7 +304,7 @@
       })
     }
 
-    function getBar1Data(produceType, hourScope, statisticalType){
+    function getBar1_Data(produceType, hourScope, statisticalType){
       $http({
         method: 'GET',
         url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
@@ -337,7 +334,11 @@
           var temp = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
           for(var i = 0;i<6;i++){
             for(var j = 0;j<4;j++){
-              temp[i][j] = data[i].quarterData[j].rate;
+              if(data[i].quarterData[j] !== undefined) {
+                temp[i][j] = data[i].quarterData[j].rate;
+              }else {
+                temp[i][j] = 0
+              }
             }
           }
           return temp
@@ -408,7 +409,7 @@
       })
     }
 
-    function getBar2Data(produceType, hourScope, statisticalType){
+    function getBar2_Data(produceType, hourScope, statisticalType){
       $http({
         method: 'GET',
         url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
@@ -509,8 +510,8 @@
       })
     }
 
-    getBar1Data(1,2,1);
-    getBar2Data(1,2,2);
+    getBar1_Data(1,2,1);
+    getBar2_Data(1,2,2);
 
     $scope.query = function(){
       $http.get('assets/json/warzone.json').success(function(data) {
@@ -547,19 +548,19 @@
           _query_statistical_type2 = '2'
         }
         if($scope.query_cycle_type)
-        getMap1Data(_product_type1,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type1);
-        getMap2Data(_product_type2,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type2);
-        getBar1Data(_product_type1,$scope.query_hour,1);
-        getBar2Data(_product_type2,$scope.query_hour,2);
+        getMap1_Data(_product_type1,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type1);
+        getMap2_Data(_product_type2,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type2);
+        getBar1_Data(_product_type1,$scope.query_hour,1);
+        getBar2_Data(_product_type2,$scope.query_hour,2);
       })
     };
 
     $scope.$watch('query_cycle_type',function(newVal,oldVal){
       if(newVal !== oldVal){
         if(newVal == '按月查询'){
-          $scope.cycle_value = ["201706","201705","201704","201703","201702","201701"]
+          $scope.cycle_value = timeList.monthList(2017,1)
         }else if(newVal == '按季度查询'){
-          $scope.cycle_value = ["201702","201701","201604","201603"]
+          $scope.cycle_value = timeList.quarterList(2016,4)
         }
       }
     });
@@ -571,7 +572,6 @@
         return value2 - value1;
       }
     }
-
 
   }
 

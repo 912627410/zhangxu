@@ -9,19 +9,18 @@
     .module('GPSCloud')
     .controller('activeRateController',activeRateController);
 
-  function activeRateController($scope,$http,GET_ACTIVERATE_URL,GET_MACHINETYPE_URL) {
+  function activeRateController($scope,$http,GET_ACTIVERATE_URL,GET_MACHINETYPE_URL,timeList) {
 
     var vm = this;
     var back = document.getElementById('backProvince');
     var time,cycle;
-    var startYear = 2016;
 
     var produceType = ['全部'];
     var machineType = ['全部'];
     var cycleType = ["按月","按季度"];
     var thresholdValue = getthreshold();
-    var cycleValue1 = getCycleValue1();
-    var cycleValue2 = getCycleValue2();
+    var cycleValue1 = timeList.monthList(2016,1);
+    var cycleValue2 = timeList.quarterList(2016,1);
     $scope.cycleTypeHidden1 = true;//默认显示开工月份周期
     $scope.cycleTypeHidden2 = false;//默认隐藏开工季度周期
 
@@ -29,33 +28,6 @@
     $scope.chartProduceType = '所有类型';
     $scope.chartWorkMonth = cycleValue1[0];
     $scope.chartThresholdValue = thresholdValue[1];
-
-    //按月
-    function getCycleValue1(){
-      var currentDate = new Date();
-      var length = (currentDate.getFullYear() - startYear) * 12 + currentDate.getMonth();
-      var result = [];
-      for(var i = 0; i < length; i++) {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        var m = currentDate.getMonth()+ 1 ;
-        m = m < 10 ? "0" + m : m;
-        result.push(currentDate.getFullYear() + '年' + m + '月');
-      }
-      return result;
-    }
-
-    //按季度
-    function getCycleValue2(){
-      var currentDate = new Date();
-      var length = (currentDate.getFullYear() - startYear) * 12 + currentDate.getMonth();
-      var result = [];
-      for(var i=0;i<length;i+=3){
-        currentDate.setMonth(currentDate.getMonth() - 3);
-        var q = Math.ceil(currentDate.getMonth() / 3) + 1;
-        result.push(currentDate.getFullYear() + '年0' + q + '季度');
-      }
-      return result;
-    }
 
     //活跃阈值范围
     function getthreshold(){
