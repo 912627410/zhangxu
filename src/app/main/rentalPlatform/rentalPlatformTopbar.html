@@ -37,7 +37,7 @@
     </div>
 
     <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(1)" ng-mouseover="submenuShow1=true" ng-mouseleave="submenuShow1=false">
-      <span  ng-init="submenuShow1=false">
+      <span ng-init="submenuShow1=false">
           {{'rentalMng'| translate}}
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
@@ -46,7 +46,7 @@
           <li ng-click=""><a ui-sref="rental.fleet">{{'fleetManagement'| translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.fence">{{'fenceMng'| translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.machine">{{'machineInfo'| translate}}</a></li>
-          <li><a >{{'maintenance'| translate}}</a></li>
+          <li><a>{{'maintenance'| translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
         </ul>
       </div>
@@ -57,9 +57,9 @@
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li  ng-click=""><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
-          <li  ng-click=""><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
-          <li  ng-click=""><a ui-sref="rental.profitStatistics">{{'profitStatistics'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.profitStatistics">{{'profitStatistics'| translate}}</a></li>
         </ul>
       </div>
     </div>
