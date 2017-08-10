@@ -1,15 +1,25 @@
 <div class="machine-content" resize>
 
-   <nav-btn>
-     <nav-title></nav-title>
-     <nav-list>
-       <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
-     </nav-list>
-     <nav-overlay></nav-overlay>
-   </nav-btn>
+
+  <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>
 
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'currentPosition'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+        <li class="active"><i class="fa fa-map-marker"></i>{{'currentPosition'| translate}}</li>
+      </ol>
+    </section>
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
@@ -88,6 +98,7 @@
         </div>
       </div>
     </div>
+
     <div class="row base-box-container">
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="box box-success base-left-map-box-container">
@@ -107,19 +118,28 @@
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="info-box box-light" style="margin-bottom: 0px;">
           <div class="info-box-content" ng-style="rentalMachineMngCtr.rightBoxTopHeight">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div style="border: 1px solid red;margin-top: 20px;margin-left: 15px;margin-right: -18px;">
-                    机器数量
-                  </div>
+            <div class="row middlePicBox">
+              <div class="col-lg-6">
+                <div class="machineNumTitle">
+                  机器数量
                 </div>
-                <div class="col-lg-6">
-                  xxx收入
+                <ul>
+                  <li class="machineNumlis"><i>直臂</i><span>34</span></li>
+                  <li class="machineNumlis"><i>曲臂</i><span>11</span></li>
+                  <li class="machineNumlis"><i>剪叉</i><span>90</span></li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <p>xxx收入</p>
+                <div id="homePie">
+
                 </div>
               </div>
+
+            </div>
           </div>
         </div>
-        <div id="machineBarChart"></div>
+        <div id="machineBarChart" style="margin-top: 15px"></div>
       </div>
     </div>
   </div>

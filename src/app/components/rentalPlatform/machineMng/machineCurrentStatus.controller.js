@@ -15,7 +15,19 @@
     ngTableDefaults.params.count = 12;
     //取消ng-table的默认分页
     ngTableDefaults.settings.counts = [];
-
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
     //定义页面导航
     $scope.navs = [{
       "title": "rental","alias":"当前位置", "icon": "fa-map"

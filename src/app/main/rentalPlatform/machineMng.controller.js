@@ -20,12 +20,13 @@
       "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
     vm.rightBoxBottomHeight=20;
+    vm.rightBoxTopHeightTemp=20;
     /**
      * 自适应高度函数
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -37,9 +38,10 @@
       }
 
       var rightBoxTopHeight=baseBoxContainerHeight/2;
+      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
-        "min-height": rightBoxTopHeight + "px"
+        "min-height": vm.rightBoxTopHeightTemp+ "px"
       }
       vm.rightBoxBottomHeight=rightBoxTopHeight;
     }
@@ -99,11 +101,12 @@
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: vm.rightBoxBottomHeight -10+ 'px'
+      height: vm.rightBoxBottomHeight -20+ 'px'
     });
 
     var option = {
       color: ['#3398DB'],
+      backgroundColor:'#ffffff',
       tooltip: {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
@@ -137,6 +140,67 @@
       ]
     };
     barChart.setOption(option);
+
+    var homePie = echarts.init(document.getElementById('homePie'), '', {
+      width: 'auto',
+      height: vm.rightBoxBottomHeight -10+ 'px'
+    });
+    var homePieoption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+      },
+      series: [
+        {
+          name:'访问来源',
+          type:'pie',
+          selectedMode: 'single',
+          radius: [0, '30%'],
+
+          label: {
+            normal: {
+              position: 'inner'
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data:[
+            {value:335, name:'直达', selected:true},
+            {value:679, name:'营销广告'},
+            {value:1548, name:'搜索引擎'}
+          ]
+        },
+        {
+          name:'访问来源',
+          type:'pie',
+          radius: ['40%', '55%'],
+
+          data:[
+            {value:335, name:'直达'},
+            {value:310, name:'邮件营销'},
+            {value:234, name:'联盟广告'},
+            {value:135, name:'视频广告'},
+            {value:1048, name:'百度'},
+            {value:251, name:'谷歌'},
+            {value:147, name:'必应'},
+            {value:102, name:'其他'}
+          ]
+        }
+      ]
+    };
+    homePie.setOption(homePieoption);
+
+    var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
+    middlePicBox.style.height = vm.rightBoxTopHeightTemp -10+ 'px';
+
+    var machineNumlis = document.getElementsByClassName('machineNumlis');
+    var lineHeight = vm.rightBoxTopHeightTemp -30 ;
+    machineNumlis[0].style.lineHeight = (lineHeight/3) + 'px';
+    machineNumlis[1].style.lineHeight = (lineHeight/3) + 'px';
+    machineNumlis[2].style.lineHeight = (lineHeight/3) + 'px';
 
   }
 })();

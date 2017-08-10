@@ -49,9 +49,21 @@
     }
 
 
-    vm.goState=function (route) {
-      $rootScope.$state.go(route);
+
+
+    var topButtons = document.getElementsByClassName('sidebar-toggle');
+    topButtons[0].style.backgroundColor = 'rgba(0,163,156,0.5)';
+    vm.topButtonClick = function (a) {
+      for(var i = 0;i<topButtons.length;i++){
+        if(i == a){
+          topButtons[i].style.backgroundColor = 'rgba(0,163,156,0.5)';
+        }
+        else{
+          topButtons[i].style.backgroundColor = '#262626';
+        }
+      }
     }
+
   }
 
 })();

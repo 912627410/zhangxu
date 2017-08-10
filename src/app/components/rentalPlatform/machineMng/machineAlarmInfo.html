@@ -8,66 +8,94 @@
   </nav-btn>
   <!--alarmInfo begin-->
   <div id="alarmInfo" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'currentPosition'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+        <li class="active"><i class="fa fa-bell-o "></i>{{'alarmInformation'| translate}}</li>
+      </ol>
+    </section>
     <div class="row info-box-container">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">围栏报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
 
-      <div class="col-lg-3 col-md-3">
-        <div class="widget style1 red-bg">
-          <div class="row">
-            <div class="col-xs-4 text-center">
-              <i class="fa fa-trophy fa-5x"></i>
-            </div>
-            <div class="col-xs-8 text-right">
-              <span> Today income </span>
-              <h2 class="font-bold">$ 4,232</h2>
+              <div class="col-lg-8">
+                a
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">车辆报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
 
-      <div class="col-lg-3 col-md-3">
-        <div class="widget style1 navy-bg">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-cloud fa-5x"></i>
-            </div>
-            <div class="col-xs-8 text-right">
-              <span> Today degrees </span>
-              <h2 class="font-bold">26'C</h2>
+              <div class="col-lg-8">
+                b
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-3">
-        <div class="widget style1 lazur-bg">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-envelope-o fa-5x"></i>
-            </div>
-            <div class="col-xs-8 text-right">
-              <span> New messages </span>
-              <h2 class="font-bold">260</h2>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">保养提醒</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
+
+              <div class="col-lg-8">
+                c
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-content">
+            <div class="row">
+              <div class="col-lg-4 info-box-left-text">
+                <div class="div-float">
+                  <span class="info-box-text info-box-left-text-top">离线报警</span>
+                  <span class="info-box-number info-box-left-text-below">410</span>
+                </div>
+                <div class="div-border"></div>
+              </div>
 
-      <div class="col-lg-3 col-md-3">
-        <div class="widget style1 yellow-bg">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-music fa-5x"></i>
-            </div>
-            <div class="col-xs-8 text-right">
-              <span> New albums </span>
-              <h2 class="font-bold">12</h2>
+              <div class="col-lg-8">
+                d
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-    <div class="row base-box-container" ng-style="rentalMachineMngCtr.baseBoxContainer"
-         style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
+    <div class="row base-box-container" ng-style="machineAlarmInfoCtr.baseBoxContainer"  style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-4">
           <div class="box box-primary">
@@ -109,12 +137,34 @@
         <div class="col-lg-10 col-md-10 col-sm-8">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">{{'content'|translate}}</h3>
-              <div class="box-tools pull-right">
-                <input type="text" class="input-sm" placeholder="{{'reminderContent'|translate}}">
-                <button type="button" class="btn btn-default btn-sm" ng-click="">
-                  <i class="fa fa-search"></i>
-                </button>
+              <div class="row">
+                <div class="col-lg-3">
+                  <h3 class="box-title">消息内容</h3>
+                </div>
+                <div class="col-lg-9">
+                  <div class="box-tools">
+                    <div class="row form-group table-form-group"><!--搜索框-->
+                      <div class="col-lg-12 col-md-12">
+                        <div class="tab-content-search-box">
+                          <label>车号:</label>
+                          <input class="input-sm" placeholder="车辆编号"/>
+                        </div>
+                        <div  class="tab-content-search-box">
+                          <label>设备号:</label>
+                          <input class="input-sm" placeholder="设备号"/>
+                        </div>
+                        <div  class="tab-content-search-box">
+                          <label>内容:</label>
+                          <input class="input-sm" placeholder="提醒内容" style="width: 100px"/>
+                        </div>
+                        <div class="search-box-button">
+                          <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
+                          <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="box-body no-padding">
