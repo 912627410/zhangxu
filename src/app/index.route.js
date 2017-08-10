@@ -180,6 +180,18 @@
           }
         }
       })
+
+      //租赁订单管理
+      .state('rental.newOrder', {
+        url: '/newOrder',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrderMng.html',
+            controller: 'newRentalOrderController',
+            controllerAs: 'newRentalOrderController'
+          }
+        }
+      })
       //租赁围栏管理
       .state('rental.fence', {
         url: '/fence',

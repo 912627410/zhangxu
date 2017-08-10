@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
+  function rentalOrderMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -30,22 +30,22 @@
     };
 
 
-    vm.query = function (page, size, sort, machine) {
+    vm.query = function (page, size, sort, order) {
       console.log("111222");
-      var restCallURL = MACHINE_PAGE_URL;
+      var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != machine) {
+      if (null != order) {
 
-        if (null != machine.deviceNum&&machine.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
-        }
-        if (null != machine.licenseId&&machine.licenseId!="") {
-          restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
-        }
+        // if (null != machine.deviceNum&&machine.deviceNum!="") {
+        //   restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
+        // }
+        // if (null != machine.licenseId&&machine.licenseId!="") {
+        //   restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
+        // }
 
       }
 

@@ -1,0 +1,106 @@
+<div class="modal-header">
+  <h3 class="modal-title">客户列表
+  <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="customerListController.cancel()">{{'close'|translate}}</button>
+  <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">确定</button>
+  </h3>
+</div>
+
+
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">客户名</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="name" class="form-control"  ng-model="customerListController.customer.name"
+             placeholder="客户名"/>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'mobile'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="mobile" class="form-control"  ng-model="customerListController.customer.mobile"
+             placeholder="手机号" />
+    </div>
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"  ng-click="customerListController.query(null,null,null,customerListController.customer)">{{'query'|translate}}
+      </button>
+      <button class="btn btn-default" type="button" ng-click="customerListController.reset()">{{'reset'|translate}}</button>
+
+
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'organisation'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="customerListController.org.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="customerListController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+
+    <div class="col-md-2">
+      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+    </div>
+    <div class="col-md-1">
+      <input type="checkbox" checked="checked" ng-model="customerListController.querySubOrg"/>
+    </div>
+
+
+  </div>
+
+  </div>
+  <div class="row">
+    <div class="btn-group col-md-2">
+      <span class="label label-info pull-left">用户总数:  {{userRoleMngController.page.totalElements}}</span>
+    </div>
+
+  </div>
+  <div class="row " style="padding: 10px">
+      <div class="table-responsive">
+
+        <table ng-table="customerListController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="customer in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="radio" name="customer.radio"  ng-value="customer" ng-model="customerListController.selectRadio">
+            </td>
+
+            <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{customer.id}}</td>
+            <td class="text-nowrap" data-title="'名称'" sortable="'deviceinfo.deviceNum'">{{customer.name}}</td>
+            <td class="text-nowrap" data-title="'电话'" sortable="'engineType.engineName'">{{customer.tel}}</td>
+            <td class="text-nowrap" data-title="'手机'" sortable="'state'">{{customer.mobile}}</td>
+            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{customer.org.label}}</td>
+          </tr>
+        </table>
+
+      </div>
+
+        <uib-pagination total-items="customerListController.page.totalElements"
+                        ng-change="customerListController.query(customerListController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="customerListController.pageNumber" items-per-page="customerListController.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
