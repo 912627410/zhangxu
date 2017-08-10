@@ -20,14 +20,14 @@
       </div>
     </div>
     <div class="col-md-7 pull-right" >
-      <div class="btn btn-warning" type="button" presentation-href="org:update" ng-click="orgMngCtrl.update()">修改</div>
-      <div class="btn btn-danger" type="button" presentation-href="org:add" ng-click="orgMngCtrl.new()">新增</div>
+      <div class="btn btn-warning" type="button" presentation-href="org:update" ng-click="orgMngCtrl.update()" style="margin-right: 10px;">修改</div>
+      <div class="btn btn-danger" type="button" presentation-href="org:add" ng-click="orgMngCtrl.new()"  style="margin-right: 10px;">新增</div>
     </div>
 
   </div>
   <div class="row" ng-controller="orgMngController">
     <div class="col-md-5"  >
-      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 380px;  height:820px;">
+      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 500; display: block; width: 380px;  height:820px;">
         <div style="padding-top: 10px;">
           <abn-tree tree-data="orgMngCtrl.my_data"
                     tree-control="treeController"
