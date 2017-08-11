@@ -65,20 +65,34 @@
         <div class="row">
           <div class="col-md-2 item">
             <div class="row">
-              <label class="col-md-4">Type</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="incomeStatisticsCtr.type"
-                      ng-options="type as y for y in incomeStatisticsCtr.typeList ">
-                <option value="">请选择...</option>
-              </select>
-            </div>
+              <!--<label class="col-md-4">Type</label>-->
+              <!--<select name="type"  class="form-control col-md-8"-->
+                      <!--ng-model="incomeStatisticsCtr.type"-->
+                      <!--ng-options="type as y for y in incomeStatisticsCtr.typeList ">-->
+                <!--<option value="">请选择...</option>-->
+              <!--</select>-->
 
+
+              <label class="col-md-4">Type</label>
+              <div class="col-md-8">
+                <ui-select id="machineType" name="machineType" ng-model="incomeStatisticsCtr.queryIncome.machineTypeId" theme="bootstrap"
+                           ng-disabled="disabled" >
+                  <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
+                  </ui-select-match>
+                  <ui-select-choices  repeat="machineType.id as machineType in incomeStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
+                    <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+
+            </div>
           </div>
           <div class="col-md-2 item" >
             <div class="row">
               <label class="col-md-4">Height</label>
               <select name="deviceHeightType"  class="form-control col-md-8"
-                      ng-model="incomeStatisticsCtr.deviceinfo.deviceHeightType"
+                      ng-model="incomeStatisticsCtr.queryIncome.heightTypeId"
                       ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
                 <option value="">请选择...</option>
               </select>
@@ -88,17 +102,27 @@
             <div class="row">
               <label class="col-md-4">Brand</label>
               <select name="type"  class="form-control col-md-8"
-                      ng-model="incomeStatisticsCtr.Brand"
+                      ng-model="incomeStatisticsCtr.queryIncome.brand"
                       ng-options="Brand as y for y  in incomeStatisticsCtr.BrandList">
                 <option value="">请选择...</option>
               </select>
             </div>
           </div>
+          <!--<div class="col-md-2 item">-->
+          <!--<div class="row">-->
+          <!--<label class="col-md-4">Brand</label>-->
+            <!--<select name="machineManufacture" class="form-control" ng-model="incomeStatisticsCtr.machineinfo.machineManufacture"-->
+                    <!--ng-options="machineMF.id as machineMF.name for machineMF in incomeStatisticsCtr.machineMFList">-->
+              <!--<option value="">请选择...</option>-->
+            <!--</select>-->
+          <!--</div>-->
+          <!--</div>-->
+
           <div class="form-inline item col-md-3">
             <div class="form-group">
               <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'startDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="incomeStatisticsCtr.startDateDeviceData" is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="incomeStatisticsCtr.startDateDeviceData" is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -109,7 +133,13 @@
             <div class="form-group">
               <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'endDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="incomeStatisticsCtr.endDateDeviceData" is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="incomeStatisticsCtr.endDateDeviceData"
+                       is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                       datepicker-options="incomeStatisticsCtr.dateOptions"
+                       ng-required="true" current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -128,7 +158,7 @@
           <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="order" ng-checked="true">订单</label>
           <label class="col-md-4"><input type="radio"  ng-model="costShowType"  name="costShowType" value="machine">车辆</label>
           <div class="right col-md-3">
-            <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="incomeStatisticsCtr.search()">Search</button>
+            <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="incomeStatisticsCtr.query(incomeStatisticsCtr.queryIncome)">Search</button>
           </div>
         </div>
         <div class="liBox" ng-switch="costShowType" ng-init="costShowType=order" >

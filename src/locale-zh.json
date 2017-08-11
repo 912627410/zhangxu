@@ -335,6 +335,7 @@
   "sim": "SIM",
   "simSerialNumber": "SIM序列号",
   "allocateTime": "调拨时间",
+  "transfer": "调拨",
   "totalNumberOfDevices": "设备总数",
   "allotOrganization": "调拨组织",
   "batchExport": "批量导出",

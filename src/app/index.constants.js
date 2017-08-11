@@ -288,5 +288,10 @@
     .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
 
 
+     //租赁
+    .constant('MACHINE_MF', SERVER_BASE_URL + 'config/machinemf')
+    .constant('RENTAL_INCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeStatistics')
+
+
 
 })();
