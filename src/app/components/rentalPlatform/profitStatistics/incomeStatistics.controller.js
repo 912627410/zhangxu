@@ -10,12 +10,107 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter) {
+  function incomeStatisticsController($scope,$rootScope, $window,ngTableDefaults,NgTableParams,DEFAULT_SIZE_PER_PAGE, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的设备id
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
+    ngTableDefaults.settings.counts = [];//默认表格设置
+
+    vm.orderinfoList = [{id:1,name:"order1"},
+                       {id:2,name:"order2"},
+                       {id:3,name:"order3"},
+                       {id:4,name:"order4"},
+                       {id:5,name:"order5"},
+                       {id:6,name:"order6"}]
+    vm.ordertableParams = new NgTableParams({}, {dataset: vm.orderinfoList});
+
+    vm.machineinfoList = [{id:11,name:"machine1"},
+        {id:22,name:"machine2"},
+        {id:33,name:"machine3"},
+        {id:44,name:"machine4"},
+        {id:55,name:"machine5"},
+        {id:66,name:"machine6"}]
+    vm.machinetableParams =new NgTableParams({}, {dataset: vm.machineinfoList});
 
 
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
+
+      }
+    }
+    vm.updateSelection = function ($event, id, status) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
+
+    // vm.updateAllSelection = function ($event) {
+    //   var checkbox = $event.target;
+    //   var action = (checkbox.checked ? 'add' : 'remove');
+    //   // alert(action);
+    //   vm.ordertableParams.data.forEach(function (orderInfo) {
+    //     updateSelected(action, orderInfo.id);
+    //   })
+    // }
+    vm.updateOrderAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      // alert(action);
+      vm.ordertableParams.data.forEach(function (deviceinfo) {
+        updateSelected(action, deviceinfo.id);
+      })
+
+    }
+
+    vm.updateMachineAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      // alert(action);
+      vm.machinetableParams.data.forEach(function (machineInfo) {
+        updateSelected(action, machineInfo.id);
+      })
+    }
+
+    vm.isSelected = function (id) {
+      return vm.selected.indexOf(id) >= 0;
+    }
+    vm.Orderchecked = function () {
+      var operStatus = false;
+      if (vm.selectAll) {
+        operStatus = false;
+        vm.selectAll = false;
+      } else {
+        operStatus = true;
+        vm.selectAll = true;
+      }
+
+      vm.ordertableParams.data.forEach(function (orderInfo) {
+        orderInfo.checked = operStatus;
+      })
+    }
+    vm.machinechecked = function () {
+      var operStatus = false;
+      if (vm.selectAll) {
+        operStatus = false;
+        vm.selectAll = false;
+      } else {
+        operStatus = true;
+        vm.selectAll = true;
+      }
+
+      vm.tableParams.data.forEach(function (machineInfo) {
+        machineInfo.checked = operStatus;
+      })
+    }
     //定义偏移量
     $anchorScroll.yOffset = 50;
     //定义页面的喵点
@@ -121,24 +216,34 @@
     //   Notification.error('获取厂商失败');
     // })
 
+    var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
+    var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
+    deviceMFData.then(function (data) {
+      vm.machineMFList = data.content;
+    }, function (reason) {
+      Notification.error('获取厂商失败');
+    })
+
     vm.Brand = 'all'
     vm.BrandList = ['brand1','brand2','brand3'];
 
 
 
     vm.query = function (queryIncome) {
+      console.log( vm.selected )
       var restCallURL = RENTAL_INCOME_URL;
-      if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""){
+      restCallURL += "?startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
+      if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
         restCallURL += "?machineType="+ queryIncome.machineTypeId;
       }
-      if(null!=queryIncome.heightType&&queryIncome.heightType!=""){
+      if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
         restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
       }
-      if(null!=queryIncome.brand&&queryIncome.brand!=""){
-        restCallURL += "&brand="+ queryIncome.brand;
+      if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
+        restCallURL += "&brand="+ queryIncome.machineManufacture;
       }
-      restCallURL += "&startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
+
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -183,7 +288,7 @@
         {
           type : 'category',
           boundaryGap : false,
-          data : ['周一周','周二周','周三周','周四周','周五周','周六周']
+          data : ['第一周','第二周','第三周','第四周','第五周','第六周']
         }
       ],
       yAxis : [

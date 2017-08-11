@@ -98,40 +98,49 @@
               </select>
             </div>
           </div>
-          <div class="col-md-2 item">
-            <div class="row">
-              <label class="col-md-4">Brand</label>
-              <select name="type"  class="form-control col-md-8"
-                      ng-model="incomeStatisticsCtr.queryIncome.brand"
-                      ng-options="Brand as y for y  in incomeStatisticsCtr.BrandList">
-                <option value="">请选择...</option>
-              </select>
-            </div>
-          </div>
           <!--<div class="col-md-2 item">-->
-          <!--<div class="row">-->
-          <!--<label class="col-md-4">Brand</label>-->
-            <!--<select name="machineManufacture" class="form-control" ng-model="incomeStatisticsCtr.machineinfo.machineManufacture"-->
-                    <!--ng-options="machineMF.id as machineMF.name for machineMF in incomeStatisticsCtr.machineMFList">-->
-              <!--<option value="">请选择...</option>-->
-            <!--</select>-->
+            <!--<div class="row">-->
+              <!--<label class="col-md-4">Brand</label>-->
+              <!--<select name="type"  class="form-control col-md-8"-->
+                      <!--ng-model="incomeStatisticsCtr.queryIncome.brand"-->
+                      <!--ng-options="Brand as y for y  in incomeStatisticsCtr.BrandList">-->
+                <!--<option value="">请选择...</option>-->
+              <!--</select>-->
+            <!--</div>-->
           <!--</div>-->
-          <!--</div>-->
+          <div class="col-md-2 item">
+          <div class="row">
+          <label class="col-md-4">Brand</label>
+            <select name="machineManufacture" class="form-control col-md-8" ng-model="incomeStatisticsCtr.queryIncome.machineManufacture"
+                    ng-options="machineMF.id as machineMF.name for machineMF in incomeStatisticsCtr.machineMFList">
+              <option value="">请选择...</option>
+            </select>
+          </div>
+          </div>
 
-          <div class="form-inline item col-md-3">
+          <div class="form-inline item col-md-2" style="padding:0px;">
             <div class="form-group">
-              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'startDate'|translate}}:</label>
+              <label class="control-label text-nowrap" style="padding-left:10px;float: left;padding-right: 10px;">{{'startDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
-                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="incomeStatisticsCtr.startDateDeviceData" is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="incomeStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="incomeStatisticsCtr.startDateDeviceData"
+                       is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
+                       datepicker-options="incomeStatisticsCtr.dateOptions"
+                       min-date="incomeStatisticsCtr.minDate"
+                       max-date="incomeStatisticsCtr.maxDate"
+                       ng-required="true"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" required />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
               </div>
             </div>
           </div>
-          <div class="form-inline item col-md-3">
+          <div class="form-inline item col-md-2"  style="padding:0px;">
             <div class="form-group">
-              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'endDate'|translate}}:</label>
+              <label class="control-label text-nowrap" style="padding-left:10px;float: left;padding-right: 10px;">{{'endDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
                 <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                        ng-model="incomeStatisticsCtr.endDateDeviceData"
@@ -139,7 +148,7 @@
                        datepicker-options="incomeStatisticsCtr.dateOptions"
                        ng-required="true" current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" />
+                       close-text="{{'close'|translate}}" required />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -163,28 +172,48 @@
         </div>
         <div class="liBox" ng-switch="costShowType" ng-init="costShowType=order" >
           <!--<ul ng-switch-when="order">-->
-          <ul ng-switch-default>
-            <li><a>57937394647694</a></li>
-            <li><a>57937394647695</a></li>
-            <li><a>57937394647696</a></li>
-            <li><a>57937394647697</a></li>
-            <li><a>57937394647698</a></li>
-            <li><a>57937394647699</a></li>
-            <li><a>57937394647700</a></li>
-            <li><a>57937394647701</a></li>
-            <li><a>57937394647702</a></li>
-          </ul>
-          <ul ng-switch-when="machine">
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-            <li><a>111111111111111</a></li>
-          </ul>
+          <div ng-switch-default >
+            <script id="selectOrderAllHeader" type="text/ng-template">
+              <input type="checkbox" ng-click="incomeStatisticsCtr.updateOrderAllSelection($event)"
+                     ng-model="incomeStatisticsCtr.Orderchecked" >
+            </script>
+            <div class="table-responsive">
+              <table class="table table-condensed table-bordered table-striped text-nowrap" ng-table="incomeStatisticsCtr.ordertableParams">
+                <tr ng-repeat="orderInfo in $data">
+                  <td class="text-nowrap" data-header="'selectOrderAllHeader'">
+                    <input type="checkbox"
+                           ng-checked="incomeStatisticsCtr.isSelected(orderInfo.id)"
+                           ng-click="incomeStatisticsCtr.updateSelection($event,orderInfo.id)"
+                           ng-model="orderInfo.checked"></td>
+
+                  <td class="text-nowrap" data-title="'terminalno'|translate" sortable="orderName">
+                    <a  ng-click="incomeStatisticsCtr.updateDeviceinfo(orderInfo.id)">{{orderInfo.name}}</a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+          <div ng-switch-when="machine">
+            <script id="selectMachineAllHeader" type="text/ng-template">
+              <input type="checkbox" ng-click="incomeStatisticsCtr.updateMachineAllSelection($event)"
+                     ng-model="incomeStatisticsCtr.machinechecked" >
+            </script>
+            <div class="table-responsive">
+              <table class="table table-condensed table-bordered table-striped text-nowrap" ng-table="incomeStatisticsCtr.machinetableParams">
+                <tr ng-repeat="machineInfo in $data">
+                  <td class="text-nowrap" data-header="'selectMachineAllHeader'">
+                    <input type="checkbox" ng-checked="incomeStatisticsCtr.isSelected(machineInfo.id)"
+                           ng-click="incomeStatisticsCtr.updateSelection($event,machineInfo.id)"
+                           ng-model="machineInfo.checked"></td>
+
+                  <td class="text-nowrap" data-title="'terminalno'|translate" sortable="orderName">
+                    <a  ng-click="incomeStatisticsCtr.updateDeviceinfo(machineInfo.id)">{{machineInfo.name}}</a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-8 rightEchart">
