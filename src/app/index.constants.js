@@ -210,6 +210,7 @@
     .constant('FLEET_URL', SERVER_BASE_URL + 'fleet/fleetOper') //CRUD
     .constant('FLEET_PAGE_URL', SERVER_BASE_URL + 'fleet/fleetPage') // PAGE
     .constant('FLEET_LIST_URL', SERVER_BASE_URL + 'fleet/fleetList') // LIST
+    .constant('FLEET_TREE_URL', SERVER_BASE_URL + 'fleet/fleetTree') // TREE
 
     //车队监控  作业点 作业路线 地图监控 图形监控 趟数统计
     .constant('WORK_LINE_URL', SERVER_BASE_URL + 'fleetMonitor/workLine') //作业路线

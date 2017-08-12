@@ -10,7 +10,7 @@
     .controller('fleetMngController', fleetMngController);
 
   /** @ngInject */
-  function fleetMngController($rootScope, $scope, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource ,FLEET_PAGE_URL,FLEET_URL) {
+  function fleetMngController($rootScope, $scope, $uibModal,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource ,FLEET_PAGE_URL,FLEET_URL,ORG_ID_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -109,34 +109,47 @@
     //更新fleet
     vm.updateFleet = function (fleet, size, type) {
 
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/fleetManagement/updateFleet.html',
-        controller: 'updateFleetController as updateFleetCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          fleet: function () {
-            return fleet;
-          },type: function () {
-            return type;
+      var url = ORG_ID_URL+"?id=" + fleet.parentId;
+      var orgPromise = serviceResource.restCallService(url,"GET");
+      orgPromise.then(function (data) {
+
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/fleetManagement/updateFleet.html',
+          controller: 'updateFleetController as updateFleetCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            fleet: function () {
+              return fleet;
+            },
+            type: function () {
+              return type;
+            },
+            parentOrg: function () {
+              return data.content;
+            }
           }
-        }
+        });
+
+        modalInstance.result.then(function(result) {
+
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
+
+      },function (reason) {
+
       });
 
-      modalInstance.result.then(function(result) {
-
-        var tabList=vm.tableParams.data;
-        //更新内容
-        for(var i=0;i<tabList.length;i++){
-          if(tabList[i].id==result.id){
-            tabList[i]=result;
-          }
-        }
-
-      }, function(reason) {
-
-      });
     };
 
     //更新 Workplane

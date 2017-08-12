@@ -54,7 +54,7 @@
     //得到设备类型集合
     var deviceTypeData = serviceResource.restCallService(DEIVCIE_TYPE_LIST_URL, "GET");
     deviceTypeData.then(function (data) {
-      vm.deviceTypeList = data;
+      vm.deviceTypeList = data.content;
     }, function (reason) {
       Notification.error('获取设备类型失败');
     })

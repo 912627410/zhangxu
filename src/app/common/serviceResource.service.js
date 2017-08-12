@@ -401,7 +401,7 @@
         var map = {
           center: {latitude: 32.115170, longitude:102.355140},
           zoom: 4,
-          options: {scrollwheel: true, scaleControl: true},
+          options: {scrollwheel: false, scaleControl: true},
           markers:[]
         };
         if ($rootScope.userInfo) {
