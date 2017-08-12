@@ -102,7 +102,7 @@
           </div>
           <div class="map-body col-sm-6">
             <div class="form-group">
-              <label class="col-sm-1 control-label">地址</label>
+              <label class="col-sm-2 control-label">地址</label>
               <div class="col-sm-7">
                 <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" ng-model="newRentalOrderController.tipinput"/>
               </div>
@@ -111,7 +111,7 @@
               </button>
             </div>
             <div class="form-group">
-            <div class="box-body" id="newOrderMap"  style="height:600px;width: 600px;"></div>
+            <div class="box-body" id="newOrderMap"  ng-style="newRentalOrderController.baseBoxMapContainer"></div>
               </div>
           </div>
         </div>

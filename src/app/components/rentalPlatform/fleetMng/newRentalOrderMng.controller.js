@@ -10,7 +10,7 @@
     .controller('newRentalOrderController', newRentalOrderController);
 
   /** @ngInject */
-  function newRentalOrderController($rootScope,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_CUSTOMER_URL,AMAP_GEO_CODER_URL, Notification) {
+  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_CUSTOMER_URL,AMAP_GEO_CODER_URL, Notification) {
     var vm = this;
     vm.workPoint = {
       longitude: null,
@@ -229,5 +229,34 @@
       vm.initMap("newOrderMap", null, null);
     }, 50);
 
+
+    vm.rightBoxBottomHeight=20;
+    vm.rightBoxTopHeightTemp=20;
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      //地图的自适应高度
+      vm.baseBoxMapContainer = {
+        "min-height": baseBoxMapContainerHeight + "px"
+      }
+
+      var rightBoxTopHeight=baseBoxContainerHeight/2;
+      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
+      //地图的右边自适应高度
+      vm.rightBoxTopHeight = {
+        "min-height": vm.rightBoxTopHeightTemp+ "px"
+      }
+      vm.rightBoxBottomHeight=rightBoxTopHeight;
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
   }
 })();
