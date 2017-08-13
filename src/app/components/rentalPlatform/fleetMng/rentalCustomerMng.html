@@ -1,100 +1,81 @@
-<div class="machine-content">
-  <section class="content-header">
-    <h1>
-      <small>{{'currentPosition'|translate}}:</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-      <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
-    </ol>
-  </section>
-
-
-  <div class="container-fluid">
-    <!--totalSummary begin-->
-    <div id="totalSummary" class="row info-box-container">
-
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  bg-aqua">
-                <span class="info-box-icon">
-                  <i class="ion ion-bag"></i></span>
-          </span>
-          <div class="info-box-content">
-            <span class="info-box-text">客户总数</span>
-            <span class="info-box-number">{{rentalCustomerMngController.page.totalElements}}</span>
-            <div class="progress">
-              <div class="progress-bar"></div>
-            </div>
-            <span class="progress-description" style="cursor: pointer;text-decoration: none;color: currentColor;">
-                   More Info <i class="fa fa-arrow-circle-right"></i>
-            </span>
-          </div>
+<div class="machine-content" resize>
+  <!--currentState begin-->
+  <div id="currentState" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'currentPosition'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
+        <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
+      </ol>
+    </section>
+    <div class="row info-box-container">
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">客户总数</div>
+          <div class="info-data">{{rentalCustomerMngController.page.totalElements}}</div>
         </div>
-      </div>
-
-      <div class="col-md-1 col-sm-6 col-xs-12">
-        <a class="info-box btn btn-app  bg-blue " ui-sref="rental.newCustomer({reload: true})">
-          <i class="glyphicon glyphicon-plus btn-lg"></i> 新增
-        </a>
       </div>
 
     </div>
-    <!--totalSummary end-->
+    <div class="row info-box-container">
+      <form name="queryForm" class="form-horizontal" role="form">
 
-    <!--machineInfo begin-->
+        <div class="form-group">
 
-    <div id="machineInfo" class="row info-box-container">
-    <form name="queryForm" class="form-horizontal" role="form">
+          <label class="col-md-1 control-label">客户名</label>
+          <div class="col-md-1">
+            <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
+                   placeholder="客户名"/>
+          </div>
 
-      <div class="form-group">
+          <label class="col-md-1 control-label">手机</label>
+          <div class="col-md-1">
+            <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
+                   placeholder="手机号" />
+          </div>
 
-        <label class="col-md-1 control-label">客户名</label>
-        <div class="col-md-2">
-          <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
-                 placeholder="客户名"/>
-        </div>
+          <label class="col-md-1 control-label">{{'organisation'|translate}}:</label>
+          <div class="col-md-2">
+            <p class="input-group">
 
-        <label class="col-md-1 control-label">手机号</label>
-        <div class="col-md-2">
-          <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
-                 placeholder="手机号" />
-        </div>
-
-        <label class="col-md-2 control-label">{{'organisation'|translate}}:</label>
-        <div class="col-md-2">
-          <p class="input-group">
-
-            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" readonly required/>
-            <span class="input-group-btn">
+              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" readonly required/>
+              <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
-          </p>
+            </p>
+          </div>
+
+          <div class="col-md-2">
+            <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+            <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
+          </div>
+          <div class="col-md-2">
+
+            <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
+            </button>
+            <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
+          </div>
+
+          <div class="col-md-1">
+
+            <button class="btn btn-primary" type="button"
+                    ng-click="rentalCustomerMngController.new()">新增
+            </button>
+          </div>
         </div>
-        <div class="col-md-1">
-          <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
-          <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
-        </div>
-        <div class="col-md-2">
 
-          <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
-          </button>
-          <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
-        </div>
-      </div>
+      </form>
+    </div>
 
-    </form>
-      </div>
 
-    <div class="row form-group" style="padding: 10px">
-      <script id="selectAllHeader" type="text/ng-template">
-        <input type="checkbox" ng-click="rentalCustomerMngController.updateAllSelection($event)"
-               ng-model="rentalCustomerMngController.checked">
-      </script>
-      <div class="table-responsive">
+    <div class="row" ng-style="rentalCustomerMngController.baseBoxContainer">
 
+      <div class="col-lg-12 table-responsive "><!--表格框-->
         <table ng-table="rentalCustomerMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="customer in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
@@ -123,20 +104,17 @@
             </td>
           </tr>
         </table>
-
       </div>
+      <div class="col-lg-12"><!--分页框-->
 
-      <div >
+
         <uib-pagination total-items="rentalCustomerMngController.page.totalElements"
                         ng-change="rentalCustomerMngController.query(rentalCustomerMngController.pageNumber-1,null,null,null)"
                         max-size="5" ng-model="rentalCustomerMngController.pageNumber" items-per-page="rentalCustomerMngController.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
       </div>
-
-
     </div>
-
-    <!--machineInfo end-->
   </div>
+  <!--currentState end-->
 </div>

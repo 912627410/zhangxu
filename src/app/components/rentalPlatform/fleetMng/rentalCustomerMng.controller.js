@@ -24,6 +24,20 @@
       });
     }
 
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
+
 
     vm.query = function (page, size, sort, customer) {
       console.log("111222");
@@ -97,6 +111,12 @@
     vm.view=function(id){
       $state.go('rental.viewCustomer', {id: id});
     }
+
+
+    vm.new=function(){
+      $state.go('rental.newCustomer');
+    }
+
 
   }
 })();
