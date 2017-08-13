@@ -16,121 +16,161 @@
       <div class="modal-body">
         <div class="box-body">
           <div class="box-body col-sm-6">
-          <div class="form-group">
-            <label class="col-sm-3 control-label">客户名字</label>
-            <div class="col-md-5">
-              <p class="input-group">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">客户名字</label>
+              <div class="col-md-5">
+                <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="请选择" ng-model="newRentalOrderController.customer.name" name="customer" readonly validator="required"/>
-                <span class="input-group-btn">
+                  <input type="text" id="org" class="form-control" placeholder="请选择"
+                         ng-model="newRentalOrderController.customer.name" name="customer" readonly
+                         validator="required"/>
+                  <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
-              </p>
+                </p>
+              </div>
             </div>
-          </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">金额</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="金额"
+                       ng-model="newRentalOrderController.rentalOrder.totalAmt" name="totalAmt"
+                       typeahead-show-hint="true"/>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">开始时间</label>
-            <div class="col-sm-5">
-              <!--<p class="input-group">-->
-                <!--<input type="text" name="startDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"-->
-                       <!--ng-model="newRentalOrderController.rentalOrder.startDate"-->
-                       <!--is-open="newRentalOrderController.startDateOpenStatus.opened"-->
-                       <!--datepicker-options="dateOptions" ng-readonly="true"  close-text="Close" validator="required"/>-->
-                <!--<span class="input-group-btn">-->
-                <!--<button type="button" class="btn btn-default"-->
-                        <!--ng-click="newRentalOrderController.startDateOpen($event)">-->
-                  <!--<i class="glyphicon glyphicon-calendar"></i></button>-->
-              <!--</span>-->
-              <!--</p>-->
-              <p class="input-group">
-                <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderController.rentalOrder.startDate"
-                       is-open="newRentalOrderController.startDateSetting.status.opened"
-                       datepicker-options="newRentalOrderController.startDateSetting.dateOptions" close-text="Close" validator="required"  message-id="bootstrap"/>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">开始时间</label>
+              <div class="col-sm-5">
+                <p class="input-group">
+                  <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="newRentalOrderController.rentalOrder.startDate"
+                         is-open="newRentalOrderController.startDateSetting.status.opened"
+                         datepicker-options="newRentalOrderController.startDateSetting.dateOptions" close-text="Close"
+                         validator="required" message-id="bootstrap"/>
 
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="newRentalOrderController.startDateSetting.open($event)">
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="newRentalOrderController.startDateSetting.open($event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-              </p>
-              <span id="bootstrap"></span>
+                </p>
+                <span id="bootstrap"></span>
 
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">结束时间</label>
-            <div class="col-sm-5">
-            <p class="input-group">
-              <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                     ng-model="newRentalOrderController.rentalOrder.endDate"
-                     is-open="newRentalOrderController.endDateOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true"  close-text="Close" />
-              <span class="input-group-btn">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">结束时间</label>
+              <div class="col-sm-5">
+                <p class="input-group">
+                  <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                         ng-model="newRentalOrderController.rentalOrder.endDate"
+                         is-open="newRentalOrderController.endDateOpenStatus.opened"
+                         datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+                  <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newRentalOrderController.endDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
               </span>
-            </p>
+                </p>
+              </div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-3 control-label">维度</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="自动匹配" readonly
-                     ng-model="newRentalOrderController.rentalOrder.latitude" name="mobile" typeahead-show-hint="true"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">经度</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="自动匹配" readonly
-                     ng-model="newRentalOrderController.rentalOrder.longitude" name="email" typeahead-show-hint="true"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">半径(米)</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control"
-                     ng-model="newRentalOrderController.radius" ng-change="newRentalOrderController.changeradius(newRentalOrderController.radius)" name="radius" validator="number"  typeahead-show-hint="true"/>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-3 control-label">描述</label>
-            <div class="col-sm-5">
-              <textarea class="form-control" placeholder="描述"
-                     ng-model="newRentalOrderController.rentalOrder.description" name="description" typeahead-show-hint="true">
-
-              </textarea>
-            </div>
-          </div>
 
             <div class="form-group">
-              <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2" ng-click="newRentalOrderController.ok()">{{'confirm'|translate}}</button>
-              <button class="btn btn-warning" type="button" ng-click="newRentalOrderController.cancel()">{{'cancel'|translate}}</button>
-          </div>
+              <label class="col-sm-3 control-label">维度</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="自动匹配" readonly
+                       ng-model="newRentalOrderController.rentalOrder.latitude" name="mobile"
+                       typeahead-show-hint="true"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">经度</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="自动匹配" readonly
+                       ng-model="newRentalOrderController.rentalOrder.longitude" name="email"
+                       typeahead-show-hint="true"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">半径(米)</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model="newRentalOrderController.radius"
+                       ng-change="newRentalOrderController.changeradius(newRentalOrderController.radius)" name="radius"
+                       validator="number" typeahead-show-hint="true"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">剪叉数量</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model="newRentalOrderController.rentalOrder.jc"
+                       placeholder="0" name="jc"
+                       validator="number" typeahead-show-hint="true"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">直臂数量</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model="newRentalOrderController.rentalOrder.zb"
+                       placeholder="0" name="zb"
+                       validator="number" typeahead-show-hint="true"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">曲臂数量</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="0" name="qb"
+                       ng-model="newRentalOrderController.rentalOrder.qb"
+                       validator="number" typeahead-show-hint="true"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">描述</label>
+              <div class="col-sm-5">
+              <textarea class="form-control" placeholder="描述"
+                        ng-model="newRentalOrderController.rentalOrder.description" name="description"
+                        typeahead-show-hint="true">
+
+              </textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2"
+                      ng-click="newRentalOrderController.ok()">{{'confirm'|translate}}
+              </button>
+              <button class="btn btn-warning" type="button" ng-click="newRentalOrderController.cancel()">
+                {{'cancel'|translate}}
+              </button>
+            </div>
 
           </div>
           <div class="map-body col-sm-6">
             <div class="form-group">
               <label class="col-sm-2 control-label">工作地址</label>
               <div class="col-sm-7">
-                <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" ng-model="newRentalOrderController.tipinput"/>
+                <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}"
+                       ng-model="newRentalOrderController.tipinput"/>
               </div>
 
             </div>
             <div class="row">
               <div class="col-md-8">
-              <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
-              {{'longitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplongitudeNum}}</span>
-              &nbsp;&nbsp;
-              {{'latitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplatitudeNum}}</span>
-            </div>
+                <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+                {{'longitude'|translate}}:<span
+                style="color: red;"> {{newRentalOrderController.amaplongitudeNum}}</span>
+                &nbsp;&nbsp;
+                {{'latitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplatitudeNum}}</span>
+              </div>
 
             </div>
             <div class="row">
@@ -140,8 +180,8 @@
               </div>
             </div>
             <div class="form-group">
-            <div class="box-body" id="newOrderMap"  ng-style="newRentalOrderController.baseBoxMapContainer"></div>
-              </div>
+              <div class="box-body" id="newOrderMap" ng-style="newRentalOrderController.baseBoxMapContainer"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -151,9 +191,7 @@
     </div>
 
 
-
   </div>
-
 
 
 </div>

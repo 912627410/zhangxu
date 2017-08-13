@@ -137,23 +137,23 @@
       <div class="table-responsive">
 
         <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-          <tr ng-repeat="machine in $data">
+          <tr ng-repeat="rentalOrder in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
               <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
-                     ng-click="rentalOrderMngController.updateSelection($event,machine.id)" ng-model="machine.checked">
+                     ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)" ng-model="machine.checked">
             </td>
-            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+            <td class="text-nowrap" data-title="'订单号'" sortable="'licenseId'">
               <a ng-if="rentalOrderMngController.validateOperPermission()" href
-                 ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
-              <span ng-if="!rentalOrderMngController.validateOperPermission()">{{machine.licenseId}}</span>
+                 ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{rentalOrder.id}}</a>
+              <span ng-if="!rentalOrderMngController.validateOperPermission()">{{rentalOrder.id}}</span>
 
             </td>
 
-            <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
-            <td class="text-nowrap" data-title="'engineType'|translate" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
-            <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">{{machine.machineState }}</td>
-            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
-            <td class="text-nowrap" data-title="'vehicleType'|translate" sortable="'typeName'">{{machine.machineType.typeName}}</td>
+            <td class="text-nowrap" data-title="'开始时间'" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+            <td class="text-nowrap" data-title="'结束时间'" sortable="'engineType.engineName'">{{machine.engineType.engineName}}</td>
+            <td class="text-nowrap" data-title="'客户'" sortable="'state'">{{machine.machineState }}</td>
+            <td class="text-nowrap" data-title="'当前状态'" sortable="'org.label'">{{machine.org.label}}</td>
+            <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">{{machine.machineType.typeName}}</td>
 
             <td class="text-nowrap" data-title="'operation'|translate">
 
