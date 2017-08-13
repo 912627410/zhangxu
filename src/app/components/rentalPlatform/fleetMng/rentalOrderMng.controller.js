@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
+  function rentalOrderMngController($scope, $window,$state, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -19,6 +19,31 @@
     $anchorScroll.yOffset = 50;
     //定义页面的喵点
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
+
+
+    //加载品牌信息
+    var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
+    retanlOrderStatusListPromise.then(function (data) {
+      vm.retanlOrderStatusList= data;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取状态失败');
+    })
+
+
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
 
     /**
      * 去到某个喵点
@@ -30,7 +55,53 @@
     };
 
 
-    vm.query = function (page, size, sort, order) {
+    vm.startDateSetting = {
+      //dt: "请选择开始日期",
+      open: function($event) {
+        vm.startDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
+
+
+
+    //vm.startDateSetting.dt="";
+
+    // 日期控件相关
+    // date picker
+    vm.startDateOpenStatus = {
+      opened: false
+    };
+
+    vm.startDateOpen = function ($event) {
+      vm.startDateOpenStatus.opened = true;
+    };
+
+    vm.endDateOpenStatus = {
+      opened: false
+    };
+
+    vm.endDateOpen = function ($event) {
+      vm.endDateOpenStatus.opened = true;
+    };
+
+
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.org =selectedItem;
+      });
+    }
+
+
+
+    vm.query = function (page, size, sort, rentalOrder) {
       console.log("111222");
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
@@ -38,15 +109,18 @@
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      if (null != order) {
+      if (null != rentalOrder) {
 
-        // if (null != machine.deviceNum&&machine.deviceNum!="") {
-        //   restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
-        // }
-        // if (null != machine.licenseId&&machine.licenseId!="") {
-        //   restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
-        // }
+        if (null != rentalOrder.id&&rentalOrder.id!="") {
+          restCallURL += "&search_EQ_id=" + rentalOrder.id;
+        }
+        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
+          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
+        }
 
+        if (null != rentalOrder.status&&rentalOrder.status!="") {
+          restCallURL += "&search_EQ_status=" + rentalOrder.status.value;
+        }
       }
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
@@ -79,6 +153,17 @@
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
+    }
+
+    vm.new=function(id){
+      $state.go('rental.newOrder');
+    }
+
+    //重置查询框
+    vm.reset = function () {
+      vm.rentalOrder = null;
+      vm.org=null;
+      vm.id=null;
     }
   }
 })();
