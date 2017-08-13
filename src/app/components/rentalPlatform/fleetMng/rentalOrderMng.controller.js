@@ -45,15 +45,6 @@
     //初始化高度
     vm.adjustWindow($window.innerHeight);
 
-    /**
-     * 去到某个喵点
-     * @param 喵点id
-     */
-    vm.gotoAnchor = function (x) {
-      $location.hash(x);
-      $anchorScroll();
-    };
-
 
     vm.startDateSetting = {
       //dt: "请选择开始日期",

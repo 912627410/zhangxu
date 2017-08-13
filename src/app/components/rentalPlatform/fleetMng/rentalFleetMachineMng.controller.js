@@ -9,25 +9,20 @@
     .controller('rentalFleetMachineMngController', rentalFleetMachineMngController);
 
   /** @ngInject */
-  function rentalFleetMachineMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
+  function rentalFleetMachineMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    //定义偏移量
-    $anchorScroll.yOffset = 50;
-    //定义页面的喵点
-    vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
+    //组织树的显示
+    vm.openTreeInfo=function() {
+      treeFactory.treeShow(function (selectedItem) {
+        vm.org =selectedItem;
+      });
+    }
 
-    /**
-     * 去到某个喵点
-     * @param 喵点id
-     */
-    vm.gotoAnchor = function (x) {
-      $location.hash(x);
-      $anchorScroll();
-    };
+
 
     //加载品牌信息
     var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
