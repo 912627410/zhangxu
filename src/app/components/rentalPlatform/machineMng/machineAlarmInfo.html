@@ -105,12 +105,22 @@
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>{{'allpendingmessages'|translate}}
+                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-check-square-o"></i>全部报警消息
+                    <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>未处理消息
                     <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-unlink"></i>{{'longTimeNotConnectedDevices'|translate}}
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>已处理消息
+                    <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="">
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-unlink"></i>离线报警
                     <span
                       class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span>
                   </a>
@@ -121,15 +131,16 @@
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-map"></i>{{'locationToRemind'|translate}}
-                    <span class="label label-danger pull-right">{{notificationCtrl.locationNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-cog"></i> 车辆报警
+                    <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-check-square-o"></i>{{'allMessages'|translate}}
-                    <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-map"></i>围栏报警
+                    <span class="label label-danger pull-right">{{notificationCtrl.locationNotificationNumber}}</span>
                   </a>
                 </li>
+
               </ul>
             </div>
           </div>
