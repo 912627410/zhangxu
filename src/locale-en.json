@@ -714,7 +714,6 @@
   "minlength":"The length is not enough",
   "maxlength":"Exceed maximum allowable length",
   "numberAndCharForPass":"The password must contain letters and Numbers,the length at least six",
-<<<<<<< HEAD
   "alarmInformation":"Alarm information",
   "rentalMng":"Rental management",
   "orderMng":"Order management",
@@ -722,10 +721,8 @@
   "machineInfo":"Machine information",
   "maintenance":"Maintenance",
   "customerInfo":"Customer information",
-  "assetMng":"Asset management"
-=======
+  "assetMng":"Asset management",
   "machineTypeMng":"MachineType Management",
   "SMSstatistics":"SMS statistics",
   "newDevice":"New Device"
->>>>>>> REL2.00
 }
