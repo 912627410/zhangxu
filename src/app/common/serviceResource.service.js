@@ -870,8 +870,7 @@
       convertGSMSing: function (value) {
         var singValue = value / 31 * 100;
         return singValue.toFixed(2);
-      },
-      //租赁平台首页地图数据
+      }
     }
   }
 
