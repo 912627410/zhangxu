@@ -10,12 +10,33 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope, $window,ngTableDefaults,NgTableParams,DEFAULT_SIZE_PER_PAGE, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF) {
+  function incomeStatisticsController($scope,$rootScope, $window,ngTableDefaults,NgTableParams,DEFAULT_SIZE_PER_PAGE, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+
+
+    //定义偏移量
+    $anchorScroll.yOffset = 50;
+    //定义页面的喵点
+    $scope.navs = [{
+      "title": "income", "icon": "fa-map"
+    }, {
+      "title": "Cost", "icon": "fa-signal"
+    }, {
+      "title": "profit", "icon": "fa-exclamation-triangle"
+    }];
+
+    /**
+     * 去到某个喵点
+     * @param 喵点id
+     */
+    vm.gotoAnchor = function (x) {
+      $location.hash(x);
+      $anchorScroll();
+    }
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
@@ -36,7 +57,7 @@
         {id:66,name:"machine6"}]
     vm.machinetableParams =new NgTableParams({}, {dataset: vm.machineinfoList});
 
-
+    //订单号和车号复选框多选与全选
     var updateSelected = function (action, id) {
       if (action == 'add' && vm.selected.indexOf(id) == -1) {
         vm.selected.push(id);
@@ -53,18 +74,9 @@
       updateSelected(action, id);
     }
 
-    // vm.updateAllSelection = function ($event) {
-    //   var checkbox = $event.target;
-    //   var action = (checkbox.checked ? 'add' : 'remove');
-    //   // alert(action);
-    //   vm.ordertableParams.data.forEach(function (orderInfo) {
-    //     updateSelected(action, orderInfo.id);
-    //   })
-    // }
     vm.updateOrderAllSelection = function ($event) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      // alert(action);
       vm.ordertableParams.data.forEach(function (deviceinfo) {
         updateSelected(action, deviceinfo.id);
       })
@@ -111,17 +123,9 @@
         machineInfo.checked = operStatus;
       })
     }
-    //定义偏移量
-    $anchorScroll.yOffset = 50;
-    //定义页面的喵点
-    $scope.navs = [{
-      "title": "income", "icon": "fa-map"
-    }, {
-      "title": "Cost", "icon": "fa-signal"
-    }, {
-      "title": "profit", "icon": "fa-exclamation-triangle"
-    }];
 
+
+    //开始时间与结束时间
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 1);
     vm.startDate = startDate;
@@ -151,20 +155,8 @@
       startingDay: 1
     };
 
-    window.onresize = function(){
-      lineChart.resize();
-    }
 
 
-
-    /**
-     * 去到某个喵点
-     * @param 喵点id
-     */
-    vm.gotoAnchor = function (x) {
-      $location.hash(x);
-      $anchorScroll();
-    }
 
 
     vm.type = 'all';
@@ -228,14 +220,14 @@
     vm.BrandList = ['brand1','brand2','brand3'];
 
 
-
+    //income query
     vm.query = function (queryIncome) {
       console.log( vm.selected )
       var restCallURL = RENTAL_INCOME_URL;
       restCallURL += "?startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
       restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
       if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
-        restCallURL += "?machineType="+ queryIncome.machineTypeId;
+        restCallURL += "&machineType="+ queryIncome.machineTypeId;
       }
       if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
         restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
@@ -255,7 +247,7 @@
     }
 
 
-    //income
+    //income line
     var lineChart = echarts.init(document.getElementById('incomeLine'));
     var option = {
       title: {
@@ -314,6 +306,33 @@
       ]
     };
     lineChart.setOption(option);
+
+    window.onresize = function(){
+      lineChart.resize();
+    }
+    var incomeStatisticInfo = {
+      totalMachines: 0,
+      totalOrders: 0,
+    };
+
+    var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
+    rspdata.then(function (data) {
+
+      var MachineStatisticsList = data.machineStatistics;
+      MachineStatisticsList.forEach(function (machineStatistics) {
+        incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
+      })
+      console.log(incomeStatisticInfo.totalMachines);
+      var RentalOrderStatisticsList = data.rentalOrderStatistics;
+      RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
+        incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
+      })
+      console.log(incomeStatisticInfo.totalOrders);
+    }, function (reason) {
+      Notification.error('获取收入统计信息失败');
+    })
+
+    vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
   }

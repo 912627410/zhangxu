@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource,DEVCE_HIGHTTYPE) {
+  function profitStatisticsController($scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL) {
     var vm = this;
 
 
@@ -25,13 +25,11 @@
     }];
 
 
-
-    window.onresize = function(){
+    window.onresize = function () {
 
       profitBar.resize();
 
     }
-
 
 
     /**
@@ -45,7 +43,7 @@
 
 
     vm.type = 'all';
-    vm.typeList = ['All','剪叉','直臂','曲臂'];
+    vm.typeList = ['All', '剪叉', '直臂', '曲臂'];
 
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
@@ -56,7 +54,7 @@
     })
 
     vm.Brand = 'all'
-    vm.BrandList = ['brand1','brand2','brand3'];
+    vm.BrandList = ['brand1', 'brand2', 'brand3'];
 
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 1);
@@ -93,20 +91,17 @@
     }
 
 
-
-
-
     //profit
     var profitBar = echarts.init(document.getElementById('profitBar'));
     var profitBarOption = {
-      tooltip : {
+      tooltip: {
         trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-          type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         }
       },
       legend: {
-        data: ['剪叉', '直臂','曲臂']
+        data: ['剪叉', '直臂', '曲臂']
       },
       grid: {
         left: '3%',
@@ -114,12 +109,12 @@
         bottom: '3%',
         containLabel: true
       },
-      yAxis:  {
+      yAxis: {
         type: 'value'
       },
       xAxis: {
         type: 'category',
-        data: ['周一周','周二周','周三周','周四周','周五周','周六周']
+        data: ['周一周', '周二周', '周三周', '周四周', '周五周', '周六周']
       },
       series: [
         {
@@ -162,5 +157,30 @@
     };
     profitBar.setOption(profitBarOption);
 
-  }
+
+    var incomeStatisticInfo = {
+      totalMachines: 0,
+      totalOrders: 0,
+    };
+
+    var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
+    rspdata.then(function (data) {
+
+      var MachineStatisticsList = data.machineStatistics;
+      MachineStatisticsList.forEach(function (machineStatistics) {
+        incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
+      })
+      console.log(incomeStatisticInfo.totalMachines);
+      var RentalOrderStatisticsList = data.rentalOrderStatistics;
+      RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
+        incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
+      })
+      console.log(incomeStatisticInfo.totalOrders);
+    }, function (reason) {
+      Notification.error('获取收入统计信息失败');
+    })
+
+  vm.incomeStatisticInfo = incomeStatisticInfo;
+
+}
 })();
