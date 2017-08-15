@@ -28,7 +28,7 @@
               <div class="col-lg-4 info-box-left-text">
                 <div class="div-float">
                   <span class="info-box-text info-box-left-text-top">围栏报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
+                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
                 </div>
                 <div class="div-border"></div>
               </div>
@@ -47,7 +47,7 @@
               <div class="col-lg-4 info-box-left-text">
                 <div class="div-float">
                   <span class="info-box-text info-box-left-text-top">车辆报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
+                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
                 </div>
                 <div class="div-border"></div>
               </div>
@@ -66,7 +66,7 @@
               <div class="col-lg-4 info-box-left-text">
                 <div class="div-float">
                   <span class="info-box-text info-box-left-text-top">保养提醒</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
+                  <span class="info-box-number info-box-left-text-below"  ng-bind="rentalMachineMngCtr.keepAlarm"></span>
                 </div>
                 <div class="div-border"></div>
               </div>
@@ -85,7 +85,7 @@
               <div class="col-lg-4 info-box-left-text">
                 <div class="div-float">
                   <span class="info-box-text info-box-left-text-top">离线报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
+                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
                 </div>
                 <div class="div-border"></div>
               </div>
@@ -121,12 +121,12 @@
             <div class="row middlePicBox">
               <div class="col-lg-6">
                 <div class="machineNumTitle">
-                  机器数量
+                  机器数量 <span style="padding-left: 30px;" ng-bind="rentalMachineMngCtr.machineCount"></span>
                 </div>
                 <ul>
-                  <li class="machineNumlis"><i>直臂</i><span>34</span></li>
-                  <li class="machineNumlis"><i>曲臂</i><span>11</span></li>
-                  <li class="machineNumlis"><i>剪叉</i><span>90</span></li>
+                  <li class="machineNumlis"><i>直臂</i><span ng-bind="rentalMachineMngCtr.shearFork"></span></li>
+                  <li class="machineNumlis"><i>曲臂</i><span ng-bind="rentalMachineMngCtr.straightArm"></span></li>
+                  <li class="machineNumlis"><i>剪叉</i><span ng-bind="rentalMachineMngCtr.crankArm"></span></li>
                 </ul>
               </div>
               <div class="col-lg-6">
