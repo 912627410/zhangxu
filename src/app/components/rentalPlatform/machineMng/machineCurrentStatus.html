@@ -23,38 +23,38 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">车辆总数</div>
-          <div class="info-data">54</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.machineCount" ></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
 
           <div class="info-title">在库维修</div>
-          <div class="info-data">12</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryMaintainCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">在库待租</div>
-          <div class="info-data">6</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryRentCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">途中</div>
-          <div class="info-data">2</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.transportCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">出租中</div>
-          <div class="info-data">103</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.leaseingCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">现场报停</div>
-          <div class="info-data">4</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.sceneSuspensionCount"></div>
         </div>
       </div>
     </div>
@@ -67,27 +67,27 @@
             <div class="col-lg-10">
             <div class="tab-content-search-box">
               <label>车号:</label>
-              <input/>
+              <input type="text" name="licenseId" id="licenseId" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
             </div>
             <div  class="tab-content-search-box">
               <label>设备号:</label>
-              <input/>
+              <input name="deviceNum" id="deviceNum" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum" />
             </div>
             <div  class="tab-content-search-box">
               <label>订单号:</label>
-              <input/>
+              <input name="orderNum" id="orderNum" ng-model="machineCurrentStatusCtr.searchConditions.orderNum" />
             </div>
             <div  class="tab-content-search-box">
               <label>类型:</label>
-              <input style="width: 100px"/>
+              <input name="type" id="type" ng-model="machineCurrentStatusCtr.searchConditions.type" />
             </div>
             <div  class="tab-content-search-box">
-              <label>状态:</label>
-              <input style="width: 100px"/>
+              <label>地址:</label>
+              <input name="address" id="address" ng-model="machineCurrentStatusCtr.searchConditions.address" />
             </div>
             <div class="search-box-button">
-              <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
-              <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+              <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
+              <button class="btn btn-default" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
             </div>
             </div>
           </div>
@@ -96,25 +96,28 @@
           <table ng-table="machineCurrentStatusCtr.customConfigParams"
                  class="table table-condensed table-bordered table-striped">
             <tr ng-repeat="row in $data">
-              <td data-title="'车号'" sortable="'车号'">{{row.name1}}</td>
-              <td data-title="'车型'" sortable="'车型'">{{row.name2}}</td>
-              <td data-title="'目的地'" sortable="'目的地'">{{row.name3}}</td>
+              <td data-title="'设备号'" sortable="'设备号'">{{row.deviceNum}}</td>
+              <td data-title="'车号'" sortable="'车号'">{{row.machineLicenseId}}</td>
+              <td data-title="'车型'" sortable="'车型'">{{row.deviceType}}</td>
               <td data-title="'订单号'" sortable="'订单号'">{{row.name4}}</td>
               <td data-title="'客户'" sortable="'客户'">{{row.name5}}</td>
-              <td data-title="'出发地'" sortable="'出发地'">{{row.name6}}</td>
-              <td data-title="'时间'" sortable="'时间'">{{row.name6}}</td>
-              <td data-title="'当前位置'" sortable="'当前位置'">{{row.name6}}</td>
+              <td data-title="'当前位置'" sortable="'当前位置'">{{row.currentAddress}}</td>
+              <td data-title="'总工作小时'" sortable="'总工作小时'">{{row.totalDuration | convertToMins}}</td>
+              <td data-title="'最近数据上传时间'" sortable="'最近数据上传时间'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td data-title="'操作'" style="text-align: center" >
+                <button type="button" class="btn btn-primary btn-xs" ng-click="rentalMachineMngCtr.monitoring(row.deviceNum)">监控</button>
+                <button type="button" class="btn btn-success btn-xs" ng-click="rentalMachineMngCtr.management(row.machineLicenseId)">管理</button>
+              </td>
             </tr>
           </table>
         </div>
         <div class="col-lg-12"><!--分页框-->
-
-
           <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
-                          total-items="100"
-                          ng-change=""
-                          max-size="5" ng-model="rentalMachineMngCtr.currentPage"
-                          items-per-page="12"
+                          total-items="machineCurrentStatusCtr.totalElements"
+                          ng-change="machineCurrentStatusCtr.loadMachineData(rentalMachineMngCtr.currentPage+1,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.searchConditions)"
+                          max-size="10"
+                          ng-model="rentalMachineMngCtr.currentPage"
+                          items-per-page="machineCurrentStatusCtr.pageSize"
                           first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
                           next-text="{{'nextPage'|translate}}"
                           previous-text="{{'previousPage'|translate}}">

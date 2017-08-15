@@ -9,7 +9,7 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, AMAP_GEO_CODER_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -19,14 +19,24 @@
     }, {
       "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
-    vm.rightBoxBottomHeight=20;
-    vm.rightBoxTopHeightTemp=20;
+    vm.rightBoxBottomHeight = 20;
+    vm.rightBoxTopHeightTemp = 20;
+    //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
+    vm.fenceAlarm = 0;//围栏报警
+    vm.machineAlarm = 0;//车辆报警
+    vm.keepAlarm = 0;//保养报警
+    vm.offLineAlarm = 0;//离线报警
+    //定义车辆类型数量 1:"剪叉",2:"直臂",3:"曲臂"
+    vm.machineCount = 0;//总数
+    vm.shearFork = 0;//剪叉
+    vm.straightArm = 0;//直臂
+    vm.crankArm = 0;//曲臂
     /**
      * 自适应高度函数
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 10 - 25 - 5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -37,13 +47,13 @@
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
-      var rightBoxTopHeight=baseBoxContainerHeight/2;
-      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
+      var rightBoxTopHeight = baseBoxContainerHeight / 2;
+      vm.rightBoxTopHeightTemp = rightBoxTopHeight - 20;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
-        "min-height": vm.rightBoxTopHeightTemp+ "px"
+        "min-height": vm.rightBoxTopHeightTemp + "px"
       }
-      vm.rightBoxBottomHeight=rightBoxTopHeight;
+      vm.rightBoxBottomHeight = rightBoxTopHeight;
     }
     //初始化高度
     vm.adjustWindow($window.innerHeight);
@@ -67,13 +77,12 @@
      */
     vm.drawPointAggregation = function (mapId, pointArray, zone) {
       //点聚合方式和自定义弹出框
-      serviceResource.refreshMapWithDeviceInfo(mapId,pointArray,zone,[104.06,30.83],true,function () {
+      serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, [104.06, 30.83], true, function () {
 
       });
     };
     //加载地图设备数据
     vm.loadHomeDeviceData();
-
     /**
      * 监听窗口大小改变后重新自适应高度
      */
@@ -81,16 +90,70 @@
       vm.adjustWindow(newHeight);
       barChart.resize({height: vm.rightBoxBottomHeight});
     })
-
     /**
      * 根据类型获取报警信息的数量
      * @param type
      */
     vm.getAlarmCountByType = function (alarmType) {
+      if (alarmType == 4) {//车辆报警单独处理
 
-      return 0;
+        return;
+      }
+
+      var url = RENTAL_ALARM_MSG_URL + "?alarmType=" + alarmType;
+      var respData = serviceResource.restCallService(url, "GET");
+      respData.then(function (data) {
+        var msgNum = data.content;
+        if (alarmType == 1) {
+          vm.fenceAlarm = msgNum;
+        }
+        if (alarmType == 2) {
+          vm.keepAlarm = msgNum;//保养报警
+        }
+        if (alarmType == 3) {
+          vm.offLineAlarm = msgNum;//离线报警
+        }
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      })
     }
+    vm.getAlarmCountByType(1);//围栏报警
+    vm.getAlarmCountByType(2);//保养提醒
+    vm.getAlarmCountByType(3);//离线提醒
+    vm.getAlarmCountByType(4);//车辆报警
+    /**
+     * 根据车辆类型获取车辆数量
+     * @param machineType
+     */
+    vm.getMachineCountByType = function (machineType) {
+      var url = RENTAL_MACHINE_COUNT_URL;
+      if (machineType) {
+        url = url + "?type=" + machineType;
+      }
+      var respData = serviceResource.restCallService(url, "GET");
+      respData.then(function (data) {
+        var msgNum = data.content;
+        if (machineType==undefined || machineType==null){
+          vm.machineCount=msgNum;
+        }
+        if (machineType == 1) {
+          vm.shearFork = msgNum;//剪叉
+        }
+        if (machineType == 2) {
+          vm.straightArm = msgNum;//直臂
+        }
+        if (machineType == 3) {
+          vm.crankArm = msgNum;//曲臂
+        }
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      })
 
+    }
+    vm.getMachineCountByType(1);//剪叉
+    vm.getMachineCountByType(2);//直臂
+    vm.getMachineCountByType(3);//曲臂
+    vm.getMachineCountByType();//总数
     /**
      * 名称转到某个视图
      * @param view 视图名称
@@ -101,12 +164,12 @@
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: vm.rightBoxBottomHeight -20+ 'px'
+      height: vm.rightBoxBottomHeight - 20 + 'px'
     });
 
     var option = {
       color: ['#3398DB'],
-      backgroundColor:'#ffffff',
+      backgroundColor: '#ffffff',
       tooltip: {
         trigger: 'axis',
         axisPointer: {            // 坐标轴指示器，坐标轴触发有效
@@ -143,7 +206,7 @@
 
     var homePie = echarts.init(document.getElementById('homePie'), '', {
       width: 'auto',
-      height: vm.rightBoxBottomHeight -10+ 'px'
+      height: vm.rightBoxBottomHeight - 10 + 'px'
     });
     var homePieoption = {
       tooltip: {
@@ -152,8 +215,8 @@
       },
       series: [
         {
-          name:'访问来源',
-          type:'pie',
+          name: '访问来源',
+          type: 'pie',
           selectedMode: 'single',
           radius: [0, '30%'],
 
@@ -167,26 +230,26 @@
               show: false
             }
           },
-          data:[
-            {value:335, name:'直达', selected:true},
-            {value:679, name:'营销广告'},
-            {value:1548, name:'搜索引擎'}
+          data: [
+            {value: 335, name: '直达', selected: true},
+            {value: 679, name: '营销广告'},
+            {value: 1548, name: '搜索引擎'}
           ]
         },
         {
-          name:'访问来源',
-          type:'pie',
+          name: '访问来源',
+          type: 'pie',
           radius: ['40%', '55%'],
 
-          data:[
-            {value:335, name:'直达'},
-            {value:310, name:'邮件营销'},
-            {value:234, name:'联盟广告'},
-            {value:135, name:'视频广告'},
-            {value:1048, name:'百度'},
-            {value:251, name:'谷歌'},
-            {value:147, name:'必应'},
-            {value:102, name:'其他'}
+          data: [
+            {value: 335, name: '直达'},
+            {value: 310, name: '邮件营销'},
+            {value: 234, name: '联盟广告'},
+            {value: 135, name: '视频广告'},
+            {value: 1048, name: '百度'},
+            {value: 251, name: '谷歌'},
+            {value: 147, name: '必应'},
+            {value: 102, name: '其他'}
           ]
         }
       ]
@@ -194,13 +257,13 @@
     homePie.setOption(homePieoption);
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
-    middlePicBox.style.height = vm.rightBoxTopHeightTemp -10+ 'px';
+    middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
-    var lineHeight = vm.rightBoxTopHeightTemp -30 ;
-    machineNumlis[0].style.lineHeight = (lineHeight/3) + 'px';
-    machineNumlis[1].style.lineHeight = (lineHeight/3) + 'px';
-    machineNumlis[2].style.lineHeight = (lineHeight/3) + 'px';
+    var lineHeight = vm.rightBoxTopHeightTemp - 30;
+    machineNumlis[0].style.lineHeight = (lineHeight / 3) + 'px';
+    machineNumlis[1].style.lineHeight = (lineHeight / 3) + 'px';
+    machineNumlis[2].style.lineHeight = (lineHeight / 3) + 'px';
 
 
     /**

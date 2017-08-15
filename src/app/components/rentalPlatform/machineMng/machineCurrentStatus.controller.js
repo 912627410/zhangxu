@@ -9,12 +9,21 @@
     .controller('machineCurrentStatusController', machineCurrentStatusController);
 
   /** @ngInject */
-  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages,serviceResource,Notification) {
-    var vm=this;
-    //表格中每页展示多少条数据
-    ngTableDefaults.params.count = 12;
-    //取消ng-table的默认分页
-    ngTableDefaults.settings.counts = [];
+  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource,commonFactory, Notification, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_DATA_URL) {
+    var vm = this;
+    ngTableDefaults.params.count = 40;//表格中每页展示多少条数据
+    ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
+    //定义车辆状态数量 6:"在库维修"7:"在库待租"8:"途中"9:"出租中"10:"现场报停" (6~10租赁平台使用)
+    vm.machineCount = 0;//总数
+    vm.libraryMaintainCount = 0;//在库维修
+    vm.libraryRentCount = 0;//在库待租
+    vm.transportCount = 0;//途中
+    vm.leaseingCount = 0;//出租中
+    vm.sceneSuspensionCount = 0;//现场报停
+    //搜索条件定义
+    vm.searchConditions={}
+    //定义每页显示多少条数据
+    vm.pageSize=13;
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -26,112 +35,88 @@
         "min-height": baseBoxContainerHeight + "px"
       }
     }
-    //初始化高度
-    vm.adjustWindow($window.innerHeight);
+    vm.adjustWindow($window.innerHeight);//初始化高度
     //定义页面导航
     $scope.navs = [{
-      "title": "rental","alias":"当前位置", "icon": "fa-map"
+      "title": "rental", "alias": "当前位置", "icon": "fa-map"
     }, {
-      "title": "rental.machineCurrentStatus", "alias":"当前状态", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
     }, {
-      "title": "rental.machineAlarmInfo", "alias":"报警信息", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
     }];
     /**
      * 名称转到某个视图
      * @param view 视图名称
      */
-    vm.gotoView=function (view) {
+    vm.gotoView = function (view) {
       $rootScope.$state.go(view);
     }
-
-    vm.simpleList = [{
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
-    }, {
-      name1: "H05024202",
-      name2: null,
-      name3: 3305258695,
-      name4: 3305258695,
-      name5: 3305258695,
-      name6: 3305258695
+    /**
+     * 根据车辆状态获取车辆数量
+     * @param statusType
+     */
+    vm.getMachineCountByStatus = function (statusType) {
+      var url = RENTAL_MACHINE_COUNT_URL;
+      if (statusType) {
+        url = url + "?status=" + statusType;
+      }
+      var respData = serviceResource.restCallService(url, "GET");
+      respData.then(function (data) {
+        var msgNum = data.content;
+        if (statusType == undefined || statusType == null) {
+          vm.machineCount = msgNum;
+        }
+        if (statusType == 6) {
+          vm.libraryMaintainCount=msgNum;
+        }
+        if (statusType == 7) {
+          vm.libraryRentCount=msgNum;
+        }
+        if (statusType == 8) {
+          vm.transportCount=msgNum;
+        }
+        if (statusType == 9) {
+          vm.leaseingCount=msgNum;
+        }
+        if (statusType == 10) {
+          vm.sceneSuspensionCount=msgNum;
+        }
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      })
     }
-    ]
+    vm.getMachineCountByStatus();//车辆总数
+    vm.getMachineCountByStatus(6);//在库维修
+    vm.getMachineCountByStatus(7);//在库待租
+    vm.getMachineCountByStatus(8);//途中
+    vm.getMachineCountByStatus(9);//出租中
+    vm.getMachineCountByStatus(10);//现场报停
 
-    vm.customConfigParams = new NgTableParams({}, {dataset: vm.simpleList});
+
+
+    /**
+     * 获取车辆数据
+     *
+     * @param currentPage
+     * @param pageSize
+     */
+    vm.loadMachineData=function (currentPage,pageSize,searchConditions) {
+      var restCallURL=RENTAL_MACHINE_DATA_URL;
+      var pageUrl = currentPage || 0;
+      var sizeUrl = pageSize || vm.pageSize;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      restCallURL =commonFactory.processSearchConditions(restCallURL,searchConditions);
+      var machineDataPromis = serviceResource.restCallService(restCallURL, "GET");
+      machineDataPromis.then(function (data) {
+        vm.machineDataList = data.content;
+        vm.customConfigParams = new NgTableParams({}, {dataset: vm.machineDataList});
+        vm.totalElements=data.totalElements;
+        vm.currentPage=data.number;
+      },function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+    }
+    vm.loadMachineData(0,vm.pageSize,null);
 
   }
 })();
