@@ -23,38 +23,38 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">车辆总数</div>
-          <div class="info-data">54</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.machineCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
 
           <div class="info-title">在库维修</div>
-          <div class="info-data">12</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryMaintainCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">在库待租</div>
-          <div class="info-data">6</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryRentCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">途中</div>
-          <div class="info-data">2</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.transportCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">出租中</div>
-          <div class="info-data">103</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.leaseingCount"></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">现场报停</div>
-          <div class="info-data">4</div>
+          <div class="info-data" ng-bind="machineCurrentStatusCtr.sceneSuspensionCount"></div>
         </div>
       </div>
     </div>
@@ -79,11 +79,11 @@
             </div>
             <div  class="tab-content-search-box">
               <label>类型:</label>
-              <input style="width: 100px"/>
+              <input/>
             </div>
             <div  class="tab-content-search-box">
               <label>状态:</label>
-              <input style="width: 100px"/>
+              <input />
             </div>
             <div class="search-box-button">
               <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
@@ -96,14 +96,18 @@
           <table ng-table="machineCurrentStatusCtr.customConfigParams"
                  class="table table-condensed table-bordered table-striped">
             <tr ng-repeat="row in $data">
+              <td data-title="'设备号'" sortable="'设备号'">{{row.name1}}</td>
               <td data-title="'车号'" sortable="'车号'">{{row.name1}}</td>
               <td data-title="'车型'" sortable="'车型'">{{row.name2}}</td>
-              <td data-title="'目的地'" sortable="'目的地'">{{row.name3}}</td>
               <td data-title="'订单号'" sortable="'订单号'">{{row.name4}}</td>
               <td data-title="'客户'" sortable="'客户'">{{row.name5}}</td>
-              <td data-title="'出发地'" sortable="'出发地'">{{row.name6}}</td>
-              <td data-title="'时间'" sortable="'时间'">{{row.name6}}</td>
               <td data-title="'当前位置'" sortable="'当前位置'">{{row.name6}}</td>
+              <td data-title="'总工作小时'" sortable="'时间'">{{row.name6}}</td>
+              <td data-title="'最近数据上传时间'" sortable="'时间'">{{row.name6}}</td>
+              <td data-title="'操作'" style="text-align: center" >
+                <button type="button" class="btn btn-primary btn-xs" ng-click="">监控</button>
+                <button type="button" class="btn btn-success btn-xs" ng-click="">管理</button>
+              </td>
             </tr>
           </table>
         </div>

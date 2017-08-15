@@ -111,16 +111,6 @@
         }
       }
     })
-      .state('rental.machineHistoryData', {
-        url: '/machineHistoryData',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/machineMng/machineHistoryData.html',
-            controller: 'machineHistoryDataController',
-            controllerAs: 'machineHistoryDataCtr'
-          }
-        }
-      })
 
       //租赁车辆管理
       .state('rental.machine', {
