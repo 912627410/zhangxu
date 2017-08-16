@@ -265,5 +265,111 @@
     machineNumlis[1].style.lineHeight = (lineHeight / 3) + 'px';
     machineNumlis[2].style.lineHeight = (lineHeight / 3) + 'px';
 
+
+    /**
+     * miniMap
+     */
+
+    var miniMap = document.getElementsByClassName('miniMap'),
+      miniMap1 = echarts.init(miniMap[0]),
+      miniMap2 = echarts.init(miniMap[1]),
+      miniMap3 = echarts.init(miniMap[2]),
+      miniMap4 = echarts.init(miniMap[3]),
+      miniOption = {
+        tooltip: {
+          showContent: false,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            lineStyle:{
+              color:'rgba(124, 181, 236, 0.5)'
+            }
+          }
+        },
+        grid: {
+          top:'25%',
+          left: '-10%',
+          right: '6%',
+          bottom: '-16%',
+          containLabel: true
+        },
+        xAxis: {
+          boundaryGap: false,
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(124, 181, 236, 0.5)'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show:false
+          },
+          data: ['8月01日', '8月02日', '8月03日', '8月04日', '8月05日', '8月06日', '8月07日']
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        series: {
+          name: '实收',
+          type: 'line',
+          label: {
+            emphasis: {
+              show: true,
+              textStyle:{
+                color: 'rgba(124, 181, 236, 1)'
+              },
+              formatter: function(param) {
+                return param.data[3];
+              },
+              position: 'top'
+            }
+          },
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgba(124, 181, 236, 1)',
+              borderColor: '#fff',
+              borderWidth: 2,
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgba(124, 181, 236, 1)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgba(124, 181, 236, 0.25)'
+            }
+          },
+          data: [60, 70, 100, 150, 200, 220, 220],
+          smooth: true,
+          smoothMonotone: 'x'
+        }
+      };
+
+    miniMap1.setOption(miniOption);
+    miniMap2.setOption(miniOption);
+    miniMap3.setOption(miniOption);
+    miniMap4.setOption(miniOption);
+
   }
 })();

@@ -23,83 +23,56 @@
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">围栏报警</span>
-                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                a
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">围栏报警</span>
+              <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">车辆报警</span>
-                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                b
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">车辆报警</span>
+              <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">保养提醒</span>
-                  <span class="info-box-number info-box-left-text-below"  ng-bind="rentalMachineMngCtr.keepAlarm"></span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                c
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">保养提醒</span>
+              <span class="info-box-number info-box-left-text-below"  ng-bind="rentalMachineMngCtr.keepAlarm"></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">离线报警</span>
-                  <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                d
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">离线报警</span>
+              <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
             </div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="row base-box-container">
+  <div class="container-fluid">
+    <div class="row">
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="box box-success base-left-map-box-container">
           <div class="box-header with-border">
@@ -142,6 +115,7 @@
         <div id="machineBarChart" style="margin-top: 15px"></div>
       </div>
     </div>
+  </div>
   </div>
   <!--currentLocation end-->
 
