@@ -20,82 +20,62 @@
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">围栏报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                a
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">围栏报警</span>
+              <span class="info-box-number info-box-left-text-below"><a ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"
+                                                                        style=" cursor:pointer;"
+                                                                        ng-bind="machineAlarmInfoCtr.fenceAlarm"></a></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">车辆报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                b
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">车辆报警</span>
+              <span class="info-box-number info-box-left-text-below"><a ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"
+                                                                        style=" cursor:pointer;"
+                                                                        ng-bind="machineAlarmInfoCtr.machineAlarm"></a></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">保养提醒</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                c
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">保养提醒</span>
+              <span class="info-box-number info-box-left-text-below"><a ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"
+                                                                        style=" cursor:pointer;"
+                                                                        ng-bind="machineAlarmInfoCtr.keepAlarm"></a></span>
             </div>
+            <div class="div-border"></div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-content">
-            <div class="row">
-              <div class="col-lg-4 info-box-left-text">
-                <div class="div-float">
-                  <span class="info-box-text info-box-left-text-top">离线报警</span>
-                  <span class="info-box-number info-box-left-text-below">410</span>
-                </div>
-                <div class="div-border"></div>
-              </div>
-
-              <div class="col-lg-8">
-                d
-              </div>
+          <div class="info-box-left-text">
+            <div class="div-float">
+              <span class="info-box-text info-box-left-text-top">离线报警</span>
+              <span class="info-box-number info-box-left-text-below"><a ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"
+                                                                        style=" cursor:pointer;"
+                                                                        ng-bind="machineAlarmInfoCtr.offLineAlarm"></a></span>
             </div>
           </div>
+          <div class="miniMap"></div>
         </div>
       </div>
     </div>
-    <div class="row base-box-container" ng-style="machineAlarmInfoCtr.baseBoxContainer"  style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
+    <div class="row base-box-container" ng-style="machineAlarmInfoCtr.baseBoxContainer"
+         style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-4">
           <div class="box box-primary">
@@ -105,42 +85,41 @@
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-check-square-o"></i>全部报警消息
-                    <span class="label label-primary pull-right">{{notificationCtrl.allNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(null)"><i class="fa fa-check-square-o"></i>全部报警消息
+                    <span class="label label-primary pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>未处理消息
-                    <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(0)"><i class="fa fa-envelope-o"></i>全部未处理
+                    <span class="label label-warning pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-envelope-o"></i>已处理消息
-                    <span class="label label-warning pull-right">{{notificationCtrl.noProcessNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(1)"><i class="fa fa-envelope-o"></i>全部已处理
+                    <span class="label label-warning pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-unlink"></i>离线报警
-                    <span
-                      class="label label-warning pull-right">{{notificationCtrl.noConnectionNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><i class="fa fa-unlink"></i>离线报警
+                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-cog"></i> {{'maintenanceToRemind'|translate}}
-                    <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><i class="fa fa-cog"></i>
+                    {{'maintenanceToRemind'|translate}}
+                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;"><i class="fa fa-cog"></i> 车辆报警
-                    <span class="label label-warning pull-right">{{notificationCtrl.maintainNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><i class="fa fa-cog"></i> 车辆报警
+                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;" ng-click=""><i class="fa fa-map"></i>围栏报警
-                    <span class="label label-danger pull-right">{{notificationCtrl.locationNotificationNumber}}</span>
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><i class="fa fa-map"></i>围栏报警
+                    <span class="label label-danger pull-right" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
                   </a>
                 </li>
-
               </ul>
             </div>
           </div>
@@ -158,19 +137,26 @@
                       <div class="col-lg-12 col-md-12">
                         <div class="tab-content-search-box">
                           <label>车号:</label>
-                          <input class="input-sm" placeholder="车辆编号"/>
+                          <input class="input-sm input-search" placeholder="车辆编号"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.licenseId"/>
                         </div>
-                        <div  class="tab-content-search-box">
+                        <div class="tab-content-search-box">
                           <label>设备号:</label>
-                          <input class="input-sm" placeholder="设备号"/>
+                          <input class="input-sm input-search" placeholder="设备号"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.deviceNum"/>
                         </div>
-                        <div  class="tab-content-search-box">
+                        <div class="tab-content-search-box">
                           <label>内容:</label>
-                          <input class="input-sm" placeholder="提醒内容" style="width: 100px"/>
+                          <input class="input-sm input-search" placeholder="提醒内容"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.content"/>
                         </div>
                         <div class="search-box-button">
-                          <button class="btn btn-primary" type="button">{{'query'|translate}}</button>
-                          <button class="btn btn-default" type="button">{{'reset'|translate}}</button>
+                          <button class="btn btn-primary" type="button"
+                                  ng-click="machineAlarmInfoCtr.getMsgByAlarmType(0,machineAlarmInfoCtr.pageSize,null,machineAlarmInfoCtr.searchConditions)">{{'query'|translate}}
+                          </button>
+                          <button class="btn btn-default" type="button"
+                                  ng-click="machineAlarmInfoCtr.searchConditions=null">{{'reset'|translate}}
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -193,15 +179,20 @@
                 <table class="table table-hover table-striped">
                   <tbody>
                   <th>{{'select'|translate}}</th>
+                  <th>{{'deviceNum'|translate}}</th>
+                  <th>车号</th>
                   <th>{{'content'|translate}}</th>
                   <th>{{'generateTime'|translate}}</th>
                   <th>{{'operation'|translate}}</th>
-                  <tr ng-repeat="notification in notificationCtrl.notificationList">
+                  <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
                     <td><input type="checkbox" ng-model="notification.checked"></td>
-                    <td class="mailbox-subject"></td>
-                    <td class="mailbox-date"></td>
+                    <td class="mailbox-subject">{{notification.deviceNum}}</td>
+                    <td class="mailbox-subject">{{notification.licenseId}}</td>
+                    <td class="mailbox-subject">{{notification.content}}</td>
+                    <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
-                      <button type="button" class="btn btn-default btn-xs" ng-click=""></button>
+                      <button type="button" class="btn btn-primary btn-xs">标记已读</button>
+                      <button type="button" class="btn btn-success btn-xs">处理报警</button>
                     </td>
                   </tr>
                   </tbody>
@@ -210,9 +201,14 @@
             </div>
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
-                <uib-pagination class="pagination-sm" boundary-links="true" rotate="false"
-                                total-items="" ng-change="" max-size="5" ng-model="vm.currentPage" items-per-page=""
-                                first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                                total-items="machineAlarmInfoCtr.totalElements"
+                                ng-change="machineAlarmInfoCtr.getMsgByAlarmType(machineAlarmInfoCtr.currentPage-1,machineAlarmInfoCtr.pageSize,machineAlarmInfoCtr.totalElements,machineAlarmInfoCtr.searchConditions)"
+                                max-size="10"
+                                ng-model="machineAlarmInfoCtr.currentPage"
+                                items-per-page="machineAlarmInfoCtr.pageSize"
+                                first-text="{{'pagingHomePage' | translate}}"
+                                last-text="{{'lastPage'|translate}}"
                                 next-text="{{'nextPage'|translate}}"
                                 previous-text="{{'previousPage'|translate}}">
                 </uib-pagination>

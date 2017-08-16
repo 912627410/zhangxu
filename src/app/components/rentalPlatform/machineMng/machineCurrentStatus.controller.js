@@ -113,7 +113,7 @@
         vm.machineDataList = data.content;
         vm.customConfigParams = new NgTableParams({}, {dataset: vm.machineDataList});
         vm.totalElements = data.totalElements;
-        vm.currentPage = data.number - 1;
+        vm.currentPage = data.number + 1;
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
@@ -132,11 +132,12 @@
      */
     vm.machineStatusLoadData = function (machineStatus) {
       if (machineStatus==null || machineStatus==undefined){
-        vm.searchConditions=null;
+        vm.loadMachineData(0, vm.pageSize, null, null);
       }else {
         vm.searchConditions.status = machineStatus
+        vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
       }
-      vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
+
     }
 
   }
