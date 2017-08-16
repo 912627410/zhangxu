@@ -150,7 +150,7 @@
       })
 
     }
-    vm.getMachineCountByType(1);//剪叉
+    vm.getMachineCountByType(1);//剪叉车
     vm.getMachineCountByType(2);//直臂
     vm.getMachineCountByType(3);//曲臂
     vm.getMachineCountByType();//总数
