@@ -10,13 +10,42 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope, $window,ngTableDefaults,NgTableParams,DEFAULT_SIZE_PER_PAGE, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+    vm.machineNums = [];
 
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      var baseBoxContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      //地图的自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      vm.baseBoxContainerHeight = baseBoxContainerHeight;
+    }
+
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
+
+    /**
+     * 监听窗口大小改变后重新自适应高度
+     */
+    $scope.$watch('height', function (oldHeight, newHeight) {
+      vm.adjustWindow(newHeight);
+      lineChart.resize({height: vm.baseBoxContainerHeight});
+    })
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -38,24 +67,10 @@
       $anchorScroll();
     }
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE; //默认每页记录数
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
 
-    vm.orderinfoList = [{id:1,name:"order1"},
-                       {id:2,name:"order2"},
-                       {id:3,name:"order3"},
-                       {id:4,name:"order4"},
-                       {id:5,name:"order5"},
-                       {id:6,name:"order6"}]
-    vm.ordertableParams = new NgTableParams({}, {dataset: vm.orderinfoList});
 
-    vm.machineinfoList = [{id:11,name:"machine1"},
-        {id:22,name:"machine2"},
-        {id:33,name:"machine3"},
-        {id:44,name:"machine4"},
-        {id:55,name:"machine5"},
-        {id:66,name:"machine6"}]
-    vm.machinetableParams =new NgTableParams({}, {dataset: vm.machineinfoList});
 
     //订单号和车号复选框多选与全选
     var updateSelected = function (action, id) {
@@ -158,10 +173,6 @@
 
 
 
-
-    vm.type = 'all';
-    vm.typeList = ['All','剪叉','直臂','曲臂'];
-
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
@@ -199,15 +210,6 @@
     vm.getMachineType();
 
 
-
-    // var machineMFUrl = MACHINE_MF + "?search_EQ_status=1";
-    // var machineMFData = serviceResource.restCallService(machineMFUrl, "GET");
-    // machineMFData.then(function (data) {
-    //   vm.machineMFList = data.content;
-    // }, function (reason) {
-    //   Notification.error('获取厂商失败');
-    // })
-
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
@@ -220,35 +222,68 @@
     vm.BrandList = ['brand1','brand2','brand3'];
 
 
-    //income query
-    vm.query = function (queryIncome) {
-      console.log( vm.selected )
-      var restCallURL = RENTAL_INCOME_URL;
-      restCallURL += "?startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
-      if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
-        restCallURL += "&machineType="+ queryIncome.machineTypeId;
-      }
-      if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
-        restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
-      }
-      if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
-        restCallURL += "&brand="+ queryIncome.machineManufacture;
-      }
 
+    vm.queryOrder = function (page, size, sort) {
+      var restCallURL = RENTAL_ORDER_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        vm.incomeData = data;
-      },function (reason) {
-        Notification.error("获取收入数据失败")
-      })
 
-    }
+        vm.ordertableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+        vm.orderpage = data.page;
+        vm.orderpageNumber = data.page.number + 1;
+      }, function (reason) {
+        vm.orderinfoList = null;
+        Notification.error("获取订单数据失败");
+      });
+    };
+    vm.queryOrder(null,null,null);
+
+    vm.queryMachine = function (page, size, sort) {
+      var restCallURL = MACHINE_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+
+        vm.machinetableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+        vm.machinepage = data.page;
+        vm.machinepageNumber = data.page.number + 1;
+      }, function (reason) {
+        vm.machineinfoList = null;
+        Notification.error("获取车辆数据失败");
+      });
+    };
+
+    vm.queryMachine(null,null,null);
+
+
+
 
 
     //income line
-    var lineChart = echarts.init(document.getElementById('incomeLine'));
+
+    var lineChart = echarts.init(document.getElementById('incomeLine'), '', {
+      width: 'auto',
+      height: vm.baseBoxContainerHeight - 20 + 'px'
+    });
     var option = {
       title: {
         text: '收入统计'
@@ -307,14 +342,12 @@
     };
     lineChart.setOption(option);
 
-    window.onresize = function(){
-      lineChart.resize();
-    }
+
     var incomeStatisticInfo = {
       totalMachines: 0,
       totalOrders: 0,
     };
-
+    //上方车辆和订单总数
     var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
     rspdata.then(function (data) {
 
@@ -322,17 +355,45 @@
       MachineStatisticsList.forEach(function (machineStatistics) {
         incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
       })
-      console.log(incomeStatisticInfo.totalMachines);
+
       var RentalOrderStatisticsList = data.rentalOrderStatistics;
       RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
         incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
       })
-      console.log(incomeStatisticInfo.totalOrders);
+
     }, function (reason) {
       Notification.error('获取收入统计信息失败');
     })
 
     vm.incomeStatisticInfo = incomeStatisticInfo;
+
+    //income query
+    vm.query = function (queryIncome) {
+      console.log( vm.selected )
+      var restCallURL = RENTAL_INCOME_URL;
+      restCallURL += "?startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
+      if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
+        restCallURL += "&machineType="+ queryIncome.machineTypeId;
+      }
+      if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
+        restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
+      }
+      if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
+        restCallURL += "&brand="+ queryIncome.machineManufacture;
+      }
+      if(vm.selected.length>0){
+        restCallURL += "&orderNums="+ vm.selected;
+      }
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.incomeData = data;
+      },function (reason) {
+        Notification.error("获取收入数据失败")
+      })
+    }
 
 
   }

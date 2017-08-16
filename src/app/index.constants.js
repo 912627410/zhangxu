@@ -10,6 +10,7 @@
     .constant('malarkey', malarkey)
     .constant('SYSTEM_VERSION', '1.16')    //系统版本号
     .constant('DEFAULT_SIZE_PER_PAGE', 40)    //默认每页显示纪录数
+    .constant('DEFAULT_MINSIZE_PER_PAGE', 10)    //默认每页显示纪录数
     .constant('AMAP_QUERY_TIMEOUT_MS', 3000)  //高德地图api调用延时毫秒数
     .constant('DEFAULT_DEVICE_SORT_BY', 'lastDataUploadTime,desc')    //读取设备时的默认排序规则
     .constant('DEFAULT_USER_SORT_BY', 'ssn,desc')    //读取用户信息时的默认排序规则

@@ -23,12 +23,37 @@
     }, {
       "title": "profit", "icon": "fa-exclamation-triangle"
     }];
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      var baseBoxContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      //地图的自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      vm.baseBoxContainerHeight = baseBoxContainerHeight;
+    }
 
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
+
+    /**
+     * 监听窗口大小改变后重新自适应高度
+     */
+    $scope.$watch('height', function (oldHeight, newHeight) {
+      vm.adjustWindow(newHeight);
+      profitBar.resize({height: vm.baseBoxContainerHeight});
+    })
 
     window.onresize = function () {
-
       profitBar.resize();
-
     }
 
 
@@ -170,12 +195,12 @@
       MachineStatisticsList.forEach(function (machineStatistics) {
         incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
       })
-      console.log(incomeStatisticInfo.totalMachines);
+     //console.log(incomeStatisticInfo.totalMachines);
       var RentalOrderStatisticsList = data.rentalOrderStatistics;
       RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
         incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
       })
-      console.log(incomeStatisticInfo.totalOrders);
+      //console.log(incomeStatisticInfo.totalOrders);
     }, function (reason) {
       Notification.error('获取收入统计信息失败');
     })

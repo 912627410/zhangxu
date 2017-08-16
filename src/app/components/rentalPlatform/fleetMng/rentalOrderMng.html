@@ -144,7 +144,8 @@
           <tr ng-repeat="rentalOrder in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
               <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
-                     ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)" ng-model="machine.checked">
+                     ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)"
+                     ng-model="machine.checked">
             </td>
             <td class="text-nowrap" data-title="'订单号'" sortable="'licenseId'">
               <a ng-if="rentalOrderMngController.validateOperPermission()" href

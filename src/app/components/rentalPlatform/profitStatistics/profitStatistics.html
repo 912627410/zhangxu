@@ -94,22 +94,22 @@
               </select>
             </div>
           </div>
-          <div class="form-inline item col-md-3">
+          <div class="form-inline item col-md-3" style="padding: 0px;">
             <div class="form-group">
-              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'startDate'|translate}}:</label>
+              <label class="control-label text-nowrap" style="padding-left:10px;float: left;padding-right: 10px;">{{'startDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="profitStatisticsCtr.startDateDeviceData" is-open="profitStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="profitStatisticsCtr.startDateDeviceData" is-open="profitStatisticsCtr.startDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" min-date="incomeStatisticsCtr.minDate" max-date="incomeStatisticsCtr.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="profitStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
               </div>
             </div>
           </div>
-          <div class="form-inline item col-md-3">
+          <div class="form-inline item col-md-3" style="padding: 0px;">
             <div class="form-group">
-              <label class="control-label text-nowrap" style="padding-left:15px;float: left;padding-right: 15px;">{{'endDate'|translate}}:</label>
+              <label class="control-label text-nowrap" style="padding-left:10px;float: left;padding-right: 10px;">{{'endDate'|translate}}:</label>
               <div class="input-group" style="float: left;">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="profitStatisticsCtr.endDateDeviceData" is-open="profitStatisticsCtr.endDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="profitStatisticsCtr.endDateDeviceData" is-open="profitStatisticsCtr.endDateOpenStatusDeviceData.opened" datepicker-options="profitStatisticsCtr.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="profitStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -123,7 +123,7 @@
       </div>
     </div>
     <div class="row profitPic">
-      <div class="profitBar" id="profitBar"></div>
+      <div class="profitBar" id="profitBar" ng-style="profitStatisticsCtr.baseBoxContainer"></div>
     </div>
   </div>
 
