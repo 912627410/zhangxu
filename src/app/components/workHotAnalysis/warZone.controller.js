@@ -8,7 +8,7 @@
   angular.module('GPSCloud')
     .controller('warZoneController',warZoneController);
 
-  function warZoneController($scope,WAR_ZONE_QUERY,$http,timeList){
+  function warZoneController($scope,WAR_ZONE_QUERY,GET_MACHINETYPE_URL,$http,timeList){
 
     var mapColor = ['rgba(42, 93, 123, 1)','rgba(42, 93, 123,0.84)','rgba(42, 93, 123, 0.68)','rgba(42, 93, 123, 0.52)','rgba(42, 93, 123, 0.36)','rgba(42, 93, 123, 0.2)'],
       mapChartList = document.getElementsByClassName('mapchart'),
@@ -22,30 +22,95 @@
 
     $scope.cycle_type = ['按月查询','按季度查询'];
     $scope.statistical_type = ['开工热度','销售热度'];
-    $scope.product_type = ['挖掘机','装载机','重机'];
     $scope.cycle_value = timeList.monthList(2017,1);
 
     //default
-    $scope.query_cycle_type = '按月查询';
-    $scope.query_cycle_value = timeList.getMonth();
+    $scope.cycle_selected = '按月查询';
+    $scope.cycle_value_selected = timeList.getMonth();
     $scope.query_hour = 2;
     $scope.query_statistical_type1 = '开工热度';
     $scope.query_statistical_type2 = '销售热度';
-    $scope.query_product_type1 = '挖掘机';
-    $scope.query_product_type2 = '挖掘机';
 
+    function getProductList(){
+      $http({
+        method: 'GET',
+        url: GET_MACHINETYPE_URL
+      }).then(function(data){
+        data = data.data;
+        data = _.sortBy(data,'name');
+        $scope.product_type = data;
+        $scope.product_selected1 = data[0].name;
+        $scope.product_selected2 = data[0].name
+      })
+    }
+    getProductList();
+
+    function getMachineList1(_productType){
+      $http({
+        method: 'GET',
+        url: GET_MACHINETYPE_URL + '?type=' + _productType
+      }).then(function(data){
+        var temp = ['全部'];
+        data = data.data;
+        data = _.sortBy(data,'name');
+        for(var i=0,length=data.length;i<length;i++){
+          temp.push(data[i].name);
+        }
+        $scope.machine_type1 = temp;
+        $scope.machine_selected1 = temp[0];
+      })
+    }
+    getMachineList1(1);
+
+    function getMachineList2(_productType){
+      $http({
+        method: 'GET',
+        url: GET_MACHINETYPE_URL + '?type=' + _productType
+      }).then(function(data){
+        var temp = ['全部'];
+        data = data.data;
+        data = _.sortBy(data,'name');
+        for(var i=0,length=data.length;i<length;i++){
+          temp.push(data[i].name);
+        }
+        $scope.machine_type2 = temp;
+        $scope.machine_selected2 = temp[0];
+      })
+    }
+    getMachineList2(1);
 
     $http.get('assets/json/warzone.json').success(function(data){
       echarts.registerMap('warZone', data);
-      getMap1_Data('1','1',timeList.getMonth(),'2','1');
-      getMap2_Data('1','1',timeList.getMonth(),'2','2');
+      getMap1_Data('1','','1',timeList.getMonth(),'2','1');
+      getMap2_Data('1','','1',timeList.getMonth(),'2','2');
     });
 
-    function getMap1_Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
+    //填充空缺的数据
+    function fixData(data) {
+      var initBarData = [{"warZone":"中部战区","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]},{"warZone":"华北战区","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]},{"warZone":"华南战区","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]},{"warZone":"济南重机","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]},{"warZone":"西北战区","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]},{"warZone":"西南战区","quarterData":[{"quarter":timeList.latestFourQuarter()[3],"rate":0},{"quarter":timeList.latestFourQuarter()[2],"rate":0},{"quarter":timeList.latestFourQuarter()[1],"rate":0},{"quarter":timeList.latestFourQuarter()[0],"rate":0}]}];
+      for(var i=0;i<6;i++){
+        for(var j=0;j<4;j++){
+          if((data[i].quarterData[j] !== undefined)){
+            for(var k=0;k<4;k++){
+              if(data[i].quarterData[j].quarter == initBarData[i].quarterData[k].quarter){
+                console.log(typeof (data[i].quarterData[j]));
+                initBarData[i].quarterData[k].quarter = data[i].quarterData[j].quarter;
+                initBarData[i].quarterData[k].rate = data[i].quarterData[j].rate;
+              }
+            }
+          }
+        }
+      }
+      return initBarData;
+    }
+
+    function getMap1_Data(productType,machineType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        // url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
+
         if(statisticalType == 1){
           data.sort(compare('workRate'));
         }else {
@@ -180,10 +245,11 @@
       })
     }
 
-    function getMap2_Data(produceType,cycleType,cycleValue,hourScope,statisticalType) {
+    function getMap2_Data(productType,machineType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'all?produceType=' + produceType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        // url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
         if(statisticalType == 1){
           data.sort(compare('workRate'));
@@ -304,15 +370,19 @@
       })
     }
 
-    function getBar1_Data(produceType, hourScope, statisticalType){
+    function getBar1_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        // url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + productType + '&machineType=' + machineType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
       }).success(function(data,header,config,status){
+
+        data = fixData(data);
 
         var zoneList = getZoneList(),
           quarterList = getQuarterList(),
           valueList = getValueList();
+
 
         function getZoneList(){
           var temp = [];
@@ -409,11 +479,14 @@
       })
     }
 
-    function getBar2_Data(produceType, hourScope, statisticalType){
+    function getBar2_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ produceType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        // url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ productType + '&machineType=' + machineType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
       }).success(function(data,header,config,status){
+
+        data = fixData(data);
 
         var zoneList = getZoneList(),
           quarterList = getQuarterList(),
@@ -510,57 +583,104 @@
       })
     }
 
-    getBar1_Data(1,2,1);
-    getBar2_Data(1,2,2);
+    getBar1_Data('1','','2','1');
+    getBar2_Data('1','','2','2');
 
     $scope.query = function(){
       $http.get('assets/json/warzone.json').success(function(data) {
         echarts.registerMap('warZone', data);
-        var _product_type1,_product_type2, _query_statistical_type1,_query_statistical_type2, _query_cycle_type, _query_cycle_value;
-        if($scope.query_product_type1 == '挖掘机'){
+        var _product_type1,_product_type2,_machine_type1,_machine_type2,_query_statistical_type1,_query_statistical_type2,_cycle_type,_query_cycle_value;
+        if($scope.product_selected1 == '挖掘机'){
           _product_type1 = '1'
-        }else if($scope.query_product_type1 == '装载机'){
+        }else if($scope.product_selected1 == '装载机'){
           _product_type1 = '2'
         }else{
           _product_type1 = '3'
         }
-        if($scope.query_product_type2 == '挖掘机'){
+
+        if($scope.machine_selected1 == '全部'){
+          _machine_type1 = ''
+        }else{
+          _machine_type1 = $scope.machine_selected1;
+        }
+
+        if($scope.machine_selected2 == '全部'){
+          _machine_type2 = ''
+        }else{
+          _machine_type2 = $scope.machine_selected2;
+        }
+
+        if($scope.product_selected2 == '挖掘机'){
           _product_type2 = '1'
-        }else if($scope.query_product_type2 == '装载机'){
+        }else if($scope.product_selected2 == '装载机'){
           _product_type2 = '2'
         }else{
           _product_type2 = '3'
         }
-        if($scope.query_cycle_type == '按月查询'){
-          _query_cycle_type = '1'
+
+        if($scope.cycle_selected == '按月查询'){
+          _cycle_type = '1'
         }else{
-          _query_cycle_type = '2'
+          _cycle_type = '2'
         }
-        _query_cycle_value = $scope.query_cycle_value;
+
         if($scope.query_statistical_type1 == '开工热度'){
           _query_statistical_type1 = '1'
         }else{
           _query_statistical_type1 = '2'
         }
+
         if($scope.query_statistical_type2 == '开工热度'){
           _query_statistical_type2 = '1'
         }else{
           _query_statistical_type2 = '2'
         }
-        if($scope.query_cycle_type)
-        getMap1_Data(_product_type1,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type1);
-        getMap2_Data(_product_type2,_query_cycle_type, _query_cycle_value, $scope.query_hour, _query_statistical_type2);
-        getBar1_Data(_product_type1,$scope.query_hour,1);
-        getBar2_Data(_product_type2,$scope.query_hour,2);
+
+        getMap1_Data(_product_type1,_machine_type1,_cycle_type,$scope.cycle_value_selected,$scope.query_hour,_query_statistical_type1);
+        getMap2_Data(_product_type2,_machine_type2,_cycle_type,$scope.cycle_value_selected,$scope.query_hour,_query_statistical_type2);
+        getBar1_Data(_product_type1,_machine_type1,$scope.query_hour,1);
+        getBar2_Data(_product_type2,_machine_type2,$scope.query_hour,2);
       })
     };
 
-    $scope.$watch('query_cycle_type',function(newVal,oldVal){
+    $scope.$watch('cycle_selected',function(newVal,oldVal){
       if(newVal !== oldVal){
         if(newVal == '按月查询'){
-          $scope.cycle_value = timeList.monthList(2017,1)
-        }else if(newVal == '按季度查询'){
-          $scope.cycle_value = timeList.quarterList(2016,4)
+          $scope.cycle_value = timeList.monthList(2017,1);
+          $scope.cycle_value_selected = $scope.cycle_value[0];
+        }else{
+          $scope.cycle_value = timeList.quarterList(2016,4);
+          $scope.cycle_value_selected = $scope.cycle_value[0];
+        }
+      }
+    });
+
+    $scope.$watch('product_selected1',function(newVal,oldVal) {
+      if(newVal !== oldVal){
+        switch (newVal){
+          case '挖掘机':
+            getMachineList1(1);
+                break;
+          case '装载机':
+            getMachineList1(2);
+                break;
+          case '重机':
+            getMachineList1(3)
+        }
+      }
+    });
+
+    $scope.$watch('product_selected2',function(newVal,oldVal) {
+      if(newVal !== oldVal){
+        switch (newVal){
+          case '挖掘机':
+            getMachineList2(1);
+            break;
+          case '装载机':
+            getMachineList2(2);
+            break;
+          case '重机':
+            getMachineList2(3)
         }
       }
     });

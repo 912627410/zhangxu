@@ -233,6 +233,18 @@
       //按年份
       yearList: function(startYear){
 
+      },
+      //输出最近四个季度
+      latestFourQuarter: function(){
+        var time = new Date();
+        var length = 12;
+        var result = [];
+        for(i=0;i<length;i+=3){
+          time.setMonth(time.getMonth() - 3);
+          var q = Math.floor(time.getMonth() / 3) + 1;
+          result.push(time.getFullYear() + '年第' + q + '季度');
+        }
+        return result;
       }
     };
     return list;
