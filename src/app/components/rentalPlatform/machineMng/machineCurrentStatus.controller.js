@@ -22,7 +22,6 @@
     vm.sceneSuspensionCount = 0;//现场报停
     //搜索条件定义
     vm.searchConditions = {}
-    vm.searchConditions2={}
     //定义每页显示多少条数据
     vm.pageSize = 13;
     /**
@@ -121,8 +120,8 @@
     }
 
     if ($rootScope.machinType) {
-      vm.searchConditions2.type = $rootScope.machinType
-      vm.loadMachineData(0, vm.pageSize, null,vm.searchConditions2);
+      vm.searchConditions.type = $rootScope.machinType
+      vm.loadMachineData(0, vm.pageSize, null,vm.searchConditions);
     } else {
       vm.loadMachineData(0, vm.pageSize, null,null);
     }
@@ -132,7 +131,11 @@
      * 上方的状态筛选
      */
     vm.machineStatusLoadData = function (machineStatus) {
-      vm.searchConditions.status = machineStatus
+      if (machineStatus==null || machineStatus==undefined){
+        vm.searchConditions=null;
+      }else {
+        vm.searchConditions.status = machineStatus
+      }
       vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
     }
 
