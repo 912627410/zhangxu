@@ -111,10 +111,16 @@
      */
     factory.processSearchConditions=function (restCallURL, searchConditions) {
       for (var prop in searchConditions){
-        if (searchConditions[prop]==null ||searchConditions[prop]==undefined ||   searchConditions[prop].replace(/(^\s*)|(\s*$)/g,"")==''){
+        var value = searchConditions[prop];
+        if(typeof value=='string'){
+          if (value.replace(/(^\s*)|(\s*$)/g,"")==''){
+              value=null;
+          }
+        }
+        if (value==null || value==undefined ){
           continue;
         }
-        restCallURL =restCallURL +"&"+prop+"="+searchConditions[prop];
+        restCallURL =restCallURL +"&"+prop+"="+value;
       }
       return restCallURL;
     }

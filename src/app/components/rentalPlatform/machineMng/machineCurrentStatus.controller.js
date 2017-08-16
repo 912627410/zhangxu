@@ -9,7 +9,7 @@
     .controller('machineCurrentStatusController', machineCurrentStatusController);
 
   /** @ngInject */
-  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource,commonFactory, Notification, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_DATA_URL) {
+  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, commonFactory, Notification, RENTAL_MACHINE_COUNT_URL, RENTAL_MACHINE_DATA_URL) {
     var vm = this;
     ngTableDefaults.params.count = 40;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
@@ -21,9 +21,10 @@
     vm.leaseingCount = 0;//出租中
     vm.sceneSuspensionCount = 0;//现场报停
     //搜索条件定义
-    vm.searchConditions={}
+    vm.searchConditions = {}
+    vm.searchConditions2={}
     //定义每页显示多少条数据
-    vm.pageSize=13;
+    vm.pageSize = 13;
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -67,19 +68,19 @@
           vm.machineCount = msgNum;
         }
         if (statusType == 6) {
-          vm.libraryMaintainCount=msgNum;
+          vm.libraryMaintainCount = msgNum;
         }
         if (statusType == 7) {
-          vm.libraryRentCount=msgNum;
+          vm.libraryRentCount = msgNum;
         }
         if (statusType == 8) {
-          vm.transportCount=msgNum;
+          vm.transportCount = msgNum;
         }
         if (statusType == 9) {
-          vm.leaseingCount=msgNum;
+          vm.leaseingCount = msgNum;
         }
         if (statusType == 10) {
-          vm.sceneSuspensionCount=msgNum;
+          vm.sceneSuspensionCount = msgNum;
         }
       }, function (reason) {
         Notification.error("获取信息失败");
@@ -91,32 +92,49 @@
     vm.getMachineCountByStatus(8);//途中
     vm.getMachineCountByStatus(9);//出租中
     vm.getMachineCountByStatus(10);//现场报停
-
-
-
     /**
      * 获取车辆数据
      *
      * @param currentPage
      * @param pageSize
      */
-    vm.loadMachineData=function (currentPage,pageSize,searchConditions) {
-      var restCallURL=RENTAL_MACHINE_DATA_URL;
+    vm.loadMachineData = function (currentPage, pageSize, totalElements, searchConditions) {
+      var restCallURL = RENTAL_MACHINE_DATA_URL;
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || vm.pageSize;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
-      restCallURL =commonFactory.processSearchConditions(restCallURL,searchConditions);
+      if (totalElements != null || totalElements != undefined) {
+        restCallURL += "&totalElements=" + totalElements;
+      }
+      if (searchConditions!=null){
+        restCallURL = commonFactory.processSearchConditions(restCallURL, searchConditions);
+      }
       var machineDataPromis = serviceResource.restCallService(restCallURL, "GET");
       machineDataPromis.then(function (data) {
         vm.machineDataList = data.content;
         vm.customConfigParams = new NgTableParams({}, {dataset: vm.machineDataList});
-        vm.totalElements=data.totalElements;
-        vm.currentPage=data.number;
-      },function (reason) {
+        vm.totalElements = data.totalElements;
+        vm.currentPage = data.number - 1;
+      }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
     }
-    vm.loadMachineData(0,vm.pageSize,null);
+
+    if ($rootScope.machinType) {
+      vm.searchConditions2.type = $rootScope.machinType
+      vm.loadMachineData(0, vm.pageSize, null,vm.searchConditions2);
+    } else {
+      vm.loadMachineData(0, vm.pageSize, null,null);
+    }
+
+
+    /**
+     * 上方的状态筛选
+     */
+    vm.machineStatusLoadData = function (machineStatus) {
+      vm.searchConditions.status = machineStatus
+      vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
+    }
 
   }
 })();

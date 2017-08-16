@@ -162,6 +162,29 @@
       $rootScope.$state.go(view);
     }
 
+    /**
+     * 根据机型转到当前位置页面
+     * @param machineType
+     */
+    vm.queryByMachineType=function (machineType) {
+      if (machineType){
+        $rootScope.machinType=machineType;
+      }
+      $rootScope.$state.go("rental.machineCurrentStatus");
+    }
+
+    /**
+     * 根据报警信息类型转到报警页面
+     *
+     * @param alarmType
+     */
+    vm.queryAlarmMsg=function (alarmType) {
+      if (alarmType){
+        $rootScope.alarmType=alarmType;
+      }
+      $rootScope.$state.go("rental.machineAlarmInfo");
+    }
+
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
       height: vm.rightBoxBottomHeight - 20 + 'px'

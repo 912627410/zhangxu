@@ -23,38 +23,38 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">车辆总数</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.machineCount" ></div>
+          <div class="info-data" ><a ng-click="machineCurrentStatusCtr.machineStatusLoadData()" ng-bind="machineCurrentStatusCtr.machineCount"></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
 
           <div class="info-title">在库维修</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryMaintainCount"></div>
+          <div class="info-data"><a ng-click="machineCurrentStatusCtr.machineStatusLoadData(6)"  ng-bind="machineCurrentStatusCtr.libraryMaintainCount"></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">在库待租</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.libraryRentCount"></div>
+          <div class="info-data"><a ng-click="machineCurrentStatusCtr.machineStatusLoadData(7)"  ng-bind="machineCurrentStatusCtr.libraryRentCount"></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">途中</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.transportCount"></div>
+          <div class="info-data"><a ng-click="machineCurrentStatusCtr.machineStatusLoadData(8)"   ng-bind="machineCurrentStatusCtr.transportCount"></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">出租中</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.leaseingCount"></div>
+          <div class="info-data" ><a ng-click="machineCurrentStatusCtr.machineStatusLoadData(9)"   ng-bind="machineCurrentStatusCtr.leaseingCount"></a></div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">现场报停</div>
-          <div class="info-data" ng-bind="machineCurrentStatusCtr.sceneSuspensionCount"></div>
+          <div class="info-data"><a ng-click="machineCurrentStatusCtr.machineStatusLoadData(10)"   ng-bind="machineCurrentStatusCtr.sceneSuspensionCount"></a></div>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
               <input name="address" id="address" ng-model="machineCurrentStatusCtr.searchConditions.address" />
             </div>
             <div class="search-box-button">
-              <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
+              <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
               <button class="btn btn-default" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
             </div>
             </div>
@@ -114,7 +114,7 @@
         <div class="col-lg-12"><!--分页框-->
           <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
                           total-items="machineCurrentStatusCtr.totalElements"
-                          ng-change="machineCurrentStatusCtr.loadMachineData(rentalMachineMngCtr.currentPage+1,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.searchConditions)"
+                          ng-change="machineCurrentStatusCtr.loadMachineData(rentalMachineMngCtr.currentPage-1,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.totalElements,machineCurrentStatusCtr.searchConditions)"
                           max-size="10"
                           ng-model="rentalMachineMngCtr.currentPage"
                           items-per-page="machineCurrentStatusCtr.pageSize"
