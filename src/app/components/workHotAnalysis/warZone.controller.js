@@ -93,7 +93,6 @@
           if((data[i].quarterData[j] !== undefined)){
             for(var k=0;k<4;k++){
               if(data[i].quarterData[j].quarter == initBarData[i].quarterData[k].quarter){
-                console.log(typeof (data[i].quarterData[j]));
                 initBarData[i].quarterData[k].quarter = data[i].quarterData[j].quarter;
                 initBarData[i].quarterData[k].rate = data[i].quarterData[j].rate;
               }
@@ -107,8 +106,7 @@
     function getMap1_Data(productType,machineType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        // url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
-        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
 
         if(statisticalType == 1){
@@ -248,8 +246,7 @@
     function getMap2_Data(productType,machineType,cycleType,cycleValue,hourScope,statisticalType) {
       $http({
         method: 'GET',
-        // url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
-        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
+        url: WAR_ZONE_QUERY + 'all?produceType=' + productType + '&machineType=' + machineType + '&cycleType=' + cycleType + '&cycleValue=' + cycleValue + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
       }).success(function(data,header,config,status){
         if(statisticalType == 1){
           data.sort(compare('workRate'));
@@ -373,8 +370,7 @@
     function getBar1_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        // url: WAR_ZONE_QUERY + 'fourQuarter?produceType=' + productType + '&machineType=' + machineType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
-        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
+        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
       }).success(function(data,header,config,status){
 
         data = fixData(data);
@@ -482,8 +478,7 @@
     function getBar2_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        // url: WAR_ZONE_QUERY + 'fourQuarter?produceType='+ productType + '&machineType=' + machineType + '&hourScope=' + hourScope +'&statisticalType=' + statisticalType
-        url: 'http://192.168.1.30:8088/slice/rest/LGWarZone/' + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
+        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
       }).success(function(data,header,config,status){
 
         data = fixData(data);
