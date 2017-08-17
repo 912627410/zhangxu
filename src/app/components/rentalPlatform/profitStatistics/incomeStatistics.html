@@ -65,13 +65,6 @@
         <div class="row">
           <div class="col-md-2 item">
             <div class="row">
-              <!--<label class="col-md-4">Type</label>-->
-              <!--<select name="type"  class="form-control col-md-8"-->
-                      <!--ng-model="incomeStatisticsCtr.type"-->
-                      <!--ng-options="type as y for y in incomeStatisticsCtr.typeList ">-->
-                <!--<option value="">请选择...</option>-->
-              <!--</select>-->
-
 
               <label class="col-md-4">Type</label>
               <div class="col-md-8">
@@ -122,7 +115,7 @@
                        ng-required="true"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" required />
+                       close-text="{{'close'|translate}}" required readonly="readonly" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -139,7 +132,7 @@
                        datepicker-options="incomeStatisticsCtr.dateOptions"
                        ng-required="true" current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" required />
+                       close-text="{{'close'|translate}}" required readonly="readonly" />
                 <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>

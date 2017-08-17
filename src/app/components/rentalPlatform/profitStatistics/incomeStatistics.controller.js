@@ -218,8 +218,6 @@
       Notification.error('获取厂商失败');
     })
 
-    vm.Brand = 'all'
-    vm.BrandList = ['brand1','brand2','brand3'];
 
 
 
