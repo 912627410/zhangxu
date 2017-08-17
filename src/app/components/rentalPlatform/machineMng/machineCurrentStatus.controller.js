@@ -120,7 +120,7 @@
     }
 
     if ($rootScope.machinType) {
-      vm.searchConditions.type = $rootScope.machinType
+      vm.searchConditions.type = $rootScope.machinType;
       vm.loadMachineData(0, vm.pageSize, null,vm.searchConditions);
     } else {
       vm.loadMachineData(0, vm.pageSize, null,null);
@@ -131,6 +131,7 @@
      * 上方的状态筛选
      */
     vm.machineStatusLoadData = function (machineStatus) {
+      vm.searchConditions={};
       if (machineStatus==null || machineStatus==undefined){
         vm.loadMachineData(0, vm.pageSize, null, null);
       }else {

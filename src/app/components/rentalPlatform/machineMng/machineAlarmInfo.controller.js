@@ -19,7 +19,7 @@
     vm.allNotificationNumber = 0;//所有的报警
     vm.noProcessNumber = 0;//未处理报警
     vm.processedNumber = 0;//已处理报警
-    vm.pageSize = 12;
+    vm.pageSize = 9;
     //搜索条件定义
     vm.searchConditions = {}
     //定义页面导航
@@ -157,10 +157,10 @@
      * @param alarmType
      */
     vm.loadMsgDataByType = function (alarmType) {
+      vm.searchConditions={};
       if (alarmType == null || alarmType == undefined) {
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
       } else {
-        vm.searchConditions={};
         vm.searchConditions.alarmType = alarmType;
         vm.getMsgByAlarmType(0, vm.pageSize, null, vm.searchConditions);
       }
@@ -171,10 +171,11 @@
      * @param alarmStatus
      */
     vm.loadMsgDataByStatus = function (alarmStatus) {
+      vm.searchConditions={};
       if (alarmStatus == null || alarmStatus == undefined) {
+        vm.searchConditions.status = 3;
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
       } else {
-        vm.searchConditions={};
         vm.searchConditions.status = alarmStatus;
         vm.getMsgByAlarmType(0, vm.pageSize, null, vm.searchConditions);
       }

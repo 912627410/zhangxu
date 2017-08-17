@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class="row base-box-container" ng-style="machineAlarmInfoCtr.baseBoxContainer"
-         style="margin-left: 0px!important;margin-right: 0px!important;padding-top: 20px;">
+         style="margin-left: 0px!important;margin-right: 0px!important;">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-4">
           <div class="box box-primary">
@@ -84,38 +84,37 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==3]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(null)"><i class="fa fa-check-square-o"></i>全部报警消息
                     <span class="label label-primary pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
                   </a>
                 </li>
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==0]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(0)"><i class="fa fa-envelope-o"></i>全部未处理
                     <span class="label label-warning pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
                   </a>
                 </li>
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==1]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(1)"><i class="fa fa-envelope-o"></i>全部已处理
                     <span class="label label-warning pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
                   </a>
                 </li>
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==3]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><i class="fa fa-unlink"></i>离线报警
                     <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
                   </a>
                 </li>
-                <li ng-class="">
-                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><i class="fa fa-cog"></i>
-                    {{'maintenanceToRemind'|translate}}
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==2]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><i class="fa fa-cog"></i>保养报警
                     <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
                   </a>
                 </li>
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==4]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><i class="fa fa-cog"></i> 车辆报警
                     <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
                   </a>
                 </li>
-                <li ng-class="">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==1]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><i class="fa fa-map"></i>围栏报警
                     <span class="label label-danger pull-right" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
                   </a>
