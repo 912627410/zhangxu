@@ -278,6 +278,8 @@
     .constant('RENTAL_MACHINE_COUNT_URL',SERVER_BASE_URL + 'rental/getMachineCount')//租赁平台首页车辆数量
     .constant('RENTAL_MACHINE_DATA_URL',SERVER_BASE_URL + 'rental/machines')//租赁平台车辆数据
     .constant('RENTAL_ALARM_MSG_DATA_URL',SERVER_BASE_URL + 'rental/getRentalNotifications')//租赁平台报警数据
+    .constant('RENTAL_MACHINE_MONITOR_URL',SERVER_BASE_URL + 'rental/getRentalMachineCurrentStatus')//租赁平台车辆当前位置
+    .constant('RENTAL_MACHINE_URL',SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
 
     //租赁客户信息
     .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息

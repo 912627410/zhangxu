@@ -146,7 +146,8 @@
 
     //初始化加载
     if ($rootScope.alarmType) {
-      vm.searchConditions.alarmType = $rootScope.alarmType
+      vm.searchConditions.alarmType = $rootScope.alarmType;
+      $rootScope.alarmType=null;
       vm.getMsgByAlarmType(0, vm.pageSize, null,vm.searchConditions);
     } else {
       vm.getMsgByAlarmType(0, vm.pageSize, null,null);

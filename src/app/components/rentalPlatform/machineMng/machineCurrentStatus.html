@@ -102,11 +102,11 @@
               <td data-title="'订单号'" sortable="'订单号'">{{row.name4}}</td>
               <td data-title="'客户'" sortable="'客户'">{{row.name5}}</td>
               <td data-title="'当前位置'" sortable="'当前位置'">{{row.currentAddress}}</td>
-              <td data-title="'总工作小时'" sortable="'总工作小时'">{{row.totalDuration | convertToMins}}</td>
+              <td data-title="'总工作小时'" sortable="'总工作小时'">{{row.totalDurationConverter | convertToMins}}</td>
               <td data-title="'最近数据上传时间'" sortable="'最近数据上传时间'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td data-title="'操作'" style="text-align: center" >
-                <button type="button" class="btn btn-primary btn-xs" ng-click="rentalMachineMngCtr.monitoring(row.deviceNum)">监控</button>
-                <button type="button" class="btn btn-success btn-xs" ng-click="rentalMachineMngCtr.management(row.machineLicenseId)">管理</button>
+                <button type="button" class="btn btn-primary btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.deviceNum)">监控</button>
+                <button type="button" class="btn btn-success btn-xs" ng-click="machineCurrentStatusCtr.management(row.machineLicenseId)">管理</button>
               </td>
             </tr>
           </table>

@@ -9,7 +9,7 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -77,8 +77,27 @@
      */
     vm.drawPointAggregation = function (mapId, pointArray, zone) {
       //点聚合方式和自定义弹出框
-      serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, [104.06, 30.83], true, function () {
-
+      serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, [104.06, 30.83], true, function (item) {
+        var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + item.deviceNum;
+        var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+        deviceDataPromis.then(function (data) {
+          //打开模态框
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: true,
+            backdrop: false,
+            templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
+            controller: 'machineMonitorController',
+            controllerAs:'machineMonitorCtr',
+            size: 'super-lg',
+            resolve: { //用来向controller传数据
+              deviceInfo: function () {
+                return data.content;
+              }
+            }
+          });
+        },function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        })
       });
     };
     //加载地图设备数据

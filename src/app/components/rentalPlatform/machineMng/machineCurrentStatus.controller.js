@@ -9,7 +9,8 @@
     .controller('machineCurrentStatusController', machineCurrentStatusController);
 
   /** @ngInject */
-  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, languages, serviceResource, commonFactory, Notification, RENTAL_MACHINE_COUNT_URL, RENTAL_MACHINE_DATA_URL) {
+  function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, NgTableParams, ngTableDefaults, languages, serviceResource, commonFactory, Notification, RENTAL_MACHINE_COUNT_URL,
+                                          RENTAL_MACHINE_DATA_URL,RENTAL_MACHINE_MONITOR_URL,RENTAL_MACHINE_URL) {
     var vm = this;
     ngTableDefaults.params.count = 40;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
@@ -119,16 +120,19 @@
       })
     }
 
+    /*初始化加载数据,首先查看是不是从别的页面转过来的,如果是使用完这个值后置空这个值*/
     if ($rootScope.machinType) {
       vm.searchConditions.type = $rootScope.machinType;
+      $rootScope.machinType=null;
       vm.loadMachineData(0, vm.pageSize, null,vm.searchConditions);
     } else {
       vm.loadMachineData(0, vm.pageSize, null,null);
     }
 
-
     /**
-     * 上方的状态筛选
+     * 页面上方的车辆状态筛选
+     *
+     * @param machineStatus
      */
     vm.machineStatusLoadData = function (machineStatus) {
       vm.searchConditions={};
@@ -140,6 +144,66 @@
       }
 
     }
+
+    vm.machineMonitors=function () {
+
+    }
+
+    /**
+     * 打开车辆监控窗口
+     *
+     * @param deviceNum
+     */
+    vm.machineMonitor=function (deviceNum) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
+      var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+      deviceDataPromis.then(function (data) {
+        //打开模态框
+        $rootScope.currentOpenModal = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
+          controller: 'machineMonitorController',
+          controllerAs:'machineMonitorCtr',
+          size: 'super-lg',
+          resolve: { //用来向controller传数据
+            deviceInfo: function () {
+              return data.content;
+            }
+          }
+        });
+      },function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+    }
+
+    /**
+     * 管理车辆信息
+     *
+     * @param machineLicenseId
+     */
+     vm.management=function (machineLicenseId) {
+       var restCallUrl = RENTAL_MACHINE_URL + "?licenseId=" + machineLicenseId;
+       var machineDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+       machineDataPromis.then(function (data) {
+         //打开模态框
+         $rootScope.currentOpenModal = $uibModal.open({
+           animation: true,
+           backdrop: false,
+           templateUrl: 'app/components/rentalPlatform/machineMng/machineMng.html',
+           controller: 'machineMngController',
+           controllerAs:'machineMngCtr',
+           size: 'super-lg',
+           resolve: { //用来向controller传数据
+             machine: function () {
+               return data.content;
+             }
+           }
+         });
+       },function (reason) {
+         Notification.error(languages.findKey('failedToGetDeviceInformation'));
+       })
+     }
 
   }
 })();

@@ -126,7 +126,7 @@
         })
       });
 
-      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
+      AMap.event.addListener(marker, 'click',function () { //鼠标点击marker弹出自定义的信息窗体
         infoWindow.open(mapObj, marker.getPosition());
         //title内容
         var title ='';
@@ -146,7 +146,7 @@
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
-        var info = createInfoWindow(title, contentInfo,mapObj,callback);
+        var info = createInfoWindow(title, contentInfo,mapObj);
         //设置窗体内容
         infoWindow.setContent(info);
       });
@@ -181,7 +181,9 @@
         mcont.innerHTML = content;
         titleA.innerHTML="终端编号:"+item.deviceNum;
         if (callback){
-          titleA.onclick =  callback;
+          titleA.onclick =  function (){
+            callback(item);//点击以后，把结果传回去。没有点击就不执行callback
+          };
         }else {
           titleA.onclick =  Viewdetails;
         }
