@@ -210,9 +210,9 @@
 
 
     //main height
-    var machineContent = document.getElementById('machine-content');
-    machineContent.style.height = $window.innerHeight + 'px';
-    machineContent.style.background = '#fff';
+    var machineContent = document.getElementsByClassName('machine-content');
+    machineContent[0].style.height = $window.innerHeight + 'px';
+    machineContent[0].style.background = '#fff';
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
     middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
