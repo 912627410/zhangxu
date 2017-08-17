@@ -41,13 +41,13 @@
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
-      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45 - 15;//地图上方的header高度
       //地图的自适应高度
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
-      var rightBoxTopHeight = (baseBoxContainerHeight  - 35) / 2;
+      var rightBoxTopHeight = (baseBoxContainerHeight  - 50) / 2;
       vm.rightBoxTopHeightTemp = rightBoxTopHeight;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
@@ -190,6 +190,10 @@
     });
 
 
+    //main height
+    var machineContent = document.getElementById('machine-content');
+    machineContent.style.height = $window.innerHeight + 'px';
+    machineContent.style.background = '#fff';
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
     middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
