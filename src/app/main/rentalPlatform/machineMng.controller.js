@@ -36,19 +36,19 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 - 25 - 5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 10 - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
-      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45 - 15;//地图上方的header高度
       //地图的自适应高度
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
-      var rightBoxTopHeight = baseBoxContainerHeight / 2;
-      vm.rightBoxTopHeightTemp = rightBoxTopHeight - 20;
+      var rightBoxTopHeight = (baseBoxContainerHeight  - 50) / 2;
+      vm.rightBoxTopHeightTemp = rightBoxTopHeight;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
         "min-height": vm.rightBoxTopHeightTemp + "px"
@@ -73,7 +73,6 @@
      * @param mapId 页面上地图的id
      * @param pointArray 点集合
      * @param zone 缩放级别
-     * @param
      */
     vm.drawPointAggregation = function (mapId, pointArray, zone) {
       //点聚合方式和自定义弹出框
@@ -206,97 +205,14 @@
 
     var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
       width: 'auto',
-      height: vm.rightBoxBottomHeight - 20 + 'px'
+      height: vm.rightBoxBottomHeight - 35 + 'px'
     });
 
-    var option = {
-      color: ['#3398DB'],
-      backgroundColor: '#ffffff',
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [
-        {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          name: '直接访问',
-          type: 'bar',
-          barWidth: '60%',
-          data: [10, 52, 200, 334, 390, 330, 220]
-        }
-      ]
-    };
-    barChart.setOption(option);
 
-    var homePie = echarts.init(document.getElementById('homePie'), '', {
-      width: 'auto',
-      height: vm.rightBoxBottomHeight - 10 + 'px'
-    });
-    var homePieoption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      series: [
-        {
-          name: '访问来源',
-          type: 'pie',
-          selectedMode: 'single',
-          radius: [0, '30%'],
-
-          label: {
-            normal: {
-              position: 'inner'
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            {value: 335, name: '直达', selected: true},
-            {value: 679, name: '营销广告'},
-            {value: 1548, name: '搜索引擎'}
-          ]
-        },
-        {
-          name: '访问来源',
-          type: 'pie',
-          radius: ['40%', '55%'],
-
-          data: [
-            {value: 335, name: '直达'},
-            {value: 310, name: '邮件营销'},
-            {value: 234, name: '联盟广告'},
-            {value: 135, name: '视频广告'},
-            {value: 1048, name: '百度'},
-            {value: 251, name: '谷歌'},
-            {value: 147, name: '必应'},
-            {value: 102, name: '其他'}
-          ]
-        }
-      ]
-    };
-    homePie.setOption(homePieoption);
+    //main height
+    var machineContent = document.getElementById('machine-content');
+    machineContent.style.height = $window.innerHeight + 'px';
+    machineContent.style.background = '#fff';
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
     middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
@@ -309,14 +225,220 @@
 
 
     /**
-     * miniMap
+     * 出租率
+     */
+    var rentOption =  {
+      backgroundColor: '#fff',
+      tooltip: {
+        trigger: 'axis'
+      },
+      grid: {
+        top:'20%',
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        axisLine: {
+          lineStyle: {
+            color: '#999'
+          }
+        },
+        axisTick: {
+          show: false
+        },
+        axisLabel: {
+          textStyle: {
+            color: '#000'
+          }
+        },
+        data: ['8月01日', '8月02日', '8月03日', '8月04日', '8月05日', '8月06日', '8月07日']
+      },
+      yAxis: {
+        name:'出租统计',
+        nameTextStyle: {
+          fontSize: 14,
+          fontFamily:''
+        },
+        nameGap:20,
+        type: 'value',
+        axisLine: {
+          show: false
+        },
+        splitLine: {
+          show: false
+        },
+        axisTick: {
+          show: false
+        },
+        axisLabel: {
+          inside: false
+        }
+      },
+      series: [{
+        name: '待租',
+        type: 'line',
+        stack: '总量',
+        itemStyle: {
+          normal: {
+            opacity: 0
+          },
+          emphasis: {
+            color: 'rgb(38, 173, 88)',
+            borderColor: '#fff',
+            opacity: 1
+          }
+        },
+        lineStyle: {
+          normal: {
+            width:1,
+            color: 'rgb(38, 173, 88)'
+          }
+        },
+        areaStyle: {
+          normal: {
+            color: 'rgb(38, 173, 88)'
+          }
+        },
+        data: [0, 0, 40, 150, 200, 240, 340],
+        smooth: true,
+        smoothMonotone: 'x'
+      }, {
+        name: '已租',
+        type: 'line',
+        stack: '总量',
+        itemStyle: {
+          normal: {
+            opacity: 0
+          },
+          emphasis: {
+            color: 'rgb(35, 142, 250)',
+            borderColor: '#fff',
+            opacity: 1
+          }
+        },
+        lineStyle: {
+          normal: {
+            width:1,
+            color: 'rgb(35, 142, 250)'
+          }
+        },
+        areaStyle: {
+          normal: {
+            // color:'rgb(255, 51, 119)'
+            color: 'rgb(35, 142, 250)'
+          }
+        },
+        data: [0, 0, 10, 20, 30, 30, 70],
+        smooth: true,
+        smoothMonotone: 'x'
+      }]
+    };
+    barChart.setOption(rentOption);
+
+
+    /**
+     * pieChart
      */
 
-    var miniMap = document.getElementsByClassName('miniMap'),
-      miniMap1 = echarts.init(miniMap[0]),
-      miniMap2 = echarts.init(miniMap[1]),
-      miniMap3 = echarts.init(miniMap[2]),
-      miniMap4 = echarts.init(miniMap[3]),
+    var homePie = echarts.init(document.getElementById('homePie'), '', {
+      width: 'auto',
+      height: vm.rightBoxTopHeightTemp + 'px'
+    });
+
+    var homePieOption = {
+      title: {
+        text: '75%',
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontWeight: 'normal',
+          color: "rgb(38, 173, 88)",
+          fontSize: 40
+        }
+      },
+      backgroundColor: '#fff',
+      series: [{
+        name: 'Line 1',
+        type: 'pie',
+        clockWise: false,
+        radius: ['60%', '65%'],
+        itemStyle: {
+          normal: {
+            color: 'rgba(38, 173, 88,1)',
+            label: {
+              show: false
+            },
+            labelLine: {
+              show: false
+            }
+            // shadowBlur: 20,
+            // shadowColor: 'rgba(40, 40, 40, 0.2)'
+          },
+          emphasis: {
+            color: 'rgba(38, 173, 88,1)',
+            label: {
+              show: false
+            },
+            labelLine: {
+              show: false
+            },
+            shadowBlur: 10,
+            shadowColor: 'rgba(40, 40, 40, 0.2)'
+          }
+        },
+        hoverAnimation: false,
+        data: [{
+          value: 75,
+          name: '01'
+        }, {
+          value: 25,
+          name: 'invisible',
+          itemStyle: {
+            normal: {
+              color: 'rgba(0, 0, 0,0.2)',
+              label: {
+                show: false
+              },
+              labelLine: {
+                show: false
+              }
+              // shadowBlur: 20,
+              // shadowColor: 'rgba(40, 40, 40, 0.2)'
+            },
+            emphasis: {
+              color: 'rgba(0, 0, 0, 0.2)',
+              label: {
+                show: false
+              },
+              labelLine: {
+                show: false
+              },
+              shadowBlur: 10,
+              shadowColor: 'rgba(40, 40, 40, 0.2)'
+            }
+          }
+        }
+
+        ]
+      }]
+    };
+
+    homePie.setOption(homePieOption);
+
+
+    /**
+     * miniChart
+     */
+
+    var miniChart = document.getElementsByClassName('miniChart'),
+      miniChart1 = echarts.init(miniChart[0]),
+      miniChart2 = echarts.init(miniChart[1]),
+      miniChart3 = echarts.init(miniChart[2]),
+      miniChart4 = echarts.init(miniChart[3]),
       miniOption = {
         tooltip: {
           showContent: false,
@@ -329,10 +451,10 @@
           }
         },
         grid: {
-          top:'25%',
-          left: '-10%',
+          top:'35%',
+          left: '',
           right: '6%',
-          bottom: '-16%',
+          bottom: '-10%',
           containLabel: true
         },
         xAxis: {
@@ -408,10 +530,10 @@
         }
       };
 
-    miniMap1.setOption(miniOption);
-    miniMap2.setOption(miniOption);
-    miniMap3.setOption(miniOption);
-    miniMap4.setOption(miniOption);
+    miniChart1.setOption(miniOption);
+    miniChart2.setOption(miniOption);
+    miniChart3.setOption(miniOption);
+    miniChart4.setOption(miniOption);
 
   }
 })();

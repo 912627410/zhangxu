@@ -181,30 +181,35 @@
   .search-box{
     display: inline-block;
     width: 100%;
-    border-radius: 3px;
-    padding: 1px 55px 1px 10px;
+    border-radius: 2px;
+    padding: 2px 8px;
     position: relative;
     background: #FFF;
-    border: 1px solid #ddd;
+    margin-top: 6px;
   }
   .search-input{
+    height:24px;
     border: none;
     box-shadow: none;
     display: inline-block;
     padding: 0;
+    font-size: 12px;
     background: transparent;
     outline: none!important;
+
+    &:focus {
+      box-shadow: none !important;
+      border: 0;
+    }
   }
   .search-btn{
     position: absolute;
-    right: 2px;
-    top: 0px;
+    right: 0;
+    top: 0;
     color: #aaaaaa;
     box-shadow: none;
-    border-radius: 3px;
-    font-size: 21px;
-    padding: 5px 10px 1px;
-    outline: none!important;
+    font-size: 14px;
+    padding: 3px 10px;
   }
 }
 
