@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
-    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalMachineMonitorCtr.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalMachineMonitorCtr.refreshCurrentDeviceInfo()">{{'refresh'|translate}}</button>
+  <h3 class="modal-title">机器工作详情
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="vm.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="vm.refreshCurrentDeviceInfo()">{{'refresh'|translate}}</button>
   </h3>
 </div>
 
@@ -9,15 +9,15 @@
   <!--数据-->
   <uib-tab>
     <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
-      a
+    <div class="modal-body" ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/a.html'"></div>
     </div>
   </uib-tab>
 
   <!--历史数据-->
   <uib-tab>
     <uib-tab-heading>{{'historicalData'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+    <div class="modal-body" ng-style="vm.monitorheight">
       b
     </div>
   </uib-tab>
@@ -25,7 +25,7 @@
   <!--报警数据-->
   <uib-tab>
     <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+    <div class="modal-body"  ng-style="vm.monitorheight">
       c
     </div>
   </uib-tab>
@@ -33,31 +33,15 @@
   <!--地图-->
   <uib-tab>
     <uib-tab-heading>{{'map'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+    <div class="modal-body"  ng-style="vm.monitorheight">
       d
-    </div>
-  </uib-tab>
-
-  <!--远程控制-->
-  <uib-tab>
-    <uib-tab-heading>{{'telecontrol'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
-      e
-    </div>
-  </uib-tab>
-
-  <!--操作日志-->
-  <uib-tab>
-    <uib-tab-heading>{{'operationLog'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
-      f
     </div>
   </uib-tab>
 
   <!--数据分析-->
   <uib-tab>
     <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
-    <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+    <div class="modal-body"   ng-style="vm.monitorheight">
       g
     </div>
   </uib-tab>

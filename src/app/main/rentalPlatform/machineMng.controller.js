@@ -86,7 +86,7 @@
             backdrop: false,
             templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
             controller: 'machineMonitorController',
-            controllerAs:'rentalMachineMonitorCtr',
+            controllerAs:'vm',
             size: 'super-lg',
             resolve: { //用来向controller传数据
               deviceInfo: function () {

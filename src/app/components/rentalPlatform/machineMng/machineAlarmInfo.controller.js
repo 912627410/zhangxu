@@ -185,7 +185,7 @@
     /**
      * miniMap
      */
-    var miniMap = document.getElementsByClassName('miniMap'),
+    var miniMap = document.getElementsByClassName('miniChart'),
       miniMap1 = echarts.init(miniMap[0]),
       miniMap2 = echarts.init(miniMap[1]),
       miniMap3 = echarts.init(miniMap[2]),
