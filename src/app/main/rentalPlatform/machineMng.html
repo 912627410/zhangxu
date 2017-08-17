@@ -23,64 +23,53 @@
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text">
-            <div class="div-float">
-              <span class="info-box-text info-box-left-text-top">围栏报警</span>
-              <span class="info-box-number info-box-left-text-below"><a ng-click="rentalMachineMngCtr.queryAlarmMsg(1)"  style=" cursor:pointer;" ng-bind="rentalMachineMngCtr.fenceAlarm"></a></span>
-            </div>
-            <div class="div-border"></div>
+          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">围栏报警</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
           </div>
-          <div class="miniMap"></div>
+          <div class="miniChart"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text">
-            <div class="div-float">
-              <span class="info-box-text info-box-left-text-top">车辆报警</span>
-              <span class="info-box-number info-box-left-text-below" ><a ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;" ng-bind="rentalMachineMngCtr.machineAlarm"></a></span>
-            </div>
-            <div class="div-border"></div>
+          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">车辆报警</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
           </div>
-          <div class="miniMap"></div>
+          <div class="miniChart"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text">
-            <div class="div-float">
-              <span class="info-box-text info-box-left-text-top">保养提醒</span>
-              <span class="info-box-number info-box-left-text-below"><a ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"  style=" cursor:pointer;"  ng-bind="rentalMachineMngCtr.keepAlarm"></a></span>
-            </div>
-            <div class="div-border"></div>
+          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"  style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">保养提醒</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.keepAlarm"></span>
           </div>
-          <div class="miniMap"></div>
+          <div class="miniChart"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text">
-            <div class="div-float">
-              <span class="info-box-text info-box-left-text-top">离线报警</span>
-              <span class="info-box-number info-box-left-text-below"><a ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"  style=" cursor:pointer;" ng-bind="rentalMachineMngCtr.offLineAlarm"></a></span>
-            </div>
+          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"  style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">离线报警</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
           </div>
-          <div class="miniMap"></div>
+          <div class="miniChart"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top: 15px">
     <div class="row">
       <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="box box-success base-left-map-box-container">
-          <div class="box-header with-border">
-            <i class="fa fa-cloud"></i>
-            <h3 class="box-title">机器预览</h3>
+        <div class="box base-left-map-box-container">
+          <div class="box-header">
+            <span>机器预览</span>
             <div class="box-tools pull-right">
-              <button class="btn btn-danger btn-sm refresh-btn" title="刷新"
-                      ng-click="rentalMachineMngCtr.loadHomeDeviceData()"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-sm" title="刷新" ng-click="rentalMachineMngCtr.loadHomeDeviceData()" style="background-color: transparent">
+                <i class="fa fa-refresh"></i>
+              </button>
             </div>
           </div>
           <div class="box-body no-padding">
@@ -91,11 +80,8 @@
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="info-box box-light" style="margin-bottom: 0px;">
           <div class="info-box-content" ng-style="rentalMachineMngCtr.rightBoxTopHeight">
-            <div class="row middlePicBox">
+            <div class="middlePicBox">
               <div class="col-lg-6">
-                <div class="machineNumTitle">
-                  机器数量 <span style="padding-left: 30px;"><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()"  ng-bind="rentalMachineMngCtr.machineCount"></a></span>
-                </div>
                 <ul>
                   <li class="machineNumlis"><i>剪叉</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(1)" ng-bind="rentalMachineMngCtr.shearFork"></a></span></li>
                   <li class="machineNumlis"><i>直臂</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(2)"  ng-bind="rentalMachineMngCtr.straightArm"></a></span></li>
@@ -103,16 +89,12 @@
                 </ul>
               </div>
               <div class="col-lg-6">
-                <p>xxx收入</p>
-                <div id="homePie">
-
-                </div>
+                <div id="homePie"></div>
               </div>
-
             </div>
           </div>
         </div>
-        <div id="machineBarChart" style="margin-top: 15px"></div>
+        <div id="machineBarChart" style="margin-top: 30px"></div>
       </div>
     </div>
   </div>
