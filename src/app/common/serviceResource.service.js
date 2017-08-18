@@ -251,15 +251,6 @@
      * @param markers
      */
     function aggregationShow(map, markers) {
-    /*  var sts = [{
-        url: "http://a.amap.com/jsapi_demos/static/images/blue.png",
-        size: new AMap.Size(32, 32),
-        offset: new AMap.Pixel(-16, -16)
-      }];
-      var point = new AMap.MarkerClusterer(map, markers, {
-        styles: sts,
-        gridSize: 40
-      });*/
       var count  = markers.length;
       var _renderCluserMarker = function (context) {
         var factor = Math.pow(context.count/count,1/18)
