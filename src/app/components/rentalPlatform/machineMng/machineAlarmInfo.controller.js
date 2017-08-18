@@ -9,7 +9,7 @@
     .controller('machineAlarmInfoController', machineAlarmInfoController);
 
   /** @ngInject */
-  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, serviceResource, commonFactory, RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL) {
+  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, serviceResource, commonFactory, RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL,RENTAL_MACHINE_MONITOR_URL) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
     vm.fenceAlarm = 0;//围栏报警
@@ -180,6 +180,36 @@
         vm.searchConditions.status = alarmStatus;
         vm.getMsgByAlarmType(0, vm.pageSize, null, vm.searchConditions);
       }
+    }
+    /**
+     * 打开车辆监控窗口
+     *
+     * @param deviceNum
+     */
+    vm.machineMonitor=function (deviceNum) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
+      var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+      deviceDataPromis.then(function (data) {
+        //打开模态框
+        $rootScope.currentOpenModal = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
+          controller: 'machineMonitorController',
+          controllerAs:'vm',
+          openedClass:'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+          windowClass:'test1',//class名 加载到ui-model 的顶级div上面
+          windowTopClass:'test2',//加载到window-class指令
+          size: 'super-lgs',
+          resolve: { //用来向controller传数据
+            deviceInfo: function () {
+              return data.content;
+            }
+          }
+        });
+      },function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
     }
 
     /**

@@ -10,15 +10,15 @@
   <uib-tab>
     <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
-      <div ng-include="'app/components/rentalPlatform/machineMng/a.html'"></div>
+      <div ng-include="'app/components/rentalPlatform/machineMng/monitor.html'"  ></div>
     </div>
   </uib-tab>
 
   <!--历史数据-->
-  <uib-tab>
+  <uib-tab >
     <uib-tab-heading>{{'historicalData'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
-      b
+      <div ng-include="'app/components/rentalPlatform/machineMng/history.html'"  ></div>
     </div>
   </uib-tab>
 
@@ -26,7 +26,7 @@
   <uib-tab>
     <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
     <div class="modal-body"  ng-style="vm.monitorheight">
-      c
+      <div ng-include="'app/components/rentalPlatform/machineMng/waring.html'"  ></div>
     </div>
   </uib-tab>
 
@@ -34,7 +34,7 @@
   <uib-tab>
     <uib-tab-heading>{{'map'|translate}}</uib-tab-heading>
     <div class="modal-body"  ng-style="vm.monitorheight">
-      d
+      <div ng-include="'app/components/rentalPlatform/machineMng/map.html'"  ></div>
     </div>
   </uib-tab>
 
@@ -42,7 +42,7 @@
   <uib-tab>
     <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
     <div class="modal-body"   ng-style="vm.monitorheight">
-      g
+      <div ng-include="'app/components/rentalPlatform/machineMng/analysis.html'"  ></div>
     </div>
   </uib-tab>
 </uib-tabset>
