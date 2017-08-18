@@ -256,7 +256,7 @@
         var div = document.createElement('div');
         var bgColor = 'rgba(101, 176, 252, 1)';
         var fontColor = '#000';
-        var borderColor = 'rgba(101, 176, 252, 0.8)';
+        var borderColor = 'rgba(101, 176, 252, 1)';
         div.style.backgroundColor = bgColor;
         if (context.count>100){
           var size = Math.round(30 + Math.pow(context.count/count,1/5) * 20)+20;
@@ -268,6 +268,7 @@
         div.style.width = div.style.height = size+'px';
         div.style.border = 'solid 1px '+ borderColor;
         div.style.borderRadius = size/2 + 'px';
+        div.style.boxShadow = '0 0 18px 4px '+ borderColor;
         div.innerHTML = context.count;
         div.style.lineHeight = size+'px';
         div.style.color = fontColor;
