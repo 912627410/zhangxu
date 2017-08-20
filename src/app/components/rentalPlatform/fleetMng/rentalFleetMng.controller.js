@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,FLEET_PAGE_URL,RENTAL_ORDER_MACHINE_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_ORDER_MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -17,6 +17,10 @@
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
+
+
+    vm.leftRentalOrderId=181889905;
+    vm.rightRentalOrderId=181889930;
 
 
 
@@ -35,7 +39,7 @@
       //   restCallURL += "&id=" + fleet.id;
       // }
 
-      restCallURL += "&id=181889905";
+      restCallURL += "&id="+vm.leftRentalOrderId;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -64,7 +68,7 @@
       //   restCallURL += "&id=" + fleet.id;
       // }
 
-      restCallURL += "&id=181889930";
+      restCallURL += "&id="+vm.rightRentalOrderId;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -124,12 +128,12 @@
 
 
 
-    vm.dropSuccessHandler2 = function($event,index,sourceArray,destArray){
+    vm.dropSuccessHandler2 = function($event,index,sourceArray,destArray,rentalOrderId){
 
       // console.log("vm.fleetList==="+vm.fleetList);
       // console.log("vm.fleetList2==="+vm.fleetList2);
 
-      console.log(sourceArray);
+      console.log(rentalOrderId);
       console.log(destArray);
 
       console.log("sourceArray[index]=="+sourceArray.data[index]);
@@ -143,8 +147,45 @@
       console.log(destArray);
 
 
-      destArray.data.splice(0, 0, sourceArray.data[index]);
+      var rentalOrderMachine=sourceArray.data[index];
+
+      console.log(rentalOrderMachine);
+      console.log(rentalOrderMachine.machine);
+      console.log(rentalOrderMachine.rentalOrder);
+
+
       sourceArray.data.splice(index,1);
+
+      vm.updateOrderMachineInfo(rentalOrderMachine.machine.id,rentalOrderId,rentalOrderMachine.id,destArray);
+    };
+
+
+
+
+    //批量设置为已处理
+    vm.updateOrderMachineInfo = function (machineId,addOrderId,delId,destArray) {
+
+      console.log("machineId=="+machineId);
+      console.log("addOrderId=="+addOrderId);
+      console.log("delId=="+delId);
+
+
+      var orderMachines = {"addOrderId": addOrderId, "delId": delId, "addMachineId": machineId};
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
+      restPromise.then(function (data) {
+
+        if(data.code==0){
+          Notification.success("车辆调拨成功!");
+
+          destArray.data.splice(0, 0, data.content);
+        }
+
+
+      }, function (reason) {
+        Notification.error(" 车辆调拨失败!");
+      });
+
+
     };
 
     vm.onDrop = function($event,$data,array){

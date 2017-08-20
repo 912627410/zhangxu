@@ -4,8 +4,8 @@
     overflow: scroll;
   }
 
-  .on-drag-enter{
-    background-color : #ff0000;
+  .on-drag-enter {
+    background-color: #ff0000;
   }
 
   .on-drag-hover:before {
@@ -32,158 +32,130 @@
   <div class="container-fluid">
 
 
-    <!--machineInfo begin-->
+    <div class="row form-group" style="padding: 10px">
 
-    <div id="machineInfo" class="row info-box-container">
-      <form class="form-horizontal" role="form">
 
-        <div class="form-group">
+      <section class="content">
+        <div class="row">
+          <div class="col-md-5">
+            <label class="col-md-2 control-label">选择订单</label>
+            <div class="col-md-6">
+              <p class="input-group">
 
-          <label class="col-md-1 control-label">车队名称</label>
+                <input type="text" id="org" class="form-control" placeholder="请选择"
+                       ng-model="newRentalOrderController.customer.name" name="customer" readonly
+                       validator="required"/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-5">
+            <label class="col-md-2 control-label">选择订单</label>
+            <div class="col-md-6">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="请选择"
+                       ng-model="newRentalOrderController.customer.name" name="customer" readonly
+                       validator="required"/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+        <div>
+          <div class="col-md-5">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{rentalOrderMachine.id}}</h3>
+                <button class="btn btn-primary pull-right" type="button"
+                        ng-click="rentalFleetMngController.updateFleet(fleet,'lg','update')">{{'edit'|translate}}
+                </button>
+              </div>
+              <!-- /.box-header -->
+              <div style="height: 300px;overflow: scroll">
+                <table ng-table="rentalFleetMngController.tableParams"
+                       class="table table-condensed table-bordered table-striped text-nowrap">
+                  <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
+                      on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams,rentalFleetMngController.tableParams2,rentalFleetMngController.rightRentalOrderId)">
+
+                    <td class="text-nowrap" data-title="'ID'">
+                      {{rentalOrderMachine.id}}
+                    </td>
+                    <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">
+                      {{rentalOrderMachine.machine.licenseId}}
+                    </td>
+
+                    <td class="text-nowrap" data-title="'terminalno'|translate">
+                      {{rentalOrderMachine.machine.statusDesc}}
+                    </td>
+
+                  </tr>
+                </table>
+
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
           <div class="col-md-2">
-            <input type="text" name="licenseId" class="form-control" ng-model="machineMngCtrl.machine.licenseId"
-                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
+            <img src="assets/images/arrow.png" align="center">
+          </div>
+          <div class="col-md-5">
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">{{rentalOrderMachine.id}}</h3>
+              </div>
+              <!-- /.box-header -->
+              <div style="height: 300px;overflow: scroll">
+                <table ng-table="rentalFleetMngController.tableParams2"
+                       class="table table-condensed table-bordered table-striped text-nowrap">
+                  <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
+                      on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams2,rentalFleetMngController.tableParams,rentalFleetMngController.leftRentalOrderId)">
+                    <td class="text-nowrap" data-title="'ID'">
+                      {{rentalOrderMachine.id}}
+                    </td>
+
+
+                    <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">
+                      {{rentalOrderMachine.machine.licenseId}}
+                    </td>
+
+                    <td class="text-nowrap" data-title="'terminalno'|translate">
+                      {{rentalOrderMachine.machine.statusDesc}}
+                    </td>
+
+
+                  </tr>
+                </table>
+
+              </div>
+              <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
           </div>
 
-          <label class="col-md-1 control-label">车号</label>
-          <div class="col-md-1">
-            <input type="text" name="licenseId" class="form-control" ng-model="machineMngCtrl.machine.licenseId"
-                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
-          </div>
-            <button class="btn btn-primary " type="button"
-                    ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
-            </button>
-            <button class="btn btn-default" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}
-            </button>
-          </div>
+
         </div>
-
-      </form>
+      </section>
     </div>
-111
-  <!--<div class="row">
-    <div class="col-xs-6">
-      <ul ui-on-drop="rentalFleetMngController.onDrop($event,$data,rentalFleetMngController.men)" drag-enter-class="on-drag-enter-custom"
-          drop-channel="beasts"
-          drop-validate="rentalFleetMngController.dropValidateHandler($drop, $event, $data)">
-        <li ui-draggable="true" drag="rentalFleetMngController.man" drag-channel="beasts"
-            on-drop-success="rentalFleetMngController.dropSuccessHandler($event,$index,rentalFleetMngController.men)"
-            ng-repeat="man in rentalFleetMngController.men track by $index">
-          {{man}}
-        </li>
-      </ul>
-    </div>
-    <div class="col-xs-6">
-      <ul ui-on-drop="rentalFleetMngController.onDrop($event,$data,rentalFleetMngController.women)"
-          drop-channel="beasts"
-          drop-validate="rentalFleetMngController.dropValidateHandler($drop, $event, $data)">
-        <li ui-draggable="true" drag="rentalFleetMngController.woman" drag-channel="beasts"
-            on-drop-success="rentalFleetMngController.dropSuccessHandler($event,$index,rentalFleetMngController.women)"
-            on-drop-failure="rentalFleetMngController.dropFailureHandler($event,$index,rentalFleetMngController.women)"
-            ng-repeat="woman in rentalFleetMngController.women track by $index">
-          {{woman}}
-        </li>
-      </ul>
-    </div>
-  </div>-->
-
-  <div class="row">
-    <div class="col-xs-6">
-      <ul >
-        <li ui-draggable="true" drag="on-drag-enter"
-            on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.men,rentalFleetMngController.women)"
-            ng-repeat="man in rentalFleetMngController.men track by $index">
-          {{man}}
-        </li>
-      </ul>
-    </div>
-    <div class="col-xs-6">
-      <ul >
-        <li ui-draggable="true" drag="rentalFleetMngController.woman"
-            on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.women,rentalFleetMngController.men)"
-            ng-repeat="woman in rentalFleetMngController.women track by $index">
-          {{woman}}
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row form-group" style="padding: 10px">
-    <section class="content">
-
-
-        <div class="col-md-5" >
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">{{fleet.label}}</h3>
-              <button class="btn btn-primary pull-right" type="button"
-                      ng-click="rentalFleetMngController.updateFleet(fleet,'lg','update')">{{'edit'|translate}}
-              </button>
-            </div>
-            <!-- /.box-header -->
-            <div style="height: 300px;overflow: scroll">
-              <table ng-table="rentalFleetMngController.tableParams"
-                     class="table table-condensed table-bordered table-striped text-nowrap">
-                <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
-                    on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams,rentalFleetMngController.tableParams2)">
-                  <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-                    {{rentalOrderMachine.machine.licenseId}}
-                  </td>
-
-                  <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">
-                    {{rentalOrderMachine.machine.statusDesc}}
-                  </td>
-
-                </tr>
-              </table>
-
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-      <div class="col-md-2" >
-        <img src="assets/images/arrow.png" align="center">
-      </div>
-        <div class="col-md-5" >
-          <div class="box" >
-            <div class="box-header with-border">
-              <h3 class="box-title"></h3>
-            </div>
-            <!-- /.box-header -->
-            <div style="height: 300px;overflow: scroll">
-              <table ng-table="rentalFleetMngController.tableParams2"
-                     class="table table-condensed table-bordered table-striped text-nowrap">
-                <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
-                    on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams2,rentalFleetMngController.tableParams)">
-                  <td class="text-nowrap" data-header="'selectAllHeader'">
-                    <input type="checkbox" ng-checked="rentalFleetMngController.isSelected(machine.id)"
-                           ng-click="rentalFleetMngController.updateSelection($event,machine.id)"
-                           ng-model="machine.checked">
-                  </td>
-                  <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-                    {{rentalOrderMachine.machine.licenseId}}
-                  </td>
-
-                  <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">
-                    {{rentalOrderMachine.machine.statusDesc}}
-                  </td>
-
-
-                </tr>
-              </table>
-
-            </div>
-            <!-- /.box-body -->
-
-          </div>
-          <!-- /.box -->
-        </div>
-
-
-
-    </section>
-  </div>
     <!--machineInfo end-->
   </div>
 </div>
