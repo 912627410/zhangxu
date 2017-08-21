@@ -290,6 +290,10 @@
     .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
     .constant('RENTAL_ORDER_STATUS',SERVER_BASE_URL + 'rental/order/statusList')//租赁平台维护订单信息
 
+    //租赁车辆信息
+    .constant('RENTAL_ORDER_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/orderMachine/page')//租赁订单信息
+    .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
+
 
     //远程升级
     .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfoPage') //升级的设备信息

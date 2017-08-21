@@ -174,8 +174,8 @@
                   <th>{{'operation'|translate}}</th>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
                     <td><input type="checkbox" ng-model="notification.checked"></td>
-                    <td class="mailbox-subject">{{notification.deviceNum}}</td>
-                    <td class="mailbox-subject">{{notification.licenseId}}</td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.licenseId}}</a></td>
                     <td class="mailbox-subject">{{notification.content}}</td>
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
