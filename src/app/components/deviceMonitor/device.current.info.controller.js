@@ -18,7 +18,7 @@
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo,
-                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_FLEET_RETURN_TIME_URL, SET_FLEET_DEFAULT_RETURN_TIME_URL) {
+                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_FLEET_RETURN_TIME_URL, SET_FLEET_DEFAULT_RETURN_TIME_URL,WORK_POINT_URL) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -29,6 +29,10 @@
     vm.workTimeOptModel = 1;
     vm.startTimesOptModel = 1;
     $scope.notices = [];
+
+    /*地图轨迹加减速初始状态*/
+    vm.mapFaster = false;
+    vm.mapSlower = true;
 
     // 短信发送成功后的初始化button
     vm.initSmsSendBtn = function () {
@@ -743,8 +747,9 @@
     /**
      * 参数: 地图轨迹gps 数据
      * @param lineAttr
+     * @param mileageArr
      */
-    vm.refreshMapTabCar = function (lineAttr) {
+    vm.refreshMapTabCar = function (lineAttr, mileageArr) {
 
       vm.lnglatShow = true;
 
@@ -765,6 +770,7 @@
       }
       /**************************************结束 ***********************************************************/
       var marker;
+      vm.markerSpeed = 500; // 小车移动速度
 
       var carPostion = lineAttr[0];
 
@@ -784,6 +790,27 @@
 
       AMap.plugin(["AMap.RangingTool"], function () {
       });
+
+      /*如果是车队的车，在地图中显示料点*/
+      if(null != deviceinfo.machine && null != deviceinfo.machine.deviceinfo && null != deviceinfo.machine.deviceinfo.fleet) {
+        var fleetId = deviceinfo.machine.deviceinfo.fleet.id;
+        var restCallURL = WORK_POINT_URL + "?page=0&size=6&sort=id&search_EQ_fleet.id=" + fleetId;
+        var restPromise = serviceResource.restCallService(restCallURL, "GET");
+        restPromise.then(function (data) {
+          vm.workPointList = data.content;
+          if(vm.workPointList!=null && vm.workPointList.length > 0){
+            for( var i=0; i < vm.workPointList.length; i ++){
+              var workPoint = vm.workPointList[i];
+              var circle = createCircle(workPoint);
+              circle.setMap(map);
+              var marker1 = createMarker(workPoint);
+              marker1.setMap(map);
+            }
+          }
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        })
+      }
 
       //为地图注册click事件获取鼠标点击出的经纬度坐标
       var clickEventListener = map.on('click', function(e) {
@@ -820,9 +847,17 @@
       /*每一步移动完成触发事件*/
       AMap.event.addListener(marker, "moveend", function () {
         markerMovingControl._currentIndex++;
-        var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
+        var totalMileage = mileageArr[markerMovingControl._currentIndex];
+        var totalMileage1 = mileageArr[markerMovingControl._currentIndex - 1];
+        var distances;
+        if(totalMileage == undefined || totalMileage == null || totalMileage == ''
+          || totalMileage1 == undefined || totalMileage1 == null || totalMileage1 == '') {
+          distances = 0;
+        } else {
+          distances = (totalMileage - totalMileage1)*0.1;
+        }
         lastDistabce += distances;
-        vm.trackMileage = lastDistabce;
+        vm.trackMileage = lastDistabce.toFixed(1);
         $scope.$apply();
         startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
       })
@@ -837,23 +872,87 @@
         $scope.$apply();
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
-        markerMovingControl._marker.moveAlong(lineAttr, 500);
+        markerMovingControl._marker.moveAlong(lineAttr, vm.markerSpeed);
       }, false);
       /*暂停事件*/
       AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
         markerMovingControl._marker.stopMove();
-        var distabcess2 = lastDistabce;
-        var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
-        distabcess2 += distances;
-        vm.trackMileage = distabcess2;
-        $scope.$apply();
+        // var distabcess2 = lastDistabce;
+        // var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
+        // distabcess2 += distances;
+        // vm.trackMileage = distabcess2;
+        // $scope.$apply();
       }, false);
       /*继续移动事件*/
       AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-        var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1)
+        var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
         lineArr2.unshift(marker.getPosition());
-        markerMovingControl._marker.moveAlong(lineArr2, 500);
+        markerMovingControl._marker.moveAlong(lineArr2, vm.markerSpeed);
       }, false);
+      /*加速移动事件*/
+      AMap.event.addDomListener(document.getElementById('faster'), 'click', function () {
+        if(vm.markerSpeed < 3000) {
+          vm.markerSpeed += 1000;
+        }
+        if(vm.markerSpeed > 3000) {
+          vm.mapFaster = true;
+        }
+        vm.mapSlower = false;
+        var lineArr3 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+        lineArr3.unshift(marker.getPosition());
+        markerMovingControl._marker.moveAlong(lineArr3, vm.markerSpeed);
+      }, false);
+      /*减速移动事件*/
+      AMap.event.addDomListener(document.getElementById('slower'), 'click', function () {
+        if(vm.markerSpeed > 1000) {
+          vm.markerSpeed -= 1000;
+        }
+        if (vm.markerSpeed < 1000) {
+          vm.mapSlower = true;
+        }
+        vm.mapFaster = false;
+        var lineArr4 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+        lineArr4.unshift(marker.getPosition());
+        markerMovingControl._marker.moveAlong(lineArr4, vm.markerSpeed);
+      }, false);
+    };
+
+    /*料点画圆*/
+    var createCircle = function (workPoint) {
+      var circle,strokeColor,fillColor;
+      if(workPoint.type == 1){
+        strokeColor="#6495ED"; //线颜色
+        fillColor= "#A2B5CD"; //填充颜色
+      }else if(workPoint.type = 2){
+        strokeColor= "#F33"; //线颜色
+        fillColor="#ee2200"; //填充颜色
+      }
+      circle = new AMap.Circle({
+        center: [workPoint.longitude, workPoint.latitude],// 圆心位置
+        radius: workPoint.radius, //半径
+        strokeColor: strokeColor, //线颜色
+        strokeOpacity: 1, //线透明度
+        strokeWeight: 3, //线粗细度
+        fillColor: fillColor, //填充颜色
+        fillOpacity: 0.35, //填充透明度
+        extData: workPoint.id
+      });
+      return circle;
+    };
+
+    /*料点标注*/
+    var createMarker = function (workPoint) {
+      var marker = new AMap.Marker({
+        position: [workPoint.longitude, workPoint.latitude],
+        title: workPoint.name,
+        draggable: false
+      });
+      // 设置label标签
+      marker.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+        offset: new AMap.Pixel(20, 20),//修改label相对于maker的位置
+        content: workPoint.name
+      });
+      return marker;
     };
 
     /**
@@ -902,6 +1001,8 @@
 
       var lineArr = [];
       var lineArr2 = [];
+      var mileageArr = [];
+      var mileageArr2 = [];
       var deviceDataPromis = serviceResource.queryDeviceSimpleData(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           var deviceMapDataList = data.content;
@@ -912,13 +1013,15 @@
             vm.deviceMapDataList = _.sortBy(deviceMapDataList, "locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
               lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
-            })
+              mileageArr.push(deviceData.totalMileage);
+            });
             for (var i = 0; i < lineArr.length; i++) {
               if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
                 lineArr2.push(lineArr[i]);
+                mileageArr2.push(mileageArr[i]);
               }
             }
-            vm.refreshMapTabCar(lineArr2);
+            vm.refreshMapTabCar(lineArr2, mileageArr2);
           }
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));

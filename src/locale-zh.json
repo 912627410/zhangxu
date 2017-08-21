@@ -718,7 +718,9 @@
   "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位",
   "machineTypeMng":"车型管理",
   "SMSstatistics":"短信发送统计",
-  "newDevice":"新建设备"
+  "newDevice":"新建设备",
+  "faster":"加速",
+  "slower":"减速"
 
 
 }
