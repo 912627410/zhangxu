@@ -13,6 +13,7 @@
   function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.queryCost = {};
 
 
 
@@ -124,7 +125,7 @@
 
 
 
-    vm.search = function () {
+    vm.search = function (queryCost) {
 
     }
 
