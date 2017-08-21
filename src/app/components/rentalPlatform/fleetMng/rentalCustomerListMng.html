@@ -81,8 +81,10 @@
               <input type="radio" name="customer.radio"  ng-value="customer" ng-model="customerListController.selectRadio">
             </td>
 
-            <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{customer.id}}</td>
-            <td class="text-nowrap" data-title="'名称'" sortable="'deviceinfo.deviceNum'">{{customer.name}}</td>
+            <td class="text-nowrap" data-title="'id'" sortable="'id'">{{customer.id}}</td>
+            <td class="text-nowrap" data-title="'名称'" sortable="'name'">{{customer.name}}</td>
+            <td class="text-nowrap" data-title="'联系人'" sortable="'contacts'">{{customer.contacts}}</td>
+            <td class="text-nowrap" data-title="'职位'" sortable="'title'">{{customer.title}}</td>
             <td class="text-nowrap" data-title="'电话'" sortable="'engineType.engineName'">{{customer.tel}}</td>
             <td class="text-nowrap" data-title="'手机'" sortable="'state'">{{customer.mobile}}</td>
             <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{customer.org.label}}</td>

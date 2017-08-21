@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,FLEET_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_ORDER_MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -17,88 +17,76 @@
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
-    //定义页面的喵点
-    vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
 
-    /**
-     * 去到某个喵点
-     * @param 喵点id
-     */
-    vm.gotoAnchor = function (x) {
-      $location.hash(x);
-      $anchorScroll();
-    };
 
-    //加载品牌信息
-    var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
-    deviceManufactureListPromise.then(function (data) {
-      vm.deviceManufactureList= data.content;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取厂家失败');
-    })
-
-    //加载高度信息
-    var deviceHeightTypeListPromise = rentalService.getDeviceHeightTypeList();
-    deviceHeightTypeListPromise.then(function (data) {
-      vm.deviceHeightTypeList= data.content;
-    }, function (reason) {
-      Notification.error('获取高度失败');
-    })
-
-  //加载车辆类型信息
-    var deviceTypeListPromise = rentalService.getDeviceTypeList();
-    deviceTypeListPromise.then(function (data) {
-      vm.deviceTypeList= data.content;
-    }, function (reason) {
-      Notification.error('获取类型失败');
-    })
-
-  //加载车辆驱动信息
-    var devicePowerTypeListPromise = rentalService.getDevicePowerTypeList();
-    devicePowerTypeListPromise.then(function (data) {
-      vm.devicePowerTypeList= data.content;
-    }, function (reason) {
-      Notification.error('获取驱动类型失败');
-    })
+    vm.leftRentalOrderId=181889905;
+    vm.rightRentalOrderId=181889930;
 
 
 
-    vm.query = function (page, size, sort, fleet) {
-      var restCallURL = FLEET_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || 8;
+
+    vm.leftQuery = function (page, size, sort, order) {
+      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+
       var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "?sort=" + sortUrl;
 
-      if (null != fleet) {
+      // if (null == order) {
+      //
+      // }
 
-        if (null != fleet.id&&fleet.id!="") {
-          restCallURL += "&search_LIKE_id=" + $filter('uppercase')(fleet.id);
-        }
-        if (null != fleet.label&&fleet.label!="") {
-          restCallURL += "&search_LIKE_label=" + $filter('uppercase')(fleet.label);
-        }
+      // if (null != order.id&&order.id!="") {
+      //   restCallURL += "&id=" + fleet.id;
+      // }
 
-      }
+      restCallURL += "&id="+vm.leftRentalOrderId;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        vm.fleetList=data.content;
         vm.tableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
         }, {
           dataset: data.content
         });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
+
+
       }, function (reason) {
         Notification.error("获取作业面数据失败");
       });
     };
 
-    vm.query();
+    vm.rightQuery = function (page, size, sort, order) {
+      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?sort=" + sortUrl;
+
+      // if (null == order) {
+      //
+      // }
+
+      // if (null != order.id&&order.id!="") {
+      //   restCallURL += "&id=" + fleet.id;
+      // }
+
+      restCallURL += "&id="+vm.rightRentalOrderId;
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+
+        vm.tableParams2 = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+      }, function (reason) {
+        Notification.error("获取作业面数据失败");
+      });
+    };
+
+
+    vm.leftQuery();
+    vm.rightQuery();
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
@@ -137,5 +125,81 @@
 
       });
     };
+
+
+
+    vm.dropSuccessHandler2 = function($event,index,sourceArray,destArray,rentalOrderId){
+
+      // console.log("vm.fleetList==="+vm.fleetList);
+      // console.log("vm.fleetList2==="+vm.fleetList2);
+
+      console.log(rentalOrderId);
+      console.log(destArray);
+
+      console.log("sourceArray[index]=="+sourceArray.data[index]);
+      console.log(destArray.data.length);
+      console.log(sourceArray.data.length);
+//      destArray.data.push(sourceArray[index]);
+
+    //
+
+      console.log(sourceArray);
+      console.log(destArray);
+
+
+      var rentalOrderMachine=sourceArray.data[index];
+
+      console.log(rentalOrderMachine);
+      console.log(rentalOrderMachine.machine);
+      console.log(rentalOrderMachine.rentalOrder);
+
+
+      sourceArray.data.splice(index,1);
+
+      vm.updateOrderMachineInfo(rentalOrderMachine.machine.id,rentalOrderId,rentalOrderMachine.id,destArray);
+    };
+
+
+
+
+    //批量设置为已处理
+    vm.updateOrderMachineInfo = function (machineId,addOrderId,delId,destArray) {
+
+      console.log("machineId=="+machineId);
+      console.log("addOrderId=="+addOrderId);
+      console.log("delId=="+delId);
+
+
+      var orderMachines = {"addOrderId": addOrderId, "delId": delId, "addMachineId": machineId};
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
+      restPromise.then(function (data) {
+
+        if(data.code==0){
+          Notification.success("车辆调拨成功!");
+
+          destArray.data.splice(0, 0, data.content);
+        }
+
+
+      }, function (reason) {
+        Notification.error(" 车辆调拨失败!");
+      });
+
+
+    };
+
+    vm.onDrop = function($event,$data,array){
+      alert($data);
+
+      array.push($data);
+    };
+
+    vm.onDrop2 = function($event,$data,array){
+      // alert("onDrop2=="+$data);
+      //
+      // array.push($data);
+    };
+
+
   }
 })();

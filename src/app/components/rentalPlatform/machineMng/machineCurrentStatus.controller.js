@@ -164,8 +164,11 @@
           backdrop: false,
           templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
           controller: 'machineMonitorController',
-          controllerAs:'machineMonitorCtr',
-          size: 'super-lg',
+          controllerAs:'vm',
+          openedClass:'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+          windowClass:'test1',//class名 加载到ui-model 的顶级div上面
+          windowTopClass:'test2',//加载到window-class指令
+          size: 'super-lgs',
           resolve: { //用来向controller传数据
             deviceInfo: function () {
               return data.content;

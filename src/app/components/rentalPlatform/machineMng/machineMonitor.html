@@ -1,1 +1,49 @@
-aaaa
+<div class="modal-header">
+  <h3 class="modal-title">机器工作详情
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="vm.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="vm.refreshCurrentDeviceInfo()">{{'refresh'|translate}}</button>
+  </h3>
+</div>
+
+<uib-tabset justified="true">
+  <!--数据-->
+  <uib-tab>
+    <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
+    <div class="modal-body" ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/monitor.html'"  ></div>
+    </div>
+  </uib-tab>
+
+  <!--历史数据-->
+  <uib-tab >
+    <uib-tab-heading>{{'historicalData'|translate}}</uib-tab-heading>
+    <div class="modal-body" ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/history.html'"  ></div>
+    </div>
+  </uib-tab>
+
+  <!--报警数据-->
+  <uib-tab>
+    <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
+    <div class="modal-body"  ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/waring.html'"  ></div>
+    </div>
+  </uib-tab>
+
+  <!--地图-->
+  <uib-tab>
+    <uib-tab-heading>{{'map'|translate}}</uib-tab-heading>
+    <div class="modal-body"  ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/map.html'"  ></div>
+    </div>
+  </uib-tab>
+
+  <!--数据分析-->
+  <uib-tab>
+    <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
+    <div class="modal-body"   ng-style="vm.monitorheight">
+      <div ng-include="'app/components/rentalPlatform/machineMng/analysis.html'"  ></div>
+    </div>
+  </uib-tab>
+</uib-tabset>
+<div class="modal-footer"></div>
