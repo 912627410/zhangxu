@@ -77,7 +77,7 @@
                      ng-model="rentalOrderMngController.rentalOrder.startDate"
                      is-open="rentalOrderMngController.startDateSetting.status.opened"
                      datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
-                     validator="required" message-id="bootstrap"/>
+                     validator="required" message-id="bootstrap" readonly/>
 
               <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -153,11 +153,12 @@
               <span ng-if="!rentalOrderMngController.validateOperPermission()">{{rentalOrder.id}}</span>
 
             </td>
-
+            <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
             <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
             <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
             <td class="text-nowrap" data-title="'客户'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
             <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
+            <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
             <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">
               {{machine.machineType.typeName}}
               <span ng-if="rentalOrder.jc==null">0</span>

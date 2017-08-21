@@ -29,31 +29,33 @@
     </ol>
   </section>
 
-  <div class="container-fluid">
+  <div class="container-fluid" >
 
 
     <div class="row form-group" style="padding: 10px">
 
 
-      <section class="content">
+      <section class="content" ng-style="rentalFleetMngController.baseBoxContainer">
         <div class="row">
           <div class="col-md-5">
             <label class="col-md-2 control-label">选择订单</label>
             <div class="col-md-6">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="请选择"
-                       ng-model="newRentalOrderController.customer.name" name="customer" readonly
+                <input type="text" id="leftRentalOrder" class="form-control" placeholder="请选择"
+                       ng-model="rentalFleetMngController.leftRentalOrder.id" name="leftRentalOrder" readonly
                        validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
+            <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectLeftOrder('lg')">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
               </p>
             </div>
-
+            <div class="col-md2">
+              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.leftReset()">{{'cancel'|translate}}</button>
+            </div>
           </div>
           <div class="col-md-2"></div>
           <div class="col-md-5">
@@ -61,16 +63,19 @@
             <div class="col-md-6">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="请选择"
-                       ng-model="newRentalOrderController.customer.name" name="customer" readonly
+                <input type="text" id="rightRentalOrder" class="form-control" placeholder="请选择"
+                       ng-model="rentalFleetMngController.rightRentalOrder.id" name="rightRentalOrder" readonly
                        validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
+            <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectRightOrder('lg')">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
               </p>
+            </div>
+            <div class="col-md2">
+              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.rightReset()">{{'cancel'|translate}}</button>
             </div>
 
 

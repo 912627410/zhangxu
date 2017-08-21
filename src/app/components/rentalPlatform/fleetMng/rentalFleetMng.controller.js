@@ -19,26 +19,34 @@
     $anchorScroll.yOffset = 50;
 
 
-    vm.leftRentalOrderId=181889905;
-    vm.rightRentalOrderId=181889930;
+    vm.leftRentalOrderId;
+    vm.rightRentalOrderId;
+    // vm.leftRentalOrderId=181889905;
+    // vm.rightRentalOrderId=181889930;
 
 
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
 
 
-    vm.leftQuery = function (page, size, sort, order) {
+    vm.leftQuery = function (page, size, sort, id) {
+
+      vm.leftRentalOrderId=id;
+
       var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
-
       var sortUrl = sort || "id,desc";
       restCallURL += "?sort=" + sortUrl;
-
-      // if (null == order) {
-      //
-      // }
-
-      // if (null != order.id&&order.id!="") {
-      //   restCallURL += "&id=" + fleet.id;
-      // }
-
       restCallURL += "&id="+vm.leftRentalOrderId;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -54,20 +62,13 @@
       });
     };
 
-    vm.rightQuery = function (page, size, sort, order) {
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+    vm.rightQuery = function (page, size, sort, id) {
 
+      vm.rightRentalOrderId=id;
+
+      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
       var sortUrl = sort || "id,desc";
       restCallURL += "?sort=" + sortUrl;
-
-      // if (null == order) {
-      //
-      // }
-
-      // if (null != order.id&&order.id!="") {
-      //   restCallURL += "&id=" + fleet.id;
-      // }
-
       restCallURL += "&id="+vm.rightRentalOrderId;
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -85,8 +86,8 @@
     };
 
 
-    vm.leftQuery();
-    vm.rightQuery();
+    // vm.leftQuery();
+    // vm.rightQuery();
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
@@ -199,6 +200,85 @@
       //
       // array.push($data);
     };
+
+
+    vm.selectLeftOrder = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrderListMng.html',
+        controller: 'orderListMngController as orderListMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.leftRentalOrder=result;
+        console.log(vm.leftRentalOrder);
+
+        //如果选择的订单和左边的一样,则直接提示重新选择
+        if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
+          vm.leftRentalOrder=null;
+          Notification.error(" 选择的订单不能一样!");
+          return;
+        }
+
+        if(null!=vm.leftRentalOrder) {
+          vm.leftQuery(null, null, null, vm.leftRentalOrder.id);
+        }
+      }, function () {
+      });
+    };
+
+
+    vm.selectRightOrder = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrderListMng.html',
+        controller: 'orderListMngController as orderListMngController',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.rightRentalOrder=result;
+
+        //如果选择的订单和左边的一样,则直接提示重新选择
+        if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
+          vm.rightRentalOrder=null;
+          Notification.error(" 选择的订单不能一样!");
+          return;
+        }
+
+        console.log(vm.rightRentalOrder);
+
+        if(null!=vm.rightRentalOrder){
+         vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
+        }
+
+      }, function () {
+      });
+    };
+
+    //重置查询框
+    vm.leftReset = function () {
+      vm.leftRentalOrder = null;
+    }
+
+    vm.rightReset = function () {
+      vm.rightRentalOrder = null;
+    }
 
 
   }
