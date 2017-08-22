@@ -441,42 +441,15 @@
       miniChart3 = echarts.init(miniChart[2]),
       miniChart4 = echarts.init(miniChart[3]);
 
-    function creatMiniChart(chart){
-      var alarmType;
-      if(chart == 'miniChart1'){
-        alarmType = 1
-      }else if(chart == 'miniChart2'){
-        alarmType = 2
-      }else if(chart == 'miniChart3'){
-        alarmType = 3
-      }else {
-        alarmType = 4
-      }
+    function creatMiniChart(chart,alarmType){
 
-      // var restCallURL = ALERT_TREND_URL;
-      var restCallURL = RENTAL_HOME_MAP_GPSDATA_URL;
+      var restCallURL = ALERT_TREND_URL;
+      restCallURL += '?alarmType=' + alarmType;
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
         function getLocalTime(nS) {
           return new Date(parseInt(nS)).toLocaleString().substr(0,10)
         }
-
-        data = {
-          "code": 0,
-          "content": [
-            {
-              "type": "1",
-              "alarmDates": [
-                1502726400000,
-                1502812800000
-              ],
-              "countList": [
-                2,
-                1
-              ]
-            }
-          ]
-        };
 
         for(var i=0;i<7;i++){
           data.content[0].alarmDates[i] = getLocalTime(data.content[0].alarmDates[i])
@@ -579,10 +552,10 @@
 
     }
 
-    creatMiniChart(miniChart1);
-    creatMiniChart(miniChart2);
-    creatMiniChart(miniChart3);
-    creatMiniChart(miniChart4);
+    creatMiniChart(miniChart1,1);
+    creatMiniChart(miniChart2,2);
+    creatMiniChart(miniChart3,3);
+    creatMiniChart(miniChart4,4);
 
 
   }
