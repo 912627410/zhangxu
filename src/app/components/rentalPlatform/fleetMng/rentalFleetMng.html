@@ -29,7 +29,7 @@
     </ol>
   </section>
 
-  <div class="container-fluid" >
+  <div class="container-fluid">
 
 
     <div class="row form-group" style="padding: 10px">
@@ -54,7 +54,9 @@
               </p>
             </div>
             <div class="col-md2">
-              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.leftReset()">{{'cancel'|translate}}</button>
+              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.leftReset()">
+                {{'cancel'|translate}}
+              </button>
             </div>
           </div>
           <div class="col-md-2"></div>
@@ -75,7 +77,9 @@
               </p>
             </div>
             <div class="col-md2">
-              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.rightReset()">{{'cancel'|translate}}</button>
+              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.rightReset()">
+                {{'cancel'|translate}}
+              </button>
             </div>
 
 
@@ -88,10 +92,16 @@
           <div class="col-md-5">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">{{rentalOrderMachine.id}}</h3>
+                <h3 class="box-title">订单ID:{{rentalFleetMngController.leftRentalOrder.id}}</h3>
+
+                <span ng-if="rentalFleetMngController.leftRentalOrder!=null">
                 <button class="btn btn-primary pull-right" type="button"
-                        ng-click="rentalFleetMngController.updateFleet(fleet,'lg','update')">{{'edit'|translate}}
+                        ng-click="rentalFleetMngController.getMachineFromOrg('lg')">组织调入
                 </button>
+                <button class="btn btn-default pull-right" type="button"
+                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">查看订单
+                </button>
+                  </span>
               </div>
               <!-- /.box-header -->
               <div style="height: 300px;overflow: scroll">
@@ -125,7 +135,15 @@
           <div class="col-md-5">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">{{rentalOrderMachine.id}}</h3>
+                <h3 class="box-title">订单ID:{{rentalFleetMngController.rightRentalOrder.id}}</h3>
+                <span ng-if="rentalFleetMngController.rightRentalOrder!=null">
+                <button class="btn btn-primary pull-right" type="button"
+                        ng-click="rentalFleetMngController.getMachineFromOrg('lg')">组织调入
+                </button>
+                <button class="btn btn-default pull-right" type="button"
+                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">查看订单
+                </button>
+                  </span>
               </div>
               <!-- /.box-header -->
               <div style="height: 300px;overflow: scroll">

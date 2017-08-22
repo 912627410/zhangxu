@@ -106,6 +106,10 @@
       if (totalElements != null || totalElements != undefined) {
         restCallURL += "&totalElements=" + totalElements;
       }
+      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
+        restCallURL += "&orgId=" + vm.org.id;
+      }
+
       if (searchConditions!=null){
         restCallURL = commonFactory.processSearchConditions(restCallURL, searchConditions);
       }
