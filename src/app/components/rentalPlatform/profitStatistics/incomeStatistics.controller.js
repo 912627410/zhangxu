@@ -23,7 +23,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      var baseBoxContainerHeight = windowHeight - 50 -105- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -392,6 +392,104 @@
         Notification.error("获取收入数据失败")
       })
     }
+
+    var miniChart = document.getElementsByClassName('miniChart'),
+      miniChart1 = echarts.init(miniChart[0]),
+      miniChart2 = echarts.init(miniChart[1]),
+      miniChart3 = echarts.init(miniChart[2]),
+      miniChart4 = echarts.init(miniChart[3]),
+      miniOption = {
+        tooltip: {
+          showContent: false,
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            lineStyle:{
+              color:'rgba(124, 181, 236, 0.5)'
+            }
+          }
+        },
+        grid: {
+          top:'35%',
+          left: '0%',
+          right: '5%',
+          bottom: '0%',
+          containLabel: true
+        },
+        xAxis: {
+          boundaryGap: false,
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(124, 181, 236, 0.5)'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          data: ['上上周', '上周', '本周']
+        },
+        yAxis: {
+          type: 'value',
+          axisLine: {
+            show: false
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          }
+        },
+        series: {
+          name: '实收',
+          type: 'line',
+          label: {
+            emphasis: {
+              show: true,
+              textStyle:{
+                color: 'rgba(124, 181, 236, 1)'
+              },
+              formatter: function(param) {
+                return param.data[3];
+              },
+              position: 'top'
+            }
+          },
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgba(124, 181, 236, 1)',
+              borderColor: '#fff',
+              borderWidth: 2,
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgba(124, 181, 236, 1)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgba(124, 181, 236, 0.25)'
+            }
+          },
+          data: [60, 70, 100],
+          smooth: true,
+          smoothMonotone: 'x'
+        }
+      };
+
+    miniChart1.setOption(miniOption);
+    miniChart2.setOption(miniOption);
+    miniChart3.setOption(miniOption);
+    miniChart4.setOption(miniOption);
 
 
   }

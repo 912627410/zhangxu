@@ -60,99 +60,92 @@
       </div>
     </div>
     <div class="row searchLine">
-      <div class="row form-group">
-        <div class="center col-md-10 ">
-          <div class="row">
-            <div class="col-md-3 item">
-              <div class="row">
-                <label class="col-md-4">Type</label>
-                <div class="col-md-8">
-                  <ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.queryCost.machineTypeId" theme="bootstrap"
-                             ng-disabled="disabled" >
-                    <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
-                    </ui-select-match>
-                    <ui-select-choices  repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
-                      <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
-                    </ui-select-choices>
-                  </ui-select>
-                </div>
+      <div class="center">
+        <div class="row">
+          <div class="col-md-2 item">
+            <div class="row">
+
+              <label class="col-md-4 item" >Type</label>
+              <div class="col-md-8" style="padding: 0px;">
+                <ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.queryCost.machineTypeId" theme="bootstrap"
+                           ng-disabled="disabled" >
+                  <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
+                  </ui-select-match>
+                  <ui-select-choices  repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
+                    <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
               </div>
 
-            </div>
-            <div class="col-md-3 item" >
-              <div class="row">
-                <label class="col-md-4">Height</label>
-                <select name="deviceHeightType"  class="form-control col-md-8"
-                        ng-model="costStatisticsCtr.deviceinfo.deviceHeightType"
-                        ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
-                  <option value="">请选择...</option>
-                </select>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-3 item">
-              <div class="row">
-                <label class="col-md-4">Brand</label>
-                  <select name="machineManufacture" class="form-control col-md-8" ng-model="costStatisticsCtr.queryCost.machineManufacture"
-                          ng-options="machineMF.id as machineMF.name for machineMF in costStatisticsCtr.machineMFList">
-                    <option value="">请选择...</option>
-                  </select>
-              </div>
-            </div>
 
+            </div>
+          </div>
+          <div class="col-md-2 item" >
+            <div class="row">
+              <label class="col-md-4">Height</label>
+              <select name="deviceHeightType"  class="form-control col-md-8"
+                      ng-model="costStatisticsCtr.queryCost.heightTypeId"
+                      ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
           </div>
 
-        </div>
-        <div class="right col-md-1">
-          <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.search()">Search</button>
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="form-inline item col-md-3" >
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'startDate'|translate}}:</label>
-            <div class="input-group" >
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                     ng-model="costStatisticsCtr.startDateDeviceData"
-                     is-open="costStatisticsCtr.startDateOpenStatusDeviceData.opened"
-                     datepicker-options="costStatisticsCtr.dateOptions"
-                     min-date="costStatisticsCtr.minDate"
-                     max-date="costStatisticsCtr.maxDate"
-                     ng-required="true"
-                     current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" required readonly="readonly"/>
-              <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"
-                                    ng-click="costStatisticsCtr.startDateOpenDeviceData($event)">
-                              <i class="glyphicon glyphicon-calendar"></i></button>
+          <div class="col-md-2 item">
+            <div class="row">
+              <label class="col-md-4">Brand</label>
+              <select name="machineManufacture" class="form-control col-md-8" ng-model="costStatisticsCtr.queryCost.machineManufacture"
+                      ng-options="machineMF.id as machineMF.name for machineMF in costStatisticsCtr.machineMFList">
+                <option value="">请选择...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-inline col-md-2" style="padding:0px;">
+            <div class="form-group">
+              <label class="control-label text-nowrap" >{{'startDate'|translate}}:</label>
+              <div class="input-group" >
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="costStatisticsCtr.startDateDeviceData"
+                       is-open="costStatisticsCtr.startDateOpenStatusDeviceData.opened"
+                       datepicker-options="costStatisticsCtr.dateOptions"
+                       min-date="costStatisticsCtr.minDate"
+                       max-date="costStatisticsCtr.maxDate"
+                       ng-required="true"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="costStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-inline item col-md-3" >
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'endDate'|translate}}:</label>
-            <div class="input-group" >
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                     ng-model="costStatisticsCtr.endDateDeviceData"
-                     is-open="costStatisticsCtr.endDateOpenStatusDeviceData.opened"
-                     datepicker-options="costStatisticsCtr.dateOptions"
-                     ng-required="true"
-                     current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}"  required readonly="readonly"/>
-              <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="costStatisticsCtr.endDateOpenDeviceData($event)">
-                              <i class="glyphicon glyphicon-calendar"></i>
-                            </button>
-                </span>
+          <div class="form-inline item col-md-2"  style="padding:0px;">
+            <div class="form-group">
+              <label class="control-label text-nowrap" >{{'endDate'|translate}}:</label>
+              <div class="input-group" >
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="incomeStatisticsCtr.endDateDeviceData"
+                       is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                       datepicker-options="incomeStatisticsCtr.dateOptions"
+                       ng-required="true" current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
             </div>
           </div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.query(costStatisticsCtr.queryCost)">Search</button>
+          </div>
+
         </div>
+
       </div>
     </div>
-
     <div class="row costPic">
       <div class="leftTable col-md-6">
         <table>
