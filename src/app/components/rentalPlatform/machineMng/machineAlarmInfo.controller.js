@@ -9,7 +9,7 @@
     .controller('machineAlarmInfoController', machineAlarmInfoController);
 
   /** @ngInject */
-  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, serviceResource, commonFactory, RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL,RENTAL_MACHINE_MONITOR_URL) {
+  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, serviceResource,languages, commonFactory, RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL,RENTAL_MACHINE_MONITOR_URL,ALERT_TREND_URL) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
     vm.fenceAlarm = 0;//围栏报警
@@ -219,102 +219,122 @@
       miniMap1 = echarts.init(miniMap[0]),
       miniMap2 = echarts.init(miniMap[1]),
       miniMap3 = echarts.init(miniMap[2]),
-      miniMap4 = echarts.init(miniMap[3]),
-      miniOption = {
-        tooltip: {
-          showContent: false,
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line',
-            lineStyle: {
-              color: 'rgba(124, 181, 236, 0.5)'
-            }
-          }
-        },
-        grid: {
-          top: '25%',
-          left: '-10%',
-          right: '6%',
-          bottom: '-16%',
-          containLabel: true
-        },
-        xAxis: {
-          boundaryGap: false,
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(124, 181, 236, 0.5)'
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          data: ['8月01日', '8月02日', '8月03日', '8月04日', '8月05日', '8月06日', '8月07日']
-        },
-        yAxis: {
-          type: 'value',
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: {
-          name: '实收',
-          type: 'line',
-          label: {
-            emphasis: {
-              show: true,
-              textStyle: {
-                color: 'rgba(124, 181, 236, 1)'
-              },
-              formatter: function (param) {
-                return param.data[3];
-              },
-              position: 'top'
-            }
-          },
-          itemStyle: {
-            normal: {
-              opacity: 0
-            },
-            emphasis: {
-              color: 'rgba(124, 181, 236, 1)',
-              borderColor: '#fff',
-              borderWidth: 2,
-              opacity: 1
-            }
-          },
-          lineStyle: {
-            normal: {
-              width: 1,
-              color: 'rgba(124, 181, 236, 1)'
-            }
-          },
-          areaStyle: {
-            normal: {
-              color: 'rgba(124, 181, 236, 0.25)'
-            }
-          },
-          data: [60, 70, 100, 150, 200, 220, 220],
-          smooth: true,
-          smoothMonotone: 'x'
-        }
-      };
+      miniMap4 = echarts.init(miniMap[3]);
+    function creatMiniChart(chart,alarmType){
 
-    miniMap1.setOption(miniOption);
-    miniMap2.setOption(miniOption);
-    miniMap3.setOption(miniOption);
-    miniMap4.setOption(miniOption);
+      var restCallURL = ALERT_TREND_URL;
+      restCallURL += '?alarmType=' + alarmType;
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function(data){
+        function getLocalTime(nS) {
+          return new Date(parseInt(nS)).toLocaleString().substr(0,10)
+        }
+
+        for(var i=0;i<7;i++){
+          data.content.alarmDates[i] = getLocalTime(data.content.alarmDates[i])
+        }
+
+        var option = {
+          tooltip: {
+            // showContent: false,
+            trigger: 'axis',
+            axisPointer: {
+              type: 'line',
+              lineStyle:{
+                color:'rgba(124, 181, 236, 0.5)'
+              }
+            }
+          },
+          grid: {
+            top:'35%',
+            left: '',
+            right: '6%',
+            bottom: '-10%',
+            containLabel: true
+          },
+          xAxis: {
+            boundaryGap: false,
+            axisLine: {
+              lineStyle: {
+                color: 'rgba(124, 181, 236, 0.5)'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show:false
+            },
+            data: data.content.alarmDates
+          },
+          yAxis: {
+            type: 'value',
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            }
+          },
+          series: {
+            name: '提醒数量',
+            type: 'line',
+            label: {
+              emphasis: {
+                show: true,
+                textStyle:{
+                  color: 'rgba(124, 181, 236, 1)'
+                },
+                formatter: function(param) {
+                  return param.data[3];
+                },
+                position: 'top'
+              }
+            },
+            itemStyle: {
+              normal: {
+                opacity: 0
+              },
+              emphasis: {
+                color: 'rgba(124, 181, 236, 1)',
+                borderColor: '#fff',
+                borderWidth: 2,
+                opacity: 1
+              }
+            },
+            lineStyle: {
+              normal: {
+                width:1,
+                color: 'rgba(124, 181, 236, 1)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: 'rgba(124, 181, 236, 0.25)'
+              }
+            },
+            data: data.content.countList,
+            smooth: true,
+            smoothMonotone: 'x'
+          }
+        };
+        chart.setOption(option);
+      },function(){
+        console.log('gg')
+      });
+
+    }
+
+    creatMiniChart(miniMap1,1);
+    creatMiniChart(miniMap2,4);
+    creatMiniChart(miniMap3,2);
+    creatMiniChart(miniMap4,3);
 
   }
 })();

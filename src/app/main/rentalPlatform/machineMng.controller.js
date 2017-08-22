@@ -452,7 +452,7 @@
         }
 
         for(var i=0;i<7;i++){
-          data.content[0].alarmDates[i] = getLocalTime(data.content[0].alarmDates[i])
+          data.content.alarmDates[i] = getLocalTime(data.content.alarmDates[i])
         }
 
         var option = {
@@ -486,7 +486,7 @@
             axisLabel: {
               show:false
             },
-            data: data.content[0].alarmDates
+            data: data.content.alarmDates
           },
           yAxis: {
             type: 'value',
@@ -540,7 +540,7 @@
                 color: 'rgba(124, 181, 236, 0.25)'
               }
             },
-            data: data.content[0].countList,
+            data: data.content.countList,
             smooth: true,
             smoothMonotone: 'x'
           }
@@ -553,9 +553,9 @@
     }
 
     creatMiniChart(miniChart1,1);
-    creatMiniChart(miniChart2,2);
-    creatMiniChart(miniChart3,3);
-    creatMiniChart(miniChart4,4);
+    creatMiniChart(miniChart2,4);
+    creatMiniChart(miniChart3,2);
+    creatMiniChart(miniChart4,3);
 
 
   }
