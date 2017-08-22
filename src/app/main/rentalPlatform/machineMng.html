@@ -63,7 +63,7 @@
   <div class="container-fluid" style="margin-top: 15px">
     <div class="row">
       <div class="col-md-6 col-sm-6 col-xs-12">
-        <div class="box base-left-map-box-container" style="box-shadow: none">
+        <div class="box base-left-map-box-container">
           <div class="box-header">
             <span>机器预览</span>
             <div class="box-tools pull-right">
@@ -83,6 +83,7 @@
             <div class="middlePicBox">
               <div class="col-lg-6">
                 <ul>
+                  <li class="machineNumlis"><i>总数</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()" ng-bind="rentalMachineMngCtr.shearFork"></a></span></li>
                   <li class="machineNumlis"><i>剪叉</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(1)" ng-bind="rentalMachineMngCtr.shearFork"></a></span></li>
                   <li class="machineNumlis"><i>直臂</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(2)"  ng-bind="rentalMachineMngCtr.straightArm"></a></span></li>
                   <li class="machineNumlis"><i>曲臂</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(3)"  ng-bind="rentalMachineMngCtr.crankArm"></a></span></li>
