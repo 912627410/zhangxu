@@ -9,7 +9,7 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $http, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -219,9 +219,10 @@
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
     var lineHeight = vm.rightBoxTopHeightTemp - 30;
-    machineNumlis[0].style.lineHeight = (lineHeight / 3) + 'px';
-    machineNumlis[1].style.lineHeight = (lineHeight / 3) + 'px';
-    machineNumlis[2].style.lineHeight = (lineHeight / 3) + 'px';
+    machineNumlis[0].style.lineHeight = (lineHeight / 4) + 'px';
+    machineNumlis[1].style.lineHeight = (lineHeight / 4) + 'px';
+    machineNumlis[2].style.lineHeight = (lineHeight / 4) + 'px';
+    machineNumlis[3].style.lineHeight = (lineHeight / 4) + 'px';
 
 
     /**
@@ -438,102 +439,151 @@
       miniChart1 = echarts.init(miniChart[0]),
       miniChart2 = echarts.init(miniChart[1]),
       miniChart3 = echarts.init(miniChart[2]),
-      miniChart4 = echarts.init(miniChart[3]),
-      miniOption = {
-        tooltip: {
-          showContent: false,
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line',
-            lineStyle:{
-              color:'rgba(124, 181, 236, 0.5)'
-            }
-          }
-        },
-        grid: {
-          top:'35%',
-          left: '',
-          right: '6%',
-          bottom: '-10%',
-          containLabel: true
-        },
-        xAxis: {
-          boundaryGap: false,
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(124, 181, 236, 0.5)'
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show:false
-          },
-          data: ['8月01日', '8月02日', '8月03日', '8月04日', '8月05日', '8月06日', '8月07日']
-        },
-        yAxis: {
-          type: 'value',
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: {
-          name: '实收',
-          type: 'line',
-          label: {
-            emphasis: {
-              show: true,
-              textStyle:{
-                color: 'rgba(124, 181, 236, 1)'
-              },
-              formatter: function(param) {
-                return param.data[3];
-              },
-              position: 'top'
-            }
-          },
-          itemStyle: {
-            normal: {
-              opacity: 0
-            },
-            emphasis: {
-              color: 'rgba(124, 181, 236, 1)',
-              borderColor: '#fff',
-              borderWidth: 2,
-              opacity: 1
-            }
-          },
-          lineStyle: {
-            normal: {
-              width:1,
-              color: 'rgba(124, 181, 236, 1)'
-            }
-          },
-          areaStyle: {
-            normal: {
-              color: 'rgba(124, 181, 236, 0.25)'
-            }
-          },
-          data: [60, 70, 100, 150, 200, 220, 220],
-          smooth: true,
-          smoothMonotone: 'x'
-        }
-      };
+      miniChart4 = echarts.init(miniChart[3]);
 
-    miniChart1.setOption(miniOption);
-    miniChart2.setOption(miniOption);
-    miniChart3.setOption(miniOption);
-    miniChart4.setOption(miniOption);
+    function creatMiniChart(chart){
+      var alarmType;
+      if(chart == 'miniChart1'){
+        alarmType = 1
+      }else if(chart == 'miniChart2'){
+        alarmType = 2
+      }else if(chart == 'miniChart3'){
+        alarmType = 3
+      }else {
+        alarmType = 4
+      }
+
+      // var restCallURL = ALERT_TREND_URL;
+      var restCallURL = RENTAL_HOME_MAP_GPSDATA_URL;
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function(data){
+        function getLocalTime(nS) {
+          return new Date(parseInt(nS)).toLocaleString().substr(0,10)
+        }
+
+        data = {
+          "code": 0,
+          "content": [
+            {
+              "type": "1",
+              "alarmDates": [
+                1502726400000,
+                1502812800000
+              ],
+              "countList": [
+                2,
+                1
+              ]
+            }
+          ]
+        };
+
+        for(var i=0;i<7;i++){
+          data.content[0].alarmDates[i] = getLocalTime(data.content[0].alarmDates[i])
+        }
+
+        var option = {
+          tooltip: {
+            // showContent: false,
+            trigger: 'axis',
+            axisPointer: {
+              type: 'line',
+              lineStyle:{
+                color:'rgba(124, 181, 236, 0.5)'
+              }
+            }
+          },
+          grid: {
+            top:'35%',
+            left: '',
+            right: '6%',
+            bottom: '-10%',
+            containLabel: true
+          },
+          xAxis: {
+            boundaryGap: false,
+            axisLine: {
+              lineStyle: {
+                color: 'rgba(124, 181, 236, 0.5)'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show:false
+            },
+            data: data.content[0].alarmDates
+          },
+          yAxis: {
+            type: 'value',
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              show: false
+            }
+          },
+          series: {
+            name: '提醒数量',
+            type: 'line',
+            label: {
+              emphasis: {
+                show: true,
+                textStyle:{
+                  color: 'rgba(124, 181, 236, 1)'
+                },
+                formatter: function(param) {
+                  return param.data[3];
+                },
+                position: 'top'
+              }
+            },
+            itemStyle: {
+              normal: {
+                opacity: 0
+              },
+              emphasis: {
+                color: 'rgba(124, 181, 236, 1)',
+                borderColor: '#fff',
+                borderWidth: 2,
+                opacity: 1
+              }
+            },
+            lineStyle: {
+              normal: {
+                width:1,
+                color: 'rgba(124, 181, 236, 1)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: 'rgba(124, 181, 236, 0.25)'
+              }
+            },
+            data: data.content[0].countList,
+            smooth: true,
+            smoothMonotone: 'x'
+          }
+        };
+        chart.setOption(option);
+      },function(){
+        console.log('gg')
+      });
+
+    }
+
+    creatMiniChart(miniChart1);
+    creatMiniChart(miniChart2);
+    creatMiniChart(miniChart3);
+    creatMiniChart(miniChart4);
+
 
   }
 })();
