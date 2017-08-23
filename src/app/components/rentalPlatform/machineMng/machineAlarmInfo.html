@@ -78,13 +78,13 @@
                     <span class="label label-primary pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
                   </a>
                 </li>
-                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==0]">
-                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(0)"><i class="fa fa-envelope-o"></i>全部未处理
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==false]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(false)"><i class="fa fa-envelope-o"></i>全部未处理
                     <span class="label label-warning pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
                   </a>
                 </li>
-                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==1]">
-                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(1)"><i class="fa fa-envelope-o"></i>全部已处理
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==true]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(true)"><i class="fa fa-envelope-o"></i>全部已处理
                     <span class="label label-warning pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
                   </a>
                 </li>
@@ -179,8 +179,11 @@
                     <td class="mailbox-subject">{{notification.content}}</td>
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
-                      <button type="button" class="btn btn-primary btn-xs">标记已读</button>
-                      <button type="button" class="btn btn-success btn-xs">处理报警</button>
+                      <!--<button type="button" class="btn btn-primary btn-xs" ng-click="machineAlarmInfoCtr.processRentalNotificationRead(notification.readStatus)">标记已读</button>-->
+                      <button type="button" class="btn btn-success btn-xs" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
+                        <span ng-if="notification.processStatus == false">{{'markedAsAlreadyProcessed'|translate}}</span>
+                        <span ng-if="notification.processStatus == true">{{'markAsUntreated'|translate}}</span>
+                      </button>
                     </td>
                   </tr>
                   </tbody>

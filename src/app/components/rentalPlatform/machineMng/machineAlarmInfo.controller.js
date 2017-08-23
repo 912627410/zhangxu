@@ -9,7 +9,8 @@
     .controller('machineAlarmInfoController', machineAlarmInfoController);
 
   /** @ngInject */
-  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, serviceResource,languages, commonFactory, RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL,RENTAL_MACHINE_MONITOR_URL,ALERT_TREND_URL) {
+  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, $uibModal, serviceResource, languages, commonFactory,
+                                      RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
     vm.fenceAlarm = 0;//围栏报警
@@ -101,10 +102,10 @@
         if (status == null || status == undefined) {
           vm.allNotificationNumber = data.content;//所有的报警
         }
-        if (status == 1) {
+        if (status == true) {
           vm.processedNumber = data.content;//已处理报警
         }
-        if (status == 0) {
+        if (status == false) {
           vm.noProcessNumber = data.content;//未处理报警
         }
       }, function (reason) {
@@ -112,8 +113,8 @@
       })
     }
     vm.getAlarmCountByStatus(undefined);
-    vm.getAlarmCountByStatus(1);
-    vm.getAlarmCountByStatus(0);
+    vm.getAlarmCountByStatus(true);
+    vm.getAlarmCountByStatus(false);
 
 
     /**
@@ -147,10 +148,10 @@
     //初始化加载
     if ($rootScope.alarmType) {
       vm.searchConditions.alarmType = $rootScope.alarmType;
-      $rootScope.alarmType=null;
-      vm.getMsgByAlarmType(0, vm.pageSize, null,vm.searchConditions);
+      $rootScope.alarmType = null;
+      vm.getMsgByAlarmType(0, vm.pageSize, null, vm.searchConditions);
     } else {
-      vm.getMsgByAlarmType(0, vm.pageSize, null,null);
+      vm.getMsgByAlarmType(0, vm.pageSize, null, null);
     }
 
     /**
@@ -158,7 +159,7 @@
      * @param alarmType
      */
     vm.loadMsgDataByType = function (alarmType) {
-      vm.searchConditions={};
+      vm.searchConditions = {};
       if (alarmType == null || alarmType == undefined) {
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
       } else {
@@ -172,7 +173,7 @@
      * @param alarmStatus
      */
     vm.loadMsgDataByStatus = function (alarmStatus) {
-      vm.searchConditions={};
+      vm.searchConditions = {};
       if (alarmStatus == null || alarmStatus == undefined) {
         vm.searchConditions.status = 3;
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
@@ -186,7 +187,7 @@
      *
      * @param deviceNum
      */
-    vm.machineMonitor=function (deviceNum) {
+    vm.machineMonitor = function (deviceNum) {
       var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
@@ -196,10 +197,10 @@
           backdrop: false,
           templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
           controller: 'machineMonitorController',
-          controllerAs:'vm',
-          openedClass:'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
-          windowClass:'test1',//class名 加载到ui-model 的顶级div上面
-          windowTopClass:'test2',//加载到window-class指令
+          controllerAs: 'vm',
+          openedClass: 'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+          windowClass: 'test1',//class名 加载到ui-model 的顶级div上面
+          windowTopClass: 'test2',//加载到window-class指令
           size: 'super-lgs',
           resolve: { //用来向controller传数据
             deviceInfo: function () {
@@ -207,7 +208,35 @@
             }
           }
         });
-      },function (reason) {
+      }, function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+    }
+
+    /**
+     *  处理报警信息
+     *
+     * @param status
+     */
+    vm.processRentalNotificationDeal = function (notification, index) {
+      var restCallUrl = RENTAL_NOTIFICATION_URL + "?id=" + notification.id + "&dealStatus=" + notification.processStatus;
+      var notificationPromis = serviceResource.restCallService(restCallUrl, "UPDATE");
+      notificationPromis.then(function (data) {
+
+        if (data.content == true && notification.processStatus==true) {
+          //标记为已处理成功
+          vm.notificationList.splice(index, 1);
+          vm.noProcessNumber += 1;
+          vm.processedNumber -= 1;
+        }
+        if (data.content == true && notification.processStatus==false) {
+          //标记为已处理成功
+          vm.notificationList.splice(index, 1);
+          vm.noProcessNumber -= 1;
+          vm.processedNumber += 1;
+        }
+
+      }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
     }
@@ -220,17 +249,18 @@
       miniMap2 = echarts.init(miniMap[1]),
       miniMap3 = echarts.init(miniMap[2]),
       miniMap4 = echarts.init(miniMap[3]);
-    function creatMiniChart(chart,alarmType){
+
+    function creatMiniChart(chart, alarmType) {
 
       var restCallURL = ALERT_TREND_URL;
       restCallURL += '?alarmType=' + alarmType;
       var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function(data){
+      rspData.then(function (data) {
         function getLocalTime(nS) {
-          return new Date(parseInt(nS)).toLocaleString().substr(0,10)
+          return new Date(parseInt(nS)).toLocaleString().substr(0, 10)
         }
 
-        for(var i=0;i<7;i++){
+        for (var i = 0; i < 7; i++) {
           data.content.alarmDates[i] = getLocalTime(data.content.alarmDates[i])
         }
 
@@ -240,13 +270,13 @@
             trigger: 'axis',
             axisPointer: {
               type: 'line',
-              lineStyle:{
-                color:'rgba(124, 181, 236, 0.5)'
+              lineStyle: {
+                color: 'rgba(124, 181, 236, 0.5)'
               }
             }
           },
           grid: {
-            top:'35%',
+            top: '35%',
             left: '',
             right: '6%',
             bottom: '-10%',
@@ -263,7 +293,7 @@
               show: false
             },
             axisLabel: {
-              show:false
+              show: false
             },
             data: data.content.alarmDates
           },
@@ -288,10 +318,10 @@
             label: {
               emphasis: {
                 show: true,
-                textStyle:{
+                textStyle: {
                   color: 'rgba(124, 181, 236, 1)'
                 },
-                formatter: function(param) {
+                formatter: function (param) {
                   return param.data[3];
                 },
                 position: 'top'
@@ -310,7 +340,7 @@
             },
             lineStyle: {
               normal: {
-                width:1,
+                width: 1,
                 color: 'rgba(124, 181, 236, 1)'
               }
             },
@@ -325,16 +355,16 @@
           }
         };
         chart.setOption(option);
-      },function(){
+      }, function () {
         console.log('gg')
       });
 
     }
 
-    creatMiniChart(miniMap1,1);
-    creatMiniChart(miniMap2,4);
-    creatMiniChart(miniMap3,2);
-    creatMiniChart(miniMap4,3);
+    creatMiniChart(miniMap1, 1);
+    creatMiniChart(miniMap2, 4);
+    creatMiniChart(miniMap3, 2);
+    creatMiniChart(miniMap4, 3);
 
   }
 })();

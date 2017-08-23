@@ -278,6 +278,7 @@
         div.style.width = div.style.height = size+'px';
         div.style.border = 'solid 1px '+ borderColor;
         div.style.borderRadius = size/2 + 'px';
+        div.style.boxShadow = '0 0 18px 4px '+ borderColor;
         div.innerHTML = context.count;
         div.style.lineHeight = size+'px';
         div.style.color = fontColor;

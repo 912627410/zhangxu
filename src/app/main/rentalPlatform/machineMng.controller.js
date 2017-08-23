@@ -9,7 +9,8 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $http, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification, RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $http, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification,
+                                      RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL,RENTAL_MACHINE_RATE_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -350,86 +351,99 @@
       height: vm.rightBoxTopHeightTemp + 'px'
     });
 
-    var homePieOption = {
-      title: {
-        text: '75%',
-        x: 'center',
-        y: 'center',
-        textStyle: {
-          fontWeight: 'normal',
-          color: "rgb(38, 173, 88)",
-          fontSize: 40
-        }
-      },
-      backgroundColor: '#fff',
-      series: [{
-        name: 'Line 1',
-        type: 'pie',
-        clockWise: false,
-        radius: ['60%', '65%'],
-        itemStyle: {
-          normal: {
-            color: 'rgba(38, 173, 88,1)',
-            label: {
-              show: false
-            },
-            labelLine: {
-              show: false
+
+    function crateHomePieOption(type) {
+      var restCallUrl=RENTAL_MACHINE_RATE_URL;
+      if (type!=null){
+        restCallUrl+=RENTAL_MACHINE_RATE_URL+'?type='+type;
+      }
+      var rspData = serviceResource.restCallService(restCallUrl,"GET");
+      rspData.then(function (data) {
+        var homePieOption = {
+          title: {
+            text: data.content.machineRate+'%',
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              color: "rgb(38, 173, 88)",
+              fontSize: 40
             }
-            // shadowBlur: 20,
-            // shadowColor: 'rgba(40, 40, 40, 0.2)'
           },
-          emphasis: {
-            color: 'rgba(38, 173, 88,1)',
-            label: {
-              show: false
-            },
-            labelLine: {
-              show: false
-            },
-            shadowBlur: 10,
-            shadowColor: 'rgba(40, 40, 40, 0.2)'
-          }
-        },
-        hoverAnimation: false,
-        data: [{
-          value: 75,
-          name: '01'
-        }, {
-          value: 25,
-          name: 'invisible',
-          itemStyle: {
-            normal: {
-              color: 'rgba(0, 0, 0,0.2)',
-              label: {
-                show: false
+          backgroundColor: '#fff',
+          series: [{
+            name: 'Line 1',
+            type: 'pie',
+            clockWise: false,
+            radius: ['60%', '65%'],
+            itemStyle: {
+              normal: {
+                color: 'rgba(38, 173, 88,1)',
+                label: {
+                  show: false
+                },
+                labelLine: {
+                  show: false
+                }
+                // shadowBlur: 20,
+                // shadowColor: 'rgba(40, 40, 40, 0.2)'
               },
-              labelLine: {
-                show: false
+              emphasis: {
+                color: 'rgba(38, 173, 88,1)',
+                label: {
+                  show: false
+                },
+                labelLine: {
+                  show: false
+                },
+                shadowBlur: 10,
+                shadowColor: 'rgba(40, 40, 40, 0.2)'
               }
-              // shadowBlur: 20,
-              // shadowColor: 'rgba(40, 40, 40, 0.2)'
             },
-            emphasis: {
-              color: 'rgba(0, 0, 0, 0.2)',
-              label: {
-                show: false
-              },
-              labelLine: {
-                show: false
-              },
-              shadowBlur: 10,
-              shadowColor: 'rgba(40, 40, 40, 0.2)'
+            hoverAnimation: false,
+            data: [{
+              value: data.content.rentalMachineCount,
+              name: '01'
+            }, {
+              value: data.content.unRentalMachineCount,
+              name: 'invisible',
+              itemStyle: {
+                normal: {
+                  color: 'rgba(0, 0, 0,0.2)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgba(0, 0, 0, 0.2)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                }
+              }
             }
-          }
-        }
 
-        ]
-      }]
-    };
+            ]
+          }]
+        };
+        homePie.setOption(homePieOption);
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      })
 
-    homePie.setOption(homePieOption);
-
+    }
+    //加载出租率
+    crateHomePieOption();
 
     /**
      * miniChart

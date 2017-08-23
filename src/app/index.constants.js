@@ -280,6 +280,8 @@
     .constant('RENTAL_ALARM_MSG_DATA_URL',SERVER_BASE_URL + 'rental/getRentalNotifications')//租赁平台报警数据
     .constant('RENTAL_MACHINE_MONITOR_URL',SERVER_BASE_URL + 'rental/getRentalMachineCurrentStatus')//租赁平台车辆当前位置
     .constant('RENTAL_MACHINE_URL',SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
+    .constant('RENTAL_NOTIFICATION_URL',SERVER_BASE_URL + 'rental/processRentalNotificationDeal')//租赁平台标记消息为已处理
+    .constant('RENTAL_MACHINE_RATE_URL',SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
 
     //租赁客户信息
     .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
