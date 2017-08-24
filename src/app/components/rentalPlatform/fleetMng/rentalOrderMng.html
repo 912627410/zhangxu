@@ -172,14 +172,12 @@
 
             <td class="text-nowrap" data-title="'operation'|translate">
 
-              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{'alter'| translate}}
-              </button>
+
               <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="rentalOrderMngController.removeDevice(machine)">{{'relieve'| translate}}
+                      ng-click="rentalOrderMngController.removeDevice(machine)">{{'alter'| translate}}
               </button>
-              <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
-                      ng-click="rentalOrderMngController.allocationlog(machine,'lg')">{{'transferLog'| translate}}
+              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                      ng-click="rentalOrderMngController.updateMachine(machine,'lg')">查看
               </button>
             </td>
           </tr>

@@ -149,18 +149,6 @@
             <td class="text-nowrap" data-title="'driveType'|translate" sortable="'devicePowerType.name'">{{machine.devicePowerType.name}}</td>
             <td class="text-nowrap" data-title="'brandType'|translate" sortable="'deviceManufacture.name'">{{machine.deviceManufacture.name}}</td>
 
-            <td class="text-nowrap" data-title="'operation'|translate">
-
-              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalFleetMachineMngController.updateMachine(machine,'lg')">{{'alter'| translate}}
-              </button>
-              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="rentalFleetMachineMngController.removeDevice(machine)">{{'relieve'| translate}}
-              </button>
-              <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
-                      ng-click="rentalFleetMachineMngController.allocationlog(machine,'lg')">{{'transferLog'| translate}}
-              </button>
-            </td>
           </tr>
         </table>
       </div>
