@@ -1,1 +1,218 @@
-c
+
+<div class="modal-body" >
+  <div class="box-body"  >
+    <div class="row">
+      <div class="col-md-1">
+        <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateDeviceData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+        </p>
+      </div>
+      <div class="col-md-1">
+        <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateDeviceData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+        </p>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,true,
+                deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
+      </div>
+      <div class="col-md-3">
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table" ng-table="deviceinfoMngCtrl.tableParams" export-csv='csv'>
+            <tr>
+              <!--数据回传时间-->
+              <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
+              <!--定位时间-->
+              <th class="text-nowrap">{{'positioningTime'|translate}}</th>
+              <!--位置-->
+              <th class="text-nowrap">{{'position'|translate}}</th>
+              <!--gpsSpeed 速度-->
+              <th class="text-nowrap">{{'speed'|translate}}</th>
+              <!--总工时-->
+              <th class="text-nowrap">{{'totalProductiveHours'|translate}}</th>
+              <!--燃油液位-->
+              <th class="text-nowrap">{{'fuelLevel'|translate}}</th>
+              <!--发动机转速-->
+              <th class="text-nowrap">{{'engineSpeed'|translate}}</th>
+              <!--水温-->
+              <th class="text-nowrap">{{'waterTemperature'|translate}}</th>
+              <!--串口通信状态-->
+              <th class="text-nowrap">{{'CANCommunicationStatus'|translate}}</th>
+              <!--供电方式-->
+              <th class="text-nowrap">{{'powerSupplyMode'|translate}}</th>
+              <!--变矩器油温-->
+              <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
+              <!--制动气压-->
+              <th class="text-nowrap">{{'brakePressure'|translate}}</th>
+              <!--gsm信号质量-->
+              <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
+              <!--运行监控-->
+              <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'operationMonitoring'|translate}}</th>
+              <!--led状态-->
+              <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'LEDState'|translate}}</th>
+              <!--实时工时-->
+              <th class="text-nowrap">{{'realTimeWork'|translate}}</th>
+              <!--启动次数-->
+              <th class="text-nowrap">{{'numberOfStarts'|translate}}</th>
+              <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
+              <!--TODO 锁车状态-->
+              <!--<th class="text-nowrap">{{'lockedCarStatus'|translate}}</th>-->
+              <!--ACC状态-->
+              <th class="text-nowrap">{{'ACCState'|translate}}</th>
+              <!--发电机状态-->
+              <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'generatorState'|translate}}</th>
+              <!--GPS电源检测和模拟量1是相同的-->
+              <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'GPSPowerDetection'|translate}}</th>
+              <!--模拟量2-->
+              <th class="text-nowrap">{{'Built-inBatteryRealTime'|translate}}</th>
+              <!--电压-->
+              <th class="text-nowrap">{{'vehicleMountedBatteryVoltage'|translate}}</th>
+              <!--开盖状态-->
+              <th class="text-nowrap">{{'openCoverState'|translate}}</th>
+              <!--可见卫星数-->
+              <th  class="text-nowrap">{{'visibleSatelliteNumber'|translate}}</th>
+              <!--可用卫星数-->
+              <th  class="text-nowrap">{{'usableSatelliteNumber'|translate}}</th>
+              <!--定位所用时间-->
+              <th  class="text-nowrap">{{'locateDuration'|translate}}</th>
+              <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
+              <!--ECU锁车状态-->
+              <!--<th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>-->
+              <!--实际绑定车号-->
+              <th  class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</th>
+              <th  class="text-nowrap">累计里程</th>
+              <th  class="text-nowrap">气压表2</th>
+              <th  class="text-nowrap">机油压力</th>
+              <th  class="text-nowrap">阶段工作时间</th>
+              <th  class="text-nowrap">阶段里程</th>
+            </tr>
+            <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
+              <!--数据回传时间-->
+              <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <!--定位时间-->
+              <td ng-cloak ng-if="deviceData.locateStatus=='A' || deviceData.locateStatus=='01'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus=='00' || deviceData.locateStatus==null" class="text-nowrap">--</td>
+              <!--位置-->
+              <td ng-cloak ng-if="(deviceData.locateStatus=='A'|| deviceData.locateStatus=='01') && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
+              <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus=='00' || deviceData.locateStatus==null || deviceData.address==null" class="text-nowrap" style="min-width: 300px">--</td>
+              <!--gpsSpeed 速度-->
+              <td ng-cloak>{{deviceData.gpsSpeed | number:2}}</td>
+              <!--总工时-->
+              <td ng-cloak class="text-nowrap">{{deviceData.totalDuration | convertToMins }}</td>
+              <!--燃油液位-->
+              <td ng-if="deviceData.oilLevel!=null" ng-cloak>{{deviceData.oilLevel}}%</td>
+              <td ng-if="deviceData.oilLevel==null" ng-cloak></td>
+              <!--发动机转速-->
+              <td ng-cloak>{{deviceData.engineRotate | number:2}}</td>
+              <!--水温-->
+              <td ng-cloak>{{deviceData.engineTemperature}}</td>
+              <!--串口通信状态-->
+              <td ng-if="deviceData.commStatus=='10' || deviceData.commStatus=='0'" class="bg-danger text-danger">{{'exception'|translate}}</td>
+              <td ng-if="deviceData.commStatus=='01' || deviceData.commStatus=='1'" class="bg-info text-info">{{'normal'|translate}}</td>
+              <td ng-if="deviceData.commStatus==null">{{'noData'|translate}}</td>
+              <!--供电方式-->
+              <td ng-if="deviceData.powerType=='00' || deviceData.powerType=='1'">{{'vehicleMountedPowerSupply'|translate}}</td>
+              <td ng-if="deviceData.powerType=='01' || deviceData.powerType=='0'">{{'internalBattery'|translate}}</td>
+              <td ng-if="deviceData.powerType==null">{{'noData'|translate}}</td>
+              <!--变矩器油温-->
+              <td ng-if="deviceData.oilTemperature!=null" ng-cloak>{{deviceData.oilTemperature | number:0}}°C</td>
+              <td ng-if="deviceData.oilTemperature==null" ng-cloak></td>
+              <!--制动气压-->
+              <td ng-if="deviceData.pressureMeter!=null" ng-cloak>{{deviceData.pressureMeter | number:2}}MPa</td>
+              <td ng-if="deviceData.pressureMeter==null" ng-cloak></td>
+              <!--gsm信号质量-->
+
+              <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
+              <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
+              <!--作业监控-->
+              <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{deviceData.workMonitor}}</td>
+              <!--led状态-->
+              <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceData.ledStatus}}</td>
+              <!--实时工时-->
+              <td ng-cloak class="text-nowrap">{{deviceData.realTimeDuration | convertToMins}}</td>
+              <!--启动次数-->
+              <td ng-cloak>{{deviceData.startTimes}}</td>
+              <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
+              <!--TODO 锁车状态-->
+              <!--<td ng-if="deviceData.lockStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>-->
+              <!--<td ng-if="deviceData.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>-->
+              <!--<td ng-if="deviceData.lockStatus=='10'" class="bg-danger text-danger">{{'two-level'|translate}}</td>-->
+              <!--<td ng-if="deviceData.lockStatus==null" class="bg-danger text-warning">-</td>-->
+              <!--ACC状态-->
+              <td ng-if="deviceData.accStatus=='01' || deviceData.accStatus=='1'" class="bg-info text-info">ON</td>
+              <td ng-if="deviceData.accStatus=='10' || deviceData.accStatus=='0'" class="bg-danger text-danger">OFF</td>
+              <td ng-if="deviceData.accStatus==null">{{'noData'|translate}}</td>
+              <!--发电机状态-->
+              <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.elecStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
+              <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.elecStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
+              <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&((deviceData.elecStatus!=='01'&&deviceData.elecStatus!=='10')||deviceData.elecStatus==null)">{{'noData'|translate}}</td>
+              <!--GPS电源检测和模拟量1是相同的-->
+              <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.imitate1!=null" ng-cloak>{{deviceData.imitate1/1000 | number:1}}V</td>
+              <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'&&deviceData.imitate1==null" ng-cloak></td>
+              <!--模拟量2-->
+              <td ng-if="deviceData.imitate2!=null" ng-cloak>{{deviceData.imitate2/1000 | number:1}}V</td>
+              <td ng-if="deviceData.imitate2==null" ng-cloak></td>
+              <!--电压-->
+              <td ng-if="deviceData.batteryVol!=null" ng-cloak>{{deviceData.batteryVol| number:2}}V</td>
+              <td ng-if="deviceData.batteryVol==null" ng-cloak></td>
+              <!--开盖状态-->
+              <td ng-if="deviceData.lockerStatus=='00' || deviceData.lockerStatus=='0'">{{'notOpen'|translate}}</td>
+              <td ng-if="deviceData.lockerStatus=='11' || deviceData.lockerStatus=='1'">{{'openCover'|translate}}</td>
+              <td ng-if="deviceData.lockerStatus==null">{{'noData'|translate}}</td>
+              <!--可见卫星数-->
+              <td  ng-cloak>{{deviceData.visibleSatelliteNumber}}</td>
+              <!--可用卫星数-->
+              <td  ng-cloak>{{deviceData.usableSatelliteNumber}}</td>
+              <!--定位所用时间-->
+              <td  ng-cloak>{{deviceData.locateDuration}}</td>
+              <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
+              <!--ECU锁车状态-->
+              <!--<td  ng-cloak>{{deviceData.ecuLockStatus}}</td>-->
+              <!--实际绑定车号-->
+              <td  ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceDate.bindMachineId!=null">{{deviceData.bindMachineId}}</td>
+              <td  ng-cloak ng-if="userInfo.userdto.organizationDto.id==1&&deviceDate.bindMachineId==null">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
+              <!--累计里程-->
+              <td ng-if="deviceData.totalMileage!=null" ng-cloak>{{deviceData.totalMileage | number:2}}KM</td>
+              <td ng-if="deviceData.totalMileage==null" ng-cloak></td>
+              <!--气压表2-->
+              <td ng-if="deviceData.pressureMeter2!=null" ng-cloak>{{deviceData.pressureMeter2 | number:2}}MPa</td>
+              <td ng-if="deviceData.pressureMeter2==null" ng-cloak></td>
+              <!--机油压力-->
+              <td ng-if="deviceData.oilPress!=null" ng-cloak>{{deviceData.oilPress}}KPa</td>
+              <td ng-if="deviceData.oilPress==null" ng-cloak></td>
+              <!--阶段工作时间-->
+              <td  ng-cloak class="text-nowrap">{{deviceData.momentWorkTime | convertToMins}}</td>
+              <!--阶段里程-->
+              <td ng-if="deviceData.momentMileage!=null" ng-cloak>{{deviceData.momentMileage | number:2}}KM</td>
+              <td ng-if="deviceData.momentMileage==null" ng-cloak></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.totalElements,false,
+                  deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>
