@@ -13,6 +13,11 @@
                                     VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceInfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                     DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT) {
     var vm = this;
+    /*******************************************数据相关begin********************************************/
+
+
+
+    /*******************************************数据相关end*********************************************/
     /*模态框自适应高度*/
     var monitorheight = $window.innerHeight/1.3;
     vm.monitorheight = {
@@ -2746,6 +2751,5 @@
         series: batteryOutChartData
       };
     }
-
   }
 })();
