@@ -12,6 +12,8 @@
   function orderListMngController($scope, $window,$state, $location,$uibModalInstance, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
+
+
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 

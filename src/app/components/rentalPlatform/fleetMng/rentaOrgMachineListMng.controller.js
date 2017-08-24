@@ -9,7 +9,7 @@
     .controller('orgMachineListMngController', orgMachineListMngController);
 
   /** @ngInject */
-  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_UNUSED_MACHINE_PAGE_URL) {
+  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -62,7 +62,7 @@
 
     vm.query = function (currentPage, pageSize, totalElements, searchConditions) {
 
-      var restCallURL = RENTANL_UNUSED_MACHINE_PAGE_URL;
+      var restCallURL = selectUrl;
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || DEFAULT_SIZE_PER_PAGE;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;

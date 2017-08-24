@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_ORDER_MACHINE_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -285,6 +285,9 @@
         resolve: {
           operatorInfo: function () {
             return vm.operatorInfo;
+          },
+          selectUrl: function () {
+            return RENTANL_UNUSED_MACHINE_PAGE_URL;
           }
         }
       });
