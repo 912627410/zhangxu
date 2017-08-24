@@ -81,8 +81,8 @@
 
     $http.get('assets/json/warzone.json').success(function(data){
       echarts.registerMap('warZone', data);
-      getMap1_Data('1','','1',timeList.getMonth(),'2','1');
-      getMap2_Data('1','','1',timeList.getMonth(),'2','2');
+      getMap1_Data('2','','1',timeList.getMonth(),'2','1');
+      getMap2_Data('2','','1',timeList.getMonth(),'2','2');
     });
 
     //填充空缺的数据
@@ -578,16 +578,16 @@
       })
     }
 
-    getBar1_Data('1','','2','1');
-    getBar2_Data('1','','2','2');
+    getBar1_Data('2','','2','1');
+    getBar2_Data('2','','2','2');
 
     $scope.query = function(){
       $http.get('assets/json/warzone.json').success(function(data) {
         echarts.registerMap('warZone', data);
         var _product_type1,_product_type2,_machine_type1,_machine_type2,_query_statistical_type1,_query_statistical_type2,_cycle_type,_query_cycle_value;
-        if($scope.product_selected1 == '挖掘机'){
+        if($scope.product_selected1 == '装载机'){
           _product_type1 = '1'
-        }else if($scope.product_selected1 == '装载机'){
+        }else if($scope.product_selected1 == '挖掘机'){
           _product_type1 = '2'
         }else{
           _product_type1 = '3'
@@ -605,9 +605,9 @@
           _machine_type2 = $scope.machine_selected2;
         }
 
-        if($scope.product_selected2 == '挖掘机'){
+        if($scope.product_selected2 == '装载机'){
           _product_type2 = '1'
-        }else if($scope.product_selected2 == '装载机'){
+        }else if($scope.product_selected2 == '挖掘机'){
           _product_type2 = '2'
         }else{
           _product_type2 = '3'
@@ -653,10 +653,10 @@
     $scope.$watch('product_selected1',function(newVal,oldVal) {
       if(newVal !== oldVal){
         switch (newVal){
-          case '挖掘机':
+          case '装载机':
             getMachineList1(1);
                 break;
-          case '装载机':
+          case '挖掘机':
             getMachineList1(2);
                 break;
           case '重机':
@@ -668,10 +668,10 @@
     $scope.$watch('product_selected2',function(newVal,oldVal) {
       if(newVal !== oldVal){
         switch (newVal){
-          case '挖掘机':
+          case '装载机':
             getMachineList2(1);
             break;
-          case '装载机':
+          case '挖掘机':
             getMachineList2(2);
             break;
           case '重机':
