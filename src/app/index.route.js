@@ -262,6 +262,53 @@
         }
       })
 
+      //租赁保养管理
+      .state('rental.maintenance', {
+        url: '/maintenance',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalMaintenanceMng.html',
+            controller: 'rentalMaintenanceController',
+            controllerAs: 'rentalMaintenanceController'
+          }
+        }
+      })
+      //添加租赁保养信息
+      .state('rental.newMaintenance', {
+        url: '/newMaintenance',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalMaintenanceMng.html',
+            controller: 'newRentalMaintenanceController',
+            controllerAs: 'newRentalMaintenanceController'
+          }
+        }
+      })
+
+      //修改租赁保养信息
+      .state('rental.updateMaintenance', {
+        url: '/updateMaintenance/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalMaintenanceMng.html',
+            controller: 'updateRentalMaintenanceController',
+            controllerAs: 'updateRentalMaintenanceController'
+          }
+        }
+      })
+
+      //查看租赁保养信息
+      .state('rental.viewMaintenance', {
+        url: '/viewMaintenance/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalMaintenanceMng.html',
+            controller: 'viewRentalMaintenanceController',
+            controllerAs: 'viewRentalMaintenanceController'
+          }
+        }
+      })
+
 
       .state('rental.incomeStatistics', {
         url: '/incomeStatistics',

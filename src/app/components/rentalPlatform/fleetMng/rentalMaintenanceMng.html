@@ -1,0 +1,192 @@
+<div class="machine-content" resize>
+  <!--currentState begin-->
+  <div id="currentState" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'currentPosition'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
+        <li class="active"><i class="fa  fa-user"></i>车辆保养</li>
+      </ol>
+    </section>
+    <div class="row info-box-container">
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">保养设备总数</div>
+          <div class="info-data">99</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+
+          <div class="info-title">进行中</div>
+          <div class="info-data">49</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">计划</div>
+          <div class="info-data">25</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">已结束</div>
+          <div class="info-data">25</div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  <div class="row info-box-container">
+    <form class="form-horizontal" role="form">
+
+      <div class="form-group">
+
+        <label class="col-md-1 control-label">车号</label>
+        <div class="col-md-2">
+          <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceController.rentalOrder.id"
+                 placeholder="订单号"/>
+        </div>
+
+        <label  class="col-md-1 control-label">操作人</label>
+        <div class="col-md-2">
+          <input type="text" name="customerName" class="form-control"  ng-model="rentalMaintenanceController.rentalOrder.customerName"
+                 placeholder="订单号"/>
+        </div>
+        <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
+        <div class="col-md-2">
+          <p class="input-group">
+
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalMaintenanceController.org.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalMaintenanceController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </p>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+          <input type="checkbox" checked="checked" ng-model="rentalMaintenanceController.querySubOrg"/>
+        </div>
+
+      </div>
+      <div class="form-group">
+
+        <label class="col-md-1 control-label">开始时间</label>
+        <div class="col-md-2">
+          <p class="input-group">
+            <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="rentalMaintenanceController.rentalOrder.startDate"
+                   is-open="rentalMaintenanceController.startDateSetting.status.opened"
+                   datepicker-options="rentalMaintenanceController.startDateSetting.dateOptions" close-text="Close"
+                   validator="required" message-id="bootstrap" readonly/>
+
+            <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="rentalMaintenanceController.startDateSetting.open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+          </p>
+          <span id="bootstrap"></span>
+        </div>
+
+        <label  class="col-md-1 control-label">结束时间</label>
+        <div class="col-md-2">
+          <p class="input-group">
+            <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="rentalMaintenanceController.rentalOrder.endDate"
+                   is-open="rentalMaintenanceController.endDateOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="rentalMaintenanceController.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+
+        <label class="col-md-1 control-label">状态</label>
+        <div class="col-md-2">
+          <ui-select name="status" ng-model="rentalMaintenanceController.rentalOrder.status" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices repeat="retanlOrderStatus in rentalMaintenanceController.retanlOrderStatusList">
+              <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="col-md-2">
+
+          <button class="btn btn-primary" type="button"
+                  ng-click="rentalMaintenanceController.query(null,null,null,rentalMaintenanceController.rentalOrder)">{{'query'|translate}}
+          </button>
+          <button class="btn btn-default" type="button" ng-click="rentalMaintenanceController.reset()">{{'reset'|translate}}</button>
+        </div>
+
+        <div class="col-md-1">
+
+          <button class="btn btn-primary" type="button"
+                  ng-click="rentalMaintenanceController.new()">新增
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+
+
+    <div class="row" ng-style="rentalMaintenanceController.baseBoxContainer">
+
+      <div class="col-lg-12 table-responsive "><!--表格框-->
+        <table ng-table="rentalMaintenanceController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="maintenance in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="rentalMaintenanceController.isSelected(machine.id)"
+                     ng-click="rentalMaintenanceController.updateSelection($event,machine.id)" ng-model="machine.checked">
+            </td>
+
+            <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{maintenance.id}}</td>
+            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{maintenance.org.label}}</td>
+            <td class="text-nowrap" data-title="'车号'" sortable="'deviceinfo.deviceNum'">{{maintenance.machine.licenseId}}</td>
+            <td class="text-nowrap" data-title="'花费时间(小时)'" sortable="'deviceinfo.deviceNum'">{{maintenance.spendTime}}</td>
+            <td class="text-nowrap" data-title="'费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.spendMoney}}</td>
+            <td class="text-nowrap" data-title="'维修内容'" sortable="'engineType.engineName'">{{maintenance.content}}</td>
+            <td class="text-nowrap" data-title="'维修人'" sortable="'state'">{{maintenance.operator}}</td>
+            <td class="text-nowrap" data-title="'状态'" sortable="'state'">{{maintenance.statusDesc}}</td>
+            <td class="text-nowrap" data-title="'创建时间'" sortable="'state'">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'更新时间'" sortable="'state'">{{maintenance.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'operation'|translate">
+
+
+              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                      ng-click="rentalMaintenanceController.update(maintenance.id)">{{'alter'| translate}}
+              </button>
+              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                      ng-click="rentalMaintenanceController.view(maintenance.id)">查看
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-12"><!--分页框-->
+
+
+        <uib-pagination total-items="rentalMaintenanceController.page.totalElements"
+                        ng-change="rentalMaintenanceController.query(rentalMaintenanceController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="rentalMaintenanceController.pageNumber" items-per-page="rentalMaintenanceController.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </div>
+    </div>
+  </div>
+  <!--currentState end-->
+</div>

@@ -1,0 +1,118 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <section class="content-header">
+    <h1>
+      客户信息
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">修改客户</h3>
+    </div>
+    <form name="newrentalCustomerForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">名称(<span class="text-red">*</span>)</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="名称"
+                     ng-model="updateRentalCustomerController.rentalCustomer.name" name="name" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">联系人</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="联系人"
+                     ng-model="updateRentalCustomerController.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">职位</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="职位"
+                     ng-model="updateRentalCustomerController.rentalCustomer.title" name="title" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">电话</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="电话"
+                     ng-model="updateRentalCustomerController.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">手机</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="手机"
+                     ng-model="updateRentalCustomerController.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
+                     validator="number" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">邮箱</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="邮箱"
+                     ng-model="updateRentalCustomerController.rentalCustomer.email" name="email" typeahead-show-hint="true"
+                     validator="email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">地址</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="地址"
+                     ng-model="updateRentalCustomerController.rentalCustomer.address" name="address" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">邮编</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="邮编"
+                     ng-model="updateRentalCustomerController.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">所属组织</label>
+            <div class="col-md-5">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="updateRentalCustomerController.org.label" name="org" readonly validator="required"/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="updateRentalCustomerController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">描述</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" placeholder="描述"
+                     ng-model="updateRentalCustomerController.rentalCustomer.description" name="description" typeahead-show-hint="true">
+
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="box-footer">
+      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="updateRentalCustomerController.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="updateRentalCustomerController.cancel()">{{'cancel'|translate}}</button>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>

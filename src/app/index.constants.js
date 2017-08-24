@@ -287,6 +287,10 @@
     .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
     .constant('RENTAL_CUSTOMER_URL',SERVER_BASE_URL + 'rental/customer/customer')//租赁平台维护客户信息
 
+    //维修信息
+    .constant('RENTAL_MAINTENANCE_PAGE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenancepage')//
+    .constant('RENTAL_MAINTENANCE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenance')//
+
     //租赁订单
     .constant('RENTAL_ORDER_PAGE_URL',SERVER_BASE_URL + 'rental/order/orderpage')//租赁订单信息
     .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
