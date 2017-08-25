@@ -6,15 +6,23 @@
 
   angular
     .module('GPSCloud')
-    .controller('machineMngController', machineMngController);
+    .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngController($uibModalInstance,deviceInfo) {
+  function machineMngControllerRental($uibModalInstance,machine) {
     var vm = this;
-
+    /**
+     * 关闭模态框
+     */
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
 
+    /**
+     * 更新车辆
+     */
+    vm.updateMachine=function () {
+      console.log("updateMachine")
+    }
   }
 })();

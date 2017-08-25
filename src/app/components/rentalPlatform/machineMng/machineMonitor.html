@@ -2,8 +2,8 @@
   <div class="modal-title">
     <div class="modal-title-text">机器工作详情</div>
     <div class="modal-title-btn">
-      <div ng-click="machineMonitorCtrl.refreshCurrentDeviceInfo()"><i class="fa fa-refresh" aria-hidden="true"></i></div>
-      <div ng-click="machineMonitorCtrl.cancel()"><i class="fa fa-times" aria-hidden="true"></i></div>
+      <div ng-click="vm.refreshCurrentDeviceInfo()"><i class="fa fa-refresh" aria-hidden="true"></i></div>
+      <div ng-click="vm.cancel()"><i class="fa fa-times" aria-hidden="true"></i></div>
     </div>
   </div>
 </div>
@@ -12,7 +12,7 @@
   <!--数据-->
   <uib-tab>
     <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
-    <div class="modal-body" ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/monitor.html'"  ></div>
     </div>
   </uib-tab>
@@ -20,7 +20,7 @@
   <!--历史数据-->
   <uib-tab >
     <uib-tab-heading>{{'historicalData'|translate}}</uib-tab-heading>
-    <div class="modal-body" ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/history.html'"  ></div>
     </div>
   </uib-tab>
@@ -28,7 +28,7 @@
   <!--报警数据-->
   <uib-tab>
     <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
-    <div class="modal-body"  ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body"  ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/waring.html'"  ></div>
     </div>
   </uib-tab>
@@ -36,7 +36,7 @@
   <!--地图-->
   <uib-tab>
     <uib-tab-heading>{{'map'|translate}}</uib-tab-heading>
-    <div class="modal-body"  ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body"  ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/map.html'"  ></div>
     </div>
   </uib-tab>
@@ -52,7 +52,7 @@
   <!--数据分析-->
   <uib-tab>
     <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
-    <div class="modal-body"   ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body"   ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/analysis.html'"  ></div>
     </div>
   </uib-tab>
@@ -60,7 +60,7 @@
   <!--电子围栏-->
   <uib-tab>
     <uib-tab-heading>{{'electricFence'|translate}}</uib-tab-heading>
-    <div class="modal-body"   ng-style="machineMonitorCtrl.monitorheight">
+    <div class="modal-body"   ng-style="vm.monitorheight">
       <div ng-include="'app/components/rentalPlatform/machineMng/electronicFence.html'"  ></div>
     </div>
   </uib-tab>

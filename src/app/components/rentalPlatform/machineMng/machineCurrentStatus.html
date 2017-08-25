@@ -107,7 +107,7 @@
               <td data-title="'最近数据上传时间'" sortable="'最近数据上传时间'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td data-title="'操作'" style="text-align: center" >
                 <button type="button" class="btn btn-primary btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.deviceNum)">监控</button>
-                <button type="button" class="btn btn-success btn-xs" ng-click="machineCurrentStatusCtr.management(row.machineLicenseId)">管理</button>
+                <button type="button" class="btn btn-success btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">管理</button>
               </td>
             </tr>
           </table>
