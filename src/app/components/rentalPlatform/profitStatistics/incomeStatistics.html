@@ -99,6 +99,7 @@
                      datepicker-options="incomeStatisticsCtr.dateOptions"
                      min-date="incomeStatisticsCtr.minDate"
                      max-date="incomeStatisticsCtr.maxDate"
+
                      ng-required="true"
                      current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
@@ -127,7 +128,7 @@
           </div>
         </div>
 
-        <button style="width: 10%" type="button" class="btn btn-sm bg-orange searchButton" ng-click="incomeStatisticsCtr.query(incomeStatisticsCtr.queryIncome)">Search</button>
+        <button style="width: 10%" type="button" class="btn btn-sm bg-orange searchButton" ng-click="incomeStatisticsCtr.query(incomeStatisticsCtr.queryIncome,incomeStatisticsCtr.startDateDeviceData,incomeStatisticsCtr.endDateDeviceData)">Search</button>
 
       </div>
     </div>

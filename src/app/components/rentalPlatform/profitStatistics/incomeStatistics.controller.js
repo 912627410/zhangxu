@@ -17,6 +17,13 @@
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
     vm.machineNums = [];
+    vm.incomeData = [];
+    var xAxisDate = [];
+    var realComeDate = [];
+    var incomeDate = [];
+    vm.queryIncome={machineTypeId:"",
+      heightTypeId:"",
+      machineManufacture:""};
 
     /**
      * 自适应高度函数
@@ -44,7 +51,7 @@
      */
     $scope.$watch('height', function (oldHeight, newHeight) {
       vm.adjustWindow(newHeight);
-      lineChart.resize({height: vm.baseBoxContainerHeight});
+     // lineChart.resize({height: vm.baseBoxContainerHeight});
     })
 
     //定义偏移量
@@ -142,7 +149,7 @@
 
     //开始时间与结束时间
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 1);
+    startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
@@ -276,8 +283,9 @@
 
 
 
-    //income line
 
+
+    //income line
     var lineChart = echarts.init(document.getElementById('incomeLine'), '', {
       width: 'auto',
       height: vm.baseBoxContainerHeight - 20 + 'px'
@@ -288,12 +296,12 @@
       },
       tooltip : {
         trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
+        // axisPointer: {
+        //   type: 'cross',
+        //   label: {
+        //     backgroundColor: '#6a7985'
+        //   }
+        // }
       },
       legend: {
         data:['实收','应收']
@@ -313,7 +321,7 @@
         {
           type : 'category',
           boundaryGap : false,
-          data : ['第一周','第二周','第三周','第四周','第五周','第六周']
+          data : xAxisDate
         }
       ],
       yAxis : [
@@ -325,20 +333,20 @@
         {
           name:'实收',
           type:'line',
-          stack: '总量',
           areaStyle: {normal: {}},
-          data:[120, 132, 101, 134, 90, 230]
+          data:realComeDate
         },
         {
           name:'应收',
           type:'line',
-          stack: '总量',
           areaStyle: {normal: {}},
-          data:[220, 182, 191, 234, 290, 330]
+          data:incomeDate
         }
       ]
     };
     lineChart.setOption(option);
+
+
 
 
     var incomeStatisticInfo = {
@@ -366,20 +374,28 @@
     vm.incomeStatisticInfo = incomeStatisticInfo;
 
     //income query
-    vm.query = function (queryIncome) {
-      console.log( vm.selected )
+    vm.query = function (queryIncome,startDate,endDate) {
+      console.log( vm.selected );
+      var xAxisDate = [];
+      var realComeDate = [];
+      var incomeDate = [];
+
+
       var restCallURL = RENTAL_INCOME_URL;
-      restCallURL += "?startDate=" + $filter('date')(vm.startDate,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
-      if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
-        restCallURL += "&machineType="+ queryIncome.machineTypeId;
+      restCallURL += "?startDate=" + $filter('date')(startDate,'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
+      if(null!=queryIncome){
+        if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
+          restCallURL += "&machineType="+ queryIncome.machineTypeId;
+        }
+        if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
+          restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
+        }
+        if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
+          restCallURL += "&machineManufacture="+ queryIncome.machineManufacture;
+        }
       }
-      if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
-        restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
-      }
-      if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
-        restCallURL += "&brand="+ queryIncome.machineManufacture;
-      }
+
       if(vm.selected.length>0){
         restCallURL += "&orderNums="+ vm.selected;
       }
@@ -387,11 +403,22 @@
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        vm.incomeData = data;
+        vm.incomeData = data.content;
+        for(var i = 0;i<vm.incomeData.length;i++){
+          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
+          realComeDate.push(vm.incomeData[i].realIncome);
+          incomeDate.push(vm.incomeData[i].accountsReceivable);
+        }
+        option.xAxis[0].data = xAxisDate;
+        option.series[0].data = realComeDate;
+        option.series[1].data = incomeDate;
+        lineChart.setOption(option);
       },function (reason) {
         Notification.error("获取收入数据失败")
       })
     }
+    //默认查询最近一个月
+    vm.query(null,vm.startDate,vm.endDate);
 
     var miniChart = document.getElementsByClassName('miniChart'),
       miniChart1 = echarts.init(miniChart[0]),
