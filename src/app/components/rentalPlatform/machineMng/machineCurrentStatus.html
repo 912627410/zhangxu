@@ -61,10 +61,10 @@
     <div class="row" ng-style="machineCurrentStatusCtr.baseBoxContainer">
         <div class="col-lg-12 form-group table-form-group tab-content-search"><!--搜索框-->
           <div class="col-lg-12 col-md-12">
-            <div class="col-lg-2 tab-content-search-head">
-              Current Status
+            <div class="col-lg-1 tab-content-search-head">
+             Status
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-11">
             <div class="tab-content-search-box">
               <label>车号:</label>
               <input type="text" name="licenseId" id="licenseId" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
@@ -89,6 +89,15 @@
               <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
               <button class="btn btn-default" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
             </div>
+              <div >
+                <button class="btn btn-default ng-binding" type="button" ng-click="machineCurrentStatusCtr.addMachine()" style="
+              height: 50px;
+              width: 70px;
+              padding-left: 6px;
+              margin-left: 46px;
+              margin-top: -7px;
+          ">添加车辆</button>
+              </div>
             </div>
           </div>
         </div>

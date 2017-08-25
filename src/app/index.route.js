@@ -111,16 +111,6 @@
         }
       }
     })
-      .state('rental.machineAdd',{
-        url: '/machineAdd',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/machineMng/machineAdd.html',
-            controller: 'machineAddController',
-            controllerAs: 'vm'
-          }
-        }
-      })
 
       //租赁车辆管理
       .state('rental.machine', {

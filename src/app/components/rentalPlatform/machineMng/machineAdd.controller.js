@@ -18,8 +18,6 @@
       "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
     }, {
       "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
-    }, {
-      "title": "rental.machineAdd", "alias": "添加车辆", "icon": "fa-exclamation-triangle"
     }];
     /**
      * 名称转到某个视图
@@ -28,17 +26,6 @@
     vm.gotoView = function (view) {
       $rootScope.$state.go(view);
     }
-    /**
-     * 自适应高度函数
-     * @param windowHeight
-     */
-    vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
-      vm.baseBoxContainer = {
-        "min-height": baseBoxContainerHeight + "px"
-      }
-    }
-    vm.adjustWindow($window.innerHeight);
 
   }
 })();

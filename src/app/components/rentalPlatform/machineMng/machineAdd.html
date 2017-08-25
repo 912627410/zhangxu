@@ -1,112 +1,103 @@
-<div class="machine-content" resize>
-  <nav-btn>
-    <nav-title></nav-title>
-    <nav-list>
-      <nav-item ng-click="machineAddCtr.gotoView(item.title)"></nav-item>
-    </nav-list>
-    <nav-overlay></nav-overlay>
-  </nav-btn>
+<!--currentState begin-->
+<div class="container-fluid">
+  <section class="content-header">
+    <h1>
+      <small>{{'currentPosition'|translate}}:</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+      <li class="active"><i class="fa fa-history"></i>添加车辆</li>
+    </ol>
+  </section>
+  <div class="row info-box-container">
+    <div class="container-fluid">
+      <div class="box-header with-border">
+        <h3 class="box-title">新建车辆</h3>
+      </div>
+      <form class="form-horizontal">
+        <div class="modal-body">
+          <div class="box-body">
+            <div class="box-body col-sm-6">
+              <div class="form-group">
+                <label class="col-sm-3 control-label">车号</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="车号"
+                         ng-model="newRentalOrderController.rentalOrder.totalAmt"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">设备号</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="设备号"
+                         ng-model="newRentalOrderController.rentalOrder.totalAmt"
+                  />
+                </div>
+              </div>
 
-  <!--currentState begin-->
-  <div class="container-fluid" style="" ng-style="vm.baseBoxContainer">
-    <section class="content-header">
-      <h1>
-        <small>{{'currentPosition'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
-        <li class="active"><i class="fa fa-history"></i>添加车辆</li>
-      </ol>
-    </section>
-    <div class="row info-box-container">
-      <div class="container-fluid">
-        <div class="box-header with-border">
-          <h3 class="box-title">新建车辆</h3>
-        </div>
-        <form class="form-horizontal">
-          <div class="modal-body">
-            <div class="box-body">
-              <div class="box-body col-sm-6">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">车号</label>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control" placeholder="车号"
-                           ng-model="newRentalOrderController.rentalOrder.totalAmt"
-                    />
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">经度</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="自动匹配" readonly
+                         ng-model="newRentalOrderController.rentalOrder.longitude" name="email"
+                         typeahead-show-hint="true"/>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">设备号</label>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control" placeholder="设备号"
-                           ng-model="newRentalOrderController.rentalOrder.totalAmt"
-                           />
-                  </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">维度</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" placeholder="自动匹配" readonly
+                         ng-model="newRentalOrderController.rentalOrder.latitude" name="mobile"
+                         typeahead-show-hint="true"/>
                 </div>
+              </div>
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">经度</label>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control" placeholder="自动匹配" readonly
-                           ng-model="newRentalOrderController.rentalOrder.longitude" name="email"
-                           typeahead-show-hint="true"/>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">半径(米)</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control"
+                         ng-model="newRentalOrderController.radius"
+                         ng-change="newRentalOrderController.changeradius(newRentalOrderController.radius)"
+                         name="radius"
+                         validator="number" typeahead-show-hint="true"/>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">维度</label>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control" placeholder="自动匹配" readonly
-                           ng-model="newRentalOrderController.rentalOrder.latitude" name="mobile"
-                           typeahead-show-hint="true"/>
-                  </div>
-                </div>
+              </div>
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">半径(米)</label>
-                  <div class="col-sm-5">
-                    <input type="text" class="form-control"
-                           ng-model="newRentalOrderController.radius"
-                           ng-change="newRentalOrderController.changeradius(newRentalOrderController.radius)"
-                           name="radius"
-                           validator="number" typeahead-show-hint="true"/>
-                  </div>
-                </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2"
+                        ng-click="newRentalOrderController.ok()">{{'confirm'|translate}}
+                </button>
+                <button class="btn btn-warning" type="button" ng-click="newRentalOrderController.cancel()">
+                  {{'cancel'|translate}}
+                </button>
+              </div>
 
-                <div class="form-group">
-                  <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2"
-                          ng-click="newRentalOrderController.ok()">{{'confirm'|translate}}
-                  </button>
-                  <button class="btn btn-warning" type="button" ng-click="newRentalOrderController.cancel()">
-                    {{'cancel'|translate}}
-                  </button>
+            </div>
+            <div class="map-body col-sm-6">
+              <div class="row">
+                <div class="col-md-8">
+                  <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+                  {{'longitude'|translate}}:<span
+                  style="color: red;"> {{newRentalOrderController.amaplongitudeNum}}</span>
+                  &nbsp;&nbsp;
+                  {{'latitude'|translate}}:<span
+                  style="color: red;"> {{newRentalOrderController.amaplatitudeNum}}</span>
                 </div>
 
               </div>
-              <div class="map-body col-sm-6">
-                <div class="row">
-                  <div class="col-md-8">
-                    <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
-                    {{'longitude'|translate}}:<span
-                    style="color: red;"> {{newRentalOrderController.amaplongitudeNum}}</span>
-                    &nbsp;&nbsp;
-                    {{'latitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplatitudeNum}}</span>
-                  </div>
-
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
+                  <span style="color: red;"> {{newRentalOrderController.selectAddress}}</span>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
-                    <span style="color: red;"> {{newRentalOrderController.selectAddress}}</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="box-body" id="newOrderMap" ng-style="newRentalOrderController.baseBoxMapContainer"></div>
-                </div>
+              </div>
+              <div class="form-group">
+                <div class="box-body" id="newOrderMap" ng-style="newRentalOrderController.baseBoxMapContainer"></div>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
