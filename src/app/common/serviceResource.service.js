@@ -254,9 +254,8 @@
       var count  = markers.length;
       var _renderCluserMarker = function (context) {
         var div = document.createElement('div');
-        var bgColor = 'rgba(101, 176, 252, 1)';
+        var bgColor = 'rgba(232, 50, 50, 0.9)';
         var fontColor = '#000';
-        var borderColor = 'rgba(101, 176, 252, 1)';
         var size,fontSize;
         div.style.backgroundColor = bgColor;
         if (context.count>200){
@@ -275,18 +274,17 @@
           size = 25;
           fontSize = 14;
         }
+        div.innerHTML = "<div>"+context.count +"</div>"+"<div class='wave a' style='height:"+size+"px;width:"+size+"px;'></div><div class='wave b' style='height:"+size+"px;width:"+size+"px;'></div><div class='wave c' style='height:"+size+"px;width:"+size+"px;'></div><div class='wave d' style='height:"+size+"px;width:"+size+"px;'></div><div class='wave e' style='height:"+size+"px;width:"+size+"px;'></div>";
         div.style.width = div.style.height = size+'px';
-        div.style.border = 'solid 1px '+ borderColor;
         div.style.borderRadius = size/2 + 'px';
-        div.style.boxShadow = '0 0 18px 4px '+ borderColor;
-        div.innerHTML = context.count;
         div.style.lineHeight = size+'px';
         div.style.color = fontColor;
         div.style.fontSize = fontSize + 'px';
         div.style.textAlign = 'center';
         context.marker.setOffset(new AMap.Pixel(-size/2,-size/2));
-        context.marker.setContent(div)
-      }
+        context.marker.setContent(div);
+
+      };
 
       var cluster = new AMap.MarkerClusterer(map,markers,{
         gridSize:80,
