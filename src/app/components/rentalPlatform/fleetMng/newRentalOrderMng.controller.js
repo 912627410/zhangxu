@@ -76,6 +76,13 @@
       vm.rentalOrder.radius=vm.radius;
       vm.rentalOrder.org=vm.customer.org;
 
+      if (vm.locationAlarmReceiverChk){
+        vm.rentalOrder.locationAlarmReceiver = 1;
+      }
+      else{
+        vm.rentalOrder.locationAlarmReceiver = 0;
+      }
+
 
       var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
     //  vm.rentalCustomer.org=vm.org;
@@ -202,6 +209,7 @@
             }
           });
 
+        //  map.clear();
           vm.echoFence(map);
 
         });
@@ -215,19 +223,52 @@
       })
     };
 
+    var circles=[]; //存放生成的圆
+    var circleEditorList=[]; //存放生成的圆编辑器
+
     /**
      * 回显电子围栏
      * @param map map
      */
     vm.echoFence = function(map) {
+
+    //每次操作时候,如果圆的个数大于0,则移除第一个圆和圆编辑器
+    if(circleEditorList.length>0){
+      map.remove(circles[0]);
+      circles.pop();
+
+      circleEditorList[0].close();
+      circleEditorList.pop();
+
+
+    }
+
+
+   //   map.remove(circles);
+
+
+     //  if(null!=circleEditor){
+     //    //  circleEditor.close();
+     //     circleEditor=null;
+     //    map.remove(circles);
+     // //   map.remove(circleEditor);
+     //  }
+
       //回显围栏坐标
       if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
         var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
 
+
         var circle = createCircle(lnglatXY);
         circle.setMap(map);
 
-        var circleEditor = new AMap.CircleEditor(map, circle);
+
+
+        // if(null==circleEditor){
+        //  circleEditor = new AMap.CircleEditor(map, circle);
+        // }
+
+        var  circleEditor = new AMap.CircleEditor(map, circle);
 
         AMap.event.addListener(circleEditor, "move", function (e) {
           var location = [e.lnglat.lng, e.lnglat.lat];
@@ -248,38 +289,19 @@
 
         circleEditor.open();
 
+        circles.push(circle);
+        circleEditorList.push(circleEditor);
+       // circle.hide();
+
+
       }
     };
 
 
-    vm.createMarker=function(marker, poi){
-      var infoWindow= vm.createInfoWindow(poi);
-      infoWindow.open(vm.scopeMap, marker.getPosition());
-
-      AMap.event.addListener(marker, 'click', function () { //鼠标点击marker弹出自定义的信息窗体
-        var infoWindow= vm.createInfoWindow(poi);
-
-
-        infoWindow.open(vm.scopeMap, marker.getPosition());
-
-        var  lnglatXY=[marker.getPosition().getLng(), marker.getPosition().getLat()];
-        vm.updateLocationInfo(poi.address, lnglatXY);
-
-      });
-    }
-
-    vm.createInfoWindow=function(poi){
-      var infoWindow = new AMap.InfoWindow({
-        autoMove: true,
-        offset: {x: 0, y: -30}
-      });
-
-      infoWindow.setContent(vm.createContent(poi));
-      return infoWindow;
-
-    }
 
     vm.createContent=function(poi) {  //信息窗体内容
+
+      alert(11);
       var s = [];
       if(null!=poi.name){
 
@@ -421,6 +443,7 @@
 
 
     vm.addMarker=function(map, location) {
+      alert(33);
       var marker = new AMap.Marker({
         map: map,
         position: location
