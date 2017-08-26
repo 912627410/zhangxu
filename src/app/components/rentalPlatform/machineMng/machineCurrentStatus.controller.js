@@ -192,15 +192,14 @@
        var restCallUrl = RENTAL_MACHINE_URL + "?licenseId=" + machineLicenseId;
        var machineDataPromis = serviceResource.restCallService(restCallUrl, "GET");
        machineDataPromis.then(function (data) {
-         //打开模态框
          $rootScope.currentOpenModal = $uibModal.open({
            animation: true,
            backdrop: false,
            templateUrl: 'app/components/rentalPlatform/machineMng/machineMng.html',
            controller: 'machineMngControllerRental',
            controllerAs:'vm',
-           openedClass:'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
-           windowClass:'test1',//class名 加载到ui-model 的顶级div上面
+           openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+           windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
            windowTopClass:'test2',//加载到window-class指令
            size: 'super-lg',
            resolve: { //用来向controller传数据
@@ -215,15 +214,14 @@
      }
 
      vm.addMachine=function () {
-       //打开模态框
        $rootScope.currentOpenModal = $uibModal.open({
          animation: true,
          backdrop: false,
          templateUrl: 'app/components/rentalPlatform/machineMng/machineAdd.html',
          controller: 'machineAddController',
          controllerAs:'vm',
-         openedClass:'test',//class名 加载到整个页面的body 上面可以取消右边的滚动条
-         windowClass:'test1',//class名 加载到ui-model 的顶级div上面
+         openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+         windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
          windowTopClass:'test2',//加载到window-class指令
          size: 'super-lg'
        });
