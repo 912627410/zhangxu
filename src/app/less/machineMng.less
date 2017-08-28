@@ -359,7 +359,7 @@
 
 .b{
   transform: scale(0);
-  animation: wave 2.5s 0.2s;
+  animation: wave 2.5s 0.4s;
   animation-iteration-count: infinite;
 }
 
@@ -381,13 +381,9 @@
 /*animation-iteration-count: infinite;*/
 /*}*/
 @keyframes wave{
-  0%{
+  0%,10%{
     transform: scale(1);
     border: 2px solid rgba(232, 50, 50, 0.9);
-  }
-  50%{
-    transform: scale(1);
-    border: 2px solid rgba(232, 50, 50, 0.9)
   }
   100%{
     transform: scale(1.8);
