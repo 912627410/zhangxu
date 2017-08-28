@@ -238,7 +238,11 @@
     var rentOption =  {
       backgroundColor: '#fff',
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        formatter:function(params){
+          var temp  = '<div>' + params[0].name + '</div>' + '<div>' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div>' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + ((params[0].data/(params[0].data+params[1].data))*10000/100).toFixed(2) + '%' + '</div>';
+          return temp;
+        }
       },
       grid: {
         top:'20%',
@@ -340,7 +344,7 @@
             color: 'rgb(35, 142, 250)'
           }
         },
-        data: [0, 0, 10, 20, 30, 30, 70],
+        data: [0, 0, 60, 20, 30, 30, 70],
         smooth: true,
         smoothMonotone: 'x'
       }]
