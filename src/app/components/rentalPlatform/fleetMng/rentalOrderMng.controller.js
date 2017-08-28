@@ -167,5 +167,18 @@
       vm.org=null;
       vm.id=null;
     }
+
+    /**
+     * 跳转到更新页面
+     * @param id
+     */
+    vm.update=function(id){
+      $state.go('rental.updateOrder', {id: id});
+    }
+
+    vm.view=function(id){
+      $state.go('rental.viewOrder', {id: id});
+    }
+
   }
 })();

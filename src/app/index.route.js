@@ -182,6 +182,30 @@
           }
         }
       })
+
+      //租赁订单管理
+      .state('rental.updateOrder', {
+        url: '/updateOrder/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
+            controller: 'updateRentalOrderController',
+            controllerAs: 'updateRentalOrderController'
+          }
+        }
+      })
+
+      .state('rental.viewOrder', {
+        url: '/viewOrder/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrderMng.html',
+            controller: 'viewRentalOrderController',
+            controllerAs: 'viewRentalOrderController'
+          }
+        }
+      })
+
       //租赁围栏管理
       .state('rental.fence', {
         url: '/fence',

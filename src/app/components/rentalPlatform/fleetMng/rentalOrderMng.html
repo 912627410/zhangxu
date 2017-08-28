@@ -14,7 +14,7 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">订单总数</div>
-          <div class="info-data">99</div>
+          <div class="info-data">{{rentalOrderMngController.page.totalElements}}</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
@@ -156,7 +156,7 @@
             <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
             <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
             <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
-            <td class="text-nowrap" data-title="'客户'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
+            <td class="text-nowrap" data-title="'客户名'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
             <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
             <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
             <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">
@@ -174,10 +174,10 @@
 
 
               <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="rentalOrderMngController.removeDevice(machine)">{{'alter'| translate}}
+                      ng-click="rentalOrderMngController.update(rentalOrder.id)">{{'alter'| translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalOrderMngController.updateMachine(machine,'lg')">查看
+                      ng-click="rentalOrderMngController.view(rentalOrder.id)">查看
               </button>
             </td>
           </tr>
