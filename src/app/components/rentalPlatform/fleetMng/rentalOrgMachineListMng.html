@@ -108,19 +108,15 @@
                    ng-click="orgMachineListMngController.updateSelection($event,machine.id)" ng-model="machine.checked">
           </td>
           <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-            <a ng-if="orgMachineListMngController.validateOperPermission()" href
-               ng-click="orgMachineListMngController.updateMachine(machine,'lg')">{{machine.licenseId}}</a>
-            <span ng-if="!orgMachineListMngController.validateOperPermission()">{{machine.licenseId}}</span>
-
+            {{machine.licenseId}}
           </td>
 
           <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'label'">{{machine.label}}</td>
           <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'deviceType.name'">
-
-            {{machine.deviceType.name}}</td>
-          <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'deviceHeightType.name'">{{machine.deviceHeightType.name }}</td>
-          <td class="text-nowrap" data-title="'driveType'|translate" sortable="'devicePowerType.name'">{{machine.devicePowerType.name}}</td>
-          <td class="text-nowrap" data-title="'brandType'|translate" sortable="'deviceManufacture.name'">{{machine.deviceManufacture.name}}</td>
+            {{machine.typeName}}</td>
+          <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName }}</td>
+          <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{machine.powerTypeName}}</td>
+          <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName}}</td>
 
         </tr>
       </table>

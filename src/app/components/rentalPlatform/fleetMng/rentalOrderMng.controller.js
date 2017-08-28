@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window,$state, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
+  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -112,6 +112,17 @@
         if (null != rentalOrder.status&&rentalOrder.status!="") {
           restCallURL += "&search_EQ_status=" + rentalOrder.status.value;
         }
+
+        if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
+          restCallURL += "&search_DGTE_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+        }
+
+        if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
+          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+        }
+
+
+
       }
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {

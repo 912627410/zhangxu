@@ -57,7 +57,7 @@
           <div class="col-md-2">
             <p class="input-group">
 
-              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org" readonly required/>
+              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org" readonly />
               <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalOrderMngController.openTreeInfo()">
@@ -77,7 +77,7 @@
                      ng-model="rentalOrderMngController.rentalOrder.startDate"
                      is-open="rentalOrderMngController.startDateSetting.status.opened"
                      datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
-                     validator="required" message-id="bootstrap" readonly/>
+                     message-id="bootstrap" readonly/>
 
               <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
