@@ -222,6 +222,10 @@
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
     var lineHeight = vm.rightBoxTopHeightTemp - 30;
+    machineNumlis[0].style.height = (lineHeight / 4) + 'px';
+    machineNumlis[1].style.height = (lineHeight / 4) + 'px';
+    machineNumlis[2].style.height = (lineHeight / 4) + 'px';
+    machineNumlis[3].style.height = (lineHeight / 4) + 'px';
     machineNumlis[0].style.lineHeight = (lineHeight / 4) + 'px';
     machineNumlis[1].style.lineHeight = (lineHeight / 4) + 'px';
     machineNumlis[2].style.lineHeight = (lineHeight / 4) + 'px';
@@ -446,6 +450,109 @@
     }
     //加载出租率
     crateHomePieOption();
+
+
+    /**
+     *  miniPie
+     */
+    var miniPie = document.getElementsByClassName('miniPie');
+    var miniPie1 = echarts.init(miniPie[0]);
+    var miniPie2 = echarts.init(miniPie[1]);
+    var miniPie3 = echarts.init(miniPie[2]);
+
+    function creatMiniPie(chart,productType){
+      var restCallURL = ALERT_TREND_URL;
+      // restCallURL += '?alarmType=' + productType;
+      restCallURL += '?alarmType=1';
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function(data){
+        var miniPieOption = {
+          title: {
+            text: '44%',
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              color: "rgb(38, 173, 88)",
+              fontSize: 12
+            }
+          },
+          backgroundColor: '#fff',
+          series: [{
+            name: 'Line 1',
+            type: 'pie',
+            clockWise: false,
+            radius: ['50%', '60%'],
+            itemStyle: {
+              normal: {
+                color: 'rgba(38, 173, 88,1)',
+                label: {
+                  show: false
+                },
+                labelLine: {
+                  show: false
+                }
+                // shadowBlur: 20,
+                // shadowColor: 'rgba(40, 40, 40, 0.2)'
+              },
+              emphasis: {
+                color: 'rgba(38, 173, 88,1)',
+                label: {
+                  show: false
+                },
+                labelLine: {
+                  show: false
+                },
+                shadowBlur: 10,
+                shadowColor: 'rgba(40, 40, 40, 0.2)'
+              }
+            },
+            hoverAnimation: false,
+            data: [{
+              value: 99,
+              name: '01'
+            }, {
+              value: 22,
+              name: 'invisible',
+              itemStyle: {
+                normal: {
+                  color: 'rgba(0, 0, 0,0.2)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgba(0, 0, 0, 0.2)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                }
+              }
+            }
+
+            ]
+          }]
+        };
+        chart.setOption(miniPieOption);
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      })
+
+    }
+
+    creatMiniPie(miniPie1,1);
+    creatMiniPie(miniPie2,3);
+    creatMiniPie(miniPie3,3);
 
     /**
      * miniChart
