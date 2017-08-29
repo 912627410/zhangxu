@@ -8,7 +8,8 @@
     function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
-                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT) {
+                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
+                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_READ_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -387,6 +388,109 @@
                 serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,centerAddr);
             })
         };
+
+      /**
+       * 设置回传时间间隔
+       * @param deviceNum
+       * @param returnTimeParam
+       */
+      vm.setReturnTime = function (deviceNum, returnTimeParam) {
+        if(angular.isUndefined(returnTimeParam)){
+          Notification.error("请检查时间设置!");
+          return;
+        }
+        if (deviceNum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+
+        if(null == returnTimeParam.name || "" == returnTimeParam.name) {
+          Notification.error("请选择时间间隔类型");
+          return;
+        }
+
+        if(null == returnTimeParam.time || "" == returnTimeParam.time) {
+          Notification.error("请输入时间");
+          return;
+        }
+
+        var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
+        $confirm({
+          text: languages.findKey('确定设置此时间间隔?') + '',
+          title: languages.findKey('时间间隔设置确认') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        }).then(function () {
+          var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+          restPromise.then(function (data) {
+            if (data.code == 0) {
+              Notification.success(data.content);
+            }
+            else {
+              Notification.error(data.content);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+      };
+
+
+      vm.uploadNum = 1;// 默认上传次数
+      vm.uploadFrequency = 10;// 默认上传频率
+
+      /**
+       * 发送读请求命令
+       * @param deviceNum
+       * @param register
+       * @param dataLength
+       * @param uploadNum
+         * @param uploadFrequency
+         */
+      vm.sendReadCommand = function (deviceNum, register, dataLength, uploadNum, uploadFrequency) {
+        if (deviceNum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        if(null == register || "" == register) {
+          Notification.error("请输入起始地址");
+          return;
+        }
+        if(null == dataLength || "" == dataLength) {
+          Notification.error("请输入数据长度");
+          return;
+        }
+        if(null == uploadNum || uploadNum == "") {
+          Notification.error("请输入上传次数");
+          return;
+        }
+        if(null == uploadFrequency || uploadFrequency == "") {
+          Notification.error("请输入上传频率");
+          return;
+        } else if(uploadFrequency < 1) {
+          Notification.error("上传频率录入有误");
+          return;
+        }
+        var restURL = SEND_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
+        $confirm({
+          text: languages.findKey('确定发送读请求命令?') + '',
+          title: languages.findKey('读请求命令确认') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        }).then(function () {
+          var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+          restPromise.then(function (data) {
+            if (data.code == 0) {
+              Notification.success(data.content);
+            }
+            else {
+              Notification.error(data.content);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+      };
 
         //构造地图对象
         vm.initMap=function(mapId,zoomsize,centeraddr){

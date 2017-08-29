@@ -53,7 +53,7 @@
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
           var templateUrl, controller;
-          if(vm.deviceinfoMonitor.versionNum == 'A001') {
+          if(vm.deviceinfoMonitor.versionNum == 'A001'||vm.deviceinfoMonitor.versionNum == '11') {
             templateUrl = 'app/components/deviceMonitor/deviceAerialCurrentInfo.html';
             controller = 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController';
           } else {

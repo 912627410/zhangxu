@@ -98,8 +98,9 @@
                       <tr>
                         <td>{{'whetherToBind'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='10'" class="bg-info text-info">{{'bind'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='B'" class="bg-info text-info">{{'BaseStationLocation'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='00'" class="bg-warning text-warning">{{'unbind'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus==null ||(deviceAerialCurrentInfoController.deviceinfo.lockStatus!='10'&& deviceAerialCurrentInfoController.deviceinfo.lockStatus!='00')">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus==null ||(deviceAerialCurrentInfoController.deviceinfo.lockStatus!='10'&& deviceAerialCurrentInfoController.deviceinfo.lockStatus!='00'&& deviceAerialCurrentInfoController.deviceinfo.lockStatus!='B')">{{'noData'|translate}}</td>
                         <td>{{'positioningState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" class="bg-warning text-warning">{{'notLocate'|translate}}</td>
@@ -1510,6 +1511,147 @@
             </div>
           </div>
 
+          <!--高空车MQTT协议 设置上传丶采样时间-->
+          <div presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+            <hr />
+            <div class="row form-group">
+              <!-- 设置采样间隔 -->
+              <div class="col-md-6">
+                <div class="box box-success">
+                  <div class="box-header">
+                    <h5 class="box-title text-gray">设置采样间隔</h5>
+                    <div class="box-tools pull-right">
+                      <a type="button" class="btn" data-toggle="tooltip"
+                         data-placement="right" title="设置采样间隔"> <i class="fa fa-info" ></i></a>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="row">
+                          <label class="col-md-2 control-label text-nowrap">采样间隔类型</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <select class="form-control" ng-model="deviceAerialCurrentInfoController.returnTimeParam.name">
+                              <option value="timeBasicInf">产品信息上传时间间隔</option>
+                              <option value="timeUpdate">上传时间间隔</option>
+                              <option value="timeSampleECUSlow">ECU缓慢变化采样时间间隔</option>
+                              <option value="timeSampleECUFast">ECU快速变化采样时间间隔</option>
+                              <option value="timeSampleGPS">GPS信息采样时间间隔</option>
+                              <option value="timeSamplePowerBAT">外部电池盒采集间隔</option>
+                              <option value="timeSampleCharge">充电器信息采集间隔</option>
+                              <option value="timeSleepTime">GPS休眠时间间隔</option>
+                              <option value="timeGPSWaitTime">GPS定位等待时间</option>
+                              <option value="timeSampleMotorParas">电机参数采集间隔</option>
+                              <option value="timeSampleSetParas">设置参数采集间隔</option>
+                              <option value="timeSampleDeviceRunStatus">设备运行状态采集间隔</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="row">
+                          <label class="col-md-2 control-label text-nowrap">采样时间(秒)</label>
+                        </div>
+                        <div class="row" >
+                          <div class="col-md-12">
+                            <input type="text" id="returnTime" class="form-control" placeholder="时间(秒)"
+                                   validator="number" ng-model="deviceAerialCurrentInfoController.returnTimeParam.time" name="returnTime"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 text-right">
+                        <div class="row" >
+                          <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <button class="btn btn-default" type="button" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setInterval"
+                                    ng-click="deviceAerialCurrentInfoController.setReturnTime(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.returnTimeParam)">{{'send'|translate}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--  请求数据  -->
+              <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setRead">
+                <div class="box box-success">
+                  <div class="box-header">
+                    <h5 class="box-title text-gray">请求数据</h5>
+                    <div class="box-tools pull-right">
+                      <a type="button" class="btn" data-toggle="tooltip"
+                         data-placement="right" title="请求数据"> <i class="fa fa-info" ></i></a>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div class="row" >
+                      <div class="col-md-3">
+                        <div class="row">
+                          <label for="register" class="col-md-7 control-label text-nowrap">起始地址</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <input type="text" id="register" class="form-control" validator="number" ng-model="deviceAerialCurrentInfoController.register" name="register"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="row">
+                          <label for="dataLength" class="col-md-7 control-label text-nowrap">数据长度</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <input type="text" id="dataLength" class="form-control"
+                                   validator="number" ng-model="deviceAerialCurrentInfoController.dataLength" name="dataLength"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="row">
+                          <label for="uploadNum" class="col-md-7 control-label text-nowrap">上传次数</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <input type="text" id="uploadNum" class="form-control"
+                                   validator="number" ng-model="deviceAerialCurrentInfoController.uploadNum" name="uploadNum"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="row">
+                          <label for="uploadFrequency" class="col-md-7 control-label text-nowrap">上传频率</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <input type="text" id="uploadFrequency" class="form-control"
+                                   validator="number" ng-model="deviceAerialCurrentInfoController.uploadFrequency" name="uploadFrequency"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 text-right">
+                        <div class="row">
+                          <label class="col-md-7 control-label text-nowrap">&nbsp;</label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <button class="btn btn-default" type="button" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setRead"
+                                    ng-click="deviceAerialCurrentInfoController.sendReadCommand(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.register,deviceAerialCurrentInfoController.dataLength,
+                                    deviceAerialCurrentInfoController.uploadNum,deviceAerialCurrentInfoController.uploadFrequency)">{{'send'|translate}}</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </uib-tab>
