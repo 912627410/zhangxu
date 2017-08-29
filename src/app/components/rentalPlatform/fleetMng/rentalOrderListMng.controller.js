@@ -9,7 +9,7 @@
     .controller('orderListMngController', orderListMngController);
 
   /** @ngInject */
-  function orderListMngController($scope, $window,$state, $location,$uibModalInstance, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
+  function orderListMngController($scope, $window,$state, $location,$filter,$uibModalInstance, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
 
@@ -114,6 +114,15 @@
         if (null != rentalOrder.status&&rentalOrder.status!="") {
           restCallURL += "&search_EQ_status=" + rentalOrder.status.value;
         }
+
+        if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
+          restCallURL += "&search_DGTE_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+        }
+
+        if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
+          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+        }
+
       }
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
@@ -148,9 +157,6 @@
       return permissions.getPermissions("machine:oper");
     }
 
-    vm.new=function(id){
-      $state.go('rental.newOrder');
-    }
 
     //重置查询框
     vm.reset = function () {

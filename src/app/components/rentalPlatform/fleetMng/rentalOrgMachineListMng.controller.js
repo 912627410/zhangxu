@@ -9,8 +9,10 @@
     .controller('orgMachineListMngController', orgMachineListMngController);
 
   /** @ngInject */
-  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
+  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl, orderId,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL) {
     var vm = this;
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的设备id
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -123,7 +125,6 @@
       // });
     };
 
-console.log("333111");
 
     vm.query(0,null,null,null);
 
@@ -146,6 +147,48 @@ console.log("333111");
       vm.machine = null;
       vm.org = null;
     }
+
+
+    var updateSelected = function (action, machine) {
+      if (action == 'add' && vm.selected.indexOf(machine.id) == -1) {
+        vm.selected.push(machine.id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(machine.id) != -1) {
+        var idx = vm.selected.indexOf(machine.id);
+        vm.selected.splice(idx, 1);
+
+      }
+    }
+
+    vm.updateSelection = function ($event, id, status) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
+
+
+    vm.updateAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+
+      vm.tableParams.data.forEach(function (machine) {
+        updateSelected(action, machine);
+      })
+
+    }
+
+    vm.isSelected = function (id) {
+      return vm.selected.indexOf(id) >= 0;
+    }
+
+
+    //批量分批车辆
+    vm.batchMoveMachine = function () {
+      $uibModalInstance.close(vm.selected);
+
+    };
+
 
 
   }
