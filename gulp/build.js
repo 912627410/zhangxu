@@ -38,10 +38,25 @@ gulp.task('html', ['inject', 'partials'], function () {
   var cssFilter = $.filter('**/*.css', { restore: true });
   var assets;
 
+  function modifyReved(filename) {
+    if (filename.indexOf('.cache') > -1) {
+      const _version = filename.match(/\.[\w]*\.cache/)[0].replace(/(\.|cache)*/g,"");
+      const _filename = filename.replace(/\.[\w]*\.cache/,"");
+      filename = _filename + "?v=" + _version;
+      return filename;
+    }
+    return filename;
+  }
+
   return gulp.src(path.join(conf.paths.tmp, '/serve/*.html'))
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(assets = $.useref.assets())
     .pipe($.rev())
+    .pipe($.revFormat({
+      prefix: '.',
+      suffix: '.cache',
+      lastExt: false
+    }))
     .pipe(jsFilter)
     .pipe($.sourcemaps.init())
     .pipe($.ngAnnotate())
@@ -56,7 +71,9 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(cssFilter.restore)
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.revReplace())
+    .pipe($.revReplace({
+      modifyReved: modifyReved
+    }))
     .pipe(htmlFilter)
     .pipe($.minifyHtml({
       empty: true,
@@ -67,7 +84,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')))
     .pipe($.size({ title: path.join(conf.paths.dist, '/'), showFiles: true }));
-  });
+});
 
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task
