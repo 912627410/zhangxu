@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF) {
+  function profitStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -236,6 +236,35 @@
     })
 
   vm.incomeStatisticInfo = incomeStatisticInfo;
+
+
+    vm.query = function (queryProfit,queryStartData,queryEndData) {
+      if(null==queryCost){
+        return '';
+      }
+
+      var restCallURL = RENTAL_PROFIT_URL;
+      restCallURL += "?startDate=" + $filter('date')(queryStartData,'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
+      if(null!=queryProfit){
+        if(null!=queryProfit.machineTypeId&&queryProfit.machineTypeId !=""&&queryProfit.machineTypeId!=undefined){
+          restCallURL += "&machineType="+ queryProfit.machineTypeId;
+        }
+        if(null!=queryProfit.heightTypeId&&queryProfit.heightTypeId!=""){
+          restCallURL += "&heightTypeId="+ queryProfit.heightTypeId;
+        }
+        if(null!=queryProfit.machineManufacture&&queryProfit.machineManufacture!=""){
+          restCallURL += "&machineManufacture="+ queryProfit.machineManufacture;
+        }
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.CostData = data.content;
+
+      },function (reason) {
+        Notification.error("获取利润数据失败")
+      })
+    }
 
 }
 })();

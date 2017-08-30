@@ -151,12 +151,12 @@
                 <tr ng-repeat="orderInfo in $data">
                   <td class="text-nowrap" data-header="'selectOrderAllHeader'">
                     <input type="checkbox"
-                           ng-checked="incomeStatisticsCtr.isSelected(orderInfo.id)"
-                           ng-click="incomeStatisticsCtr.updateSelection($event,orderInfo.id)"
+                           ng-checked="incomeStatisticsCtr.orderIsSelected(orderInfo.id)"
+                           ng-click="incomeStatisticsCtr.updateOrderSelection($event,orderInfo.id)"
                            ng-model="orderInfo.checked"></td>
 
                   <td class="text-nowrap"  data-title="'订单号'"  sortable="orderName">
-                    <a  ng-click="incomeStatisticsCtr.updateDeviceinfo(orderInfo.id)">{{orderInfo.id}}</a>
+                    <a  >{{orderInfo.id}}</a>
                   </td>
                 </tr>
               </table>
@@ -184,12 +184,12 @@
               <table class="table table-condensed table-bordered table-striped text-nowrap" ng-table="incomeStatisticsCtr.machinetableParams">
                 <tr ng-repeat="machineInfo in $data">
                   <td class="text-nowrap" data-header="'selectMachineAllHeader'">
-                    <input type="checkbox" ng-checked="incomeStatisticsCtr.isSelected(machineInfo.id)"
-                           ng-click="incomeStatisticsCtr.updateSelection($event,machineInfo.id)"
+                    <input type="checkbox" ng-checked="incomeStatisticsCtr.machineIsSelected(machineInfo.id)"
+                           ng-click="incomeStatisticsCtr.updateMachineSelection($event,machineInfo.id)"
                            ng-model="machineInfo.checked"></td>
 
                   <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-                    <a  ng-click="incomeStatisticsCtr.updateDeviceinfo(machineInfo.id)">{{machineInfo.licenseId}}</a>
+                    <a  >{{machineInfo.licenseId}}</a>
                   </td>
                 </tr>
               </table>
