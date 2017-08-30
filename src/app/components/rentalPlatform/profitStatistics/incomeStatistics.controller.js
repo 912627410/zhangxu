@@ -15,7 +15,8 @@
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
     vm.selectAll = false;//是否全选标志
-    vm.selected = []; //选中的设备id
+    vm.orderSelected = []; //选中的设备id
+    vm.machineSelected = []; //选中的车辆id
     vm.machineNums = [];
     vm.incomeData = [];
     var xAxisDate = [];
@@ -80,20 +81,36 @@
 
 
     //订单号和车号复选框多选与全选
-    var updateSelected = function (action, id) {
-      if (action == 'add' && vm.selected.indexOf(id) == -1) {
-        vm.selected.push(id);
+    var updateOrderSelected = function (action, id) {
+      if (action == 'add' && vm.orderSelected.indexOf(id) == -1) {
+        vm.orderSelected.push(id);
       }
-      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
-        var idx = vm.selected.indexOf(id);
-        vm.selected.splice(idx, 1);
+      if (action == 'remove' && vm.orderSelected.indexOf(id) != -1) {
+        var idx = vm.orderSelected.indexOf(id);
+        vm.orderIsSelected.splice(idx, 1);
 
       }
     }
-    vm.updateSelection = function ($event, id, status) {
+    vm.updateOrderSelection = function ($event, id, status) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      updateSelected(action, id);
+      updateOrderSelected(action, id);
+    }
+
+    var updateMachineSelected = function (action, id) {
+      if (action == 'add' && vm.machineSelected.indexOf(id) == -1) {
+        vm.machineSelected.push(id);
+      }
+      if (action == 'remove' && vm.machineSelected.indexOf(id) != -1) {
+        var idx = vm.machineSelected.indexOf(id);
+        vm.machineSelected.splice(idx, 1);
+
+      }
+    }
+    vm.updateMachineSelection = function ($event, id, status) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateMachineSelected(action, id);
     }
 
     vm.updateOrderAllSelection = function ($event) {
@@ -114,8 +131,12 @@
       })
     }
 
-    vm.isSelected = function (id) {
-      return vm.selected.indexOf(id) >= 0;
+    vm.orderIsSelected = function (id) {
+      return vm.orderSelected.indexOf(id) >= 0;
+    }
+
+    vm.machineIsSelected = function (id) {
+      return vm.machineSelected.indexOf(id) >= 0;
     }
     vm.Orderchecked = function () {
       var operStatus = false;
@@ -140,14 +161,13 @@
         operStatus = true;
         vm.selectAll = true;
       }
-
       vm.tableParams.data.forEach(function (machineInfo) {
         machineInfo.checked = operStatus;
       })
     }
 
 
-    //开始时间与结束时间
+    //开始时间与结束时间(默认差值为一个月30天)
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
@@ -375,7 +395,8 @@
 
     //income query
     vm.query = function (queryIncome,startDate,endDate) {
-      console.log( vm.selected );
+      console.log( vm.orderSelected);
+      console.log( vm.machineSelected);
       var xAxisDate = [];
       var realComeDate = [];
       var incomeDate = [];
@@ -396,8 +417,11 @@
         }
       }
 
-      if(vm.selected.length>0){
-        restCallURL += "&orderNums="+ vm.selected;
+      if(vm.orderSelected.length>0){
+        restCallURL += "&orderNums="+ vm.orderSelected;
+      }
+      if(vm.machineSelected.length>0){
+        restCallURL += "&machineNums="+ vm.machineSelected;
       }
 
 
