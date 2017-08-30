@@ -22,7 +22,7 @@
     vm.leaseingCount = 0;//出租中
     vm.sceneSuspensionCount = 0;//现场报停
     //搜索条件定义
-    vm.searchConditions = {}
+    vm.searchConditions = {};
     //定义每页显示多少条数据
     vm.pageSize = 13;
     /**
@@ -35,8 +35,11 @@
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
-    }
-    vm.adjustWindow($window.innerHeight);//初始化高度
+    };
+
+    var machineContent = document.getElementsByClassName('machine-content');
+    machineContent[0].style.height = $window.innerHeight + 'px';
+
     //定义页面导航
     $scope.navs = [{
       "title": "rental", "alias": "当前位置", "icon": "fa-map"

@@ -67,7 +67,7 @@
          style="margin-left: 0px!important;margin-right: 0px!important;">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-4">
-          <div class="box box-primary">
+          <div class="box base-left-map-box-container">
             <div class="box-header with-border">
               <h3 class="box-title">{{'type'|translate}}</h3>
             </div>
@@ -75,37 +75,37 @@
               <ul class="nav nav-pills nav-stacked">
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==3]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(null)"><i class="fa fa-check-square-o"></i>全部报警消息
-                    <span class="label label-primary pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==false]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(false)"><i class="fa fa-envelope-o"></i>全部未处理
-                    <span class="label label-warning pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==true]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(true)"><i class="fa fa-envelope-o"></i>全部已处理
-                    <span class="label label-warning pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==1]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><i class="fa fa-map"></i>围栏报警
-                    <span class="label label-danger pull-right" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==4]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><i class="fa fa-cog"></i> 车辆报警
-                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==2]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><i class="fa fa-cog"></i>保养提醒
-                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==3]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><i class="fa fa-unlink"></i>离线报警
-                    <span class="label label-warning pull-right" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
                   </a>
                 </li>
               </ul>
@@ -113,7 +113,7 @@
           </div>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-8">
-          <div class="box box-primary">
+          <div class="box base-left-map-box-container table-wrapper">
             <div class="box-header with-border">
               <div class="row">
                 <div class="col-lg-3">
@@ -159,19 +159,19 @@
                 </button>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm" ng-click="">
-                    {{'markedAsAlreadyProcessed'|translate}}
+                    {{'done'|translate}}
                   </button>
                 </div>
               </div>
               <div class="table-responsive mailbox-messages">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover">
                   <tbody>
                   <th>{{'select'|translate}}</th>
                   <th>{{'deviceNum'|translate}}</th>
                   <th>车号</th>
                   <th>{{'content'|translate}}</th>
                   <th>{{'generateTime'|translate}}</th>
-                  <th>{{'operation'|translate}}</th>
+                  <th>状态</th>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
                     <td><input type="checkbox" ng-model="notification.checked"></td>
                     <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
@@ -180,9 +180,11 @@
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
                       <!--<button type="button" class="btn btn-primary btn-xs" ng-click="machineAlarmInfoCtr.processRentalNotificationRead(notification.readStatus)">标记已读</button>-->
-                      <button type="button" class="btn btn-success btn-xs" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
-                        <span ng-if="notification.processStatus == false">{{'markedAsAlreadyProcessed'|translate}}</span>
-                        <span ng-if="notification.processStatus == true">{{'markAsUntreated'|translate}}</span>
+                      <button type="button" class="btn btn-warning btn-xs" ng-if="notification.processStatus == false" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
+                        <span>{{'undo'|translate}}</span>
+                      </button>
+                      <button type="button" class="btn btn-success btn-xs" ng-if="notification.processStatus == true" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
+                        <span>{{'done'|translate}}</span>
                       </button>
                     </td>
                   </tr>

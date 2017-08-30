@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -274,7 +274,7 @@
      * 从组织调入车辆
      * @param size
      */
-    vm.getMachineFromOrg = function (size) {
+    vm.getLeftMachineFromOrg = function (size) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -286,6 +286,9 @@
           operatorInfo: function () {
             return vm.operatorInfo;
           },
+          orderId: function () {
+            return vm.leftRentalOrder.id;
+          },
           selectUrl: function () {
             return RENTANL_UNUSED_MACHINE_PAGE_URL;
           }
@@ -293,20 +296,24 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.rightRentalOrder=result;
 
-        //如果选择的订单和左边的一样,则直接提示重新选择
-        if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
-          vm.rightRentalOrder=null;
-          Notification.error(" 选择的订单不能一样!");
-          return;
-        }
+        var roleUsers = {"addMachineIdList": result, "addOrderId": vm.leftRentalOrder.id};
+        var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, roleUsers);
+        restPromise.then(function (data) {
 
-        console.log(vm.rightRentalOrder);
+          if(data.code==0){
+            Notification.success("调入车辆成功!");
+            var result=data.content;
+            for(var i=0;i<result.length;i++){
+              vm.tableParams.data.splice(0, 0, result[0]);
+            }
+          }
 
-        if(null!=vm.rightRentalOrder){
-         vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
-        }
+
+        }, function (reason) {
+          Notification.error(" 调入车辆失败!");
+        });
+
 
       }, function () {
       });
