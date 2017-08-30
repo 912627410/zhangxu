@@ -7,14 +7,14 @@
   </div>
 </div>
 <div class="row modal-body" style="padding-top: 0px!important;">
-  <form class="form-horizontal">
+  <form name="updateMachine" class="form-horizontal">
     <div class="modal-body">
       <div class="box-body col-sm-3">
         <div class="row"><h5>基本信息:</h5></div>
         <div class="form-group">
           <label class="col-sm-4 control-label padding5 ng-binding">车号</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-pending ng-touched" placeholder="车号"  ng-model="vm.machine.licenseId"
+            <input type="text" class="form-control ng-pristine ng-pending ng-touched" placeholder="车号" validator="required" ng-model="vm.machine.licenseId"
                    typeahead-show-hint="true">
           </div>
         </div>
@@ -22,8 +22,10 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">绑定终端</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="输入6位号码或扫条码" ng-model="vm.machine.deviceNum"
+            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="输入6位号码或扫条码" ng-model="vm.machine.deviceNum"  validator="required" ng-minlength='6' ng-maxlength='26'
                    typeahead-show-hint="false">
+            <span class="error text-danger" ng-show="updateMachine.deviceNum.$error.maxlength">最长26位</span>
+            <span class="error text-danger" ng-show="updateMachine.deviceNum.$error.minlength">最短6位</span>
           </div>
         </div>
 
@@ -36,7 +38,7 @@
               <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
               </ui-select-match>
               <ui-select-choices
-                repeat="machineType.id as machineType in newMachineController.machineTypeList | propsFilter: {typeName: $select.search}">
+                repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {typeName: $select.search}">
                 <div ng-bind-html="machineType.typeName | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
@@ -46,13 +48,13 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">发动机类型</label>
           <div class="col-sm-8">
-            <ui-select id="engineType" name="engineType" ng-model="newMachineController.machine.engineType.id"
+            <ui-select id="engineType" name="engineType" ng-model="vm.machine.engineType.id"
                        theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
               </ui-select-match>
               <ui-select-choices
-                repeat="engineType.id as engineType in newMachineController.engineTypeList | propsFilter: {engineName: $select.search}">
+                repeat="engineType.id as engineType in vm.engineTypeList | propsFilter: {engineName: $select.search}">
                 <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
@@ -62,12 +64,12 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">车辆状态</label>
           <div class="col-sm-8">
-            <ui-select id="machineState" name="machineState" ng-model="newMachineController.machine.machineState"
+            <ui-select id="machineState" name="machineState" ng-model="vm.machine.machineState"
                        theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
               <ui-select-choices
-                repeat="machineState.code as machineState in newMachineController.machineStateList | propsFilter: {machineState: $select.search}">
+                repeat="machineState.code as machineState in vm.machineStateList | propsFilter: {machineState: $select.search}">
                 <div ng-bind-html="machineState.machineState | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
@@ -112,6 +114,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="vm.updateMachine()">提交</button>
+  <button class="btn btn-primary" type="button" validation-submit="updateMachine"  ng-click="vm.updateMachine()">提交</button>
   <button class="btn btn-warning" type="button" ng-click="vm.reset()">重置</button>
 </div></div>
