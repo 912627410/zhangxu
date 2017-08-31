@@ -193,7 +193,7 @@
           vm.deviceinfoMonitor = data.content;
 
         //判读是否是高空车
-        if(vm.deviceinfoMonitor.versionNum=='A001'){
+        if(vm.deviceinfoMonitor.versionNum=='A001' || vm.deviceinfoMonitor.versionNum=='11'){
 
           $rootScope.currentOpenModal = $uibModal.open({
             animation: vm.animationsEnabled,
@@ -251,7 +251,7 @@
      });
    }
 
-    
+
 
     //导出至Excel
     vm.excelExport=function (queryOrg) {
