@@ -282,6 +282,7 @@
     .constant('RENTAL_MACHINE_URL',SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
     .constant('RENTAL_NOTIFICATION_URL',SERVER_BASE_URL + 'rental/processRentalNotificationDeal')//租赁平台标记消息为已处理
     .constant('RENTAL_MACHINE_RATE_URL',SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
+    .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台出租率
 
     //租赁客户信息
     .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
@@ -314,10 +315,15 @@
 
 
      //租赁
-    .constant('MACHINE_MF', SERVER_BASE_URL + 'config/machinemf')
     .constant('RENTAL_INCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeStatistics')
+    .constant('RENTAL_COST_PAGED_URL', SERVER_BASE_URL + 'rental/asset/getCostStatistics')
+    .constant('RENTAL_PROFIT_URL', SERVER_BASE_URL + 'rental/asset/getProfitStatistics')
     .constant('RENTAL_ASSET_STATISTICS_DATA_URL', SERVER_BASE_URL + 'rental/asset/assetTopData')
+
+    .constant('MACHINE_MF', SERVER_BASE_URL + 'config/machinemf')
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势
+
+
 
 
 

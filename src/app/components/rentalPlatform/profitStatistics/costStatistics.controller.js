@@ -10,7 +10,7 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -28,15 +28,14 @@
       "title": "profit", "icon": "fa-exclamation-triangle"
     }];
 
-
-
-
     window.onresize = function(){
       topPie.resize();
-      bottomPie.resize();
-
     }
 
+
+
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
 
     /**
@@ -48,7 +47,7 @@
       $anchorScroll();
     }
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 1);
+    startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
@@ -125,8 +124,41 @@
 
 
 
-    vm.search = function (queryCost) {
+    vm.queryCost = function (page, size, sort,startDate,endDate) {
 
+      var restCallURL = RENTAL_COST_PAGED_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || 'id';
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "&startDate=" + $filter('date')(startDate,'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
+
+
+      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+      }
+      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+      }
+      if (null != vm.machineType&&vm.machineType != ""){
+        restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
+      }
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
+      },function (reason) {
+        Notification.error("获取成本数据失败")
+      })
     }
 
 
@@ -140,7 +172,7 @@
       legend: {
         orient: 'vertical',
         x: 'left',
-        data:['贷款额','还款额','其他']
+        data:['车辆相关','销售费用','管理费用','财务费用']
       },
       series: [
         {
@@ -149,55 +181,17 @@
           selectedMode: 'single',
           radius: '60%',
           data:[
-            {value:335, name:'贷款额', selected:true},
-            {value:679, name:'还款额'},
-            {value:1548, name:'其他'}
+            {value:335, name:'车辆相关', selected:true},
+            {value:679, name:'销售费用'},
+            {value:1548, name:'管理费用'},
+            {value:666, name:'财务费用'}
           ]
         }
       ]
     };
     topPie.setOption(topPieOption);
 
-    var bottomPie = echarts.init(document.getElementById('bottomPie'));
-    var bottomPieoption = {
-      title : {
-        text: '成本相关',
-        subtext: '',
-        x:'center'
-      },
-      tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['折旧','维修','保养','配件','人工']
-      },
-      series : [
-        {
-          name: '访问来源',
-          type: 'pie',
-          radius : '55%',
-          center: ['50%', '60%'],
-          data:[
-            {value:335, name:'折旧'},
-            {value:310, name:'维修'},
-            {value:234, name:'保养'},
-            {value:135, name:'配件'},
-            {value:1548, name:'人工'}
-          ],
-          itemStyle: {
-            emphasis: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }
-      ]
-    };
-    bottomPie.setOption(bottomPieoption);
+
 
 
   }

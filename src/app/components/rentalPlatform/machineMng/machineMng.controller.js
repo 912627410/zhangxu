@@ -9,8 +9,9 @@
     .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngControllerRental($scope,$uibModalInstance,machine,serviceResource, AMAP_PLACESEARCH_URL) {
+  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW) {
     var vm = this;
+    vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
     vm.machine={}
     //围栏默认半径
@@ -27,11 +28,70 @@
      * 更新车辆
      */
     vm.updateMachine=function () {
-      console.log("updateMachine")
+      var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
+      machinePromis.then(function (data) {
+
+      }, function (reson) {
+
+      })
     }
 
     //全局的圆对象
     var circle=null;
+
+    /**
+     * 关闭模态框
+     */
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
+
+    /**
+     * 查询当前用户拥有的车辆类型明细
+     */
+    vm.getMachineType = function(){
+      var restCallURL = USER_MACHINE_TYPE_URL;
+      if(vm.operatorInfo){
+        restCallURL += "?orgId="+ vm.operatorInfo.userdto.organizationDto.id;
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
+      rspData.then(function (data) {
+        vm.machineTypeList = data;
+        console.log(vm.machineTypeList)
+      }, function (reason) {
+        Notification.error("获取车辆类型数据失败");
+      });
+    }
+
+    /**
+     * 得到发动机类型集合
+     */
+    vm.getMachinePowerType=function () {
+      var engineTypeData = serviceResource.restCallService(ENGINE_TYPE_LIST_URL, "QUERY");
+      engineTypeData.then(function (data) {
+        vm.engineTypeList = data;
+      }, function (reason) {
+        Notification.error('获取发动机类型失败');
+      })
+    }
+
+    /**
+     * 获取车辆状态集合
+     */
+    vm.getMachineStatus=function () {
+      var machineStatePromise = machineService.getMachineStateList();
+      machineStatePromise.then(function (data) {
+        vm.machineStateList = data;
+        console.log(vm.machineStateList)
+      }, function (reason) {
+        Notification.error('获取车辆状态失败');
+      })
+    }
+
+    vm.getMachineType();
+    vm.getMachineStatus();
+    vm.getMachinePowerType();
+
 
     /**
      * 在地图上画圆
@@ -155,10 +215,6 @@
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.machine.amaplongitudeNum = e.lnglat.getLng();
           vm.machine.amaplatitudeNum = e.lnglat.getLat();
-          var geocoder = new AMap.Geocoder({
-            radius: 100,
-            extensions: "all"
-          });
           geocoder.getAddress(lnglatXY, function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
               var address = result.regeocode.formattedAddress; //返回地址描述
