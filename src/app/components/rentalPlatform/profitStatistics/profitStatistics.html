@@ -65,7 +65,7 @@
         <div class="forminline" >
           <label >Type</label>
           <div class="forminline" style="width: 150px;">
-            <ui-select id="machineType" name="machineType" ng-model="profitStatisticsCtr.queryProfit.machineTypeId" theme="bootstrap"
+            <ui-select id="machineType" name="machineType" ng-model="profitStatisticsCtr.machineType" theme="bootstrap"
                        ng-disabled="disabled" >
               <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
               </ui-select-match>
@@ -79,14 +79,15 @@
         <div class="forminline" >
           <label>Height</label>
           <select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"
-                  ng-model="profitStatisticsCtr.queryProfit.heightTypeId"
+                  ng-model="profitStatisticsCtr.queryDeviceHeightType"
                   ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
             <option value="">请选择...</option>
           </select>
         </div>
         <div class="forminline" style="width: 17%">
           <label class="">Brand</label>
-          <select name="machineManufacture" class="form-control forminline " style="width: 150px;" ng-model="profitStatisticsCtr.queryProfit.machineManufacture"
+          <select name="machineManufacture" class="form-control forminline " style="width: 150px;"
+                  ng-model="profitStatisticsCtr.queryManufacture"
                   ng-options="machineMF.id as machineMF.name for machineMF in profitStatisticsCtr.machineMFList">
             <option value="">请选择...</option>
           </select>

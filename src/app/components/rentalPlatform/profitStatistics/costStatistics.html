@@ -51,16 +51,24 @@
       <div >
         <div class="forminline" >
           <label >Type</label>
+          <!--<div class="forminline" style="width: 150px;">-->
+            <!--<ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.machineType" theme="bootstrap"-->
+                       <!--ng-disabled="disabled" >-->
+              <!--<ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}-->
+              <!--</ui-select-match>-->
+              <!--<ui-select-choices  repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >-->
+                <!--<div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>-->
+              <!--</ui-select-choices>-->
+            <!--</ui-select>-->
+          <!--</div>-->
           <div class="forminline" style="width: 150px;">
-            <ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.machineType" theme="bootstrap"
-                       ng-disabled="disabled" >
-              <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
-              </ui-select-match>
-              <ui-select-choices  repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
-                <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
+            <select class="form-control" ng-model="monitorCtrl.machineType">
+              <option value="0">剪叉</option>
+              <option value="1">直臂</option>
+              <option value="2">曲臂</option>
+            </select>
           </div>
+
         </div>
 
         <div class="forminline" >
@@ -150,7 +158,7 @@
         </div>
       </div>
       <div class="rightPic col-md-6">
-        <div id="topPie" ></div>
+        <div id="topPie" ng-style="costStatisticsCtr.baseBoxContainer" ></div>
       </div>
     </div>
   </div>
