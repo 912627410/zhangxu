@@ -13,7 +13,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
-    vm.machine={}
+    vm.machine=machine;
     //围栏默认半径
     vm.machine.radius=1000;
 
@@ -30,7 +30,7 @@
     vm.updateMachine=function () {
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
-
+        console.log(data);
       }, function (reson) {
 
       })
@@ -57,7 +57,6 @@
       var rspData = serviceResource.restCallService(restCallURL, "QUERY");
       rspData.then(function (data) {
         vm.machineTypeList = data;
-        console.log(vm.machineTypeList)
       }, function (reason) {
         Notification.error("获取车辆类型数据失败");
       });
@@ -82,7 +81,6 @@
       var machineStatePromise = machineService.getMachineStateList();
       machineStatePromise.then(function (data) {
         vm.machineStateList = data;
-        console.log(vm.machineStateList)
       }, function (reason) {
         Notification.error('获取车辆状态失败');
       })
