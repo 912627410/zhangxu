@@ -459,20 +459,20 @@
     /**
      *  miniPie
      */
-    var miniPie = document.getElementsByClassName('miniPie');
+    var miniPie = document.querySelectorAll('.miniPie');
     var miniPie1 = echarts.init(miniPie[0]);
     var miniPie2 = echarts.init(miniPie[1]);
     var miniPie3 = echarts.init(miniPie[2]);
 
-    function creatMiniPie(chart,productType){
-      var restCallURL = ALERT_TREND_URL;
-      // restCallURL += '?alarmType=' + productType;
-      restCallURL += '?alarmType=1';
+    function creatMiniPie(chart,type){
+      var restCallURL = RENTAL_MACHINE_RATE_URL;
+      restCallURL += '?type=' + type;
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
+        console.log(data.content);
         var miniPieOption = {
           title: {
-            text: '44%',
+            text: data.content.machineRate + '%',
             x: 'center',
             y: 'center',
             textStyle: {
@@ -487,37 +487,35 @@
             type: 'pie',
             clockWise: false,
             radius: ['50%', '60%'],
-            itemStyle: {
-              normal: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                }
-                // shadowBlur: 20,
-                // shadowColor: 'rgba(40, 40, 40, 0.2)'
-              },
-              emphasis: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                },
-                shadowBlur: 10,
-                shadowColor: 'rgba(40, 40, 40, 0.2)'
-              }
-            },
             hoverAnimation: false,
             data: [{
-              value: 99,
-              name: '01'
+              value: data.content.rentalMachineCount,
+              itemStyle: {
+                normal: {
+                  color: 'rgba(38, 173, 88,1)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgba(38, 173, 88,1)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                }
+              }
             }, {
-              value: 22,
-              name: 'invisible',
+              value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
                   color: 'rgba(0, 0, 0,0.2)',
@@ -542,9 +540,7 @@
                   shadowColor: 'rgba(40, 40, 40, 0.2)'
                 }
               }
-            }
-
-            ]
+            }]
           }]
         };
         chart.setOption(miniPieOption);
