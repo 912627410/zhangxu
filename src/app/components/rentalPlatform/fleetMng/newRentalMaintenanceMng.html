@@ -16,13 +16,14 @@
     <div class="box-header with-border">
       <h3 class="box-title">新建保养信息</h3>
     </div>
-    <form name="newrentalCustomerForm2" class="form-horizontal">
+    <form name="form" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">选择车辆</label>
-            <div class="col-md-5">
+
+            <label class="col-md-1 control-label">选择车辆</label>
+            <div class="col-md-2">
               <p class="input-group">
 
                 <input type="text" id="org" class="form-control" placeholder="请选择"
@@ -36,23 +37,162 @@
           </span>
               </p>
             </div>
+
+            <label  class="col-md-1 control-label">保养原因</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">描述</label>
+            <div class="col-md-5">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+
+
           </div>
-
-
+          <hr/>
+          <div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">描述</label>
-            <div class="col-sm-5">
-              <textarea class="form-control" placeholder="描述"
-                     ng-model="newRentalMaintenanceController.rentalCustomer.description" name="description" typeahead-show-hint="true">
 
-              </textarea>
+            <label class="col-md-1 control-label">保养类别</label>
+            <div class="col-md-2">
+              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
+                     placeholder="订单号"/>
+            </div>
+
+            <label  class="col-md-1 control-label">保养项目</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">保养人</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">保养时间</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+
+
+
+          </div>
+          <div class="form-group">
+
+            <label class="col-md-1 control-label">保养费用</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+
+            <label  class="col-md-1 control-label">人工费用</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">状态</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label"></label>
+            <div class="col-md-2">
+              <button class="btn btn-danger" type="button"  ng-click="">删除该项目</button>
+            </div>
+
+          </div>
+        </div>
+          <div>
+            <div class="form-group">
+
+              <label class="col-md-1 control-label">保养类别</label>
+              <div class="col-md-2">
+                <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
+                       placeholder="订单号"/>
+              </div>
+
+              <label  class="col-md-1 control-label">保养项目</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+              <label class="col-md-1 control-label">保养人</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+              <label class="col-md-1 control-label">保养时间</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+
+
+
+            </div>
+            <div class="form-group">
+
+              <label class="col-md-1 control-label">保养费用</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+
+              <label  class="col-md-1 control-label">人工费用</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+              <label class="col-md-1 control-label">状态</label>
+              <div class="col-md-2">
+                <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                       placeholder="订单号"/>
+              </div>
+              <label class="col-md-1 control-label"></label>
+              <div class="col-md-2">
+                <button class="btn btn-danger" type="button"  ng-click="">删除该项目</button>
+              </div>
+
             </div>
           </div>
+          <hr/>
+          <div class="form-group">
+
+            <label class="col-md-1 control-label">总保养费用</label>
+            <div class="col-md-2">
+              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
+                     placeholder="订单号"/>
+            </div>
+
+            <label  class="col-md-1 control-label">总人工费用</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">状态</label>
+            <div class="col-md-2">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org" readonly />
+                <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalOrderMngController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </form>
     <div class="box-footer">
-      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalMaintenanceController.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-primary" type="button" validation-submit="form" ng-click="newRentalMaintenanceController.ok()">{{'confirm'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="newRentalMaintenanceController.cancel()">{{'cancel'|translate}}</button>
     </div>
 

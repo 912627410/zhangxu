@@ -7,30 +7,31 @@
   </div>
 </div>
 <div class="row modal-body" style="padding-top: 0px!important;">
-  <form class="form-horizontal">
+  <form  name="newDeviceForm"  class="form-horizontal">
     <div class="modal-body">
       <div class="box-body col-sm-3">
         <div class="row"><h5>基本信息:</h5></div>
         <div class="form-group">
           <label class="col-sm-4 control-label padding5 ng-binding">车号</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-pending ng-touched" placeholder="车号" ng-model="vm.machine.licenseId"
-                   typeahead-show-hint="true">
+            <input type="text" class="form-control ng-pristine ng-pending ng-touched"  name="licenseId" placeholder="车号" ng-model="vm.machine.licenseId" validator="required" typeahead-show-hint="true">
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">绑定终端</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="输入6位号码或扫条码" ng-model="vm.machine.deviceNum"
+            <input type="text"  id="deviceNum" name="deviceNum" class="form-control ng-pristine ng-valid ng-touched" placeholder="输入6位号码或扫条码" ng-model="vm.machine.deviceNum" validator="required" ng-minlength='6' ng-maxlength='26'
                    typeahead-show-hint="false">
+            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.maxlength">最长26位</span>
+            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.minlength">最短6位</span>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">车辆类型</label>
           <div class="col-sm-8">
-            <ui-select  ng-model="vm.machine.machineType.id" ng-disabled="disabled">
+            <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}</ui-select-match>
               <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {typeName: $select.search}">
                 <div ng-bind-html="machineType.typeName | highlight: $select.search"></div>
@@ -42,7 +43,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">发动机类型</label>
           <div class="col-sm-8">
-            <ui-select  ng-model="vm.machine.engineType.id" ng-disabled="disabled">
+            <ui-select  ng-model="vm.machine.engineTypeId" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}</ui-select-match>
               <ui-select-choices repeat="engineType.id as engineType in vm.engineTypeList | propsFilter: {engineName: $select.search}">
                 <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
@@ -54,7 +55,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">车辆状态</label>
           <div class="col-sm-8">
-            <ui-select  ng-model="vm.machine.status" ng-disabled="disabled">
+            <ui-select  ng-model="vm.machine.status" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
               <ui-select-choices repeat="machineState.code as machineState in vm.machineStateList | propsFilter: {machineState: $select.search}">
                 <div ng-bind-html="machineState.machineState | highlight: $select.search"></div>
@@ -101,6 +102,6 @@
   </form>
 </div>
 <div class="modal-footer ng-scope">
-  <button class="btn btn-primary" type="button" ng-click="vm.addMachine()">提交</button>
+  <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">提交</button>
   <button class="btn btn-warning" type="button" ng-click="vm.reset()">重置</button>
 </div>

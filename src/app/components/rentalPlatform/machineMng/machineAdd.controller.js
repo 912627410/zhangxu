@@ -9,7 +9,7 @@
     .controller('machineAddController', machineAddController);
 
   /** @ngInject */
-  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource,rentalService,Notification,machineService,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,AMAP_PLACESEARCH_URL) {
+  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
@@ -27,10 +27,10 @@
     /**
      * 查询当前用户拥有的车辆类型明细
      */
-    vm.getMachineType = function(){
+    vm.getMachineType = function () {
       var restCallURL = USER_MACHINE_TYPE_URL;
-      if(vm.operatorInfo){
-        restCallURL += "?orgId="+ vm.operatorInfo.userdto.organizationDto.id;
+      if (vm.operatorInfo) {
+        restCallURL += "?orgId=" + vm.operatorInfo.userdto.organizationDto.id;
       }
       var rspData = serviceResource.restCallService(restCallURL, "QUERY");
       rspData.then(function (data) {
@@ -44,7 +44,7 @@
     /**
      * 得到发动机类型集合
      */
-    vm.getMachinePowerType=function () {
+    vm.getMachinePowerType = function () {
       var engineTypeData = serviceResource.restCallService(ENGINE_TYPE_LIST_URL, "QUERY");
       engineTypeData.then(function (data) {
         vm.engineTypeList = data;
@@ -56,7 +56,7 @@
     /**
      * 获取车辆状态集合
      */
-    vm.getMachineStatus=function () {
+    vm.getMachineStatus = function () {
       var machineStatePromise = machineService.getMachineStateList();
       machineStatePromise.then(function (data) {
         vm.machineStateList = data;
@@ -152,6 +152,7 @@
         //在地图中添加坐标-地址插件
         map.plugin(["AMap.Geocoder"], function () {
           geocoder = new AMap.Geocoder({
+            radius: 1000,
             visible: true //初始化隐藏鹰眼
           });
           map.addControl(geocoder);
@@ -189,16 +190,12 @@
         //当点击地图的时候
         map.on('click', function (e) {
           //如果地图上有圆,重新绘制
-          if (circle!=null){
-              vm.initMap(vm.scopeMap.getZoom())
+          if (circle != null) {
+            vm.initMap(vm.scopeMap.getZoom())
           }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.machine.amaplongitudeNum = e.lnglat.getLng();
           vm.machine.amaplatitudeNum = e.lnglat.getLat();
-          var geocoder = new AMap.Geocoder({
-            radius: 100,
-            extensions: "all"
-          });
           geocoder.getAddress(lnglatXY, function (status, result) {
             if (status === 'complete' && result.info === 'OK') {
               var address = result.regeocode.formattedAddress; //返回地址描述
@@ -296,8 +293,15 @@
     }
 
 
-    vm.addMachine=function () {
+    vm.addMachine = function () {
       console.log(vm.machine)
+      var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "ADD", vm.machine);
+      machinePromis.then(function (data) {
+
+
+      }, function (reson) {
+
+      })
     }
   }
 })();
