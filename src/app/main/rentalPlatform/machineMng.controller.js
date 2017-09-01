@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function rentalMachineMngController($rootScope, $scope, $window, $http, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification,
-                                      RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL,RENTAL_MACHINE_RATE_URL) {
+                                      RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL,RENTAL_MACHINE_RATE_URL,MACHINE_RENT_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -206,10 +206,6 @@
       $rootScope.$state.go("rental.machineAlarmInfo");
     }
 
-    var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
-      width: 'auto',
-      height: vm.rightBoxBottomHeight - 35 + 'px'
-    });
 
 
     //main height
@@ -235,121 +231,143 @@
     /**
      * 出租率
      */
-    var rentOption =  {
-      backgroundColor: '#fff',
-      tooltip: {
-        trigger: 'axis',
-        formatter:function(params){
-          var temp  = '<div>' + params[0].name + '</div>' + '<div>' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div>' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + ((params[0].data/(params[0].data+params[1].data))*10000/100).toFixed(2) + '%' + '</div>';
-          return temp;
+    var barChart = echarts.init(document.getElementById('machineBarChart'), '', {
+      width: 'auto',
+      height: vm.rightBoxBottomHeight - 35 + 'px'
+    });
+
+    function creatRentChart(){
+      var rspData = serviceResource.restCallService(MACHINE_RENT_URL,"GET");
+      rspData.then(function (data) {
+        function getLocalTime(nS) {
+          return new Date(parseInt(nS)).toLocaleString().substr(0,9)
         }
-      },
-      grid: {
-        top:'20%',
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        axisLine: {
-          lineStyle: {
-            color: '#999'
-          }
-        },
-        axisTick: {
-          show: false
-        },
-        axisLabel: {
-          textStyle: {
-            color: '#000'
-          }
-        },
-        data: ['8月01日', '8月02日', '8月03日', '8月04日', '8月05日', '8月06日', '8月07日']
-      },
-      yAxis: {
-        name:'出租统计',
-        nameTextStyle: {
-          fontSize: 14,
-          fontFamily:''
-        },
-        nameGap:20,
-        type: 'value',
-        axisLine: {
-          show: false
-        },
-        splitLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
-        axisLabel: {
-          inside: false
+
+        for(var i=0;i<7;i++){
+          data.content.startDate[i] = getLocalTime(data.content.startDate[i])
         }
-      },
-      series: [{
-        name: '待租',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {
-          normal: {
-            opacity: 0
+
+        var rentOption =  {
+          backgroundColor: '#fff',
+          tooltip: {
+            trigger: 'axis',
+            formatter:function(params){
+              var temp  = '<div>' + params[0].name + '</div>' + '<div>' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div>' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
+              return temp;
+            }
           },
-          emphasis: {
-            color: 'rgb(38, 173, 88)',
-            borderColor: '#fff',
-            opacity: 1
-          }
-        },
-        lineStyle: {
-          normal: {
-            width:1,
-            color: 'rgb(38, 173, 88)'
-          }
-        },
-        areaStyle: {
-          normal: {
-            color: 'rgb(38, 173, 88)'
-          }
-        },
-        data: [0, 0, 40, 150, 200, 240, 340],
-        smooth: true,
-        smoothMonotone: 'x'
-      }, {
-        name: '已租',
-        type: 'line',
-        stack: '总量',
-        itemStyle: {
-          normal: {
-            opacity: 0
+          grid: {
+            top:'20%',
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
           },
-          emphasis: {
-            color: 'rgb(35, 142, 250)',
-            borderColor: '#fff',
-            opacity: 1
-          }
-        },
-        lineStyle: {
-          normal: {
-            width:1,
-            color: 'rgb(35, 142, 250)'
-          }
-        },
-        areaStyle: {
-          normal: {
-            // color:'rgb(255, 51, 119)'
-            color: 'rgb(35, 142, 250)'
-          }
-        },
-        data: [0, 0, 60, 20, 30, 30, 70],
-        smooth: true,
-        smoothMonotone: 'x'
-      }]
-    };
-    barChart.setOption(rentOption);
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            axisLine: {
+              lineStyle: {
+                color: '#999'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              textStyle: {
+                color: '#000'
+              }
+            },
+            data: data.content.startDate
+          },
+          yAxis: {
+            name:'出租统计',
+            nameTextStyle: {
+              fontSize: 14,
+              fontFamily:''
+            },
+            nameGap:20,
+            type: 'value',
+            axisLine: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              inside: false
+            }
+          },
+          series: [{
+            name: '待租',
+            type: 'line',
+            stack: '总量',
+            itemStyle: {
+              normal: {
+                opacity: 0
+              },
+              emphasis: {
+                color: 'rgb(38, 173, 88)',
+                borderColor: '#fff',
+                opacity: 1
+              }
+            },
+            lineStyle: {
+              normal: {
+                width:1,
+                color: 'rgb(38, 173, 88)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: 'rgb(38, 173, 88)'
+              }
+            },
+            data: data.content.rentalingList,
+            smooth: true,
+            smoothMonotone: 'x'
+          }, {
+            name: '已租',
+            type: 'line',
+            stack: '总量',
+            itemStyle: {
+              normal: {
+                opacity: 0
+              },
+              emphasis: {
+                color: 'rgb(35, 142, 250)',
+                borderColor: '#fff',
+                opacity: 1
+              }
+            },
+            lineStyle: {
+              normal: {
+                width:1,
+                color: 'rgb(35, 142, 250)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                // color:'rgb(255, 51, 119)'
+                color: 'rgb(35, 142, 250)'
+              }
+            },
+            data: data.content.unRentalList,
+            smooth: true,
+            smoothMonotone: 'x'
+          }]
+        };
+        barChart.setOption(rentOption);
+      }, function (reason) {
+        Notification.error("获取信息失败");
+      });
+
+    }
+    creatRentChart();
 
 
     /**
@@ -361,13 +379,8 @@
       height: vm.rightBoxTopHeightTemp + 'px'
     });
 
-
-    function crateHomePieOption(type) {
-      var restCallUrl=RENTAL_MACHINE_RATE_URL;
-      if (type!=null){
-        restCallUrl+=RENTAL_MACHINE_RATE_URL+'?type='+type;
-      }
-      var rspData = serviceResource.restCallService(restCallUrl,"GET");
+    function crateHomePieOption() {
+      var rspData = serviceResource.restCallService(RENTAL_MACHINE_RATE_URL,"GET");
       rspData.then(function (data) {
         var homePieOption = {
           title: {
@@ -469,7 +482,6 @@
       restCallURL += '?type=' + type;
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
-        console.log(data.content);
         var miniPieOption = {
           title: {
             text: data.content.machineRate + '%',
@@ -669,9 +681,7 @@
           }
         };
         chart.setOption(option);
-      },function(){
-        console.log('gg')
-      });
+      },function(){});
 
     }
 
