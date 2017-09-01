@@ -54,7 +54,7 @@
      */
     vm.gotoView = function (view) {
       $rootScope.$state.go(view);
-    }
+    };
     /**
      * 根据车辆状态获取车辆数量
      * @param statusType
@@ -88,7 +88,7 @@
       }, function (reason) {
         Notification.error("获取信息失败");
       })
-    }
+    };
     vm.getMachineCountByStatus();//车辆总数
     vm.getMachineCountByStatus(6);//在库维修
     vm.getMachineCountByStatus(7);//在库待租
@@ -125,7 +125,7 @@
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
-    }
+    };
 
     /*初始化加载数据,首先查看是不是从别的页面转过来的,如果是使用完这个值后置空这个值*/
     if ($rootScope.machinType) {
@@ -150,11 +150,11 @@
         vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
       }
 
-    }
+    };
 
     vm.machineMonitors=function () {
 
-    }
+    };
 
     /**
      * 打开车辆监控窗口
@@ -214,7 +214,7 @@
        },function (reason) {
          Notification.error(languages.findKey('failedToGetDeviceInformation'));
        })
-     }
+     };
 
      vm.addMachine=function () {
        $rootScope.currentOpenModal = $uibModal.open({
@@ -228,6 +228,13 @@
          windowTopClass:'test2',//加载到window-class指令
          size: 'super-lg'
        });
-     }
+       $rootScope.currentOpenModal.result.then(function (newVal) {
+         vm.machineCount += 1;
+       }, function () {
+         //取消
+       });
+
+     };
+
   }
 })();

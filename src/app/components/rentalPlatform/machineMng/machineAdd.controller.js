@@ -13,7 +13,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
-    vm.machine = {}
+    vm.machine = {};
     //围栏默认半径
     vm.machine.radius = 1000;
 
@@ -39,7 +39,7 @@
       }, function (reason) {
         Notification.error("获取车辆类型数据失败");
       });
-    }
+    };
 
     /**
      * 得到发动机类型集合
@@ -51,7 +51,7 @@
       }, function (reason) {
         Notification.error('获取发动机类型失败');
       })
-    }
+    };
 
     /**
      * 获取车辆状态集合
@@ -64,7 +64,7 @@
       }, function (reason) {
         Notification.error('获取车辆状态失败');
       })
-    }
+    };
 
     vm.getMachineType();
     vm.getMachineStatus();
@@ -211,7 +211,7 @@
         //调整半径后
         vm.echoFence(map);
       })
-    }
+    };
 
     //加载地图
     vm.initMap(4);
@@ -227,7 +227,7 @@
         var lnglatXY = [poiArr[0].location.getLng(), poiArr[0].location.getLat()];
         vm.updateLocationInfo(poiArr[0].address, lnglatXY);
       }
-    }
+    };
 
     /**
      * 电子围栏地址,经纬度值设置
@@ -290,17 +290,18 @@
      */
     vm.adjustCircleRadius = function (radius) {
       vm.initMap(vm.scopeMap.getZoom());
-    }
+    };
 
-
+    /**
+     * 模态框回传数据
+     */
     vm.addMachine = function () {
-      console.log(vm.machine)
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "ADD", vm.machine);
       machinePromis.then(function (data) {
-
-
-      }, function (reson) {
-
+        console.log(vm.machine);
+        $uibModalInstance.close(vm.machine);
+      }, function (reason) {
+        console.log(reason.data.message);
       })
     }
   }

@@ -12,6 +12,7 @@
   function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+
     //定义machine对象
     vm.machine=machine;
     //围栏默认半径
@@ -30,21 +31,14 @@
     vm.updateMachine=function () {
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
-        console.log(data);
-      }, function (reson) {
-
+        $uibModalInstance.close(vm.machine);
+      }, function (reason) {
+        console.log(reason)
       })
-    }
+    };
 
     //全局的圆对象
     var circle=null;
-
-    /**
-     * 关闭模态框
-     */
-    vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
-    };
 
     /**
      * 查询当前用户拥有的车辆类型明细
@@ -60,7 +54,7 @@
       }, function (reason) {
         Notification.error("获取车辆类型数据失败");
       });
-    }
+    };
 
     /**
      * 得到发动机类型集合
@@ -72,7 +66,7 @@
       }, function (reason) {
         Notification.error('获取发动机类型失败');
       })
-    }
+    };
 
     /**
      * 获取车辆状态集合
@@ -84,7 +78,7 @@
       }, function (reason) {
         Notification.error('获取车辆状态失败');
       })
-    }
+    };
 
     vm.getMachineType();
     vm.getMachineStatus();
@@ -228,7 +222,7 @@
         //调整半径后
         vm.echoFence(map);
       })
-    }
+    };
 
     //加载地图
     vm.initMap(4);
@@ -244,7 +238,7 @@
         var lnglatXY = [poiArr[0].location.getLng(), poiArr[0].location.getLat()];
         vm.updateLocationInfo(poiArr[0].address, lnglatXY);
       }
-    }
+    };
 
     /**
      * 电子围栏地址,经纬度值设置
