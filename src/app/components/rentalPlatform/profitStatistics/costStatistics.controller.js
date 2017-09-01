@@ -28,9 +28,31 @@
       "title": "profit", "icon": "fa-exclamation-triangle"
     }];
 
-    window.onresize = function(){
-      topPie.resize();
+
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 -5 - 25 - 52  - 60-50 ;//50 topBar的高,5间距,25面包屑导航,52msgBox高,60 search;line
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      vm.baseBoxContainerHeight = baseBoxContainerHeight;
     }
+
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
+
+    /**
+     * 监听窗口大小改变后重新自适应高度
+     */
+    $scope.$watch('height', function (oldHeight, newHeight) {
+      vm.adjustWindow(newHeight);
+       //topPie.resize({height: vm.baseBoxContainerHeight});
+    })
+
 
 
 
@@ -135,14 +157,25 @@
       restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
 
 
+      // if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+      //   restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+      // }
+      // if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+      //   restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+      // }
+      // if (null != vm.machineType&&vm.machineType != ""){
+      //   restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
+      // }
+
+
       if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+        restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
       }
       if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+        restCallURL += "&machineManufacture=" +vm.queryManufacture;
       }
       if (null != vm.machineType&&vm.machineType != ""){
-        restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
+        restCallURL += "&machineType=" + vm.machineType;
       }
 
 
@@ -161,9 +194,16 @@
       })
     }
 
+    //默认查询最近一个月
+    vm.queryCost(null,null,null,vm.startDate,vm.endDate);
+
 
     //cost
-    var topPie =  echarts.init(document.getElementById('topPie'));
+    var topPie =  echarts.init(document.getElementById('topPie'),'', {
+      width: 'auto',
+      height: vm.baseBoxContainerHeight - 20 + 'px'
+    });
+    //var topPie =  echarts.init(document.getElementById('topPie'));
     var topPieOption = {
       tooltip: {
         trigger: 'item',

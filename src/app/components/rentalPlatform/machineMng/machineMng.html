@@ -32,7 +32,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">车辆类型</label>
           <div class="col-sm-8">
-            <ui-select id="machineType" name="machineType" ng-model="newMachineController.machine.machineType.id"
+            <ui-select id="machineType" name="machineType" ng-model="vm.machine.machineTypeId"
                        theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
@@ -48,7 +48,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">发动机类型</label>
           <div class="col-sm-8">
-            <ui-select id="engineType" name="engineType" ng-model="vm.machine.engineType.id"
+            <ui-select id="engineType" name="engineType" ng-model="vm.machine.engineTypeId"
                        theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
@@ -64,7 +64,7 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">车辆状态</label>
           <div class="col-sm-8">
-            <ui-select id="machineState" name="machineState" ng-model="vm.machine.machineState"
+            <ui-select id="machineState" name="machineState" ng-model="vm.machine.status"
                        theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
