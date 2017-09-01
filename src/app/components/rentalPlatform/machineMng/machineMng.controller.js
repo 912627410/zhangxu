@@ -12,7 +12,11 @@
   function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.machine= machine;
+
+    //定义machine对象
+    vm.machine=machine;
+    //围栏默认半径
+    vm.machine.radius=1000;
 
     /**
      * 关闭模态框
@@ -28,8 +32,8 @@
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
         $uibModalInstance.close(vm.machine);
-      }, function (reason) {
-        console.log(reason);
+      }, function (reson) {
+
       })
     };
 
@@ -47,7 +51,6 @@
       var rspData = serviceResource.restCallService(restCallURL, "QUERY");
       rspData.then(function (data) {
         vm.machineTypeList = data;
-        console.log(vm.machineTypeList)
       }, function (reason) {
         Notification.error("获取车辆类型数据失败");
       });
@@ -72,7 +75,6 @@
       var machineStatePromise = machineService.getMachineStateList();
       machineStatePromise.then(function (data) {
         vm.machineStateList = data;
-        console.log(vm.machineStateList)
       }, function (reason) {
         Notification.error('获取车辆状态失败');
       })

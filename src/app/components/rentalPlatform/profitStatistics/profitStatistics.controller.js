@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -238,25 +238,22 @@
   vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
-    vm.query = function (queryProfit,queryStartData,queryEndData) {
-      if(null==queryCost){
-        return '';
-      }
+    vm.query = function (queryStartData,queryEndData) {
 
       var restCallURL = RENTAL_PROFIT_URL;
       restCallURL += "?startDate=" + $filter('date')(queryStartData,'yyyy-MM-dd');
       restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
-      if(null!=queryProfit){
-        if(null!=queryProfit.machineTypeId&&queryProfit.machineTypeId !=""&&queryProfit.machineTypeId!=undefined){
-          restCallURL += "&machineType="+ queryProfit.machineTypeId;
-        }
-        if(null!=queryProfit.heightTypeId&&queryProfit.heightTypeId!=""){
-          restCallURL += "&heightTypeId="+ queryProfit.heightTypeId;
-        }
-        if(null!=queryProfit.machineManufacture&&queryProfit.machineManufacture!=""){
-          restCallURL += "&machineManufacture="+ queryProfit.machineManufacture;
-        }
+
+      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
       }
+      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+      }
+      if (null != vm.machineType&&vm.machineType != ""){
+        restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
+      }
+
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         vm.CostData = data.content;

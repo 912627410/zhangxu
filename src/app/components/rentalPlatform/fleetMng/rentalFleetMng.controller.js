@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -128,31 +128,21 @@
     };
 
 
-
+    /**
+     * 左右拖动触发事件
+     * @param $event
+     * @param index
+     * @param sourceArray
+     * @param destArray
+     * @param rentalOrderId
+     */
     vm.dropSuccessHandler2 = function($event,index,sourceArray,destArray,rentalOrderId){
-
 
       if(rentalOrderId==null||destArray==null){
         return;
       }
 
-      console.log("sourceArray[index]=="+sourceArray.data[index]);
-      console.log(destArray.data.length);
-      console.log(sourceArray.data.length);
-//      destArray.data.push(sourceArray[index]);
-
-    //
-
-      console.log(sourceArray);
-      console.log(destArray);
-
-
       var rentalOrderMachine=sourceArray.data[index];
-
-      console.log(rentalOrderMachine);
-      console.log(rentalOrderMachine.machine);
-      console.log(rentalOrderMachine.rentalOrder);
-
 
       sourceArray.data.splice(index,1);
 
@@ -164,11 +154,6 @@
 
     //批量设置为已处理
     vm.updateOrderMachineInfo = function (machineId,addOrderId,delId,destArray) {
-
-      console.log("machineId=="+machineId);
-      console.log("addOrderId=="+addOrderId);
-      console.log("delId=="+delId);
-
 
       var orderMachines = {"addOrderId": addOrderId, "delId": delId, "addMachineId": machineId};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
@@ -260,8 +245,6 @@
           return;
         }
 
-        console.log(vm.rightRentalOrder);
-
         if(null!=vm.rightRentalOrder){
          vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
         }
@@ -274,7 +257,7 @@
      * 从组织调入车辆
      * @param size
      */
-    vm.getLeftMachineFromOrg = function (size) {
+    vm.getMachineFromOrg = function (destArray,rentalOrderId,size) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -286,9 +269,6 @@
           operatorInfo: function () {
             return vm.operatorInfo;
           },
-          orderId: function () {
-            return vm.leftRentalOrder.id;
-          },
           selectUrl: function () {
             return RENTANL_UNUSED_MACHINE_PAGE_URL;
           }
@@ -297,7 +277,10 @@
 
       modalInstance.result.then(function (result) {
 
-        var roleUsers = {"addMachineIdList": result, "addOrderId": vm.leftRentalOrder.id};
+        if(result.length==0){
+          return;
+        }
+        var roleUsers = {"addMachineIdList": result, "addOrderId": rentalOrderId};
         var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, roleUsers);
         restPromise.then(function (data) {
 
@@ -305,7 +288,7 @@
             Notification.success("调入车辆成功!");
             var result=data.content;
             for(var i=0;i<result.length;i++){
-              vm.tableParams.data.splice(0, 0, result[0]);
+              destArray.data.splice(0, 0, result[0]);
             }
           }
 

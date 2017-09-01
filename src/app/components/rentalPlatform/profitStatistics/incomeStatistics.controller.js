@@ -31,13 +31,8 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -105- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      var baseBoxContainerHeight = windowHeight -50 -25 -5 - 105-10- 40 - 20-50; //50 topBar的高,5间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
       //baseBox自适应高度
-      vm.baseBoxContainer = {
-        "min-height": baseBoxContainerHeight + "px"
-      }
-      var baseBoxContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
-      //地图的自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
@@ -477,7 +472,7 @@
           axisTick: {
             show: false
           },
-          data: ['上上周', '上周', '本周']
+          data: ['', '', '']
         },
         yAxis: {
           type: 'value',

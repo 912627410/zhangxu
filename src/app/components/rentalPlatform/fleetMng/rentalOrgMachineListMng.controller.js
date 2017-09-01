@@ -9,7 +9,7 @@
     .controller('orgMachineListMngController', orgMachineListMngController);
 
   /** @ngInject */
-  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl, orderId,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL) {
+  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
