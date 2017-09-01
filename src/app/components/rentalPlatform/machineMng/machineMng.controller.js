@@ -32,8 +32,8 @@
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
         $uibModalInstance.close(vm.machine);
-      }, function (reson) {
-
+      }, function (reason) {
+        console.log(reason)
       })
     };
 
