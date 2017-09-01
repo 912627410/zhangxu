@@ -24,7 +24,7 @@
     //搜索条件定义
     vm.searchConditions = {};
     //定义每页显示多少条数据
-    vm.pageSize = 13;
+    vm.pageSize = 12;
     /**
      * 自适应高度函数
      * @param windowHeight
