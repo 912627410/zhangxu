@@ -239,11 +239,12 @@
     function creatRentChart(){
       var rspData = serviceResource.restCallService(MACHINE_RENT_URL,"GET");
       rspData.then(function (data) {
+
         function getLocalTime(nS) {
           return new Date(parseInt(nS)).toLocaleString().substr(0,9)
         }
 
-        for(var i=0;i<7;i++){
+        for(var i=0,len = data.content.startDate.length;i<len;i++){
           data.content.startDate[i] = getLocalTime(data.content.startDate[i])
         }
 
@@ -252,9 +253,25 @@
           tooltip: {
             trigger: 'axis',
             formatter:function(params){
-              var temp  = '<div>' + params[0].name + '</div>' + '<div>' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div>' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
+              var temp  = '<div>' + params[0].name + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(38, 173, 88);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(35,142,250);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
               return temp;
             }
+          },
+          legend: {
+            // top: 20,
+            // data: [{
+            //   name: '已租',
+            //   icon: false,
+            //   textStyle: {
+            //     color: 'rgb(35, 142, 250)'
+            //   }
+            // },{
+            //   name: '待租',
+            //   icon: false,
+            //   textStyle: {
+            //     color: 'rgb(38, 173, 88)'
+            //   }
+            // }]
           },
           grid: {
             top:'20%',
@@ -352,7 +369,6 @@
             },
             areaStyle: {
               normal: {
-                // color:'rgb(255, 51, 119)'
                 color: 'rgb(35, 142, 250)'
               }
             },
