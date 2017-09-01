@@ -26,6 +26,12 @@
       },
       maxlength: function(value, scope, element, attrs, param) {
         return value.length <= param;
+      },
+      maxValue: function (value, scope, element, attrs, param) {
+        return parseInt(value) <= parseInt(param);
+      },
+      minValue: function (value, scope, element, attrs, param) {
+        return parseInt(value) >= parseInt(param);
       }
     };
 
@@ -69,6 +75,14 @@
       },
       maxlength: {
         error: '超出最大允许长度',
+        success: ''
+      },
+      minValue: {
+        error: '不能小于',
+        success: ''
+      },
+      maxValue: {
+        error: '不能大于',
         success: ''
       },
       numberAndCharForPass: {
@@ -127,6 +141,30 @@
           return value === attrs.validfoo;
         },
         url:"abc"
+      }
+    );
+
+    //自定义最大值最小值消息
+
+    $validationProvider.setExpression({
+        maxValue: function(value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxValue: {
+              error: '不能大于 ' + param
+            }
+          });
+
+           return parseInt(value) <= parseInt(param);
+        },
+        minValue: function(value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minValue: {
+              error: '不能小于 ' + param
+            }
+          });
+
+          return parseInt(value) >= parseInt(param);
+        },
       }
     );
 

@@ -1399,7 +1399,8 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <input type="text" id="secOutPower" class="form-control" validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                                  <input type="text" id="secOutPower" class="form-control"
+                                         validator="number,maxValue=65535" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
                                 </div>
                               </div>
                             </div>
@@ -1410,7 +1411,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="secLocateInt" class="form-control"
-                                         validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                                         validator="number,maxValue=65535" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
                                 </div>
                               </div>
                             </div>
@@ -1421,7 +1422,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="secInnerPower" class="form-control"
-                                         validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                                         validator="number,maxValue=65535" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
                                 </div>
                               </div>
                             </div>
