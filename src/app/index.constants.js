@@ -294,6 +294,7 @@
     .constant('RENTAL_MAINTENANCE_PAGE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenancepage')//
     .constant('RENTAL_MAINTENANCE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenance')//
     .constant('RENTAL_MAINTENANCE_TYPE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenanceType')//
+    .constant('RENTAL_MAINTENANCE_STATUS_URL',SERVER_BASE_URL + 'rental/maintenance/statusList')//
 
     //租赁订单
     .constant('RENTAL_ORDER_PAGE_URL',SERVER_BASE_URL + 'rental/order/orderpage')//租赁订单信息

@@ -38,15 +38,15 @@
               </p>
             </div>
 
-            <label  class="col-md-1 control-label">保养原因</label>
+            <label  class="col-md-1 control-label">保养依据</label>
             <div class="col-md-2">
-              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
-                     placeholder="订单号"/>
+              <input type="text" name="customerName" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.customerName"
+                     placeholder="保养依据"/>
             </div>
             <label class="col-md-1 control-label">描述</label>
             <div class="col-md-5">
-              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
-                     placeholder="订单号"/>
+              <input type="text" name="customerName" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.description"
+                     placeholder="描述"/>
             </div>
 
 
@@ -55,27 +55,25 @@
 
             <label class="col-md-1 control-label">总保养费用</label>
             <div class="col-md-2">
-              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
-                     placeholder="订单号"/>
+              <input type="text" name="id" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalMaintentanceCost"
+                     placeholder="总保养费用"/>
             </div>
 
             <label  class="col-md-1 control-label">总人工费用</label>
             <div class="col-md-2">
-              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
-                     placeholder="订单号"/>
+              <input type="text" name="customerName" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalOperatorCost"
+                     placeholder="总人工费用"/>
             </div>
             <label class="col-md-1 control-label">状态</label>
             <div class="col-md-2">
-              <p class="input-group">
-
-                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org" readonly />
-                <span class="input-group-btn">
-            <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalOrderMngController.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-              </p>
+              <ui-select name="status" ng-model="newRentalMaintenanceController.status" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+                </ui-select-match>
+                <ui-select-choices repeat="maintenanceStatus in newRentalMaintenanceController.statusList">
+                  <div ng-bind-html="maintenanceStatus.desc | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
             </div>
 
           </div>

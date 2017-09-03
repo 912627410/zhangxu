@@ -10,10 +10,11 @@
     .controller('newRentalMaintenanceController', newRentalMaintenanceController);
 
   /** @ngInject */
-  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
+  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
+   // vm.maintenance={};
 
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
@@ -30,10 +31,33 @@
     }
 
 
+    //加载车辆驱动信息
+    var statusPromise = rentalService.getMaintenanceStatusList();
+    statusPromise.then(function (data) {
+      vm.statusList= data;
+
+      console.log(vm.statusList);
+    }, function (reason) {
+      Notification.error('获取状态集合失败');
+    })
+
+
 
     vm.ok = function () {
+
+      console.log(vm.maintenance);
+     // console.log(vm.tableParams.data);
+      console.log(vm.machine);
+
+      vm.maintenance.machine=vm.machine;
+      vm.maintenance.maintenanceListVo=vm.tableParams.data;
+
+      if (null != vm.status) {
+        vm.maintenance.status= vm.status.value;
+      }
+
       var rspdata = serviceResource.restAddRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
-      vm.maintenance.org=vm.org;
+
       rspdata.then(function (data) {
         Notification.success("新建保养信息成功!");
         $location.path(path);
@@ -142,7 +166,6 @@
 
 
     vm.updateAllSelection = function ($event) {
-      alert(11);
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
 

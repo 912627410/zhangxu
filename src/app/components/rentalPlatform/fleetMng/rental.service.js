@@ -9,7 +9,7 @@
     .factory('rentalService', rentalService);
 
   /** @ngInject */
-  function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE,RENTAL_ORDER_STATUS) {
+  function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE,RENTAL_ORDER_STATUS,RENTAL_MAINTENANCE_STATUS_URL) {
 
 
 
@@ -30,6 +30,9 @@
       },
       getRetnalOrderStatusList: function () {
         return serviceResource.restCallService(RENTAL_ORDER_STATUS,"QUERY"); //返回结果是List,所以用Query
+      },
+      getMaintenanceStatusList: function () {
+        return serviceResource.restCallService(RENTAL_MAINTENANCE_STATUS_URL,"QUERY"); //返回结果是List,所以用Query
       },
 
     };
