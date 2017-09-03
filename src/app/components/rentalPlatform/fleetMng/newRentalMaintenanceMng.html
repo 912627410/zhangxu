@@ -53,21 +53,23 @@
           </div>
           <div class="form-group">
 
-            <label class="col-md-1 control-label">总保养费用</label>
+            <label class="col-md-1 control-label">保养总费用</label>
             <div class="col-md-2">
-              <input type="text" name="id" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalMaintentanceCost"
-                     placeholder="总保养费用"/>
+              <input type="text" name="totalMaintentanceCost"
+                     class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalMaintentanceCost"
+                     placeholder="总保养费用" validator="required"/>
+
             </div>
 
-            <label  class="col-md-1 control-label">总人工费用</label>
+            <label  class="col-md-1 control-label">人工总费用</label>
             <div class="col-md-2">
               <input type="text" name="customerName" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalOperatorCost"
-                     placeholder="总人工费用"/>
+                     placeholder="总人工费用" validator="required"/>
             </div>
             <label class="col-md-1 control-label">状态</label>
             <div class="col-md-2">
               <ui-select name="status" ng-model="newRentalMaintenanceController.status" theme="bootstrap"
-                         ng-disabled="disabled">
+                         ng-disabled="disabled" validator="required">
                 <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
                 </ui-select-match>
                 <ui-select-choices repeat="maintenanceStatus in newRentalMaintenanceController.statusList">
@@ -78,6 +80,8 @@
 
           </div>
           <hr/>
+          <div class="form-group">
+
           <div class="col-lg-12 table-responsive "><!--表格框-->
             <script id="selectAllHeader" type="text/ng-template">
               <input type="checkbox"  ng-click="newRentalMaintenanceController.updateAllSelection($event)">
@@ -93,13 +97,13 @@
                 <td class="text-nowrap" data-title="'保养项目'" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
 
                 <td class="text-nowrap" data-title="'保养费用'" sortable="'deviceinfo.deviceNum'">
-                  <input type="text" name="customerName" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="保养费用"/>
+                  <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="保养费用"/>
                 </td>
                 <td class="text-nowrap" data-title="'人工费用'" sortable="'engineType.engineName'">
-                  <input type="text" name="customerName" class="form-control"  ng-model="maintenanceList.operatorCost" placeholder="人工费用"/>
+                  <input type="text" name="operatorCost" class="form-control"  ng-model="maintenanceList.operatorCost" placeholder="人工费用"/>
                 </td>
 
-                <td class="text-nowrap" data-title="'保养时间'" sortable="'deviceinfo.deviceNum'">
+                <td class="text-nowrap" data-title="'保养时间'" sortable="'deviceinfo.deviceNum'" >
                   <p class="input-group">
                     <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                            ng-model="maintenanceList.createTime"
@@ -117,15 +121,27 @@
                   <span id="bootstrap"></span>
                 </td>
                 <td class="text-nowrap" data-title="'保养人'" sortable="'deviceinfo.deviceNum'">
-                  <input type="text" name="customerName" class="form-control"  ng-model="maintenanceList.operator" placeholder="保养人"/>
+                  <input type="text" name="operatorRequiredOnly{{$index}}" message-id="operatorRequiredOnly{{$index}}"
+                         class="form-control"  validator="required" ng-model="maintenanceList.operator" placeholder="保养人"/>
+                  <span id="operatorRequiredOnly{{$index}}"></span>
                 </td>
                 <td class="text-nowrap" data-title="'状态'" sortable="'state'">
-                  <input type="text" name="customerName" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="状态"/>
+                  <ui-select name="statusRequiredOnly{{$index}}" message-id="statusRequiredOnly{{$index}}"
+                             ng-model="maintenanceList.status" theme="bootstrap"
+                             ng-disabled="disabled" validator="required">
+                    <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceController.listStatusList">
+                      <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <span id="statusRequiredOnly{{$index}}"></span>
                 </td>
 
               </tr>
             </table>
           </div>
+            </div>
         </div>
       </div>
     </form>

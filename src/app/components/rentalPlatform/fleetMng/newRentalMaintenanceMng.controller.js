@@ -31,12 +31,17 @@
     }
 
 
-    //加载车辆驱动信息
     var statusPromise = rentalService.getMaintenanceStatusList();
     statusPromise.then(function (data) {
       vm.statusList= data;
 
-      console.log(vm.statusList);
+    }, function (reason) {
+      Notification.error('获取状态集合失败');
+    })
+    var listStatusPromise = rentalService.getMaintenanceListStatusList();
+    listStatusPromise.then(function (data) {
+      vm.listStatusList= data;
+
     }, function (reason) {
       Notification.error('获取状态集合失败');
     })
@@ -55,6 +60,11 @@
       if (null != vm.status) {
         vm.maintenance.status= vm.status.value;
       }
+
+      for(var i=0;i<vm.maintenance.maintenanceListVo.length;i++){
+        vm.maintenance.maintenanceListVo[i].status=vm.maintenance.maintenanceListVo[i].status.value;
+      }
+
 
       var rspdata = serviceResource.restAddRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
 
