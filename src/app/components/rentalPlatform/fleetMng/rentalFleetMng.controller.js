@@ -259,6 +259,7 @@
      */
     vm.getMachineFromOrg = function (destArray,rentalOrderId,size) {
 
+      var dest=destArray;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrgMachineListMng.html',
@@ -288,7 +289,7 @@
             Notification.success("调入车辆成功!");
             var result=data.content;
             for(var i=0;i<result.length;i++){
-              destArray.data.splice(0, 0, result[0]);
+              dest.data.splice(0, 0, result[i]);
             }
           }
 

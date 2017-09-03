@@ -6,7 +6,7 @@
 
   angular
     .module('GPSCloud')
-    .controller('orgMachineListMngController', orgMachineListMngController);
+    .controller('maintenanceMachineListMngController', orgMachineListMngController);
 
   /** @ngInject */
   function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,commonFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
@@ -43,7 +43,7 @@
       Notification.error('获取高度失败');
     })
 
-  //加载车辆类型信息
+    //加载车辆类型信息
     var deviceTypeListPromise = rentalService.getDeviceTypeList();
     deviceTypeListPromise.then(function (data) {
       vm.deviceTypeList= data.content;
@@ -51,7 +51,7 @@
       Notification.error('获取类型失败');
     })
 
-  //加载车辆驱动信息
+    //加载车辆驱动信息
     var devicePowerTypeListPromise = rentalService.getDevicePowerTypeList();
     devicePowerTypeListPromise.then(function (data) {
       vm.devicePowerTypeList= data.content;
@@ -139,7 +139,7 @@
 
     //提交
     vm.ok = function () {
-     // $uibModalInstance.close(vm.selectRadio);
+      // $uibModalInstance.close(vm.selectRadio);
     };
 
     vm.cancel = function () {
@@ -187,11 +187,10 @@
     }
 
 
-    //批量分批车辆
-    vm.batchMoveMachine = function () {
-      $uibModalInstance.close(vm.selected);
-
-
+    //提交
+    vm.ok = function () {
+      console.log(vm.selectRadio);
+      $uibModalInstance.close(vm.selectRadio);
     };
 
 

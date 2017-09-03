@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">未分配车辆列表
-    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="orgMachineListMngController.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orgMachineListMngController.batchMoveMachine()">确定</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="maintenanceMachineListMngController.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="maintenanceMachineListMngController.ok()">确定</button>
   </h3>
 </div>
 
@@ -14,7 +14,7 @@
 
         <label class="col-md-2 control-label">{{'machineNumber'| translate}}</label>
         <div class="col-md-2">
-          <input type="text" name="licenseId" class="form-control"  ng-model="orgMachineListMngController.searchConditions.licenseId"
+          <input type="text" name="licenseId" class="form-control"  ng-model="maintenanceMachineListMngController.searchConditions.licenseId"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
@@ -22,10 +22,10 @@
         <div class="col-md-2">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="orgMachineListMngController.org.label" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="maintenanceMachineListMngController.org.label" name="org" readonly required/>
             <span class="input-group-btn">
             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="orgMachineListMngController.openTreeInfo()">
+            <button type="button" class="btn btn-default" ng-click="maintenanceMachineListMngController.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
@@ -38,22 +38,22 @@
 
         <label  class="col-md-2 control-label">类型</label>
         <div class="col-md-2">
-          <ui-select name="deviceType" ng-model="orgMachineListMngController.searchConditions.typeId" theme="bootstrap"
+          <ui-select name="deviceType" ng-model="maintenanceMachineListMngController.searchConditions.typeId" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
             </ui-select-match>
-            <ui-select-choices repeat="deviceType in orgMachineListMngController.deviceTypeList">
+            <ui-select-choices repeat="deviceType in maintenanceMachineListMngController.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
         <label class="col-md-1 control-label">驱动</label>
         <div class="col-md-2">
-          <ui-select name="devicePowerType" ng-model="orgMachineListMngController.searchConditions.powerTypeId" theme="bootstrap"
+          <ui-select name="devicePowerType" ng-model="maintenanceMachineListMngController.searchConditions.powerTypeId" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="驱动">{{$select.selected.name}}
             </ui-select-match>
-            <ui-select-choices repeat="devicePowerType in orgMachineListMngController.devicePowerTypeList">
+            <ui-select-choices repeat="devicePowerType in maintenanceMachineListMngController.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
@@ -65,22 +65,22 @@
 
         <label class="col-md-2 control-label">高度</label>
         <div class="col-md-2">
-          <ui-select name="deviceHeightType" ng-model="orgMachineListMngController.searchConditions.heightTypeId" theme="bootstrap"
+          <ui-select name="deviceHeightType" ng-model="maintenanceMachineListMngController.searchConditions.heightTypeId" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
             </ui-select-match>
-            <ui-select-choices repeat="deviceHeightType in orgMachineListMngController.deviceHeightTypeList">
+            <ui-select-choices repeat="deviceHeightType in maintenanceMachineListMngController.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
         <label  class="col-md-1 control-label">品牌</label>
         <div class="col-md-2">
-          <ui-select name="deviceManufacture" ng-model="orgMachineListMngController.searchConditions.factoryId" theme="bootstrap"
+          <ui-select name="deviceManufacture" ng-model="maintenanceMachineListMngController.searchConditions.factoryId" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="品牌">{{$select.selected.name}}
             </ui-select-match>
-            <ui-select-choices repeat="deviceManufacture in orgMachineListMngController.deviceManufactureList">
+            <ui-select-choices repeat="deviceManufacture in maintenanceMachineListMngController.deviceManufactureList">
               <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
@@ -88,9 +88,9 @@
         <div class="col-md-2">
 
           <button class="btn btn-primary" type="button"
-                  ng-click="orgMachineListMngController.query(null,null,null,orgMachineListMngController.searchConditions)">{{'query'|translate}}
+                  ng-click="maintenanceMachineListMngController.query(null,null,null,maintenanceMachineListMngController.searchConditions)">{{'query'|translate}}
           </button>
-          <button class="btn btn-default" type="button" ng-click="orgMachineListMngController.reset()">{{'reset'|translate}}</button>
+          <button class="btn btn-default" type="button" ng-click="maintenanceMachineListMngController.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
     </form>
@@ -100,15 +100,14 @@
 
   <div class="row" ng-style="rentalOrderMngController.baseBoxContainer">
     <script id="selectAllHeader" type="text/ng-template">
-      <input type="checkbox"  ng-click="orgMachineListMngController.updateAllSelection($event)"
+      <input type="checkbox"  ng-click="maintenanceMachineListMngController.updateAllSelection($event)"
              ng-model="machineMngCtrl.checked">
     </script>
     <div class="col-lg-12 table-responsive "><!--表格框-->
-      <table ng-table="orgMachineListMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <table ng-table="maintenanceMachineListMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="machine in $data">
-          <td class="text-nowrap" data-header="'selectAllHeader'">
-            <input type="checkbox" ng-checked="orgMachineListMngController.isSelected(machine.id)"
-                   ng-click="orgMachineListMngController.updateSelection($event,machine)" ng-model="machine.checked">
+          <td class="text-nowrap">
+            <input type="radio" name="machine.radio"  ng-value="machine" ng-model="maintenanceMachineListMngController.selectRadio">
           </td>
           <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
             {{machine.licenseId}}
@@ -127,9 +126,9 @@
     <div class="col-lg-12"><!--分页框-->
 
 
-      <uib-pagination total-items="orgMachineListMngController.page.totalElements"
-                      ng-change="orgMachineListMngController.query(orgMachineListMngController.pageNumber-1,null,null,null)"
-                      max-size="5" ng-model="orgMachineListMngController.pageNumber" items-per-page="orgMachineListMngController.page.size"
+      <uib-pagination total-items="maintenanceMachineListMngController.page.totalElements"
+                      ng-change="maintenanceMachineListMngController.query(maintenanceMachineListMngController.pageNumber-1,null,null,null)"
+                      max-size="5" ng-model="maintenanceMachineListMngController.pageNumber" items-per-page="maintenanceMachineListMngController.page.size"
                       class="pagination-sm" boundary-links="true" rotate="false"
                       first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
     </div>

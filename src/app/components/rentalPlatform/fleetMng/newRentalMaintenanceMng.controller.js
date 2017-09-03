@@ -10,8 +10,11 @@
     .controller('newRentalMaintenanceController', newRentalMaintenanceController);
 
   /** @ngInject */
-  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $uibModal,$location,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification) {
+  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
     var vm = this;
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的设备id
+
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
     vm.cancel = function () {
@@ -49,8 +52,8 @@
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrgMachineListMng.html',
-        controller: 'orgMachineListMngController as orgMachineListMngController',
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalMaintenanceMachineListMng.html',
+        controller: 'maintenanceMachineListMngController as maintenanceMachineListMngController',
         size: size,
         backdrop: false,
         resolve: {
@@ -58,7 +61,7 @@
             return vm.operatorInfo;
           },
           selectUrl: function () {
-          return RENTAL_MAINTENANCE_URL;
+          return RENTANL_UNUSED_MACHINE_PAGE_URL;
         }
         }
       });
@@ -66,22 +69,95 @@
       modalInstance.result.then(function (result) {
         vm.rightRentalOrder=result;
 
-        //如果选择的订单和左边的一样,则直接提示重新选择
-        if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
-          vm.rightRentalOrder=null;
-          Notification.error(" 选择的订单不能一样!");
-          return;
-        }
 
-        console.log(vm.rightRentalOrder);
+        console.log(result);
+        vm.machine=result;
 
-        if(null!=vm.rightRentalOrder){
-          vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
-        }
+        vm.queryTypes(vm.machine.id);
+
+
+
 
       }, function () {
       });
     };
+
+    vm.queryTypes = function ( machineId) {
+
+
+      var restCallURL = RENTAL_MAINTENANCE_TYPE_URL;
+      restCallURL += "?id="+machineId;
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+          console.log(data.content);
+
+
+
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+
+        // console.log(11);
+        // console.log(vm.tableParams);
+        // console.log(vm.tableParams.data.length);
+        // for(var i=0;i<vm.tableParams.data.length;i++){
+        //   console.log(vm.tableParams.data[i]);
+        // }
+        // console.log(22);
+      }, function (reason) {
+        Notification.error("获取作业面数据失败");
+      });
+    };
+
+    vm.open = function($event, dt) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+
+      dt.opened = true;
+
+    };
+
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
+
+      }
+    }
+
+    vm.updateSelection = function ($event, id, status) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
+
+
+    vm.updateAllSelection = function ($event) {
+      alert(11);
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+
+      vm.tableParams.data.forEach(function (maintenanceList) {
+        updateSelected(action, maintenanceList.machineMaintenanceType.id);
+      })
+
+    }
+
+    vm.isSelected = function (id) {
+      return vm.selected.indexOf(id) >= 0;
+    }
+
+
+
 
   }
 })();
