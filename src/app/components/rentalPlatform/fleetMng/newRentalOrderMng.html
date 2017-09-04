@@ -22,8 +22,7 @@
                 <p class="input-group">
 
                   <input type="text" id="org" class="form-control" placeholder="请选择"
-                         ng-model="newRentalOrderController.customer.name" name="customer" readonly
-                         validator="required"/>
+                         ng-model="newRentalOrderController.customer.name" name="customer" validator="required"/>
                   <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="newRentalOrderController.selectCustomer('lg')">
@@ -71,7 +70,7 @@
                          ng-model="newRentalOrderController.rentalOrder.startDate"
                          is-open="newRentalOrderController.startDateSetting.status.opened"
                          datepicker-options="newRentalOrderController.startDateSetting.dateOptions" close-text="Close"
-                         validator="required" message-id="bootstrap" readonly/>
+                         validator="required" message-id="bootstrap"/>
 
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -91,7 +90,7 @@
                   <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                          ng-model="newRentalOrderController.rentalOrder.endDate"
                          is-open="newRentalOrderController.endDateOpenStatus.opened"
-                         datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+                         datepicker-options="dateOptions" close-text="Close"/>
                   <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newRentalOrderController.endDateOpen($event)">
@@ -105,8 +104,7 @@
               <label class="col-sm-3 control-label">经度</label>
               <div class="col-sm-5">
                 <input type="text" class="form-control" placeholder="自动匹配" readonly
-                       ng-model="newRentalOrderController.rentalOrder.longitude" name="email"
-                       typeahead-show-hint="true"/>
+                       ng-model="newRentalOrderController.rentalOrder.longitude" typeahead-show-hint="true"/>
               </div>
             </div>
             <div class="form-group">

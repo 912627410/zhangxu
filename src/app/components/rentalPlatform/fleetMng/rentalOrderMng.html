@@ -37,161 +37,161 @@
         </div>
       </div>
     </div>
-    <div class="row info-box-container">
-      <form class="form-horizontal" role="form">
+    <div class="container-fluid table-wrapper" style="margin-top: 15px">
+      <div class="row info-box-container">
+        <form class="form-horizontal" role="form">
 
-        <div class="form-group">
+          <div class="form-group">
 
-          <label class="col-md-1 control-label">订单号</label>
-          <div class="col-md-2">
-            <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
-                   placeholder="订单号"/>
-          </div>
+            <label class="col-md-1 control-label">订单号</label>
+            <div class="col-md-2">
+              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
+                     placeholder="订单号"/>
+            </div>
 
-          <label  class="col-md-1 control-label">客户</label>
-          <div class="col-md-2">
-            <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
-                   placeholder="订单号"/>
-          </div>
-          <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
-          <div class="col-md-2">
-            <p class="input-group">
+            <label  class="col-md-1 control-label">客户</label>
+            <div class="col-md-2">
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+                     placeholder="订单号"/>
+            </div>
+            <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
+            <div class="col-md-2">
+              <p class="input-group">
 
-              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org" readonly />
-              <span class="input-group-btn">
+                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrderMngController.org.label" name="org"/>
+                <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalOrderMngController.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
-            </p>
+              </p>
+            </div>
+
           </div>
+          <div class="form-group">
 
-        </div>
-        <div class="form-group">
+            <label class="col-md-1 control-label">开始时间</label>
+            <div class="col-md-2">
+              <p class="input-group">
+                <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="rentalOrderMngController.rentalOrder.startDate"
+                       is-open="rentalOrderMngController.startDateSetting.status.opened"
+                       datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
+                       message-id="bootstrap"/>
 
-          <label class="col-md-1 control-label">开始时间</label>
-          <div class="col-md-2">
-            <p class="input-group">
-              <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
-                     ng-model="rentalOrderMngController.rentalOrder.startDate"
-                     is-open="rentalOrderMngController.startDateSetting.status.opened"
-                     datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
-                     message-id="bootstrap" readonly/>
-
-              <span class="input-group-btn">
+                <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
                           ng-click="rentalOrderMngController.startDateSetting.open($event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-            </p>
-            <span id="bootstrap"></span>
-          </div>
+              </p>
+              <span id="bootstrap"></span>
+            </div>
 
-          <label  class="col-md-1 control-label">结束时间</label>
-          <div class="col-md-2">
-            <p class="input-group">
-              <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                     ng-model="rentalOrderMngController.rentalOrder.endDate"
-                     is-open="rentalOrderMngController.endDateOpenStatus.opened"
-                     datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
-              <span class="input-group-btn">
+            <label  class="col-md-1 control-label">结束时间</label>
+            <div class="col-md-2">
+              <p class="input-group">
+                <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="rentalOrderMngController.rentalOrder.endDate"
+                       is-open="rentalOrderMngController.endDateOpenStatus.opened"
+                       datepicker-options="dateOptions" close-text="Close"/>
+                <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalOrderMngController.endDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
               </span>
-            </p>
-          </div>
+              </p>
+            </div>
 
-          <label class="col-md-1 control-label">状态</label>
-          <div class="col-md-2">
-            <ui-select name="status" ng-model="rentalOrderMngController.rentalOrder.status" theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-              </ui-select-match>
-              <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngController.retanlOrderStatusList">
-                <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
+            <label class="col-md-1 control-label">状态</label>
+            <div class="col-md-2">
+              <ui-select name="status" ng-model="rentalOrderMngController.rentalOrder.status" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+                </ui-select-match>
+                <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngController.retanlOrderStatusList">
+                  <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
 
-          <div class="col-md-2">
+            <div class="col-md-2">
 
-            <button class="btn btn-primary" type="button"
-                    ng-click="rentalOrderMngController.query(null,null,null,rentalOrderMngController.rentalOrder)">{{'query'|translate}}
-            </button>
-            <button class="btn btn-default" type="button" ng-click="rentalOrderMngController.reset()">{{'reset'|translate}}</button>
-          </div>
-
-          <div class="col-md-1">
-
-            <button class="btn btn-primary" type="button"
-                    ng-click="rentalOrderMngController.new()">新增
-            </button>
-          </div>
-        </div>
-
-      </form>
-
-    </div>
-
-
-    <div class="row" ng-style="rentalOrderMngController.baseBoxContainer">
-
-      <div class="col-lg-12 table-responsive "><!--表格框-->
-        <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-          <tr ng-repeat="rentalOrder in $data">
-            <td class="text-nowrap" data-header="'selectAllHeader'">
-              <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
-                     ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)"
-                     ng-model="machine.checked">
-            </td>
-            <td class="text-nowrap" data-title="'订单号'" sortable="'licenseId'">
-              <a ng-if="rentalOrderMngController.validateOperPermission()" href
-                 ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{rentalOrder.id}}</a>
-              <span ng-if="!rentalOrderMngController.validateOperPermission()">{{rentalOrder.id}}</span>
-
-            </td>
-            <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
-            <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
-            <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
-            <td class="text-nowrap" data-title="'客户名'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
-            <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
-            <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
-            <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">
-              {{machine.machineType.typeName}}
-              <span ng-if="rentalOrder.jc==null">0</span>
-              <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
-              <span ng-if="rentalOrder.zb==null">0</span>
-              <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
-              <span ng-if="rentalOrder.qb==null">0</span>
-              <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
-
-            </td>
-
-            <td class="text-nowrap" data-title="'operation'|translate">
-
-
-              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                      ng-click="rentalOrderMngController.update(rentalOrder.id)">{{'alter'| translate}}
+              <button class="btn btn-primary" type="button"
+                      ng-click="rentalOrderMngController.query(null,null,null,rentalOrderMngController.rentalOrder)">{{'query'|translate}}
               </button>
-              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalOrderMngController.view(rentalOrder.id)">查看
+              <button class="btn btn-default" type="button" ng-click="rentalOrderMngController.reset()">{{'reset'|translate}}</button>
+            </div>
+
+            <div class="col-md-1">
+
+              <button class="btn btn-primary" type="button"
+                      ng-click="rentalOrderMngController.new()">新增
               </button>
-            </td>
-          </tr>
-        </table>
+            </div>
+          </div>
+
+        </form>
+
       </div>
-      <div class="col-lg-12"><!--分页框-->
+      <div class="row" ng-style="rentalOrderMngController.baseBoxContainer">
+
+        <div class="col-lg-12 table-responsive "><!--表格框-->
+          <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered text-nowrap">
+            <tr ng-repeat="rentalOrder in $data">
+              <td class="text-nowrap" data-header="'selectAllHeader'">
+                <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
+                       ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)"
+                       ng-model="machine.checked">
+              </td>
+              <td class="text-nowrap" data-title="'订单号'" sortable="'licenseId'">
+                <a ng-if="rentalOrderMngController.validateOperPermission()" href
+                   ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{rentalOrder.id}}</a>
+                <span ng-if="!rentalOrderMngController.validateOperPermission()">{{rentalOrder.id}}</span>
+
+              </td>
+              <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
+              <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
+              <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
+              <td class="text-nowrap" data-title="'客户名'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
+              <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
+              <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
+              <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">
+                {{machine.machineType.typeName}}
+                <span ng-if="rentalOrder.jc==null">0</span>
+                <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
+                <span ng-if="rentalOrder.zb==null">0</span>
+                <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
+                <span ng-if="rentalOrder.qb==null">0</span>
+                <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
+
+              </td>
+
+              <td class="text-nowrap" data-title="'operation'|translate">
 
 
-        <uib-pagination total-items="rentalOrderMngController.page.totalElements"
-                        ng-change="rentalOrderMngController.query(rentalOrderMngController.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="rentalOrderMngController.pageNumber" items-per-page="rentalOrderMngController.page.size"
-                        class="pagination-sm" boundary-links="true" rotate="false"
-                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
-        </uib-pagination>
+                <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                        ng-click="rentalOrderMngController.update(rentalOrder.id)">{{'alter'| translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                        ng-click="rentalOrderMngController.view(rentalOrder.id)">查看
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-12"><!--分页框-->
+
+
+          <uib-pagination total-items="rentalOrderMngController.page.totalElements"
+                          ng-change="rentalOrderMngController.query(rentalOrderMngController.pageNumber-1,null,null,null)"
+                          max-size="5" ng-model="rentalOrderMngController.pageNumber" items-per-page="rentalOrderMngController.page.size"
+                          class="pagination-sm" boundary-links="true" rotate="false"
+                          first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+          </uib-pagination>
+        </div>
       </div>
     </div>
   </div>
