@@ -254,7 +254,7 @@
       var count  = markers.length;
       var _renderCluserMarker = function (context) {
         var div = document.createElement('div');
-        var bgColor = 'rgba(232, 50, 50, 0.9)';
+        var bgColor = 'rgb(0,160,152)';
         var fontColor = '#000';
         var size,fontSize;
         div.style.backgroundColor = bgColor;

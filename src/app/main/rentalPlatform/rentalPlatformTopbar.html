@@ -3,25 +3,12 @@
     <img src='assets/images/logo2.png' height="40">
   </a>
   <nav class="navbar navbar-static-top" role="navigation">
-    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')">-->
-    <!--<img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文-->
-    <!--</a>-->
-    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')">-->
-    <!--<img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English-->
-    <!--</a>-->
-
-    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseleave="submenuShow=false">-->
-      <!--<span ng-mouseover="submenuShow=true" ng-init="submenuShow=false">-->
-         <!--{{'vehicleManagement'|translate}}-->
-      <!--</span>-->
-      <!--<div ng-show="submenuShow" ng-mouseleave="submenuShow=false">-->
-        <!--<ul>-->
-          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental')">当前位置</li>-->
-          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental.machineCurrentStatus')">当前状态</li>-->
-          <!--<li ng-click="rentalPlatformTopbarCtr.goState('rental.machineAlarmInfo')">报警信息</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</a>-->
+a    <a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')">
+    <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
+    </a>
+    <a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')">
+    <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
+    </a>
 
     <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseover="submenuShow=true"  ng-mouseleave="submenuShow=false">
       <span ng-init="submenuShow=false">
@@ -44,7 +31,7 @@
         <ul>
           <li ng-click=""><a ui-sref="rental.order">{{'orderMng'| translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.fleet">{{'fleetManagement'| translate}}</a></li>
-          <li ng-click=""><a ui-sref="rental.fleet">围栏管理</a></li>
+          <li ng-click=""><a ui-sref="rental.fleet">{{'fenceMng'|translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.maintenance">{{'maintenance'| translate}}</a></li>
           <li ng-click=""><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
         </ul>
