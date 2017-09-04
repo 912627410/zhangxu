@@ -63,21 +63,18 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label >Type</label>
+          <label >车型</label>
           <div class="forminline" style="width: 150px;">
-            <ui-select id="machineType" name="machineType" ng-model="profitStatisticsCtr.machineType" theme="bootstrap"
-                       ng-disabled="disabled" >
-              <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
-              </ui-select-match>
-              <ui-select-choices  repeat="machineType.id as machineType in profitStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
-                <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
+            <select class="form-control" ng-model="monitorCtrl.machineType">
+              <option value="0">剪叉</option>
+              <option value="1">直臂</option>
+              <option value="2">曲臂</option>
+            </select>
           </div>
         </div>
 
         <div class="forminline" >
-          <label>Height</label>
+          <label>高度</label>
           <select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"
                   ng-model="profitStatisticsCtr.queryDeviceHeightType"
                   ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
@@ -85,7 +82,7 @@
           </select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">Brand</label>
+          <label class="">品牌</label>
           <select name="machineManufacture" class="form-control forminline " style="width: 150px;"
                   ng-model="profitStatisticsCtr.queryManufacture"
                   ng-options="machineMF.id as machineMF.name for machineMF in profitStatisticsCtr.machineMFList">

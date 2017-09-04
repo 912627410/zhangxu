@@ -10,14 +10,10 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
-    vm.selectAll = false;//是否全选标志
-    vm.orderSelected = []; //选中的设备id
-    vm.machineSelected = []; //选中的车辆id
-    vm.machineNums = [];
     vm.incomeData = [];
     var xAxisDate = [];
     var realComeDate = [];
@@ -75,122 +71,48 @@
 
 
 
-    //订单号和车号复选框多选与全选
-    var updateOrderSelected = function (action, id) {
-      if (action == 'add' && vm.orderSelected.indexOf(id) == -1) {
-        vm.orderSelected.push(id);
+    vm.startDateSetting = {
+      //dt: "请选择开始日期",
+      open: function($event) {
+        vm.startDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
       }
-      if (action == 'remove' && vm.orderSelected.indexOf(id) != -1) {
-        var idx = vm.orderSelected.indexOf(id);
-        vm.orderIsSelected.splice(idx, 1);
-
-      }
-    }
-    vm.updateOrderSelection = function ($event, id, status) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      updateOrderSelected(action, id);
-    }
-
-    var updateMachineSelected = function (action, id) {
-      if (action == 'add' && vm.machineSelected.indexOf(id) == -1) {
-        vm.machineSelected.push(id);
-      }
-      if (action == 'remove' && vm.machineSelected.indexOf(id) != -1) {
-        var idx = vm.machineSelected.indexOf(id);
-        vm.machineSelected.splice(idx, 1);
-
-      }
-    }
-    vm.updateMachineSelection = function ($event, id, status) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      updateMachineSelected(action, id);
-    }
-
-    vm.updateOrderAllSelection = function ($event) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      vm.ordertableParams.data.forEach(function (deviceinfo) {
-        updateSelected(action, deviceinfo.id);
-      })
-
-    }
-
-    vm.updateMachineAllSelection = function ($event) {
-      var checkbox = $event.target;
-      var action = (checkbox.checked ? 'add' : 'remove');
-      // alert(action);
-      vm.machinetableParams.data.forEach(function (machineInfo) {
-        updateSelected(action, machineInfo.id);
-      })
-    }
-
-    vm.orderIsSelected = function (id) {
-      return vm.orderSelected.indexOf(id) >= 0;
-    }
-
-    vm.machineIsSelected = function (id) {
-      return vm.machineSelected.indexOf(id) >= 0;
-    }
-    vm.Orderchecked = function () {
-      var operStatus = false;
-      if (vm.selectAll) {
-        operStatus = false;
-        vm.selectAll = false;
-      } else {
-        operStatus = true;
-        vm.selectAll = true;
-      }
-
-      vm.ordertableParams.data.forEach(function (orderInfo) {
-        orderInfo.checked = operStatus;
-      })
-    }
-    vm.machinechecked = function () {
-      var operStatus = false;
-      if (vm.selectAll) {
-        operStatus = false;
-        vm.selectAll = false;
-      } else {
-        operStatus = true;
-        vm.selectAll = true;
-      }
-      vm.tableParams.data.forEach(function (machineInfo) {
-        machineInfo.checked = operStatus;
-      })
-    }
-
-
-    //开始时间与结束时间(默认差值为一个月30天)
-    var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 30);
-    vm.startDate = startDate;
-    vm.endDate = new Date();
-
-    vm.startDateDeviceData = startDate;
-    vm.endDateDeviceData = new Date();
-
-    //date picker
-    vm.startDateOpenStatusDeviceData = {
-      opened: false
     };
-    vm.endDateOpenStatusDeviceData = {
+    // 日期控件相关
+    // date picker
+    vm.startDateOpenStatus = {
       opened: false
     };
 
-    vm.startDateOpenDeviceData = function ($event) {
-      vm.startDateOpenStatusDeviceData.opened = true;
-    };
-    vm.endDateOpenDeviceData = function ($event) {
-      vm.endDateOpenStatusDeviceData.opened = true;
+    vm.startDateOpen = function ($event) {
+      vm.startDateOpenStatus.opened = true;
     };
 
-    vm.maxDate = new Date();
-    vm.dateOptions = {
-      formatYear: 'yyyy',
-      startingDay: 1
+    vm.endDateOpenStatus = {
+      opened: false
     };
+
+    vm.endDateOpen = function ($event) {
+      vm.endDateOpenStatus.opened = true;
+    };
+
+    var startDay = new Date();
+    startDay.setDate(startDay.getDate() - 30);
+    vm.startDay = startDay;
+    vm.endDay = new Date();
+
+    // vm.rentalOrder = {
+    //   startDate:vm.startDay ,
+    //   endDate:vm.endDay,
+    //   customerName:'',
+    //   workplace:''
+    // }
 
 
 
@@ -239,61 +161,6 @@
     }, function (reason) {
       Notification.error('获取厂商失败');
     })
-
-
-
-
-    vm.queryOrder = function (page, size, sort) {
-      var restCallURL = RENTAL_ORDER_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-
-        vm.ordertableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
-        }, {
-          dataset: data.content
-        });
-        vm.orderpage = data.page;
-        vm.orderpageNumber = data.page.number + 1;
-      }, function (reason) {
-        vm.orderinfoList = null;
-        Notification.error("获取订单数据失败");
-      });
-    };
-    vm.queryOrder(null,null,null);
-
-    vm.queryMachine = function (page, size, sort) {
-      var restCallURL = MACHINE_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-
-        vm.machinetableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
-        }, {
-          dataset: data.content
-        });
-        vm.machinepage = data.page;
-        vm.machinepageNumber = data.page.number + 1;
-      }, function (reason) {
-        vm.machineinfoList = null;
-        Notification.error("获取车辆数据失败");
-      });
-    };
-
-    vm.queryMachine(null,null,null);
-
 
 
 
@@ -390,8 +257,7 @@
 
     //income query
     vm.query = function (queryIncome,startDate,endDate) {
-      console.log( vm.orderSelected);
-      console.log( vm.machineSelected);
+
       var xAxisDate = [];
       var realComeDate = [];
       var incomeDate = [];
@@ -412,12 +278,6 @@
         }
       }
 
-      if(vm.orderSelected.length>0){
-        restCallURL += "&orderNums="+ vm.orderSelected;
-      }
-      if(vm.machineSelected.length>0){
-        restCallURL += "&machineNums="+ vm.machineSelected;
-      }
 
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -437,7 +297,98 @@
       })
     }
     //默认查询最近一个月
-    vm.query(null,vm.startDate,vm.endDate);
+    // vm.query(null,vm.startDate,vm.endDate);
+
+
+
+    vm.queryByOrder = function (page, size, sort,rentalOrder) {
+      var xAxisDate = [];
+      var realComeDate = [];
+      var incomeDate = [];
+
+
+      vm.leftOrderListQuery  (page, size, sort, rentalOrder);
+
+
+      var restCallURL = RENTAL_INCOME_ORDER_QUERY;
+      restCallURL += "?startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate,'yyyy-MM-dd');
+
+      if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
+        restCallURL += "&customerName="+ vm.customerName; + rentalOrder.customerName;
+      }
+
+      if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
+        restCallURL += "&workplace="+ vm.workplace;
+      }
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.incomeData = data.content;
+        for(var i = 0;i<vm.incomeData.length;i++){
+          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
+          realComeDate.push(vm.incomeData[i].realIncome);
+          incomeDate.push(vm.incomeData[i].accountsReceivable);
+        }
+        option.xAxis[0].data = xAxisDate;
+        option.series[0].data = realComeDate;
+        option.series[1].data = incomeDate;
+        lineChart.setOption(option);
+      },function (reason) {
+        Notification.error("获取收入数据失败")
+      })
+    }
+
+
+    vm.leftOrderListQuery = function (page, size, sort, rentalOrder) {
+
+      var restCallURL = RENTAL_ORDER_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      if (null != rentalOrder) {
+
+        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
+          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
+        }
+
+        if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
+          restCallURL += "&search_LIKE_workplace=" + rentalOrder.workplace;
+        }
+
+        if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
+          restCallURL += "&search_DGTE_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+        }
+
+        if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
+          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+        }
+
+      }
+
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
+      }, function (reason) {
+        vm.machineList = null;
+        Notification.error("获取车辆数据失败");
+      });
+    };
+
+   // vm.queryByOrder(null,null,null,rentalOrder)
 
     var miniChart = document.getElementsByClassName('miniChart'),
       miniChart1 = echarts.init(miniChart[0]),

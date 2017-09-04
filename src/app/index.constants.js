@@ -320,6 +320,7 @@
 
      //租赁
     .constant('RENTAL_INCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeStatistics')
+    .constant('RENTAL_INCOME_ORDER_QUERY', SERVER_BASE_URL + 'rental/asset/getIncomeByOrder')
     .constant('RENTAL_COST_PAGED_URL', SERVER_BASE_URL + 'rental/asset/getCostStatistics')
     .constant('RENTAL_PROFIT_URL', SERVER_BASE_URL + 'rental/asset/getProfitStatistics')
     .constant('RENTAL_ASSET_STATISTICS_DATA_URL', SERVER_BASE_URL + 'rental/asset/assetTopData')
