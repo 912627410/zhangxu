@@ -14,11 +14,11 @@
     var vm = this;
     //定义页面导航
     $scope.navs = [{
-      "title": "rental", "alias": "当前位置", "icon": "fa-map"
+      "title": "rental", "alias": "rentalCurrentLocate", "icon": "fa-map"
     }, {
-      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "currentState", "icon": "fa-signal"
     }, {
-      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "alarmInformation", "icon": "fa-exclamation-triangle"
     }];
     vm.rightBoxBottomHeight = 20;
     vm.rightBoxTopHeightTemp = 20;
@@ -37,7 +37,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
+      var baseBoxContainerHeight = windowHeight - 50  - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -253,28 +253,12 @@
           tooltip: {
             trigger: 'axis',
             formatter:function(params){
-              var temp  = '<div>' + params[0].name + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(38, 173, 88);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(35,142,250);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
+              var temp  = '<div >' + languages.findKey(params[0].name) + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(0,160,152);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[1].seriesName) + '：' + params[1].data + " "+languages.findKey('rentalCar') + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(204,204,204);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[0].seriesName)+ '：' + params[0].data +" "+ languages.findKey('rentalCar') + '</div>' + '<div>' + languages.findKey('rentalRents')+':' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
               return temp;
             }
           },
-          legend: {
-            // top: 20,
-            // data: [{
-            //   name: '已租',
-            //   icon: false,
-            //   textStyle: {
-            //     color: 'rgb(35, 142, 250)'
-            //   }
-            // },{
-            //   name: '待租',
-            //   icon: false,
-            //   textStyle: {
-            //     color: 'rgb(38, 173, 88)'
-            //   }
-            // }]
-          },
           grid: {
-            top:'20%',
+            top:'5%',
             left: '3%',
             right: '4%',
             bottom: '3%',
@@ -299,7 +283,6 @@
             data: data.content.startDate
           },
           yAxis: {
-            name:'出租统计',
             nameTextStyle: {
               fontSize: 14,
               fontFamily:''
@@ -320,15 +303,15 @@
             }
           },
           series: [{
-            name: '待租',
+            name: 'rentalForrent',
             type: 'line',
-            stack: '总量',
+            stack: 'rentalTotal',
             itemStyle: {
               normal: {
                 opacity: 0
               },
               emphasis: {
-                color: 'rgb(38, 173, 88)',
+                color: 'rgb(0,0,0)',
                 borderColor: '#fff',
                 opacity: 1
               }
@@ -336,43 +319,43 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgb(38, 173, 88)'
+                color: 'rgb(0,0,0)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgb(38, 173, 88)'
-              }
-            },
-            data: data.content.rentalingList,
-            smooth: true,
-            smoothMonotone: 'x'
-          }, {
-            name: '已租',
-            type: 'line',
-            stack: '总量',
-            itemStyle: {
-              normal: {
-                opacity: 0
-              },
-              emphasis: {
-                color: 'rgb(35, 142, 250)',
-                borderColor: '#fff',
-                opacity: 1
-              }
-            },
-            lineStyle: {
-              normal: {
-                width:1,
-                color: 'rgb(35, 142, 250)'
-              }
-            },
-            areaStyle: {
-              normal: {
-                color: 'rgb(35, 142, 250)'
+                color: 'rgb(0,0,0)'
               }
             },
             data: data.content.unRentalList,
+            smooth: true,
+            smoothMonotone: 'x'
+          }, {
+            name: 'rentalLeased',
+            type: 'line',
+            stack: 'rentalTotal',
+            itemStyle: {
+              normal: {
+                opacity: 0
+              },
+              emphasis: {
+                color: 'rgb(0,160,152)',
+                borderColor: '#fff',
+                opacity: 1
+              }
+            },
+            lineStyle: {
+              normal: {
+                width:1,
+                color: 'rgb(0,160,152)'
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: 'rgb(0,160,152)'
+              }
+            },
+            data: data.content.rentalingList,
             smooth: true,
             smoothMonotone: 'x'
           }]
@@ -415,40 +398,13 @@
             type: 'pie',
             clockWise: false,
             radius: ['60%', '65%'],
-            itemStyle: {
-              normal: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                }
-                // shadowBlur: 20,
-                // shadowColor: 'rgba(40, 40, 40, 0.2)'
-              },
-              emphasis: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                },
-                shadowBlur: 10,
-                shadowColor: 'rgba(40, 40, 40, 0.2)'
-              }
-            },
             hoverAnimation: false,
             data: [{
               value: data.content.rentalMachineCount,
-              name: '01'
-            }, {
-              value: data.content.unRentalMachineCount,
-              name: 'invisible',
+              name: '01',
               itemStyle: {
                 normal: {
-                  color: 'rgba(0, 0, 0,0.2)',
+                  color: 'rgb(0,160,152)',
                   label: {
                     show: false
                   },
@@ -459,7 +415,34 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(0, 0, 0, 0.2)',
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(40, 40, 40, 0.2)'
+                }
+              }
+            }, {
+              value: data.content.unRentalMachineCount,
+              name: 'invisible',
+              itemStyle: {
+                normal: {
+                  color: 'rgb(87,87,87)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -531,7 +514,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(38, 173, 88,1)',
+                  color: 'rgb(0, 160,152)',
                   label: {
                     show: false
                   },
@@ -539,14 +522,14 @@
                     show: false
                   },
                   shadowBlur: 10,
-                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                  shadowColor: 'rgb(0, 160,152)'
                 }
               }
             }, {
               value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
-                  color: 'rgba(0, 0, 0,0.2)',
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -557,7 +540,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(0, 0, 0, 0.2)',
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -565,7 +548,7 @@
                     show: false
                   },
                   shadowBlur: 10,
-                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                  shadowColor: 'rgb(87,87,87)'
                 }
               }
             }]

@@ -90,7 +90,7 @@
         restrict: 'AE',
         replace: true,
         transclude: true,
-        template:'<li class="nav-btn-link" ng-repeat="item in navs"><span class="link" ng-class="linkActive">{{item.alias}}</span><i class="link-icon fa {{item.icon}}" ng-class="linkIconActive" aria-hidden="true"></i></li>'
+        template:'<li class="nav-btn-link" ng-repeat="item in navs"><span class="link" ng-class="linkActive">{{item.alias |translate}}</span><i class="link-icon fa {{item.icon}}" ng-class="linkIconActive" aria-hidden="true"></i></li>'
       }
 
     });

@@ -38,7 +38,7 @@
       $rootScope.$state.go('login');
       //提示信息
       Notification.success(languages.findKey('successfulExit'));
-    }
+    };
 
     /**
      * 切换语言
@@ -46,17 +46,14 @@
      */
     vm.changeLanguage = function (langKey) {
       $translate.use(langKey);
-    }
-
-
-
+    };
 
     var topButtons = document.getElementsByClassName('sidebar-toggle');
-    topButtons[0].style.backgroundColor = 'rgba(0,163,156,0.5)';
+    topButtons[0].style.backgroundColor = 'rgb(0,160,152)';
     vm.topButtonClick = function (a) {
       for(var i = 0;i<topButtons.length;i++){
         if(i == a){
-          topButtons[i].style.backgroundColor = 'rgba(0,163,156,0.5)';
+          topButtons[i].style.backgroundColor = 'rgb(0,160,152)';
         }
         else{
           topButtons[i].style.backgroundColor = '#262626';

@@ -726,7 +726,43 @@
   "assetMng":"资产管理",
   "machineTypeMng":"车型管理",
   "SMSstatistics":"短信发送统计",
-  "newDevice":"新建设备"
+  "newDevice":"新建设备",
+
+
+  "rentalCurrentLocate":"当前位置",
+  "rentalGeo-FenceWarning":"围栏",
+  "rentalEquipmentWarning":"报警",
+  "rentalMaintenanceReminder":"保养",
+  "rentalOff-lineReminder":"离线",
+  "rentalEquipmentPreview":"机器预览",
+  "rentalTotal":"总数",
+  "rentalScissorLift":"剪叉",
+  "rentalBoomLift":"直臂",
+  "rentalArticulatingBoomLift":"直臂",
+  "rentalStatistics":"出租统计",
+  "rentalForrent":"待租",
+  "rentalLeased":"已租",
+  "rentalRents":"出租率",
+  "rentalCar":"辆",
+  "rentalMachineTotal":"全部",
+  "rentalLibraryService":"维修",
+  "rentalLibraryForrent":"待租",
+  "rentalTransportation":"运输",
+  "rentalRentedOut":"出租",
+  "rentalStop":"报停",
+  "rentalMachineID":"车号",
+  "rentalDeviceID":"设备号",
+  "rentalOrderNumber":"订单号",
+  "rentalNewMachine":"添加车辆",
+  "rentalBrand":"品牌",
+  "rentalTotalWorkingHours":"总工作消息",
+  "rentalTimeofLastDataTransmitted":"最近数据上传时间",
+  "rentalManagement":"管理",
+  "rentalMsgContent":"消息内容",
+  "rentalAllDone":"全部已处理",
+  "rentalAllUndo":"全部未处理",
+  "rentalAllAlarmMsg":"全部报警消息"
+
 
 
 }
