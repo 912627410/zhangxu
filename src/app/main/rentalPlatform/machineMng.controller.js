@@ -257,22 +257,6 @@
               return temp;
             }
           },
-          legend: {
-            // top: 20,
-            // data: [{
-            //   name: '已租',
-            //   icon: false,
-            //   textStyle: {
-            //     color: 'rgb(35, 142, 250)'
-            //   }
-            // },{
-            //   name: '待租',
-            //   icon: false,
-            //   textStyle: {
-            //     color: 'rgb(38, 173, 88)'
-            //   }
-            // }]
-          },
           grid: {
             top:'5%',
             left: '3%',
@@ -327,7 +311,7 @@
                 opacity: 0
               },
               emphasis: {
-                color: 'rgb(204,204,204)',
+                color: 'rgb(0,0,0)',
                 borderColor: '#fff',
                 opacity: 1
               }
@@ -335,12 +319,12 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgb(204,204,204)'
+                color: 'rgb(0,0,0)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgb(204,204,204)'
+                color: 'rgb(0,0,0)'
               }
             },
             data: data.content.unRentalList,
@@ -414,40 +398,13 @@
             type: 'pie',
             clockWise: false,
             radius: ['60%', '65%'],
-            itemStyle: {
-              normal: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                }
-                // shadowBlur: 20,
-                // shadowColor: 'rgba(40, 40, 40, 0.2)'
-              },
-              emphasis: {
-                color: 'rgba(38, 173, 88,1)',
-                label: {
-                  show: false
-                },
-                labelLine: {
-                  show: false
-                },
-                shadowBlur: 10,
-                shadowColor: 'rgba(40, 40, 40, 0.2)'
-              }
-            },
             hoverAnimation: false,
             data: [{
               value: data.content.rentalMachineCount,
-              name: '01'
-            }, {
-              value: data.content.unRentalMachineCount,
-              name: 'invisible',
+              name: '01',
               itemStyle: {
                 normal: {
-                  color: 'rgba(0, 0, 0,0.2)',
+                  color: 'rgb(0,160,152)',
                   label: {
                     show: false
                   },
@@ -458,7 +415,34 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(0, 0, 0, 0.2)',
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(40, 40, 40, 0.2)'
+                }
+              }
+            }, {
+              value: data.content.unRentalMachineCount,
+              name: 'invisible',
+              itemStyle: {
+                normal: {
+                  color: 'rgb(87,87,87)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -530,7 +514,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(38, 173, 88,1)',
+                  color: 'rgb(0, 160,152)',
                   label: {
                     show: false
                   },
@@ -538,14 +522,14 @@
                     show: false
                   },
                   shadowBlur: 10,
-                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                  shadowColor: 'rgb(0, 160,152)'
                 }
               }
             }, {
               value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
-                  color: 'rgba(0, 0, 0,0.2)',
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -556,7 +540,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgba(0, 0, 0, 0.2)',
+                  color: 'rgb(87,87,87)',
                   label: {
                     show: false
                   },
@@ -564,7 +548,7 @@
                     show: false
                   },
                   shadowBlur: 10,
-                  shadowColor: 'rgba(40, 40, 40, 0.2)'
+                  shadowColor: 'rgb(87,87,87)'
                 }
               }
             }]
