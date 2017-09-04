@@ -1058,6 +1058,9 @@
     vm.serverHost = "iotserver1.nvr-china.com";
 
     vm.serverPort = "09999";
+    if(vm.deviceinfo.versionNum!=null && vm.deviceinfo.versionNum =='2001'){
+      vm.serverPort = "09998";
+    }
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
     if (vm.workHours != null) {
