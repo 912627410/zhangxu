@@ -35,7 +35,6 @@
       var rspData = serviceResource.restCallService(restCallURL, "QUERY");
       rspData.then(function (data) {
         vm.machineTypeList = data;
-        console.log(vm.machineTypeList)
       }, function (reason) {
         Notification.error("获取车辆类型数据失败");
       });
