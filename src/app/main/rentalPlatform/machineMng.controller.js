@@ -14,11 +14,11 @@
     var vm = this;
     //定义页面导航
     $scope.navs = [{
-      "title": "rental", "alias": "当前位置", "icon": "fa-map"
+      "title": "rental", "alias": "rentalCurrentLocate", "icon": "fa-map"
     }, {
-      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "currentState", "icon": "fa-signal"
     }, {
-      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "alarmInformation", "icon": "fa-exclamation-triangle"
     }];
     vm.rightBoxBottomHeight = 20;
     vm.rightBoxTopHeightTemp = 20;
@@ -37,7 +37,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
+      var baseBoxContainerHeight = windowHeight - 50  - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -253,7 +253,7 @@
           tooltip: {
             trigger: 'axis',
             formatter:function(params){
-              var temp  = '<div>' + params[0].name + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(38, 173, 88);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[0].seriesName+ '：' + params[0].data + ' 辆' + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(35,142,250);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + params[1].seriesName + '：' + params[1].data + ' 辆' + '</div>' + '<div>' + '出租率：' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
+              var temp  = '<div >' + languages.findKey(params[0].name) + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(38, 173, 88);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[0].seriesName)+ '：' + params[0].data +" "+ languages.findKey('rentalCar') + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(35,142,250);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[1].seriesName) + '：' + params[1].data + " "+languages.findKey('rentalCar') + '</div>' + '<div>' + languages.findKey('rentalRents')+':' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
               return temp;
             }
           },
@@ -274,7 +274,7 @@
             // }]
           },
           grid: {
-            top:'20%',
+            top:'5%',
             left: '3%',
             right: '4%',
             bottom: '3%',
@@ -299,7 +299,6 @@
             data: data.content.startDate
           },
           yAxis: {
-            name:'出租统计',
             nameTextStyle: {
               fontSize: 14,
               fontFamily:''
@@ -320,9 +319,9 @@
             }
           },
           series: [{
-            name: '待租',
+            name: 'rentalForrent',
             type: 'line',
-            stack: '总量',
+            stack: 'rentalTotal',
             itemStyle: {
               normal: {
                 opacity: 0
@@ -348,9 +347,9 @@
             smooth: true,
             smoothMonotone: 'x'
           }, {
-            name: '已租',
+            name: 'rentalLeased',
             type: 'line',
-            stack: '总量',
+            stack: 'rentalTotal',
             itemStyle: {
               normal: {
                 opacity: 0

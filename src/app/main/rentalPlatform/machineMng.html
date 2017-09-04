@@ -13,7 +13,7 @@
   <div id="currentLocation" class="container-fluid">
     <section class="content-header">
       <h1>
-        <small>{{'currentPosition'|translate}}:</small>
+        <small>{{'rentalCurrentLocate'|translate}}:</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
@@ -24,7 +24,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">围栏报警</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalGeo-FenceWarning'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
           </div>
           <div class="miniChart"></div>
@@ -33,7 +33,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">车辆报警</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalEquipmentWarning'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
           </div>
           <div class="miniChart"></div>
@@ -42,7 +42,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"  style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">保养提醒</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalMaintenanceReminder'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.keepAlarm"></span>
           </div>
           <div class="miniChart"></div>
@@ -51,7 +51,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"  style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">离线报警</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalOff-lineReminder'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
           </div>
           <div class="miniChart"></div>
@@ -65,9 +65,9 @@
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="box base-left-map-box-container">
           <div class="box-header">
-            <span>机器预览</span>
+            <span>{{'rentalEquipmentPreview'|translate}}</span>
             <div class="box-tools pull-right">
-              <button class="btn btn-sm" title="刷新" ng-click="rentalMachineMngCtr.loadHomeDeviceData()" style="background-color: transparent">
+              <button class="btn btn-sm" title="{{'refresh'|translate}}" ng-click="rentalMachineMngCtr.loadHomeDeviceData()" style="background-color: transparent">
                 <i class="fa fa-refresh"></i>
               </button>
             </div>
@@ -83,10 +83,10 @@
             <div class="middlePicBox">
               <div class="col-lg-6">
                 <ul>
-                  <li class="machineNumlis"><i>总数</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()" ng-bind="rentalMachineMngCtr.machineCount"></a></span></li>
-                  <li class="machineNumlis"><i>剪叉</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(1)" ng-bind="rentalMachineMngCtr.shearFork"></a></span><div class="miniPie"></div></li>
-                  <li class="machineNumlis"><i>直臂</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(2)"  ng-bind="rentalMachineMngCtr.straightArm"></a></span><div class="miniPie"></div></li>
-                  <li class="machineNumlis"><i>曲臂</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(3)"  ng-bind="rentalMachineMngCtr.crankArm"></a></span><div class="miniPie"></div></li>
+                  <li class="machineNumlis"><i>{{'rentalTotal'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()" ng-bind="rentalMachineMngCtr.machineCount"></a></span></li>
+                  <li class="machineNumlis"><i>{{'rentalScissorLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(1)" ng-bind="rentalMachineMngCtr.shearFork"></a></span><div class="miniPie"></div></li>
+                  <li class="machineNumlis"><i>{{'rentalBoomLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(2)"  ng-bind="rentalMachineMngCtr.straightArm"></a></span><div class="miniPie"></div></li>
+                  <li class="machineNumlis"><i>{{'rentalArticulatingBoomLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(3)"  ng-bind="rentalMachineMngCtr.crankArm"></a></span><div class="miniPie"></div></li>
                 </ul>
               </div>
               <div class="col-lg-6">
@@ -95,7 +95,10 @@
             </div>
           </div>
         </div>
-        <div id="machineBarChart" style="margin-top: 30px"></div>
+        <div style="margin-top: 10px">
+          <div style="background-color: #ffffff"><span>{{'rentalStatistics'|translate}}</span></div>
+          <div id="machineBarChart"></div>
+        </div>
       </div>
     </div>
   </div>
