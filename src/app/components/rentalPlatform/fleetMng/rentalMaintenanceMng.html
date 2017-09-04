@@ -46,15 +46,11 @@
 
         <label class="col-md-1 control-label">车号</label>
         <div class="col-md-2">
-          <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceController.rentalOrder.id"
-                 placeholder="订单号"/>
+          <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceController.machine.licenseId"
+                 placeholder="车号"/>
         </div>
 
-        <label  class="col-md-1 control-label">操作人</label>
-        <div class="col-md-2">
-          <input type="text" name="customerName" class="form-control"  ng-model="rentalMaintenanceController.rentalOrder.customerName"
-                 placeholder="订单号"/>
-        </div>
+
         <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
@@ -112,12 +108,12 @@
 
         <label class="col-md-1 control-label">状态</label>
         <div class="col-md-2">
-          <ui-select name="status" ng-model="rentalMaintenanceController.rentalOrder.status" theme="bootstrap"
+          <ui-select name="status" ng-model="rentalMaintenanceController.maintenance.status" theme="bootstrap"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
             </ui-select-match>
-            <ui-select-choices repeat="retanlOrderStatus in rentalMaintenanceController.retanlOrderStatusList">
-              <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
+            <ui-select-choices repeat="status in rentalMaintenanceController.statusList">
+              <div ng-bind-html="status.desc | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -125,7 +121,7 @@
         <div class="col-md-2">
 
           <button class="btn btn-primary" type="button"
-                  ng-click="rentalMaintenanceController.query(null,null,null,rentalMaintenanceController.rentalOrder)">{{'query'|translate}}
+                  ng-click="rentalMaintenanceController.query(null,null,null,rentalMaintenanceController.maintenance)">{{'query'|translate}}
           </button>
           <button class="btn btn-default" type="button" ng-click="rentalMaintenanceController.reset()">{{'reset'|translate}}</button>
         </div>
@@ -157,9 +153,9 @@
             <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{maintenance.id}}</td>
             <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{maintenance.org.label}}</td>
             <td class="text-nowrap" data-title="'车号'" sortable="'deviceinfo.deviceNum'">{{maintenance.machine.licenseId}}</td>
-            <td class="text-nowrap" data-title="'保养总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.spendTime}}</td>
-            <td class="text-nowrap" data-title="'人工总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.spendMoney}}</td>
-            <td class="text-nowrap" data-title="'保养依据'" sortable="'engineType.engineName'">{{maintenance.content}}</td>
+            <td class="text-nowrap" data-title="'保养总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalMaintentanceCost}}</td>
+            <td class="text-nowrap" data-title="'人工总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalOperatorCost}}</td>
+            <td class="text-nowrap" data-title="'保养依据'" sortable="'engineType.engineName'">{{maintenance.reason}}</td>
             <td class="text-nowrap" data-title="'状态'" sortable="'state'">{{maintenance.statusDesc}}</td>
             <td class="text-nowrap" data-title="'描述'" sortable="'state'">{{maintenance.statusDesc}}</td>
             <td class="text-nowrap" data-title="'创建时间'" sortable="'state'">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

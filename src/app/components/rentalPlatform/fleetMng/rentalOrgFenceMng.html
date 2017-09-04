@@ -1,0 +1,140 @@
+<div class="machine-content" resize>
+  <!--currentState begin-->
+  <div id="currentState" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'currentPosition'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-car"></i>{{'rentalMng'| translate}}</a></li>
+        <li class="active"><i class="fa fa-file-text-o"></i>围栏管理</li>
+      </ol>
+    </section>
+    <div class="row info-box-container">
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">围栏总数</div>
+          <div class="info-data">{{rentalOrgFenceMngController.page.totalElements}}</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+
+          <div class="info-title">正常</div>
+          <div class="info-data">49</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">失效</div>
+          <div class="info-data">25</div>
+        </div>
+      </div>
+    </div>
+    <div class="row info-box-container">
+      <form class="form-horizontal" role="form">
+
+        <div class="form-group">
+
+          <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
+          <div class="col-md-2">
+            <p class="input-group">
+
+              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalOrgFenceMngController.org.label" name="org" readonly />
+              <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalOrgFenceMngController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+            </p>
+          </div>
+
+
+
+
+          <div class="col-md-1">
+            <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+
+            <input type="checkbox" checked="checked" ng-model="rentalOrgFenceMngController.querySubOrg"/>
+          </div>
+
+          <label class="col-md-1 control-label">状态</label>
+          <div class="col-md-2">
+            <ui-select name="status" ng-model="rentalOrgFenceMngController.rentalOrgFence.status" theme="bootstrap"
+                       ng-disabled="disabled">
+              <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+              </ui-select-match>
+              <ui-select-choices repeat="status in rentalOrgFenceMngController.statusList">
+                <div ng-bind-html="status.desc | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-md-2">
+
+            <button class="btn btn-primary" type="button"
+                    ng-click="rentalOrgFenceMngController.query(null,null,null,rentalOrgFenceMngController.rentalOrgFence)">{{'query'|translate}}
+            </button>
+            <button class="btn btn-default" type="button" ng-click="rentalOrgFenceMngController.reset()">{{'reset'|translate}}</button>
+          </div>
+
+          <div class="col-md-1">
+
+            <button class="btn btn-primary" type="button"
+                    ng-click="rentalOrgFenceMngController.new()">新增
+            </button>
+          </div>
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+
+    <div class="row" ng-style="rentalOrgFenceMngController.baseBoxContainer">
+
+      <div class="col-lg-12 table-responsive "><!--表格框-->
+        <table ng-table="rentalOrgFenceMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="rentalOrgFence in $data">
+            <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrgFence.id}}</td>
+            <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{rentalOrgFence.org.label }}</td>
+            <td class="text-nowrap" data-title="'经度'" sortable="'longitude'">{{rentalOrgFence.longitude }}</td>
+            <td class="text-nowrap" data-title="'维度'" sortable="'latitude'">{{rentalOrgFence.latitude }}</td>
+            <td class="text-nowrap" data-title="'半径'" sortable="'radius'">{{rentalOrgFence.radius }}</td>
+            <td class="text-nowrap" data-title="'地址'" sortable="'statusDesc'">{{rentalOrgFence.location }}</td>
+            <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrgFence.statusDesc }}</td>
+            <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{rentalOrgFence.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+
+            <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+
+
+
+            <td class="text-nowrap" data-title="'operation'|translate">
+
+
+              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                      ng-click="rentalOrgFenceMngController.update(rentalOrgFence.id)">{{'alter'| translate}}
+              </button>
+              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                      ng-click="rentalOrgFenceMngController.view(rentalOrgFence.id)">查看
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-12"><!--分页框-->
+
+
+        <uib-pagination total-items="rentalOrgFenceMngController.page.totalElements"
+                        ng-change="rentalOrgFenceMngController.query(rentalOrgFenceMngController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="rentalOrgFenceMngController.pageNumber" items-per-page="rentalOrgFenceMngController.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+        </uib-pagination>
+      </div>
+    </div>
+  </div>
+  <!--currentState end-->
+</div>

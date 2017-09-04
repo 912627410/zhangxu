@@ -7,57 +7,22 @@
 
   angular
     .module('GPSCloud')
-    .controller('updateRentalOrderController', updateRentalOrderController);
+    .controller('newRentalOrgFenceController', newRentalOrgFenceController);
 
   /** @ngInject */
-  function updateRentalOrderController($rootScope,$window,$scope,$timeout,$stateParams,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL, Notification) {
+  function newRentalOrgFenceController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORG_FENCE_URL,AMAP_GEO_CODER_URL, Notification) {
     var vm = this;
-    vm.rentalOrder={};
+    vm.rentalOrgFence={};
 
+    vm.radius = 100; //设置的半径,默认100米
 
-    var path="/rental/order";
+    var path="/rental/orgFence";
     vm.operatorInfo =$rootScope.userInfo;
     vm.cancel = function () {
       $location.path(path);
 
     };
 
-
-    vm.startDateSetting = {
-      //dt: "请选择开始日期",
-      open: function($event) {
-        vm.startDateSetting.status.opened = true;
-      },
-      dateOptions: {
-        formatYear: 'yy',
-        startingDay: 1
-      },
-      status: {
-        opened: false
-      }
-    };
-
-
-
-    //vm.startDateSetting.dt="";
-
-    // 日期控件相关
-    // date picker
-    vm.startDateOpenStatus = {
-      opened: false
-    };
-
-    vm.startDateOpen = function ($event) {
-      vm.startDateOpenStatus.opened = true;
-    };
-
-    vm.endDateOpenStatus = {
-      opened: false
-    };
-
-    vm.endDateOpen = function ($event) {
-      vm.endDateOpenStatus.opened = true;
-    };
 
 
     //组织树的显示
@@ -69,25 +34,17 @@
 
 
 
-
-
     vm.ok = function () {
+      vm.rentalOrgFence.location=vm.selectAddress;
+      vm.rentalOrgFence.radius=vm.radius;
+      vm.rentalOrgFence.org=vm.org;
 
-      vm.rentalOrder.rentalCustomer=vm.customer;
-      vm.rentalOrder.location=vm.selectAddress;
-      vm.rentalOrder.radius=vm.radius;
-     // vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
 
-      if (vm.locationAlarmReceiverChk){
-        vm.rentalOrder.locationAlarmReceiver = 1;
-      }
-      else{
-        vm.rentalOrder.locationAlarmReceiver = 0;
-      }
 
-      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.rentalOrder);
+      var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL,vm.rentalOrgFence);
+    //  vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
-        Notification.success("更新订单成功!");
+        Notification.success("新建订单成功!");
         $location.path(path);
 
       },function (reason) {
@@ -96,28 +53,6 @@
     }
 
 
-    //新建角色
-    vm.selectCustomer = function (size) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
-        controller: 'customerListController as customerListController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (result) {
-        vm.customer=result;
-        console.log(vm.customer);
-      }, function () {
-      });
-    };
 
 
 
@@ -158,8 +93,8 @@
       vm.amaplatitudeNum=location[1];//选中的维度
 
       //设置订单工作地址信息
-      vm.rentalOrder.latitude=vm.amaplatitudeNum;
-      vm.rentalOrder.longitude=vm.amaplongitudeNum;
+      vm.rentalOrgFence.latitude=vm.amaplatitudeNum;
+      vm.rentalOrgFence.longitude=vm.amaplongitudeNum;
 
       $scope.$apply();
 
@@ -411,20 +346,20 @@
     };
 
     //默认显示当前设备的最新地址
-    vm.initScopeMapTab = function(rentalOrder){
+    vm.initScopeMapTab = function(rentalOrgFence){
 
       //第一个标注
       var centerAddr;
 
       //第一个标注
-      vm.refreshScopeMapWithDeviceInfo("newOrderMap",rentalOrder,15,centerAddr);
+      vm.refreshScopeMapWithDeviceInfo("newOrderMap",rentalOrgFence,15,centerAddr);
     };
 
 
 
     $timeout(function () {
       vm.initScopeMapTab();
-      //vm.rentalOrder.startDate="11";
+      //vm.rentalOrgFence.startDate="11";
     }, 50);
 
 
@@ -570,41 +505,6 @@
       }
 
     }
-
-
-    //查询要修改的客户信息
-    vm.getOrder=function(){
-      var id=$stateParams.id;
-      var url=RENTAL_ORDER_URL+"?id="+id;
-      var rspdata = serviceResource.restCallService(url,"GET");
-
-      rspdata.then(function (data) {
-        console.log(data.content);
-        vm.rentalOrder=data.content;
-        vm.customer=vm.rentalOrder.rentalCustomer;
-        vm.org=vm.rentalOrder.org;
-        vm.selectAddress=vm.rentalOrder.location;
-        vm.amaplongitudeNum=vm.rentalOrder.longitude;
-        vm.amaplatitudeNum=vm.rentalOrder.latitude;
-        vm.radius=vm.rentalOrder.radius;
-
-        if (vm.rentalOrder.locationAlarmReceiver ==1){
-          vm.locationAlarmReceiverChk=true;
-        }
-        else{
-          vm.locationAlarmReceiverChk=false;
-        }
-
-
-        vm.refreshScopeMapWithDeviceInfo("newOrderMap",vm.rentalOrder,15,[[vm.amaplongitudeNum,vm.amaplatitudeNum]]);
-      },function (reason) {
-        Notification.error(reason.data.message);
-      })
-
-    }
-
-    vm.getOrder();
-
 
   }
 })();

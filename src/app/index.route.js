@@ -159,7 +159,7 @@
         }
       })
 
-      //租赁订单管理
+           //租赁订单管理
       .state('rental.order', {
         url: '/order',
         views: {
@@ -206,29 +206,57 @@
         }
       })
 
-      //租赁围栏管理
-      .state('rental.fence', {
-        url: '/fence',
+
+      //组织围栏管理
+      .state('rental.orgFence', {
+        url: '/orgFence',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFenceMng.html',
-            controller: 'rentalFenceMngController',
-            controllerAs: 'rentalFenceMngController'
+            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrgFenceMng.html',
+            controller: 'rentalOrgFenceMngController',
+            controllerAs: 'rentalOrgFenceMngController'
           }
         }
       })
 
-      //租赁围栏添加管理
-      .state('rental.newFence', {
-        url: '/newFence',
+      //组织围栏管理
+      .state('rental.newOrgFence', {
+        url: '/newOrgFence',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFenceMng.html',
-            controller: 'newRentalFenceController',
-            controllerAs: 'newRentalFenceController'
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrgFenceMng.html',
+            controller: 'newRentalOrgFenceController',
+            controllerAs: 'newRentalOrgFenceController'
           }
         }
       })
+
+      //组织围栏管理
+      .state('rental.updateOrgFence', {
+        url: '/updateOrgFence/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrgFenceMng.html',
+            controller: 'updateRentalOrgFenceController',
+            controllerAs: 'updateRentalOrgFenceController'
+          }
+        }
+      })
+      //组织围栏管理
+      .state('rental.viewOrgFence', {
+        url: '/viewOrgFence/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrgFenceMng.html',
+            controller: 'viewRentalOrgFenceController',
+            controllerAs: 'viewRentalOrgFenceController'
+          }
+        }
+      })
+
+
+
+
       //租赁客户管理
       .state('rental.customer', {
         url: '/customer',

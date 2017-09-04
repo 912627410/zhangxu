@@ -9,7 +9,7 @@
     .controller('rentalMaintenanceController', rentalMaintenanceController);
 
   /** @ngInject */
-  function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL) {
+  function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll,rentalService, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -62,6 +62,22 @@
       });
     }
 
+
+    var statusPromise = rentalService.getMaintenanceStatusList();
+    statusPromise.then(function (data) {
+      vm.statusList= data;
+
+    }, function (reason) {
+      Notification.error('获取状态集合失败');
+    })
+    var listStatusPromise = rentalService.getMaintenanceListStatusList();
+    listStatusPromise.then(function (data) {
+      vm.listStatusList= data;
+
+    }, function (reason) {
+      Notification.error('获取状态集合失败');
+    })
+
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -77,24 +93,37 @@
     vm.adjustWindow($window.innerHeight);
 
 
-    vm.query = function (page, size, sort, customer) {
+    vm.query = function (page, size, sort, maintentance) {
       console.log("111222");
       var restCallURL = RENTAL_MAINTENANCE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      if (null != maintentance) {
 
-      if (null != customer) {
 
-        if (null != customer.name&&customer.name!="") {
-          restCallURL += "&search_LIKE_name=" + customer.name;
+
+        if (null != maintentance.status&&maintentance.status!="") {
+          restCallURL += "&search_EQ_status=" + maintentance.status.value;
         }
 
-        if (null != customer.mobile&&customer.mobile!="") {
-          restCallURL += "&search_LIKE_mobile=" + customer.mobile;
+        if (null != maintentance.startDate&&maintentance.startDate!="") {
+          restCallURL += "&search_DGTE_createTime=" + $filter('date')(maintentance.startDate, 'yyyy-MM-dd');
         }
+
+        if (null != maintentance.endDate&&maintentance.endDate!="") {
+          restCallURL += "&search_DLTE_updateTime=" + $filter('date')(maintentance.endDate, 'yyyy-MM-dd');
+        }
+
+
+
       }
+
+      if (null != vm.machine&&null != vm.machine.licenseId) {
+        restCallURL += "&search_LIKE_machine.licenseId=" + vm.machine.licenseId;
+      }
+
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
@@ -103,6 +132,8 @@
       if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.org.id;
       }
+
+      console.log(restCallURL);
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -130,7 +161,8 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.customer = null;
+      vm.maintentance = null;
+      vm.machine.licenseId = null;
       vm.org=null;
       vm.querySubOrg=false;
     }

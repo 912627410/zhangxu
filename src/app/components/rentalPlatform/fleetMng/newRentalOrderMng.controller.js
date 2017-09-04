@@ -433,12 +433,12 @@
       if( "" == vm.selectAddress){
         return;
       }
-      vm.initScopeMapTab(deviceinfo);
+      vm.initScopeMapTab();
     };
     /*回到以当前车辆为中心点的位置*/
     vm.backCurrentAdd = function () {
       // vm.zoomsize--;
-      vm.initScopeMapTab(deviceinfo);
+      vm.initScopeMapTab();
     };
 
 

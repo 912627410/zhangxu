@@ -1,0 +1,126 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <section class="content-header">
+    <h1>
+      客户信息
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">新建客户</h3>
+    </div>
+    <form name="newrentalOrgFenceForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+          <div class="box-body col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
+              <div class="col-md-5">
+                <p class="input-group">
+
+                  <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="newRentalOrgFenceController.org.label" name="org" readonly validator="required"/>
+                  <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newRentalOrgFenceController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">经度</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="自动匹配" readonly
+                       ng-model="newRentalOrgFenceController.rentalOrgFence.longitude" name="longitude"
+                       typeahead-show-hint="true" validator="required"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">维度</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="自动匹配" readonly
+                       ng-model="newRentalOrgFenceController.rentalOrgFence.latitude" name="latitude"
+                       typeahead-show-hint="true" validator="required"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">半径(米)</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control"
+                       ng-model="newRentalOrgFenceController.radius"
+                       ng-change="newRentalOrgFenceController.changeradius(newRentalOrgFenceController.radius)" name="radius"
+                       validator="number" typeahead-show-hint="true" validator="required"/>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">描述</label>
+              <div class="col-sm-5">
+              <textarea class="form-control" placeholder="描述"
+                        ng-model="newRentalOrgFenceController.rentalOrgFence.description" name="description"
+                        typeahead-show-hint="true">
+
+              </textarea>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <button class="btn btn-primary" type="button" validation-submit="newrentalOrgFenceForm2"
+                      ng-click="newRentalOrgFenceController.ok()">{{'confirm'|translate}}
+              </button>
+              <button class="btn btn-warning" type="button" ng-click="newRentalOrgFenceController.cancel()">
+                {{'cancel'|translate}}
+              </button>
+            </div>
+
+          </div>
+          <div class="map-body col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">工作地址</label>
+              <div class="col-sm-7">
+                <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}"
+                       ng-model="newRentalOrgFenceController.tipinput"/>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+                {{'longitude'|translate}}:<span
+                style="color: red;"> {{newRentalOrgFenceController.amaplongitudeNum}}</span>
+                &nbsp;&nbsp;
+                {{'latitude'|translate}}:<span style="color: red;"> {{newRentalOrgFenceController.amaplatitudeNum}}</span>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
+                <span style="color: red;"> {{newRentalOrgFenceController.selectAddress}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="box-body" id="newOrderMap" ng-style="newRentalOrgFenceController.baseBoxMapContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="box-footer">
+
+    </div>
+
+
+  </div>
+
+
+</div>
