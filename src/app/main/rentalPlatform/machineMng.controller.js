@@ -328,7 +328,7 @@
                 opacity: 0
               },
               emphasis: {
-                color: 'rgb(38, 173, 88)',
+                color: 'rgb(204,204,204)',
                 borderColor: '#fff',
                 opacity: 1
               }
@@ -336,15 +336,15 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgb(38, 173, 88)'
+                color: 'rgb(204,204,204)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgb(38, 173, 88)'
+                color: 'rgb(204,204,204)'
               }
             },
-            data: data.content.rentalingList,
+            data: data.content.unRentalList,
             smooth: true,
             smoothMonotone: 'x'
           }, {
@@ -356,7 +356,7 @@
                 opacity: 0
               },
               emphasis: {
-                color: 'rgb(35, 142, 250)',
+                color: 'rgb(0,160,152)',
                 borderColor: '#fff',
                 opacity: 1
               }
@@ -364,15 +364,15 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgb(35, 142, 250)'
+                color: 'rgb(0,160,152)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgb(35, 142, 250)'
+                color: 'rgb(0,160,152)'
               }
             },
-            data: data.content.unRentalList,
+            data: data.content.rentalingList,
             smooth: true,
             smoothMonotone: 'x'
           }]
