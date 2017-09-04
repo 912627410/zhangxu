@@ -127,6 +127,8 @@
       })
     };
 
+    vm.machineTypeList = ['矿车','高空车','剪叉','直臂','曲臂'];
+
     /*初始化加载数据,首先查看是不是从别的页面转过来的,如果是使用完这个值后置空这个值*/
     if ($rootScope.machinType) {
       vm.searchConditions.type = $rootScope.machinType;
@@ -146,7 +148,7 @@
       if (machineStatus==null || machineStatus==undefined){
         vm.loadMachineData(0, vm.pageSize, null, null);
       }else {
-        vm.searchConditions.status = machineStatus
+        vm.searchConditions.status = machineStatus;
         vm.loadMachineData(0, vm.pageSize, null, vm.searchConditions);
       }
 

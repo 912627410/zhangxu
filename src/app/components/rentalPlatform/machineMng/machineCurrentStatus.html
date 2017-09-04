@@ -73,7 +73,13 @@
         </div>
         <div class="tab-content-search-box">
           <label>类型:</label>
-          <input class="input-search" name="type" id="type" placeholder="设备类型" ng-model="machineCurrentStatusCtr.searchConditions.type" />
+          <ui-select name="machineType" ng-model="machineCurrentStatusCtr.machineTypeList.whatever" theme="bootstrap"
+                     ng-disabled="disabled" style="display: inline-block;">
+            <ui-select-match allow-clear="true" placeholder="车辆类型" style="width: 200px">{{$select.selected}}</ui-select-match>
+            <ui-select-choices  repeat="machineType in machineCurrentStatusCtr.machineTypeList" >
+              <div ng-bind-html="machineType | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
         <div class="tab-content-search-box">
           <label>地址:</label>
