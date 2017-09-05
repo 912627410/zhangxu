@@ -168,10 +168,10 @@
                   <tbody>
                   <th>{{'select'|translate}}</th>
                   <th>{{'deviceNum'|translate}}</th>
-                  <th>车号</th>
+                  <th>{{'machineNumberAndCarNumber'|translate}}</th>
                   <th>{{'content'|translate}}</th>
                   <th>{{'generateTime'|translate}}</th>
-                  <th>状态</th>
+                  <th>{{'state'|translate}}</th>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
                     <td><input type="checkbox" ng-model="notification.checked"></td>
                     <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
