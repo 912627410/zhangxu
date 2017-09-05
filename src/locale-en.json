@@ -774,6 +774,26 @@
   "rentalAddress":"Address",
   "rentalOperations":"Operations",
   "rentalView":"View",
-  "rentalEdit":"Edit"
+  "rentalEdit":"Edit",
+  "rentalSelectOrder":"Select Order",
+  "rentalOrderDetail":"Order Detail",
+  "rentalGeoFence":"Geo Fence",
+  "rentalValid":"valid",
+  "rentalInvalid":"Invalid",
+  "rentalGeoFenceID":"Geo Fence ID",
+  "rentalLongitude":"Longitude",
+  "rentalLatitude":"Latitude",
+  "rentalRadius":"Radius",
+  "rentalCreateTime":"Create Time",
+  "rentalUpdateTime":"Update Time",
+  "rentalMaintenanceCost":"Maintenance Cost",
+  "rentalLaborCost":"Labor Cost",
+  "rentalMaintenanceCertification":"Mantenance Certification",
+  "rentalMaintenanceDescripition":"Mantenance Description",
+  "rentalLinkman":"Linkman",
+  "rentalCustomerPosition":"Customer Position",
+  "rentalCustomerName":"Customer Name",
+  "rentalMail":"Email",
+  "rentalPhoneNumber":"Phone Number"
 
 }
