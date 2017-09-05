@@ -131,9 +131,9 @@
         //title内容
         var title ='';
         if(item.versionNum == 'A001') {
-          title = "高空车:"+(item.machineLicenseId==null?"":item.machineLicenseId);
+          title = languages.findKey('arialVehicle')+":"+(item.machineLicenseId==null?"":item.machineLicenseId);
         } else {
-          title = "矿机:"+(item.machineLicenseId==null?"":item.machineLicenseId);
+          title = languages.findKey('oreMachine')+":"+(item.machineLicenseId==null?"":item.machineLicenseId);
         }
         /*若整机编号为空，则显示终端编号*/
         if(title == null){
@@ -179,7 +179,7 @@
         middle.className = "info-middle";
         middle.style.backgroundColor = 'white';
         mcont.innerHTML = content;
-        titleA.innerHTML="终端编号:"+item.deviceNum;
+        titleA.innerHTML=languages.findKey('terminalNumber')+" :"+item.deviceNum;
         if (callback){
           titleA.onclick =  function (){
             callback(item);//点击以后，把结果传回去。没有点击就不执行callback

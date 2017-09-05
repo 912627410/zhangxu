@@ -13,26 +13,26 @@
     <div class="row info-box-container">
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
-          <div class="info-title">保养设备总数</div>
+          <div class="info-title">{{'rentalTotal'|translate}}</div>
           <div class="info-data">99</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
 
-          <div class="info-title">进行中</div>
+          <div class="info-title">{{'rentalInProcess'|translate}}</div>
           <div class="info-data">49</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
-          <div class="info-title">计划</div>
+          <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">25</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
-          <div class="info-title">已结束</div>
+          <div class="info-title">{{'rentalComplete'|translate}}</div>
           <div class="info-data">25</div>
         </div>
       </div>
@@ -44,18 +44,17 @@
 
       <div class="form-group">
 
-        <label class="col-md-1 control-label">车号</label>
+        <label class="col-md-1 control-label">{{'rentalMachineID'|translate}}</label>
         <div class="col-md-2">
           <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceController.machine.licenseId"
                  placeholder="车号"/>
         </div>
 
-
-        <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
+        <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalMaintenanceController.org.label" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalMaintenanceController.org.label" name="org" readonly required/>
             <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalMaintenanceController.openTreeInfo()">
@@ -72,7 +71,7 @@
       </div>
       <div class="form-group">
 
-        <label class="col-md-1 control-label">开始时间</label>
+        <label class="col-md-1 control-label">{{'rentalStartingDate'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
@@ -91,7 +90,7 @@
           <span id="bootstrap"></span>
         </div>
 
-        <label  class="col-md-1 control-label">结束时间</label>
+        <label  class="col-md-1 control-label">{{'rentalEndDate'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -106,7 +105,7 @@
           </p>
         </div>
 
-        <label class="col-md-1 control-label">状态</label>
+        <label class="col-md-1 control-label">{{'rentalStatus'|translate}}</label>
         <div class="col-md-2">
           <ui-select name="status" ng-model="rentalMaintenanceController.maintenance.status" theme="bootstrap"
                      ng-disabled="disabled">
@@ -129,7 +128,7 @@
         <div class="col-md-1">
 
           <button class="btn btn-primary" type="button"
-                  ng-click="rentalMaintenanceController.new()">新增
+                  ng-click="rentalMaintenanceController.new()">{{'rentalAdd'|translate}}
           </button>
         </div>
       </div>
@@ -137,8 +136,6 @@
     </form>
 
   </div>
-
-
 
     <div class="row" ng-style="rentalMaintenanceController.baseBoxContainer">
 
@@ -151,18 +148,16 @@
             </td>
 
             <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{maintenance.id}}</td>
-            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{maintenance.org.label}}</td>
-            <td class="text-nowrap" data-title="'车号'" sortable="'deviceinfo.deviceNum'">{{maintenance.machine.licenseId}}</td>
-            <td class="text-nowrap" data-title="'保养总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalMaintentanceCost}}</td>
-            <td class="text-nowrap" data-title="'人工总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalOperatorCost}}</td>
-            <td class="text-nowrap" data-title="'保养依据'" sortable="'engineType.engineName'">{{maintenance.reason}}</td>
-            <td class="text-nowrap" data-title="'状态'" sortable="'state'">{{maintenance.statusDesc}}</td>
-            <td class="text-nowrap" data-title="'描述'" sortable="'state'">{{maintenance.statusDesc}}</td>
-            <td class="text-nowrap" data-title="'创建时间'" sortable="'state'">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td class="text-nowrap" data-title="'更新时间'" sortable="'state'">{{maintenance.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td class="text-nowrap" data-title="'operation'|translate">
-
-
+            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'org.label'">{{maintenance.org.label}}</td>
+            <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="'deviceinfo.deviceNum'">{{maintenance.machine.licenseId}}</td>
+            <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">{{maintenance.totalMaintentanceCost}}</td>
+            <td class="text-nowrap" data-title="'rentalLaborCost'|translate" sortable="'deviceinfo.deviceNum'">{{maintenance.totalOperatorCost}}</td>
+            <td class="text-nowrap" data-title="'rentalMaintenanceCertification'|translate" sortable="'engineType.engineName'">{{maintenance.reason}}</td>
+            <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'state'|translate">{{maintenance.statusDesc}}</td>
+            <td class="text-nowrap" data-title="'rentalMaintenanceDescripition'|translate" sortable="'state'">{{maintenance.statusDesc}}</td>
+            <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'state'|translate">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'state'|translate">{{maintenance.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'rentalOperations'|translate">
               <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
                       ng-click="rentalMaintenanceController.update(maintenance.id)">{{'alter'| translate}}
               </button>
@@ -174,7 +169,6 @@
         </table>
       </div>
       <div class="col-lg-12"><!--分页框-->
-
 
         <uib-pagination total-items="rentalMaintenanceController.page.totalElements"
                         ng-change="rentalMaintenanceController.query(rentalMaintenanceController.pageNumber-1,null,null,null)"

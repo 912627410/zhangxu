@@ -1082,7 +1082,7 @@
         center: localCenterAddr,
         zooms: [4, 18]
       });
-      //    alert(555);
+
       map.setZoom(localZoomSize);
       map.plugin(['AMap.ToolBar'], function () {
         map.addControl(new AMap.ToolBar());

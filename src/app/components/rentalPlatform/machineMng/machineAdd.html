@@ -1,6 +1,6 @@
 <div class="modal-header modal-header-padding">
   <div class="modal-title">
-    <div class="modal-title-text">添加车辆</div>
+    <div class="modal-title-text">{{'rentalNewMachine'|translate}}</div>
     <div class="modal-title-btn">
       <div ng-click="vm.cancel()"><i class="fa fa-times" aria-hidden="true"></i></div>
     </div>
@@ -10,29 +10,29 @@
   <form  name="newDeviceForm"  class="form-horizontal">
     <div class="modal-body">
       <div class="box-body col-sm-3">
-        <div class="row"><h5>基本信息:</h5></div>
+        <div class="row"><h5>{{'rentalBasicinfo'|translate}}:</h5></div>
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5 ng-binding">车号</label>
+          <label class="col-sm-4 control-label padding5 ng-binding">{{'machineNumberAndCarNumber'|translate}}</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-pending ng-touched"  name="licenseId" placeholder="车号" ng-model="vm.machine.licenseId" validator="required" typeahead-show-hint="true">
+            <input type="text" class="form-control ng-pristine ng-pending ng-touched"  name="licenseId" placeholder="{{'machineNumberAndCarNumber'|translate}}" ng-model="vm.machine.licenseId" validator="required" typeahead-show-hint="true">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">绑定终端</label>
+          <label class="col-sm-4 control-label padding5">{{'rentalBindingTterminal'|translate}}</label>
           <div class="col-sm-8">
-            <input type="text"  id="deviceNum" name="deviceNum" class="form-control ng-pristine ng-valid ng-touched" placeholder="输入6位号码或扫条码" ng-model="vm.machine.deviceNum" validator="required" ng-minlength='6' ng-maxlength='26'
+            <input type="text"  id="deviceNum" name="deviceNum" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalEntersixdigitsorsweepthebarcode'|translate}}" ng-model="vm.machine.deviceNum" validator="required" ng-minlength='6' ng-maxlength='26'
                    typeahead-show-hint="false">
-            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.maxlength">最长26位</span>
-            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.minlength">最短6位</span>
+            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+            <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">车辆类型</label>
+          <label class="col-sm-4 control-label padding5">{{'vehicleType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.typeName}}</ui-select-match>
               <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {typeName: $select.search}">
                 <div ng-bind-html="machineType.typeName | highlight: $select.search"></div>
               </ui-select-choices>
@@ -41,10 +41,10 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">发动机类型</label>
+          <label class="col-sm-4 control-label padding5">{{'engineType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.engineTypeId" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'engineType'|translate}}">{{$select.selected.engineName}}</ui-select-match>
               <ui-select-choices repeat="engineType.id as engineType in vm.engineTypeList | propsFilter: {engineName: $select.search}">
                 <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
               </ui-select-choices>
@@ -53,10 +53,10 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">车辆状态</label>
+          <label class="col-sm-4 control-label padding5">{{'rentalVehicleState'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.status" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState}}</ui-select-match>
               <ui-select-choices repeat="machineState.code as machineState in vm.machineStateList | propsFilter: {machineState: $select.search}">
                 <div ng-bind-html="machineState.machineState | highlight: $select.search"></div>
               </ui-select-choices>
@@ -65,27 +65,27 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">品牌</label>
+          <label class="col-sm-4 control-label padding5">{{'brandType'|translate}}</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="品牌" ng-model="vm.machine.brand"  validator="required"
+            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'brandType'|translate}}" ng-model="vm.machine.brand"  validator="required"
                    typeahead-show-hint="false">
           </div>
         </div>
 
       </div>
       <div class="map-body col-sm-9">
-        <div class="row"><h5>电子围栏</h5></div>
+        <div class="row"><h5>{{'electricFence'|translate}}</h5></div>
         <div class="row">
           <div class="col-md-6">
-            <label class="col-sm-2 control-label padding5">地址:</label>
+            <label class="col-sm-2 control-label padding5">{{'rentalAddress'|translate}}:</label>
             <div class="col-lg-8">
               <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}"  />
             </div>
           </div>
           <div class="col-md-6">
-            <label class="col-sm-2 control-label padding5">半径:</label>
+            <label class="col-sm-2 control-label padding5">{{'rentalRadius'|translate}}:</label>
             <div class="col-lg-6">
-              <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="半径范围" ng-model="vm.machine.radius" ng-change="vm.changeRadius(deviceAerialCurrentInfoController.radius)"
+              <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalRadius'|translate}}" ng-model="vm.machine.radius" ng-change="vm.changeRadius(deviceAerialCurrentInfoController.radius)"
                      typeahead-show-hint="false">
             </div>
           </div>
@@ -110,6 +110,6 @@
   </form>
 </div>
 <div class="modal-footer ng-scope">
-  <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">提交</button>
-  <button class="btn btn-warning" type="button" ng-click="vm.reset()">重置</button>
+  <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">{{'submit'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="vm.reset()">{{'reset'|translate}}</button>
 </div>
