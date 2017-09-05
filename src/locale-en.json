@@ -759,6 +759,21 @@
   "rentalMsgContent":"MsgContent",
   "rentalAllDone":"All Done",
   "rentalAllUndo":"All Undo",
-  "rentalAllAlarmMsg":"All Alarm Msg"
+  "rentalAllAlarmMsg":"All Alarm Msg",
+  "rentalInProgress":"In Progress",
+  "rentalPlan":"Plan",
+  "rentalComplete":"Complete",
+  "rentalCustomer":"Customer",
+  "rentalOrganization":"Organization",
+  "rentalStartingDate":"Starting Date",
+  "rentalEndDate":"End Date",
+  "rentalStatus":"Status",
+  "rentalQuery":"Query",
+  "rentalReset":"Reset",
+  "rentalAdd":"Add",
+  "rentalAddress":"Address",
+  "rentalOperations":"Operations",
+  "rentalView":"View",
+  "rentalEdit":"Edit"
 
 }

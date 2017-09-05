@@ -761,8 +761,21 @@
   "rentalMsgContent":"消息内容",
   "rentalAllDone":"全部已处理",
   "rentalAllUndo":"全部未处理",
-  "rentalAllAlarmMsg":"全部报警消息"
-
-
+  "rentalAllAlarmMsg":"全部报警消息",
+  "rentalInProgress":"进行中",
+  "rentalPlan":"计划",
+  "rentalComplete":"已结束",
+  "rentalCustomer":"客户",
+  "rentalOrganization":"组织",
+  "rentalStartingDate":"开始时间",
+  "rentalEndDate":"结束时间",
+  "rentalStatus":"状态",
+  "rentalQuery":"查询",
+  "rentalReset":"重置",
+  "rentalAdd":"新增",
+  "rentalAddress":"地址",
+  "rentalOperations":"操作",
+  "rentalView":"查看",
+  "rentalEdit":"修改"
 
 }
