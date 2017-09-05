@@ -134,7 +134,8 @@
       verticalSpacing: 20,
       horizontalSpacing: 20,
       positionX: 'center',
-      positionY: 'top'
+      positionY: 'top',
+      replaceMessage:true
     });
 
   }]);

@@ -12,6 +12,10 @@
   function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    var xAxisDate = [];
+    var jcProfitDate = [];
+    var zbProfitDate = [];
+    var qbProfitDate = [];
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -76,33 +80,6 @@
       Notification.error('获取高度类型失败');
     })
 
-    //查询当前用户拥有的车辆类型明细
-    vm.getMachineType = function(){
-      var restCallURL = USER_MACHINE_TYPE_URL;
-      if(vm.operatorInfo){
-        restCallURL += "?orgId="+ vm.operatorInfo.userdto.organizationDto.id;
-      }
-      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
-      rspData.then(function (data) {
-        if(data.length>0){
-          vm.machineTypeList = data;
-        } else {
-          //在用户的所在组织不存在车辆类型时,默认查询其上级组织拥有的车辆类型
-          if(vm.operatorInfo){
-            var restCallURL1 = USER_MACHINE_TYPE_URL;
-            restCallURL1 += "?orgId="+ vm.operatorInfo.userdto.organizationDto.parentId;
-          }
-          var rspData1 = serviceResource.restCallService(restCallURL1, "QUERY");
-          rspData1.then(function (data1) {
-            vm.machineTypeList = data1;
-          });
-        }
-      }, function (reason) {
-        vm.machineList = null;
-        Notification.error("获取车辆类型数据失败");
-      });
-    }
-    vm.getMachineType();
 
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
@@ -111,6 +88,8 @@
     }, function (reason) {
       Notification.error('获取厂商失败');
     })
+
+
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 1);
     vm.startDate = startDate;
@@ -141,10 +120,6 @@
     };
 
 
-    vm.search = function () {
-
-    }
-
 
     //profit
     var profitBar = echarts.init(document.getElementById('profitBar'));
@@ -169,7 +144,7 @@
       },
       xAxis: {
         type: 'category',
-        data: ['周一周', '周二周', '周三周', '周四周', '周五周', '周六周']
+        data: xAxisDate
       },
       series: [
         {
@@ -182,7 +157,7 @@
               position: 'insideRight'
             }
           },
-          data: [320, 302, 301, 334, 390, 330]
+          data: jcProfitDate
         },
         {
           name: '直臂',
@@ -194,7 +169,7 @@
               position: 'insideRight'
             }
           },
-          data: [120, 132, 101, 134, 90, 230]
+          data: zbProfitDate
         },
         {
           name: '曲臂',
@@ -206,7 +181,7 @@
               position: 'insideRight'
             }
           },
-          data: [220, 182, 191, 234, 290, 330]
+          data: qbProfitDate
         }
       ]
     };
@@ -238,26 +213,42 @@
   vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
-    vm.query = function (queryStartData,queryEndData) {
+    vm.queryProfit = function (queryStartData,queryEndData) {
+
+      var xAxisDate = [];
+      var jcProfitDate = [];
+      var zbProfitDate = [];
+      var qbProfitDate = [];
 
       var restCallURL = RENTAL_PROFIT_URL;
       restCallURL += "?startDate=" + $filter('date')(queryStartData,'yyyy-MM-dd');
       restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
 
       if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-        restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
+        restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
       }
       if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-        restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
+        restCallURL += "&machineManufacture=" +vm.queryManufacture;
       }
       if (null != vm.machineType&&vm.machineType != ""){
-        restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
+        restCallURL += "&machineType=" + vm.machineType;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        vm.CostData = data.content;
-
+        vm.profitData = data.content;
+        for(var i = 0;i<vm.profitData.length;i++){
+          xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
+          jcProfitDate.push(vm.profitData[i].jcProfit);
+          zbProfitDate.push(vm.profitData[i].zbProfit);
+          qbProfitDate.push(vm.profitData[i].qbProfit);
+        }
+        console.log(profitBarOption.xAxis[0])
+        profitBarOption.xAxis.data = xAxisDate;
+        profitBarOption.series[0].data = jcProfitDate;
+        profitBarOption.series[1].data = zbProfitDate;
+        profitBarOption.series[2].data = qbProfitDate;
+        profitBar.setOption(profitBarOption);
       },function (reason) {
         Notification.error("获取利润数据失败")
       })

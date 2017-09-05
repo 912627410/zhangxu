@@ -109,7 +109,7 @@
      * @param zoomsize
      */
     vm.initMap = function (zoomsize) {
-      $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true})
+      $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
         //初始化地图对象
         if (!AMap) {
@@ -131,6 +131,8 @@
           zooms: [3, 18],
           zoom:zoomsize
         });
+
+        map.setLang($rootScope.langkey);
 
         //加载比例尺插件
         map.plugin(["AMap.Scale"], function () {
