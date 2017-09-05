@@ -796,6 +796,13 @@
   "rentalMail":"Email",
   "rentalPhoneNumber":"Phone Number",
   "rentalLifecycle":"Life cycle",
-  "rentalLocus":"Locus"
+  "rentalLocus":"Locus",
+  "rentalBasicinfo":"Basic Info",
+  "rentalBindingTterminal":"Binding Device",
+  "rentalEntersixdigitsorsweepthebarcode":"Enter six digits or sweep the bar code",
+  "rentalMaximum26bits":"Maximum 26 bits",
+  "rentalMinimum6bits":"Minimum 6 bits",
+  "rentalVehicleState":" Vehicle State",
+  "rentalUpdateMachine":"Update Machine"
 
 }

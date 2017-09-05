@@ -798,7 +798,14 @@
   "rentalMail":"邮箱",
   "rentalPhoneNumber":"手机",
   "rentalLifecycle":"生命周期",
-  "rentalLocus":"轨迹"
+  "rentalLocus":"轨迹",
+  "rentalBasicinfo":"基本信息",
+  "rentalBindingTterminal":"绑定终端",
+  "rentalEntersixdigitsorsweepthebarcode":"输入6位号码或扫条码",
+  "Maximum26bits":"最长26位",
+  "Minimum6bits":"最短6位",
+  "rentalVehicleState":" 车辆状态",
+  "rentalUpdateMachine":"更新车辆信息"
 
 
 }
