@@ -36,7 +36,7 @@
       rspData.then(function (data) {
         vm.machineTypeList = data;
       }, function (reason) {
-        Notification.error("获取车辆类型数据失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       });
     };
 
@@ -48,7 +48,7 @@
       engineTypeData.then(function (data) {
         vm.engineTypeList = data;
       }, function (reason) {
-        Notification.error('获取发动机类型失败');
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     };
 
@@ -61,7 +61,7 @@
         vm.machineStateList = data;
         console.log(vm.machineStateList)
       }, function (reason) {
-        Notification.error('获取车辆状态失败');
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     };
 
@@ -300,7 +300,7 @@
         console.log(vm.machine);
         $uibModalInstance.close(vm.machine);
       }, function (reason) {
-        console.log(reason.data.message);
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     }
   }

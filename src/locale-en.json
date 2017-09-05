@@ -803,6 +803,7 @@
   "rentalMaximum26bits":"Maximum 26 bits",
   "rentalMinimum6bits":"Minimum 6 bits",
   "rentalVehicleState":" Vehicle State",
-  "rentalUpdateMachine":"Update Machine"
+  "rentalUpdateMachine":"Update Machine",
+  "rentalGetDataError":"Data failure"
 
 }

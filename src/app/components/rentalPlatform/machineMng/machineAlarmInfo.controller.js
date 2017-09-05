@@ -25,11 +25,11 @@
     vm.searchConditions = {}
     //定义页面导航
     $scope.navs = [{
-      "title": "rental", "alias": "当前位置", "icon": "fa-map"
+      "title": "rental", "alias": "rentalCurrentLocate", "icon": "fa-map"
     }, {
-      "title": "rental.machineCurrentStatus", "alias": "当前状态", "icon": "fa-signal"
+      "title": "rental.machineCurrentStatus", "alias": "currentState", "icon": "fa-signal"
     }, {
-      "title": "rental.machineAlarmInfo", "alias": "报警信息", "icon": "fa-exclamation-triangle"
+      "title": "rental.machineAlarmInfo", "alias": "alarmInformation", "icon": "fa-exclamation-triangle"
     }];
     /**
      * 自适应高度函数
@@ -79,7 +79,7 @@
           vm.offLineAlarm = msgNum;//离线报警
         }
       }, function (reason) {
-        Notification.error("获取信息失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     }
     vm.getAlarmCountByType(1);//围栏报警
@@ -109,7 +109,7 @@
           vm.noProcessNumber = data.content;//未处理报警
         }
       }, function (reason) {
-        Notification.error("获取信息失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     }
     vm.getAlarmCountByStatus(undefined);
