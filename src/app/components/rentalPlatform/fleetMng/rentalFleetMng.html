@@ -21,7 +21,7 @@
 <div class="machine-content">
   <section class="content-header">
     <h1>
-      <small>{{'currentPosition'|translate}}:</small>
+      <small>{{'rentalCurrentLocate'|translate}}:</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
@@ -38,12 +38,12 @@
       <section class="content" ng-style="rentalFleetMngController.baseBoxContainer">
         <div class="row">
           <div class="col-md-5">
-            <label class="col-md-2 control-label">选择订单</label>
+            <label class="col-md-2 control-label">{{'rentalSelectOrder'| translate}}</label>
             <div class="col-md-6">
               <p class="input-group">
 
-                <input type="text" id="leftRentalOrder" class="form-control" placeholder="请选择"
-                       ng-model="rentalFleetMngController.leftRentalOrder.id" name="leftRentalOrder" readonly
+                <input type="text" id="leftRentalOrder" class="form-control"
+                       ng-model="rentalFleetMngController.leftRentalOrder.id" name="leftRentalOrder"
                        validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
@@ -61,12 +61,12 @@
           </div>
           <div class="col-md-2"></div>
           <div class="col-md-5">
-            <label class="col-md-2 control-label">选择订单</label>
+            <label class="col-md-2 control-label">{{'rentalSelectOrder'| translate}}</label>
             <div class="col-md-6">
               <p class="input-group">
 
-                <input type="text" id="rightRentalOrder" class="form-control" placeholder="请选择"
-                       ng-model="rentalFleetMngController.rightRentalOrder.id" name="rightRentalOrder" readonly
+                <input type="text" id="rightRentalOrder" class="form-control"
+                       ng-model="rentalFleetMngController.rightRentalOrder.id" name="rightRentalOrder"
                        validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
@@ -92,14 +92,14 @@
           <div class="col-md-5">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">订单ID:{{rentalFleetMngController.leftRentalOrder.id}}</h3>
+                <h3 class="box-title">{{'rentalOrderNumber'| translate}}:{{rentalFleetMngController.leftRentalOrder.id}}</h3>
 
                 <span ng-if="rentalFleetMngController.leftRentalOrder!=null">
                 <button class="btn btn-primary pull-right" type="button"
                         ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams,rentalFleetMngController.leftRentalOrderId,'lg')">组织调入
                 </button>
                 <button class="btn btn-default pull-right" type="button"
-                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">查看订单
+                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">{{'rentalOrderDetail'| translate}}
                 </button>
                   </span>
               </div>
@@ -135,13 +135,13 @@
           <div class="col-md-5">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">订单ID:{{rentalFleetMngController.rightRentalOrder.id}}</h3>
+                <h3 class="box-title">{{'rentalOrderNumber'| translate}}:{{rentalFleetMngController.rightRentalOrder.id}}</h3>
                 <span ng-if="rentalFleetMngController.rightRentalOrder!=null">
                 <button class="btn btn-primary pull-right" type="button"
                         ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams2,rentalFleetMngController.rightRentalOrderId,'lg')">组织调入
                 </button>
                 <button class="btn btn-default pull-right" type="button"
-                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">查看订单
+                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">{{'rentalOrderDetail'| translate}}
                 </button>
                   </span>
               </div>

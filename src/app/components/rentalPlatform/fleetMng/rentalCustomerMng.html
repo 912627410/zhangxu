@@ -13,7 +13,7 @@
     <div class="row info-box-container">
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
-          <div class="info-title">客户总数</div>
+          <div class="info-title">{{'rentalTotal'|translate}}</div>
           <div class="info-data">{{rentalCustomerMngController.page.totalElements}}</div>
         </div>
       </div>
@@ -25,23 +25,23 @@
 
           <div class="form-group">
 
-            <label class="col-md-1 control-label">客户名</label>
+            <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}</label>
             <div class="col-md-1">
               <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
-                     placeholder="客户名"/>
+                     placeholder="{{'rentalCustomerName'|translate}}"/>
             </div>
 
-            <label class="col-md-1 control-label">手机</label>
+            <label class="col-md-1 control-label">{{'rentalPhoneNumber'|translate}}</label>
             <div class="col-md-1">
               <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
-                     placeholder="手机号" />
+                     placeholder="{{'rentalPhoneNumber'|translate}}" />
             </div>
 
-            <label class="col-md-1 control-label">{{'organisation'|translate}}:</label>
+            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" required/>
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" required/>
                 <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
@@ -65,7 +65,7 @@
             <div class="col-md-1">
 
               <button class="btn btn-primary" type="button"
-                      ng-click="rentalCustomerMngController.new()">新增
+                      ng-click="rentalCustomerMngController.new()">{{'rentalAdd'|translate}}
               </button>
             </div>
           </div>
@@ -83,23 +83,23 @@
               </td>
 
               <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{customer.id}}</td>
-              <td class="text-nowrap" data-title="'名称'" sortable="'deviceinfo.deviceNum'">{{customer.name}}</td>
-              <td class="text-nowrap" data-title="'联系人'" sortable="'deviceinfo.deviceNum'">{{customer.contacts}}</td>
-              <td class="text-nowrap" data-title="'职位'" sortable="'deviceinfo.deviceNum'">{{customer.title}}</td>
-              <td class="text-nowrap" data-title="'电话'" sortable="'engineType.engineName'">{{customer.tel}}</td>
-              <td class="text-nowrap" data-title="'手机'" sortable="'state'">{{customer.mobile}}</td>
-              <td class="text-nowrap" data-title="'地址'" sortable="'state'">{{customer.address}}</td>
-              <td class="text-nowrap" data-title="'邮编'" sortable="'state'">{{customer.postcode}}</td>
-              <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{customer.org.label}}</td>
-              <td class="text-nowrap" data-title="'创建时间'" sortable="'state'">{{customer.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-              <td class="text-nowrap" data-title="'更新时间'" sortable="'state'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-              <td class="text-nowrap" data-title="'operation'|translate">
+              <td class="text-nowrap" data-title="'rentalDeviceID'|translate" sortable="'deviceinfo.deviceNum'">{{customer.name}}</td>
+              <td class="text-nowrap" data-title="'rentalLinkman'|translate" sortable="'deviceinfo.deviceNum'">{{customer.contacts}}</td>
+              <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'deviceinfo.deviceNum'">{{customer.title}}</td>
+              <td class="text-nowrap" data-title="'rentalCustomerName'|translate" sortable="'engineType.engineName'">{{customer.tel}}</td>
+              <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'state'">{{customer.mobile}}</td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'state'">{{customer.address}}</td>
+              <td class="text-nowrap" data-title="'rentalMail'|translate" sortable="'state'">{{customer.postcode}}</td>
+              <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'org.label'">{{customer.org.label}}</td>
+              <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'state'">{{customer.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'state'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalOperations'|translate">
 
                 <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
-                        ng-click="rentalCustomerMngController.update(customer.id)">{{'alter'| translate}}
+                        ng-click="rentalCustomerMngController.update(customer.id)">{{'rentalEdit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                        ng-click="rentalCustomerMngController.view(customer.id)">查看
+                        ng-click="rentalCustomerMngController.view(customer.id)">{{'rentalView'|translate}}
                 </button>
               </td>
             </tr>
