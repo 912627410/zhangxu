@@ -322,7 +322,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,centeraddr,aggregation,callback) {
+      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,langkey,centeraddr,aggregation,callback) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -344,6 +344,7 @@
             center: localCenterAddr,
             zooms: [3, 18]
           });
+          map.setLang(langkey);
           map.setZoom(localZoomSize);
           map.plugin(['AMap.ToolBar'], function () {
             map.addControl(new AMap.ToolBar());

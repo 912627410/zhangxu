@@ -61,23 +61,32 @@
     /**
      * 初始化地图数据
      */
-    vm.loadHomeDeviceData = function () {
+    vm.loadHomeDeviceData = function (langkey) {
       var rspdata = serviceResource.restCallService(RENTAL_HOME_MAP_GPSDATA_URL, "GET");
       rspdata.then(function (data) {
-        vm.drawPointAggregation("homeMap", data.content, 4);
+        vm.drawPointAggregation("homeMap", data.content, 4, langkey);
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
-    }
+    };
+
+    /**
+     * 地图国际化
+     * 切换语言时重新加载地图
+     */
+    $rootScope.$watch('langkey',function(newVal,oldVal){
+      vm.loadHomeDeviceData(newVal);
+    });
+
     /**
      * 点聚合绘制
      * @param mapId 页面上地图的id
      * @param pointArray 点集合
      * @param zone 缩放级别
      */
-    vm.drawPointAggregation = function (mapId, pointArray, zone) {
+    vm.drawPointAggregation = function (mapId, pointArray, zone, langkey) {
       //点聚合方式和自定义回调函数弹出框
-      serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, [104.06, 30.83], true, function (item) {
+      serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, langkey, [104.06, 30.83], true, function (item) {
         var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + item.deviceNum;
         var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
         deviceDataPromis.then(function (data) {

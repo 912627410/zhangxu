@@ -45,6 +45,7 @@
      * @param langKey
      */
     vm.changeLanguage = function (langKey) {
+      $rootScope.langkey = langKey;
       $translate.use(langKey);
     };
 
