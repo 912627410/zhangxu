@@ -794,6 +794,8 @@
   "rentalCustomerPosition":"Customer Position",
   "rentalCustomerName":"Customer Name",
   "rentalMail":"Email",
-  "rentalPhoneNumber":"Phone Number"
+  "rentalPhoneNumber":"Phone Number",
+  "rentalLifecycle":"Life cycle",
+  "rentalLocus":"Locus"
 
 }

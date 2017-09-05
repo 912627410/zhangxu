@@ -796,7 +796,9 @@
   "rentalCustomerPosition":"职位",
   "rentalCustomerName":"客户名",
   "rentalMail":"邮箱",
-  "rentalPhoneNumber":"手机"
+  "rentalPhoneNumber":"手机",
+  "rentalLifecycle":"生命周期",
+  "rentalLocus":"轨迹"
 
 
 }
