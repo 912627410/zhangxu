@@ -31,13 +31,7 @@
     }
 
 
-    var statusPromise = rentalService.getMaintenanceStatusList();
-    statusPromise.then(function (data) {
-      vm.statusList= data;
 
-    }, function (reason) {
-      Notification.error('获取状态集合失败');
-    })
     var listStatusPromise = rentalService.getMaintenanceListStatusList();
     listStatusPromise.then(function (data) {
       vm.listStatusList= data;

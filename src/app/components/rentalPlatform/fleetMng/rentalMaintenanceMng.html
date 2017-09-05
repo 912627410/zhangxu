@@ -106,16 +106,9 @@
           </p>
         </div>
 
-        <label class="col-md-1 control-label">状态</label>
-        <div class="col-md-2">
-          <ui-select name="status" ng-model="rentalMaintenanceController.maintenance.status" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-            </ui-select-match>
-            <ui-select-choices repeat="status in rentalMaintenanceController.statusList">
-              <div ng-bind-html="status.desc | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+
+        <div class="col-md-3">
+
         </div>
 
         <div class="col-md-2">
@@ -156,7 +149,6 @@
             <td class="text-nowrap" data-title="'保养总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalMaintentanceCost}}</td>
             <td class="text-nowrap" data-title="'人工总费用'" sortable="'deviceinfo.deviceNum'">{{maintenance.totalOperatorCost}}</td>
             <td class="text-nowrap" data-title="'保养依据'" sortable="'engineType.engineName'">{{maintenance.reason}}</td>
-            <td class="text-nowrap" data-title="'状态'" sortable="'state'">{{maintenance.statusDesc}}</td>
             <td class="text-nowrap" data-title="'描述'" sortable="'state'">{{maintenance.statusDesc}}</td>
             <td class="text-nowrap" data-title="'创建时间'" sortable="'state'">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'更新时间'" sortable="'state'">{{maintenance.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
