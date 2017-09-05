@@ -12,11 +12,10 @@
   <div class="container-fluid">
 
     <div class="box-header with-border">
-      <h3 class="box-title">新建客户</h3>
+      <h3 class="box-title">新建订单</h3>
     </div>
     <form name="newrentalOrderForm2" class="form-horizontal">
       <div class="box-body">
-        <div class="box-body col-sm-6">
           <div class="form-group">
             <label class="col-sm-3 control-label">客户名字</label>
             <div class="col-md-5">
@@ -57,7 +56,7 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="付款方式"
                      ng-model="newRentalOrderController.rentalOrder.payType" name="payType"
-                     typeahead-show-hint="true"/>
+                     typeahead-show-hint="true" validator="required"/>
             </div>
           </div>
 
@@ -99,31 +98,6 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-sm-3 control-label">经度</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="自动匹配" readonly
-                     ng-model="newRentalOrderController.rentalOrder.longitude" typeahead-show-hint="true"/>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">维度</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="自动匹配" readonly
-                     ng-model="newRentalOrderController.rentalOrder.latitude" name="mobile"
-                     typeahead-show-hint="true"/>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-3 control-label">半径(米)</label>
-            <div class="col-sm-5">
-              <input type="text" class="form-control"
-                     ng-model="newRentalOrderController.radius"
-                     ng-change="newRentalOrderController.changeradius(newRentalOrderController.radius)" name="radius"
-                     validator="number" typeahead-show-hint="true"/>
-            </div>
-          </div>
 
           <div class="form-group">
             <label class="col-sm-3 control-label">剪叉数量</label>
@@ -183,28 +157,6 @@
           </div>
 
         </div>
-        <div class="map-body col-sm-6">
-          <div class="form-group">
-            <label>工作地址</label>
-            <!--<input type="text" id="tipinput" class="form-control col-lg-10" placeholder="{{'search'|translate}}" ng-model="newRentalOrderController.tipinput"/>-->
-            <input class="input-search" placeholder="工作地址" ng-model="newRentalOrderController.tipinput" />
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="text-nowrap">{{'coordinate'|translate}}:</label>
-              {{'longitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplongitudeNum}}</span>
-              {{'latitude'|translate}}:<span style="color: red;"> {{newRentalOrderController.amaplatitudeNum}}</span>
-            </div>
-            <div class="col-md-6">
-              <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
-              <span style="color: red;"> {{newRentalOrderController.selectAddress}}</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="box-body" id="newOrderMap" ng-style="newRentalOrderController.baseBoxMapContainer"></div>
-          </div>
-        </div>
-      </div>
     </form>
   </div>
 

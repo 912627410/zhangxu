@@ -15,7 +15,6 @@
     <form name="newrentalOrderForm2" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
-          <div class="box-body col-sm-6">
             <div class="form-group">
               <label class="col-sm-3 control-label">客户名字</label>
               <div class="col-md-5">
@@ -98,32 +97,6 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">经度</label>
-              <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="自动匹配" readonly
-                       ng-model="updateRentalOrderController.rentalOrder.longitude" name="email"
-                       typeahead-show-hint="true"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">维度</label>
-              <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="自动匹配" readonly
-                       ng-model="updateRentalOrderController.rentalOrder.latitude" name="mobile"
-                       typeahead-show-hint="true"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">半径(米)</label>
-              <div class="col-sm-5">
-                <input type="text" class="form-control"
-                       ng-model="updateRentalOrderController.radius"
-                       ng-change="updateRentalOrderController.changeradius(updateRentalOrderController.radius)" name="radius"
-                       validator="number" typeahead-show-hint="true"/>
-              </div>
-            </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">剪叉数量</label>
@@ -183,37 +156,7 @@
             </div>
 
           </div>
-          <div class="map-body col-sm-6">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">工作地址</label>
-              <div class="col-sm-7">
-                <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}"
-                       ng-model="updateRentalOrderController.tipinput"/>
-              </div>
-
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
-                {{'longitude'|translate}}:<span
-                style="color: red;"> {{updateRentalOrderController.amaplongitudeNum}}</span>
-                &nbsp;&nbsp;
-                {{'latitude'|translate}}:<span style="color: red;"> {{updateRentalOrderController.amaplatitudeNum}}</span>
-              </div>
-
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
-                <span style="color: red;"> {{updateRentalOrderController.selectAddress}}</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="box-body" id="newOrderMap" ng-style="updateRentalOrderController.baseBoxMapContainer"></div>
-            </div>
-          </div>
         </div>
-      </div>
     </form>
     <div class="box-footer">
 
