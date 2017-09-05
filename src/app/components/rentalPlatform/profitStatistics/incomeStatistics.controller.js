@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -71,49 +71,77 @@
 
 
 
-    vm.startDateSetting = {
-      //dt: "请选择开始日期",
-      open: function($event) {
-        vm.startDateSetting.status.opened = true;
-      },
-      dateOptions: {
-        formatYear: 'yy',
-        startingDay: 1
-      },
-      status: {
-        opened: false
-      }
+    // vm.startDateSetting = {
+    //   //dt: "请选择开始日期",
+    //   open: function($event) {
+    //     vm.startDateSetting.status.opened = true;
+    //   },
+    //   dateOptions: {
+    //     formatYear: 'yy',
+    //     startingDay: 1
+    //   },
+    //   status: {
+    //     opened: false
+    //   }
+    // };
+    // // 日期控件相关
+    // // date picker
+    // vm.startDateOpenStatus = {
+    //   opened: false
+    // };
+    //
+    // vm.startDateOpen = function ($event) {
+    //   vm.startDateOpenStatus.opened = true;
+    // };
+    //
+    // vm.endDateOpenStatus = {
+    //   opened: false
+    // };
+    //
+    // vm.endDateOpen = function ($event) {
+    //   vm.endDateOpenStatus.opened = true;
+    // };
+    //
+    // var startDay = new Date();
+    // startDay.setDate(startDay.getDate() - 30);
+    // vm.startDay = startDay;
+    // vm.endDay = new Date();
+
+
+    var startDate = new Date();
+    startDate.setDate(startDate.getDate() - 1);
+    vm.startDate = startDate;
+    vm.endDate = new Date();
+
+    vm.startDateDeviceData = startDate;
+    vm.endDateDeviceData = new Date();
+
+    //date picker
+    vm.startDateOpenStatusDeviceData = {
+      opened: false
     };
-    // 日期控件相关
-    // date picker
-    vm.startDateOpenStatus = {
+    vm.endDateOpenStatusDeviceData = {
       opened: false
     };
 
-    vm.startDateOpen = function ($event) {
-      vm.startDateOpenStatus.opened = true;
+    vm.startDateOpenDeviceData = function ($event) {
+      vm.startDateOpenStatusDeviceData.opened = true;
+    };
+    vm.endDateOpenDeviceData = function ($event) {
+      vm.endDateOpenStatusDeviceData.opened = true;
+    };
+    vm.startDateOpenDeviceData1 = function ($event) {
+      vm.startDateOpenStatusDeviceData1.opened = true;
+    };
+    vm.endDateOpenDeviceData1 = function ($event) {
+      vm.endDateOpenStatusDeviceData1.opened = true;
     };
 
-    vm.endDateOpenStatus = {
-      opened: false
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
     };
-
-    vm.endDateOpen = function ($event) {
-      vm.endDateOpenStatus.opened = true;
-    };
-
-    var startDay = new Date();
-    startDay.setDate(startDay.getDate() - 30);
-    vm.startDay = startDay;
-    vm.endDay = new Date();
-
-    // vm.rentalOrder = {
-    //   startDate:vm.startDay ,
-    //   endDate:vm.endDay,
-    //   customerName:'',
-    //   workplace:''
-    // }
-
 
 
 
@@ -163,8 +191,24 @@
     })
 
 
+    vm.orderQuery = true;
+    vm.machineQuery = false;
+   vm.change = function (queryType) {
+     if(queryType==1){
+       vm.orderQuery = true;
+       vm.machineQuery = false;
+     }
+     if(queryType==2){
+       vm.orderQuery = false;
+       vm.machineQuery = true;
+     }
+   }
 
 
+   vm.reset = function () {
+     vm.rentalOrder= null;
+     vm.rentalMachine = null;
+   }
 
 
     //income line
@@ -374,7 +418,7 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        vm.tableParams = new NgTableParams({
+        vm.orderIncometableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
         }, {
@@ -389,6 +433,54 @@
     };
 
    // vm.queryByOrder(null,null,null,rentalOrder)
+
+
+    vm.queryByMachine = function (page, size, sort,rentalMachine) {
+      vm.leftMachineListQuery (page, size, sort, rentalMachine)
+    }
+
+    vm.leftMachineListQuery = function (page, size, sort, rentalMachine) {
+      var restCallURL = RENTAL_MACHINEINCOME_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+
+      restCallURL += "&startDate=" + $filter('date')(rentalMachine.startDate, 'yyyy-MM-dd');
+      restCallURL += "&endDate=" + $filter('date')(rentalMachine.endDate,'yyyy-MM-dd');
+      if (null != rentalMachine) {
+        if (null != rentalMachine.machineTypeId&&rentalMachine.machineTypeId!="") {
+          restCallURL += "&machineTypeId=" + rentalMachine.machineTypeId;
+        }
+
+        if (null != rentalMachine.heightTypeId&&rentalMachine.heightTypeId!="") {
+          restCallURL += "&heightTypeId=" + rentalMachine.heightTypeId;
+        }
+
+        if (null != rentalMachine.machineManufacture&&rentalMachine.machineManufacture!="") {
+          restCallURL += "&machineManufacture=" + rentalMachine.machineManufacture
+        }
+
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+
+          vm.machineIncometableParams = new NgTableParams({
+            // initial sort order
+            // sorting: { name: "desc" }
+          }, {
+            dataset: data.content
+          });
+          vm.page = data.page;
+          vm.pageNumber = data.page.number + 1;
+        }, function (reason) {
+          vm.machineList = null;
+          Notification.error("获取车辆数据失败");
+        });
+
+
+      }
+    }
+
 
     var miniChart = document.getElementsByClassName('miniChart'),
       miniChart1 = echarts.init(miniChart[0]),
