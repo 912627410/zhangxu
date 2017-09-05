@@ -60,20 +60,6 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">状态</label>
-              <div class="col-sm-5">
-                <ui-select name="status" ng-model="updateRentalOrgFenceController.status" theme="bootstrap"
-                           ng-disabled="disabled">
-                  <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-                  </ui-select-match>
-                  <ui-select-choices repeat="status in updateRentalOrgFenceController.statusList">
-                    <div ng-bind-html="status.desc | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
-
-            <div class="form-group">
               <label class="col-sm-3 control-label">描述</label>
               <div class="col-sm-5">
               <textarea class="form-control" placeholder="描述"

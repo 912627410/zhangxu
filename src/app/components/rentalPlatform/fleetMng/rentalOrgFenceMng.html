@@ -59,17 +59,6 @@
             <input type="checkbox" checked="checked" ng-model="rentalOrgFenceMngController.querySubOrg"/>
           </div>
 
-          <label class="col-md-1 control-label">状态</label>
-          <div class="col-md-2">
-            <ui-select name="status" ng-model="rentalOrgFenceMngController.rentalOrgFence.status" theme="bootstrap"
-                       ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-              </ui-select-match>
-              <ui-select-choices repeat="status in rentalOrgFenceMngController.statusList">
-                <div ng-bind-html="status.desc | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
           <div class="col-md-2">
 
             <button class="btn btn-primary" type="button"
@@ -78,9 +67,11 @@
             <button class="btn btn-default" type="button" ng-click="rentalOrgFenceMngController.reset()">{{'reset'|translate}}</button>
           </div>
 
+          <div class="col-md-3"></div>
+
           <div class="col-md-1">
 
-            <button class="btn btn-primary" type="button"
+            <button class="btn btn-primary pull-right" type="button"
                     ng-click="rentalOrgFenceMngController.new()">新增
             </button>
           </div>
@@ -104,9 +95,7 @@
             <td class="text-nowrap" data-title="'维度'" sortable="'latitude'">{{rentalOrgFence.latitude }}</td>
             <td class="text-nowrap" data-title="'半径'" sortable="'radius'">{{rentalOrgFence.radius }}</td>
             <td class="text-nowrap" data-title="'地址'" sortable="'statusDesc'">{{rentalOrgFence.location }}</td>
-            <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrgFence.statusDesc }}</td>
             <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{rentalOrgFence.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-
             <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
 
@@ -120,7 +109,11 @@
               <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
                       ng-click="rentalOrgFenceMngController.view(rentalOrgFence.id)">查看
               </button>
+              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                      ng-click="rentalOrgFenceMngController.delete(rentalOrgFence.id)">删除
+              </button>
             </td>
+
           </tr>
         </table>
       </div>

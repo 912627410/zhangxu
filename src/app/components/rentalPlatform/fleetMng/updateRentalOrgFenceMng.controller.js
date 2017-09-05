@@ -23,13 +23,6 @@
       $location.path(path);
 
     };
-    var statusListPromise = rentalService.getRetnalOrgFenceStatusList();
-    statusListPromise.then(function (data) {
-      vm.statusList= data;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取状态失败');
-    })
 
 
     //组织树的显示

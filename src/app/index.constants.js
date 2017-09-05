@@ -304,9 +304,10 @@
 
 
     //组织围栏
-    .constant('RENTAL_ORG_FENCE_PAGE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//租赁订单信息
-    .constant('RENTAL_ORG_FENCE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFence')//租赁平台维护订单信息
-    .constant('RENTAL_ORG_FENCE_STATUS',SERVER_BASE_URL + 'rental/orgFence/statusList')//租赁平台维护订单信息
+    .constant('RENTAL_ORG_FENCE_PAGE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//
+    .constant('RENTAL_ORG_FENCE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFence')//
+    .constant('RENTAL_ORG_FENCE_STATUS',SERVER_BASE_URL + 'rental/orgFence/statusList')//
+    .constant('RENTAL_ORG_FENCE_DELETE_STATUS',SERVER_BASE_URL + 'rental/orgFence/delete')//
 
     //租赁车辆信息
     .constant('RENTAL_ORDER_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/orderMachine/page')//租赁订单信息

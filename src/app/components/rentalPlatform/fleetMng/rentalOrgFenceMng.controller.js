@@ -9,7 +9,8 @@
     .controller('rentalOrgFenceMngController', rentalOrgFenceMngController);
 
   /** @ngInject */
-  function rentalOrgFenceMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORG_FENCE_PAGE_URL) {
+  function rentalOrgFenceMngController($scope, $window,$state,$confirm, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
+                                       DEFAULT_SIZE_PER_PAGE,RENTAL_ORG_FENCE_PAGE_URL,RENTAL_ORG_FENCE_DELETE_STATUS) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -19,16 +20,6 @@
     $anchorScroll.yOffset = 50;
     //定义页面的喵点
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
-
-
-    var statusListPromise = rentalService.getRetnalOrgFenceStatusList();
-    statusListPromise.then(function (data) {
-      vm.statusList= data;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取状态失败');
-    })
-
 
     /**
      * 自适应高度函数
@@ -126,6 +117,20 @@
     vm.view=function(id){
       $state.go('rental.viewOrgFence', {id: id});
     }
+
+    vm.delete = function (id) {
+      $confirm({text: '确定要删除吗?',title: '删除确认', ok: '确定', cancel: '取消'})
+        .then(function() {
+          var restPromise = serviceResource.restUpdateRequest(RENTAL_ORG_FENCE_DELETE_STATUS, id);
+          restPromise.then(function (data) {
+            Notification.success("删除成功!");
+            vm.query(null, null, null, null);
+          }, function (reason) {
+            Notification.error("删除成功出错!");
+          });
+        });
+    };
+
 
   }
 })();
