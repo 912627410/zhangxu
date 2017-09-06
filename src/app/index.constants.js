@@ -302,6 +302,7 @@
     .constant('RENTAL_ORDER_PAGE_URL',SERVER_BASE_URL + 'rental/order/orderpage')//租赁订单信息
     .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
     .constant('RENTAL_ORDER_STATUS',SERVER_BASE_URL + 'rental/order/statusList')//租赁平台维护订单信息
+    .constant('RENTAL_ORDER_GROUP_BY_STATUS',SERVER_BASE_URL + 'rental/order/groupByStatus')//租赁平台维护订单信息
 
 
     //组织围栏

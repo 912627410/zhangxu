@@ -9,8 +9,14 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
+  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
+                                    DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS) {
     var vm = this;
+    vm.totalOrders=0;
+    vm.planOrders=0;
+    vm.processOrders=0;
+    vm.fininshOrders=0;
+
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -25,10 +31,36 @@
     var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
     retanlOrderStatusListPromise.then(function (data) {
       vm.retanlOrderStatusList= data;
-      //    console.log(vm.userinfoStatusList);
+
+
     }, function (reason) {
       Notification.error('获取状态失败');
     })
+
+    var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
+    groupByStatusListPromise.then(function (data) {
+      var groupByStatusList= data.content;
+          console.log(vm.groupByStatusList);
+
+
+      for(var i=0;i<groupByStatusList.length;i++){
+        var retanlOrderStatus=groupByStatusList[i];
+        console.log(retanlOrderStatus);
+        if(retanlOrderStatus.status==1){ //计划
+          vm.planOrders+=retanlOrderStatus.rentalOrderNumber;
+        }else if(retanlOrderStatus.status==2){ //进行中
+          vm.processOrders+=retanlOrderStatus.rentalOrderNumber;
+        }else{
+          vm.fininshOrders+=retanlOrderStatus.rentalOrderNumber;
+        }
+        vm.totalOrders+=retanlOrderStatus.rentalOrderNumber;
+
+      }
+    }, function (reason) {
+      Notification.error('获取状态分组失败');
+    })
+
+
 
 
     /**

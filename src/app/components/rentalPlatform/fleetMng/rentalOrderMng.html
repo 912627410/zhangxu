@@ -14,26 +14,26 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngController.page.totalElements}}</div>
+          <div class="info-data">{{rentalOrderMngController.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
 
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
-          <div class="info-data">49</div>
+          <div class="info-data">{{rentalOrderMngController.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
-          <div class="info-data">25</div>
+          <div class="info-data">{{rentalOrderMngController.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
-          <div class="info-data">25</div>
+          <div class="info-data">{{rentalOrderMngController.fininshOrders}}</div>
         </div>
       </div>
     </div>
