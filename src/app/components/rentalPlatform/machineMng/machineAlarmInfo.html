@@ -73,7 +73,7 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==3]">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==null]">
                   <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(null)"><i class="fa fa-check-square-o"></i>{{'rentalAllAlarmMsg'|translate}}
                     <span class="label label-default pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
                   </a>
