@@ -262,7 +262,7 @@
           tooltip: {
             trigger: 'axis',
             formatter:function(params){
-              var temp  = '<div >' + languages.findKey(params[0].name) + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(0,160,152);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[1].seriesName) + '：' + params[1].data + " "+languages.findKey('rentalCar') + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(204,204,204);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[0].seriesName)+ '：' + params[0].data +" "+ languages.findKey('rentalCar') + '</div>' + '<div>' + languages.findKey('rentalRents')+':' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
+              var temp  = '<div >' + languages.findKey(params[0].name) + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(0,160,152);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[1].seriesName) + '：' + params[1].data + " "+languages.findKey('rentalCar') + '</div>' + '<div style="margin-top:5px;margin-right: 3px;width: 12px;height: 12px;background-color: rgb(200,200,200);border-radius: 4px;display: inline-block;float: left;"></div>' + '<div style="margin-right: 16px">' + languages.findKey(params[0].seriesName)+ '：' + params[0].data +" "+ languages.findKey('rentalCar') + '</div>' + '<div>' + languages.findKey('rentalRents')+':' + data.content.rate[params[1].dataIndex] + '%' + '</div>';
               return temp;
             }
           },
@@ -328,12 +328,12 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgb(0,0,0)'
+                color: 'rgb(200,200,200)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgb(0,0,0)'
+                color: 'rgb(200,200,200)'
               }
             },
             data: data.content.unRentalList,
@@ -440,7 +440,7 @@
               name: 'invisible',
               itemStyle: {
                 normal: {
-                  color: 'rgb(87,87,87)',
+                  color: 'rgb(200,200,200)',
                   label: {
                     show: false
                   },
@@ -451,7 +451,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgb(87,87,87)',
+                  color: 'rgb(200,200,200)',
                   label: {
                     show: false
                   },
@@ -538,7 +538,7 @@
               value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
-                  color: 'rgb(87,87,87)',
+                  color: 'rgb(200,200,200)',
                   label: {
                     show: false
                   },
@@ -549,7 +549,7 @@
                   // shadowColor: 'rgba(40, 40, 40, 0.2)'
                 },
                 emphasis: {
-                  color: 'rgb(87,87,87)',
+                  color: 'rgb(200,200,200)',
                   label: {
                     show: false
                   },
@@ -557,7 +557,7 @@
                     show: false
                   },
                   shadowBlur: 10,
-                  shadowColor: 'rgb(87,87,87)'
+                  shadowColor: 'rgb(200,200,200)'
                 }
               }
             }]
@@ -591,7 +591,7 @@
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
         function getLocalTime(nS) {
-          return new Date(parseInt(nS)).toLocaleString().substr(0,10)
+          return new Date(parseInt(nS)).toLocaleString().substr(0,9)
         }
 
         for(var i=0;i<7;i++){
@@ -605,7 +605,7 @@
             axisPointer: {
               type: 'line',
               lineStyle:{
-                color:'rgba(124, 181, 236, 0.5)'
+                color:'rgba(0, 160, 152, 0.5)'
               }
             }
           },
@@ -620,7 +620,7 @@
             boundaryGap: false,
             axisLine: {
               lineStyle: {
-                color: 'rgba(124, 181, 236, 0.5)'
+                color: 'rgba(0, 160, 152, 0.5)'
               }
             },
             axisTick: {
@@ -653,7 +653,7 @@
               emphasis: {
                 show: true,
                 textStyle:{
-                  color: 'rgba(124, 181, 236, 1)'
+                  color: 'rgba(0, 160, 152, 1)'
                 },
                 formatter: function(param) {
                   return param.data[3];
@@ -666,7 +666,7 @@
                 opacity: 0
               },
               emphasis: {
-                color: 'rgba(124, 181, 236, 1)',
+                color: 'rgba(0, 160, 152, 1)',
                 borderColor: '#fff',
                 borderWidth: 2,
                 opacity: 1
@@ -675,12 +675,12 @@
             lineStyle: {
               normal: {
                 width:1,
-                color: 'rgba(124, 181, 236, 1)'
+                color: 'rgba(0, 160, 152, 1)'
               }
             },
             areaStyle: {
               normal: {
-                color: 'rgba(124, 181, 236, 0.25)'
+                color: 'rgba(0, 160, 152, 0.25)'
               }
             },
             data: data.content.countList,
