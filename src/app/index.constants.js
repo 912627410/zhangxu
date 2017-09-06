@@ -284,6 +284,7 @@
     .constant('RENTAL_MACHINE_RATE_URL',SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
     .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台出租率
     .constant('MACHINE_RENT_URL', SERVER_BASE_URL + 'rental/rentalRate7day')  //出租率七天数据
+    .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
 
 
     //租赁客户信息
