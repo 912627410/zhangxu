@@ -132,14 +132,11 @@
         <div class="forminline" >
           <label >车型</label>
           <div class="forminline" style="width: 150px;">
-            <ui-select id="machineType" name="machineType" ng-model="incomeStatisticsCtr.rentalMachine.machineTypeId" theme="bootstrap"
-                       ng-disabled="disabled" >
-              <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
-              </ui-select-match>
-              <ui-select-choices  repeat="machineType.id as machineType in incomeStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >
-                <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
-              </ui-select-choices>
-            </ui-select>
+            <select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">
+              <option value="1">剪叉</option>
+              <option value="2">直臂</option>
+              <option value="3">曲臂</option>
+            </select>
           </div>
         </div>
 
@@ -240,8 +237,8 @@
 
                   <td class="text-nowrap" data-title="'高度'" sortable="'rentalCustomer.name'">{{rentalMachine.heightType }}</td>
                   <td class="text-nowrap" data-title="'车型'" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
-                  <td class="text-nowrap" data-title="'实收'" sortable="'statusDesc'">{{rentalMachine.deposit }}</td>
-                  <td class="text-nowrap" data-title="'应收'" sortable="'statusDesc'">{{rentalMachine.totalAmt }}</td>
+                  <td class="text-nowrap" data-title="'实收'" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
+                  <td class="text-nowrap" data-title="'应收'" sortable="'statusDesc'">{{rentalMachine.accountsReceivable }}</td>
                 </tr>
               </table>
             </div>
