@@ -66,17 +66,6 @@
               <input type="text" name="totalOperatorCost" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalOperatorCost"
                      placeholder="总人工费用" validator="required"/>
             </div>
-            <label class="col-md-1 control-label">状态</label>
-            <div class="col-md-2">
-              <ui-select name="status" ng-model="newRentalMaintenanceController.status" theme="bootstrap"
-                         ng-disabled="disabled" validator="required">
-                <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
-                </ui-select-match>
-                <ui-select-choices repeat="maintenanceStatus in newRentalMaintenanceController.statusList">
-                  <div ng-bind-html="maintenanceStatus.desc | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
 
           </div>
           <hr/>
