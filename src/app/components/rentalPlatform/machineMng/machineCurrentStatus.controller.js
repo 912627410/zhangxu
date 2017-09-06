@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, NgTableParams, ngTableDefaults, languages, serviceResource, commonFactory, Notification, RENTAL_MACHINE_COUNT_URL,
-                                          RENTAL_MACHINE_DATA_URL,RENTAL_MACHINE_MONITOR_URL,RENTAL_MACHINE_URL) {
+                                          RENTAL_MACHINE_DATA_URL,RENTAL_MACHINE_MONITOR_URL,RENTAL_MACHINE_URL,MACHINE_DEVICETYPE_URL) {
     var vm = this;
     ngTableDefaults.params.count = 40;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
@@ -127,7 +127,20 @@
       })
     };
 
-    vm.machineTypeList = ['矿车','高空车','剪叉','直臂','曲臂'];
+
+    /**
+     * 得到设备类型集合
+     */
+    vm.getDeviceType = function () {
+      var engineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+      engineTypeData.then(function (data) {
+        vm.deviceTypeList = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
+    };
+
+    vm.getDeviceType();
 
     /*初始化加载数据,首先查看是不是从别的页面转过来的,如果是使用完这个值后置空这个值*/
     if ($rootScope.machinType) {
