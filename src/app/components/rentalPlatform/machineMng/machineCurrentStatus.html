@@ -73,11 +73,10 @@
         </div>
         <div class="tab-content-search-box">
           <label>{{'type'|translate}}:</label>
-          <ui-select name="machineType" ng-model="machineCurrentStatusCtr.machineTypeList.whatever" theme="bootstrap"
-                     ng-disabled="disabled" style="display: inline-block;">
-            <ui-select-match allow-clear="true" placeholder="{{'type'|translate}}" style="width: 200px">{{$select.selected}}</ui-select-match>
-            <ui-select-choices  repeat="machineType in machineCurrentStatusCtr.machineTypeList" >
-              <div ng-bind-html="machineType | highlight: $select.search"></div>
+          <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required>
+            <ui-select-match allow-clear="true" style="width: 200px" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="machineState.code as machineState in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
+              <div ng-bind-html="machineState.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -98,7 +97,7 @@
               <tr ng-repeat="row in $data">
                 <td data-title="'rentalDeviceID'|translate" sortable="'rentalDeviceID'|translate">{{row.deviceNum}}</td>
                 <td data-title="'rentalMachineID'|translate" sortable="'rentalMachineID'|translate">{{row.machineLicenseId}}</td>
-                <td data-title="'type'|translate" sortable="'type'|translate">{{row.machineType}}</td>
+                <td data-title="'type'|translate" sortable="'type'|translate">{{row.deviceType}}</td>
                 <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.brand}}</td>
                 <td data-title="'rentalCurrentLocate'|translate" sortable="'rentalCurrentLocate'|translate">{{row.currentAddress}}</td>
                 <td data-title="'rentalTotalWorkingHours'|translate" sortable="'rentalTotalWorkingHours'|translate">{{row.totalDurationConverter | convertToMins}}</td>
