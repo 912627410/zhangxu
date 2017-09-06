@@ -189,13 +189,6 @@
           });
         });
 
-        AMap.event.addListener(circleEditor, "adjust" ,function (e) {
-          vm.radius = e.radius;
-          $scope.$apply();
-        });
-
-        circleEditor.open();
-
         circles.push(circle);
         circleEditorList.push(circleEditor);
        // circle.hide();
@@ -224,98 +217,6 @@
       return s.join("<br>");
     }
 
-    /*设置电子围栏*/
-    vm.updateScopeMap = function () {
-      if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
-        Notification.error('当前设备未绑定车辆，无法设置电子围栏');
-        return false;
-      }
-      if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
-        Notification.error('无效的地址');
-        return false;
-      }
-      if(!vm.amaplongitudeNum&&typeof(vm.amaplongitudeNum)=="undefined"){
-        Notification.error('无效的经度');
-        return false;
-      }
-      if(!vm.amaplatitudeNum&&typeof(vm.amaplatitudeNum)=="undefined"){
-        Notification.error('无效的维度');
-        return false;
-      }
-      if(!vm.radius||typeof(vm.radius)=="undefined"||isNaN(vm.radius)){
-        Notification.error('无效的半径');
-        return false;
-      }
-
-      var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-      $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
-        .then(function() {
-          var machieId;
-          if(deviceinfo.machine.id!=null){
-            machieId=deviceinfo.machine.id;
-          }else{
-            machieId=deviceinfo.machine;
-          }
-          var fence={
-            id:machieId,
-            radius:vm.radius,
-            selectAddress:vm.selectAddress,
-            amaplongitudeNum:vm.amaplongitudeNum,
-            amaplatitudeNum:vm.amaplatitudeNum,
-            fenceStatus: '1'
-          }
-          //TODO 保存电子围栏
-          var restResult = serviceResource.restAddRequest(MACHINE_FENCE,fence);
-          restResult.then(function (data) {
-              deviceinfo.machine.fenceStatus = 1;
-              Notification.success("设置电子围栏成功!");
-              //$uibModalInstance.close();
-            },function (reason) {
-              vm.errorMsg=reason.data.message;
-              Notification.error(reason.data.message);
-            }
-          );
-
-        });
-    };
-
-    /*取消电子围栏*/
-    vm.cacheElectronicFence = function() {
-      if (null == deviceinfo.machine || null == deviceinfo.machine.id) {
-        Notification.error('当前设备未绑定车辆，无法设置电子围栏');
-        return false;
-      }
-      if (deviceinfo.machine.fenceStatus == null) {
-        Notification.error('当前车辆未设置围栏，无需取消');
-        return false;
-      }
-      var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
-      $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
-        .then(function () {
-          var fence = {
-            id: deviceinfo.machine.id,
-            radius: 0,
-            selectAddress: null,
-            amaplongitudeNum: null,
-            amaplatitudeNum: null
-          };
-          //取消电子围栏
-          var restResult = serviceResource.restUpdateRequest(MACHINE_FENCE_CACHE, fence);
-          restResult.then(function (data) {
-              deviceinfo.machine.fenceStatus = 0;
-              vm.selectAddress = ''; //选中的地址信息
-              vm.amaplongitudeNum = null;//选中的经度
-              vm.amaplatitudeNum = null;//选中的维度
-              vm.radius = null; //设置的半径
-              vm.initScopeMapTab(deviceinfo);
-              Notification.success("取消电子围栏成功!");
-            }, function (reason) {
-              vm.errorMsg = reason.data.message;
-              Notification.error(reason.data.message);
-            }
-          );
-        });
-    };
 
     //默认显示当前设备的最新地址
     vm.initScopeMapTab = function(rentalOrgFence){
@@ -327,48 +228,6 @@
       vm.refreshScopeMapWithDeviceInfo("newOrderMap",rentalOrgFence,15,centerAddr);
     };
 
-
-
-    // $timeout(function () {
-    //   vm.initScopeMapTab();
-    //   //vm.rentalOrgFence.startDate="11";
-    // }, 50);
-
-
-    /*监听radius变化*/
-    vm.changeradius = function (radius) {
-      if( "" == vm.selectAddress){
-        return;
-      }
-      vm.initScopeMapTab();
-    };
-    /*回到以当前车辆为中心点的位置*/
-    vm.backCurrentAdd = function () {
-      // vm.zoomsize--;
-      vm.initScopeMapTab();
-    };
-
-
-    vm.addMarker=function(map, location) {
-      alert(33);
-      var marker = new AMap.Marker({
-        map: map,
-        position: location
-      });
-      var infoWindow = new AMap.InfoWindow({
-        content: d.formattedAddress,
-        offset: {x: 0, y: -30}
-      });
-      marker.on("mouseover", function(e) {
-        infoWindow.open(map, marker.getPosition());
-      });
-
-      AMap.event.addDomListener(marker, 'click', function () {
-        infoWindow.open(vm.map, marker.getPosition());
-      }, false);
-
-      map.setCenter(location);
-    }
 
 
     //构造地图对象

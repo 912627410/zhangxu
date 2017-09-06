@@ -808,7 +808,8 @@
   "Minimum6bits":"最短6位",
   "rentalVehicleState":" 车辆状态",
   "rentalUpdateMachine":"更新车辆信息",
-  "rentalGetDataError":"获取数据失败"
+  "rentalGetDataError":"获取数据失败",
+  "rentalDelete":"删除"
 
 
 }

@@ -806,6 +806,6 @@
   "rentalMinimum6bits":"Minimum 6 bits",
   "rentalVehicleState":" Vehicle State",
   "rentalUpdateMachine":"Update Machine",
-  "rentalGetDataError":"Data failure"
-
+  "rentalGetDataError":"Data failure",
+  "rentalDelete":"Delete"
 }
