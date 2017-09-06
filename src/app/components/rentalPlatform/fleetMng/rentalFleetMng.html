@@ -44,7 +44,7 @@
 
                 <input type="text" id="leftRentalOrder" class="form-control"
                        ng-model="rentalFleetMngController.leftRentalOrder.id" name="leftRentalOrder"
-                       validator="required"/>
+                       validator="required" readonly/>
                 <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectLeftOrder('lg')">
@@ -67,7 +67,7 @@
 
                 <input type="text" id="rightRentalOrder" class="form-control"
                        ng-model="rentalFleetMngController.rightRentalOrder.id" name="rightRentalOrder"
-                       validator="required"/>
+                       validator="required" readonly/>
                 <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectRightOrder('lg')">
@@ -98,9 +98,7 @@
                 <button class="btn btn-primary pull-right" type="button"
                         ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams,rentalFleetMngController.leftRentalOrderId,'lg')">组织调入
                 </button>
-                <button class="btn btn-default pull-right" type="button"
-                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">{{'rentalOrderDetail'| translate}}
-                </button>
+
                   </span>
               </div>
               <!-- /.box-header -->
@@ -140,9 +138,7 @@
                 <button class="btn btn-primary pull-right" type="button"
                         ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams2,rentalFleetMngController.rightRentalOrderId,'lg')">组织调入
                 </button>
-                <button class="btn btn-default pull-right" type="button"
-                        ng-click="rentalFleetMngController.viewOrderInfo(fleet,'lg','update')">{{'rentalOrderDetail'| translate}}
-                </button>
+
                   </span>
               </div>
               <!-- /.box-header -->

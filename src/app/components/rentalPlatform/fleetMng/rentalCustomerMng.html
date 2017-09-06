@@ -83,16 +83,16 @@
               </td>
 
               <td class="text-nowrap" data-title="'id'" sortable="'deviceinfo.deviceNum'">{{customer.id}}</td>
-              <td class="text-nowrap" data-title="'rentalDeviceID'|translate" sortable="'deviceinfo.deviceNum'">{{customer.name}}</td>
-              <td class="text-nowrap" data-title="'rentalLinkman'|translate" sortable="'deviceinfo.deviceNum'">{{customer.contacts}}</td>
-              <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'deviceinfo.deviceNum'">{{customer.title}}</td>
-              <td class="text-nowrap" data-title="'rentalCustomerName'|translate" sortable="'engineType.engineName'">{{customer.tel}}</td>
-              <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'state'">{{customer.mobile}}</td>
-              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'state'">{{customer.address}}</td>
-              <td class="text-nowrap" data-title="'rentalMail'|translate" sortable="'state'">{{customer.postcode}}</td>
-              <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'org.label'">{{customer.org.label}}</td>
-              <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'state'">{{customer.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-              <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'state'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalCustomerName'|translate" sortable="'name'">{{customer.name}}</td>
+              <td class="text-nowrap" data-title="'rentalLinkman'|translate" sortable="'contacts'">{{customer.contacts}}</td>
+              <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'title'">{{customer.title}}</td>
+              <td class="text-nowrap" data-title="'rentalTel'|translate" sortable="'tel'">{{customer.tel}}</td>
+              <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'mobile'">{{customer.mobile}}</td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'address'">{{customer.address}}</td>
+              <td class="text-nowrap" data-title="'rentalPostcode'|translate" sortable="'postcode'">{{customer.postcode}}</td>
+              <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{customer.org.label}}</td>
+              <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'createTime'">{{customer.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'updateTime'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
 
                 <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
