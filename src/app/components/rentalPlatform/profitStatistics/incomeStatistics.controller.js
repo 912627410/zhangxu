@@ -71,51 +71,18 @@
 
 
 
-    // vm.startDateSetting = {
-    //   //dt: "请选择开始日期",
-    //   open: function($event) {
-    //     vm.startDateSetting.status.opened = true;
-    //   },
-    //   dateOptions: {
-    //     formatYear: 'yy',
-    //     startingDay: 1
-    //   },
-    //   status: {
-    //     opened: false
-    //   }
-    // };
-    // // 日期控件相关
-    // // date picker
-    // vm.startDateOpenStatus = {
-    //   opened: false
-    // };
-    //
-    // vm.startDateOpen = function ($event) {
-    //   vm.startDateOpenStatus.opened = true;
-    // };
-    //
-    // vm.endDateOpenStatus = {
-    //   opened: false
-    // };
-    //
-    // vm.endDateOpen = function ($event) {
-    //   vm.endDateOpenStatus.opened = true;
-    // };
-    //
-    // var startDay = new Date();
-    // startDay.setDate(startDay.getDate() - 30);
-    // vm.startDay = startDay;
-    // vm.endDay = new Date();
-
 
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 1);
+    startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
-    vm.startDateDeviceData = startDate;
-    vm.endDateDeviceData = new Date();
 
+
+    vm.rentalOrder = {
+      startDate:startDate,
+      endDate:new Date()
+    }
     //date picker
     vm.startDateOpenStatusDeviceData = {
       opened: false
@@ -321,42 +288,15 @@
 
 
     vm.queryByOrder = function (page, size, sort,rentalOrder) {
-      var xAxisDate = [];
-      var realComeDate = [];
-      var incomeDate = [];
-
+      if(rentalOrder==null){
+        Notification.error("请选择开始时间或者结束时间");
+        return;
+      }
 
       vm.leftOrderListQuery  (page, size, sort, rentalOrder);
 
+      vm.rightDataQueryByOrder(rentalOrder);
 
-      var restCallURL = RENTAL_INCOME_ORDER_QUERY;
-      restCallURL += "?startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate,'yyyy-MM-dd');
-
-      if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-        restCallURL += "&customerName="+ vm.customerName; + rentalOrder.customerName;
-      }
-
-      if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
-        restCallURL += "&workplace="+ vm.workplace;
-      }
-
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.incomeData = data.content;
-        for(var i = 0;i<vm.incomeData.length;i++){
-          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
-          realComeDate.push(vm.incomeData[i].realIncome);
-          incomeDate.push(vm.incomeData[i].accountsReceivable);
-        }
-        option.xAxis[0].data = xAxisDate;
-        option.series[0].data = realComeDate;
-        option.series[1].data = incomeDate;
-        lineChart.setOption(option);
-      },function (reason) {
-        Notification.error("获取收入数据失败")
-      })
     }
 
 
@@ -407,10 +347,49 @@
       });
     };
 
-   // vm.queryByOrder(null,null,null,rentalOrder)
+    vm.rightDataQueryByOrder = function (rentalOrder) {
+      var xAxisDate = [];
+      var realComeDate = [];
+      var incomeDate = [];
+      var restCallURL = RENTAL_INCOME_ORDER_QUERY;
+
+      if (null != rentalOrder) {
+        if(rentalOrder.startDate == null||rentalOrder.endDate == null){
+          Notification.error("请选择开始时间或者结束时间");
+        }
+        restCallURL += "?startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate,'yyyy-MM-dd');
+
+        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
+          restCallURL += "&customerName="+ vm.customerName; + rentalOrder.customerName;
+        }
+
+        if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
+          restCallURL += "&workplace="+ vm.workplace;
+        }
+      }
+
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.incomeData = data.content;
+        for(var i = 0;i<vm.incomeData.length;i++){
+          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
+          realComeDate.push(vm.incomeData[i].realIncome);
+          incomeDate.push(vm.incomeData[i].accountsReceivable);
+        }
+        option.xAxis[0].data = xAxisDate;
+        option.series[0].data = realComeDate;
+        option.series[1].data = incomeDate;
+        lineChart.setOption(option);
+      },function (reason) {
+        Notification.error("获取收入数据失败")
+      })
+    }
 
 
     vm.queryByMachine = function (page, size, sort,rentalMachine) {
+
       vm.leftMachineListQuery (page, size, sort, rentalMachine)
     }
 
@@ -421,9 +400,12 @@
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-      restCallURL += "&startDate=" + $filter('date')(rentalMachine.startDate, 'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(rentalMachine.endDate,'yyyy-MM-dd');
       if (null != rentalMachine) {
+        if(rentalMachine.startDate == null||rentalMachine.endDate == null){
+          Notification.error("请选择开始时间或者结束时间");
+        }
+        restCallURL += "&startDate=" + $filter('date')(rentalMachine.startDate, 'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(rentalMachine.endDate,'yyyy-MM-dd');
         if (null != rentalMachine.machineType&&rentalMachine.machineType!="") {
           restCallURL += "&machineType=" + rentalMachine.machineType;
         }
@@ -451,9 +433,8 @@
           vm.machineList = null;
           Notification.error("获取车辆数据失败");
         });
-
-
       }
+
     }
 
 
