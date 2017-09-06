@@ -120,6 +120,14 @@
     };
 
 
+    vm.reset = function () {
+      vm.machineType = null;
+      vm.queryDeviceHeightType = null;
+      vm.queryManufacture = null;
+      vm.startDateDeviceData = null;
+      vm.endDateDeviceData = null;
+    }
+
 
     //profit
     var profitBar = echarts.init(document.getElementById('profitBar'));

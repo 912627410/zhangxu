@@ -65,7 +65,7 @@
         <div class="forminline" >
           <label >车型</label>
           <div class="forminline" style="width: 150px;">
-            <select class="form-control" ng-model="monitorCtrl.machineType">
+            <select class="form-control" ng-model="profitStatisticsCtr.machineType">
               <option value="0">剪叉</option>
               <option value="1">直臂</option>
               <option value="2">曲臂</option>
@@ -127,8 +127,8 @@
           </div>
         </div>
 
-        <button style="width: 10%" type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.queryProfit(profitStatisticsCtr.startDateDeviceData,profitStatisticsCtr.endDateDeviceData)">Search</button>
-
+        <button  type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.queryProfit(profitStatisticsCtr.startDateDeviceData,profitStatisticsCtr.endDateDeviceData)">Search</button>
+        <button  type="button" class="btn btn-sm bg-orange searchButton" ng-click="profitStatisticsCtr.reset()">reset</button>
       </div>
     </div>
     <div class="row profitPic">

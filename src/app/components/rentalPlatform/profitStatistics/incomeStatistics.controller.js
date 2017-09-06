@@ -130,11 +130,12 @@
     vm.endDateOpenDeviceData = function ($event) {
       vm.endDateOpenStatusDeviceData.opened = true;
     };
+
     vm.startDateOpenDeviceData1 = function ($event) {
-      vm.startDateOpenStatusDeviceData1.opened = true;
+      vm.startDateOpenStatusDeviceData.opened = true;
     };
     vm.endDateOpenDeviceData1 = function ($event) {
-      vm.endDateOpenStatusDeviceData1.opened = true;
+      vm.endDateOpenStatusDeviceData.opened = true;
     };
 
     vm.maxDate = new Date();

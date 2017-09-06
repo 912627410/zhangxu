@@ -62,7 +62,7 @@
             <!--</ui-select>-->
           <!--</div>-->
           <div class="forminline" style="width: 150px;">
-            <select class="form-control" ng-model="monitorCtrl.machineType">
+            <select class="form-control" ng-model="costStatisticsCtr.machineType">
               <option value="1">剪叉</option>
               <option value="2">直臂</option>
               <option value="3">曲臂</option>
@@ -126,8 +126,8 @@
           </div>
         </div>
 
-        <button style="width: 10%" type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">Search</button>
-
+        <button  type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">Search</button>
+        <button  type="button" class="btn btn-sm bg-orange searchButton" ng-click="costStatisticsCtr.reset()">reset</button>
       </div>
     </div>
 

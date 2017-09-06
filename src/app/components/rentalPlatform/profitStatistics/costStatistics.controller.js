@@ -143,7 +143,13 @@
       Notification.error('获取厂商失败');
     })
 
-
+   vm.reset = function () {
+     vm.machineType = null;
+     vm.queryDeviceHeightType = null;
+     vm.queryManufacture = null;
+     vm.startDateDeviceData = null;
+     vm.endDateDeviceData = null;
+   }
 
 
     vm.queryCost = function (page, size, sort,startDate,endDate) {

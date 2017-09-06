@@ -164,7 +164,7 @@
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="incomeStatisticsCtr.rentalMachine.startDate"
-                     is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData1.opened"
+                     is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
                      datepicker-options="incomeStatisticsCtr.dateOptions"
                      min-date="incomeStatisticsCtr.minDate"
                      max-date="incomeStatisticsCtr.maxDate"
@@ -174,7 +174,7 @@
                      clear-text="{{'cleanUp'|translate}}"
                      close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
               <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
             </div>
           </div>
@@ -185,13 +185,13 @@
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="incomeStatisticsCtr.rentalMachine.endDate"
-                     is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData1.opened"
+                     is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
                      datepicker-options="incomeStatisticsCtr.dateOptions"
                      ng-required="true" current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
                      close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
               <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
             </div>
           </div>
