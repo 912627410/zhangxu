@@ -57,14 +57,6 @@
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li>
-          <a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')" ng-init="langZH=true" ng-show="langZH">
-            <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
-          </a>
-          <a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')" ng-init="langEN=false" ng-show="langEN">
-            <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
-          </a>
-        </li>
         <li class=" " style="width: 200px;margin-right: 30px">
           <div class="search-box">
             <form class="search-form" ng-click="" href="">
@@ -81,6 +73,14 @@
         </li>
         <li class=" ">
           <a ng-click="" href="">Setting</a>
+        </li>
+        <li>
+          <a class="center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')" ng-init="langZH=false" ng-show="langZH">
+            <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;中文
+          </a>
+          <a class="center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')" ng-init="langEN=true" ng-show="langEN">
+            <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;English
+          </a>
         </li>
         <li class="user user-menu">
           <a ng-click="rentalPlatformTopbarCtr.logout()" href="">{{'logout'|translate}}</a>
