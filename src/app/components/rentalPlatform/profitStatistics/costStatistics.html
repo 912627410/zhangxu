@@ -22,26 +22,26 @@
 
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
-          <div class="info-title">车辆相关</div>
+          <div class="info-title">{{'rentalMachineCost'| translate}}</div>
           <div class="info-data">99</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
 
-          <div class="info-title">销售费用</div>
+          <div class="info-title">{{'rentalSaleCost'| translate}}</div>
           <div class="info-data">49</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
-          <div class="info-title">管理费用</div>
+          <div class="info-title">{{'rentalManagementCost'| translate}}</div>
           <div class="info-data">25</div>
         </div>
       </div>
       <div class="col-lg-23 col-md-3">
         <div class="info-card">
-          <div class="info-title">财务费用</div>
+          <div class="info-title">{{'rentalFinanceCost'| translate}}</div>
           <div class="info-data">25</div>
         </div>
       </div>
@@ -50,7 +50,7 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label >车型</label>
+          <label>{{'rentalMachineType'| translate}}</label>
           <!--<div class="forminline" style="width: 150px;">-->
             <!--<ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.machineType" theme="bootstrap"-->
                        <!--ng-disabled="disabled" >-->
@@ -63,28 +63,28 @@
           <!--</div>-->
           <div class="forminline" style="width: 150px;">
             <select class="form-control" ng-model="costStatisticsCtr.machineType">
-              <option value="1">剪叉</option>
-              <option value="2">直臂</option>
-              <option value="3">曲臂</option>
+              <option value="1">{{'rentalScissorLift'| translate}}</option>
+              <option value="2">{{'rentalBoomLift'| translate}}</option>
+              <option value="3">{{'rentalArticulatingBoomLift'| translate}}</option>
             </select>
           </div>
 
         </div>
 
         <div class="forminline" >
-          <label>高度</label>
+          <label>{{'rentalHeight'| translate}}</label>
           <select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"
                   ng-model="costStatisticsCtr.queryDeviceHeightType"
                   ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
-            <option value="">请选择...</option>
+            <option value=""></option>
           </select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">品牌</label>
+          <label class="">{{'rentalBrand'| translate}}</label>
           <select name="machineManufacture" class="form-control forminline " style="width: 150px;"
                   ng-model="costStatisticsCtr.queryManufacture"
                   ng-options="machineMF.id as machineMF.name for machineMF in costStatisticsCtr.machineMFList">
-            <option value="">请选择...</option>
+            <option value=""></option>
           </select>
         </div>
         <div class="form-inline forminline" style="width: 18%">
@@ -110,7 +110,7 @@
         </div>
         <div class="form-inline  forminline"  style="width: 18%" >
           <div class="form-group">
-            <label class="control-label text-nowrap" >{{'endDate'|translate}}:</label>
+            <label class="control-label text-nowrap" >{{'rentalEndDate'|translate}}:</label>
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="costStatisticsCtr.endDateDeviceData"
@@ -136,11 +136,11 @@
         <div class="table-responsive">
           <table ng-table="costStatisticsCtr.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="costdata in $data">
-              <td class="text-nowrap" data-title="'车号'" sortable="''">{{costdata.machineLicenseId}}</td>
-              <td class="text-nowrap" data-title="'车辆类型'" sortable="''">{{costdata.machineTypeName}}</td>
-              <td class="text-nowrap" data-title="'高度类型'" sortable="''">{{costdata.heightTypeName}}</td>
-              <td class="text-nowrap" data-title="'品牌类型'" sortable="''">{{costdata.machineManufacture}}</td>
-              <td class="text-nowrap" data-title="'车辆相关成本费用'" sortable="''">{{costdata.machineCost}}</td>
+              <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="''">{{costdata.machineLicenseId}}</td>
+              <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="''">{{costdata.machineTypeName}}</td>
+              <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="''">{{costdata.heightTypeName}}</td>
+              <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="''">{{costdata.machineManufacture}}</td>
+              <td class="text-nowrap" data-title="'rentalMachineCost'|translate" sortable="''">{{costdata.machineCost}}</td>
             </tr>
           </table>
         </div>

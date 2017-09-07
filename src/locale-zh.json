@@ -809,7 +809,26 @@
   "rentalVehicleState":" 车辆状态",
   "rentalUpdateMachine":"更新车辆信息",
   "rentalGetDataError":"获取数据失败",
-  "rentalDelete":"删除"
-
-
+  "rentalDelete":"删除",
+  "rentalTotalIncome":"总收入",
+  "rentalScissorLiftIncome":"剪叉收入",
+  "rentalBoomLiftIncome":"直臂收入",
+  "rentalArticulatingBoomLiftIncome":"曲臂收入",
+  "rentalQueryType":"查询类型",
+  "rentalByOrder":"按订单",
+  "rentalByMachine":"按车号",
+  "rentalWorkLocation":"工作地点",
+  "rentalIncomeDetailSortByOrder":"按订单收入详情",
+  "rentalIncomeDetailSortByMachine":"按车辆收入详情",
+  "rentalIncomeReceived":"实收",
+  "rentalIncomeReceivable":"应收",
+  "rentalMachineCost":"车辆相关费用",
+  "rentalSaleCost":"销售费用",
+  "rentalManagementCost":"管理费用",
+  "rentalFinanceCost":"财务费用",
+  "rentalMachineType":"车辆类型",
+  "rentalHeight":"高度",
+  "rentalNewProfit":"新增利润",
+  "rentalAccumulatedProfits":"累计利润",
+  "rentalTotalOrder":"订单"
 }
