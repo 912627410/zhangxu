@@ -242,6 +242,37 @@
     }
 
     /**
+     *  处理报警信息
+     *
+     * @param status
+     */
+    vm.processRentalNotificationDeal2=function (notification, index) {
+      //打开模态框
+      $rootScope.currentOpenModal = $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/machineMng/processAlarmInfo.html',
+        controller: 'processAlarmInfoController',
+        controllerAs: 'vm',
+        openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+        windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+        size: 'sm',
+        resolve: { //用来向controller传数据
+          notification: function () {
+            return notification;
+          }
+        }
+      });
+
+      $rootScope.currentOpenModal.result.then(function (newVal) {
+        //数据
+      }, function () {
+        //取消
+      });
+
+    }
+
+    /**
      * miniMap
      */
     var miniMap = document.getElementsByClassName('miniChart'),

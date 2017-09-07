@@ -33,9 +33,9 @@
           <label class="col-sm-4 control-label padding5">{{'vehicleType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" >
-              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
               <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="machineType.name | highlight: $select.search"></div>
+                <div ng-bind-html="machineType.name | highlight: $select.search | translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -47,11 +47,11 @@
             <ui-select id="engineType" name="engineType" ng-model="vm.machine.engineTypeId"
                        theme="bootstrap"
                        ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="{{'engineType'|translate}}">{{$select.selected.engineName}}
+              <ui-select-match allow-clear="true" placeholder="{{'engineType'|translate}}">{{$select.selected.engineName|translate}}
               </ui-select-match>
               <ui-select-choices
                 repeat="engineType.id as engineType in vm.engineTypeList | propsFilter: {engineName: $select.search}">
-                <div ng-bind-html="engineType.engineName | highlight: $select.search"></div>
+                <div ng-bind-html="engineType.engineName | highlight: $select.search | translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -61,9 +61,9 @@
           <label class="col-sm-4 control-label padding5">{{'rentalVehicleState'|translate}}</label>
           <div class="col-sm-8">
             <ui-select id="machineState" name="machineState" ng-model="vm.machine.status">
-              <ui-select-match allow-clear="true" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState|translate}}</ui-select-match>
               <ui-select-choices repeat="machineState.code as machineState in vm.machineStateList | propsFilter: {machineState: $select.search}">
-                <div ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+                <div ng-bind-html="machineState.machineState | highlight: $select.search | translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -73,9 +73,9 @@
           <label class="col-sm-4 control-label padding5">{{'brandType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.manufacture " ng-disabled="disabled" >
-              <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
               <ui-select-choices repeat="manufacture.id as manufacture in vm.machineManufacture | propsFilter: {name: $select.search}">
-                <div ng-bind-html="manufacture.name | highlight: $select.search"></div>
+                <div ng-bind-html="manufacture.name | highlight: $select.search | translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>

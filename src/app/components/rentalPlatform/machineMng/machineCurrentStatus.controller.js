@@ -226,12 +226,27 @@
              }
            }
          });
+         $rootScope.currentOpenModal.result.then(function (result) {
+           var tabList=vm.customConfigParams.data;
+           //更新内容
+           for(var i=0;i<tabList.length;i++){
+             if(tabList[i].machineLicenseId==result.machineLicenseId){
+               tabList[i]=result;
+             }
+           }
+         }, function () {
+           //取消
+         });
+
        },function (reason) {
          Notification.error(languages.findKey('failedToGetDeviceInformation'));
        })
      };
 
-     vm.addMachine=function () {
+    /**
+     * 添加车辆
+     */
+    vm.addMachine=function () {
        $rootScope.currentOpenModal = $uibModal.open({
          animation: true,
          backdrop: false,
@@ -245,6 +260,7 @@
        });
        $rootScope.currentOpenModal.result.then(function (newVal) {
          vm.machineCount += 1;
+         vm.customConfigParams.data.splice(0, 0, newVal);
        }, function () {
          //取消
        });

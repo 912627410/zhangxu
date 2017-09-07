@@ -755,7 +755,7 @@
   "rentalOrderNumber":"订单号",
   "rentalNewMachine":"添加车辆",
   "rentalBrand":"品牌",
-  "rentalTotalWorkingHours":"总工作消息",
+  "rentalTotalWorkingHours":"总工作小时",
   "rentalTimeofLastDataTransmitted":"最近数据上传时间",
   "rentalManagement":"管理",
   "rentalMsgContent":"消息内容",
@@ -830,5 +830,37 @@
   "rentalHeight":"高度",
   "rentalNewProfit":"新增利润",
   "rentalAccumulatedProfits":"累计利润",
-  "rentalTotalOrder":"订单"
+  "rentalTotalOrder":"订单",
+
+
+
+  "越野剪叉式":"越野剪叉式",
+  "自行走剪叉式":"自行走剪叉式",
+  "直臂式":"直臂式",
+  "捷尔杰":"捷尔杰",
+  "欧历胜":"欧历胜",
+  "Skyjack":"Skyjack",
+  "鼎力":"鼎力",
+  "吉尼":"吉尼",
+  "星邦":"星邦",
+  "潍柴":"潍柴",
+  "大柴":"大柴",
+  "洋马":"洋马",
+  "玉柴":"玉柴",
+  "测试":"测试",
+  "在库":"在库",
+  "待售":"待售",
+  "已售":"已售",
+  "维修":"维修",
+  "待租":"待租",
+  "出租":"出租",
+  "报停":"报停",
+  "主机厂-运输":"主机厂-运输",
+  "租赁商-运输":"租赁商-运输"
+
+
+
+
+
+>>>>>>> 国际化和bug fix
 }

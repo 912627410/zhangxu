@@ -9,7 +9,7 @@
     .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL) {
+  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,languages,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -31,9 +31,10 @@
     vm.updateMachine=function () {
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
-        $uibModalInstance.close(vm.machine);
+        console.log(data)
+        $uibModalInstance.close(data.content);
       }, function (reason) {
-        console.log(reason)
+        Notification.error(languages.findKey('rentalGetDataError'));
       })
     };
 
@@ -47,6 +48,11 @@
       var engineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
       engineTypeData.then(function (data) {
         vm.machineTypeList = data.content;
+
+        angular.forEach(vm.machineTypeList ,function (data,index,array) {
+          vm.machineTypeList[index].name=languages.findKey(data.name);
+        })
+
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })

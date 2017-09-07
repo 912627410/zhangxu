@@ -74,9 +74,9 @@
         <div class="tab-content-search-box">
           <label style="display: block;margin-top: 8px;margin-bottom: 0;float: left">{{'type'|translate}}:</label>
           <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;">
-            <ui-select-match allow-clear="true" style="width: 200px" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-match allow-clear="true" style="width: 200px" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
             <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
-              <div ng-bind-html="machineType.name | highlight: $select.search"></div>
+              <div ng-bind-html="machineType.name | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -95,10 +95,10 @@
           <div class="table-responsive "><!--表格框-->
             <table ng-table="machineCurrentStatusCtr.customConfigParams" class="table">
               <tr ng-repeat="row in $data">
-                <td data-title="'rentalDeviceID'|translate" sortable="'rentalDeviceID'|translate">{{row.deviceNum}}</td>
                 <td data-title="'rentalMachineID'|translate" sortable="'rentalMachineID'|translate">{{row.machineLicenseId}}</td>
-                <td data-title="'type'|translate" sortable="'type'|translate">{{row.deviceType}}</td>
-                <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.manufacture}}</td>
+                <td data-title="'rentalDeviceID'|translate" sortable="'rentalDeviceID'|translate">{{row.deviceNum}}</td>
+                <td data-title="'type'|translate" sortable="'type'|translate">{{row.deviceType |translate}}</td>
+                <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.manufacture|translate}}</td>
                 <td data-title="'rentalCurrentLocate'|translate" sortable="'rentalCurrentLocate'|translate">{{row.currentAddress}}</td>
                 <td data-title="'rentalTotalWorkingHours'|translate" sortable="'rentalTotalWorkingHours'|translate">{{row.totalDurationConverter | convertToMins}}</td>
                 <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'rentalTimeofLastDataTransmitted'|translate">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>

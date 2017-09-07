@@ -9,7 +9,7 @@
     .controller('machineAddController', machineAddController);
 
   /** @ngInject */
-  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_MF) {
+  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource,languages, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_MF) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
@@ -308,8 +308,8 @@
     vm.addMachine = function () {
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "ADD", vm.machine);
       machinePromis.then(function (data) {
-        console.log(vm.machine);
-        $uibModalInstance.close(vm.machine);
+        console.log(data);
+        $uibModalInstance.close(data.content);
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })

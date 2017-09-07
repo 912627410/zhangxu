@@ -172,6 +172,7 @@
                   <th>{{'content'|translate}}</th>
                   <th>{{'generateTime'|translate}}</th>
                   <th>{{'state'|translate}}</th>
+                  <th>{{'operation'|translate}}</th>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
                     <td><input type="checkbox" ng-model="notification.checked"></td>
                     <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
@@ -179,13 +180,15 @@
                     <td class="mailbox-subject">{{notification.content}}</td>
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
-                      <!--<button type="button" class="btn btn-primary btn-xs" ng-click="machineAlarmInfoCtr.processRentalNotificationRead(notification.readStatus)">标记已读</button>-->
-                      <button type="button" class="btn btn-warning btn-xs" ng-if="notification.processStatus == false" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
+                      <button type="button" class="btn btn-warning btn-xs" ng-if="notification.processStatus == false" >
                         <span>{{'undo'|translate}}</span>
                       </button>
-                      <button type="button" class="btn btn-success btn-xs" ng-if="notification.processStatus == true" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal(notification,$index)">
+                      <button type="button" class="btn btn-success btn-xs" ng-if="notification.processStatus == true" >
                         <span>{{'done'|translate}}</span>
                       </button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">操作</button>
                     </td>
                   </tr>
                   </tbody>
