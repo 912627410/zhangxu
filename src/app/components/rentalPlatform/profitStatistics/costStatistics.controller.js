@@ -129,50 +129,42 @@
       if(startDate==null||endDate==null){
         Notification.error("请选择开始时间或者结束时间");
       }
-      var restCallURL = RENTAL_COST_PAGED_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
-      var sortUrl = sort || 'id';
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      restCallURL += "&startDate=" + $filter('date')(startDate,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
+      if(null!=startDate&&null!=endDate){
+        var restCallURL = RENTAL_COST_PAGED_URL;
+        var pageUrl = page || 0;
+        var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+        var sortUrl = sort || 'id';
+        restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+        restCallURL += "&startDate=" + $filter('date')(startDate,'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
 
 
-      // if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-      //   restCallURL += "&search_EQ_deviceHeightType.id=" +$filter('uppercase')(vm.queryDeviceHeightType);
-      // }
-      // if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-      //   restCallURL += "&search_EQ_deviceManufacture.id=" +$filter('uppercase')(vm.queryManufacture);
-      // }
-      // if (null != vm.machineType&&vm.machineType != ""){
-      //   restCallURL += "&search_EQ_machineTypeEntity.id=" + $filter('uppercase')(vm.machineType);
-      // }
+        if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
+        }
+        if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+          restCallURL += "&machineManufacture=" +vm.queryManufacture;
+        }
+        if (null != vm.machineType&&vm.machineType != ""){
+          restCallURL += "&machineType=" + vm.machineType;
+        }
 
 
-      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-        restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          vm.tableParams = new NgTableParams({
+            // initial sort order
+            // sorting: { name: "desc" }
+          }, {
+            dataset: data.content
+          });
+          vm.page = data.page;
+          vm.pageNumber = data.page.number + 1;
+        },function (reason) {
+          Notification.error("获取成本数据失败")
+        })
       }
-      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-        restCallURL += "&machineManufacture=" +vm.queryManufacture;
-      }
-      if (null != vm.machineType&&vm.machineType != ""){
-        restCallURL += "&machineType=" + vm.machineType;
-      }
 
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.tableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
-        }, {
-          dataset: data.content
-        });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
-      },function (reason) {
-        Notification.error("获取成本数据失败")
-      })
     }
 
     //默认查询最近一个月

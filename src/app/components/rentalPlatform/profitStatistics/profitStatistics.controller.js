@@ -222,44 +222,49 @@
 
 
     vm.queryProfit = function (queryStartData,queryEndData) {
-
-      var xAxisDate = [];
-      var jcProfitDate = [];
-      var zbProfitDate = [];
-      var qbProfitDate = [];
-
-      var restCallURL = RENTAL_PROFIT_URL;
-      restCallURL += "?startDate=" + $filter('date')(queryStartData,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
-
-      if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-        restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
+      if(queryStartData==null||queryEndData==null){
+        Notification.error("请选择开始时间或者结束时间");
       }
-      if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-        restCallURL += "&machineManufacture=" +vm.queryManufacture;
-      }
-      if (null != vm.machineType&&vm.machineType != ""){
-        restCallURL += "&machineType=" + vm.machineType;
-      }
+      if(null!=queryStartData&&null!=queryEndData){
+        var xAxisDate = [];
+        var jcProfitDate = [];
+        var zbProfitDate = [];
+        var qbProfitDate = [];
 
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.profitData = data.content;
-        for(var i = 0;i<vm.profitData.length;i++){
-          xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
-          jcProfitDate.push(vm.profitData[i].jcProfit);
-          zbProfitDate.push(vm.profitData[i].zbProfit);
-          qbProfitDate.push(vm.profitData[i].qbProfit);
+        var restCallURL = RENTAL_PROFIT_URL;
+        restCallURL += "?startDate=" + $filter('date')(queryStartData,'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
+
+        if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
+          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
         }
-        console.log(profitBarOption.xAxis[0])
-        profitBarOption.xAxis.data = xAxisDate;
-        profitBarOption.series[0].data = jcProfitDate;
-        profitBarOption.series[1].data = zbProfitDate;
-        profitBarOption.series[2].data = qbProfitDate;
-        profitBar.setOption(profitBarOption);
-      },function (reason) {
-        Notification.error("获取利润数据失败")
-      })
+        if (null != vm.queryManufacture&&vm.queryManufacture!="") {
+          restCallURL += "&machineManufacture=" +vm.queryManufacture;
+        }
+        if (null != vm.machineType&&vm.machineType != ""){
+          restCallURL += "&machineType=" + vm.machineType;
+        }
+
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          vm.profitData = data.content;
+          for(var i = 0;i<vm.profitData.length;i++){
+            xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
+            jcProfitDate.push(vm.profitData[i].jcProfit);
+            zbProfitDate.push(vm.profitData[i].zbProfit);
+            qbProfitDate.push(vm.profitData[i].qbProfit);
+          }
+          console.log(profitBarOption.xAxis[0])
+          profitBarOption.xAxis.data = xAxisDate;
+          profitBarOption.series[0].data = jcProfitDate;
+          profitBarOption.series[1].data = zbProfitDate;
+          profitBarOption.series[2].data = qbProfitDate;
+          profitBar.setOption(profitBarOption);
+        },function (reason) {
+          Notification.error("获取利润数据失败")
+        })
+      }
+
     }
 
 }

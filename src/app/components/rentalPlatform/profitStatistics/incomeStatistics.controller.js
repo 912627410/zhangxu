@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,MACHINE_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -241,65 +241,18 @@
 
     vm.incomeStatisticInfo = incomeStatisticInfo;
 
-    //income query
-    vm.query = function (queryIncome,startDate,endDate) {
 
-      var xAxisDate = [];
-      var realComeDate = [];
-      var incomeDate = [];
-
-
-      var restCallURL = RENTAL_INCOME_URL;
-      restCallURL += "?startDate=" + $filter('date')(startDate,'yyyy-MM-dd');
-      restCallURL += "&endDate=" + $filter('date')(endDate,'yyyy-MM-dd');
-      if(null!=queryIncome){
-        if(null!=queryIncome.machineTypeId&&queryIncome.machineTypeId !=""&&queryIncome.machineTypeId!=undefined){
-          restCallURL += "&machineType="+ queryIncome.machineTypeId;
-        }
-        if(null!=queryIncome.heightTypeId&&queryIncome.heightTypeId!=""){
-          restCallURL += "&heightTypeId="+ queryIncome.heightTypeId;
-        }
-        if(null!=queryIncome.machineManufacture&&queryIncome.machineManufacture!=""){
-          restCallURL += "&machineManufacture="+ queryIncome.machineManufacture;
-        }
-      }
-
-
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.incomeData = data.content;
-        for(var i = 0;i<vm.incomeData.length;i++){
-          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
-          realComeDate.push(vm.incomeData[i].realIncome);
-          incomeDate.push(vm.incomeData[i].accountsReceivable);
-        }
-        option.xAxis[0].data = xAxisDate;
-        option.series[0].data = realComeDate;
-        option.series[1].data = incomeDate;
-        lineChart.setOption(option);
-      },function (reason) {
-        Notification.error("获取收入数据失败")
-      })
-    }
-    //默认查询最近一个月
-    // vm.query(null,vm.startDate,vm.endDate);
-
-
-
+   //根据订单参数进行收入统计
     vm.queryByOrder = function (page, size, sort,rentalOrder) {
       if(rentalOrder==null){
         Notification.error("请选择开始时间或者结束时间");
         return;
       }
-
       vm.leftOrderListQuery  (page, size, sort, rentalOrder);
-
       vm.rightDataQueryByOrder(rentalOrder);
-
     }
 
-
+    //左侧订单表格
     vm.leftOrderListQuery = function (page, size, sort, rentalOrder) {
 
       var restCallURL = RENTAL_ORDER_PAGE_URL;
@@ -323,7 +276,7 @@
         }
 
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
-          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DLTE_startDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
 
       }
@@ -346,7 +299,7 @@
         Notification.error("获取车辆数据失败");
       });
     };
-
+    //右侧根据订单统计的收入数据
     vm.rightDataQueryByOrder = function (rentalOrder) {
       var xAxisDate = [];
       var realComeDate = [];
@@ -354,9 +307,6 @@
       var restCallURL = RENTAL_INCOME_ORDER_QUERY;
 
       if (null != rentalOrder) {
-        if(rentalOrder.startDate == null||rentalOrder.endDate == null){
-          Notification.error("请选择开始时间或者结束时间");
-        }
         restCallURL += "?startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate,'yyyy-MM-dd');
 
@@ -383,17 +333,24 @@
         option.series[1].data = incomeDate;
         lineChart.setOption(option);
       },function (reason) {
-        Notification.error("获取收入数据失败")
+        Notification.error("按订单参数查询获取收入数据失败")
       })
     }
 
 
+    //根据车辆参数进行收入统计
     vm.queryByMachine = function (page, size, sort,rentalMachine) {
+      if(rentalMachine==null){
+        Notification.error("请选择开始时间或者结束时间");
+        return;
+      }
+      vm.leftMachineListQuery (page, size, sort, rentalMachine);
+      vm.rightDataQueryByMachine(rentalMachine);
 
-      vm.leftMachineListQuery (page, size, sort, rentalMachine)
     }
-
+    //左侧车辆表格
     vm.leftMachineListQuery = function (page, size, sort, rentalMachine) {
+
       var restCallURL = RENTAL_MACHINEINCOME_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
@@ -401,9 +358,7 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != rentalMachine) {
-        if(rentalMachine.startDate == null||rentalMachine.endDate == null){
-          Notification.error("请选择开始时间或者结束时间");
-        }
+
         restCallURL += "&startDate=" + $filter('date')(rentalMachine.startDate, 'yyyy-MM-dd');
         restCallURL += "&endDate=" + $filter('date')(rentalMachine.endDate,'yyyy-MM-dd');
         if (null != rentalMachine.machineType&&rentalMachine.machineType!="") {
@@ -435,6 +390,47 @@
         });
       }
 
+    }
+    //右侧根据车辆统计的收入数据
+    vm.rightDataQueryByMachine = function (rentalMachine) {
+      var xAxisDate = [];
+      var realComeDate = [];
+      var incomeDate = [];
+      var restCallURL = RENTAL_INCOME_MACHINE_QUERY;
+
+      if (null != rentalMachine) {
+
+        restCallURL += "?startDate=" + $filter('date')(rentalMachine.startDate, 'yyyy-MM-dd');
+        restCallURL += "&endDate=" + $filter('date')(rentalMachine.endDate,'yyyy-MM-dd');
+
+        if (null != rentalMachine.machineType&&rentalMachine.machineType!="") {
+          restCallURL += "&machineType=" +rentalMachine.machineType;
+        }
+
+        if (null != rentalMachine.heightTypeId&&rentalMachine.heightTypeId!="") {
+          restCallURL += "&heightTypeId=" +rentalMachine.heightTypeId;
+        }
+
+        if (null != rentalMachine.machineManufacture&&rentalMachine.machineManufacture!="") {
+          restCallURL += "&machineManufacture=" +rentalMachine.machineManufacture;
+        }
+      }
+
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+        vm.incomeData = data.content;
+        for(var i = 0;i<vm.incomeData.length;i++){
+          xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
+          realComeDate.push(vm.incomeData[i].realIncome);
+          incomeDate.push(vm.incomeData[i].accountsReceivable);
+        }
+        option.xAxis[0].data = xAxisDate;
+        option.series[0].data = realComeDate;
+        option.series[1].data = incomeDate;
+        lineChart.setOption(option);
+      },function (reason) {
+        Notification.error("按车辆参数查询获取收入数据失败")
+      })
     }
 
 
