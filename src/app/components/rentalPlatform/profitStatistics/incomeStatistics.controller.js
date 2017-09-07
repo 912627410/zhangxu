@@ -71,13 +71,11 @@
 
 
 
-
+    //开始时间,结束时间
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
     vm.endDate = new Date();
-
-
 
     vm.rentalOrder = {
       startDate:startDate,
@@ -112,7 +110,7 @@
     };
 
 
-
+    //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
@@ -122,8 +120,7 @@
     })
 
 
-
-
+    //查询厂商List
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
@@ -133,27 +130,28 @@
     })
 
 
+    //切换查询类型
     vm.orderQuery = true;
     vm.machineQuery = false;
-   vm.change = function (queryType) {
-     if(queryType==1){
-       vm.orderQuery = true;
-       vm.machineQuery = false;
-     }
-     if(queryType==2){
-       vm.orderQuery = false;
-       vm.machineQuery = true;
-     }
-   }
+    vm.change = function (queryType) {
+       if(queryType==1){
+         vm.orderQuery = true;
+         vm.machineQuery = false;
+       }
+       if(queryType==2){
+         vm.orderQuery = false;
+         vm.machineQuery = true;
+       }
+    }
 
-
+   //重置搜索框
    vm.reset = function () {
      vm.rentalOrder= null;
      vm.rentalMachine = null;
    }
 
 
-    //income line
+    //收入统计右侧折线图
     var lineChart = echarts.init(document.getElementById('incomeLine'), '', {
       width: 'auto',
       height: vm.baseBoxContainerHeight - 20 + 'px'
@@ -163,13 +161,7 @@
         text: '收入统计'
       },
       tooltip : {
-        trigger: 'axis',
-        // axisPointer: {
-        //   type: 'cross',
-        //   label: {
-        //     backgroundColor: '#6a7985'
-        //   }
-        // }
+        trigger: 'axis'
       },
       legend: {
         data:['实收','应收']
@@ -215,33 +207,6 @@
     lineChart.setOption(option);
 
 
-
-
-    var incomeStatisticInfo = {
-      totalMachines: 0,
-      totalOrders: 0,
-    };
-    //上方车辆和订单总数
-    var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
-    rspdata.then(function (data) {
-
-      var MachineStatisticsList = data.machineStatistics;
-      MachineStatisticsList.forEach(function (machineStatistics) {
-        incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
-      })
-
-      var RentalOrderStatisticsList = data.rentalOrderStatistics;
-      RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
-        incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
-      })
-
-    }, function (reason) {
-      Notification.error('获取收入统计信息失败');
-    })
-
-    vm.incomeStatisticInfo = incomeStatisticInfo;
-
-
    //根据订单参数进行收入统计
     vm.queryByOrder = function (page, size, sort,rentalOrder) {
       if(rentalOrder==null){
@@ -278,19 +243,14 @@
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
           restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
-
+        //订单状态为结束的订单
         restCallURL += "&search_EQ_status=" + '3';
-
       }
-
-
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-
         vm.orderIncometableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
+
         }, {
           dataset: data.content
         });
@@ -320,7 +280,6 @@
           restCallURL += "&workplace="+ vm.workplace;
         }
       }
-
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -435,7 +394,7 @@
       })
     }
 
-
+    //上方四个曲线图
     var miniChart = document.getElementsByClassName('miniChart'),
       miniChart1 = echarts.init(miniChart[0]),
       miniChart2 = echarts.init(miniChart[1]),

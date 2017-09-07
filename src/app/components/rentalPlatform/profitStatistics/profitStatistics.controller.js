@@ -60,7 +60,6 @@
       profitBar.resize();
     }
 
-
     /**
      * 去到某个喵点
      * @param 喵点id
@@ -71,7 +70,7 @@
     }
 
 
-
+    //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
@@ -80,7 +79,7 @@
       Notification.error('获取高度类型失败');
     })
 
-
+   //查询厂商List
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
@@ -119,7 +118,7 @@
       startingDay: 1
     };
 
-
+    //重置搜索框
     vm.reset = function () {
       vm.machineType = null;
       vm.queryDeviceHeightType = null;
@@ -217,8 +216,7 @@
     }, function (reason) {
       Notification.error('获取收入统计信息失败');
     })
-
-  vm.incomeStatisticInfo = incomeStatisticInfo;
+    vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
     vm.queryProfit = function (queryStartData,queryEndData) {

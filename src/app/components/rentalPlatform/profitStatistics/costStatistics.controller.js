@@ -54,8 +54,6 @@
     })
 
 
-
-
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
@@ -68,6 +66,8 @@
       $location.hash(x);
       $anchorScroll();
     }
+
+    //开始时间,结束时间
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
@@ -98,7 +98,7 @@
     };
 
 
-
+    //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
@@ -107,7 +107,7 @@
       Notification.error('获取高度类型失败');
     })
 
-
+    //查询厂商List
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
@@ -116,6 +116,7 @@
       Notification.error('获取厂商失败');
     })
 
+    //重置搜索框
    vm.reset = function () {
      vm.machineType = null;
      vm.queryDeviceHeightType = null;
