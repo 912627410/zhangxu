@@ -135,7 +135,7 @@
             <select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">
               <option value="1">{{'rentalScissorLift'|translate}}</option>
               <option value="2">{{'rentalBoomLift'|translate}}</option>
-              <option value="3">{{'rentalAriculatingBoomLift'|translate}}</option>
+              <option value="3">{{'rentalArticulatingBoomLift'|translate}}</option>
             </select>
           </div>
         </div>
@@ -208,8 +208,6 @@
                 <tr ng-repeat="rentalOrder in $data">
                   <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
                   <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
-                  <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
-
                   <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
                   <td class="text-nowrap" data-title="'rentalWorkLocation'|translate" sortable="'statusDesc'">{{rentalOrder.location }}</td>
                   <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'statusDesc'">{{rentalOrder.deposit }}</td>
@@ -236,9 +234,9 @@
                   <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="'startDate'">{{rentalMachine.manufacture}}</td>
 
                   <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="'rentalCustomer.name'">{{rentalMachine.heightType }}</td>
-                  <td class="text-nowrap" data-title="rentalMachieType" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
-                  <td class="text-nowrap" data-title="rentalIncomeReceived" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
-                  <td class="text-nowrap" data-title="rentalIncomeReceivable" sortable="'statusDesc'">{{rentalMachine.accountsReceivable }}</td>
+                  <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceivable'|translate" sortable="'statusDesc'">{{rentalMachine.totalAmt*rentalMachine.workDays/rentalMachine.totalDays}}</td>
                 </tr>
               </table>
             </div>

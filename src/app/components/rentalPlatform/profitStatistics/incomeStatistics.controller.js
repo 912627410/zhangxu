@@ -268,7 +268,7 @@
         }
 
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
-          restCallURL += "&search_LIKE_workplace=" + rentalOrder.workplace;
+          restCallURL += "&search_LIKE_location=" + rentalOrder.workplace;
         }
 
         if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
@@ -278,6 +278,8 @@
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
           restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
+
+        restCallURL += "&search_EQ_status=" + '3';
 
       }
 
