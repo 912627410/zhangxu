@@ -23,7 +23,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="incomeStatisticsCtr.queryAlarmMsg(1)" style="cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">总收入</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalTotalIncome'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" >111</span>
           </div>
           <div class="miniChart"></div>
@@ -32,7 +32,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="incomeStatisticsCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">剪叉收入</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalScissorLiftIncome'|translate}}</span>
             <span class="info-box-number info-box-left-text-below">12</span>
           </div>
           <div class="miniChart"></div>
@@ -41,7 +41,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="incomeStatisticsCtr.queryAlarmMsg(2)"  style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">直臂收入</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalBoomLiftIncome'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" >33</span>
           </div>
           <div class="miniChart"></div>
@@ -50,7 +50,7 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
           <div class="info-box-left-text" ng-click="incomeStatisticsCtr.queryAlarmMsg(3)"  style=" cursor:pointer;">
-            <span class="info-box-text info-box-left-text-top">曲臂收入</span>
+            <span class="info-box-text info-box-left-text-top">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" >44</span>
           </div>
           <div class="miniChart"></div>
@@ -60,31 +60,31 @@
 
     <div class="info-box-container searchLine row">
       <div  class=" col-md-2">
-        <label class="control-label">查询维度:</label>
+        <label class="control-label">{{'rentalQueryType'|translate}}</label>
         <select class="form-control" style="width: 125px;display: inline-block;" ng-change="incomeStatisticsCtr.change(incomeStatisticsCtr.queryType)" ng-model="incomeStatisticsCtr.queryType">
-          <option value="1" ng-selected="true">按订单</option>
-          <option value="2">按车辆</option>
+          <option value="1" ng-selected="true">{{'rentalByOrder'|translate}}</option>
+          <option value="2">{{'rentalByMachine'|translate}}</option>
         </select>
       </div>
       <div class="col-md-10" ng-show="incomeStatisticsCtr.orderQuery" >
         <div class="forminline" >
-          <label >工作地点</label>
+          <label>{{'rentalWorkLocation'|translate}}</label>
           <div class="forminline" style="width: 150px;">
-            <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="工作地点" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
+            <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
           </div>
         </div>
 
         <div class="forminline" >
-          <label >客户名字</label>
+          <label>{{'rentalCustomerName'|translate}}</label>
           <div class="forminline" style="width: 150px;">
             <input type="text" name="customerName" class="form-control"  ng-model="incomeStatisticsCtr.rentalOrder.customerName"
-                   placeholder="客户名字"/>
+                   placeholder="{{'rentalCustomerName'|translate}}"/>
           </div>
         </div>
 
         <div class="form-inline forminline" style="width: 18%;vertical-align: top;">
           <div class="form-group">
-            <label class="control-label text-nowrap" >{{'startDate'|translate}}:</label>
+            <label class="control-label text-nowrap" >{{'rentalStartingDate'|translate}}:</label>
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="incomeStatisticsCtr.rentalOrder.startDate"
@@ -108,7 +108,7 @@
 
         <div class="form-inline  forminline"  style="width: 18%;vertical-align: top;" >
           <div class="form-group">
-            <label class="control-label text-nowrap" >{{'endDate'|translate}}:</label>
+            <label class="control-label text-nowrap" >{{'rentalEndDate'|translate}}:</label>
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="incomeStatisticsCtr.rentalOrder.endDate"
@@ -133,26 +133,26 @@
           <label >车型</label>
           <div class="forminline" style="width: 150px;">
             <select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">
-              <option value="1">剪叉</option>
-              <option value="2">直臂</option>
-              <option value="3">曲臂</option>
+              <option value="1">{{'rentalScissorLift'|translate}}</option>
+              <option value="2">{{'rentalBoomLift'|translate}}</option>
+              <option value="3">{{'rentalAriculatingBoomLift'|translate}}</option>
             </select>
           </div>
         </div>
 
         <div class="forminline" >
-          <label>高度</label>
+          <label>{{'rentalHeight'|translate}}</label>
           <select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"
                   ng-model="incomeStatisticsCtr.rentalMachine.heightTypeId"
                   ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
-            <option value="">请选择...</option>
+            <option value=""></option>
           </select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">品牌</label>
+          <label class="">{{'rentalBrand'|translate}}</label>
           <select name="machineManufacture" class="form-control forminline " style="width: 150px;" ng-model="incomeStatisticsCtr.rentalMachine.machineManufacture"
                   ng-options="machineMF.id as machineMF.name for machineMF in incomeStatisticsCtr.machineMFList">
-            <option value="">请选择...</option>
+            <option value=""></option>
           </select>
         </div>
         <div class="form-inline forminline" style="width: 18%;vertical-align: top;">
@@ -203,17 +203,17 @@
         <div class="liBox" >
           <div class="row" ng-show="incomeStatisticsCtr.orderQuery">
             <div class="col-lg-12 table-responsive "><!--表格框-->
-              <p>订单维度收入详情</p>
+              <p>{{'rentalIncomeDetailSortByOrder'|translate}}</p>
               <table ng-table="incomeStatisticsCtr.orderIncometableParams" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="rentalOrder in $data">
-                  <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
+                  <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
                   <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
-                  <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
+                  <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
 
-                  <td class="text-nowrap" data-title="'客户'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
-                  <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
-                  <td class="text-nowrap" data-title="'实收'" sortable="'statusDesc'">{{rentalOrder.deposit }}</td>
-                  <td class="text-nowrap" data-title="'应收'" sortable="'statusDesc'">{{rentalOrder.totalAmt }}</td>
+                  <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
+                  <td class="text-nowrap" data-title="'rentalWorkLocation'|translate" sortable="'statusDesc'">{{rentalOrder.location }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'statusDesc'">{{rentalOrder.deposit }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceivable'|translate" sortable="'statusDesc'">{{rentalOrder.totalAmt }}</td>
                 </tr>
               </table>
             </div>
@@ -228,17 +228,17 @@
           </div>
           <div class="row" ng-show="incomeStatisticsCtr.machineQuery">
             <div class="col-lg-12 table-responsive "><!--表格框-->
-              <p>车辆维度收入详情</p>
+              <p>{{'rentalIncomeDetailSortByMachine'|translate}}</p>
               <table ng-table="incomeStatisticsCtr.machineIncometableParams" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="rentalMachine in $data">
-                  <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalMachine.orderEndData | date:'yyyy-MM-dd'}}</td>
-                  <td class="text-nowrap" data-title="'车号'" sortable="'id'">{{rentalMachine.licenseId}}</td>
-                  <td class="text-nowrap" data-title="'品牌'" sortable="'startDate'">{{rentalMachine.manufacture}}</td>
+                  <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalMachine.orderEndData | date:'yyyy-MM-dd'}}</td>
+                  <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="'id'">{{rentalMachine.licenseId}}</td>
+                  <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="'startDate'">{{rentalMachine.manufacture}}</td>
 
-                  <td class="text-nowrap" data-title="'高度'" sortable="'rentalCustomer.name'">{{rentalMachine.heightType }}</td>
-                  <td class="text-nowrap" data-title="'车型'" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
-                  <td class="text-nowrap" data-title="'实收'" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
-                  <td class="text-nowrap" data-title="'应收'" sortable="'statusDesc'">{{rentalMachine.accountsReceivable }}</td>
+                  <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="'rentalCustomer.name'">{{rentalMachine.heightType }}</td>
+                  <td class="text-nowrap" data-title="rentalMachieType" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
+                  <td class="text-nowrap" data-title="rentalIncomeReceived" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
+                  <td class="text-nowrap" data-title="rentalIncomeReceivable" sortable="'statusDesc'">{{rentalMachine.accountsReceivable }}</td>
                 </tr>
               </table>
             </div>
