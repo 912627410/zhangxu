@@ -68,10 +68,6 @@
           <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}:" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum" />
         </div>
         <div class="tab-content-search-box">
-          <label>{{'rentalOrderNumber'|translate}}:</label>
-          <input class="input-search" name="orderNum" id="orderNum" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.orderNum" />
-        </div>
-        <div class="tab-content-search-box">
           <label style="display: block;margin-top: 8px;margin-bottom: 0;float: left">{{'type'|translate}}:</label>
           <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;">
             <ui-select-match allow-clear="true" style="width: 200px" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
