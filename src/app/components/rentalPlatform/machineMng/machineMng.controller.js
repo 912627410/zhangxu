@@ -9,7 +9,7 @@
     .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW) {
+  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -41,19 +41,15 @@
     var circle=null;
 
     /**
-     * 查询当前用户拥有的车辆类型明细
+     * 得到机器类型集合
      */
-    vm.getMachineType = function(){
-      var restCallURL = USER_MACHINE_TYPE_URL;
-      if(vm.operatorInfo){
-        restCallURL += "?orgId="+ vm.operatorInfo.userdto.organizationDto.id;
-      }
-      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
-      rspData.then(function (data) {
-        vm.machineTypeList = data;
+    vm.getDeviceType = function () {
+      var engineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+      engineTypeData.then(function (data) {
+        vm.machineTypeList = data.content;
       }, function (reason) {
-        Notification.error("获取车辆类型数据失败");
-      });
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
     };
 
     /**
@@ -80,10 +76,22 @@
       })
     };
 
-    vm.getMachineType();
+    /**
+     * 车辆品牌
+     */
+    vm.getDeviceManufacture=function () {
+      var deviceManufacturePromise=rentalService.getDeviceManufactureList();
+      deviceManufacturePromise.then(function (data) {
+        vm.machineManufacture = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
+    }
+
+    vm.getDeviceType();
     vm.getMachineStatus();
     vm.getMachinePowerType();
-
+    vm.getDeviceManufacture();
 
     /**
      * 在地图上画圆

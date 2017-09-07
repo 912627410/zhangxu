@@ -129,7 +129,7 @@
 
 
     /**
-     * 得到设备类型集合
+     * 得到机器类型集合
      */
     vm.getDeviceType = function () {
       var engineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");

@@ -32,9 +32,9 @@
           <label class="col-sm-4 control-label padding5">{{'vehicleType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.typeName}}</ui-select-match>
-              <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {typeName: $select.search}">
-                <div ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="machineType.name | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -67,8 +67,12 @@
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">{{'brandType'|translate}}</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'brandType'|translate}}" ng-model="vm.machine.brand"  validator="required"
-                   typeahead-show-hint="false">
+            <ui-select  ng-model="vm.machine.manufacture " ng-disabled="disabled" required>
+              <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="Manufacture.name as Manufacture in vm.machineManufacture | propsFilter: {name: $select.search}">
+                <div ng-bind-html="Manufacture.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
 
