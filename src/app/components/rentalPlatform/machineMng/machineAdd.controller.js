@@ -9,7 +9,7 @@
     .controller('machineAddController', machineAddController);
 
   /** @ngInject */
-  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW) {
+  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_MF) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
@@ -25,19 +25,15 @@
     };
 
     /**
-     * 查询当前用户拥有的车辆类型明细
+     * 得到机器类型集合
      */
-    vm.getMachineType = function () {
-      var restCallURL = USER_MACHINE_TYPE_URL;
-      if (vm.operatorInfo) {
-        restCallURL += "?orgId=" + vm.operatorInfo.userdto.organizationDto.id;
-      }
-      var rspData = serviceResource.restCallService(restCallURL, "QUERY");
-      rspData.then(function (data) {
-        vm.machineTypeList = data;
+    vm.getDeviceType = function () {
+      var engineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+      engineTypeData.then(function (data) {
+        vm.machineTypeList = data.content;
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
-      });
+      })
     };
 
     /**
@@ -65,9 +61,22 @@
       })
     };
 
-    vm.getMachineType();
+    /**
+     * 车辆品牌
+     */
+    vm.getDeviceManufacture=function () {
+      var deviceManufacturePromise=rentalService.getDeviceManufactureList();
+      deviceManufacturePromise.then(function (data) {
+        vm.machineManufacture = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
+    }
+
+    vm.getDeviceType();
     vm.getMachineStatus();
     vm.getMachinePowerType();
+    vm.getDeviceManufacture();
 
     //全局的圆对象
     var circle = null;

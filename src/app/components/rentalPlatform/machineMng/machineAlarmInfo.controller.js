@@ -175,8 +175,10 @@
     vm.loadMsgDataByStatus = function (alarmStatus) {
       vm.searchConditions = {};
       if (alarmStatus == null || alarmStatus == undefined) {
+        vm.all = 1;
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
       } else {
+        vm.all = null;
         vm.searchConditions.status = alarmStatus;
         vm.getMsgByAlarmType(0, vm.pageSize, null, vm.searchConditions);
       }
