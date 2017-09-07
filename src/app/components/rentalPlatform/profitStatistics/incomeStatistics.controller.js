@@ -272,11 +272,11 @@
         }
 
         if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
-          restCallURL += "&search_DGTE_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DGTE_endDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         }
 
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
-          restCallURL += "&search_DLTE_startDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
 
       }
