@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <section class="content-header">
       <h1>
-        <small>{{'currentPosition'|translate}}:</small>
+        <small>{{'rentalCurrentLocate'|translate}}:</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
@@ -92,14 +92,14 @@
           <div class="table-responsive "><!--表格框-->
             <table ng-table="machineCurrentStatusCtr.customConfigParams" class="table">
               <tr ng-repeat="row in $data">
-                <td data-title="'rentalMachineID'|translate" sortable="'rentalMachineID'|translate">{{row.machineLicenseId}}</td>
-                <td data-title="'rentalDeviceID'|translate" sortable="'rentalDeviceID'|translate">{{row.deviceNum}}</td>
-                <td data-title="'type'|translate" sortable="'type'|translate">{{row.deviceType |translate}}</td>
+                <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'">{{row.machineLicenseId}}</td>
+                <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{row.deviceNum}}</td>
+                <td data-title="'type'|translate" sortable="'deviceType'">{{row.deviceType |translate}}</td>
                 <!--<td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.manufacture|translate}}</td>-->
-                <td data-title="'highlyType'|translate" sortable="'highlyType'|translate">{{row.heightType|translate}}</td>
-                <td data-title="'rentalCurrentLocate'|translate" sortable="'rentalCurrentLocate'|translate">{{row.currentAddress}}</td>
-                <td data-title="'rentalTotalWorkingHours'|translate" sortable="'rentalTotalWorkingHours'|translate">{{row.totalDurationConverter | convertToMins}}</td>
-                <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'rentalTimeofLastDataTransmitted'|translate">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'highlyType'|translate" sortable="'heightType'">{{row.heightType|translate}}</td>
+                <td data-title="'rentalCurrentLocate'|translate" sortable="'currentAddress'">{{row.currentAddress}}</td>
+                <td data-title="'rentalTotalWorkingHours'|translate" sortable="'totalDurationConverter'">{{row.totalDurationConverter | convertToMins}}</td>
+                <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td data-title="'operation'|translate" style="text-align: center" >
                   <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.deviceNum)">{{'equipmentMonitoring'|translate}}</button>
                   <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalManagement'|translate}}</button>

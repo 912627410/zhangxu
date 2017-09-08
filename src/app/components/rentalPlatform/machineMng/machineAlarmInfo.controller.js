@@ -159,6 +159,7 @@
      * @param alarmType
      */
     vm.loadMsgDataByType = function (alarmType) {
+      vm.all = null;
       vm.searchConditions = {};
       if (alarmType == null || alarmType == undefined) {
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
@@ -256,7 +257,7 @@
         controllerAs: 'vm',
         openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
         windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
-        size: 'sm',
+        size: 'md',
         resolve: { //用来向controller传数据
           notification: function () {
             return notification;

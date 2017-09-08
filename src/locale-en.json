@@ -851,9 +851,14 @@
   "待租":"For rent",
   "出租":"rent",
   "报停":"suspension",
+  "8-12米":"8-12 M",
+  "13-20米":"13-20 M",
+  "<8米":"<8 M",
   "主机厂-运输":"Hosts-transport",
   "租赁商-运输":"rental-transport",
   "maintenanceReminder":"Maintenance Reminder",
   "lastMaintenanceDate":"Last Maintenance Date",
-  "nextMaintenanceDate":"Next Maintenance Date"
+  "nextMaintenanceDate":"Next Maintenance Date",
+  "processingAalarm":"Processing Aalarm",
+  "processAll":"全部标记为已处理"
 }
