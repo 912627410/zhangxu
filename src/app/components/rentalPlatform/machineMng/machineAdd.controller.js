@@ -9,7 +9,7 @@
     .controller('machineAddController', machineAddController);
 
   /** @ngInject */
-  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource,languages, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_MF) {
+  function machineAddController($rootScope, $scope, $window, $uibModalInstance, serviceResource,languages, rentalService, Notification, machineService, USER_MACHINE_TYPE_URL, ENGINE_TYPE_LIST_URL, AMAP_PLACESEARCH_URL, RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_MF,DEVCE_HIGHTTYPE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     //定义machine对象
@@ -61,9 +61,9 @@
       })
     };
 
-    /**
+   /* /!**
      * 车辆品牌
-     */
+     *!/
     vm.getDeviceManufacture=function () {
       var deviceManufacturePromise=rentalService.getDeviceManufactureList();
       deviceManufacturePromise.then(function (data) {
@@ -72,11 +72,22 @@
         Notification.error(languages.findKey('rentalGetDataError'));
       })
     }
+*/
+
+    vm.getHeightType=function () {
+      var machineHeightType = serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
+      machineHeightType.then(function (data) {
+        vm.machineHeightType = data.content;
+      }, function (reason) {
+        Notification.error('获取车辆状态失败');
+      })
+    }
 
     vm.getDeviceType();
     vm.getMachineStatus();
     vm.getMachinePowerType();
-    vm.getDeviceManufacture();
+    vm.getHeightType()
+    /*vm.getDeviceManufacture();*/
 
     //全局的圆对象
     var circle = null;

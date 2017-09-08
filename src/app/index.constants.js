@@ -282,7 +282,7 @@
     .constant('RENTAL_MACHINE_URL',SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
     .constant('RENTAL_NOTIFICATION_URL',SERVER_BASE_URL + 'rental/processRentalNotificationDeal')//租赁平台标记消息为已处理
     .constant('RENTAL_MACHINE_RATE_URL',SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
-    .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台出租率
+    .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台车辆信息
     .constant('MACHINE_RENT_URL', SERVER_BASE_URL + 'rental/rentalRate7day')  //出租率七天数据
     .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
 

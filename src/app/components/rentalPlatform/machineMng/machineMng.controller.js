@@ -9,7 +9,7 @@
     .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,languages,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL) {
+  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,languages,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_HIGHTTYPE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -82,9 +82,9 @@
       })
     };
 
-    /**
+   /* /!**
      * 车辆品牌
-     */
+     *!/
     vm.getDeviceManufacture=function () {
       var deviceManufacturePromise=rentalService.getDeviceManufactureList();
       deviceManufacturePromise.then(function (data) {
@@ -92,12 +92,25 @@
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })
-    }
+    }*/
+
+    /**
+     * 车辆高度类型
+     */
+   vm.getHeightType=function () {
+     var machineHeightType = serviceResource.restCallService(DEVCE_HIGHTTYPE, "GET");
+     machineHeightType.then(function (data) {
+       vm.machineHeightType = data.content;
+     }, function (reason) {
+       Notification.error('获取车辆高度失败');
+     })
+   }
 
     vm.getDeviceType();
     vm.getMachineStatus();
     vm.getMachinePowerType();
-    vm.getDeviceManufacture();
+    vm.getHeightType();
+    /*vm.getDeviceManufacture();*/
 
     /**
      * 在地图上画圆

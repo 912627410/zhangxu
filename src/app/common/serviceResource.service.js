@@ -176,9 +176,9 @@
           content += languages.findKey('deviceType')+":" +(item.machineType==null ?'无':item.machineType) + "<br/>";
           content += languages.findKey('rentalBrand')+":" +(item.manufacture==null ?'无':item.manufacture) + "<br/>";
           content += languages.findKey('rentalHeight')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
-          content += languages.findKey('maintenanceReminder')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
-          content += languages.findKey('lastMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
-          content += languages.findKey('nextMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
+          content += languages.findKey('maintenanceReminder')+":" +(item.deviceHeight==null ?'无':item.maintenanceReminder) + "<br/>";
+          content += languages.findKey('lastMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.lastMaintenanceDate) + "<br/>";
+          content += languages.findKey('nextMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.nextMaintenanceDate) + "<br/>";
         }
         // 定义中部内容
         var middle = document.createElement("div");
