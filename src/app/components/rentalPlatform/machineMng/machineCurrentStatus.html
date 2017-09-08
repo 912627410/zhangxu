@@ -59,33 +59,34 @@
     </div>
     <div class="container-fluid table-wrapper" style="margin-top: 15px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
       <div class="col-lg-12 form-group table-form-group tab-content-search"><!--搜索框-->
-        <div class="tab-content-search-box">
+        <div class="tab-content-search-box col-lg-2 col-md-2">
           <label>{{'rentalMachineID'|translate}}:</label>
           <input class="input-search" type="text" name="licenseId" id="licenseId" placeholder="{{'rentalMachineID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
         </div>
-        <div class="tab-content-search-box">
+        <div class="tab-content-search-box col-lg-2 col-md-2">
           <label>{{'rentalDeviceID'|translate}}:</label>
           <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}:" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum" />
         </div>
-        <div class="tab-content-search-box">
-          <label style="display: block;margin-top: 8px;margin-bottom: 0;float: left">{{'type'|translate}}:</label>
-          <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;">
-            <ui-select-match allow-clear="true" style="width: 200px" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
+        <div class="tab-content-search-box col-lg-2 col-md-2">
+          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'type'|translate}}:</label>
+          <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;padding: 0px;width: 182px;" class="col-lg-8 col-md-8">
+            <ui-select-match allow-clear="true"  placeholder="{{'vehicleType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
             <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
               <div ng-bind-html="machineType.name | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>
-        <div class="tab-content-search-box">
+        <div class="tab-content-search-box col-lg-2 col-md-2">
           <label>{{'address'|translate}}:</label>
           <input class="input-search" name="address" id="address" placeholder="{{'address'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.address" />
         </div>
-        <div class="search-box-button">
+        <div class="search-box-button col-lg-2 col-md-2" style="display: inline-block;">
           <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
           <button class="btn btn-danger" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
         </div>
         <button class="btn btn-adn ng-binding pull-right" type="button" ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}</button>
       </div>
+
       <div class="col-lg-12">
         <div class="">
           <div class="table-responsive "><!--表格框-->
