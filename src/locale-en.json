@@ -234,6 +234,7 @@
   "content": "Content",
   "reminderContent": "Reminder Content",
   "checkAll": "Check All",
+  "Reverse": "Reverse",
   "markedAsAlreadyProcessed": "Marked as already processed",
   "markAsUntreated": "Mark as untreated",
   "select": "Select",

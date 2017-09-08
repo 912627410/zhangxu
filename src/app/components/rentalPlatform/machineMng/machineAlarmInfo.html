@@ -157,6 +157,9 @@
                 <button type="button" class="btn btn-default btn-sm" ng-click="">
                   {{'checkAll'|translate}}
                 </button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                  {{'Reverse'|translate}}
+                </button>
                 <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm" ng-click="">
                     {{'processAll'|translate}}
@@ -188,7 +191,7 @@
                       </button>
                     </td>
                     <td>
-                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">操作</button>
+                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
                     </td>
                   </tr>
                   </tbody>
