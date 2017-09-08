@@ -37,6 +37,7 @@
     .constant('DEVCE_MONITOR_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage')   //分页查询设备监控信息URL
     .constant('DEVCE_MONITOR_SINGL_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfo')   //分页查询设备监控信息URL
     .constant('DEVCEINFO_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceParameter')   //设备参数
+    .constant('DEVCEINFO_CALIBRATION_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceCalibrationParameter')   //设备标定参数
     .constant('DEVCEINFO_URL', SERVER_BASE_URL + 'device/deviceinfo')   //设备crud
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
     .constant('BATTERY_CHART_DATA', SERVER_BASE_URL + 'deviceCharger/historyData')   //充电设备电压数据URL

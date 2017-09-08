@@ -57,6 +57,8 @@
   "undefined": "未定义",
   "positioningState": "定位状态",
   "hasBeenpositioning": "已定位",
+  "hasBeenpositioning(GPS)": "已定位(GPS)",
+  "hasBeenpositioning(B)": "已定位(基站)",
   "notLocate": "未定位",
   "protocolType": "机型",
   "lastUpdateTime": "最后更新时间",

@@ -61,6 +61,8 @@
   "workingHours": "Working Hours",
   "positioningType": "Type",
   "hasBeenpositioning": "Located ",
+  "hasBeenpositioning(GPS)": "Located(GPS) ",
+  "hasBeenpositioning(B)": "Located(BaseStation) ",
   "notLocate": "Pending locate",
   "protocolType": "Type",
   "lastUpdateTime": "Last Update Time",
