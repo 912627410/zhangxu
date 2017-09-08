@@ -125,7 +125,7 @@
 
 
     vm.query = function (page, size, sort, rentalOrder) {
-      console.log("111222");
+
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
@@ -146,11 +146,11 @@
         }
 
         if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
-          restCallURL += "&search_DGTE_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DGT_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         }
 
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
-          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DLT_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
 
 

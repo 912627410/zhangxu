@@ -37,7 +37,7 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="金额"
                      ng-model="newRentalOrderController.rentalOrder.totalAmt" name="totalAmt"
-                     typeahead-show-hint="true"/>
+                     typeahead-show-hint="true" validator="number"/>
             </div>
           </div>
 
@@ -46,7 +46,7 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="定金"
                      ng-model="newRentalOrderController.rentalOrder.deposit" name="deposit"
-                     typeahead-show-hint="true"/>
+                     typeahead-show-hint="true" validator="number"/>
             </div>
 
           </div>
@@ -68,7 +68,7 @@
                        ng-model="newRentalOrderController.rentalOrder.startDate"
                        is-open="newRentalOrderController.startDateSetting.status.opened"
                        datepicker-options="newRentalOrderController.startDateSetting.dateOptions" close-text="Close"
-                       validator="required" message-id="bootstrap"/>
+                        message-id="bootstrap" readonly/>
 
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -88,7 +88,7 @@
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="newRentalOrderController.rentalOrder.endDate"
                        is-open="newRentalOrderController.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" close-text="Close"/>
+                       datepicker-options="dateOptions" close-text="Close" readonly/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newRentalOrderController.endDateOpen($event)">

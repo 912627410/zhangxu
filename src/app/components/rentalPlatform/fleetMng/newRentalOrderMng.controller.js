@@ -71,28 +71,31 @@
 
 
     vm.ok = function () {
-      vm.rentalOrder.rentalCustomer=vm.customer;
-      vm.rentalOrder.location=vm.selectAddress;
-      vm.rentalOrder.radius=vm.radius;
-      vm.rentalOrder.org=vm.customer.org;
+      if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
+        Notification.error("请选择订单开始时间和结束时间");
+      } else{
+        vm.rentalOrder.rentalCustomer=vm.customer;
+        vm.rentalOrder.location=vm.selectAddress;
+        vm.rentalOrder.radius=vm.radius;
+        vm.rentalOrder.org=vm.customer.org;
 
-      if (vm.locationAlarmReceiverChk){
-        vm.rentalOrder.locationAlarmReceiver = 1;
+        if (vm.locationAlarmReceiverChk){
+          vm.rentalOrder.locationAlarmReceiver = 1;
+        }
+        else{
+          vm.rentalOrder.locationAlarmReceiver = 0;
+        }
+        
+        var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
+        //  vm.rentalCustomer.org=vm.org;
+        rspdata.then(function (data) {
+          Notification.success("新建订单成功!");
+          $location.path(path);
+
+        },function (reason) {
+          Notification.error(reason.data.message);
+        })
       }
-      else{
-        vm.rentalOrder.locationAlarmReceiver = 0;
-      }
-
-
-      var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
-    //  vm.rentalCustomer.org=vm.org;
-      rspdata.then(function (data) {
-        Notification.success("新建订单成功!");
-        $location.path(path);
-
-      },function (reason) {
-        Notification.error(reason.data.message);
-      })
     }
 
 

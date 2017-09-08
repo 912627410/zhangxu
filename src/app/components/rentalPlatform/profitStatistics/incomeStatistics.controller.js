@@ -237,11 +237,11 @@
         }
 
         if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
-          restCallURL += "&search_DGTE_endDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DGT_endDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         }
 
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
-          restCallURL += "&search_DLTE_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+          restCallURL += "&search_DLT_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
         //订单状态为结束的订单
         restCallURL += "&search_EQ_status=" + '3';

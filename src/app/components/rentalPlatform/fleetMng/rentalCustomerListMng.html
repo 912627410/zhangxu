@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">客户列表
   <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="customerListController.cancel()">{{'close'|translate}}</button>
-  <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">确定</button>
+  <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
   </h3>
 </div>
 
@@ -13,19 +13,19 @@
 
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">客户名</label>
+      <label class="control-label">{{'rentalCustomerName'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="name" class="form-control"  ng-model="customerListController.customer.name"
-             placeholder="客户名"/>
+             placeholder="{{'rentalCustomerName'|translate}}"/>
     </div>
 
     <div class="col-md-1">
-      <label class="control-label">{{'mobile'|translate}}:</label>
+      <label class="control-label">{{'phoneNumber'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="mobile" class="form-control"  ng-model="customerListController.customer.mobile"
-             placeholder="手机号" />
+             placeholder="{{'phoneNumber'|translate}}" />
     </div>
 
 
@@ -68,7 +68,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">用户总数:  {{userRoleMngController.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumbeOfUsers'|translate}}:  {{userRoleMngController.page.totalElements}}</span>
     </div>
 
   </div>

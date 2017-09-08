@@ -29,65 +29,66 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">联系人</label>
+            <label class="col-sm-3 control-label">{{'rentalLinkman'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="联系人"
+              <input type="text" class="form-control" placeholder="{{'rentalLinkman'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">职位</label>
+            <label class="col-sm-3 control-label">{{'rentalCustomerPosition'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="职位"
+              <input type="text" class="form-control" placeholder="{{'rentalCustomerPosition'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.title" name="title" typeahead-show-hint="true"
                      validator="required"  />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">电话</label>
+            <label class="col-sm-3 control-label">{{'rentalTel'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="电话"
+              <input type="text" class="form-control" placeholder="{{'rentalTel'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">手机</label>
+            <label class="col-sm-3 control-label">{{'rentalPhoneNumber'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="手机"
+              <input type="text" class="form-control" placeholder="{{'rentalPhoneNumber'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
-                     validator="number" />
+                     validator="telephoneNo" />
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">邮箱</label>
+            <label class="col-sm-3 control-label">{{'rentalMail'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="邮箱"
+              <input type="text" class="form-control" placeholder="{{'rentalMail'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.email" name="email" typeahead-show-hint="true"
                      validator="email" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">地址</label>
+            <label class="col-sm-3 control-label">{{'rentalAddress'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="地址"
+              <input type="text" class="form-control" placeholder="{{'rentalAddress'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.address" name="address" typeahead-show-hint="true"
                      validator="required" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">邮编</label>
+            <label class="col-sm-3 control-label">{{'rentalPostcode'|translate}}</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="邮编"
-                     ng-model="newRentalCustomerController.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"/>
+              <input type="text" class="form-control" placeholder="{{'rentalPostcode'|translate}}"
+                     ng-model="newRentalCustomerController.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"
+                     validator="postcode"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">所属组织</label>
+            <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
             <div class="col-md-5">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="所属组织" ng-model="newRentalCustomerController.org.label" name="org" readonly validator="required"/>
+                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="newRentalCustomerController.org.label" name="org" readonly validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="newRentalCustomerController.openTreeInfo()">
@@ -98,9 +99,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">描述</label>
+            <label class="col-sm-3 control-label">{{'description'|translate}}</label>
             <div class="col-sm-5">
-              <textarea class="form-control" placeholder="描述"
+              <textarea class="form-control" placeholder="{{'description'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.description" name="description" typeahead-show-hint="true">
 
               </textarea>
