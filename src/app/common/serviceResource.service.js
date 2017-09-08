@@ -109,7 +109,7 @@
 
 
     //添加带文本的点标记覆盖物
-    var addMarkerModel = function(mapObj,item, icon,callback) {
+    var addMarkerModel = function(mapObj,item, icon,callback,rental) {
       var mapObj = mapObj;
       //实例化信息窗体
       var infoWindow = new AMap.InfoWindow({
@@ -146,18 +146,18 @@
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
         contentInfo += languages.findKey('updateTime')+": " +(item.lastDataUploadTime==null ?'':$filter('date')(item.lastDataUploadTime,'yyyy-MM-dd HH:mm:ss'))  + "<br/>";
+
+
         var info = createInfoWindow(title, contentInfo,mapObj);
         //设置窗体内容
         infoWindow.setContent(info);
       });
-
       //构建自定义信息窗体
       function createInfoWindow(title, content) {
         var info = document.createElement("div");
         info.className = "info";
         //可以通过下面的方式修改自定义窗体的宽高
         info.style.width = "220px";
-
         // 定义顶部标题
         var top = document.createElement("div");
         var titleD = document.createElement("div");
@@ -167,11 +167,19 @@
         closeX.src = "http://webapi.amap.com/images/close2.gif";
         closeX.onclick = closeInfoWindow;
 
-
         top.appendChild(titleD);
         top.appendChild(closeX);
         info.appendChild(top);
 
+        //租赁系统增加的字段
+        if (rental){
+          content += languages.findKey('deviceType')+":" +(item.machineType==null ?'无':item.machineType) + "<br/>";
+          content += languages.findKey('rentalBrand')+":" +(item.manufacture==null ?'无':item.manufacture) + "<br/>";
+          content += languages.findKey('rentalHeight')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
+          content += languages.findKey('maintenanceReminder')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
+          content += languages.findKey('lastMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
+          content += languages.findKey('nextMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.deviceHeight) + "<br/>";
+        }
         // 定义中部内容
         var middle = document.createElement("div");
         var titleA = document.createElement("a");
@@ -187,7 +195,6 @@
         }else {
           titleA.onclick =  Viewdetails;
         }
-
 
         middle.appendChild(titleA);
         middle.appendChild(mcont);
@@ -322,7 +329,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,langkey,centeraddr,aggregation,callback) {
+      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -338,9 +345,12 @@
           if (centeraddr){
             localCenterAddr = centeraddr;
           }
+          if (!scrollWheel){
+            scrollWheel=false;
+          }
           var map = new AMap.Map(mapId, {
             resizeEnable: true,
-            scrollWheel:false, // 是否可通过鼠标滚轮缩放浏览
+            scrollWheel:scrollWheel, // 是否可通过鼠标滚轮缩放浏览
             center: localCenterAddr,
             zooms: [3, 18]
           });
@@ -397,7 +407,7 @@
                     if(deviceGPSInfo[i].accStatus=='01'){
                       marker="assets/images/greenMarker.png";
                     }
-                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback));
+                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
                   }
                 }
                 //是否以点聚合的方式显示
@@ -416,9 +426,9 @@
                   if(deviceInfo.accStatus=='01' || deviceInfo.machineStatus=='1'){
                     marker="assets/images/greenMarker.png";
                   }
-                  var markerPoint=addMarkerModel(map,deviceInfo,marker,callback);
-                  markers.push(markerPoint);
                 }
+                var markerPoint=addMarkerModel(map,deviceInfo,marker,callback,rental);
+                markers.push(markerPoint);
               })
               //是否以点聚合的方式显示
               if(aggregation){

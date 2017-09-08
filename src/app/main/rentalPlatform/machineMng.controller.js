@@ -109,7 +109,7 @@
         },function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         })
-      });
+      },true,true);
     };
     //加载地图设备数据
     vm.loadHomeDeviceData();

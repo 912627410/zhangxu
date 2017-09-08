@@ -852,5 +852,8 @@
   "出租":"rent",
   "报停":"suspension",
   "主机厂-运输":"Hosts-transport",
-  "租赁商-运输":"rental-transport"
+  "租赁商-运输":"rental-transport",
+  "maintenanceReminder":"Maintenance Reminder",
+  "lastMaintenanceDate":"Last Maintenance Date",
+  "nextMaintenanceDate":"Next Maintenance Date"
 }
