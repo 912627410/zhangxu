@@ -834,6 +834,9 @@
   "越野剪叉式":"Cross cross",
   "自行走剪叉式":"Self-cut fork",
   "直臂式":"Straight brarm",
+  "曲臂":"Crank arm",
+  "剪叉":"Cross cros",
+  "直臂":"Straight brarm",
   "捷尔杰":"JLG",
   "欧历胜":"Haulotte",
   "Skyjack":"Skyjack",
@@ -861,5 +864,5 @@
   "lastMaintenanceDate":"Last Maintenance Date",
   "nextMaintenanceDate":"Next Maintenance Date",
   "processingAalarm":"Processing Aalarm",
-  "processAll":"全部标记为已处理"
+  "processAll":"Deal Select"
 }
