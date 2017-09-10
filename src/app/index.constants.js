@@ -37,6 +37,7 @@
     .constant('DEVCE_MONITOR_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfopage')   //分页查询设备监控信息URL
     .constant('DEVCE_MONITOR_SINGL_QUERY', SERVER_BASE_URL + 'deviceMonitor/deviceinfo')   //分页查询设备监控信息URL
     .constant('DEVCEINFO_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceParameter')   //设备参数
+    .constant('DEVCEINFO_CALIBRATION_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceCalibrationParameter')   //设备标定参数
     .constant('DEVCEINFO_URL', SERVER_BASE_URL + 'device/deviceinfo')   //设备crud
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
     .constant('BATTERY_CHART_DATA', SERVER_BASE_URL + 'deviceCharger/historyData')   //充电设备电压数据URL
@@ -149,6 +150,9 @@
     .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTReturnTime')   // 设置车队回传时间
     .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTDefaultReturnTime')   // 设置车队默认的回传时间间隔
     .constant('SEND_READ_URL', SERVER_BASE_URL + 'sms/sendReadCommand') // 发送读请求命令
+    .constant('SEND_MQTT_OPERATED_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTOperated') //MQTT发布操作命令
+    .constant('SEND_MQTT_WRITE_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTWrite') //MQTT发布写命令
+    .constant('GET_MQTT_RETURN_TIME', SERVER_BASE_URL + 'deviceMonitor/getMQTTRetrunTime') // 得到MQTT相关回传采样时间
 
     //键盘数据相关
     .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')

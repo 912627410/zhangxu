@@ -5,11 +5,12 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
+    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,$window,
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
-                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_READ_URL) {
+                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
+                                               DEVCEINFO_CALIBRATION_PARAMETER_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -31,6 +32,18 @@
         vm.amaplatitudeNum;//选中的维度
         vm.radius = 100; //设置的半径,默认100米
         vm.zoomsize = 8;
+        vm.uploadNum = 1;// 默认上传次数1
+        vm.uploadFrequency = 2;// 默认上传频率2s
+        vm.faultCommand = 39; //默认故障命令为39
+        vm.parameterType = 0; // 默认车辆参数类型0
+
+        // 短信发送成功后的初始化button
+        vm.initSmsSendBtn = function () {
+          $window.sessionStorage["sendBtnStatus"] = true;
+          $window.sessionStorage["sendBtnTime"] = 20000;
+          $window.sessionStorage["sendDeviceNum"] = vm.deviceinfo.deviceNum;
+          vm.sendBtnShow = true;
+        };
 
         if(deviceinfo.machine!=null&&deviceinfo.machine.selectAddress!=null
             &&deviceinfo.machine.amaplongitudeNum!=null&&deviceinfo.machine.amaplatitudeNum!=null
@@ -39,6 +52,58 @@
             vm.amaplongitudeNum=deviceinfo.machine.amaplongitudeNum;//选中的经度
             vm.amaplatitudeNum=deviceinfo.machine.amaplatitudeNum;//选中的维度
             vm.radius=deviceinfo.machine.radius; //设置的半径
+        }
+
+        //未标定时,负载重量和平台高度显示为-
+        if(vm.deviceinfo.calibrationStatus == 192) {
+          if(vm.deviceinfo.loadWeight > 100) {
+            vm.deviceinfo.loadWeight = 'Overrange';
+            vm.deviceinfo.hostHeight = 'Overrange';
+          } else {
+            vm.deviceinfo.loadWeight += '%';
+            vm.deviceinfo.hostHeight += '%';
+          }
+        } else {
+          vm.deviceinfo.loadWeight = "-";
+          vm.deviceinfo.hostHeight = "-";
+        }
+
+      /**
+       * PCU状态
+       * 行走模式-右转-左转-中位-前进、后退
+       * 升降模式-中位-举升、下降
+       */
+        if(null != vm.deviceinfo.pcuStatus && vm.deviceinfo.pcuStatus.length == 8) {
+          var pcuStatus = vm.deviceinfo.pcuStatus;
+          if(pcuStatus.substring(1,2) == "0") {
+            if(pcuStatus.substring(4,5) == "0") {
+              if(pcuStatus.substring(5,6) == "0") {
+                if(pcuStatus.substring(6,7) == "0") {
+                  if(pcuStatus.substring(7,8) == "0") {
+                    vm.pcuStatus = languages.findKey('retreat');
+                  } else if(pcuStatus.substring(7,8) == "1") {
+                    vm.pcuStatus = languages.findKey('advance');
+                  }
+                } else if(pcuStatus.substring(6,7) == "1") {
+                  vm.pcuStatus = languages.findKey('median');
+                }
+              } else if(pcuStatus.substring(5,6) == "1") {
+                vm.pcuStatus = languages.findKey('turnLeft');
+              }
+            } else if(pcuStatus.substring(4,5) == "1") {
+              vm.pcuStatus = languages.findKey('turnRight');
+            }
+          } else if(pcuStatus.substring(1,2) == "1") {
+            if(pcuStatus.substring(6,7) == "0") {
+              if(pcuStatus.substring(7,8) == "0") {
+                vm.pcuStatus = languages.findKey('decline');
+              } else if(pcuStatus.substring(7,8) == "1") {
+                vm.pcuStatus = languages.findKey('liftUp');
+              }
+            } else if(pcuStatus.substring(6, 7) == "1") {
+              vm.pcuStatus = languages.findKey('median');
+            }
+          }
         }
 
         if (vm.deviceinfo.calibrationVisible=='1'){//由于硬件bug,标定状态特定的车改成标定成功。0代表没有bug，1代表有bug，页面需要显示标定成功 by xielong.wang 2017-07-07
@@ -204,8 +269,8 @@
 
 
         //******************远程控制tab**********************]
-        vm.serverHost = "iot.nvr-china.com";
-        vm.serverPort = "08090";
+        vm.serverHost = vm.deviceinfo.mainGatewayIp == null ? "iot.nvr-china.com" : vm.deviceinfo.mainGatewayIp;
+        vm.serverPort = vm.deviceinfo.mainGatewayPort == null ? "08090" : vm.deviceinfo.mainGatewayPort;
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';
         vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
@@ -373,6 +438,75 @@
                 });
         }
 
+        /**
+         * MQTT下发操作命令
+         * @param type 类型
+         * @param deviceNum 设备号
+         * @param faultCommand 故障屏蔽码
+         */
+        vm.sendMQTTOperated = function (type, deviceNum, faultCommand) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          var restURL = SEND_MQTT_OPERATED_URL + "?type="+ type + "&deviceNum=" + deviceNum + "&faultCommand=" + faultCommand;
+          $confirm({
+            text: languages.findKey('确定发送此命令?') + '',
+            title: languages.findKey('发送命令确认') + '',
+            ok: languages.findKey('confirm') + '',
+            cancel: languages.findKey('cancel') + ''
+          }).then(function () {
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                Notification.success(data.content);
+                vm.initSmsSendBtn();
+              }
+              else {
+                Notification.error(data.content);
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+        };
+
+        /**
+         * MQTT下发写命令
+         * @param type 类型
+         * @param deviceNum 设备号
+         * @param content 内容
+         */
+        vm.sendMQTTWrite = function (type, deviceNum, content) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          var restURL = SEND_MQTT_WRITE_URL + "?type="+ type + "&deviceNum=" + deviceNum;
+          if(null != content) {
+            restURL += "&content=" + content;
+          }
+          $confirm({
+            text: languages.findKey('确定发送此命令?') + '',
+            title: languages.findKey('发送命令确认') + '',
+            ok: languages.findKey('confirm') + '',
+            cancel: languages.findKey('cancel') + ''
+          }).then(function () {
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                Notification.success(data.content);
+                vm.initSmsSendBtn();
+              }
+              else {
+                Notification.error(data.content);
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+        };
+
         //默认显示当前设备的最新地址
         vm.initMapTab = function(deviceInfo){
 
@@ -388,6 +522,30 @@
                 serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,centerAddr);
             })
         };
+
+        /**
+         * 得到MQTT相关回传采样时间
+         * @param deviceNum 设备号
+         * @param name 名称
+         */
+          vm.returnTimeQuery = function (deviceNum, name) {
+            if (deviceNum == null) {
+              Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+              return;
+            }
+            if(null == name || name == "") {
+              return;
+            }
+            var restURL = GET_MQTT_RETURN_TIME + "?deviceNum=" + deviceNum + "&returnTimeName=" + name;
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                vm.returnTimeParam.time = data.content;
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          };
 
       /**
        * 设置回传时间间隔
@@ -425,6 +583,7 @@
           restPromise.then(function (data) {
             if (data.code == 0) {
               Notification.success(data.content);
+              vm.initSmsSendBtn();
             }
             else {
               Notification.error(data.content);
@@ -436,8 +595,6 @@
       };
 
 
-      vm.uploadNum = 1;// 默认上传次数
-      vm.uploadFrequency = 10;// 默认上传频率
 
       /**
        * 发送读请求命令
@@ -482,6 +639,7 @@
           restPromise.then(function (data) {
             if (data.code == 0) {
               Notification.success(data.content);
+              vm.initSmsSendBtn();
             }
             else {
               Notification.error(data.content);
@@ -1811,79 +1969,259 @@
 
         //车辆参数
         vm.parameterConfig = {
-            options: {
-                chart: {
-                    type: 'line',
-                    zoomType: 'xy',
-                    width: 840,
-                },
-                credits: {
-                    text: 'nvr-china',
-                    href: 'http://www.nvr-china.com/'
-                },
-                exporting: false,
-                legend: {
-                    enabled: false
+            tooltip: {
+                triggerOn: 'none',
+                formatter: function (params) {
+                    return 'X: ' + Math.round(params.data[0]) + '<br>Y: ' + Math.round(params.data[1]);
                 }
-            },
-            title: {
-                text: false
             },
             xAxis: {
                 min: -127,
-                max: 127,
-                gridLineColor: '#197F07',
-                gridLineWidth: 1
+                max: 127
             },
             yAxis: {
                 min: 0,
-                max: 100,
-                title: false,
-                gridLineColor: '#197F07',
-                gridLineWidth: 1
+                max: 100
             },
             series: [{
-                name: 'value',
+                id: 'a',
+                type: 'line',
+                smooth: true,
+                symbolSize: 10,
                 data: []
             },{
-                name: 'value',
+                id: 'b',
+                type: 'line',
+                smooth: true,
+                symbolSize: 10,
                 data: []
-            }],
-            loading: false,
-            func: function (chart) {
-                $timeout(function () {
-                    chart.reflow();
-                }, 0);
-            }
+            }]
         };
 
-        vm.refreshParameterChart = function (parameterValue,curve) {
+        vm.refreshParameterChart = function (queryParameter) {
+            var name = queryParameter.name;
+            var curve = queryParameter.curve;
             var bIndex1 = curve.bIndex1;
 
-            if(bIndex1 < parameterValue.bJoystickNeutralZone){
-                bIndex1 = parameterValue.bJoystickNeutralZone;
+            if(bIndex1 < vm.parameterValue.bJoystickNeutralZone){
+                bIndex1 = vm.parameterValue.bJoystickNeutralZone;
             }
 
-            var data1 = [bIndex1,curve.bPwmPos1];
-            var data2 = [curve.bIndex2,curve.bPwmPos2];
-            var data3 = [curve.bIndex3,curve.bPwmPos3];
-            var data4 = [curve.bIndex4,curve.bPwmPos4];
-            var data5 = [127,curve.bPwmPosMax];
-            var data6 = [-bIndex1,curve.bPwmNeg1];
-            var data7 = [-curve.bIndex2,curve.bPwmNeg2];
-            var data8 = [-curve.bIndex3,curve.bPwmNeg3];
-            var data9 = [-curve.bIndex4,curve.bPwmNeg4];
-            var data10 = [-127,curve.bPwmNegMax];
+            var data1 = [-bIndex1,curve.bPwmNeg1];
+            var data2 = [-curve.bIndex2,curve.bPwmNeg2];
+            var data3 = [-curve.bIndex3,curve.bPwmNeg3];
+            var data4 = [-curve.bIndex4,curve.bPwmNeg4];
+            var data5 = [-127,curve.bPwmNegMax];
+            var data6 = [bIndex1,curve.bPwmPos1];
+            var data7 = [curve.bIndex2,curve.bPwmPos2];
+            var data8 = [curve.bIndex3,curve.bPwmPos3];
+            var data9 = [curve.bIndex4,curve.bPwmPos4];
+            var data10 = [127,curve.bPwmPosMax];
 
-            vm.parameterConfig.series[0].data = [data1,data2,data3,data4,data5];
-            vm.parameterConfig.series[1].data = [data6,data7,data8,data9,data10];
+          var parameterData1 = [data1,data2,data3,data4,data5]; //左侧曲线数据
+          var parameterData2 = [data6,data7,data8,data9,data10]; //右侧曲线数据
+          var parameterData = [data1,data2,data3,data4,data5,data6,data7,data8,data9,data10];
+
+          vm.parameterChart.setOption({
+            graphic: echarts.util.map(parameterData, function (item, dataIndex) {
+              var data, seriesIndex, id;
+              if(dataIndex < 5) {
+                data = parameterData1;
+                seriesIndex = 0;
+                id = 'a';
+              } else {
+                data = parameterData2;
+                seriesIndex = 1;
+                dataIndex -= 5;
+                id = 'b';
+              }
+              return {
+                type: 'circle',
+                position: vm.parameterChart.convertToPixel('grid', item),
+                shape: {
+                  r: 10
+                },
+                invisible: true,
+                draggable: true,
+                ondrag: echarts.util.curry(onPointDragging, data, id, name, dataIndex),
+                onmousemove: echarts.util.curry(showTooltip, seriesIndex, dataIndex),
+                onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                z: 100
+              };
+            })
+          });
+          vm.parameterChart.setOption({
+            series: [
+              {
+                data: parameterData1
+              },{
+                data: parameterData2
+              }]
+          });
         };
 
+      function showTooltip(seriesIndex, dataIndex) {
+        vm.parameterChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: seriesIndex,
+          dataIndex: dataIndex
+        });
+      }
+
+      function hideTooltip(dataIndex) {
+        vm.parameterChart.dispatchAction({
+          type: 'hideTip'
+        });
+      }
+
+      function onPointDragging(data, id, name, dataIndex) {
+        data[dataIndex] = vm.parameterChart.convertFromPixel('grid', this.position);
+        data[dataIndex][1] = data[dataIndex][1]< 0 ? 0 : Math.round(data[dataIndex][1]);
+        data[dataIndex][1] = data[dataIndex][1]> 100 ? 100 : Math.round(data[dataIndex][1]);
+        if(id == 'b') {
+          data[dataIndex][0] = data[dataIndex][0] < 0 ? 0: Math.round(data[dataIndex][0]);
+          data[dataIndex][0] = data[dataIndex][0] > 127 ? 127: Math.round(data[dataIndex][0]);
+        } else if(id == 'a') {
+          data[dataIndex][0] = data[dataIndex][0] < -127 ? -127: Math.round(data[dataIndex][0]);
+          data[dataIndex][0] = data[dataIndex][0] > 0 ? 0: Math.round(data[dataIndex][0]);
+        }
+
+
+        if(id == "a") {
+          if(name == "上升曲线") {
+            vm.selectParameter = vm.parameterValue.liftUpCurve;
+          } else {
+            if(name == "快速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveFastCurve;
+            } else if (name == "起升后行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveRisedCurve;
+            } else if (name == "慢速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveSlowCurve;
+            } else if (name == "转向曲线") {
+              vm.selectParameter = vm.parameterValue.steerRisedCurve;
+            }
+
+            if(dataIndex == 0) {
+              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(-data[dataIndex][0]);
+              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(-data[dataIndex][0]);
+              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(-data[dataIndex][0]);
+              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
+            }
+          }
+        } else if(id == "b") {
+          if(name == "上升曲线") {
+            vm.selectParameter = vm.parameterValue.liftUpCurve;
+            if(dataIndex == 0) {
+              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+            }
+          } else {
+            if(name == "快速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveFastCurve;
+            } else if (name == "起升后行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveRisedCurve;
+            } else if (name == "慢速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveSlowCurve;
+            } else if (name == "转向曲线") {
+              vm.selectParameter = vm.parameterValue.steerRisedCurve;
+            }
+
+            if(dataIndex == 0) {
+              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
+            }
+          }
+        }
+
+        if(name == "快速行走曲线") {
+          vm.parameterValue.driveFastCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[0]);
+        } else if (name == "起升后行走曲线") {
+          vm.parameterValue.driveRisedCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[1]);
+        } else if (name == "上升曲线") {
+          vm.parameterValue.liftUpCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[2]);
+        } else if (name == "慢速行走曲线") {
+          vm.parameterValue.driveSlowCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[3]);
+        } else if (name == "转向曲线") {
+          vm.parameterValue.steerRisedCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[4]);
+        }
+      }
+
+
         vm.initParameterTab = function (deviceinfo) {
+            vm.parameterChart = echarts.init(document.getElementById('parameterChart'));
+            vm.parameterChart.setOption(vm.parameterConfig);
+            vm.machineParametersReadonly = true; //默认车辆参数不可编辑
             var restURL = DEVCEINFO_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum;
             var rspData = serviceResource.restCallService(restURL, "GET");
             rspData.then(function (data) {
+              if(data.code == -1 && deviceinfo.versionNum == "11") {
+                Notification.error('车辆参数为空,请稍后刷新');
+                // 写ECU参数类型
+                var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
+                var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+                setTimeout(function () {
+                  // 读ECU参数数据
+                  var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
+                  var restPromise = serviceResource.restCallService(readURL, "ADD", null);
+                }, 5000);
+              } else if(data.code == 0) {
                 vm.parameterValue = data.content;
+                vm.parameterValue.bBrakeDelay = data.content.bBrakeDelay*100;
+                vm.parameterValue.bCoilFaultDetectionPeriod = data.content.bCoilFaultDetectionPeriod*10;
+                vm.parameterValue.bSteeringOffDelay = data.content.bSteeringOffDelay*100;
+                vm.parameterValue.bDirectionDelay = data.content.bDirectionDelay*10;
+                vm.parameterValue.bMotorEnableDelay = data.content.bMotorEnableDelay*10;
+                vm.parameterValue.bOverloadStabilizationPeriod = data.content.bOverloadStabilizationPeriod*100;
+                vm.parameterValue.bBatteryLevel1 = (data.content.bBatteryLevel1+100)/10;
+                vm.parameterValue.bBatteryLevel2 = (data.content.bBatteryLevel2+100)/10;
+                vm.parameterValue.bBatteryLevel3 = (data.content.bBatteryLevel3+100)/10;
+                vm.parameterValue.bBatteryLevel4 = (data.content.bBatteryLevel4+100)/10;
+                vm.parameterValue.bBatteryLevel5 = (data.content.bBatteryLevel5+100)/10;
+                vm.parameterValue.bTiltBrakeDelay = data.content.bTiltBrakeDelay*10;
+                vm.parameterValue.bLevelBrakeDelay = data.content.bLevelBrakeDelay*10;
 
                 vm.parameterTypeList=[{
                     name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
@@ -1898,15 +2236,237 @@
                 }];
 
                 vm.queryParameter = vm.parameterTypeList[0];
-                vm.refreshParameterChart(vm.parameterValue,vm.queryParameter.curve);
+                vm.refreshParameterChart(vm.queryParameter);
+              }
             }, function (reason) {
                 Notification.error('获取车辆参数失败');
                 Notification.error(reason.data.message);
             });
         };
 
+        /**
+         * 车辆参数编辑
+         */
+        vm.machineParametersEdit = function () {
+          vm.machineParametersReadonly = false;
+          if(!vm.parameterValue || null == vm.parameterValue || vm.parameterValue == "") {
+            vm.machineParametersReadonly = true;
+          }
+        };
+
+        /**
+         * MQTT下发车辆参数
+         * @param deviceNum
+         * @param parameterValue
+         */
+        vm.sendMQTTParameters = function (deviceNum, parameterValue) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          var content = "[" + parameterValue.bLiftType +", "+ parameterValue.bMajor +", "+ parameterValue.bMinor +", "+ Math.round(parameterValue.bBrakeDelay/100) +", "+ Math.round(parameterValue.bCoilFaultDetectionPeriod/10) +", "+ Math.round(parameterValue.bSteeringOffDelay/100) +", "+
+            Math.round(parameterValue.bDirectionDelay/10) +", "+ Math.round(parameterValue.bMotorEnableDelay/10) +", "+ Math.round(parameterValue.bOverloadStabilizationPeriod/100) +", "+ parameterValue.bSteeringBoostPwm +", "+ parameterValue.bNeutralSteeringPwm +", "+
+            parameterValue.bChassisLiftUpPwm +", "+ parameterValue.bPlatformLiftUpMaxPwm +", "+ parameterValue.bJoystickOffsetCompensation +", "+ parameterValue.bJoystickNeutralZone +", "+ Math.round(parameterValue.bBatteryLevel1*10-100) +", "+ Math.round(parameterValue.bBatteryLevel2*10-100) +", "+
+            Math.round(parameterValue.bBatteryLevel3*10-100) +", "+ Math.round(parameterValue.bBatteryLevel4*10-100) +", "+ Math.round(parameterValue.bBatteryLevel5*10-100) +", "+ Math.round(parameterValue.bTiltBrakeDelay/10) +", "+ Math.round(parameterValue.bLevelBrakeDelay/10) +", "+
+            parameterValue.driveFastCurve.bIndex1 +", "+ parameterValue.driveFastCurve.bIndex2 +", "+ parameterValue.driveFastCurve.bIndex3 +", "+ parameterValue.driveFastCurve.bIndex4 +", "+ parameterValue.driveFastCurve.bPwmPos1 +", "+ parameterValue.driveFastCurve.bPwmPos2 +", "+
+            parameterValue.driveFastCurve.bPwmPos3 +", "+ parameterValue.driveFastCurve.bPwmPos4 +", "+ parameterValue.driveFastCurve.bPwmPosMax +", "+ parameterValue.driveFastCurve.bPwmPosAdjust +", "+ parameterValue.driveFastCurve.bPwmNeg1 +", "+ parameterValue.driveFastCurve.bPwmNeg2 +", "+
+            parameterValue.driveFastCurve.bPwmNeg3 +", "+ parameterValue.driveFastCurve.bPwmNeg4 +", "+ parameterValue.driveFastCurve.bPwmNegMax +", "+ parameterValue.driveFastCurve.bPwmNegAdjust +", "+ parameterValue.driveFastCurve.bAccelIncrement +", "+
+            parameterValue.driveFastCurve.bDecelIncrement +", "+ parameterValue.driveFastCurve.bPeriod +", "+
+            parameterValue.driveRisedCurve.bIndex1 +", "+ parameterValue.driveRisedCurve.bIndex2 +", "+ parameterValue.driveRisedCurve.bIndex3 +", "+ parameterValue.driveRisedCurve.bIndex4 +", "+ parameterValue.driveRisedCurve.bPwmPos1 +", "+ parameterValue.driveRisedCurve.bPwmPos2 +", "+
+            parameterValue.driveRisedCurve.bPwmPos3 +", "+ parameterValue.driveRisedCurve.bPwmPos4 +", "+ parameterValue.driveRisedCurve.bPwmPosMax +", "+ parameterValue.driveRisedCurve.bPwmPosAdjust +", "+ parameterValue.driveRisedCurve.bPwmNeg1 +", "+ parameterValue.driveRisedCurve.bPwmNeg2 +", "+
+            parameterValue.driveRisedCurve.bPwmNeg3 +", "+ parameterValue.driveRisedCurve.bPwmNeg4 +", "+ parameterValue.driveRisedCurve.bPwmNegMax +", "+ parameterValue.driveRisedCurve.bPwmNegAdjust +", "+ parameterValue.driveRisedCurve.bAccelIncrement +", "+
+            parameterValue.driveRisedCurve.bDecelIncrement +", "+ parameterValue.driveRisedCurve.bPeriod +", "+
+            parameterValue.liftUpCurve.bIndex1 +", "+ parameterValue.liftUpCurve.bIndex2 +", "+ parameterValue.liftUpCurve.bIndex3 +", "+ parameterValue.liftUpCurve.bIndex4 +", "+ parameterValue.liftUpCurve.bPwmPos1 +", "+ parameterValue.liftUpCurve.bPwmPos2 +", "+
+            parameterValue.liftUpCurve.bPwmPos3 +", "+ parameterValue.liftUpCurve.bPwmPos4 +", "+ parameterValue.liftUpCurve.bPwmPosMax +", "+ parameterValue.liftUpCurve.bPwmPosAdjust +", "+ parameterValue.liftUpCurve.bPwmNeg1 +", "+ parameterValue.liftUpCurve.bPwmNeg2 +", "+
+            parameterValue.liftUpCurve.bPwmNeg3 +", "+ parameterValue.liftUpCurve.bPwmNeg4 +", "+ parameterValue.liftUpCurve.bPwmNegMax +", "+ parameterValue.liftUpCurve.bPwmNegAdjust +", "+ parameterValue.liftUpCurve.bAccelIncrement +", "+
+            parameterValue.liftUpCurve.bDecelIncrement +", "+ parameterValue.liftUpCurve.bPeriod +", "+
+            parameterValue.driveSlowCurve.bIndex1 +", "+ parameterValue.driveSlowCurve.bIndex2 +", "+ parameterValue.driveSlowCurve.bIndex3 +", "+ parameterValue.driveSlowCurve.bIndex4 +", "+ parameterValue.driveSlowCurve.bPwmPos1 +", "+ parameterValue.driveSlowCurve.bPwmPos2 +", "+
+            parameterValue.driveSlowCurve.bPwmPos3 +", "+ parameterValue.driveSlowCurve.bPwmPos4 +", "+ parameterValue.driveSlowCurve.bPwmPosMax +", "+ parameterValue.driveSlowCurve.bPwmPosAdjust +", "+ parameterValue.driveSlowCurve.bPwmNeg1 +", "+ parameterValue.driveSlowCurve.bPwmNeg2 +", "+
+            parameterValue.driveSlowCurve.bPwmNeg3 +", "+ parameterValue.driveSlowCurve.bPwmNeg4 +", "+ parameterValue.driveSlowCurve.bPwmNegMax +", "+ parameterValue.driveSlowCurve.bPwmNegAdjust +", "+ parameterValue.driveSlowCurve.bAccelIncrement +", "+
+            parameterValue.driveSlowCurve.bDecelIncrement +", "+ parameterValue.driveSlowCurve.bPeriod +", "+
+            parameterValue.steerRisedCurve.bIndex1 +", "+ parameterValue.steerRisedCurve.bIndex2 +", "+ parameterValue.steerRisedCurve.bIndex3 +", "+ parameterValue.steerRisedCurve.bIndex4 +", "+ parameterValue.steerRisedCurve.bPwmPos1 +", "+ parameterValue.steerRisedCurve.bPwmPos2 +", "+
+            parameterValue.steerRisedCurve.bPwmPos3 +", "+ parameterValue.steerRisedCurve.bPwmPos4 +", "+ parameterValue.steerRisedCurve.bPwmPosMax +", "+ parameterValue.steerRisedCurve.bPwmPosAdjust +", "+ parameterValue.steerRisedCurve.bPwmNeg1 +", "+ parameterValue.steerRisedCurve.bPwmNeg2 +", "+
+            parameterValue.steerRisedCurve.bPwmNeg3 +", "+ parameterValue.steerRisedCurve.bPwmNeg4 +", "+ parameterValue.steerRisedCurve.bPwmNegMax +", "+ parameterValue.steerRisedCurve.bPwmNegAdjust +", "+ parameterValue.steerRisedCurve.bAccelIncrement +", "+
+            parameterValue.steerRisedCurve.bDecelIncrement +", "+ parameterValue.steerRisedCurve.bPeriod + "]";
+
+          vm.sendMQTTWrite(27, deviceNum, content);
+        };
+
+      //标定参数
+      vm.calibrationParameterConfig = {
+        tooltip: {
+          triggerOn: 'none',
+          formatter: function (params) {
+            return 'X: ' + Math.round(params.data[0]) + '<br>Y: ' + Math.round(params.data[1]);
+          }
+        },
+        xAxis: {
+          min: 0,
+          max: 4096,
+          name: '角度'
+        },
+        yAxis: {
+          min: 0,
+          max: 4096,
+          name: '电压'
+        },
+        series: [{
+          type: 'line',
+          smooth: true,
+          symbolSize: 10,
+          data: []
+        }]
+      };
+
+      /**
+       * 标定参数图表增加拖拽监听
+       * @param calibrationParameterData 数据
+         */
+      vm.refreshCalibrationParameterChart = function (calibrationParameterData) {
+        vm.calibrationParameterChart.setOption({
+          graphic: echarts.util.map(calibrationParameterData, function (item, dataIndex) {
+            return {
+              type: 'circle',
+              position: vm.calibrationParameterChart.convertToPixel('grid', item),
+              shape: {
+                r: 10
+              },
+              invisible: true,
+              draggable: true,
+              ondrag: echarts.util.curry(onPointDragging2, calibrationParameterData, dataIndex),
+              onmousemove: echarts.util.curry(showTooltip2, dataIndex),
+              onmouseout: echarts.util.curry(hideTooltip2, dataIndex),
+              z: 100
+            };
+          })
+        });
+
+        vm.calibrationParameterChart.setOption({
+          series: [
+            {
+              data: calibrationParameterData
+            }]
+        });
+      };
+
+      function showTooltip2(dataIndex) {
+        vm.calibrationParameterChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: dataIndex
+        });
+      }
+
+      function hideTooltip2(dataIndex) {
+        vm.calibrationParameterChart.dispatchAction({
+          type: 'hideTip'
+        });
+      }
+
+      /**
+       * 标定参数图表拖拽方法
+       * @param data 数据
+       * @param dataIndex 拖拽点的下标
+         */
+      function onPointDragging2(data, dataIndex) {
+        var dataLen = data.length;
+        var y = data[dataIndex][1];
+        var update = vm.calibrationParameterChart.convertFromPixel('grid', this.position);
+        var updateY = Math.round(update[1]) - y;
+        var maxY = data[0][1];
+        var minY = data[0][1];
+        for(var m = 0; m < dataLen; m++) {
+          maxY = data[m][1] > maxY ? data[m][1] : maxY;
+          minY = data[m][1] < minY ? data[m][1] : minY;
+        }
+        updateY = (maxY + updateY) > 4096 ? 0 : updateY;
+        updateY = (minY + updateY) < 0 ? 0 : updateY;
+
+        for(var i = 0;i<data.length;i++) {
+          data[i][1] = data[i][1] + updateY;
+        }
+
+        var dataValue = "[";
+        var dataValueY = "";
+        for(var j = 0;j < dataLen;j++) {
+          dataValue += data[j][0] + ", ";
+          dataValueY += data[j][1] + ", ";
+        }
+        dataValue += dataValueY;
+        dataValue = dataValue.substring(0, dataValue.length - 2);
+        dataValue += "]";
+        vm.calibrationParameterValue = dataValue;
+        vm.refreshCalibrationParameterChart(data);
+      }
 
 
+      vm.calibrationParameterType = 1; //默认标定参数类型
+
+      /**
+       * 初始化标定参数图表
+       * @param deviceinfo
+       * @param calibrationParameterType 标定参数类型
+         */
+      vm.initCalibrationParameter = function (deviceinfo, calibrationParameterType) {
+        vm.calibrationParameterChart = echarts.init(document.getElementById('calibrationParameterChart'));
+        vm.calibrationParameterChart.setOption(vm.calibrationParameterConfig);
+        var restURL = DEVCEINFO_CALIBRATION_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum + "&calibrationParameterType=" + calibrationParameterType;
+        var rspData = serviceResource.restCallService(restURL, "GET");
+        rspData.then(function (data) {
+          if(data.code == -1 && deviceinfo.versionNum == "11") {
+            Notification.error('车辆标定参数为空,请稍后刷新');
+            // 写ECU参数类型
+            var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
+            var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+            setTimeout(function () {
+              // 读ECU参数数据
+              var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
+              var restPromise = serviceResource.restCallService(readURL, "ADD", null);
+            }, 5000);
+          } else if(data.code == 0) {
+            vm.calibrationParameterValue = data.content;
+            var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
+            var num = parameterArrays.length/2;
+            vm.calibrationParameterData = [];
+            for (var i = 0; i < num; i++) {
+              vm.calibrationParameterData.push([Math.round(parameterArrays[i]), Math.round(parameterArrays[i + num])]);
+            }
+            vm.refreshCalibrationParameterChart(vm.calibrationParameterData);
+          }
+        }, function (reason) {
+          Notification.error('获取车辆参数失败');
+          Notification.error(reason.data.message);
+        });
+      };
+
+      /**
+       * MQTT下发标定参数
+       * @param deviceNum 设备号
+       * @param calibrationParameterValue 标定参数值
+       * @param calibrationParameterType 标定参数类型
+         */
+      vm.sendMQTTCalibrationParameters = function (deviceNum, calibrationParameterValue, calibrationParameterType) {
+        if(null == deviceNum || deviceNum == '') {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var type;
+        if(calibrationParameterType == 1) {
+          type = 28;
+        } else if(calibrationParameterType == 2) {
+          type = 29;
+        } else if(calibrationParameterType == 3) {
+          type = 30;
+        } else if(calibrationParameterType == 4) {
+          type = 31;
+        }
+
+        if(null == type) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        vm.sendMQTTWrite(type, deviceNum, calibrationParameterValue);
+      };
 
 
       //battery data
