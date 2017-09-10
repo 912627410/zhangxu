@@ -259,6 +259,7 @@
   "failedToGetSmallExcavatorModel": "读取小挖设备型号参数失败",
   "hour": "小时",
   "mins": "分钟",
+  "sec": "秒",
   "highSpeed": "高速",
   "harSlowMachineTwo": "缓速器2档指示",
   "harSlowMachineThree": "缓速器3档指示",
@@ -752,7 +753,23 @@
   "enableLBS":"使能LBS",
   "faultMasking":"故障屏蔽",
   "shield":"屏蔽",
-  "release":"解除"
+  "release":"解除",
+  "upTotalTime":"上升总时间",
+  "runTotalTime":"总走路时间",
+  "gpsAntenna":"GPS天线",
+  "openCircuit":"开路",
+  "shortCircuit":"短路",
+  "loadWeight":"负载重量",
+  "hostHeight":"平台高度",
+  "currentMode":"当前模式",
+  "walkMode":"行走模式",
+  "liftMode":"升降模式",
+  "median":"中位",
+  "calibrationParameters":"标定参数",
+  "staticNoLoad":"静态空载",
+  "staticFullLoad":"静态满载",
+  "dynamicNoLoad":"动态空载",
+  "dynamicFullLoad":"动态满载"
 
 
 }

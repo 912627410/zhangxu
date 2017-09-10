@@ -54,6 +54,58 @@
             vm.radius=deviceinfo.machine.radius; //设置的半径
         }
 
+        //未标定时,负载重量和平台高度显示为-
+        if(vm.deviceinfo.calibrationStatus == 192) {
+          if(vm.deviceinfo.loadWeight > 100) {
+            vm.deviceinfo.loadWeight = 'Overrange';
+            vm.deviceinfo.hostHeight = 'Overrange';
+          } else {
+            vm.deviceinfo.loadWeight += '%';
+            vm.deviceinfo.hostHeight += '%';
+          }
+        } else {
+          vm.deviceinfo.loadWeight = "-";
+          vm.deviceinfo.hostHeight = "-";
+        }
+
+      /**
+       * PCU状态
+       * 行走模式-右转-左转-中位-前进、后退
+       * 升降模式-中位-举升、下降
+       */
+        if(null != vm.deviceinfo.pcuStatus && vm.deviceinfo.pcuStatus.length == 8) {
+          var pcuStatus = vm.deviceinfo.pcuStatus;
+          if(pcuStatus.substring(1,2) == "0") {
+            if(pcuStatus.substring(4,5) == "0") {
+              if(pcuStatus.substring(5,6) == "0") {
+                if(pcuStatus.substring(6,7) == "0") {
+                  if(pcuStatus.substring(7,8) == "0") {
+                    vm.pcuStatus = languages.findKey('retreat');
+                  } else if(pcuStatus.substring(7,8) == "1") {
+                    vm.pcuStatus = languages.findKey('advance');
+                  }
+                } else if(pcuStatus.substring(6,7) == "1") {
+                  vm.pcuStatus = languages.findKey('median');
+                }
+              } else if(pcuStatus.substring(5,6) == "1") {
+                vm.pcuStatus = languages.findKey('turnLeft');
+              }
+            } else if(pcuStatus.substring(4,5) == "1") {
+              vm.pcuStatus = languages.findKey('turnRight');
+            }
+          } else if(pcuStatus.substring(1,2) == "1") {
+            if(pcuStatus.substring(6,7) == "0") {
+              if(pcuStatus.substring(7,8) == "0") {
+                vm.pcuStatus = languages.findKey('decline');
+              } else if(pcuStatus.substring(7,8) == "1") {
+                vm.pcuStatus = languages.findKey('liftUp');
+              }
+            } else if(pcuStatus.substring(6, 7) == "1") {
+              vm.pcuStatus = languages.findKey('median');
+            }
+          }
+        }
+
         if (vm.deviceinfo.calibrationVisible=='1'){//由于硬件bug,标定状态特定的车改成标定成功。0代表没有bug，1代表有bug，页面需要显示标定成功 by xielong.wang 2017-07-07
           vm.deviceinfo.calibrationStatus= "标定成功";
         }else {
@@ -2119,28 +2171,6 @@
           }
         }
 
-
-
-
-
-        // if(id == "a") {
-        //
-        // }else if(id == "b") {
-        //   if(dataIndex == 0) {
-        //     vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
-        //   } else if (dataIndex == 1) {
-        //     vm.selectParameter.bIndex2 = Math.round(-data[dataIndex][0]);
-        //     vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
-        //   } else if(dataIndex == 2) {
-        //     vm.selectParameter.bIndex3 = Math.round(-data[dataIndex][0]);
-        //     vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
-        //   } else if(dataIndex == 3) {
-        //     vm.selectParameter.bIndex4 = Math.round(-data[dataIndex][0]);
-        //     vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
-        //   } else if(dataIndex == 4) {
-        //     vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
-        //   }
-        // }
         if(name == "快速行走曲线") {
           vm.parameterValue.driveFastCurve = vm.selectParameter;
           vm.refreshParameterChart(vm.parameterTypeList[0]);
@@ -2170,13 +2200,13 @@
               if(data.code == -1 && deviceinfo.versionNum == "11") {
                 Notification.error('车辆参数为空,请稍后刷新');
                 // 写ECU参数类型
-                // var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
-                // var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-                // setTimeout(function () {
-                //   // 读ECU参数数据
-                //   var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
-                //   var restPromise = serviceResource.restCallService(readURL, "ADD", null);
-                // }, 3000);
+                var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
+                var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+                setTimeout(function () {
+                  // 读ECU参数数据
+                  var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
+                  var restPromise = serviceResource.restCallService(readURL, "ADD", null);
+                }, 5000);
               } else if(data.code == 0) {
                 vm.parameterValue = data.content;
                 vm.parameterValue.bBrakeDelay = data.content.bBrakeDelay*100;
@@ -2385,14 +2415,14 @@
         rspData.then(function (data) {
           if(data.code == -1 && deviceinfo.versionNum == "11") {
             Notification.error('车辆标定参数为空,请稍后刷新');
-            // // 写ECU参数类型
-            // var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
-            // var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-            // setTimeout(function () {
-            //   // 读ECU参数数据
-            //   var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
-            //   var restPromise = serviceResource.restCallService(readURL, "ADD", null);
-            // }, 3000);
+            // 写ECU参数类型
+            var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
+            var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+            setTimeout(function () {
+              // 读ECU参数数据
+              var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
+              var restPromise = serviceResource.restCallService(readURL, "ADD", null);
+            }, 5000);
           } else if(data.code == 0) {
             vm.calibrationParameterValue = data.content;
             var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
@@ -2436,17 +2466,6 @@
           return;
         }
         vm.sendMQTTWrite(type, deviceNum, calibrationParameterValue);
-      };
-
-      /*TODO 测试完成删除*/
-      vm.paramWriteRead = function (deviceinfo, id) {
-        var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + id;
-        var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-        setTimeout(function () {
-          // 读ECU参数数据
-          var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
-          var restPromise = serviceResource.restCallService(readURL, "ADD", null);
-        }, 3000);
       };
 
 
