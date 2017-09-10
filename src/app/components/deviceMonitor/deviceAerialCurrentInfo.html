@@ -548,7 +548,7 @@
           </div>
 
           <div class="row" style="padding: 30px 0 10px;">
-            <div class="col-md-12 text-right">
+            <div class="col-md-12 text-right" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
               <button type="button" class="btn btn-warning" ng-click="deviceAerialCurrentInfoController.machineParametersEdit()" presentation-href="dashboard:deviceMonitor:vehicleParameters:edit">{{'edit'|translate}}</button>
               <button type="button" class="btn btn-primary" ng-disabled="deviceAerialCurrentInfoController.machineParametersReadonly" presentation-href="dashboard:deviceMonitor:vehicleParameters:send"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.parameterValue)">{{'send'|translate}}</button>
@@ -665,7 +665,7 @@
               </select>
             </div>
             <div class="col-md-2">
-              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send"
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterValue, deviceAerialCurrentInfoController.calibrationParameterType)">{{'send'|translate}}</button>
             </div>
           </div>
