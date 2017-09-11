@@ -1598,6 +1598,59 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-6" presentation-href="sms:customizedSMS" ng-show={{deviceCurrentInfoCtrl.versionNum=="2002"}}>
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">自定义短信（内部调试）</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="自定义短信（内部调试）"> <i class="fa fa-info" ></i></a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="funcNum" class="col-md-2 control-label text-nowrap">功能码</label>
+                              </div>
+                              <div class="row" presentation-href="sms:customizedSMS">
+                                <div class="col-md-12">
+                                  <input type="text" id="funcNum" class="form-control" placeholder="功能码" name="funcNum" ng-model="deviceCurrentInfoCtrl.funcNum"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label for="customizedData" class="col-md-2 control-label text-nowrap">数据</label>
+                              </div>
+                              <div class="row" presentation-href="sms:customizedSMS">
+                                <div class="col-md-12">
+                                  <input type="text" id="customizedData" class="form-control" placeholder="数据" name="customizedData" ng-model="deviceCurrentInfoCtrl.customizedData"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-3">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceCurrentInfoCtrl.sendCustomizedSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.funcNum,deviceCurrentInfoCtrl.customizedData)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
