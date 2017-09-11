@@ -400,7 +400,7 @@
             y: 'center',
             textStyle: {
               fontWeight: 'normal',
-              color: "rgb(38, 173, 88)",
+              color: "rgb(0,160,152)",
               fontSize: 40
             }
           },
@@ -500,7 +500,7 @@
             y: 'center',
             textStyle: {
               fontWeight: 'normal',
-              color: "rgb(38, 173, 88)",
+              color: "rgb(0, 160,152)",
               fontSize: 12
             }
           },
@@ -515,7 +515,7 @@
               value: data.content.rentalMachineCount,
               itemStyle: {
                 normal: {
-                  color: 'rgba(38, 173, 88,1)',
+                  color: 'rgba(0,160,152,1)',
                   label: {
                     show: false
                   },
