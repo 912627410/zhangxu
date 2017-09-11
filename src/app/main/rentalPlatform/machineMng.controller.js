@@ -125,10 +125,10 @@
      * @param type
      */
     vm.getAlarmCountByType = function (alarmType) {
-      if (alarmType == 4) {//车辆报警单独处理
+     /* if (alarmType == 4) {//车辆报警单独处理
 
         return;
-      }
+      }*/
 
       var url = RENTAL_ALARM_MSG_URL + "?alarmType=" + alarmType;
       var respData = serviceResource.restCallService(url, "GET");
@@ -142,6 +142,9 @@
         }
         if (alarmType == 3) {
           vm.offLineAlarm = msgNum;//离线报警
+        }
+        if (alarmType == 4) {
+          vm.machineAlarm = msgNum;//离线报警
         }
       }, function (reason) {
         Notification.error("获取信息失败");
