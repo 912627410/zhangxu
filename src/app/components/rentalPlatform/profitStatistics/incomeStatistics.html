@@ -130,7 +130,7 @@
       </div>
       <div class="col-md-10" ng-show="incomeStatisticsCtr.machineQuery">
         <div class="forminline" >
-          <label >车型</label>
+          <label >{{'rentalMachineType'|translate}}</label>
           <div class="forminline" style="width: 150px;">
             <select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">
               <option value="1">{{'rentalScissorLift'|translate}}</option>
@@ -142,18 +142,28 @@
 
         <div class="forminline" >
           <label>{{'rentalHeight'|translate}}</label>
-          <select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"
-                  ng-model="incomeStatisticsCtr.rentalMachine.heightTypeId"
-                  ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
-            <option value=""></option>
-          </select>
+
+          <ui-select name="deviceHeightType" ng-model="incomeStatisticsCtr.rentalMachine.heightType" theme="bootstrap" style="display:inline-block;width: 150px;"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
+            </ui-select-choices>
+          </ui-select>
+
         </div>
         <div class="forminline" style="width: 17%">
           <label class="">{{'rentalBrand'|translate}}</label>
-          <select name="machineManufacture" class="form-control forminline " style="width: 150px;" ng-model="incomeStatisticsCtr.rentalMachine.machineManufacture"
-                  ng-options="machineMF.id as machineMF.name for machineMF in incomeStatisticsCtr.machineMFList">
-            <option value=""></option>
-          </select>
+
+          <ui-select name="deviceManufacture" ng-model="incomeStatisticsCtr.rentalMachine.machineManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="machineMF in incomeStatisticsCtr.machineMFList">
+              <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>
+            </ui-select-choices>
+          </ui-select>
         </div>
         <div class="form-inline forminline" style="width: 18%;vertical-align: top;">
           <div class="form-group">
@@ -231,10 +241,10 @@
                 <tr ng-repeat="rentalMachine in $data">
                   <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalMachine.orderEndData | date:'yyyy-MM-dd'}}</td>
                   <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="'id'">{{rentalMachine.licenseId}}</td>
-                  <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="'startDate'">{{rentalMachine.manufacture}}</td>
+                  <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="'startDate'">{{rentalMachine.manufacture  |translate}}</td>
 
-                  <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="'rentalCustomer.name'">{{rentalMachine.heightType }}</td>
-                  <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="'statusDesc'">{{rentalMachine.machineType }}</td>
+                  <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="'rentalCustomer.name'">{{rentalMachine.heightType |translate}}</td>
+                  <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="'statusDesc'">{{rentalMachine.machineType  |translate }}</td>
                   <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'statusDesc'">{{rentalMachine.realIncome }}</td>
                   <td class="text-nowrap" data-title="'rentalIncomeReceivable'|translate" sortable="'statusDesc'">{{rentalMachine.totalAmt*rentalMachine.workDays/rentalMachine.totalDays}}</td>
                 </tr>

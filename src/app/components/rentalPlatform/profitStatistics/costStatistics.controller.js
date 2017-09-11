@@ -10,7 +10,7 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -141,10 +141,10 @@
 
 
         if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
+          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType.id;
         }
         if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-          restCallURL += "&machineManufacture=" +vm.queryManufacture;
+          restCallURL += "&machineManufacture=" +vm.queryManufacture.id;
         }
         if (null != vm.machineType&&vm.machineType != ""){
           restCallURL += "&machineType=" + vm.machineType;
@@ -186,7 +186,7 @@
       legend: {
         orient: 'vertical',
         x: 'left',
-        data:['车辆相关','销售费用','管理费用','财务费用']
+        data:[languages.findKey('rentalMachineCost'),languages.findKey('rentalSaleCost'),languages.findKey('rentalManagementCost'),languages.findKey('rentalFinanceCost')]
       },
       series: [
         {
@@ -195,10 +195,10 @@
           selectedMode: 'single',
           radius: '60%',
           data:[
-            {value:335, name:'车辆相关', selected:true},
-            {value:679, name:'销售费用'},
-            {value:1548, name:'管理费用'},
-            {value:666, name:'财务费用'}
+            {value:335, name:languages.findKey('rentalMachineCost'), selected:true},
+            {value:679, name:languages.findKey('rentalSaleCost')},
+            {value:1548, name:languages.findKey('rentalManagementCost')},
+            {value:666, name:languages.findKey('rentalFinanceCost')}
           ]
         }
       ]

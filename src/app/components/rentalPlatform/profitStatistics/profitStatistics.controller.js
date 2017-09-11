@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     var xAxisDate = [];
@@ -138,7 +138,7 @@
         }
       },
       legend: {
-        data: ['剪叉', '直臂', '曲臂']
+        data: [languages.findKey('rentalScissorLift'), languages.findKey('rentalArticulatingBoomLift'), languages.findKey('rentalBoomLift')]
       },
       grid: {
         left: '3%',
@@ -155,7 +155,7 @@
       },
       series: [
         {
-          name: '剪叉',
+          name: languages.findKey('rentalScissorLift'),
           type: 'bar',
           stack: '总量',
           label: {
@@ -167,7 +167,7 @@
           data: jcProfitDate
         },
         {
-          name: '直臂',
+          name: languages.findKey('rentalArticulatingBoomLift'),
           type: 'bar',
           stack: '总量',
           label: {
@@ -179,7 +179,7 @@
           data: zbProfitDate
         },
         {
-          name: '曲臂',
+          name: languages.findKey('rentalBoomLift'),
           type: 'bar',
           stack: '总量',
           label: {
@@ -234,10 +234,10 @@
         restCallURL += "&endDate=" + $filter('date')(queryEndData,'yyyy-MM-dd');
 
         if (null != vm.queryDeviceHeightType&&vm.queryDeviceHeightType!="") {
-          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType;
+          restCallURL += "&heightTypeId=" +vm.queryDeviceHeightType.id;
         }
         if (null != vm.queryManufacture&&vm.queryManufacture!="") {
-          restCallURL += "&machineManufacture=" +vm.queryManufacture;
+          restCallURL += "&machineManufacture=" +vm.queryManufacture.id;
         }
         if (null != vm.machineType&&vm.machineType != ""){
           restCallURL += "&machineType=" + vm.machineType;
