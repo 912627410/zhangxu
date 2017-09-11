@@ -6,7 +6,7 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-      <li class="active"><i class="fa  fa-user"></i>车辆保养</li>
+      <li class="active"><i class="fa  fa-user"></i>{{'maintenance'|translate}}</li>
     </ol>
   </section>
 
@@ -14,7 +14,7 @@
 
 
     <div class="box-header with-border">
-      <h3 class="box-title">新建保养信息</h3>
+      <h3 class="box-title">{{'newMaintenanceInformation'|translate}}</h3>
     </div>
     <form name="form" class="form-horizontal">
       <div class="modal-body">
@@ -22,11 +22,11 @@
 
           <div class="form-group">
 
-            <label class="col-md-1 control-label">选择车辆</label>
+            <label class="col-md-1 control-label">{{'rentalSelectMachine'|translate}}</label>
             <div class="col-md-2">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="请选择"
+                <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
                        ng-model="newRentalMaintenanceController.machine.licenseId" name="licenseId" readonly
                        validator="required"/>
                 <span class="input-group-btn">
@@ -38,33 +38,33 @@
               </p>
             </div>
 
-            <label  class="col-md-1 control-label">保养依据</label>
+            <label  class="col-md-1 control-label">{{'rentalMaintenanceCertification'|translate}}</label>
             <div class="col-md-2">
               <input type="text" name="reason" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.reason"
-                     placeholder="保养依据"/>
+                     placeholder="{{'rentalMaintenanceCertification'|translate}}"/>
             </div>
-            <label class="col-md-1 control-label">描述</label>
+            <label class="col-md-1 control-label">{{'rentalMaintenanceDescripition'}}</label>
             <div class="col-md-5">
               <input type="text" name="description" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.description"
-                     placeholder="描述"/>
+                     placeholder="{{'rentalMaintenanceDescripition'}}"/>
             </div>
 
 
           </div>
           <div class="form-group">
 
-            <label class="col-md-1 control-label">保养总费用</label>
+            <label class="col-md-1 control-label">{{'rentalTotalMaintenanceCost'|translate}}</label>
             <div class="col-md-2">
               <input type="text" name="totalMaintentanceCost"
                      class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalMaintentanceCost"
-                     placeholder="总保养费用" validator="required"/>
+                     placeholder="{{'rentalTotalMaintenanceCost'|translate}}" validator="required"/>
 
             </div>
 
-            <label  class="col-md-1 control-label">人工总费用</label>
+            <label  class="col-md-1 control-label">{{'rentalTotalLaborCost'|translate}}</label>
             <div class="col-md-2">
               <input type="text" name="totalOperatorCost" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalOperatorCost"
-                     placeholder="总人工费用" validator="required"/>
+                     placeholder="{{'rentalTotalLaborCost'|translate}}" validator="required"/>
             </div>
 
           </div>
@@ -82,17 +82,17 @@
                          ng-click="newRentalMaintenanceController.updateSelection($event,maintenanceList.machineMaintenanceType.id)" ng-model="maintenanceList.checked">
                 </td>
 
-                <td class="text-nowrap" data-title="'保养类别'" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
-                <td class="text-nowrap" data-title="'保养项目'" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
+                <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
+                <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
 
-                <td class="text-nowrap" data-title="'保养费用'" sortable="'deviceinfo.deviceNum'">
+                <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">
                   <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="保养费用"/>
                 </td>
-                <td class="text-nowrap" data-title="'人工费用'" sortable="'engineType.engineName'">
+                <td class="text-nowrap" data-title="'rentalLaborCost'|translate" sortable="'engineType.engineName'">
                   <input type="text" name="operatorCost" class="form-control"  ng-model="maintenanceList.operatorCost" placeholder="人工费用"/>
                 </td>
 
-                <td class="text-nowrap" data-title="'保养时间'" sortable="'deviceinfo.deviceNum'" >
+                <td class="text-nowrap" data-title="'rentalMaintenanceTime'|translate" sortable="'deviceinfo.deviceNum'" >
                   <p class="input-group">
                     <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                            ng-model="maintenanceList.createTime"
@@ -109,12 +109,12 @@
                   </p>
                   <span id="bootstrap"></span>
                 </td>
-                <td class="text-nowrap" data-title="'保养人'" sortable="'deviceinfo.deviceNum'">
+                <td class="text-nowrap" data-title="'rentalMaintenancePerson'|translate" sortable="'deviceinfo.deviceNum'">
                   <input type="text" name="operatorRequiredOnly{{$index}}" message-id="operatorRequiredOnly{{$index}}"
                          class="form-control"  validator="required" ng-model="maintenanceList.operator" placeholder="保养人"/>
                   <span id="operatorRequiredOnly{{$index}}"></span>
                 </td>
-                <td class="text-nowrap" data-title="'状态'" sortable="'state'">
+                <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">
                   <ui-select name="statusRequiredOnly{{$index}}" message-id="statusRequiredOnly{{$index}}"
                              ng-model="maintenanceList.status" theme="bootstrap"
                              ng-disabled="disabled" validator="required">

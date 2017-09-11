@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -18,8 +18,8 @@
     var xAxisDate = [];
     var realComeDate = [];
     var incomeDate = [];
-    vm.queryIncome={machineTypeId:"",
-      heightTypeId:"",
+    vm.queryIncome={machineType:"",
+      heightType:"",
       machineManufacture:""};
 
     /**
@@ -158,13 +158,13 @@
     });
     var option = {
       title: {
-        text: '收入统计'
+        text: languages.findKey('incomeStatistics')
       },
       tooltip : {
         trigger: 'axis'
       },
       legend: {
-        data:['实收','应收']
+        data:[languages.findKey('rentalIncomeReceived'),languages.findKey('rentalIncomeReceivable')]
       },
       toolbox: {
         feature: {
@@ -191,13 +191,13 @@
       ],
       series : [
         {
-          name:'实收',
+          name:languages.findKey('rentalIncomeReceived'),
           type:'line',
           areaStyle: {normal: {}},
           data:realComeDate
         },
         {
-          name:'应收',
+          name:languages.findKey('rentalIncomeReceivable'),
           type:'line',
           areaStyle: {normal: {}},
           data:incomeDate
@@ -326,12 +326,12 @@
           restCallURL += "&machineType=" + rentalMachine.machineType;
         }
 
-        if (null != rentalMachine.heightTypeId&&rentalMachine.heightTypeId!="") {
-          restCallURL += "&heightTypeId=" + rentalMachine.heightTypeId;
+        if (null != rentalMachine.heightType&&rentalMachine.heightType!="") {
+          restCallURL += "&heightTypeId=" + rentalMachine.heightType.id;
         }
 
         if (null != rentalMachine.machineManufacture&&rentalMachine.machineManufacture!="") {
-          restCallURL += "&machineManufacture=" + rentalMachine.machineManufacture
+          restCallURL += "&machineManufacture=" + rentalMachine.machineManufacture.id
         }
 
         var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -368,12 +368,12 @@
           restCallURL += "&machineType=" +rentalMachine.machineType;
         }
 
-        if (null != rentalMachine.heightTypeId&&rentalMachine.heightTypeId!="") {
-          restCallURL += "&heightTypeId=" +rentalMachine.heightTypeId;
+        if (null != rentalMachine.heightType&&rentalMachine.heightType!="") {
+          restCallURL += "&heightTypeId=" +rentalMachine.heightType.id;
         }
 
         if (null != rentalMachine.machineManufacture&&rentalMachine.machineManufacture!="") {
-          restCallURL += "&machineManufacture=" +rentalMachine.machineManufacture;
+          restCallURL += "&machineManufacture=" +rentalMachine.machineManufacture.id;
         }
       }
 
@@ -446,7 +446,7 @@
           }
         },
         series: {
-          name: '实收',
+          name: languages.findKey('rentalIncomeReceived'),
           type: 'line',
           label: {
             emphasis: {

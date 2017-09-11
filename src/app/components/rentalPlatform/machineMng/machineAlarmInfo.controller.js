@@ -56,10 +56,10 @@
      * @param type
      */
     vm.getAlarmCountByType = function (alarmType) {
-      if (alarmType == 4) {//车辆报警单独处理
+      /*if (alarmType == 4) {//车辆报警单独处理
 
         return;
-      }
+      }*/
       var restCallUrl = RENTAL_ALARM_MSG_URL;
 
       if (alarmType != null && alarmType != undefined) {
@@ -77,6 +77,9 @@
         }
         if (alarmType == 3) {
           vm.offLineAlarm = msgNum;//离线报警
+        }
+        if (alarmType == 4) {
+          vm.machineAlarm = msgNum;//离线报警
         }
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
