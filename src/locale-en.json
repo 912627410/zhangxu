@@ -865,6 +865,7 @@
   "nextMaintenanceDate":"Next Maintenance Date",
   "processingAalarm":"Processing Aalarm",
   "processAll":"Deal Select",
-  "processAlarm":"process"
+  "processAlarm":"process",
+  "MachineWorkDetails":"Machine Work Details"
 
 }
