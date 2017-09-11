@@ -162,7 +162,7 @@
     //重置查询框
     vm.reset = function () {
       vm.maintentance = null;
-      vm.machine.licenseId = null;
+      vm.machine = null;
       vm.org=null;
       vm.querySubOrg=false;
     }
