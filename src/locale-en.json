@@ -886,6 +886,11 @@
   "processingAalarm":"Processing Aalarm",
   "processAll":"Deal Select",
   "processAlarm":"process",
-  "MachineWorkDetails":"Machine Work Details"
+  "MachineWorkDetails":"Machine Work Details",
+  "customizeMessageContent":"Customize Message Content",
+  "MessageContent":"Message Content",
+  "SMSReceiver":"SMS Receiver",
+  "Mailorphone":"Mail Or Phone"
+
 
 }

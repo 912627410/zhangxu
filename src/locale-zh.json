@@ -892,7 +892,11 @@
   "processingAalarm":"处理报警",
   "processAll":"处理选中的报警",
   "processAlarm":"处理",
-  "MachineWorkDetails":"机器工作详情"
+  "MachineWorkDetails":"机器工作详情",
+  "customizeMessageContent":"自定义短信内容",
+  "MessageContent":"自定义短信内容",
+  "SMSReceiver":"短信接收人",
+  "Mailorphone":"邮件或手机号"
 
 
 

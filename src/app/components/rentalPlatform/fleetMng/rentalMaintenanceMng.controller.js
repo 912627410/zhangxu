@@ -9,8 +9,13 @@
     .controller('rentalMaintenanceController', rentalMaintenanceController);
 
   /** @ngInject */
-  function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll,rentalService, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL) {
+  function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll,rentalService, serviceResource,NgTableParams,ngTableDefaults,
+                                       Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL,RENTAL_MAINTENANCE_GROUP_BY_STATUS) {
     var vm = this;
+    vm.totalOrders=0;
+    vm.planOrders=0;
+    vm.processOrders=0;
+    vm.fininshOrders=0;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
@@ -162,7 +167,7 @@
     //重置查询框
     vm.reset = function () {
       vm.maintentance = null;
-      vm.machine.licenseId = null;
+      vm.machine = null;
       vm.org=null;
       vm.querySubOrg=false;
     }
@@ -186,6 +191,34 @@
     vm.new=function(){
       $state.go('rental.newMaintenance');
     }
+
+
+    var groupByStatusListPromise = serviceResource.restCallService(RENTAL_MAINTENANCE_GROUP_BY_STATUS,"GET");
+    groupByStatusListPromise.then(function (data) {
+      var groupByStatusList= data.content;
+
+      for(var i=0;i<groupByStatusList.length;i++){
+        var retanlOrderStatus=groupByStatusList[i];
+        console.log(retanlOrderStatus);
+        if(retanlOrderStatus.status==1){ //计划
+          vm.planOrders+=retanlOrderStatus.rentalOrderNumber;
+        }else if(retanlOrderStatus.status==2){ //进行中
+          vm.processOrders+=retanlOrderStatus.rentalOrderNumber;
+        }else{
+          vm.fininshOrders+=retanlOrderStatus.rentalOrderNumber;
+        }
+
+
+        console.log(vm.totalOrders);
+        vm.totalOrders+=retanlOrderStatus.rentalOrderNumber;
+
+        console.log(vm.totalOrders);
+
+      }
+    }, function (reason) {
+      Notification.error('获取状态分组失败');
+    })
+
 
 
   }
