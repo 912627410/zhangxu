@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title">未分配车辆列表
+  <h3 class="modal-title">{{'unUsedMachineList'|translate}}
     <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="orgMachineListMngController.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orgMachineListMngController.batchMoveMachine()">确定</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orgMachineListMngController.batchMoveMachine()">{{'confirm'|translate}}</button>
   </h3>
 </div>
 
@@ -36,7 +36,7 @@
 
       <div class="form-group">
 
-        <label  class="col-md-2 control-label">类型</label>
+        <label  class="col-md-2 control-label">{{'rentalMachineType'|translate}}</label>
         <div class="col-md-2">
           <ui-select name="deviceType" ng-model="orgMachineListMngController.searchConditions.typeId" theme="bootstrap"
                      ng-disabled="disabled">
@@ -47,11 +47,11 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label class="col-md-1 control-label">驱动</label>
+        <label class="col-md-1 control-label">{{'driveType'|translate}}</label>
         <div class="col-md-2">
           <ui-select name="devicePowerType" ng-model="orgMachineListMngController.searchConditions.powerTypeId" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="驱动">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name}}
             </ui-select-match>
             <ui-select-choices repeat="devicePowerType in orgMachineListMngController.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
@@ -63,7 +63,7 @@
 
       <div class="form-group">
 
-        <label class="col-md-2 control-label">高度</label>
+        <label class="col-md-2 control-label">{{'highlyType'|translate}}</label>
         <div class="col-md-2">
           <ui-select name="deviceHeightType" ng-model="orgMachineListMngController.searchConditions.heightTypeId" theme="bootstrap"
                      ng-disabled="disabled">

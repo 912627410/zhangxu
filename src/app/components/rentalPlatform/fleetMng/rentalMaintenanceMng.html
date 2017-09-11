@@ -7,7 +7,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-        <li class="active"><i class="fa  fa-user"></i>车辆保养</li>
+        <li class="active"><i class="fa  fa-user"></i>{{'maintenance'|translate}}</li>
       </ol>
     </section>
     <div class="row info-box-container">
@@ -47,7 +47,7 @@
         <label class="col-md-1 control-label">{{'rentalMachineID'|translate}}</label>
         <div class="col-md-2">
           <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceController.machine.licenseId"
-                 placeholder="车号"/>
+                 placeholder="{{'rentalMachineID'|translate}}"/>
         </div>
 
         <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
@@ -155,7 +155,7 @@
                       ng-click="rentalMaintenanceController.update(maintenance.id)">{{'alter'| translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
-                      ng-click="rentalMaintenanceController.view(maintenance.id)">查看
+                      ng-click="rentalMaintenanceController.view(maintenance.id)">{{'rentalView'|translate}}
               </button>
             </td>
           </tr>

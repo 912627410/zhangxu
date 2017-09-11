@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title">客户列表
+  <h3 class="modal-title">{{'customerList'|translate}}
     <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="orderListMngController.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orderListMngController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">确定</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orderListMngController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
   </h3>
 </div>
 <!-- Main content -->
@@ -12,16 +12,16 @@
 
       <div class="form-group">
 
-        <label class="col-md-1 control-label">订单号</label>
+        <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}</label>
         <div class="col-md-2">
           <input type="text" name="id" class="form-control"  ng-model="orderListMngController.rentalOrder.id"
-                 placeholder="订单号"/>
+                 placeholder="{{'rentalOrderNumber'|translate}}"/>
         </div>
 
-        <label  class="col-md-1 control-label">客户</label>
+        <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}</label>
         <div class="col-md-2">
           <input type="text" name="customerName" class="form-control"  ng-model="orderListMngController.rentalOrder.customerName"
-                 placeholder="订单号"/>
+                 placeholder="{{'rentalCustomer'|translate}}"/>
         </div>
         <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
         <div class="col-md-2">
@@ -40,7 +40,7 @@
       </div>
       <div class="form-group">
 
-        <label class="col-md-1 control-label">开始时间</label>
+        <label class="col-md-1 control-label">{{'startingTime'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
@@ -59,7 +59,7 @@
           <span id="bootstrap"></span>
         </div>
 
-        <label  class="col-md-1 control-label">结束时间</label>
+        <label  class="col-md-1 control-label">{{'endTime'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -74,7 +74,7 @@
           </p>
         </div>
 
-        <label class="col-md-1 control-label">状态</label>
+        <label class="col-md-1 control-label">{{'rentalStatus'|translate}}</label>
         <div class="col-md-2">
           <ui-select name="status" ng-model="orderListMngController.rentalOrder.status" theme="bootstrap"
                      ng-disabled="disabled">
@@ -110,12 +110,12 @@
             <input type="radio" name="rentalOrder.radio"  ng-value="rentalOrder" ng-model="orderListMngController.selectRadio">
           </td>
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
-          <td class="text-nowrap" data-title="'开始时间'" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'结束时间'" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'客户'" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
-          <td class="text-nowrap" data-title="'当前状态'" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
-          <td class="text-nowrap" data-title="'工作地址'" sortable="'statusDesc'">{{rentalOrder.location }}</td>
-          <td class="text-nowrap" data-title="'车辆数量(剪叉/直臂/曲臂)'" sortable="'typeName'">
+          <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
+          <td class="text-nowrap" data-title="'currentState'|translate" sortable="'statusDesc'">{{rentalOrder.statusDesc }}</td>
+          <td class="text-nowrap" data-title="'workAddress'|translate" sortable="'statusDesc'">{{rentalOrder.location }}</td>
+          <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate" >
             {{machine.machineType.typeName}}
             <span ng-if="rentalOrder.jc==null">0</span>
             <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
