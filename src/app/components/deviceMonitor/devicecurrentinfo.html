@@ -341,7 +341,8 @@
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}</td>
 
                     <td>{{'GPSVelocity'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='1'">{{deviceCurrentInfoCtrl.deviceinfo.gpsSpeed | number:2}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='0'"></td>
 
                     <!--定位所用时间-->
                     <td>{{'locateDuration'|translate}}</td>
