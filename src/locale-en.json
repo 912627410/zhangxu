@@ -255,7 +255,7 @@
   "nextPage": "Next page",
   "previousPage": "Previous page",
   "failedToGetSmallExcavatorModel": "Get small excavator parameter failed",
-  "hour": "Hour",
+  "hour": "Hours",
   "mins": "Mins",
   "highSpeed": "High speed",
   "harSlowMachineTwo": "SlowMachineTwo",
@@ -726,7 +726,7 @@
   "machineTypeMng":"MachineTypeMng",
   "SMSstatistics":"SMS statistics",
   "newDevice":"New Device",
-
+  "modifyCustomerInformation":"Modify Customer Information",
 
   "rentalCurrentLocate":"locate",
   "rentalGeo-FenceWarning":"Geo-Fence",
@@ -849,6 +849,7 @@
   "automaticMatching":"Automatic Matching",
   "workAddress":"Work Address",
   "customerList":"Customer List",
+  "unUsedMachineList":"unUsed Machine List",
 
   "越野剪叉式":"Cross cross",
   "自行走剪叉式":"Self-cut fork",
@@ -889,7 +890,16 @@
   "customizeMessageContent":"Customize Message Content",
   "MessageContent":"Message Content",
   "SMSReceiver":"SMS Receiver",
-  "Mailorphone":"Mail Or Phone"
+  "Mailorphone":"Mail Or Phone",
+  "viewFence":"view Fence",
+  "AbnormalAlarmReceivingMachine":"when checked, the machine will receive the alarm information of the electronic fence",
+  "VehicleMaintenance":"Vehicle Maintenance",
+  "viewMaintenanceInfo":"View Maintenance Info",
+  "Machine":"Machine",
+  "MaintenanceBasis":"Maintenance Basis",
+  "ModifyMaintenanceInfo":"Modify maintenance info",
+  "TotalNumbersAndRateRents":"Total Numbers &&   Rate Rents"
+
 
 
 }

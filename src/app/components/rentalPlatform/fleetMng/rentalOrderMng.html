@@ -3,7 +3,7 @@
   <div id="currentState" class="container-fluid">
     <section class="content-header">
       <h1>
-        <small>{{'currentPosition'|translate}}:</small>
+        <small>{{'rentalCurrentLocate'|translate}}:</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-car"></i>{{'rentalMng'| translate}}</a></li>
@@ -138,7 +138,18 @@
         <div class="col-lg-12 table-responsive "><!--表格框-->
           <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <td class="text-nowrap" data-title="'订单号'" sortable="'id'">{{rentalOrder.id}}</td>
+              <td class="text-nowrap" data-header="'selectAllHeader'">
+                <input type="checkbox" ng-checked="rentalOrderMngController.isSelected(machine.id)"
+                       ng-click="rentalOrderMngController.updateSelection($event,rentalOrder.id)"
+                       ng-model="machine.checked">
+              </td>
+              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
+                <a ng-if="rentalOrderMngController.validateOperPermission()" href
+                   ng-click="rentalOrderMngController.updateMachine(machine,'lg')">{{rentalOrder.id}}</a>
+                <span ng-if="!rentalOrderMngController.validateOperPermission()">{{rentalOrder.id}}</span>
+
+              </td>
+              <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>

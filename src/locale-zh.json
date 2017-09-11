@@ -372,7 +372,7 @@
   "workplaneName": "作业面名称",
   "workplaneNO": "作业面编号",
   "TheTotalNumberOfworkplane": "作业面总数",
-  "description": "描述",
+  "descritpion": "描述",
   "loadingPointName": "装料点名称",
   "unloadPointName": "卸料点名称",
   "loadingPointsOfLatitudeAndLongitude": "装料点经/纬度",
@@ -728,6 +728,7 @@
   "machineTypeMng":"车型管理",
   "SMSstatistics":"短信发送统计",
   "newDevice":"新建设备",
+  "modifyCustomerInformation":"修改客户",
 
 
   "rentalCurrentLocate":"当前位置",
@@ -852,6 +853,7 @@
   "AutomaticMatching":"自动匹配",
   "workAddress":"工作地址",
   "customerList":"客户列表",
+  "unUsedMachineList":"未分配车辆列表",
 
 
 
@@ -895,7 +897,15 @@
   "customizeMessageContent":"自定义短信内容",
   "MessageContent":"自定义短信内容",
   "SMSReceiver":"短信接收人",
-  "Mailorphone":"邮件或手机号"
+  "Mailorphone":"邮件或手机号",
+  "viewFence":"查看围栏",
+  "AbnormalAlarmReceivingMachine":" 接收机器位置异常报警(勾选时会收到机器超出电子围栏报警信息)",
+  "VehicleMaintenance":"车辆保养",
+  "viewMaintenanceInfo":"查看保养信息",
+  "Machine":"车辆",
+  "MaintenanceBasis":"保养依据",
+  "ModifyMaintenanceInfo":"修改保养信息",
+  "TotalNumbersAndRateRents":"车辆总数&&出租率"
 
 
 

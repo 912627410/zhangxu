@@ -1,13 +1,13 @@
 <div class="machine-content" resize>
 
 
-  <nav-btn>
+<!--  <nav-btn>
     <nav-title></nav-title>
     <nav-list>
       <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
     </nav-list>
     <nav-overlay></nav-overlay>
-  </nav-btn>
+  </nav-btn>-->
 
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
@@ -81,6 +81,7 @@
         <div class="info-box box-light" style="margin-bottom: 0px;">
           <div class="info-box-content" ng-style="rentalMachineMngCtr.rightBoxTopHeight">
             <div class="middlePicBox">
+              <div class="header">{{'TotalNumbersAndRateRents'|translate}}</div>
               <div class="col-lg-6">
                 <ul>
                   <li class="machineNumlis"><i>{{'rentalTotal'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()" ng-bind="rentalMachineMngCtr.machineCount"></a></span></li>
