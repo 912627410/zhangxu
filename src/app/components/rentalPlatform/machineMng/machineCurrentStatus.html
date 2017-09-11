@@ -68,9 +68,9 @@
           <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum" />
         </div>
         <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'type'|translate}}:</label>
+          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'rentalMachineType'|translate}}:</label>
           <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;padding: 0px;width: 182px;" class="col-lg-8 col-md-8">
-            <ui-select-match allow-clear="true"  placeholder="{{'vehicleType' | translate}}">{{$select.selected.name | translate}}</ui-select-match>
+            <ui-select-match allow-clear="true"  placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}</ui-select-match>
             <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
               <div ng-bind-html="machineType.name | highlight: $select.search | translate"></div>
             </ui-select-choices>

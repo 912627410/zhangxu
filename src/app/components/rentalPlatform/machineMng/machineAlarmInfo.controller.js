@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, $uibModal, serviceResource, languages, commonFactory,
-                                      RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL) {
+                                      RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL,Notification) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
     vm.fenceAlarm = 0;//围栏报警
