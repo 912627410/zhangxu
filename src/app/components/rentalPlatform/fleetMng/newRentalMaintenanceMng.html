@@ -77,10 +77,6 @@
             </script>
             <table ng-table="newRentalMaintenanceController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="maintenanceList in $data">
-                <td class="text-nowrap" data-header="'selectAllHeader'">
-                  <input type="checkbox" ng-checked="newRentalMaintenanceController.isSelected(maintenanceList.machineMaintenanceType.id)"
-                         ng-click="newRentalMaintenanceController.updateSelection($event,maintenanceList.machineMaintenanceType.id)" ng-model="maintenanceList.checked">
-                </td>
 
                 <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
                 <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>

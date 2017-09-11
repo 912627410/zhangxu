@@ -89,7 +89,6 @@
             <td class="text-nowrap" data-title="'rentalLongitude'|translate" sortable="'longitude'">{{rentalOrgFence.longitude }}</td>
             <td class="text-nowrap" data-title="'rentalLatitude'|translate" sortable="'latitude'">{{rentalOrgFence.latitude }}</td>
             <td class="text-nowrap" data-title="'rentalRadius'|translate" sortable="'radius'">{{rentalOrgFence.radius }}</td>
-            <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'statusDesc'">{{rentalOrgFence.location }}</td>
             <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'createTime'">{{rentalOrgFence.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
@@ -100,7 +99,7 @@
               <button type="button" class="btn btn-default btn-xs"
                       ng-click="rentalOrgFenceMngController.view(rentalOrgFence.id)">{{'rentalView'| translate}}
               </button>
-              <button type="button" class="btn btn-danger btn-xs" 
+              <button type="button" class="btn btn-danger btn-xs"
                       ng-click="rentalOrgFenceMngController.delete(rentalOrgFence.id)">{{'rentalDelete'| translate}}
               </button>
             </td>
