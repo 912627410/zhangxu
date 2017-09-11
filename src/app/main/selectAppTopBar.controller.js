@@ -46,7 +46,7 @@
       $rootScope.$state.go('login');
       Notification.success(languages.findKey('successfulExit'));
 
-    }
+    };
 
     /**
      * 切换语言

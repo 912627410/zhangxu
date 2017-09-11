@@ -1,0 +1,439 @@
+<!--数据-->
+<div class="modal-body">
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-6">
+        <span>{{'GSMsignalStrength'|translate}}</span>
+        <uib-progressbar max="100" value="machineMonitorCtrl.deviceInfo.gsmsignalStrength" type="warning"><span style="color:white; white-space:nowrap;">{{machineMonitorCtrl.deviceInfo.gsmsignalStrength}}/100</span></uib-progressbar>
+      </div>
+      <div class="col-md-6">
+        <span>{{'batteryPower'|translate}}</span>
+        <uib-progressbar max="25.6" value="machineMonitorCtrl.deviceInfo.voltage"><span style="color:white; white-space:nowrap;">{{machineMonitorCtrl.deviceInfo.voltage| number : 2}}V/25.6V</span></uib-progressbar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row detailMargin">
+          <table class="table table-striped" ng-init="rowInx=0">
+            <tr>
+              <table class="table table-striped" ng-init="rowInx=0">
+                <caption>{{'deviceBasicInformation'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <td>{{'terminalNumber'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.deviceNum}}</td>
+                  <td>{{'machineNumberAndCarNumber'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machine==null" class="bg-warning text-warning">{{'UnboundMachineCurrent'|translate}} </td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machine!=null" >{{machineMonitorCtrl.deviceInfo.machine.licenseId}}</td>
+                  <td>{{'MachineType'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode!=null && machineMonitorCtrl.deviceInfo.deviceCode>=0 && machineMonitorCtrl.deviceInfo.deviceCode<=15">{{'hydraulicDriveScissors'|translate}}({{machineMonitorCtrl.deviceInfo.deviceCode}})</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode!=null && machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.deviceCode<=31">{{'DcMotorDriveForklift'|translate}}({{machineMonitorCtrl.deviceInfo.deviceCode}})</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null">{{'noData'|translate}}</td>
+                  <!--调整机器代码 by 李小鹏 2016.6.20
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode!=null && machineMonitorCtrl.deviceInfo.deviceCode>=32&& machineMonitorCtrl.deviceInfo.deviceCode<=47">电动驱动型小剪叉车（柯蒂斯方案）({{machineMonitorCtrl.deviceInfo.deviceCode}})</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode!=null && machineMonitorCtrl.deviceInfo.deviceCode>=48&& machineMonitorCtrl.deviceInfo.deviceCode<=63">电动驱动型小剪叉车（ZAPI方案）({{machineMonitorCtrl.deviceInfo.deviceCode}})</td>
+                  -->
+                </tr>
+                <tr>
+                  <td>{{'machineRunningState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machineStatus==1" class="bg-info text-info">{{'work'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machineStatus!=1" class="bg-warning text-warning">{{'notWork'|translate}}</td>
+                  <td>{{'batteryLevelSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.liquidLevelSw==1" class="bg-info text-info">{{'normal'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.liquidLevelSw==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.liquidLevelSw==null">{{'noData'|translate}}</td>
+                  <td>{{'electronicFenceStatus'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machine.fenceStatus=='0'" class="bg-warning text-warning">{{'fenceSetlocationIsAbnormal'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machine.fenceStatus=='1'" class="bg-info text-info">{{'fenceSetlocationIsNormal'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.machine.fenceStatus==null" class="bg-danger text-danger">{{'notSetFence'|translate}}</td>
+                </tr>
+                <tr>
+                  <td>{{'whetherToActivated'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockStatus=='10'" class="bg-info text-info">{{'activated'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockStatus=='00'" class="bg-warning text-warning">{{'inactivated'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockStatus==null ||(machineMonitorCtrl.deviceInfo.lockStatus!='10'&& machineMonitorCtrl.deviceInfo.lockStatus!='00')">{{'noData'|translate}}</td>
+                  <td>{{'positioningState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.locateStatus==1" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.locateStatus!=1" class="bg-warning text-warning">{{'notLocate'|translate}}</td>
+                  <td>{{'latestAlarmCode'|translate}}</td>
+                  <!--报警代码为0时显示为无故障-->
+                  <td ng-if="machineMonitorCtrl.deviceInfo.warningCode!=null && machineMonitorCtrl.deviceInfo.warningCode==0" class="bg-info text-info">{{'noTrouble'|translate }}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.warningCode!=null && machineMonitorCtrl.deviceInfo.warningCode!=0" class="bg-warning text-warning">{{machineMonitorCtrl.deviceInfo.warningCode}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.warningCode==null">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <td>{{'ECUstate'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==0" class="bg-danger text-danger">{{'initialization'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==1" class="bg-info text-info">{{'waitingForTheLink'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==2" class="bg-info text-info">{{'NVMInitialize'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==3" class="bg-info text-info">{{'waitingPlatformInitialization'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==4" class="bg-info text-info">{{'protocolInitialization'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==5" class="bg-info text-info">{{'workingState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==6" class="bg-info text-info">{{'reservedState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==7" class="bg-info text-info">{{'speedRegulation'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==8" class="bg-info text-info">{{'saveState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==9" class="bg-info text-info">{{'limitOperatingState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.ecuStatus==10" class="bg-info text-info">{{'breakLease'|translate}}</td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.ecuStatus==0 || machineMonitorCtrl.deviceInfo.ecuStatus==1 || machineMonitorCtrl.deviceInfo.ecuStatus==2 || machineMonitorCtrl.deviceInfo.ecuStatus==3 || machineMonitorCtrl.deviceInfo.ecuStatus==4 || machineMonitorCtrl.deviceInfo.ecuStatus==5 || machineMonitorCtrl.deviceInfo.ecuStatus==6 || machineMonitorCtrl.deviceInfo.ecuStatus==7 || machineMonitorCtrl.deviceInfo.ecuStatus==8 || machineMonitorCtrl.deviceInfo.ecuStatus==9 || machineMonitorCtrl.deviceInfo.ecuStatus==10)||machineMonitorCtrl.deviceInfo.ecuStatus==null">{{'noData'|translate}}</td>
+                  <td>{{'GPSavailableSatelliteNumber'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.gprssignalStrength}}</td>
+                  <td>{{'GPSvisibleSatelliteNumber'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.gpssignalStrength}}</td>
+                </tr>
+                <tr>
+                  <td>{{'Built-inBatteryVoltage'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.builtInVoltage}}V</td>
+                  <td>{{'totalRunningTimeHour'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.workDuration | convertToMins }}</td>
+                  <td>{{'cylinderPressure'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.oilPressure|number: 2}}MPa</td>
+                </tr>
+                <!--<tr>
+                    <td>{{'GPSVelocity'|translate}}</td>
+                    <td ng-cloak>{{machineMonitorCtrl.deviceInfo.gpsSpeed | number:2}}</td>
+                    <td>GPS信号质量</td>
+                    <td ng-cloak>{{machineMonitorCtrl.deviceInfo.gsmSignal}}</td>
+                </tr>-->
+                <tr>
+                  <td>{{'ECUid'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.ecuID}}</td>
+                  <td>{{'ECUsoftwareVersion'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.ecuSoftVersion}}</td>
+                  <td>{{'PCUsoftwareVersion'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.pcuSoftVersion}}</td>
+                </tr>
+                <tr>
+                  <!--TODO 电池电压 改到电池电量上-->
+                  <!--<td>蓄电池电池组电压</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.voltage==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.voltage!=null">
+                      {{machineMonitorCtrl.deviceInfo.voltage/1000 |number:2}}mV
+                  </td>-->
+                  <td>{{'positioningTime'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{'returnTime'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <td>{{'longitude'|translate}}</td>
+                <td ng-cloak>{{machineMonitorCtrl.deviceInfo.amaplongitudeNum | number:5}}</td>
+                <td>{{'latitude'|translate}}</td>
+                <td ng-cloak>{{machineMonitorCtrl.deviceInfo.amaplatitudeNum | number:5}}</td>
+                <td></td>
+                <td></td>
+                <tr>
+                  <td>{{'currentPosition'|translate}}</td>
+                  <td ng-cloak colspan="5">{{machineMonitorCtrl.deviceInfo.address}}</td>
+                </tr>
+              </table>
+            </tr>
+            <tr>
+              <table class="table table-striped" ng-init="rowInx=0">
+                <caption>{{'deviceInputInformation'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <td>{{'keySwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.key==1" class="bg-info text-info">{{'platformControl'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.key==0" class="bg-warning text-warning">{{'offlineControl'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.key==null">{{'noData'|translate}}</td>
+                  <td>{{'openCoverState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockerStatus=='00'" class="bg-warning text-warning">{{'notOpen'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockerStatus=='11'" class="bg-info text-info">{{'openCover'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.lockerStatus==null" class="bg-danger text-danger">{{'noData'|translate}}</td>
+                  <td>{{'pitProtectionSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.pothole==1" class="bg-info text-info">{{'open'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.pothole==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.pothole==null" class="bg-danger text-danger">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <td>{{'panelRisingOperationSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.chassisUp==1" class="bg-info text-info">{{'open'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.chassisUp!=1" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                  <td>{{'upperLimitSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.upLimit==1" class="bg-info text-info">{{'notReachTheLimit'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.upLimit==0" class="bg-warning text-warning">{{'alreadyReachTheLimit'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.upLimit==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16">{{'leftBrakeCoilState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.leftBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.leftBrake==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || (machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.leftBrake==null)">{{'noData'|translate}}</td>
+                  <!-左刹车线圈状态为空时填充行->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                </tr>
+                <tr>
+                  <td>{{'panelDownOperationSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.chassisDown==1" class="bg-info text-info">{{'open'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.chassisDown==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.chassisDown==null">{{'noData'|translate}}</td>
+                  <td>{{'lowerLimitSwitch'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.downLimit==1" class="bg-info text-info">{{'putAway'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.downLimit==0" class="bg-warning text-warning">{{'raising'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.downLimit==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16">{{'rightBrakeCoilState'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.rightBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.rightBrake==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || (machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.rightBrake==null)">{{'noData'|translate}}</td>
+                  <!--右刹车线圈状态为空时填充行-->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                </tr>
+                <tr>
+                  <td>{{'tiltState'|translate}}</td>
+                  <td class="text-nowrap" ng-switch on="machineMonitorCtrl.deviceInfo.tilt">
+                    <div ng-cloak ng-switch-when="0">{{'tilt'|translate}}</div>
+                    <div ng-cloak ng-switch-when="1">{{'level'|translate}}</div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </tr>
+            <tr>
+              <table class="table table-striped" ng-init="rowInx=0">
+                <caption>{{'deviceOutputInformation'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th style="width:22%">{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <td>{{'advance'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetForward==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetForward==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetForward==null">{{'noData'|translate}}</td>
+                  <td>{{'rise'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetUp==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetUp==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetUp==null">{{'noData'|translate}}</td>
+                  <td>{{'turnRight'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetRigth==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetRigth==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetRigth==null">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <td>{{'retreat'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetReverse==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetReverse==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetReverse==null">{{'noData'|translate}}</td>
+                  <td>{{'decline'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetDown==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetDown==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetDown==null">{{'noData'|translate}}</td>
+                  <td>{{'turnLeft'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetLeft==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetLeft==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetLeft==null">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <!--机器代码 0--15代表液压驱动剪叉车, 16--31代表直流电机驱动剪叉车-->
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16">{{'brake'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetBrakes==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetBrakes==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || (machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetBrakes==null)">{{'noData'|translate}}</td>
+                  <td>{{'speaker'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetHorn==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetHorn==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetHorn==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode<=15">{{'speedValve'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode<=15 && machineMonitorCtrl.deviceInfo.fetParallel==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode<=15 && machineMonitorCtrl.deviceInfo.fetParallel==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || (machineMonitorCtrl.deviceInfo.deviceCode<=15 && machineMonitorCtrl.deviceInfo.fetParallel==null)">{{'noData'|translate}}</td>
+                  <!--速度阀为空时填充行-->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode<=15)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode<=15)"></td>
+                  <!--刹车为空时填充行-->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                </tr>
+                <tr>
+                  <td>{{'pumpEnabled'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetMCE==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetMCE==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetMCE==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16">{{'electricDriveEnabled'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetMCE2==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetMCE2==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.deviceCode==null || (machineMonitorCtrl.deviceInfo.deviceCode>=16 && machineMonitorCtrl.deviceInfo.fetMCE2==null)">{{'noData'|translate}}</td>
+                  <td>{{'buzzer'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetAlarm==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetAlarm==0" class="bg-warning text-warning">{{'no'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetAlarm==null">{{'noData'|translate}}</td>
+                  <!--电驱使能为空时填充行-->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.deviceCode==null || machineMonitorCtrl.deviceInfo.deviceCode>=16)"></td>
+                </tr>
+              </table>
+            </tr>
+            <tr>
+              <table class="table table-striped" ng-init="rowInx=0">
+                <caption>{{'deviceOtherInformation'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <!-- 硬件无解决方案，暂时屏蔽
+                  <td>平台高度</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.hostHeight!=null">{{machineMonitorCtrl.deviceInfo.hostHeight}} 米</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.hostHeight==null">&#45;&#45; 米</td>
+                  <td>0米</td>-->
+                  <td>{{'powerSupplyMode'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.gpsPowerStatus=='00'">{{'outElectric'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.gpsPowerStatus=='01'">{{'inElectric'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.gpsPowerStatus!=null && machineMonitorCtrl.deviceInfo.gpsPowerStatus!='00'&& machineMonitorCtrl.deviceInfo.gpsPowerStatus!='01'">{{'other'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.gpsPowerStatus==null" >{{'noData'|translate}}</td>
+                  <td>{{'terminalSoftwareVersion'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.gpsSoftVersion==null">{{'noData'|translate}}</td>
+                  <td ng-cloak  ng-if="machineMonitorCtrl.deviceInfo.gpsSoftVersion!=null">VER{{machineMonitorCtrl.deviceInfo.gpsSoftVersion}}</td>
+                  <td>{{'terminalHardwareVersion'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.gpsHardVersion==null">{{'noData'|translate}}</td>
+                  <td ng-cloak  ng-if="machineMonitorCtrl.deviceInfo.gpsSoftVersion!=null">VER{{machineMonitorCtrl.deviceInfo.gpsHardVersion}}</td>
+                </tr>
+                <tr>
+                  <td>{{'maximumFastWalkingSpeed'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.highSpeedPercent}}%</td>
+                  <td>{{'maximumSlowWalkingSpeed'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.lowSpeedPercent}}%</td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.fetDown==1 || machineMonitorCtrl.deviceInfo.fetUp==1)&&(machineMonitorCtrl.deviceInfo.fetForward==1 || machineMonitorCtrl.deviceInfo.fetReverse==1)">{{'currentWalkingSpeed'|translate}}</td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.fetForward==1 || machineMonitorCtrl.deviceInfo.fetReverse!=1)&&(machineMonitorCtrl.deviceInfo.fetDown==1 || machineMonitorCtrl.deviceInfo.fetUp==1)">{{'currentRisingSpeed'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.fetForward==1 || machineMonitorCtrl.deviceInfo.fetReverse==1||machineMonitorCtrl.deviceInfo.fetDown==1 || machineMonitorCtrl.deviceInfo.fetUp==1">{{machineMonitorCtrl.deviceInfo.hostSpeed}}</td>
+                  <!--当前行走速度和当前上升速度同时为空时填充行-->
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.fetForward==1 || machineMonitorCtrl.deviceInfo.fetReverse==1|| machineMonitorCtrl.deviceInfo.fetDown==1 || machineMonitorCtrl.deviceInfo.fetUp==1)"></td>
+                  <td ng-if="!(machineMonitorCtrl.deviceInfo.fetForward==1 || machineMonitorCtrl.deviceInfo.fetReverse==1|| machineMonitorCtrl.deviceInfo.fetDown==1 || machineMonitorCtrl.deviceInfo.fetUp==1)"></td>
+                </tr>
+                <tr>
+                  <td>{{'maximumRisingSpeed'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.maxUpSpeedPercent}}%</td>
+                  <td>{{'maximumWalkingSpeedAfterLifting'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.maxStandSpeedPercent}}%</td>
+                  <td>{{'weighingStatus'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.calibrationStatus!=null">{{machineMonitorCtrl.deviceInfo.calibrationStatus}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.calibrationStatus==null">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <td>{{'dataAcquisitionTime'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{'lastAlarmTime'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.warningCode!=0">{{machineMonitorCtrl.deviceInfo.warningTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.warningCode==0"></td>
+                  <td>{{'recordGenerationTime'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                </tr>
+                <tr>
+                  <td>{{'SIMCardNumber'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.sim.phoneNumber}}</td>
+                  <td>{{'pumpMotorSpeed'|translate}}</td>
+                  <td ng-cloak>{{machineMonitorCtrl.deviceInfo.engineRPM}}%</td>
+                  <td>{{'CANcommunicationStatus'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.canStatus!=null && machineMonitorCtrl.deviceInfo.canStatus==0">{{'CANcommunicationInterrupt'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.canStatus!=null && machineMonitorCtrl.deviceInfo.canStatus==1">{{'CANcommunicationNormal'|translate}}</td>
+                  <td ng-cloak ng-if="machineMonitorCtrl.deviceInfo.canStatus==null" >{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <!--TODO 市电电压-->
+                  <td>{{'mainsVoltage'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.voltage==null">{{'noData'|translate}}</td>
+                  <td ng-if="machineMonitorCtrl.deviceInfo.voltage!=null" >{{machineMonitorCtrl.deviceInfo.voltage}}V</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </tr>
+            <tr>
+              <table class="table table-striped" ng-if="machineMonitorCtrl.deviceInfo.pcuStatus">
+                <caption>{{'PCUinformation'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <td>{{'turtleSpeedButton'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:0">
+                    <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                    <div ng-switch-when="1">{{'press'|translate}}</div>
+                  </td>
+                  <td>{{'currentState'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:1">
+                    <div ng-switch-when="0">{{'walk'|translate}}</div>
+                    <div ng-switch-when="1">{{'liftUp'|translate}}</div>
+                  </td>
+                  <td>{{'speakerButton'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:2">
+                    <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                    <div ng-switch-when="1">{{'press'|translate}}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td >{{'enableButton'|translate}}</td>
+                  <td class="text-nowrap" ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:3">
+                    <div ng-cloak ng-switch-when="0">{{'notEnabled'|translate}}</div>
+                    <div ng-cloak ng-switch-when="1">{{'hasEnabled'|translate}}</div>
+                  </td>
+                  <td>{{'turnRight'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:4">
+                    <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                    <div ng-switch-when="1">{{'press'|translate}}</div>
+                  </td>
+                  <td>{{'turnLeft'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:5">
+                    <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                    <div ng-switch-when="1">{{'press'|translate}}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{'handleCenter'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:6">
+                    <div ng-switch-when="0">{{'no'|translate}}</div>
+                    <div ng-switch-when="1">{{'yes'|translate}}</div>
+                  </td>
+                  <td>{{'direction'|translate}}</td>
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:7">
+                    <div ng-switch-when="0">{{'retreat'|translate}}</div>
+                    <div ng-switch-when="1">{{'advance'|translate}}</div>
+                  </td>
+                  <td>{{'handleAnalog'|translate}}</td>
+                  <!--该值有符号，后退时-127-->
+                  <td ng-switch on="machineMonitorCtrl.deviceInfo.pcuStatus | limitTo:1:7">
+                    <div ng-switch-when="0">{{machineMonitorCtrl.deviceInfo.handleAnalog - 127}}</div>
+                    <div ng-switch-when="1">{{machineMonitorCtrl.deviceInfo.handleAnalog}}</div>
+                  </td>
+                </tr>
+              </table>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

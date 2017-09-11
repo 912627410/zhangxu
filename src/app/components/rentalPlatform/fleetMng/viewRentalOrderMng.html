@@ -1,0 +1,111 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <!--<section class="content-header">-->
+    <!--<h1>-->
+      <!--{{'customerInfo'|translate}}-->
+      <!--<small></small>-->
+    <!--</h1>-->
+  <!--</section>-->
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">{{'rentalOrderDetail'|translate}}</h3>
+    </div>
+    <form name="newrentalOrderForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}</label>
+              <div class="col-md-5">
+                {{viewRentalOrderController.customer.name}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'amount'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.totalAmt}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'deposit'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.deposit}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.payType}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'startingTime'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.startDate | date:'yyyy-MM-dd'}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'endTime'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.endDate | date:'yyyy-MM-dd'}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.jc}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.zb}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.qb}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrderController.rentalOrder.description}}
+              </div>
+            </div>
+
+            <!--<div class="form-group">-->
+              <!--<label class="col-sm-3 control-label"></label>-->
+              <!--<div class="col-sm-5">-->
+                <!--<label>-->
+                  <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="viewRentalOrderController.locationAlarmReceiverChk" id="locationAlarmReceiver" disabled="disabled" >-->
+                  <!--{{'AbnormalAlarmReceivingMachine'|translate}}-->
+                <!--</label>-->
+              <!--</div>-->
+            <!--</div>-->
+
+            <div class="form-group">
+              <button class="btn btn-warning" type="button" ng-click="viewRentalOrderController.cancel()">
+                {{'cancel'|translate}}
+              </button>
+            </div>
+
+          </div>
+        </div>
+    </form>
+    <div class="box-footer">
+
+    </div>
+
+
+  </div>
+
+
+</div>

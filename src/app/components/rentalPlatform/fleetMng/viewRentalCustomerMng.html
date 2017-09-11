@@ -1,0 +1,96 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <section class="content-header">
+    <h1>
+      {{'customerInfo'|translate}}
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">{{'customerInfo'|translate}}</h3>
+    </div>
+    <form name="newrentalCustomerForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'name'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.name}}
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalLinkman'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.contacts}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalCustomerPosition'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.title}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalTel'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.tel}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalPhoneNumber'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.mobile}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalMail'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.email}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'address'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.address}}
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalPostcode'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.postcode}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'organisation'|translate}}</label>
+            <div class="col-md-5">
+              {{viewRentalCustomerController.org.label}}
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
+            <div class="col-sm-5">
+              {{viewRentalCustomerController.rentalCustomer.description}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="box-footer">
+      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="viewRentalCustomerController.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="viewRentalCustomerController.cancel()">{{'cancel'|translate}}</button>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>

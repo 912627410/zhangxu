@@ -301,7 +301,16 @@
   <div class="row">
   </div>
   <div class="box-footer">
-    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+    <uib-pagination total-items="monitorCtrl.page.totalElements"
+                    ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)"
+                    max-size="15"
+                    ng-model="monitorCtrl.deviceData_pagenumber"
+                    items-per-page="monitorCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="{{'pagingHomePage' | translate}}"
+                    last-text="{{'lastPage'|translate}}"
+                    next-text="{{'nextPage'|translate}}"
+                    previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
   <!-- Main row -->
 </section><!-- /.content -->

@@ -1,0 +1,39 @@
+<div class="modal-header modal-header-padding">
+  <div class="modal-title">
+    <div class="modal-title-text">{{'processingAalarm'|translate}}</div>
+    <div class="modal-title-btn">
+      <div ng-click="vm.cancel()"><i class="fa fa-times" aria-hidden="true"></i></div>
+    </div>
+  </div>
+</div>
+<div class="row modal-body">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-3 control-label " style="text-align: center">{{'description'|translate}}</label>
+      <div class="col-sm-9" >
+        <textarea class="form-control" rows="3" placeholder="{{'description'|translate}}" style="width: 75%!important;"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label "  style="text-align: center">{{'MessageContent'|translate}}</label>
+      <div class="col-sm-9">
+        <input type="text"  class="form-control ng-pristine ng-valid ng-touched"
+               placeholder="{{'customizeMessageContent'|translate}}"  style="width: 75%!important;">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label "  style="text-align: center">{{'SMSReceiver'|translate}}</label>
+      <div class="col-sm-9">
+        <input type="text"  class="form-control ng-pristine ng-valid ng-touched"
+               placeholder="{{'Mailorphone'|translate}}"  style="width: 75%!important;">
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer ng-scope">
+  <button class="btn btn-primary" type="button">{{'processAlarm'| translate}}</button>
+  <button class="btn btn-warning" type="button">{{'reset'| translate}}</button>
+</div>

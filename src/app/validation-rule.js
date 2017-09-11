@@ -21,6 +21,8 @@
       //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
       numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
+      telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
+      postcode:/^[1-9]\d{5}(?!\d)$/,
 
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
@@ -75,6 +77,14 @@
       numberAndCharForPass: {
         error: 'numberAndCharForPass',
         success: ''
+      },
+      telephoneNo: {
+        error: 'telephoneNo',
+        success: ''
+      },
+      postcode: {
+        error: 'postcodes',
+        success: ''
       }
     };
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);
@@ -92,29 +102,6 @@
       }
     });
 
-    $validationProvider.setExpression({
-        abc: function(value, scope, element, attrs) {
-
-          var params = {deviceNum: "c"};
-          return $http.get(
-            "rest/device/fetchUnused",
-            {params: params}
-          ).then(function(response) {
-            alert(response.data);
-          });
-
-
-          $validationProvider.setDefaultMsg({
-            abc: {
-              error: 'Foo must equal ' + attrs.validfoo
-            }
-          });
-
-          //alert(attrs.validfoo);
-          return value === attrs.validfoo;
-        }
-      }
-    );
 
     $validationProvider.setExpression({
         mock: function(value, scope, element, attrs) {
@@ -133,8 +120,8 @@
 
 
     $validationProvider.setErrorHTML(function (msg) {
-      //return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
-      return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
+      return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      //return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
 
     });
 

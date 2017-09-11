@@ -1,0 +1,95 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <section class="content-header">
+    <h1>
+      {{'customerInfo'|translate}}
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">{{'viewFence'|translate}}</h3>
+    </div>
+    <form name="newrentalOrgFenceForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+          <div class="box-body col-sm-6">
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalOrganization'|translate}}</label>
+              <div class="col-md-5">
+                {{viewRentalOrgFenceController.rentalOrgFence.org.label}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalLongitude'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrgFenceController.rentalOrgFence.longitude}}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'rentalLatitude'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrgFenceController.rentalOrgFence.latitude}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'radius'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrgFenceController.rentalOrgFence.radius}}
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
+              <div class="col-sm-5">
+                {{viewRentalOrgFenceController.rentalOrgFence.description}}
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <button class="btn btn-warning" type="button" ng-click="viewRentalOrgFenceController.cancel()">
+                {{'cancel'|translate}}
+              </button>
+            </div>
+
+          </div>
+          <div class="map-body col-sm-6">
+
+            <div class="row">
+              <div class="col-md-8">
+                <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+                {{'longitude'|translate}}:<span
+                style="color: red;"> {{viewRentalOrgFenceController.amaplongitudeNum}}</span>
+                &nbsp;&nbsp;
+                {{'latitude'|translate}}:<span style="color: red;"> {{viewRentalOrgFenceController.amaplatitudeNum}}</span>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="text-nowrap">{{'selectAddress'|translate}}:</label>
+                <span style="color: red;"> {{viewRentalOrgFenceController.selectAddress}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="box-body" id="newOrderMap" ng-style="viewRentalOrgFenceController.baseBoxMapContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="box-footer">
+
+    </div>
+
+
+  </div>
+
+
+</div>

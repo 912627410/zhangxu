@@ -104,6 +104,27 @@
       });
     }
 
+    /**
+     *
+     * @param restCallURL url条件
+     * @param searchConditions 搜索条件
+     */
+    factory.processSearchConditions=function (restCallURL, searchConditions) {
+      for (var prop in searchConditions){
+        var value = searchConditions[prop];
+        if(typeof value=='string'){
+          if (value.replace(/(^\s*)|(\s*$)/g,"")==''){
+              value=null;
+          }
+        }
+        if (value==null || value==undefined ){
+          continue;
+        }
+        restCallURL =restCallURL +"&"+prop+"="+value;
+      }
+      return restCallURL;
+    }
+
     return factory;
   })
 })();

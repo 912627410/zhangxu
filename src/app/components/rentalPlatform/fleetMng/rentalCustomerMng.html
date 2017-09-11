@@ -1,0 +1,114 @@
+<div class="machine-content" resize>
+  <!--currentState begin-->
+  <div id="currentState" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'rentalCurrentLocate'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
+        <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
+      </ol>
+    </section>
+    <div class="row info-box-container">
+      <div class="col-lg-2 col-md-2">
+        <div class="info-card">
+          <div class="info-title">{{'rentalTotal'|translate}}</div>
+          <div class="info-data">{{rentalCustomerMngController.page.totalElements}}</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="container-fluid table-wrapper" style="margin-top: 15px">
+      <div class="row info-box-container">
+        <form name="queryForm" class="form-horizontal" role="form">
+
+          <div class="form-group">
+
+            <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}</label>
+            <div class="col-md-1">
+              <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
+                     placeholder="{{'rentalCustomerName'|translate}}"/>
+            </div>
+
+            <label class="col-md-1 control-label">{{'rentalPhoneNumber'|translate}}</label>
+            <div class="col-md-1">
+              <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
+                     placeholder="{{'rentalPhoneNumber'|translate}}" />
+            </div>
+
+            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
+            <div class="col-md-2">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" required/>
+                <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+
+            <div class="col-md-2">
+              <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+              <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
+            </div>
+            <div class="col-md-2">
+
+              <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
+              </button>
+              <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
+            </div>
+
+            <div class="col-md-1">
+
+              <button class="btn btn-primary" type="button"
+                      ng-click="rentalCustomerMngController.new()">{{'rentalAdd'|translate}}
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="row" ng-style="rentalCustomerMngController.baseBoxContainer">
+
+        <div class="col-lg-12 table-responsive "><!--表格框-->
+          <table ng-table="rentalCustomerMngController.tableParams" class="table table-condensed table-bordered text-nowrap">
+            <tr ng-repeat="customer in $data">
+              <td class="text-nowrap" data-title="'rentalCustomerName'|translate" sortable="'name'">{{customer.name}}</td>
+              <td class="text-nowrap" data-title="'rentalLinkman'|translate" sortable="'contacts'">{{customer.contacts}}</td>
+              <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'title'">{{customer.title}}</td>
+              <td class="text-nowrap" data-title="'rentalTel'|translate" sortable="'tel'">{{customer.tel}}</td>
+              <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'mobile'">{{customer.mobile}}</td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'address'">{{customer.address}}</td>
+              <td class="text-nowrap" data-title="'rentalPostcode'|translate" sortable="'postcode'">{{customer.postcode}}</td>
+              <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{customer.org.label}}</td>
+              <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'createTime'">{{customer.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'updateTime'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'rentalOperations'|translate">
+
+                <button type="button" class="btn btn-danger btn-xs"
+                        ng-click="rentalCustomerMngController.update(customer.id)">{{'rentalEdit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="rentalCustomerMngController.view(customer.id)">{{'rentalView'|translate}}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-12"><!--分页框-->
+
+          <uib-pagination total-items="rentalCustomerMngController.page.totalElements"
+                          ng-change="rentalCustomerMngController.query(rentalCustomerMngController.pageNumber-1,null,null,null)"
+                          max-size="5" ng-model="rentalCustomerMngController.pageNumber" items-per-page="rentalCustomerMngController.page.size"
+                          class="pagination-sm" boundary-links="true" rotate="false"
+                          first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--currentState end-->
+</div>

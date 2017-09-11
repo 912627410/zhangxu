@@ -1,0 +1,221 @@
+<div class="machine-content" resize>
+ <!-- <nav-btn>
+    <nav-title></nav-title>
+    <nav-list>
+      <nav-item ng-click="machineAlarmInfoCtr.gotoView(item.title)"></nav-item>
+    </nav-list>
+    <nav-overlay></nav-overlay>
+  </nav-btn>-->
+  <!--alarmInfo begin-->
+  <div id="alarmInfo" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small>{{'rentalCurrentLocate'|translate}}:</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+        <li class="active"><i class="fa fa-bell-o "></i>{{'alarmInformation'| translate}}</li>
+      </ol>
+    </section>
+    <div class="row info-box-container">
+
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-left-text" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)" style="cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">{{'rentalGeo-FenceWarning'|translate}}</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
+          </div>
+          <div class="miniChart"></div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-left-text" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)" style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">{{'rentalEquipmentWarning'|translate}}</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
+          </div>
+          <div class="miniChart"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-left-text" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"  style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">{{'rentalMaintenanceReminder'|translate}}</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
+          </div>
+          <div class="miniChart"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="info-box-left-text" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"  style=" cursor:pointer;">
+            <span class="info-box-text info-box-left-text-top">{{'rentalOff-lineReminder'|translate}}</span>
+            <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
+          </div>
+          <div class="miniChart"></div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row base-box-container" ng-style="machineAlarmInfoCtr.baseBoxContainer"
+         style="margin-left: 0px!important;margin-right: 0px!important;">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-4">
+          <div class="box base-left-map-box-container">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{'type'|translate}}</h3>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.all==1]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(null)"><i class="fa fa-check-square-o"></i>{{'rentalAllAlarmMsg'|translate}}
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.allNotificationNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==false]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(false)"><i class="fa fa-envelope-o"></i>{{'rentalAllUndo'|translate}}
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.noProcessNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==true]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(true)"><i class="fa fa-envelope-o"></i>{{'rentalAllDone'|translate}}
+                    <span class="label label-default pull-right">{{machineAlarmInfoCtr.processedNumber}}</span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==1]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><i class="fa fa-map"></i>{{'rentalGeo-FenceWarning'|translate}}
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==4]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><i class="fa fa-cog"></i> {{'rentalEquipmentWarning'|translate}}
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==2]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><i class="fa fa-cog"></i>{{'rentalMaintenanceReminder'|translate}}
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
+                  </a>
+                </li>
+                <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.alarmType==3]">
+                  <a style="cursor: hand;cursor: pointer;" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><i class="fa fa-unlink"></i>{{'rentalOff-lineReminder'|translate}}
+                    <span class="label label-default pull-right" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-8">
+          <div class="box base-left-map-box-container table-wrapper">
+            <div class="box-header with-border">
+              <div class="row">
+                <div class="col-lg-2">
+                  <h3 class="box-title">{{'rentalMsgContent'|translate}}</h3>
+                </div>
+                <div class="col-lg-10">
+                  <div class="box-tools">
+                    <div class="row form-group table-form-group"><!--搜索框-->
+                      <div class="col-lg-12 col-md-12">
+                        <div class="tab-content-search-box">
+                          <label>{{'rentalMachineID'|translate}}:</label>
+                          <input class="input-sm input-search" placeholder="{{'rentalMachineID'|translate}}"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.licenseId"/>
+                        </div>
+                        <div class="tab-content-search-box">
+                          <label>{{'rentalDeviceID'|translate}}:</label>
+                          <input class="input-sm input-search" placeholder="{{'rentalDeviceID'|translate}}"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.deviceNum"/>
+                        </div>
+                        <div class="tab-content-search-box">
+                          <label>{{'rentalMsgContent'|translate}}:</label>
+                          <input class="input-sm input-search" placeholder="{{'rentalMsgContent'|translate}}"
+                                 ng-model="machineAlarmInfoCtr.searchConditions.content"/>
+                        </div>
+                        <div class="search-box-button">
+                          <button class="btn btn-primary" type="button"
+                                  ng-click="machineAlarmInfoCtr.getMsgByAlarmType(0,machineAlarmInfoCtr.pageSize,null,machineAlarmInfoCtr.searchConditions)">{{'query'|translate}}
+                          </button>
+                          <button class="btn btn-danger" type="button"
+                                  ng-click="machineAlarmInfoCtr.searchConditions=null">{{'reset'|translate}}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <div class="mailbox-controls">
+                <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.select=!machineAlarmInfoCtr.select;machineAlarmInfoCtr.selectAll(machineAlarmInfoCtr.select)">
+                  {{'checkAll'|translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.reverse()">
+                  {{'Reverse'|translate}}
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.processAll()">
+                    {{'processAll'|translate}}
+                  </button>
+                </div>
+                <!--<div ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index"> {{notification.state}}</div>-->
+
+              </div>
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover">
+                  <tbody>
+                  <th>{{'select'|translate}}</th>
+                  <th>{{'deviceNum'|translate}}</th>
+                  <th>{{'machineNumberAndCarNumber'|translate}}</th>
+                  <th>{{'content'|translate}}</th>
+                  <th>{{'generateTime'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'operation'|translate}}</th>
+                  <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index">
+                    <td><input type="checkbox"  ng-model="notification.state" ></td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.licenseId}}</a></td>
+                    <td class="mailbox-subject">{{notification.content}}</td>
+                    <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>
+                      <button type="button" class="btn btn-warning btn-xs" ng-if="notification.processStatus == false" >
+                        <span>{{'undo'|translate}}</span>
+                      </button>
+                      <button type="button" class="btn btn-success btn-xs" ng-if="notification.processStatus == true" >
+                        <span>{{'rentaldone'|translate}}</span>
+                      </button>
+                    </td>
+                    <td >
+                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer no-padding">
+              <div class="mailbox-controls">
+                <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                                total-items="machineAlarmInfoCtr.totalElements"
+                                ng-change="machineAlarmInfoCtr.getMsgByAlarmType(machineAlarmInfoCtr.currentPage-1,machineAlarmInfoCtr.pageSize,machineAlarmInfoCtr.totalElements,machineAlarmInfoCtr.searchConditions)"
+                                max-size="10"
+                                ng-model="machineAlarmInfoCtr.currentPage"
+                                items-per-page="machineAlarmInfoCtr.pageSize"
+                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                </uib-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--alarmInfo end-->
+</div>
