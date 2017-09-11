@@ -14,16 +14,16 @@
 
 
     <div class="box-header with-border">
-      <h3 class="box-title">新建客户</h3>
+      <h3 class="box-title">{{'newCustomer'|translate}}</h3>
     </div>
     <form name="newrentalCustomerForm2" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">名称(<span class="text-red">*</span>)</label>
+            <label class="col-sm-3 control-label">{{'name'|translate}}(<span class="text-red">*</span>)</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" placeholder="名称"
+              <input type="text" class="form-control" placeholder="{{'name'|translate}}"
                      ng-model="newRentalCustomerController.rentalCustomer.name" name="name" typeahead-show-hint="true"
                      validator="required" />
             </div>

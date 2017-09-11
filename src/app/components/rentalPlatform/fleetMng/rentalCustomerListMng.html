@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">客户列表
+  <h3 class="modal-title">{{'customerList'|translate}}
   <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="customerListController.cancel()">{{'close'|translate}}</button>
   <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
   </h3>
@@ -82,11 +82,11 @@
             </td>
 
             <td class="text-nowrap" data-title="'id'" sortable="'id'">{{customer.id}}</td>
-            <td class="text-nowrap" data-title="'名称'" sortable="'name'">{{customer.name}}</td>
-            <td class="text-nowrap" data-title="'联系人'" sortable="'contacts'">{{customer.contacts}}</td>
-            <td class="text-nowrap" data-title="'职位'" sortable="'title'">{{customer.title}}</td>
-            <td class="text-nowrap" data-title="'电话'" sortable="'engineType.engineName'">{{customer.tel}}</td>
-            <td class="text-nowrap" data-title="'手机'" sortable="'state'">{{customer.mobile}}</td>
+            <td class="text-nowrap" data-title="'name'|translate" sortable="'name'">{{customer.name}}</td>
+            <td class="text-nowrap" data-title="'rentalLinkman'|translate" sortable="'contacts'">{{customer.contacts}}</td>
+            <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'title'">{{customer.title}}</td>
+            <td class="text-nowrap" data-title="'tellPhoneNumber'|translate" sortable="'engineType.engineName'">{{customer.tel}}</td>
+            <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'state'">{{customer.mobile}}</td>
             <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{customer.org.label}}</td>
           </tr>
         </table>
