@@ -870,7 +870,8 @@
   "nextMaintenanceDate":"下次保养日期",
   "setFence":"设置围栏",
   "processingAalarm":"处理报警",
-  "processAll":"处理选中的报警"
+  "processAll":"处理选中的报警",
+  "processAlarm":"处理"
 
 
 

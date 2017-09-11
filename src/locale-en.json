@@ -864,5 +864,7 @@
   "lastMaintenanceDate":"Last Maintenance Date",
   "nextMaintenanceDate":"Next Maintenance Date",
   "processingAalarm":"Processing Aalarm",
-  "processAll":"Deal Select"
+  "processAll":"Deal Select",
+  "processAlarm":"process"
+
 }
