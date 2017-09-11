@@ -69,17 +69,17 @@
               <table ng-table="viewRentalMaintenanceController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="maintenanceList in $data">
 
-                  <td class="text-nowrap" data-title="{{'rentalMaintenanceCategories'|translate}}" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
-                  <td class="text-nowrap" data-title="{{'rentalMaintenanceItems'|translate}}" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
+                  <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
+                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
 
-                  <td class="text-nowrap" data-title="{{'rentalMaintenanceCost'|translate}}" sortable="'deviceinfo.deviceNum'">
+                  <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">
                     <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="{{'rentalMaintenanceCost'|translate}}" readonly/>
                   </td>
-                  <td class="text-nowrap" data-title="{{'rentalLaborCost'|translate}}" sortable="'engineType.engineName'">
+                  <td class="text-nowrap" data-title="'rentalLaborCost'|translate" sortable="'engineType.engineName'">
                     <input type="text" name="operatorCost" class="form-control"  ng-model="maintenanceList.operatorCost" placeholder="{{'rentalLaborCost'|translate}}" readonly/>
                   </td>
 
-                  <td class="text-nowrap" data-title="{{'rentalMaintenanceTime'|translate}}" sortable="'deviceinfo.deviceNum'" >
+                  <td class="text-nowrap" data-title="'rentalMaintenanceTime'|translate" sortable="'deviceinfo.deviceNum'" >
                     <p class="input-group">
                       <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                              ng-model="maintenanceList.createTime"
@@ -92,12 +92,12 @@
                     </p>
                     <span id="bootstrap"></span>
                   </td>
-                  <td class="text-nowrap" data-title="{{'rentalMaintenancePerson'|translate}}" sortable="'deviceinfo.deviceNum'">
+                  <td class="text-nowrap" data-title="'rentalMaintenancePerson'|translate" sortable="'deviceinfo.deviceNum'">
                     <input type="text" name="operatorRequiredOnly{{$index}}" message-id="operatorRequiredOnly{{$index}}"
                            class="form-control"  validator="required" ng-model="maintenanceList.operator" placeholder="{{'rentalMaintenancePerson'|translate}}" readonly/>
                     <span id="operatorRequiredOnly{{$index}}"></span>
                   </td>
-                  <td class="text-nowrap" data-title="{{'state'|translate}}" sortable="'state'">
+                  <td class="text-nowrap" data-title="'state'|translate" sortable="'state'">
                     <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.statusDesc" placeholder="{{'state'|translate}}" readonly/>
                   </td>
 
