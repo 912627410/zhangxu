@@ -890,7 +890,15 @@
   "customizeMessageContent":"Customize Message Content",
   "MessageContent":"Message Content",
   "SMSReceiver":"SMS Receiver",
-  "Mailorphone":"Mail Or Phone"
+  "Mailorphone":"Mail Or Phone",
+  "viewFence":"view Fence",
+  "AbnormalAlarmReceivingMachine":"when checked, the machine will receive the alarm information of the electronic fence",
+  "VehicleMaintenance":"Vehicle Maintenance",
+  "viewMaintenanceInfo":"View Maintenance Info",
+  "Machine":"Machine",
+  "MaintenanceBasis":"Maintenance Basis",
+  "ModifyMaintenanceInfo":"Modify maintenance info"
+
 
 
 }

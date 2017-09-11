@@ -1,7 +1,7 @@
 <div class="machine-content" xmlns="http://www.w3.org/1999/html">
   <section class="content-header">
     <h1>
-      客户信息
+      {{'customerInfo'|translate}}
       <small></small>
     </h1>
   </section>
@@ -10,17 +10,17 @@
 
 
     <div class="box-header with-border">
-      <h3 class="box-title">新建客户</h3>
+      <h3 class="box-title">{{'newCustomer'|translate}}</h3>
     </div>
     <form name="newrentalOrderForm2" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
             <div class="form-group">
-              <label class="col-sm-3 control-label">客户名字</label>
+              <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}</label>
               <div class="col-md-5">
                 <p class="input-group">
 
-                  <input type="text" id="org" class="form-control" placeholder="请选择"
+                  <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
                          ng-model="updateRentalOrderController.customer.name" name="customer" readonly
                          validator="required"/>
                   <span class="input-group-btn">
@@ -33,34 +33,34 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">金额</label>
+              <label class="col-sm-3 control-label">{{'amount'|translate}}</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="金额"
+                <input type="text" class="form-control" placeholder="{{'amount'|translate}}"
                        ng-model="updateRentalOrderController.rentalOrder.totalAmt" name="totalAmt"
                        typeahead-show-hint="true"/>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">定金</label>
+              <label class="col-sm-3 control-label">{{'deposit'|translate}}</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="定金"
+                <input type="text" class="form-control" placeholder="{{'deposit'|translate}}"
                        ng-model="updateRentalOrderController.rentalOrder.deposit" name="deposit"
                        typeahead-show-hint="true"/>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">付款方式</label>
+              <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}</label>
               <div class="col-sm-5">
-                <input type="text" class="form-control" placeholder="付款方式"
+                <input type="text" class="form-control" placeholder="{'paymentMethod'|translate}}"
                        ng-model="updateRentalOrderController.rentalOrder.payType" name="payType"
                        typeahead-show-hint="true"/>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">开始时间</label>
+              <label class="col-sm-3 control-label">{{'startingTime'|translate}}</label>
               <div class="col-sm-5">
                 <p class="input-group">
                   <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">结束时间</label>
+              <label class="col-sm-3 control-label">{{'endTime'|translate}}</label>
               <div class="col-sm-5">
                 <p class="input-group">
                   <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -99,7 +99,7 @@
 
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">剪叉数量</label>
+              <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}</label>
               <div class="col-sm-5">
                 <input type="text" class="form-control"
                        ng-model="updateRentalOrderController.rentalOrder.jc"
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">直臂数量</label>
+              <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}</label>
               <div class="col-sm-5">
                 <input type="text" class="form-control"
                        ng-model="updateRentalOrderController.rentalOrder.zb"
@@ -117,7 +117,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">曲臂数量</label>
+              <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}</label>
               <div class="col-sm-5">
                 <input type="text" class="form-control" placeholder="0" name="qb"
                        ng-model="updateRentalOrderController.rentalOrder.qb"
@@ -126,9 +126,9 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-3 control-label">描述</label>
+              <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
               <div class="col-sm-5">
-              <textarea class="form-control" placeholder="描述"
+              <textarea class="form-control" placeholder="{{'descritpion'|translate}}"
                         ng-model="updateRentalOrderController.rentalOrder.description" name="description"
                         typeahead-show-hint="true">
 
@@ -141,7 +141,7 @@
               <div class="col-sm-5">
                 <label>
                   <input type="checkbox" name="locationAlarmReceiver" ng-model="updateRentalOrderController.locationAlarmReceiverChk" id="locationAlarmReceiver">
-                  接收机器位置异常报警(勾选时会收到机器超出电子围栏报警信息)
+                  {{'AbnormalAlarmReceivingMachine'|translate}}
                 </label>
               </div>
             </div>
