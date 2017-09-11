@@ -898,7 +898,9 @@
   "Machine":"Machine",
   "MaintenanceBasis":"Maintenance Basis",
   "ModifyMaintenanceInfo":"Modify maintenance info",
-  "TotalNumbersAndRateRents":"Total Numbers &&   Rate Rents"
+  "TotalNumbersAndRateRents":"Total Numbers &&   Rate Rents",
+  "RemindNum":"Remind Number"
+
 
 
 

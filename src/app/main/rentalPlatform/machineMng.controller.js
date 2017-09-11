@@ -650,7 +650,7 @@
             }
           },
           series: {
-            name: '提醒数量',
+            name: languages.findKey('RemindNum'),
             type: 'line',
             label: {
               emphasis: {
