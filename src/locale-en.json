@@ -898,8 +898,11 @@
   "Machine":"Machine",
   "MaintenanceBasis":"Maintenance Basis",
   "ModifyMaintenanceInfo":"Modify maintenance info",
-  "TotalNumbersAndRateRents":"Total Numbers && Rental Rate",
-  "RemindNum":"Remind Number"
+  "TotalNumbersAndRateRents":"Total Numbers & Rental Rate",
+  "RemindNum":"Remind Number",
+  "结束":"end",
+  "计划":"plan",
+  "进行中":"progress"
 
 
 

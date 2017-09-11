@@ -906,7 +906,10 @@
   "MaintenanceBasis":"保养依据",
   "ModifyMaintenanceInfo":"修改保养信息",
   "TotalNumbersAndRateRents":"车辆总数 & 出租率",
-  "RemindNum":"提醒数量"
+  "RemindNum":"提醒数量",
+  "结束":"结束",
+  "计划":"计划",
+  "进行中":"进行中"
 
 
 
