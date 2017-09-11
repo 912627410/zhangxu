@@ -14,26 +14,26 @@
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
-          <div class="info-data">99</div>
+          <div class="info-data">{{rentalMaintenanceController.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
 
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
-          <div class="info-data">49</div>
+          <div class="info-data">{{rentalMaintenanceController.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
-          <div class="info-data">25</div>
+          <div class="info-data">{{rentalMaintenanceController.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
-          <div class="info-data">25</div>
+          <div class="info-data">{{rentalMaintenanceController.fininshOrders}}</div>
         </div>
       </div>
     </div>
@@ -144,10 +144,10 @@
             <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'rentalCreateTime'|translate">{{maintenance.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'rentalUpdateTime'|translate">{{maintenance.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap" data-title="'rentalOperations'|translate">
-              <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+              <button type="button" class="btn btn-danger btn-xs"
                       ng-click="rentalMaintenanceController.update(maintenance.id)">{{'alter'| translate}}
               </button>
-              <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+              <button type="button" class="btn btn-default btn-xs"
                       ng-click="rentalMaintenanceController.view(maintenance.id)">{{'rentalView'| translate}}
               </button>
             </td>
