@@ -29,10 +29,10 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'vehicleType'|translate}}</label>
+          <label class="col-sm-4 control-label padding5">{{'rentalMachineType'|translate}}</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
               <ui-select-choices repeat="machineType.id as machineType in vm.machineTypeList | propsFilter: {name: $select.search}">
                 <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
               </ui-select-choices>
@@ -40,17 +40,6 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'engineType'|translate}}</label>
-          <div class="col-sm-8">
-            <ui-select  ng-model="vm.machine.engineTypeId" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="{{'engineType'|translate}}">{{$select.selected.engineName |translate}}</ui-select-match>
-              <ui-select-choices repeat="engineType.id as engineType in vm.engineTypeList | propsFilter: {engineName: $select.search}">
-                <div ng-bind-html="engineType.engineName | highlight: $select.search | translate"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
 
         <div class="form-group">
           <label class="col-sm-4 control-label padding5">{{'rentalVehicleState'|translate}}</label>
@@ -89,7 +78,7 @@
 
       </div>
       <div class="map-body col-sm-9">
-        <div class="row"><h5 style="padding: 0px!important;">{{'setFence'|translate}}</h5></div>
+        <div class="row"><h5 style="padding: 0px!important;">{{'rentalSetFence'|translate}}</h5></div>
         <div class="row">
           <div class="col-md-6">
             <label class="col-sm-2 control-label padding5">{{'rentalAddress'|translate}}:</label>
@@ -125,6 +114,6 @@
   </form>
 </div>
 <div class="modal-footer ng-scope">
-  <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">{{'submit'|translate}}</button>
-  <button class="btn btn-warning" type="button" ng-click="vm.reset()">{{'reset'|translate}}</button>
+  <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="vm.cancel()">{{'cancel'|translate}}</button>
 </div>

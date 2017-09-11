@@ -856,6 +856,7 @@
   "workAddress":"Work Address",
   "customerList":"Customer List",
   "unUsedMachineList":"unUsed Machine List",
+  "rentalSetFence":"Set Geo-Fence",
 
 
   "maintenanceReminder":"Maintenance Reminder",
