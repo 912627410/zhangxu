@@ -140,6 +140,7 @@
         vm.notificationList = data.content;
         vm.totalElements = data.totalElements;
         vm.currentPage = data.number + 1;
+        vm.select = false;
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
@@ -159,6 +160,7 @@
      * @param alarmType
      */
     vm.loadMsgDataByType = function (alarmType) {
+      vm.all = null;
       vm.searchConditions = {};
       if (alarmType == null || alarmType == undefined) {
         vm.getMsgByAlarmType(0, vm.pageSize, null, null);
@@ -223,13 +225,13 @@
       var notificationPromis = serviceResource.restCallService(restCallUrl, "UPDATE");
       notificationPromis.then(function (data) {
 
-        if (data.content == true && notification.processStatus==true) {
+        if (data.content == true && notification.processStatus == true) {
           //标记为已处理成功
           vm.notificationList.splice(index, 1);
           vm.noProcessNumber += 1;
           vm.processedNumber -= 1;
         }
-        if (data.content == true && notification.processStatus==false) {
+        if (data.content == true && notification.processStatus == false) {
           //标记为已处理成功
           vm.notificationList.splice(index, 1);
           vm.noProcessNumber -= 1;
@@ -246,7 +248,7 @@
      *
      * @param status
      */
-    vm.processRentalNotificationDeal2=function (notification, index) {
+    vm.processRentalNotificationDeal2 = function (notification, index) {
       //打开模态框
       $rootScope.currentOpenModal = $uibModal.open({
         animation: true,
@@ -256,7 +258,7 @@
         controllerAs: 'vm',
         openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
         windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
-        size: 'sm',
+        size: 'md',
         resolve: { //用来向controller传数据
           notification: function () {
             return notification;
@@ -396,6 +398,45 @@
     creatMiniChart(miniMap2, 4);
     creatMiniChart(miniMap3, 2);
     creatMiniChart(miniMap4, 3);
+
+    /**
+     * 全选或取消全选
+     * @param check
+     */
+    vm.selectAll = function (check) {
+      if (check != null && check != undefined) {
+        for (var i = 0; i < vm.notificationList.length; i++) {
+          vm.notificationList[i].state = check;
+        }
+      }
+    };
+
+    /**
+     * 反选
+     */
+    vm.reverse = function () {
+      var checkItem = [];
+      var unCheckItem = [];
+      for (var i = 0; i < vm.notificationList.length; i++) {
+        if (vm.notificationList[i].state === true) {
+          checkItem.push(false)
+        } else {
+          unCheckItem.push(true)
+        }
+      }
+      //全为选中或全为没有被选中的时候反选不起作用
+      if (checkItem.length == vm.notificationList.length || unCheckItem.length == vm.notificationList.length) {
+        return;
+      }
+      for (var i = 0; i < vm.notificationList.length; i++) {
+        vm.notificationList[i].state = !vm.notificationList[i].state;
+      }
+    }
+
+    //处理选中的消息
+    vm.processAll = function () {
+
+    }
 
   }
 })();

@@ -154,14 +154,19 @@
             </div>
             <div class="box-body no-padding">
               <div class="mailbox-controls">
-                <button type="button" class="btn btn-default btn-sm" ng-click="">
+                <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.select=!machineAlarmInfoCtr.select;machineAlarmInfoCtr.selectAll(machineAlarmInfoCtr.select)">
                   {{'checkAll'|translate}}
                 </button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.reverse()">
+                  {{'Reverse'|translate}}
+                </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" ng-click="">
-                    {{'done'|translate}}
+                  <button type="button" class="btn btn-default btn-sm" ng-click="machineAlarmInfoCtr.processAll()">
+                    {{'processAll'|translate}}
                   </button>
                 </div>
+                <!--<div ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index"> {{notification.state}}</div>-->
+
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover">
@@ -173,8 +178,8 @@
                   <th>{{'generateTime'|translate}}</th>
                   <th>{{'state'|translate}}</th>
                   <th>{{'operation'|translate}}</th>
-                  <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList">
-                    <td><input type="checkbox" ng-model="notification.checked"></td>
+                  <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index">
+                    <td><input type="checkbox"  ng-model="notification.state" ></td>
                     <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.deviceNum}}</a></td>
                     <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" style="cursor: pointer;">{{notification.licenseId}}</a></td>
                     <td class="mailbox-subject">{{notification.content}}</td>
@@ -187,8 +192,8 @@
                         <span>{{'done'|translate}}</span>
                       </button>
                     </td>
-                    <td>
-                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">操作</button>
+                    <td >
+                      <button type="button" class="btn progress-bar-warning btn-xs" style="color: #FFFFFF" ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
                     </td>
                   </tr>
                   </tbody>

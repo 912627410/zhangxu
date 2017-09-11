@@ -234,6 +234,7 @@
   "content": "Content",
   "reminderContent": "Reminder Content",
   "checkAll": "Check All",
+  "Reverse": "Reverse",
   "markedAsAlreadyProcessed": "Marked as already processed",
   "markAsUntreated": "Mark as untreated",
   "select": "Select",
@@ -833,6 +834,9 @@
   "越野剪叉式":"Cross cross",
   "自行走剪叉式":"Self-cut fork",
   "直臂式":"Straight brarm",
+  "曲臂":"Crank arm",
+  "剪叉":"Cross cros",
+  "直臂":"Straight brarm",
   "捷尔杰":"JLG",
   "欧历胜":"Haulotte",
   "Skyjack":"Skyjack",
@@ -851,9 +855,14 @@
   "待租":"For rent",
   "出租":"rent",
   "报停":"suspension",
+  "8-12米":"8-12 M",
+  "13-20米":"13-20 M",
+  "<8米":"<8 M",
   "主机厂-运输":"Hosts-transport",
   "租赁商-运输":"rental-transport",
   "maintenanceReminder":"Maintenance Reminder",
   "lastMaintenanceDate":"Last Maintenance Date",
-  "nextMaintenanceDate":"Next Maintenance Date"
+  "nextMaintenanceDate":"Next Maintenance Date",
+  "processingAalarm":"Processing Aalarm",
+  "processAll":"Deal Select"
 }
