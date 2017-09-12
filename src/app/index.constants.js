@@ -290,6 +290,8 @@
     .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台车辆信息
     .constant('MACHINE_RENT_URL', SERVER_BASE_URL + 'rental/rentalRate7day')  //出租率七天数据
     .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
+    .constant('RENTAL_PRCESS_ALARM', SERVER_BASE_URL + 'rental/process-alarm')  //
+    .constant('RENTAL_PRCESS_ALARMS', SERVER_BASE_URL + 'rental/process-multiple-alarm')  //
 
 
     //租赁客户信息

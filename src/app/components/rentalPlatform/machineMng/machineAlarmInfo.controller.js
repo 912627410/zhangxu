@@ -247,7 +247,7 @@
     }
 
     /**
-     *  处理报警信息
+     *  处理单个报警信息
      *
      * @param status
      */
@@ -263,6 +263,9 @@
         windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
         size: 'md',
         resolve: { //用来向controller传数据
+          notifications: function () {
+            return null;
+          },
           notification: function () {
             return notification;
           }
@@ -276,6 +279,52 @@
       });
 
     }
+
+
+    /**
+     *  处理多个报警信息
+     *
+     * @param status
+     */
+    vm.processAll = function () {
+      var selected=[];
+      angular.forEach(vm.notificationList,function (data,index,array) {
+        if (data.state===true){
+          selected.push(data)
+        }
+      })
+      if (selected==null||selected.length<=0){
+        Notification.warning("请选择要处理的报警信息!");
+        return;
+      }
+      //打开模态框
+      $rootScope.currentOpenModal = $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/machineMng/processAlarmInfo.html',
+        controller: 'processAlarmInfoController',
+        controllerAs: 'vm',
+        openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+        windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+        size: 'md',
+        resolve: { //用来向controller传数据
+          notification: function () {
+            return null;
+          },
+          notifications: function () {
+            return selected;
+          },
+        }
+      });
+
+      $rootScope.currentOpenModal.result.then(function (newVal) {
+        //数据
+      }, function () {
+        //取消
+      });
+
+    }
+
 
     /**
      * miniMap
@@ -434,11 +483,6 @@
       for (var i = 0; i < vm.notificationList.length; i++) {
         vm.notificationList[i].state = !vm.notificationList[i].state;
       }
-    }
-
-    //处理选中的消息
-    vm.processAll = function () {
-
     }
 
   }
