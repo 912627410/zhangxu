@@ -12,7 +12,7 @@
 <section class="content">
 
   <div class="row form-group">
-    <div class="col-md-1">
+    <div class="col-md-2">
       <label class="control-label">{{'rentalCustomerName'|translate}}</label>
     </div>
     <div class="col-md-3">
@@ -29,7 +29,7 @@
     </div>
 
 
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button class="btn btn-primary" type="button"  ng-click="customerListController.query(null,null,null,customerListController.customer)">{{'query'|translate}}
       </button>
       <button class="btn btn-default" type="button" ng-click="customerListController.reset()">{{'reset'|translate}}</button>
@@ -39,13 +39,13 @@
   </div>
 
   <div class="row form-group">
-    <div class="col-md-1">
-      <label class="control-label">{{'organisation'|translate}}:</label>
+    <div class="col-md-2">
+      <label class="control-label">{{'rentalOrganization'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
 
-        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="customerListController.org.label" name="org" required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="customerListController.org.label" name="org" required/>
         <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="customerListController.openTreeInfo()">
@@ -56,7 +56,7 @@
     </div>
 
     <div class="col-md-2">
-      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+      <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
     </div>
     <div class="col-md-1">
       <input type="checkbox" checked="checked" ng-model="customerListController.querySubOrg"/>
@@ -87,7 +87,7 @@
             <td class="text-nowrap" data-title="'rentalCustomerPosition'|translate" sortable="'title'">{{customer.title}}</td>
             <td class="text-nowrap" data-title="'tellPhoneNumber'|translate" sortable="'engineType.engineName'">{{customer.tel}}</td>
             <td class="text-nowrap" data-title="'rentalPhoneNumber'|translate" sortable="'state'">{{customer.mobile}}</td>
-            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{customer.org.label}}</td>
+            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'org.label'">{{customer.org.label}}</td>
           </tr>
         </table>
 
