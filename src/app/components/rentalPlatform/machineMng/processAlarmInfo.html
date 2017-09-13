@@ -7,11 +7,11 @@
   </div>
 </div>
 <div class="row modal-body">
-  <form class="form-horizontal">
+  <form name="processAlarmFrom"   class="form-horizontal">
     <div class="form-group">
-      <label class="col-sm-3 control-label " style="text-align: center">{{'description'|translate}}</label>
+      <label class="col-sm-3 control-label " style="text-align: center">{{'descritpion'|translate}}</label>
       <div class="col-sm-9" >
-        <textarea class="form-control" rows="3" placeholder="{{'description'|translate}}" style="width: 75%!important;"></textarea>
+        <textarea class="form-control" rows="3" placeholder="{{'description'|translate}}" style="width: 75%!important;" ng-model="vm.notificationProcess.processDesc"></textarea>
       </div>
     </div>
 
@@ -19,21 +19,21 @@
       <label class="col-sm-3 control-label "  style="text-align: center">{{'MessageContent'|translate}}</label>
       <div class="col-sm-9">
         <input type="text"  class="form-control ng-pristine ng-valid ng-touched"
-               placeholder="{{'customizeMessageContent'|translate}}"  style="width: 75%!important;">
+               placeholder="{{'customizeMessageContent'|translate}}"  style="width: 75%!important;" ng-model="vm.notificationProcess.customSms">
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-3 control-label "  style="text-align: center">{{'SMSReceiver'|translate}}</label>
       <div class="col-sm-9">
-        <input type="text"  class="form-control ng-pristine ng-valid ng-touched"
-               placeholder="{{'Mailorphone'|translate}}"  style="width: 75%!important;">
+        <input type="text"  class="form-control ng-pristine ng-valid ng-touched" name="receiver"
+               placeholder="{{'Mailorphone'|translate}}"  style="width: 75%!important;" ng-model="vm.notificationProcess.receiver"  validator="required">
       </div>
     </div>
 
   </form>
 </div>
 <div class="modal-footer ng-scope">
-  <button class="btn btn-primary" type="button">{{'processAlarm'| translate}}</button>
-  <button class="btn btn-warning" type="button">{{'reset'| translate}}</button>
+  <button class="btn btn-primary" type="button" validation-submit="processAlarmFrom" ng-click="vm.processAlarm()">{{'processAlarm'| translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="vm.notificationProcess=null">{{'reset'| translate}}</button>
 </div>
