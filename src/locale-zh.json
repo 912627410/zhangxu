@@ -860,7 +860,11 @@
   "customerList":"客户列表",
   "unUsedMachineList":"未分配车辆列表",
   "rentalSetFence":"设置围栏",
-
+  "rentalcurrentPosition":"当前位置",
+  "rentalOrderMng":"订单管理",
+  "rentalsubordinateOrganization": "包含下级组织",
+  "rentalTotalProfit":"总利润",
+  "rentalProfitOrderTotal":"订单总数",
 
 
 

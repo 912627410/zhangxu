@@ -48,11 +48,11 @@
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
-          <label class="col-md-1 control-label">{{'organisation'|translate}}:</label>
+          <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
           <div class="col-md-2">
             <p class="input-group">
 
-              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="rentalFleetMachineMngController.org.label" name="org" readonly required/>
+              <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalFleetMachineMngController.org.label" name="org" readonly required/>
               <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalFleetMachineMngController.openTreeInfo()">
@@ -63,7 +63,7 @@
           </div>
 
           <div class="col-md-2">
-            <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+            <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
             <input type="checkbox" checked="checked" ng-model="rentalFleetMachineMngController.querySubOrg"/>
           </div>
         </div>

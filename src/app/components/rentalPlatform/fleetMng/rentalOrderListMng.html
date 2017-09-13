@@ -23,11 +23,11 @@
           <input type="text" name="customerName" class="form-control"  ng-model="orderListMngController.rentalOrder.customerName"
                  placeholder="{{'rentalCustomer'|translate}}"/>
         </div>
-        <label class="col-md-1 control-label">{{'organisation'|translate}}</label>
+        <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
         <div class="col-md-2">
           <p class="input-group">
 
-            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="orderListMngController.org.label" name="org" readonly required/>
+            <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="orderListMngController.org.label" name="org" readonly required/>
             <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="orderListMngController.openTreeInfo()">
@@ -86,7 +86,7 @@
           </ui-select>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-3">
 
           <button class="btn btn-primary" type="button"
                   ng-click="orderListMngController.query(null,null,null,orderListMngController.rentalOrder)">{{'query'|translate}}
