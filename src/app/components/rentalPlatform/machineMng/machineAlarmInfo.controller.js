@@ -326,6 +326,17 @@
       });
 
       $rootScope.currentOpenModal.result.then(function (newVal) {
+        console.log(newVal);
+        //数据
+        var tabList=vm.notificationList;
+        //更新内容
+        angular.forEach(newVal,function (data,index,array) {
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==data.id){
+              tabList[i].processStatus=data.processStatus;
+            }
+          }
+        })
         //数据
       }, function () {
         //取消

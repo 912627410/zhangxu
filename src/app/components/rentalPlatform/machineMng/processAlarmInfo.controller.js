@@ -67,10 +67,15 @@
     /**
      *处理多个报警信息
      */
-    vm.processMultipleAlarm = function (notifications) {
-      var processPromis = serviceResource.restCallService(RENTAL_PRCESS_ALARMS, "ADD", notifications);
+    vm.processMultipleAlarm = function (notificationProcess) {
+      var processPromis = serviceResource.restCallService(RENTAL_PRCESS_ALARMS, "ADD", notificationProcess);
       processPromis.then(function (data) {
-
+        if (data.content==true){
+         angular.forEach(notificationProcess.notifications,function (data,index,array) {
+           notificationProcess.notifications[index].processStatus=true;
+         })
+          $uibModalInstance.close(notificationProcess.notifications);
+        }
       }, function (reason) {
 
       })
