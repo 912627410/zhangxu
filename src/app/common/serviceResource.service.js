@@ -130,10 +130,13 @@
         infoWindow.open(mapObj, marker.getPosition());
         //title内容
         var title ='';
-        if(item.versionNum == 'A001') {
+        var workHours = '';
+        if(item.versionNum == 'A001' || item.versionNum == '11') {
           title = languages.findKey('arialVehicle')+":"+(item.machineLicenseId==null?"":item.machineLicenseId);
+          workHours = item.workDuration==null ?'':$filter('number')(item.workDuration,2);
         } else {
           title = languages.findKey('oreMachine')+":"+(item.machineLicenseId==null?"":item.machineLicenseId);
+          workHours = item.totalDuration==null ?'':$filter('number')(item.totalDuration,2);
         }
         /*若整机编号为空，则显示终端编号*/
         if(title == null){
@@ -141,7 +144,7 @@
         }
         //窗体内容
         var contentInfo="";
-        contentInfo += languages.findKey('workingHours')+": "+(item.totalDuration==null ?'':$filter('number')(item.totalDuration,2))+ "<br/>";
+        contentInfo += languages.findKey('workingHours')+": "+ workHours + "h<br/>";
         contentInfo += languages.findKey('longitude')+": "+(item.amaplongitudeNum==null ?'':$filter('number')(item.amaplongitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('latitude')+": "+(item.amaplatitudeNum==null ?'':$filter('number')(item.amaplatitudeNum,2))+"<br/>";
         contentInfo += languages.findKey('currentPosition')+":" +(item.address==null ?'':item.address) + "<br/>";
@@ -421,14 +424,14 @@
             }else{
               var markers =[];
               deviceList.forEach(function(deviceInfo){
-                if ((deviceInfo.locateStatus =='A' || deviceInfo.locateStatus == '1' ) && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+                if ((deviceInfo.locateStatus =='A' || deviceInfo.locateStatus == '1' || deviceInfo.locateStatus == 'B' ) && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   var marker="assets/images/orangeMarker.png";
                   if(deviceInfo.accStatus=='01' || deviceInfo.machineStatus=='1'){
                     marker="assets/images/greenMarker.png";
                   }
+                  var markerPoint = addMarkerModel(map,deviceInfo,marker,callback,rental);
+                  markers.push(markerPoint);
                 }
-                var markerPoint=addMarkerModel(map,deviceInfo,marker,callback,rental);
-                markers.push(markerPoint);
               })
               //是否以点聚合的方式显示
               if(aggregation){

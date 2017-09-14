@@ -298,7 +298,6 @@
   "locateDuration": "定位所用时间",
   "batteryVol": "车载电压",
   "mph": "时速",
-  "sec": "秒",
   "pressureMeter": "气压表2",
   "totalMileage": "累计里程",
   "momentWorkTime": "阶段工作时间",
@@ -919,7 +918,7 @@
   "shield":"屏蔽",
   "release":"解除",
   "upTotalTime":"上升总时间",
-  "runTotalTime":"总走路时间",
+  "runTotalTime":"行走总时间",
   "gpsAntenna":"GPS天线",
   "openCircuit":"开路",
   "shortCircuit":"短路",
@@ -939,6 +938,15 @@
   "rentalUnProcessed": "未处理",
   "rentalProfit":"利润",
   "dispatch":"组织调入",
+  "whetherOverload":"是否超载",
+  "requestTheLatestData":"请求最新数据",
+  "GPSFun": "GPS功能",
+  "AGPSFun": "AGPS功能",
+  "BaseStationLocationFun": "基站定位功能",
+  "turnedON":"已开启",
+  "closed":"已关闭",
+  "shielded":"已屏蔽",
+  "unshielded":"未屏蔽",
 
 
 

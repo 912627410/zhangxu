@@ -934,6 +934,15 @@
   "rentalUnProcessed": "Unprocessed",
   "rentalProfit":"Income",
   "dispatch":"Dispatch",
+  "whetherOverload":"Whether it is overloaded",
+  "requestTheLatestData":"Request the latest data",
+  "GPSFun": "GPS function",
+  "AGPSFun": "AGPS function",
+  "BaseStationLocationFun": "Base station location function",
+  "turnedON":"Turned ON",
+  "closed":"Closed",
+  "shielded":"Shielded",
+  "unshielded":"Unshielded",
 
 
 
