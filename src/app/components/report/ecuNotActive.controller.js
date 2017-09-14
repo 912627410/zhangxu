@@ -58,11 +58,31 @@
         var objectUrl = window.URL.createObjectURL(blob);
 
         var anchor = angular.element('<a/>');
-        anchor.attr({
-          href: objectUrl,
-          target: '_blank',
-          download: 'ECU未绑定车辆.xls'
-        })[0].click();
+
+        //兼容多种浏览器
+        if (window.navigator.msSaveBlob) { // IE
+          window.navigator.msSaveOrOpenBlob(blob, 'ECU未绑定车辆.xls')
+        } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+
+          anchor.css({display: 'none'});
+          angular.element(document.body).append(anchor);
+
+
+          anchor.attr({
+            href: URL.createObjectURL(blob),
+            target: '_blank',
+            download: 'ECU未绑定车辆.xls'
+          })[0].click();
+
+          anchor.remove();
+        } else { // Chrome
+          anchor.attr({
+            href: URL.createObjectURL(blob),
+            target: '_blank',
+            download: 'ECU未绑定车辆.xls'
+          })[0].click();
+        }
+
 
       }).error(function (data, status, headers, config) {
         Notification.error("下载失败!");
