@@ -9,8 +9,8 @@
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
-                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
-                                               DEVCEINFO_CALIBRATION_PARAMETER_URL) {
+                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_MQTT_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
+                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -628,7 +628,7 @@
           Notification.error("上传频率录入有误");
           return;
         }
-        var restURL = SEND_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
+        var restURL = SEND_MQTT_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
         $confirm({
           text: languages.findKey('确定发送读请求命令?') + '',
           title: languages.findKey('读请求命令确认') + '',
@@ -2171,23 +2171,24 @@
               vm.selectParameter = vm.parameterValue.steerRisedCurve;
             }
 
+            /*打开下面的注释,调整曲线时左右两侧对称*/
             if(dataIndex == 0) {
-              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
               vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
             } else if (dataIndex == 1) {
               vm.selectParameter.bIndex2 = Math.round(-data[dataIndex][0]);
-              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
               vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 2) {
               vm.selectParameter.bIndex3 = Math.round(-data[dataIndex][0]);
-              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
               vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 3) {
               vm.selectParameter.bIndex4 = Math.round(-data[dataIndex][0]);
-              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
               vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 4) {
-              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
               vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
             }
           }
@@ -2219,24 +2220,25 @@
               vm.selectParameter = vm.parameterValue.steerRisedCurve;
             }
 
+            /*打开下面的注释,调整曲线时左右两侧对称*/
             if(dataIndex == 0) {
               vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
-              vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
             } else if (dataIndex == 1) {
               vm.selectParameter.bIndex2 = Math.round(data[dataIndex][0]);
               vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
-              vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 2) {
               vm.selectParameter.bIndex3 = Math.round(data[dataIndex][0]);
               vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
-              vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 3) {
               vm.selectParameter.bIndex4 = Math.round(data[dataIndex][0]);
               vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
-              vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
             } else if(dataIndex == 4) {
               vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
-              vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
             }
           }
         }
@@ -2272,11 +2274,6 @@
                 // 写ECU参数类型
                 var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
                 var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-                setTimeout(function () {
-                  // 读ECU参数数据
-                  var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
-                  var restPromise = serviceResource.restCallService(readURL, "ADD", null);
-                }, 5000);
               } else if(data.code == 0) {
                 vm.parameterValue = data.content;
                 vm.parameterValue.bBrakeDelay = data.content.bBrakeDelay*100;
@@ -2334,30 +2331,30 @@
             Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
             return;
           }
-          var content = "[" + parameterValue.bLiftType +", "+ parameterValue.bMajor +", "+ parameterValue.bMinor +", "+ Math.round(parameterValue.bBrakeDelay/100) +", "+ Math.round(parameterValue.bCoilFaultDetectionPeriod/10) +", "+ Math.round(parameterValue.bSteeringOffDelay/100) +", "+
-            Math.round(parameterValue.bDirectionDelay/10) +", "+ Math.round(parameterValue.bMotorEnableDelay/10) +", "+ Math.round(parameterValue.bOverloadStabilizationPeriod/100) +", "+ parameterValue.bSteeringBoostPwm +", "+ parameterValue.bNeutralSteeringPwm +", "+
-            parameterValue.bChassisLiftUpPwm +", "+ parameterValue.bPlatformLiftUpMaxPwm +", "+ parameterValue.bJoystickOffsetCompensation +", "+ parameterValue.bJoystickNeutralZone +", "+ Math.round(parameterValue.bBatteryLevel1*10-100) +", "+ Math.round(parameterValue.bBatteryLevel2*10-100) +", "+
-            Math.round(parameterValue.bBatteryLevel3*10-100) +", "+ Math.round(parameterValue.bBatteryLevel4*10-100) +", "+ Math.round(parameterValue.bBatteryLevel5*10-100) +", "+ Math.round(parameterValue.bTiltBrakeDelay/10) +", "+ Math.round(parameterValue.bLevelBrakeDelay/10) +", "+
-            parameterValue.driveFastCurve.bIndex1 +", "+ parameterValue.driveFastCurve.bIndex2 +", "+ parameterValue.driveFastCurve.bIndex3 +", "+ parameterValue.driveFastCurve.bIndex4 +", "+ parameterValue.driveFastCurve.bPwmPos1 +", "+ parameterValue.driveFastCurve.bPwmPos2 +", "+
-            parameterValue.driveFastCurve.bPwmPos3 +", "+ parameterValue.driveFastCurve.bPwmPos4 +", "+ parameterValue.driveFastCurve.bPwmPosMax +", "+ parameterValue.driveFastCurve.bPwmPosAdjust +", "+ parameterValue.driveFastCurve.bPwmNeg1 +", "+ parameterValue.driveFastCurve.bPwmNeg2 +", "+
-            parameterValue.driveFastCurve.bPwmNeg3 +", "+ parameterValue.driveFastCurve.bPwmNeg4 +", "+ parameterValue.driveFastCurve.bPwmNegMax +", "+ parameterValue.driveFastCurve.bPwmNegAdjust +", "+ parameterValue.driveFastCurve.bAccelIncrement +", "+
-            parameterValue.driveFastCurve.bDecelIncrement +", "+ parameterValue.driveFastCurve.bPeriod +", "+
-            parameterValue.driveRisedCurve.bIndex1 +", "+ parameterValue.driveRisedCurve.bIndex2 +", "+ parameterValue.driveRisedCurve.bIndex3 +", "+ parameterValue.driveRisedCurve.bIndex4 +", "+ parameterValue.driveRisedCurve.bPwmPos1 +", "+ parameterValue.driveRisedCurve.bPwmPos2 +", "+
-            parameterValue.driveRisedCurve.bPwmPos3 +", "+ parameterValue.driveRisedCurve.bPwmPos4 +", "+ parameterValue.driveRisedCurve.bPwmPosMax +", "+ parameterValue.driveRisedCurve.bPwmPosAdjust +", "+ parameterValue.driveRisedCurve.bPwmNeg1 +", "+ parameterValue.driveRisedCurve.bPwmNeg2 +", "+
-            parameterValue.driveRisedCurve.bPwmNeg3 +", "+ parameterValue.driveRisedCurve.bPwmNeg4 +", "+ parameterValue.driveRisedCurve.bPwmNegMax +", "+ parameterValue.driveRisedCurve.bPwmNegAdjust +", "+ parameterValue.driveRisedCurve.bAccelIncrement +", "+
-            parameterValue.driveRisedCurve.bDecelIncrement +", "+ parameterValue.driveRisedCurve.bPeriod +", "+
-            parameterValue.liftUpCurve.bIndex1 +", "+ parameterValue.liftUpCurve.bIndex2 +", "+ parameterValue.liftUpCurve.bIndex3 +", "+ parameterValue.liftUpCurve.bIndex4 +", "+ parameterValue.liftUpCurve.bPwmPos1 +", "+ parameterValue.liftUpCurve.bPwmPos2 +", "+
-            parameterValue.liftUpCurve.bPwmPos3 +", "+ parameterValue.liftUpCurve.bPwmPos4 +", "+ parameterValue.liftUpCurve.bPwmPosMax +", "+ parameterValue.liftUpCurve.bPwmPosAdjust +", "+ parameterValue.liftUpCurve.bPwmNeg1 +", "+ parameterValue.liftUpCurve.bPwmNeg2 +", "+
-            parameterValue.liftUpCurve.bPwmNeg3 +", "+ parameterValue.liftUpCurve.bPwmNeg4 +", "+ parameterValue.liftUpCurve.bPwmNegMax +", "+ parameterValue.liftUpCurve.bPwmNegAdjust +", "+ parameterValue.liftUpCurve.bAccelIncrement +", "+
-            parameterValue.liftUpCurve.bDecelIncrement +", "+ parameterValue.liftUpCurve.bPeriod +", "+
-            parameterValue.driveSlowCurve.bIndex1 +", "+ parameterValue.driveSlowCurve.bIndex2 +", "+ parameterValue.driveSlowCurve.bIndex3 +", "+ parameterValue.driveSlowCurve.bIndex4 +", "+ parameterValue.driveSlowCurve.bPwmPos1 +", "+ parameterValue.driveSlowCurve.bPwmPos2 +", "+
-            parameterValue.driveSlowCurve.bPwmPos3 +", "+ parameterValue.driveSlowCurve.bPwmPos4 +", "+ parameterValue.driveSlowCurve.bPwmPosMax +", "+ parameterValue.driveSlowCurve.bPwmPosAdjust +", "+ parameterValue.driveSlowCurve.bPwmNeg1 +", "+ parameterValue.driveSlowCurve.bPwmNeg2 +", "+
-            parameterValue.driveSlowCurve.bPwmNeg3 +", "+ parameterValue.driveSlowCurve.bPwmNeg4 +", "+ parameterValue.driveSlowCurve.bPwmNegMax +", "+ parameterValue.driveSlowCurve.bPwmNegAdjust +", "+ parameterValue.driveSlowCurve.bAccelIncrement +", "+
-            parameterValue.driveSlowCurve.bDecelIncrement +", "+ parameterValue.driveSlowCurve.bPeriod +", "+
-            parameterValue.steerRisedCurve.bIndex1 +", "+ parameterValue.steerRisedCurve.bIndex2 +", "+ parameterValue.steerRisedCurve.bIndex3 +", "+ parameterValue.steerRisedCurve.bIndex4 +", "+ parameterValue.steerRisedCurve.bPwmPos1 +", "+ parameterValue.steerRisedCurve.bPwmPos2 +", "+
-            parameterValue.steerRisedCurve.bPwmPos3 +", "+ parameterValue.steerRisedCurve.bPwmPos4 +", "+ parameterValue.steerRisedCurve.bPwmPosMax +", "+ parameterValue.steerRisedCurve.bPwmPosAdjust +", "+ parameterValue.steerRisedCurve.bPwmNeg1 +", "+ parameterValue.steerRisedCurve.bPwmNeg2 +", "+
-            parameterValue.steerRisedCurve.bPwmNeg3 +", "+ parameterValue.steerRisedCurve.bPwmNeg4 +", "+ parameterValue.steerRisedCurve.bPwmNegMax +", "+ parameterValue.steerRisedCurve.bPwmNegAdjust +", "+ parameterValue.steerRisedCurve.bAccelIncrement +", "+
-            parameterValue.steerRisedCurve.bDecelIncrement +", "+ parameterValue.steerRisedCurve.bPeriod + "]";
+          var content = "[" + parameterValue.bLiftType +","+ parameterValue.bMajor +","+ parameterValue.bMinor +","+ Math.round(parameterValue.bBrakeDelay/100) +","+ Math.round(parameterValue.bCoilFaultDetectionPeriod/10) +","+ Math.round(parameterValue.bSteeringOffDelay/100) +","+
+            Math.round(parameterValue.bDirectionDelay/10) +","+ Math.round(parameterValue.bMotorEnableDelay/10) +","+ Math.round(parameterValue.bOverloadStabilizationPeriod/100) +","+ parameterValue.bSteeringBoostPwm +","+ parameterValue.bNeutralSteeringPwm +","+
+            parameterValue.bChassisLiftUpPwm +","+ parameterValue.bPlatformLiftUpMaxPwm +","+ parameterValue.bJoystickOffsetCompensation +","+ parameterValue.bJoystickNeutralZone +","+ Math.round(parameterValue.bBatteryLevel1*10-100) +","+ Math.round(parameterValue.bBatteryLevel2*10-100) +","+
+            Math.round(parameterValue.bBatteryLevel3*10-100) +","+ Math.round(parameterValue.bBatteryLevel4*10-100) +","+ Math.round(parameterValue.bBatteryLevel5*10-100) +","+ Math.round(parameterValue.bTiltBrakeDelay/10) +","+ Math.round(parameterValue.bLevelBrakeDelay/10) +","+
+            parameterValue.driveFastCurve.bIndex1 +","+ parameterValue.driveFastCurve.bIndex2 +","+ parameterValue.driveFastCurve.bIndex3 +","+ parameterValue.driveFastCurve.bIndex4 +","+ parameterValue.driveFastCurve.bPwmPos1 +","+ parameterValue.driveFastCurve.bPwmPos2 +","+
+            parameterValue.driveFastCurve.bPwmPos3 +","+ parameterValue.driveFastCurve.bPwmPos4 +","+ parameterValue.driveFastCurve.bPwmPosMax +","+ parameterValue.driveFastCurve.bPwmPosMax +","+ parameterValue.driveFastCurve.bPwmNeg1 +","+ parameterValue.driveFastCurve.bPwmNeg2 +","+
+            parameterValue.driveFastCurve.bPwmNeg3 +","+ parameterValue.driveFastCurve.bPwmNeg4 +","+ parameterValue.driveFastCurve.bPwmNegMax +","+ parameterValue.driveFastCurve.bPwmNegMax +","+ parameterValue.driveFastCurve.bAccelIncrement +","+
+            parameterValue.driveFastCurve.bDecelIncrement +","+ parameterValue.driveFastCurve.bPeriod +","+
+            parameterValue.driveRisedCurve.bIndex1 +","+ parameterValue.driveRisedCurve.bIndex2 +","+ parameterValue.driveRisedCurve.bIndex3 +","+ parameterValue.driveRisedCurve.bIndex4 +","+ parameterValue.driveRisedCurve.bPwmPos1 +","+ parameterValue.driveRisedCurve.bPwmPos2 +","+
+            parameterValue.driveRisedCurve.bPwmPos3 +","+ parameterValue.driveRisedCurve.bPwmPos4 +","+ parameterValue.driveRisedCurve.bPwmPosMax +","+ parameterValue.driveRisedCurve.bPwmPosMax +","+ parameterValue.driveRisedCurve.bPwmNeg1 +","+ parameterValue.driveRisedCurve.bPwmNeg2 +","+
+            parameterValue.driveRisedCurve.bPwmNeg3 +","+ parameterValue.driveRisedCurve.bPwmNeg4 +","+ parameterValue.driveRisedCurve.bPwmNegMax +","+ parameterValue.driveRisedCurve.bPwmNegMax +","+ parameterValue.driveRisedCurve.bAccelIncrement +","+
+            parameterValue.driveRisedCurve.bDecelIncrement +","+ parameterValue.driveRisedCurve.bPeriod +","+
+            parameterValue.liftUpCurve.bIndex1 +","+ parameterValue.liftUpCurve.bIndex2 +","+ parameterValue.liftUpCurve.bIndex3 +","+ parameterValue.liftUpCurve.bIndex4 +","+ parameterValue.liftUpCurve.bPwmPos1 +","+ parameterValue.liftUpCurve.bPwmPos2 +","+
+            parameterValue.liftUpCurve.bPwmPos3 +","+ parameterValue.liftUpCurve.bPwmPos4 +","+ parameterValue.liftUpCurve.bPwmPosMax +","+ parameterValue.liftUpCurve.bPwmPosMax +","+ parameterValue.liftUpCurve.bPwmNeg1 +","+ parameterValue.liftUpCurve.bPwmNeg2 +","+
+            parameterValue.liftUpCurve.bPwmNeg3 +","+ parameterValue.liftUpCurve.bPwmNeg4 +","+ parameterValue.liftUpCurve.bPwmNegMax +","+ parameterValue.liftUpCurve.bPwmNegMax +","+ parameterValue.liftUpCurve.bAccelIncrement +","+
+            parameterValue.liftUpCurve.bDecelIncrement +","+ parameterValue.liftUpCurve.bPeriod +","+
+            parameterValue.driveSlowCurve.bIndex1 +","+ parameterValue.driveSlowCurve.bIndex2 +","+ parameterValue.driveSlowCurve.bIndex3 +","+ parameterValue.driveSlowCurve.bIndex4 +","+ parameterValue.driveSlowCurve.bPwmPos1 +","+ parameterValue.driveSlowCurve.bPwmPos2 +","+
+            parameterValue.driveSlowCurve.bPwmPos3 +","+ parameterValue.driveSlowCurve.bPwmPos4 +","+ parameterValue.driveSlowCurve.bPwmPosMax +","+ parameterValue.driveSlowCurve.bPwmPosMax +","+ parameterValue.driveSlowCurve.bPwmNeg1 +","+ parameterValue.driveSlowCurve.bPwmNeg2 +","+
+            parameterValue.driveSlowCurve.bPwmNeg3 +","+ parameterValue.driveSlowCurve.bPwmNeg4 +","+ parameterValue.driveSlowCurve.bPwmNegMax +","+ parameterValue.driveSlowCurve.bPwmNegMax +","+ parameterValue.driveSlowCurve.bAccelIncrement +","+
+            parameterValue.driveSlowCurve.bDecelIncrement +","+ parameterValue.driveSlowCurve.bPeriod +","+
+            parameterValue.steerRisedCurve.bIndex1 +","+ parameterValue.steerRisedCurve.bIndex2 +","+ parameterValue.steerRisedCurve.bIndex3 +","+ parameterValue.steerRisedCurve.bIndex4 +","+ parameterValue.steerRisedCurve.bPwmPos1 +","+ parameterValue.steerRisedCurve.bPwmPos2 +","+
+            parameterValue.steerRisedCurve.bPwmPos3 +","+ parameterValue.steerRisedCurve.bPwmPos4 +","+ parameterValue.steerRisedCurve.bPwmPosMax +","+ parameterValue.steerRisedCurve.bPwmPosMax +","+ parameterValue.steerRisedCurve.bPwmNeg1 +","+ parameterValue.steerRisedCurve.bPwmNeg2 +","+
+            parameterValue.steerRisedCurve.bPwmNeg3 +","+ parameterValue.steerRisedCurve.bPwmNeg4 +","+ parameterValue.steerRisedCurve.bPwmNegMax +","+ parameterValue.steerRisedCurve.bPwmNegMax +","+ parameterValue.steerRisedCurve.bAccelIncrement +","+
+            parameterValue.steerRisedCurve.bDecelIncrement +","+ parameterValue.steerRisedCurve.bPeriod + "]";
 
           vm.sendMQTTWrite(27, deviceNum, content);
         };
@@ -2459,11 +2456,11 @@
         var dataValue = "[";
         var dataValueY = "";
         for(var j = 0;j < dataLen;j++) {
-          dataValue += data[j][0] + ", ";
-          dataValueY += data[j][1] + ", ";
+          dataValue += data[j][0] + ",";
+          dataValueY += data[j][1] + ",";
         }
         dataValue += dataValueY;
-        dataValue = dataValue.substring(0, dataValue.length - 2);
+        dataValue = dataValue.substring(0, dataValue.length - 1);
         dataValue += "]";
         vm.calibrationParameterValue = dataValue;
         vm.refreshCalibrationParameterChart(data);
@@ -2488,19 +2485,22 @@
             // 写ECU参数类型
             var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
             var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-            setTimeout(function () {
-              // 读ECU参数数据
-              var readURL = SEND_READ_URL + "?deviceNum="+ deviceinfo.deviceNum + "&register=154&dataLength=132&uploadNum=1&uploadFrequency=2";
-              var restPromise = serviceResource.restCallService(readURL, "ADD", null);
-            }, 5000);
           } else if(data.code == 0) {
             vm.calibrationParameterValue = data.content;
             var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
+            var values = "[";
+            var valuesY = "";
             var num = parameterArrays.length/2;
             vm.calibrationParameterData = [];
             for (var i = 0; i < num; i++) {
               vm.calibrationParameterData.push([Math.round(parameterArrays[i]), Math.round(parameterArrays[i + num])]);
+              values += Math.round(parameterArrays[i]) + ",";
+              valuesY += Math.round(parameterArrays[i + num]) + ",";
             }
+            values += valuesY;
+            values = values.substring(0, values.length - 1);
+            values += "]";
+            vm.calibrationParameterValue = values;
             vm.refreshCalibrationParameterChart(vm.calibrationParameterData);
           }
         }, function (reason) {
@@ -2537,6 +2537,36 @@
         }
         vm.sendMQTTWrite(type, deviceNum, calibrationParameterValue);
       };
+
+      /**
+       * 标定参数导出
+       * @param deviceNum 设备号
+         */
+      vm.calibrationParametersDownload = function (deviceNum) {
+        if(null == deviceNum || deviceNum == '') {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restCallURL = CALIBRATION_PARAMETER_EXPORT + "?deviceNum=" + deviceNum;
+        $http({
+          url: restCallURL,
+          method: "GET",
+          responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+          var objectUrl = window.URL.createObjectURL(blob);
+
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: objectUrl,
+            target: '_blank',
+            download: deviceNum +'标定参数.xls'
+          })[0].click();
+
+        }).error(function (data, status, headers, config) {
+          Notification.error("下载失败!");
+        });
+      }
 
 
       //battery data
