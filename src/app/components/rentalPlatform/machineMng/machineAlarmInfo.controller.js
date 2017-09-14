@@ -274,6 +274,14 @@
 
       $rootScope.currentOpenModal.result.then(function (newVal) {
         //数据
+        var tabList=vm.notificationList;
+        //更新内容
+        for(var i=0;i<tabList.length;i++){
+          if(tabList[i].id==newVal.id){
+            tabList[i].processStatus=newVal.processStatus;
+            break;
+          }
+        }
       }, function () {
         //取消
       });
