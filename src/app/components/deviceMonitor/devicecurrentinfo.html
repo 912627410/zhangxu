@@ -169,16 +169,16 @@
       </uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
         <div class="box-body" >
-          <div class="row">
+          <div class="row" ng-if="deviceCurrentInfoCtrl.device.machineType!='装载机'&&deviceCurrentInfoCtrl.device.machineType2!='装载机'">
             <div class="col-md-3" >
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
-              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
+              <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
             </div>
             <div class="col-md-6" >
-              <highchart id="container-rpm" style="width: 400px; height: 200px; float:left" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
+              <highchart id="container-rpm" style="width: 400px; height: 200px; float:left; margin: 0 auto;" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
             </div>
             <div class="col-md-3" >
-              <highchart id="container-oil" style="width: 200px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsOil"></highchart>
+              <highchart id="container-oil" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsOil"></highchart>
             </div>
             <!--<div class="col-md-4">-->
               <!--<highchart id="container-rpm" config="deviceCurrentInfoCtrl.highchartsAir"></highchart>-->
@@ -186,6 +186,23 @@
             <!--<div class="col-md-2">-->
               <!--<highchart id="container-oil" config="deviceCurrentInfoCtrl.highchartsAir"></highchart>-->
             <!--</div>-->
+          </div>
+          <div ng-if="deviceCurrentInfoCtrl.device.machineType=='装载机'||deviceCurrentInfoCtrl.device.machineType2=='装载机'">
+            <div  style="width: 20%;float: left;">
+              <highchart id="container-urealevel" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsurealevel"></highchart>
+            </div>
+            <div  style="width: 20%;float: left;">
+              <highchart id="container-oil1" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsOil"></highchart>
+            </div>
+            <div style="width: 20%;float: left;" >
+              <highchart id="container-rpm1" style="width: 150px; height: 150px; float:left" config="deviceCurrentInfoCtrl.highchartsRpm"></highchart>
+            </div>
+            <div style="width: 20%;float: left;" >
+              <highchart id="container-water1" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
+            </div>
+            <div  style="width: 20%;float: left;">
+              <highchart id="container-ATF" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsATF"></highchart>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-12">
