@@ -947,6 +947,7 @@
   "closed":"已关闭",
   "shielded":"已屏蔽",
   "unshielded":"未屏蔽",
+  "portError":"端口号范围1000~65535",
 
 
 

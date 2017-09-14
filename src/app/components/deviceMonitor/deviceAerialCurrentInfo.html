@@ -1711,9 +1711,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="serverPortMQTT" class="form-control" placeholder="{{'portNumber'|translate}}"
-                                         ng-minlength='4' ng-maxlength='5' validator="number"  ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPortMQTT" >
-                                  <p class="error text-danger" ng-show="deviceDetailForm.serverPortMQTT.$error.maxlength">{{'theLongestFive'|translate}}</p>
-                                  <p class="error text-danger" ng-show="deviceDetailForm.serverPortMQTT.$error.minlength">{{'theShortestFour'|translate}}</p>
+                                         validator="port"  ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPortMQTT" >
                                 </div>
                               </div>
                             </div>

@@ -23,6 +23,8 @@
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
+      port: /^[1-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1000~65535
+      // port: /^[1][0-9][2-9][4-9]$|^[2-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1024~65535
 
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
@@ -84,6 +86,11 @@
       },
       postcode: {
         error: 'postcodes',
+        success: ''
+      },
+      port: {
+        // error: 'portError',
+        error: '端口号范围1000~65535',
         success: ''
       }
     };

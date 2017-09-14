@@ -943,6 +943,7 @@
   "closed":"Closed",
   "shielded":"Shielded",
   "unshielded":"Unshielded",
+  "portError":"The port number ranges from 1000 to 65535",
 
 
 
