@@ -19,7 +19,7 @@
     vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
     vm.querySubOrg = true;
-
+    vm.queryDeviceNum="AA01FA";
 
 
     vm.refreshMainMap = function (deviceList) {
