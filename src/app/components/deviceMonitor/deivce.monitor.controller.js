@@ -20,7 +20,6 @@
     var userInfo = $rootScope.userInfo;
     vm.querySubOrg = true;
 
-
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
         if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
