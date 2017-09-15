@@ -835,7 +835,7 @@
   "rentalSaleCost":"销售费用",
   "rentalManagementCost":"管理费用",
   "rentalFinanceCost":"财务费用",
-  "rentalMachineType":"车辆类型",
+  "rentalMachineType":"车型",
   "rentalHeight":"高度",
   "rentalNewProfit":"新增利润",
   "rentalAccumulatedProfits":"累计利润",
