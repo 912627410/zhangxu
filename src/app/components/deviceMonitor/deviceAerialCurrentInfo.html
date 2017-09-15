@@ -796,14 +796,11 @@
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
-                <!-- Default panel contents -->
-                <!-- Table -->
                 <table class="table">
                   <tr>
                     <th class="text-nowrap">{{'terminalNumber'|translate}}</th>
                     <th class="text-nowrap">{{'terminalSoftwareVersion'|translate}}</th>
                     <th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'MachineType'|translate}}</th>
                     <th class="text-nowrap">{{'machineRunningState'|translate}}</th>
                     <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
                     <th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>
@@ -857,10 +854,6 @@
                     <!--终端硬件版本-->
                     <td ng-if="deviceData.gpsHardVersion==null">{{'noData'|translate}}</td>
                     <td ng-cloak ng-if="deviceData.gpsHardVersion!=null">VER{{deviceData.gpsHardVersion}}</td>
-                    <!--机器类型-->
-                    <td ng-if="deviceData.deviceCode>=0&& deviceData.deviceCode<=15" class="text-nowrap">{{'hydraulicDriveScissors'|translate}}({{deviceData.deviceCode}})</td>
-                    <td ng-if="deviceData.deviceCode>=16&& deviceData.deviceCode<=31" class="text-nowrap">{{'DcMotorDriveForklift'|translate}}({{deviceData.deviceCode}})</td>
-                    <td ng-if="!(deviceData.deviceCode>=0||deviceData.deviceCode<=31)">{{'noData'|translate}}</td>
                     <!--车辆运行状态-->
                     <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                     <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
@@ -1003,7 +996,7 @@
                     <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">{{'noData'|translate}}</td>
                     <!--数据采集时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <!--纪录生成时间-->
+                    <!--平台接收时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
                 </table>
@@ -1021,7 +1014,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </uib-tab>
 
@@ -2292,8 +2284,5 @@
 
   </uib-tabset>
 
-  <div class="modal-footer">
-    <!--<button class="btn btn-primary" type="submit">OK</button>-->
-
-  </div>
+  <div class="modal-footer"></div>
 </form>
