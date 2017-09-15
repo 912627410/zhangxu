@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3 class="modal-title">车辆绑定设备记录</h3>
+
+</div>
+
+<section class="content">
+  <div class="table-responsive">
+    <p><strong>车号:</strong><span>{{machinelicenseId}}</span></p>
+    <table ng-table="machineBindDeviceRecordCtrl.tableParams" class="table table-bordered table-striped ">
+      <tr ng-repeat="recordlog in machineBindDeviceRecordCtrl.recordlog">
+        <!--<td data-title="'整机编号/车号'" >{{}}</td>-->
+        <td  data-title="'车号'"  >{{recordlog.licenseId}}</td>
+        <td  data-title="'原始设备号'"  >{{recordlog.oldDeviceNum}}</td>
+        <td  data-title="'操作后设备号'"  >{{recordlog.newDeviceNum}}</td>
+        <td  data-title="'操作员'"  >{{recordlog.operationStaff}}</td>
+        <td  data-title="'描述'"  >{{recordlog.describe}}</td>
+        <td  data-title="'操作时间'"  >{{recordlog.recordTime | date: 'yyyy-MM-dd hh:mm:ss'}}</td>
+      </tr>
+    </table>
+  </div>
+</section>
+<form name="myForm" class="form-horizontal ">
+  <div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="machineBindDeviceRecordCtrl.cancel()">关闭</button>
+  </div>
+</form>
