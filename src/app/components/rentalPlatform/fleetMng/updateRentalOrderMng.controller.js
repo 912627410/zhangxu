@@ -74,7 +74,6 @@
     vm.ok = function () {
 
       vm.rentalOrder.rentalCustomer=vm.customer;
-      vm.rentalOrder.location=vm.selectAddress;
       vm.rentalOrder.radius=vm.radius;
      // vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
 

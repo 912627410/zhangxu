@@ -75,7 +75,6 @@
         Notification.error("请选择订单开始时间和结束时间");
       } else{
         vm.rentalOrder.rentalCustomer=vm.customer;
-        vm.rentalOrder.location=vm.selectAddress;
         vm.rentalOrder.radius=vm.radius;
         vm.rentalOrder.org=vm.customer.org;
 
@@ -85,7 +84,7 @@
         else{
           vm.rentalOrder.locationAlarmReceiver = 0;
         }
-        
+
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
         //  vm.rentalCustomer.org=vm.org;
         rspdata.then(function (data) {
