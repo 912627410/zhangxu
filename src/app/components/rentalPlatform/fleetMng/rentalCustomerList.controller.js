@@ -76,23 +76,7 @@
 
     //提交
     vm.ok = function () {
-      console.log(vm.selectRadio);
       $uibModalInstance.close(vm.selectRadio);
-     // var restPromise = serviceResource.restAddRequest(ROLE_URL, roleInfo);
-     //  restPromise.then(function (data) {
-     //    if(data.code===0){
-     //      Notification.success("新建角色信息成功!");
-     //      $uibModalInstance.close(data.content);
-     //    }else{
-     //      vm.roleInfo = roleInfo;
-     //      Notification.error(data.message);
-     //    }
-     //  }, function (reason) {
-     //      vm.errorMsg=reason.data.message;
-     //      Notification.error(reason.data.message);
-     //  });
-
-      console.log()
     };
 
     vm.cancel = function () {

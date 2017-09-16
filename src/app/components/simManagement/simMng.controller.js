@@ -142,7 +142,6 @@
 
 
       modalInstance.result.then(function(result) {
-       console.log("111");
         var tabList=vm.tableParams.data;
         //恢复列表中的值
         for(var i=0;i<tabList.length;i++){

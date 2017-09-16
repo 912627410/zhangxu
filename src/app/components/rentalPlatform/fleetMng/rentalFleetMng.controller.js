@@ -203,8 +203,6 @@
 
       modalInstance.result.then(function (result) {
         vm.leftRentalOrder=result;
-        console.log(vm.leftRentalOrder);
-
         //如果选择的订单和左边的一样,则直接提示重新选择
         if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
           vm.leftRentalOrder=null;

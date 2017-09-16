@@ -113,7 +113,6 @@
 
       modalInstance.result.then(function (result) {
         vm.customer=result;
-        console.log(vm.customer);
       }, function () {
       });
     };
@@ -158,7 +157,6 @@
       var rspdata = serviceResource.restCallService(url,"GET");
 
       rspdata.then(function (data) {
-        console.log(data.content);
         vm.rentalOrder=data.content;
         vm.customer=vm.rentalOrder.rentalCustomer;
         vm.org=vm.rentalOrder.org;

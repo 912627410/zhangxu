@@ -116,7 +116,6 @@
 
       modalInstance.result.then(function (result) {
         vm.customer=result;
-        console.log(vm.customer);
       }, function () {
       });
     };
