@@ -730,6 +730,7 @@
   "machineTypeMng":"MachineTypeMng",
   "SMSstatistics":"SMS statistics",
   "newDevice":"New Device",
+  "noInfo":"--",
 
   "modifyCustomerInformation":"Modify Customer Information",
 
