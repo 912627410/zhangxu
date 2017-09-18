@@ -126,6 +126,7 @@
         postInfo.deviceinfo = null;
       }
       postInfo.org = machine.org;
+      postInfo.machineCreateDate = new Date();
       // postInfo.engineType={id:machine.engineType};
       // postInfo.fuelConfig={id:machine.fuelConfig};
 

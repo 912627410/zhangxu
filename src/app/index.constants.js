@@ -235,6 +235,7 @@
 
 
     .constant('MACHINE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询车辆调拨日志
+    .constant('MACHINE_BIND_DEVICE_RECORD', SERVER_BASE_URL + 'audit/queryMachineBindDeviceRecord')   //设备车辆历史绑定记录
     .constant('DEVCE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询设备调拨日志
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
