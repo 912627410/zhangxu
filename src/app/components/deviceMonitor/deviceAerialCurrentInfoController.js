@@ -828,12 +828,23 @@
 
             })
         };
-
+        var circles=[]; //存放生成的圆
+        var circleEditorList=[]; //存放生成的圆编辑器
           /**
            * 回显电子围栏
            * @param map map
              */
           vm.echoFence = function(map) {
+
+            //每次操作时候,如果圆的个数大于0,则移除第一个圆和圆编辑器
+            if(circleEditorList.length>0){
+              map.remove(circles[0]);
+              circles.pop();
+
+              circleEditorList[0].close();
+              circleEditorList.pop();
+
+            }
             //回显围栏坐标
             if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
               var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
@@ -861,6 +872,8 @@
               });
 
               circleEditor.open();
+              circles.push(circle);
+              circleEditorList.push(circleEditor);
 
             }
           };
