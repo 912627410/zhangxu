@@ -607,6 +607,7 @@
   "setFence":"Set fence",
   "cancelFence":"Cancel Fence",
   "selectAddress":"Select address",
+  "selectCoordinate":"Select coordinate",
   "coordinate":"Coordinate",
   "returnToMachineLocation":"Return to machine location",
   "workPointMng":"Work Point",
@@ -948,6 +949,13 @@
   "shielded":"Shielded",
   "unshielded":"Unshielded",
   "portError":"The port number ranges from 1000 to 65535",
+  "maxPortError":"The port number can not exceed 65535",
+  "overrange":"Overrange",
+  "gprsSignalStrength":"GPRS signal strength",
+  "GPSFactoryDate":"GPS factory date",
+  "gsmCelid":"Base station number",
+  "gsmLac":"Base station area number",
+  "gsmRxl":"Receive signal quality",
 
 
 

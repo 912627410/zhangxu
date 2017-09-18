@@ -605,6 +605,7 @@
   "SetFence":"设置围栏",
   "cancelFence":"取消围栏",
   "selectAddress":"选中地址",
+  "selectCoordinate":"选中坐标",
   "coordinate":"坐标",
   "returnToMachineLocation":"回到车辆定位的位置",
   "workPointMng":"作业点管理",
@@ -953,6 +954,13 @@
   "shielded":"已屏蔽",
   "unshielded":"未屏蔽",
   "portError":"端口号范围1000~65535",
+  "maxPortError":"端口号不能超过65535",
+  "overrange":"超出额定范围",
+  "gprsSignalStrength":"GPRS信号强度",
+  "GPSFactoryDate":"GPS出厂日期",
+  "gsmCelid":"基站号",
+  "gsmLac":"基站小区号",
+  "gsmRxl":"接受信号质量",
 
 
 

@@ -57,8 +57,8 @@
         //未标定时,负载重量和平台高度显示为-
         if(vm.deviceinfo.calibrationStatus == 192) {
           if(vm.deviceinfo.loadWeight > 100) {
-            vm.deviceinfo.loadWeight = 'Overrange';
-            vm.deviceinfo.hostHeight = 'Overrange';
+            vm.deviceinfo.loadWeight = languages.findKey('overrange');
+            vm.deviceinfo.hostHeight = languages.findKey('overrange');
           } else {
             vm.deviceinfo.loadWeight += '%';
             vm.deviceinfo.hostHeight += '%';
@@ -482,6 +482,13 @@
             Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
             return;
           }
+          if(type == 18 && null != content) {
+            var port = content.split(",")[1];
+            if(port > 65535) {
+              Notification.error(languages.findKey('maxPortError'));
+              return;
+            }
+          }
           var restURL = SEND_MQTT_WRITE_URL + "?type="+ type + "&deviceNum=" + deviceNum;
           if(null != content) {
             restURL += "&content=" + content;
@@ -519,7 +526,7 @@
                 }
 
 
-                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,centerAddr);
+                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,null,centerAddr);
             })
         };
 
@@ -571,6 +578,20 @@
           Notification.error("请输入时间");
           return;
         }
+
+        //加载json,判断有效值
+        $http.get('awpReturnTime.json').success(function(data){
+          vm.mqttReturnTime=JSON.parse(JSON.stringify(data));
+          for(var i = 0 ; i<vm.mqttReturnTime.length; i++) {
+            var retrunTime = vm.mqttReturnTime[i];
+            if(retrunTime.name == returnTimeParam.name) {
+              if(returnTimeParam.time < retrunTime.minValue || returnTimeParam.time > retrunTime.maxValue) {
+                Notification.error("超出有效值范围:"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                return;
+              }
+            }
+          }
+        });
 
         var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
         $confirm({
@@ -818,7 +839,7 @@
 
 
                 //读取所有设备的gps信息，home map使用
-                if (deviceInfo.locateStatus === '1' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+                if ((deviceInfo.locateStatus === '1' || deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === 'B') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   vm.addMarkerModelEmcloud(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
                 }
 

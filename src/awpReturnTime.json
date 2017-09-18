@@ -1,0 +1,62 @@
+[
+  {
+    "name":"timeBasicInf",
+    "maxValue": 7200,
+    "minValue": 60
+  },
+  {
+    "name": "timeUpdate",
+    "maxValue": 3600,
+    "minValue": 10
+  },
+  {
+    "name": "timeSampleECUSlow",
+    "maxValue": 3600,
+    "minValue": 10
+  },
+  {
+    "name": "timeSampleECUFast",
+    "maxValue": 3600,
+    "minValue": 10
+  },
+  {
+    "name": "timeSampleGPS",
+    "maxValue": 3600,
+    "minValue": 10
+  },
+  {
+    "name": "timeSamplePowerBAT",
+    "maxValue": 3600,
+    "minValue": 0
+  },
+  {
+    "name": "timeSampleCharge",
+    "maxValue": 3600,
+    "minValue": 0
+  },
+  {
+    "name": "timeSleepTime",
+    "maxValue": 14400,
+    "minValue": 0
+  },
+  {
+    "name": "timeGPSWaitTime",
+    "maxValue": 3600,
+    "minValue": 0
+  },
+  {
+    "name": "timeSampleMotorParas",
+    "maxValue": 3600,
+    "minValue": 0
+  },
+  {
+    "name": "timeSampleSetParas",
+    "maxValue": 3600,
+    "minValue": 0
+  },
+  {
+    "name": "timeSampleDeviceRunStatus",
+    "maxValue": 3600,
+    "minValue": 0
+  }
+]
