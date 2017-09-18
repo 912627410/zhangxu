@@ -43,36 +43,46 @@
       deviceinfoPromis.then(function (data) {
 
         vm.controllerInitialization(data.content);
-        //气压表
-        if (vm.highchartsAir != null) {
 
-          vm.highchartsAir.series[0].data = [vm.deviceinfo.pressureMeter];
-        }
-        //冷却液温度（水温）
-        if (vm.highchartsWater != null) {
+          //气压表
+          if (vm.highchartsAir != null) {
 
-          vm.highchartsWater.series[0].data = [vm.deviceinfo.engineTemperature];
-        }
-        //发动机转速
-        if (vm.highchartsRpm != null) {
+            vm.highchartsAir.series[0].data = [vm.deviceinfo.pressureMeter];
+          }
+          //冷却液温度（水温）
+          if (vm.highchartsWater != null) {
 
-          vm.highchartsRpm.series[0].data = [vm.deviceinfo.enginRotate];
-        }
-        //燃油液位
-        if (vm.highchartsOil != null) {
+            vm.highchartsWater.series[0].data = [vm.deviceinfo.engineTemperature];
+          }
+          //发动机转速
+          if (vm.highchartsRpm != null) {
 
-          vm.highchartsOil.series[0].data = [vm.deviceinfo.oilLevel];
-        }
-        //与装载机仪表对应显示，尿素液位（预留，国四用）
-        if (vm.highchartsurealevel != null) {
+            vm.highchartsRpm.series[0].data = [vm.deviceinfo.enginRotate];
+          }
 
-          vm.highchartsurealevel.series[0].data = [0];
-        }
-        //传动油温度（油温）
-        if (vm.highchartsATF != null) {
+        //发动机转速(装载机)
+        if (vm.highchartsZZJRpm != null) {
 
-          vm.highchartsATF.series[0].data = [vm.deviceinfo.oilTemperature];
+          vm.highchartsZZJRpm.series[0].data = [vm.deviceinfo.enginRotate];
         }
+          //燃油液位
+          if (vm.highchartsOil != null) {
+
+            vm.highchartsOil.series[0].data = [vm.deviceinfo.oilLevel];
+          }
+          //与装载机仪表对应显示，尿素液位（预留，国四用）
+          if (vm.highchartsurealevel != null) {
+
+            vm.highchartsurealevel.series[0].data = [0];
+          }
+          //传动油温度（油温）
+          if (vm.highchartsATF != null) {
+
+            vm.highchartsATF.series[0].data = [vm.deviceinfo.oilTemperature];
+          }
+
+
+
 
 
         }, function (reason) {
@@ -157,10 +167,8 @@
         vm.deviceinfo.voltageLowAlarmValue = vm.deviceinfo.voltageLowAlarmValue * 0.1 + 10;
       }
       //改为过滤器
-      //vm.deviceinfo.totalDuration = serviceResource.convertToMins(vm.deviceinfo.totalDuration);
-      //vm.deviceinfo.realtimeDuration = serviceResource.convertToMins(vm.deviceinfo.realtimeDuration);
       vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature); //
-      //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据deviceNum来判断当前设备是否是小挖,装载机，矿车
+      //TODO 原来根据车架号判断，由于增加了临沃的车，需要根据versionNum来判断当前设备是否是小挖,装载机，矿车
       //如果车架号不为空就根据车架号来判断车辆类型,判断出来不为小挖返回null，再根据vserionNum判断
       if (deviceinfo.machine == null || null == deviceinfo.machine.licenseId) {
         vm.DeviceType = null;
@@ -242,7 +250,7 @@
           },
           tickLength: 5,
           mitickLength: 5,
-          endOnTick: false,
+          endOnTick: true,
           title: {
             y:15,
             text: languages.findKey('barometricPressure') + ''
@@ -272,7 +280,7 @@
         name: languages.findKey('barometricPressure') + '',
         data: [vm.deviceinfo.pressureMeter],
         dataLabels: {
-          format: '<div style="text-align:center;"><span style="line-height:18px;border:none;font-size:18px;color:' +
+          format: '<div style="text-align:center;"><span style="line-height:12px;border:none;font-size:12px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span>' +
           '</div>',
           inside:false,
@@ -330,10 +338,11 @@
         // the value axis
         yAxis: {
           min: 0,
-          max: 98,  //水温表最大120
+          max: 120,  //水温表最大120
           lineColor: '#339',
           tickColor: '#339',
           minorTickColor: '#339',
+          minorTickInterval: 'auto',
           offset: -10,
           lineWidth: 2,
           labels: {
@@ -347,7 +356,12 @@
           title: {
             y:15,
             text: languages.findKey('waterTemperature') + ''
-          }
+          },
+          plotBands: [{
+            from: 105,
+            to: 120,
+            color: '#DF5353' // red
+          }]
 
         },
         credits: {
@@ -369,7 +383,7 @@
         name: languages.findKey('waterTemperature') + '',
         data: [vm.deviceinfo.engineTemperature],
         dataLabels: {
-          format: '<div style="text-align:center"><span style="border:none;line-height:18px;font-size:18px;color:' +
+          format: '<div style="text-align:center"><span style="border:none;line-height:12px;font-size:12px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}℃</span>' + '</div>',
           inside:false,
           borderWidth:0,
@@ -512,6 +526,135 @@
       }
     };
 
+    //转速图
+    vm.highchartsZZJRpm = {
+      options: {
+        chart: {
+          type: 'gauge',
+          plotBackgroundColor: null,
+          plotBackgroundImage: null,
+          plotBorderWidth: 0,
+          plotShadow: false
+        },
+        exporting: {enabled: false},
+        pane: {
+          startAngle: -150,
+          endAngle: 150,
+          background: [{
+            backgroundColor: {
+              linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+              stops: [
+                [0, '#FFF'],
+                [1, '#333']
+              ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+          }, {
+            backgroundColor: {
+              linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1},
+              stops: [
+                [0, '#333'],
+                [1, '#FFF']
+              ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+          }, {
+            // default background
+          }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+          }]
+        },
+
+        tooltip: {
+          enabled: false
+        },
+
+        yAxis: {
+          min: 0,
+          max: 3000,
+
+          minorTickInterval: 'auto',
+          minorTickWidth: 1,
+          minorTickLength: 5,
+          minorTickPosition: 'inside',
+          minorTickColor: '#666',
+
+          tickPixelInterval: 50,
+          tickWidth: 2,
+          tickPosition: 'inside',
+          tickLength: 10,
+          tickColor: '#666',
+          labels: {
+            step: 2,
+            rotation: 'auto'
+          },
+          title: {
+            text: languages.findKey('rotatingSpeed'),
+            y:15
+          },
+          plotBands: [{
+            from: 0,
+            to: 600,
+            color: '#55BF3B' // green
+          }, {
+            from: 600,
+            to: 2400,
+            color: '#DDDF0D' // yellow
+          }, {
+            from: 2400,
+            to: 3000,
+            color: '#DF5353' // red
+          }]
+        },
+
+        credits: {
+          enabled: false
+        },
+
+        plotOptions: {
+          solidgauge: {
+            dataLabels: {
+              y: 5,
+              borderWidth: 0,
+              useHTML: true
+            }
+          }
+        }
+      },
+      title: {
+        text: null
+      },
+      series: [{
+        name: languages.findKey('rotatingSpeed') + '',
+        data: [vm.deviceinfo.enginRotate],
+        dataLabels: {
+          format: '<div style="text-align:center"><span style="border:none;line-height:12px;font-size:12px;color:' +
+          ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span>' + '</div>',
+          inside:false,
+          borderWidth:0,
+          x:0,
+          y:80
+        },
+        tooltip: {
+          valueSuffix: languages.findKey('turn') + ''
+        }
+      }],
+
+      loading: false,
+      func: function (chart) {
+        $timeout(function () {
+          chart.reflow();
+          //The below is an event that will trigger all instances of charts to reflow
+          //$scope.$broadcast('highchartsng.reflow');
+        }, 0);
+      }
+    };
+
 
     //油位图
     vm.highchartsOil = {
@@ -541,7 +684,7 @@
         },
 
         tooltip: {
-          enabled: true
+          enabled: false
         },
 
         // the value axis
@@ -552,7 +695,11 @@
             y:15,
             text: languages.findKey('Oil') + ''
           },
-
+          plotBands: [{
+            from: 0,
+            to: 12.5,
+            color: '#DF5353' // red
+          }],
           lineColor: '#339',
           tickColor: '#339',
           minorTickColor: '#339',
@@ -567,6 +714,7 @@
           endOnTick: false,
 
         },
+
         credits: {
           enabled: false
         },
@@ -586,7 +734,7 @@
         name: languages.findKey('Oil') + '',
         data: [vm.deviceinfo.oilLevel],
         dataLabels: {
-          format: '<div style="text-align:center"><span style="font-size:18px;line-height:18px;border:none;color:' +
+          format: '<div style="text-align:center"><span style="font-size:12px;line-height:12px;border:none;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span>' + '</div>',
           inside:false,
           borderWidth:0,
@@ -659,7 +807,7 @@
           },
           tickLength: 5,
           minorTickLength: 5,
-          endOnTick: false,
+          endOnTick: true,
 
         },
         credits: {
@@ -681,7 +829,7 @@
         name: languages.findKey('surealevel') + '',
         data: [vm.deviceinfo.oilLevel],
         dataLabels: {
-          format: '<div style="text-align:center"><span style="font-size:18px;line-height:18px;border:none;color:' +
+          format: '<div style="text-align:center"><span style="font-size:12px;line-height:12px;border:none;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span>' + '</div>',
           inside:false,
           borderWidth:0,
@@ -715,7 +863,7 @@
           plotShadow: false
         },
 
-        title: languages.findKey('torqueConverterOilTemperature') + '',
+        title: languages.findKey('OilTemperature') + '',
         exporting: {enabled: false},
 
         pane: {
@@ -732,16 +880,17 @@
         },
 
         tooltip: {
-          enabled: true
+          enabled: false
         },
 
         // the value axis
         yAxis: {
           min: 0,
-          max: 98,  //水温表最大120
+          max: 140,  //水温表最大120
           lineColor: '#339',
           tickColor: '#339',
           minorTickColor: '#339',
+          minorTickInterval: 'auto',
           offset: -10,
           lineWidth: 2,
           labels: {
@@ -750,12 +899,18 @@
           },
           tickLength: 5,
           minorTickLength: 5,
+          tickInterval:40,
           endOnTick: false,
 
           title: {
-            y: 8,
-            text: languages.findKey('torqueConverterOilTemperature') + ''
-          }
+            y:15,
+            text: languages.findKey('OilTemperature') + ''
+          },
+          plotBands: [{
+            from: 120,
+            to: 140,
+            color: '#DF5353' // red
+          }]
 
         },
         credits: {
@@ -772,12 +927,12 @@
           }
         }
       },
-      title: languages.findKey('torqueConverterOilTemperature') + '',
+      title: languages.findKey('OilTemperature') + '',
       series: [{
-        name: languages.findKey('torqueConverterOilTemperature') + '',
+        name: languages.findKey('OilTemperature') + '',
         data: [vm.deviceinfo.engineTemperature],
         dataLabels: {
-          format: '<div style="text-align:center"><span style="border:none;line-height:18px;font-size:18px;color:' +
+          format: '<div style="text-align:center"><span style="border:none;line-height:12px;font-size:12px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}℃</span>' + '</div>',
           inside:false,
           borderWidth:0,

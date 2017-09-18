@@ -318,6 +318,7 @@
   "scanQRcode": "扫码下载",
   "comingSoon": "敬请期待",
   "noMessage": "--",
-  "surealevel":"尿素液位"
+  "surealevel":"尿素液位",
+  "OilTemperature": "油温"
 
 }

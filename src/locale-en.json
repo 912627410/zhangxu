@@ -317,5 +317,6 @@
   "scanQRcode": "Scan QR Download",
   "comingSoon": "Coming Soon",
   "noMessage": "N/A",
-  "surealevel":"Surea level"
+  "surealevel":"Surea level",
+  "OilTemperature": "Oil Temperature"
 }
