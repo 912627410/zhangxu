@@ -956,7 +956,9 @@
   "gsmCelid":"Base station number",
   "gsmLac":"Base station area number",
   "gsmRxl":"Receive signal quality",
-
+  "beyondValidRange":"Beyond valid range",
+  "okSetThisInterval":"Ok set this time interval?",
+  "intervalConfirmation":"Time interval setting confirmation",
 
 
 
