@@ -961,6 +961,9 @@
   "gsmCelid":"基站号",
   "gsmLac":"基站小区号",
   "gsmRxl":"接受信号质量",
+  "beyondValidRange":"超出有效值范围",
+  "okSetThisInterval":"确定设置此时间间隔?",
+  "intervalConfirmation":"时间间隔设置确认",
 
 
 

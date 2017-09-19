@@ -590,7 +590,7 @@
             </div>
             <div class="col-md-9 text-right">
               <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:vehicleParameters:read" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
-                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'requestTheLatestData'|translate}}</button>
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, 0)">{{'requestTheLatestData'|translate}}</button>
             </div>
           </div>
 
