@@ -23,7 +23,6 @@
         file.upload.then(function (response) {
           $timeout(function () {
             file.result = response.data;
-            console.log(response.data);
             vm.errorList=file.result.content;
             if (vm.errorList.length > 0){
               vm.operMsg = "存在异常数据";
@@ -32,7 +31,6 @@
             }
 
             vm.file=null;
-            console.log(vm.operMsg);
 
           });
         }, function (response) {

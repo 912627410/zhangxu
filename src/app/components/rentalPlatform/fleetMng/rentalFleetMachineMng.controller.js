@@ -103,8 +103,6 @@
       });
     };
 
-console.log("333111");
-
     vm.query(null,null,null,null);
 
     vm.validateOperPermission=function(){

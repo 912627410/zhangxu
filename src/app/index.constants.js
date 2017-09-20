@@ -325,7 +325,7 @@
     .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
     .constant('RENTANL_UNUSED_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//未出租车辆查询信息
-
+    .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines')
 
     //远程升级
     .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfoPage') //升级的设备信息

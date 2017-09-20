@@ -34,7 +34,6 @@
       var rspdata = serviceResource.restCallService(url,"GET");
 
       rspdata.then(function (data) {
-        console.log(data.content);
         vm.rentalCustomer=data.content;
         vm.org=vm.rentalCustomer.org;
       },function (reason) {

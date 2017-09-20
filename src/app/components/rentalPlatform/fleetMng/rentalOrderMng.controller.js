@@ -40,12 +40,9 @@
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
     groupByStatusListPromise.then(function (data) {
       var groupByStatusList= data.content;
-          console.log(vm.groupByStatusList);
-
 
       for(var i=0;i<groupByStatusList.length;i++){
         var retanlOrderStatus=groupByStatusList[i];
-        console.log(retanlOrderStatus);
         if(retanlOrderStatus.status==1){ //计划
           vm.planOrders+=retanlOrderStatus.rentalOrderNumber;
         }else if(retanlOrderStatus.status==2){ //进行中

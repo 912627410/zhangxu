@@ -99,7 +99,6 @@
 
 
     vm.query = function (page, size, sort, maintentance) {
-      console.log("111222");
       var restCallURL = RENTAL_MAINTENANCE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
