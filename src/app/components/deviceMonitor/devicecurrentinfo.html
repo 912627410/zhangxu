@@ -169,7 +169,7 @@
       </uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
         <div class="box-body" >
-          <div class="row" ng-if="!(deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.device.machineType=='装载机')">
+          <div class="row" ng-if="!(deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.deviceinfo.machineType=='装载机')">
             <div class="col-md-3" >
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
@@ -187,7 +187,7 @@
               <!--<highchart id="container-oil" config="deviceCurrentInfoCtrl.highchartsAir"></highchart>-->
             <!--</div>-->
           </div>
-          <div ng-if="deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.device.machineType=='装载机'">
+          <div ng-if="deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.deviceinfo.machineType=='装载机'">
             <div  style="width: 20%;float: left;">
               <highchart id="container-urealevel" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsurealevel"></highchart>
             </div>

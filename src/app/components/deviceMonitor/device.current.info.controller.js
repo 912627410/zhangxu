@@ -19,7 +19,6 @@
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
-    vm.device = deviceinfo;
     $scope.myInterval = 5000;//轮播间隔
     $scope.noWrapSlides = false;// 是否轮播 默认false
     $scope.noTransition = false;// 是否有过场动画 默认false
@@ -77,8 +76,9 @@
           }
           //传动油温度（油温）
           if (vm.highchartsATF != null) {
+            var oilTemperature = parseInt(vm.deviceinfo.oilTemperature);
 
-            vm.highchartsATF.series[0].data = [vm.deviceinfo.oilTemperature];
+            vm.highchartsATF.series[0].data = [oilTemperature];
           }
 
 
@@ -827,7 +827,7 @@
       title: languages.findKey('surealevel') + '',
       series: [{
         name: languages.findKey('surealevel') + '',
-        data: [vm.deviceinfo.oilLevel],
+        data: [vm.deviceinfo.surealevel],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:12px;line-height:12px;border:none;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}%</span>' + '</div>',
@@ -851,6 +851,8 @@
       }
     }
 
+
+    var oilTemperature = parseInt(vm.deviceinfo.oilTemperature);
     //传动油温度（油温）
     vm.highchartsATF = {
       options: {
@@ -886,7 +888,7 @@
         // the value axis
         yAxis: {
           min: 0,
-          max: 140,  //水温表最大120
+          max: 140,  //最大140
           lineColor: '#339',
           tickColor: '#339',
           minorTickColor: '#339',
@@ -930,7 +932,7 @@
       title: languages.findKey('OilTemperature') + '',
       series: [{
         name: languages.findKey('OilTemperature') + '',
-        data: [vm.deviceinfo.engineTemperature],
+        data: [oilTemperature],
         dataLabels: {
           format: '<div style="text-align:center"><span style="border:none;line-height:12px;font-size:12px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}℃</span>' + '</div>',
