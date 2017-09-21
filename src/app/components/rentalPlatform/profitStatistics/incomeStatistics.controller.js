@@ -18,6 +18,7 @@
     var xAxisDate = [];
     var realComeDate = [];
     var incomeDate = [];
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     vm.queryIncome={machineType:"",
       heightType:"",
       machineManufacture:""};
@@ -222,7 +223,7 @@
 
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE || vm.pageSize;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 

@@ -204,7 +204,7 @@
           </div>
         </div>
 
-        <button  type="button" class="btn btn-sm btn-primary  searchButton" ng-click="incomeStatisticsCtr.queryByMachine(null,null,null,incomeStatisticsCtr.rentalMachine)">Search</button>
+        <button  type="button" class="btn btn-sm btn-primary  searchButton" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">Search</button>
         <button  type="button" class="btn btn-sm btn-default  searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
       </div>
     </div>
@@ -227,7 +227,7 @@
             </div>
             <div class="col-lg-12"><!--分页框-->
               <uib-pagination total-items="incomeStatisticsCtr.page.totalElements"
-                              ng-change="incomeStatisticsCtr.queryByOrder(incomeStatisticsCtr.pageNumber-1,null,null,null)"
+                              ng-change="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,incomeStatisticsCtr.totalElements,null)"
                               max-size="5" ng-model="incomeStatisticsCtr.pageNumber" items-per-page="incomeStatisticsCtr.page.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
                               first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
@@ -252,7 +252,7 @@
             </div>
             <div class="col-lg-12"><!--分页框-->
               <uib-pagination total-items="incomeStatisticsCtr.page.totalElements"
-                              ng-change="incomeStatisticsCtr.queryByMachine(incomeStatisticsCtr.pageNumber-1,null,null,null)"
+                              ng-change="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,incomeStatisticsCtr.totalElements,null)"
                               max-size="5" ng-model="incomeStatisticsCtr.pageNumber" items-per-page="incomeStatisticsCtr.page.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
                               first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
