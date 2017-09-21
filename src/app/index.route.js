@@ -447,6 +447,27 @@
       })
     ;
 
+    //DMS系统页面集成
+    $stateProvider
+      .state('dms', {
+        url: '/dms',
+        views: {
+          '@': {
+            templateUrl: 'app/main/dms/dmsMainframe.html',
+          }
+        }
+      })
+      //
+      .state('dms.machineComparison', {
+        url: '/machineComparison?username&password&orgLgCode',
+        views: {
+          'main@dms': {
+            templateUrl: 'app/components/workHotAnalysis/machineComparison.html',
+            controller: 'machineComparedMngController as machineComparedMngCtrl'
+          }
+        }
+      });
+
     $urlRouterProvider.otherwise('/home');
   }
 
