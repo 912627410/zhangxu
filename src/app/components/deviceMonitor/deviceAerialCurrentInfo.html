@@ -590,7 +590,7 @@
             </div>
             <div class="col-md-9 text-right">
               <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:vehicleParameters:read" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
-                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'requestTheLatestData'|translate}}</button>
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, 0)">{{'requestTheLatestData'|translate}}</button>
             </div>
           </div>
 
@@ -713,7 +713,7 @@
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
         <div class="box-body">
 
-          <div class="row">
+          <div class="row form-group">
             <div class="col-md-3">
               <select name="queryType" class="form-control"
                       ng-model="deviceAerialCurrentInfoController.calibrationParameterType"
@@ -731,6 +731,36 @@
                       ng-click="deviceAerialCurrentInfoController.calibrationParametersDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum)">{{'export'|translate}}</button>
               <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterType)">{{'requestTheLatestData'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-md-1">
+              <label class="control-label">{{'calibrationStatus'|translate}}</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.calibrationStatusValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">{{'batteryPower'|translate}}</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.batteryPowerValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
+                      deviceAerialCurrentInfoController.calibrationStatusValue, deviceAerialCurrentInfoController.batteryPowerValue, 32)">{{'send'|translate}}</button>
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">{{'overloadPercentage'|translate}}</label>
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.overloadValue" placeholder="{{'DecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(33, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.overloadValue)">{{'send'|translate}}</button>
             </div>
           </div>
 
@@ -828,7 +858,7 @@
               </p>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
+              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
               <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:export" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
             </div>
 
@@ -838,18 +868,22 @@
               <div class="table-responsive">
                 <table class="table">
                   <tr>
-                    <th class="text-nowrap">{{'terminalNumber'|translate}}</th>
-                    <th class="text-nowrap">{{'terminalSoftwareVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'positioningState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'address'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'longitude'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'latitude'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'terminalNumber'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'terminalSoftwareVersion'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'machineRunningState'|translate}}</th>
                     <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
-                    <th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <th class="text-nowrap">{{'GPSvisibleSatelliteNumber'|translate}}</th>
                     <th class="text-nowrap">{{'GPSavailableSatelliteNumber'|translate}}</th>
-                    <th class="text-nowrap">{{'ECUid'|translate}}</th>
-                    <th class="text-nowrap">{{'ECUsoftwareVersion'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'ECUid'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'ECUsoftwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'ECUstate'|translate}}</th>
                     <th class="text-nowrap">{{'totalRunningTimeHour'|translate}}</th>
                     <th class="text-nowrap">{{'panelRisingOperationSwitch'|translate}}</th>
@@ -886,14 +920,27 @@
                     <th class="text-nowrap">{{'recordGenerationTime'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceAerialCurrentInfoController.deviceDataList">
+                    <!--定位状态-->
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A')">{{'hasBeenpositioning(GPS)'|translate}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceData.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">{{'notLocate'|translate}}</td>
+                    <!--地址-->
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.address}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
+                    <!--经度-->
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplongitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
+                    <!--纬度-->
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplatitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
                     <!--终端编号-->
-                    <td ng-cloak>{{deviceData.deviceNum}}</td>
+                    <!--<td ng-cloak>{{deviceData.deviceNum}}</td>-->
                     <!--终端软件版本-->
-                    <td ng-if="deviceData.gpsSoftVersion==null">{{'noData'|translate}}</td>
-                    <td ng-cloak ng-if="deviceData.gpsSoftVersion!=null">VER{{deviceData.gpsSoftVersion}}</td>
+                    <!--<td ng-if="deviceData.gpsSoftVersion==null">{{'noData'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="deviceData.gpsSoftVersion!=null">VER{{deviceData.gpsSoftVersion}}</td>-->
                     <!--终端硬件版本-->
-                    <td ng-if="deviceData.gpsHardVersion==null">{{'noData'|translate}}</td>
-                    <td ng-cloak ng-if="deviceData.gpsHardVersion!=null">VER{{deviceData.gpsHardVersion}}</td>
+                    <!--<td ng-if="deviceData.gpsHardVersion==null">{{'noData'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="deviceData.gpsHardVersion!=null">VER{{deviceData.gpsHardVersion}}</td>-->
                     <!--车辆运行状态-->
                     <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                     <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
@@ -901,9 +948,9 @@
                     <!--内置电池电压-->
                     <td ng-cloak>{{deviceData.builtInVoltage}}v</td>
                     <!--协议版本-->
-                    <td ng-cloak>{{deviceData.versionNum}}</td>
+                    <!--<td ng-cloak>{{deviceData.versionNum}}</td>-->
                     <!--PCU软件版本-->
-                    <td ng-cloak>{{deviceData.pcuSoftVersion}}</td>
+                    <!--<td ng-cloak>{{deviceData.pcuSoftVersion}}</td>-->
                     <!--GPRS信号质量-->
                     <td ng-cloak>{{deviceData.gsmsignalStrength/31*100 | number :0}}%</td>
                     <!--GPS可见卫星数-->
@@ -911,9 +958,9 @@
                     <!--GPS可用卫星数-->
                     <td ng-cloak>{{deviceData.gprssignalStrength}}</td>
                     <!--ECU ID-->
-                    <td>{{deviceData.ecuID}}</td>
+                    <!--<td>{{deviceData.ecuID}}</td>-->
                     <!--ECU软件版本-->
-                    <td>{{deviceData.ecuSoftVersion}}</td>
+                    <!--<td>{{deviceData.ecuSoftVersion}}</td>-->
                     <!--ECU状态-->
                     <td ng-if="deviceData.ecuStatus==0">{{'initialization'|translate}}</td>
                     <td ng-if="deviceData.ecuStatus==1">{{'waitingForTheLink'|translate}}</td>
@@ -1010,8 +1057,8 @@
                     <td ng-if="deviceData.fetAlarm==0" class="bg-warning text-warning">{{'no'|translate}}</td>
                     <td ng-if="deviceData.fetAlarm!==0&&deviceData.fetAlarm!==1" class="text-nowrap">{{'noData'|translate}}</td>
                     <!--平台高度-->
-                    <td ng-if="deviceData.hostHeight!=null">{{deviceData.hostHeight}}{{'m'|translate}}</td>
-                    <td ng-if="deviceData.hostHeight==null">-- {{'m'|translate}}</td>
+                    <td nowrap ng-if="deviceData.calibrationStatus=='192' && deviceData.hostHeight!=null && deviceData.hostHeight<='100' && deviceData.hostHeight >='0'">{{deviceData.hostHeight}}%</td>
+                    <td ng-if="deviceData.calibrationStatus!='192' || deviceData.hostHeight==null || deviceData.hostHeight<'0'|| deviceData.hostHeight>'100'">-</td>
                     <!--油缸压力-->
                     <td ng-cloak>{{25*deviceData.oilPressure/4095 |number: 2}}MPa</td>
                     <!--泵电机转速-->
@@ -1046,7 +1093,7 @@
           <div class="row">
             <div class="col-md-12">
               <uib-pagination total-items="deviceAerialCurrentInfoController.page.totalElements"
-                              ng-change="deviceAerialCurrentInfoController.getDeviceData(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
+                              ng-change="deviceAerialCurrentInfoController.getDeviceData(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
                               ng-model="deviceAerialCurrentInfoController.deviceData_pagenumber"
                               items-per-page="deviceAerialCurrentInfoController.page.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
@@ -1058,7 +1105,7 @@
     </uib-tab>
 
     <!--位置信息-->
-    <uib-tab presentation-href="dashboard:deviceMonitor:historyLocateData">
+    <uib-tab presentation-href="dashboard:deviceMonitor:historyLocateData" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
       <uib-tab-heading>
         {{'locationInformation'|translate}}
       </uib-tab-heading>
@@ -1858,7 +1905,7 @@
                               </div>
                               <div class="row" >
                                 <div class="col-md-12">
-                                  <input type="text" id="returnTime" class="form-control" placeholder="{{'timeSec'|translate}}"
+                                  <input type="text" id="returnTime" class="form-control" placeholder="{{'time'|translate}}"
                                          validator="number" ng-model="deviceAerialCurrentInfoController.returnTimeParam.time" name="returnTime"/>
                                 </div>
                               </div>
@@ -2127,35 +2174,37 @@
                         </div>
                       </div>
                     </div>
-                    <!--设置车辆参数类型-->
-                    <!--<div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setParameterType">-->
-                      <!--<div class="box box-danger">-->
-                        <!--<div class="box-header">-->
-                          <!--<h5 class="box-title text-gray">设置参数类型</h5>-->
-                          <!--<div class="box-tools pull-right">-->
-                            <!--<a type="button" class="btn" data-toggle="tooltip"-->
-                               <!--data-placement="right" title="设置车辆参数类型"> <i class="fa fa-info" ></i> </a>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="box-body">-->
-                          <!--<div class="row">-->
-                            <!--<div class="col-md-12">-->
-                              <!--<div class="row">-->
-                                <!--<label class="col-md-12 control-label text-nowrap">&nbsp;</label>-->
-                                <!--<div class="col-md-6">-->
-                                  <!--<input type="text" class="form-control" validator="number" ng-model="deviceAerialCurrentInfoController.parameterType"/>-->
-                                <!--</div>-->
-                                <!--<div class="col-md-6">-->
-                                  <!--<sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"-->
-                                                <!--send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"-->
-                                                <!--ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.parameterType)">{{'send'|translate}}</sms-send-btn>-->
-                                <!--</div>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
+                    <!--设置工作小时数-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setParameterType">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'setHoursOfWorkHours'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <label for="mqttWorkHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <input type="text" id="mqttWorkHours" class="form-control" ng-model="deviceAerialCurrentInfoController.workHours" name="mqttWorkHours"/>
+                                </div>
+                                <div class="col-md-6">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(34, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.workHours)">{{'send'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <!--  请求数据  -->
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setRead">
                       <div class="box box-success">

@@ -733,8 +733,24 @@
             warningMsg.action = "停止所有动作";
             break;
           case '3':
-            warningMsg.description = "无效选项设置错误";
+            warningMsg.description = "初次使用未设置机器代码错误";
             warningMsg.action = "停止所有动作";
+            break;
+          case '4':
+            warningMsg.description = "设定的代码无效";
+            warningMsg.action = "停止所有动作";
+            break;
+          case '6':
+            warningMsg.description = "远程参数下发成功提示";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '7':
+            warningMsg.description = "二级锁车报警";
+            warningMsg.action = "禁止举升和行走";
+            break;
+          case '8':
+            warningMsg.description = "称重标定数据下发成功提示";
+            warningMsg.action = "仅显示报警";
             break;
           case '01':
             warningMsg.description = "系统初始化错误";
@@ -764,13 +780,27 @@
             warningMsg.description = "角度传感器错误";
             warningMsg.action = "停止所有动作";
             break;
+          case '35':
+            warningMsg.description = "标定数据错误";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '36':
+            warningMsg.description = "电池电量低报警";
+            break;
           case '38':
-            warningMsg.description = "标定过程不成功或标定数据存储错误";
-            warningMsg.action = "重新标定";
+            warningMsg.description = "超载功能开启，称重标定未完成错误";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '39':
+            warningMsg.description = "蓄电池液位开关检测到蓄电池液位低";
+            warningMsg.action = "仅显示报警";
+            break;
+          case '40':
+            warningMsg.description = "ECU与GPS握手失败报警	可行走不可举升";
             break;
           case '41':
-            warningMsg.description = "锁车报警";
-            warningMsg.action = "下次上电锁车";
+            warningMsg.description = "通过平台锁定车辆状态（仅适用于带有GPS功能的ECU）";
+            warningMsg.action = "可行走不可举升";
             break;
           case '42':
             warningMsg.description = "启动时,平台向左转向按钮按下错误";
@@ -813,7 +843,7 @@
             warningMsg.action = "停止起升和行走";
             break;
           case '58':
-            warningMsg.description = "刹车线圈错误";
+            warningMsg.description = "刹车线圈错误(因为刹车线圈是可选项，该功能暂时屏蔽)";
             warningMsg.action = "停止起升和行走";
             break;
           case '68':
