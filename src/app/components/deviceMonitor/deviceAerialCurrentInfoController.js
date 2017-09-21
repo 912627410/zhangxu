@@ -597,6 +597,7 @@
           return;
         }
 
+        var isSend = true; // 是否发送
         //加载json,判断有效值
         $http.get('awpReturnTime.json').success(function(data){
           vm.mqttReturnTime=JSON.parse(JSON.stringify(data));
@@ -604,32 +605,34 @@
             var retrunTime = vm.mqttReturnTime[i];
             if(retrunTime.name == returnTimeParam.name) {
               if(returnTimeParam.time < retrunTime.minValue || returnTimeParam.time > retrunTime.maxValue) {
-                Notification.error("超出有效值范围:"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                Notification.error(languages.findKey('beyondValidRange')+":"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                isSend = false;
                 return;
               }
             }
           }
-        });
-
-        var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
-        $confirm({
-          text: languages.findKey('确定设置此时间间隔?') + '',
-          title: languages.findKey('时间间隔设置确认') + '',
-          ok: languages.findKey('confirm') + '',
-          cancel: languages.findKey('cancel') + ''
-        }).then(function () {
-          var restPromise = serviceResource.restCallService(restURL, "ADD", null);
-          restPromise.then(function (data) {
-            if (data.code == 0) {
-              Notification.success(data.content);
-              vm.initSmsSendBtn();
-            }
-            else {
-              Notification.error(data.content);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
-          })
+          if(isSend) {
+            var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
+            $confirm({
+              text: languages.findKey('okSetThisInterval') + '',
+              title: languages.findKey('intervalConfirmation') + '',
+              ok: languages.findKey('confirm') + '',
+              cancel: languages.findKey('cancel') + ''
+            }).then(function () {
+              var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+              restPromise.then(function (data) {
+                if (data.code == 0) {
+                  Notification.success(data.content);
+                  vm.initSmsSendBtn();
+                }
+                else {
+                  Notification.error(data.content);
+                }
+              }, function (reason) {
+                Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              })
+            });
+          }
         });
       };
 

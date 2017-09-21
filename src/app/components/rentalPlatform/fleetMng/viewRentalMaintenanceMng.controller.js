@@ -47,7 +47,6 @@
       var rspdata = serviceResource.restCallService(url,"GET");
 
       rspdata.then(function (data) {
-        console.log(data.content);
         vm.maintenance=data.content;
 
         //处理list

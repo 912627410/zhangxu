@@ -24,8 +24,6 @@
         var sortUrl = sort || "id,desc";
         restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
-       console.log(sim);
-
         if(sim){
 
           if (sim.phoneNumber) {

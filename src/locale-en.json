@@ -962,6 +962,9 @@
   "HexadecimalValue":"Hexadecimal value",
   "DecimalValue":"Decimal value",
 
+  "beyondValidRange":"Beyond valid range",
+  "okSetThisInterval":"Ok set this time interval?",
+  "intervalConfirmation":"Time interval setting confirmation",
 
 
 

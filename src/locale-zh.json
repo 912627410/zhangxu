@@ -966,6 +966,9 @@
   "overloadPercentage":"超载百分比",
   "HexadecimalValue":"16进制数值",
   "DecimalValue":"10进制数值",
+  "beyondValidRange":"超出有效值范围",
+  "okSetThisInterval":"确定设置此时间间隔?",
+  "intervalConfirmation":"时间间隔设置确认",
 
 
 
