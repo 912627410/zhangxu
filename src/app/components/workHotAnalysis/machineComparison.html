@@ -1,11 +1,12 @@
 <div>
   <section>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" ng-hide="machineComparedMngCtrl.hiteTopLink">
       <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
       <li>统计分析</li>
       <li>开工热度分析</li>
       <li class="active">开工与销售热度</li>
     </ol>
+    <br ng-show="machineComparedMngCtrl.hiteTopLink">
   </section>
   <div class="container-fluid machineCompared">
     <div >
