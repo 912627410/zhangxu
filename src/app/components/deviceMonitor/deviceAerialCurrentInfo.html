@@ -727,8 +727,13 @@
             <div class="col-md-9 text-right">
               <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterValue, deviceAerialCurrentInfoController.calibrationParameterType)">{{'send'|translate}}</button>
+
               <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:export"
                       ng-click="deviceAerialCurrentInfoController.calibrationParametersDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum)">{{'export'|translate}}</button>
+
+              <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:import"
+                      ng-click="deviceAerialCurrentInfoController.calibrationParametersImport('mg')">{{'import'|translate}}</button>
+
               <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterType)">{{'requestTheLatestData'|translate}}</button>
             </div>
@@ -1891,7 +1896,7 @@
                                     <option value="timeSampleCharge">{{'chargerSamplingInterval'|translate}}</option>
                                     <option value="timeSleepTime">{{'gpsSleepTimeInterval'|translate}}</option>
                                     <option value="timeGPSWaitTime">{{'gpsPositioningWaitTime'|translate}}</option>
-                                    <option value="timeSampleMotorParas">{{'motorParameterAcquisitionInterval'|translate}}</option>
+                                    <option value="timeSampleMotorParas">{{'ECUParameterAcquisitionInterval'|translate}}</option>
                                     <option value="timeSampleSetParas">{{'setTheParameterAcquisitionInterval'|translate}}</option>
                                     <option value="timeSampleDeviceRunStatus">{{'deviceRunningStatusAcquisitionInterval'|translate}}</option>
                                   </select>
