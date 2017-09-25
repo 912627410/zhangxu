@@ -452,7 +452,7 @@
           markers:[]
         };
         if ($rootScope.userInfo) {
-          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL+"?size=3000", "QUERY");
+          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL+"?size=3000&locateStatus=1", "QUERY");
           rspdata.then(function (deviceGPSInfoList) {
             deviceGPSInfoList.forEach(function (deviceGPSInfo, index, array) {
               if (deviceGPSInfo != null && deviceGPSInfo.latitudeNum != null && deviceGPSInfo.longitudeNum != null) {
@@ -460,8 +460,8 @@
                 //map.center.longitude=deviceGPSInfo.amaplongitudeNum;
                 map.markers.push({
                   id: index,
-                  latitude: deviceGPSInfo.latitudeNum,
-                  longitude: deviceGPSInfo.longitudeNum,
+                  latitude: deviceGPSInfo.amaplatitudeNum,
+                  longitude: deviceGPSInfo.amaplongitudeNum,
                   show: false,
                   deviceNum: deviceGPSInfo.deviceNum,
                   lastDataUploadTime: deviceGPSInfo.lastDataUploadTime == null ? '' : $filter('date')(deviceGPSInfo.lastDataUploadTime, 'yyyy-MM-dd HH:mm:ss'),
