@@ -11,6 +11,11 @@
   function machineMonitorController($rootScope,$window,$scope,$http, $uibModalInstance,$location, $timeout, $filter) {
     var vm = this;
     vm.test="machineMonitorController";
+
+    vm.toggle=function (url) {
+      vm.position=url;
+    }
+
     /*模态框自适应高度*/
     var monitorheight = $window.innerHeight/1.3;
     vm.monitorheight = {
@@ -21,5 +26,8 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+
+
   }
 })();

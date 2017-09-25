@@ -10,9 +10,8 @@
   /** @ngInject */
   function machineMonitorPositionController($rootScope,$window,$scope,$http, $location, $timeout, $filter,serviceResource,Notification,NgTableParams,ngTableDefaults,languages) {
     var vm = this;
+    vm.position='machineMonitorPositionController';
 
-    vm.initPosition=function () {
-      console.log("initPosition");
-    }
+    console.log("position");
   }
 })();
