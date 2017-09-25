@@ -332,7 +332,7 @@
         },
 
         tooltip: {
-          enabled: true
+          enabled: false
         },
 
         // the value axis
