@@ -8,10 +8,10 @@
     .controller('machineMonitorPositionController', machineMonitorPositionController);
 
   /** @ngInject */
-  function machineMonitorPositionController($rootScope,$window,$scope,$http, $location, $timeout, $filter,serviceResource,Notification,NgTableParams,ngTableDefaults,languages) {
+  function machineMonitorPositionController($rootScope,$window,$scope,$http, $location, $timeout, $filter,serviceResource,Notification,NgTableParams,ngTableDefaults,languages,sharedDeviceInfoFactory) {
     var vm = this;
-    vm.position='machineMonitorPositionController';
+    vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
 
-    console.log("position");
+
   }
 })();

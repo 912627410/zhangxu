@@ -8,9 +8,9 @@
     .controller('machineMonitorLiftCycleController', machineMonitorLiftCycleController);
 
   /** @ngInject */
-  function machineMonitorLiftCycleController($rootScope,$window,$scope,$http, $location, $timeout, $filter) {
+  function machineMonitorLiftCycleController($rootScope,$window,$scope,$http, $location, $timeout, $filter,sharedDeviceInfoFactory) {
     var vm = this;
-    vm.test="machineMonitorLiftCycleController";
+    vm.deviceInfo=sharedDeviceInfoFactory.getSharedDeviceInfo();
 
   }
 })();

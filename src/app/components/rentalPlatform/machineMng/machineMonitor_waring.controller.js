@@ -8,9 +8,9 @@
     .controller('machineMonitorWaringController', machineMonitorWaringController);
 
   /** @ngInject */
-  function machineMonitorWaringController($rootScope,$window,$scope,$http, $location, $timeout, $filter) {
+  function machineMonitorWaringController($rootScope,$window,$scope,$http, $location, $timeout, $filter,sharedDeviceInfoFactory) {
     var vm = this;
-    vm.test="machineMonitorWaringController";
+    vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
 
   }
 })();

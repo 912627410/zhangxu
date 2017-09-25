@@ -8,9 +8,9 @@
     .controller('machineMonitorAnalysisController', machineMonitorAnalysisController);
 
   /** @ngInject */
-  function machineMonitorAnalysisController($rootScope,$window,$scope,$http, $location, $timeout, $filter) {
+  function machineMonitorAnalysisController($rootScope,$window,$scope,$http, $location, $timeout, $filter,sharedDeviceInfoFactory) {
     var vm = this;
-    vm.test="machineMonitorAnalysisController";
+    vm.deviceInfo=sharedDeviceInfoFactory.getSharedDeviceInfo();
 
   }
 })();

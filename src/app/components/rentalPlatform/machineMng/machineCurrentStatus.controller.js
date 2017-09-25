@@ -172,7 +172,7 @@
     };
 
     /**
-     * 打开车辆监控窗口
+     * 车辆监控
      *
      * @param deviceNum
      */
@@ -180,6 +180,9 @@
       var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
+        data.content={
+          deviceNum:"AA0012"
+        }
         //打开模态框
         $rootScope.currentOpenModal = $uibModal.open({
           animation: true,

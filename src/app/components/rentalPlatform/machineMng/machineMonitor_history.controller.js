@@ -8,9 +8,9 @@
     .controller('machineMonitorHistoryController', machineMonitorHistoryController);
 
   /** @ngInject */
-  function machineMonitorHistoryController($rootScope,$window,$scope,$http, $location, $timeout, $filter) {
+  function machineMonitorHistoryController($rootScope,$window,$scope,$http, $location, $timeout, $filter,sharedDeviceInfoFactory) {
     var vm = this;
-    vm.test="machineMonitorHistoryController";
+    vm.deviceInfo=sharedDeviceInfoFactory.getSharedDeviceInfo();
 
   }
 })();

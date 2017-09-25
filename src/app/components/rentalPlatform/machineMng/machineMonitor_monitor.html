@@ -1,7 +1,7 @@
 <!--数据-->
-<div class="modal-body"  ng-controller="machineMonitorDataController as vm">
+<div class="modal-body"  ng-controller="machineMonitorDataController as vm" >
   <div class="box-body">
-    <div class="row">{{vm.test}}
+    <div class="row">
       <div class="col-md-6">
         <span>{{'GSMsignalStrength'|translate}}</span>
         <uib-progressbar max="100" value="machineMonitorCtrl.deviceInfo.gsmsignalStrength" type="warning"><span style="color:white; white-space:nowrap;">{{machineMonitorCtrl.deviceInfo.gsmsignalStrength}}/100</span></uib-progressbar>
