@@ -873,7 +873,7 @@
   "lastMaintenanceDate":"上次保养日期",
   "nextMaintenanceDate":"下次保养日期",
   "setFence":"设置围栏",
-  "processingAalarm":"处理报警",
+  "processingAalarm":"处理",
   "processAll":"处理选中的报警",
   "processAlarm":"处理",
   "MachineWorkDetails":"机器工作详情",
@@ -1005,7 +1005,9 @@
   "租赁商-运输":"租赁商-运输",
   "结束":"结束",
   "计划":"计划",
-  "进行中":"进行中"
+  "进行中":"进行中",
+  "checkAlarm":"请勾选要处理的报警信息!",
+  "neglect":"忽略"
 
 
 }

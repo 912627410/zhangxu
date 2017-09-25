@@ -302,7 +302,7 @@
         }
       })
       if (selected==null||selected.length<=0){
-        Notification.warning("请选择要处理的报警信息!");
+        Notification.warning(languages.findKey('checkAlarm'));
         return;
       }
       //打开模态框
@@ -502,6 +502,16 @@
       for (var i = 0; i < vm.notificationList.length; i++) {
         vm.notificationList[i].state = !vm.notificationList[i].state;
       }
+    }
+
+    /**
+     * 忽略报警信息
+     *
+     * @param data
+     * @param index
+     */
+    vm.neglect=function (data,index) {
+
     }
 
   }
