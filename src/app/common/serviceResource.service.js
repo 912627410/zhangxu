@@ -452,7 +452,7 @@
           markers:[]
         };
         if ($rootScope.userInfo) {
-          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL+"?size=3000&search_locateStatus=1", "QUERY");
+          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL+"?size=3000&search_EQ_locateStatus=1", "QUERY");
           rspdata.then(function (deviceGPSInfoList) {
             deviceGPSInfoList.forEach(function (deviceGPSInfo, index, array) {
               if (deviceGPSInfo != null && deviceGPSInfo.latitudeNum != null && deviceGPSInfo.longitudeNum != null) {
