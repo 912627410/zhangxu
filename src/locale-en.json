@@ -1002,6 +1002,7 @@
   "主机厂-运输":"Hosts-transport",
   "租赁商-运输":"rental-transport",
   "checkAlarm":"Please check the alarm information to be processed!",
-  "neglect":"Neglect"
+  "neglect":"Neglect",
+  "position":"Position"
 
 }

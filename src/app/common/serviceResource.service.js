@@ -193,7 +193,7 @@
         titleA.innerHTML=languages.findKey('terminalNumber')+" :"+item.deviceNum;
         if (callback){
           titleA.onclick =  function (){
-            callback(item);//点击以后，把结果传回去。没有点击就不执行callback
+            //callback(item);//点击以后，把结果传回去。没有点击就不执行callback
           };
         }else {
           titleA.onclick =  Viewdetails;
@@ -452,7 +452,7 @@
           markers:[]
         };
         if ($rootScope.userInfo) {
-          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL, "QUERY");
+          var rspdata = restCallService(HOME_GOOGLEMAPGPSDATA_URL+"?size=3000", "QUERY");
           rspdata.then(function (deviceGPSInfoList) {
             deviceGPSInfoList.forEach(function (deviceGPSInfo, index, array) {
               if (deviceGPSInfo != null && deviceGPSInfo.amaplatitudeNum != null && deviceGPSInfo.amaplongitudeNum != null) {
