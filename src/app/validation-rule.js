@@ -7,6 +7,11 @@
 
   /** @ngInject */
   function validationuleConfig($validationProvider,$injector) {
+
+    //全局设置是否显示 success/error message
+    $validationProvider.showSuccessMessage = false; // or true(default)
+    $validationProvider.showErrorMessage = true; // or true(default)
+
     var expression = {
       required: function(value) {
         return !!value;
@@ -31,6 +36,9 @@
       },
       maxlength: function(value, scope, element, attrs, param) {
         return value.length <= param;
+      },
+      nullOrNumber : function (value) {
+        return value ==null || value =='' || /^\d+$/.test(value);
       }
     };
 
@@ -40,57 +48,61 @@
 
     var defaultMsg = {
       required: {
-        error: 'required',
+        error: "{{'required' |translate}}",
         success: ''
       },
 
       url: {
-        error: 'urlNotLegal',
+        error: "{{'urlNotLegal' |translate}}",
         success: ''
       },
       email: {
-        error: 'emailNotLegal',
+        error: "{{'emailNotLegal' |translate}}",
         success: ''
       },
       number: {
-        error: 'numberOnly',
+        error: "{{'numberOnly' |translate}}",
         success: ''
       },
       numberAndChar: {
-        error: 'numberAndChar',
+        error: "{{'numberAndChar' |translate}}",
         success: ''
       },
       numberAndCharAndDot: {
-        error: 'numberAndCharAndDot',
+        error: "{{'numberAndCharAndDot' |translate}}",
         success: ''
       },
       numberAndDot: {
-        error: 'numberAndDot',
+        error: "{{'numberAndDot' |translate}}",
         success: ''
       },
       minlength: {
-        error: 'minlength',
+        error: "{{'minlength' |translate}}",
         success: ''
       },
       maxlength: {
-        error: 'maxlength',
+        error: "{{'maxlength' |translate}}",
         success: ''
       },
       numberAndCharForPass: {
-        error: 'numberAndCharForPass',
+        error: "{{'numberAndCharForPass' |translate}}",
         success: ''
       },
       telephoneNo: {
-        error: 'telephoneNo',
+        error: "{{'telephoneNo' |translate}}",
         success: ''
       },
       postcode: {
-        error: 'postcodes',
+        error: "{{'postcodes' |translate}}",
         success: ''
       },
       port: {
         // error: 'portError',
         error: '端口号范围1000~65535',
+        success: ''
+      },
+      nullOrNumber: {
+        error: "{{'nullOrNumber' |translate}}",
         success: ''
       }
     };
@@ -127,8 +139,8 @@
 
 
     $validationProvider.setErrorHTML(function (msg) {
-      //return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
-      return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
+      return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      //return '<label class="control-label has-error\" style="color: red;">' + this.$injector.get('$translate').instant(msg) + '</label>';
 
     });
 
