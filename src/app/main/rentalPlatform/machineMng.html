@@ -1,13 +1,13 @@
 <div class="machine-content" resize>
 
 
-<!--  <nav-btn>
-    <nav-title></nav-title>
-    <nav-list>
-      <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
-    </nav-list>
-    <nav-overlay></nav-overlay>
-  </nav-btn>-->
+  <!--  <nav-btn>
+      <nav-title></nav-title>
+      <nav-list>
+        <nav-item ng-click="rentalMachineMngCtr.gotoView(item.title)"></nav-item>
+      </nav-list>
+      <nav-overlay></nav-overlay>
+    </nav-btn>-->
 
   <!--currentLocation begin-->
   <div id="currentLocation" class="container-fluid">
@@ -23,38 +23,86 @@
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalGeo-FenceWarning'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.fenceAlarm"></span>
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/fence-rental.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" ><strong ng-bind="rentalMachineMngCtr.fenceAlarm"></strong></div>
+            </div>
           </div>
-          <div class="miniChart"></div>
+          <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
+            <span class=" info-box-left-text-top">{{'rentalGeo-FenceWarning'|translate}}</span>
+            <span class="info-box-number info-box-left-text-below" ></span>
+          </div>-->
+          <!-- <div class="miniChart"></div>-->
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/car.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div  ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" ><strong  ng-bind="rentalMachineMngCtr.machineAlarm"></strong></div>
+            </div>
+          </div>
+         <!-- <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
             <span class=" info-box-left-text-top">{{'rentalEquipmentWarning'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.machineAlarm"></span>
-          </div>
-          <div class="miniChart"></div>
+          </div>-->
+          <!--<div class="miniChart"></div>-->
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"  style=" cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalMaintenanceReminder'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.keepAlarm"></span>
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/main.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"><strong ng-bind="rentalMachineMngCtr.keepAlarm"></strong></div>
+            </div>
           </div>
-          <div class="miniChart"></div>
+          <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)" style=" cursor:pointer;">-->
+            <!--<span class=" info-box-left-text-top">{{'rentalMaintenanceReminder'|translate}}</span>-->
+            <!--<span class="info-box-number info-box-left-text-below" ></span>-->
+          <!--</div>-->
+          <!--<div class="miniChart"></div>-->
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"  style=" cursor:pointer;">
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/offline.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"><strong ng-bind="rentalMachineMngCtr.offLineAlarm"></strong></div>
+            </div>
+          </div>
+          <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)" style=" cursor:pointer;">
             <span class=" info-box-left-text-top">{{'rentalOff-lineReminder'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="rentalMachineMngCtr.offLineAlarm"></span>
-          </div>
-          <div class="miniChart"></div>
+          </div>-->
+          <!-- <div class="miniChart"></div>-->
         </div>
       </div>
     </div>
@@ -67,7 +115,8 @@
           <div class="box-header">
             <span>{{'rentalEquipmentPreview'|translate}}</span>
             <div class="box-tools pull-right">
-              <button class="btn btn-sm" title="{{'refresh'|translate}}" ng-click="rentalMachineMngCtr.loadHomeDeviceData(langkey)" style="background-color: transparent">
+              <button class="btn btn-sm" title="{{'refresh'|translate}}"
+                      ng-click="rentalMachineMngCtr.loadHomeDeviceData(langkey)" style="background-color: transparent">
                 <i class="fa fa-refresh"></i>
               </button>
             </div>
@@ -84,10 +133,25 @@
               <div class="header">{{'TotalNumbersAndRateRents'|translate}}</div>
               <div class="col-lg-6">
                 <ul>
-                  <li class="machineNumlis"><i>{{'rentalTotal'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType()" ng-bind="rentalMachineMngCtr.machineCount"></a></span></li>
-                  <li class="machineNumlis"><i>{{'rentalScissorLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(1)" ng-bind="rentalMachineMngCtr.shearFork"></a></span><div class="miniPie"></div></li>
-                  <li class="machineNumlis"><i>{{'rentalBoomLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(2)"  ng-bind="rentalMachineMngCtr.straightArm"></a></span><div class="miniPie"></div></li>
-                  <li class="machineNumlis"><i>{{'rentalArticulatingBoomLift'|translate}}</i><span><a style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(3)"  ng-bind="rentalMachineMngCtr.crankArm"></a></span><div class="miniPie"></div></li>
+                  <li class="machineNumlis"><i>{{'rentalTotal'|translate}}</i><span><a style=" cursor:pointer;"
+                                                                                       ng-click="rentalMachineMngCtr.queryByMachineType()"
+                                                                                       ng-bind="rentalMachineMngCtr.machineCount"></a></span>
+                  </li>
+                  <li class="machineNumlis"><i>{{'rentalScissorLift'|translate}}</i><span><a style=" cursor:pointer;"
+                                                                                             ng-click="rentalMachineMngCtr.queryByMachineType(1)"
+                                                                                             ng-bind="rentalMachineMngCtr.shearFork"></a></span>
+                    <div class="miniPie"></div>
+                  </li>
+                  <li class="machineNumlis"><i>{{'rentalBoomLift'|translate}}</i><span><a style=" cursor:pointer;"
+                                                                                          ng-click="rentalMachineMngCtr.queryByMachineType(2)"
+                                                                                          ng-bind="rentalMachineMngCtr.straightArm"></a></span>
+                    <div class="miniPie"></div>
+                  </li>
+                  <li class="machineNumlis"><i>{{'rentalArticulatingBoomLift'|translate}}</i><span><a
+                    style=" cursor:pointer;" ng-click="rentalMachineMngCtr.queryByMachineType(3)"
+                    ng-bind="rentalMachineMngCtr.crankArm"></a></span>
+                    <div class="miniPie"></div>
+                  </li>
                 </ul>
               </div>
               <div class="col-lg-6">
@@ -103,7 +167,7 @@
       </div>
     </div>
   </div>
-  </div>
-  <!--currentLocation end-->
+</div>
+<!--currentLocation end-->
 
 </div>

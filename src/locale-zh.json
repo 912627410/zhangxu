@@ -739,9 +739,9 @@
 
 
   "rentalCurrentLocate":"当前位置",
-  "rentalGeo-FenceWarning":"围栏",
-  "rentalEquipmentWarning":"报警",
-  "rentalMaintenanceReminder":"保养",
+  "rentalGeo-FenceWarning":"围栏报警",
+  "rentalEquipmentWarning":"车辆报警",
+  "rentalMaintenanceReminder":"保养提醒",
   "rentalOff-lineReminder":"离线",
   "rentalEquipmentPreview":"机器预览",
   "rentalTotal":"总数",
