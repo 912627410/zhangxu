@@ -70,17 +70,30 @@
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
 
+    vm.totalIncome = 0;
+    vm.jcTotalIncome =0;
+    vm.zbTotalIncome = 0;
+    vm.qbTotalIncome = 0;
+
     vm.queryIncomeByType = function () {
       //查询高度类型
       var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
       var incomeTotalData = serviceResource.restCallService(incomeTotalURL, "GET");
       incomeTotalData.then(function (data) {
         vm.incomeTotalData = data.content;
-        vm.jcTotalIncome = vm.incomeTotalData[0].totalRevenue;
-        vm.zbTotalIncome = vm.incomeTotalData[1].totalRevenue;
-        vm.qbTotalIncome = vm.incomeTotalData[2].totalRevenue;
-        vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
+        for(var i = 0;i<vm.incomeTotalData.length;i++){
+          if( vm.incomeTotalData[i].devicetypeid==1){
+            vm.jcTotalIncome = vm.incomeTotalData[i].totalRevenue;
+          }
+          if( vm.incomeTotalData[i].devicetypeid==2){
+            vm.zbTotalIncome = vm.incomeTotalData[i].totalRevenue;
+          }
+          if( vm.incomeTotalData[i].devicetypeid==3){
+            vm.qbTotalIncome = vm.incomeTotalData[i].totalRevenue;
+          }
 
+        }
+        vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
 
       }, function (reason) {
         Notification.error('获取失败');
