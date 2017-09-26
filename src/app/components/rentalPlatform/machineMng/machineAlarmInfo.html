@@ -28,8 +28,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="machineAlarmInfoCtr.fenceAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><strong ng-bind="machineAlarmInfoCtr.fenceAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)" >
@@ -51,8 +51,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong  ng-bind="machineAlarmInfoCtr.machineAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div  ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><strong  ng-bind="machineAlarmInfoCtr.machineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)" >
@@ -73,8 +73,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="machineAlarmInfoCtr.keepAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><strong ng-bind="machineAlarmInfoCtr.keepAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)">
@@ -95,8 +95,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="machineAlarmInfoCtr.offLineAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><strong ng-bind="machineAlarmInfoCtr.offLineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)">

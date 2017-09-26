@@ -31,8 +31,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="rentalMachineMngCtr.fenceAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" ><strong ng-bind="rentalMachineMngCtr.fenceAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
@@ -52,8 +52,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong  ng-bind="rentalMachineMngCtr.machineAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div  ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" ><strong  ng-bind="rentalMachineMngCtr.machineAlarm"></strong></div>
             </div>
           </div>
          <!-- <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
@@ -73,8 +73,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="rentalMachineMngCtr.keepAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"><strong ng-bind="rentalMachineMngCtr.keepAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)" style=" cursor:pointer;">-->
@@ -94,8 +94,8 @@
             <div class="col-md-6 profit-info-height" >
               <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
             </div>
-            <div class="col-md-3 profit-info-height">
-              <div ><strong ng-bind="rentalMachineMngCtr.offLineAlarm"></strong></div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"><strong ng-bind="rentalMachineMngCtr.offLineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)" style=" cursor:pointer;">
