@@ -10,7 +10,7 @@
     .controller('newRentalMaintenanceController', newRentalMaintenanceController);
 
   /** @ngInject */
-  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
+  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_MAINTENANCE_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -43,11 +43,6 @@
 
 
     vm.ok = function () {
-
-      console.log(vm.maintenance);
-     // console.log(vm.tableParams.data);
-      console.log(vm.machine);
-
       vm.maintenance.machine=vm.machine;
       vm.maintenance.maintenanceListVo=vm.tableParams.data;
 
@@ -89,7 +84,7 @@
             return vm.operatorInfo;
           },
           selectUrl: function () {
-          return RENTANL_UNUSED_MACHINE_PAGE_URL;
+          return RENTANL_MAINTENANCE_MACHINE_PAGE_URL;
         }
         }
       });
@@ -118,10 +113,6 @@
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-          console.log(data.content);
-
-
-
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -129,13 +120,6 @@
           dataset: data.content
         });
 
-        // console.log(11);
-        // console.log(vm.tableParams);
-        // console.log(vm.tableParams.data.length);
-        // for(var i=0;i<vm.tableParams.data.length;i++){
-        //   console.log(vm.tableParams.data[i]);
-        // }
-        // console.log(22);
       }, function (reason) {
         Notification.error("获取作业面数据失败");
       });

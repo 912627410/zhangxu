@@ -56,11 +56,14 @@
 
         //未标定时,负载重量和平台高度显示为-
         if(vm.deviceinfo.calibrationStatus == 192) {
-          if(vm.deviceinfo.loadWeight > 100) {
-            vm.deviceinfo.loadWeight = languages.findKey('overrange');
-            vm.deviceinfo.hostHeight = languages.findKey('overrange');
+          if(null == vm.deviceinfo.loadWeight || vm.deviceinfo.loadWeight > 100 || vm.deviceinfo.loadWeight < 0) {
+            vm.deviceinfo.loadWeight = '-';
           } else {
             vm.deviceinfo.loadWeight += '%';
+          }
+          if(null == vm.deviceinfo.hostHeight || vm.deviceinfo.hostHeight > 100 || vm.deviceinfo.hostHeight < 0) {
+            vm.deviceinfo.hostHeight = '-';
+          } else {
             vm.deviceinfo.hostHeight += '%';
           }
         } else {
@@ -273,7 +276,7 @@
         vm.serverPort = vm.deviceinfo.mainGatewayPort == null ? "08090" : vm.deviceinfo.mainGatewayPort;
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';
-        vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
+        vm.workHours = $filter('number')(vm.deviceinfo.workDuration, 1);
         if (vm.workHours != null) {
             vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
         }
@@ -482,12 +485,27 @@
             Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
             return;
           }
-          if(type == 18 && null != content) {
+          if(type == 18 && null != content) { // 回传地址
             var port = content.split(",")[1];
             if(port > 65535) {
               Notification.error(languages.findKey('maxPortError'));
               return;
             }
+          }
+          if(type == 33 && (null == content || content == "")) { // 超载百分比
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          if(type == 34) { // MQTT设置工作小时数
+            if(null == content || content=="") {
+              Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+              return;
+            }
+            else if(content*3600>(vm.deviceinfo.upTotalTime+vm.deviceinfo.runTotalTime+300)){
+              Notification.error(languages.findKey('setWorkHoursMessage'));
+              return;
+            }
+            content = Math.round(content*60/5);
           }
           var restURL = SEND_MQTT_WRITE_URL + "?type="+ type + "&deviceNum=" + deviceNum;
           if(null != content) {
@@ -579,6 +597,7 @@
           return;
         }
 
+        var isSend = true; // 是否发送
         //加载json,判断有效值
         $http.get('awpReturnTime.json').success(function(data){
           vm.mqttReturnTime=JSON.parse(JSON.stringify(data));
@@ -586,32 +605,34 @@
             var retrunTime = vm.mqttReturnTime[i];
             if(retrunTime.name == returnTimeParam.name) {
               if(returnTimeParam.time < retrunTime.minValue || returnTimeParam.time > retrunTime.maxValue) {
-                Notification.error("超出有效值范围:"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                Notification.error(languages.findKey('beyondValidRange')+":"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                isSend = false;
                 return;
               }
             }
           }
-        });
-
-        var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
-        $confirm({
-          text: languages.findKey('确定设置此时间间隔?') + '',
-          title: languages.findKey('时间间隔设置确认') + '',
-          ok: languages.findKey('confirm') + '',
-          cancel: languages.findKey('cancel') + ''
-        }).then(function () {
-          var restPromise = serviceResource.restCallService(restURL, "ADD", null);
-          restPromise.then(function (data) {
-            if (data.code == 0) {
-              Notification.success(data.content);
-              vm.initSmsSendBtn();
-            }
-            else {
-              Notification.error(data.content);
-            }
-          }, function (reason) {
-            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
-          })
+          if(isSend) {
+            var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
+            $confirm({
+              text: languages.findKey('okSetThisInterval') + '',
+              title: languages.findKey('intervalConfirmation') + '',
+              ok: languages.findKey('confirm') + '',
+              cancel: languages.findKey('cancel') + ''
+            }).then(function () {
+              var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+              restPromise.then(function (data) {
+                if (data.code == 0) {
+                  Notification.success(data.content);
+                  vm.initSmsSendBtn();
+                }
+                else {
+                  Notification.error(data.content);
+                }
+              }, function (reason) {
+                Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              })
+            });
+          }
         });
       };
 
@@ -1410,13 +1431,21 @@
         };
 
         // device data
-        vm.getDeviceData = function(page,size,sort,deviceNum,startDate,endDate){
+        vm.getDeviceData = function(page,size,sort,deviceinfo,startDate,endDate){
           //  $location.search({'page':page||0,'size':size||20,'sort':sort||''});
-            if (vm.operatorInfo){
+            if (vm.operatorInfo && null != deviceinfo){
 
                 var queryCondition;
-                if (deviceNum){
-                    queryCondition = "&deviceNum=" + deviceNum;
+                if (deviceinfo.deviceNum){
+                    queryCondition = "&deviceNum=" + deviceinfo.deviceNum;
+                }
+                if (deviceinfo.versionNum) {
+                  if (queryCondition) {
+                    queryCondition += "&versionNum=" + deviceinfo.versionNum
+                  }
+                  else {
+                    queryCondition += "versionNum=" + deviceinfo.versionNum;
+                  }
                 }
               if (startDate) {
                 var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -2404,7 +2433,7 @@
         xAxis: {
           min: 0,
           max: 4096,
-          name: '角度'
+          name: '高度'
         },
         yAxis: {
           min: 0,
@@ -2570,6 +2599,22 @@
           return;
         }
         vm.sendMQTTWrite(type, deviceNum, calibrationParameterValue);
+      };
+
+      /**
+       * MQTT下发标定状态和电池电量
+       * @param deviceNum 设备号
+       * @param calibrationStatusValue 标定状态
+       * @param batteryPowerValue 电池电量
+       * @param type
+       */
+      vm.sendMQTTCalibrationParameterValues = function (deviceNum, calibrationStatusValue, batteryPowerValue, type) {
+        if(null==calibrationStatusValue||calibrationStatusValue==''||null==batteryPowerValue||batteryPowerValue==''||null==type) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var content = calibrationStatusValue+','+batteryPowerValue;
+        vm.sendMQTTWrite(type, deviceNum, content);
       };
 
       /**

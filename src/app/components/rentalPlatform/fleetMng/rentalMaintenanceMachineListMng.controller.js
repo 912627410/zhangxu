@@ -189,7 +189,6 @@
 
     //提交
     vm.ok = function () {
-      console.log(vm.selectRadio);
       $uibModalInstance.close(vm.selectRadio);
     };
 

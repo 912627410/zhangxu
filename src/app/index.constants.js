@@ -325,7 +325,7 @@
     .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
     .constant('RENTANL_UNUSED_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//未出租车辆查询信息
-
+    .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines')
 
     //远程升级
     .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfoPage') //升级的设备信息
@@ -338,6 +338,7 @@
 
 
      //租赁
+    .constant('RENTAL_TOTALINCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeTotal') //收入统计上方四个方框 总收入和每种类型的总收入
     .constant('RENTAL_INCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeStatistics')
     .constant('RENTAL_INCOME_ORDER_QUERY', SERVER_BASE_URL + 'rental/asset/getIncomeByOrder')  //收入统计右侧折线图根据订单统计的收入数据
     .constant('RENTAL_MACHINEINCOME_PAGE_URL', SERVER_BASE_URL + 'rental/asset/getIncomeByMachine') //收入统计左侧表格数据信息

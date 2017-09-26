@@ -514,7 +514,6 @@
       var rspdata = serviceResource.restCallService(url,"GET");
 
       rspdata.then(function (data) {
-        console.log(data.content);
         vm.rentalOrgFence=data.content;
         vm.org=vm.rentalOrgFence.org;
         vm.selectAddress=vm.rentalOrgFence.location;
@@ -525,9 +524,6 @@
        // vm.status={value:"1",desc:"正常"};
         vm.status.value=vm.rentalOrgFence.status.toString();
         vm.status.desc=vm.rentalOrgFence.statusDesc;
-
-        console.log(vm.status);
-        console.log(vm.rentalOrgFence.status.toString());
 
         vm.refreshScopeMapWithDeviceInfo("newOrderMap",vm.rentalOrgFence,15,null);
       },function (reason) {

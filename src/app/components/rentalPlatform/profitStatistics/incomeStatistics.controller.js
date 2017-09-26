@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,languages) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -69,6 +69,25 @@
 
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE; //默认每页记录数
     ngTableDefaults.settings.counts = [];//默认表格设置
+
+    vm.queryIncomeByType = function () {
+      //查询高度类型
+      var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
+      var incomeTotalData = serviceResource.restCallService(incomeTotalURL, "GET");
+      incomeTotalData.then(function (data) {
+        vm.incomeTotalData = data.content;
+        vm.jcTotalIncome = vm.incomeTotalData[0].totalRevenue;
+        vm.zbTotalIncome = vm.incomeTotalData[1].totalRevenue;
+        vm.qbTotalIncome = vm.incomeTotalData[2].totalRevenue;
+        vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
+
+
+      }, function (reason) {
+        Notification.error('获取失败');
+      })
+
+    }
+    vm.queryIncomeByType();
 
 
 
