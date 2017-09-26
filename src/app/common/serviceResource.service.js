@@ -460,8 +460,8 @@
                 //map.center.longitude=deviceGPSInfo.amaplongitudeNum;
                 map.markers.push({
                   id: index,
-                  latitude: deviceGPSInfo.amaplatitudeNum,
-                  longitude: deviceGPSInfo.amaplongitudeNum,
+                  latitude: deviceGPSInfo.latitudeNum,
+                  longitude: deviceGPSInfo.longitudeNum,
                   show: false,
                   deviceNum: deviceGPSInfo.deviceNum,
                   lastDataUploadTime: deviceGPSInfo.lastDataUploadTime == null ? '' : $filter('date')(deviceGPSInfo.lastDataUploadTime, 'yyyy-MM-dd HH:mm:ss'),
