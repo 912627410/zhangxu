@@ -721,6 +721,7 @@
   "minlength":"位数不够",
   "maxlength":"超出最大允许长度",
   "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位",
+  "nullOrNumber" : "只能为空或数字",
   "alarmInformation":"报警信息",
   "rentalMng":"租赁管理",
   "orderMng":"订单管理",
@@ -969,9 +970,17 @@
   "beyondValidRange":"超出有效值范围",
   "okSetThisInterval":"确定设置此时间间隔?",
   "intervalConfirmation":"时间间隔设置确认",
-
-
-
+  "appManagement": "APP管理",
+  "appVersion": "版本管理",
+  "appType": "软件类型",
+  "appName": "软件名称",
+  "versionCode": "版本",
+  "versionContent": "版本内容",
+  "versionDesc": "版本说明",
+  "ifForced": "是否强制升级",
+  "releaseDate": "发布日期",
+  "fileSize": "文件大小",
+  "downloadUrl": "下载地址",
 
 
   "越野剪叉式":"越野剪叉式",

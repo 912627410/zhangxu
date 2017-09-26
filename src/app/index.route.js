@@ -939,7 +939,15 @@
         }
       }
     })
-
+    .state('home.appVersion', {
+      url: '/appVersion',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/appManagement/appVersion.html',
+          controller: 'appVersionController as appVersionCtrl'
+        }
+      }
+    })
 
 
     ;
