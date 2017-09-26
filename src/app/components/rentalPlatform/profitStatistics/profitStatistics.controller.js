@@ -90,7 +90,7 @@
 
 
     var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 1);
+    startDate.setDate(startDate.getDate() - 30);
     vm.startDate = startDate;
     vm.endDate = new Date();
 
@@ -248,9 +248,9 @@
           vm.profitData = data.content;
           for(var i = 0;i<vm.profitData.length;i++){
             xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
-            jcProfitDate.push(vm.profitData[i].jcProfit);
-            zbProfitDate.push(vm.profitData[i].zbProfit);
-            qbProfitDate.push(vm.profitData[i].qbProfit);
+            jcProfitDate.push(vm.profitData[i].jcProfit.toFixed(2));
+            zbProfitDate.push(vm.profitData[i].zbProfit.toFixed(2));
+            qbProfitDate.push(vm.profitData[i].qbProfit.toFixed(2));
           }
           console.log(profitBarOption.xAxis[0])
           profitBarOption.xAxis.data = xAxisDate;
