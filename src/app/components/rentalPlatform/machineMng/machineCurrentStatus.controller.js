@@ -106,7 +106,7 @@
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || vm.pageSize;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
-      if (totalElements != null || totalElements != undefined) {
+      if (totalElements != null && totalElements != undefined) {
         restCallURL += "&totalElements=" + totalElements;
       }
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
@@ -176,8 +176,8 @@
      *
      * @param deviceNum
      */
-    vm.machineMonitor=function (deviceNum) {
-      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
+    vm.machineMonitor=function (machineLicenseId) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + machineLicenseId;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
         //打开模态框
@@ -219,7 +219,7 @@
            openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
            windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
            windowTopClass:'test2',//加载到window-class指令
-           size: 'super-lg',
+           size: 'md',
            resolve: { //用来向controller传数据
              machine: function () {
                return data.content;
@@ -256,7 +256,7 @@
          openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
          windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
          windowTopClass:'test2',//加载到window-class指令
-         size: 'super-lg'
+         size: 'md'
        });
        $rootScope.currentOpenModal.result.then(function (newVal) {
          vm.machineCount += 1;

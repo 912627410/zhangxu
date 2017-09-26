@@ -293,6 +293,7 @@
     .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
     .constant('RENTAL_PRCESS_ALARM', SERVER_BASE_URL + 'rental/process-alarm')  //
     .constant('RENTAL_PRCESS_ALARMS', SERVER_BASE_URL + 'rental/process-multiple-alarm')  //
+    .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
 
 
     //租赁客户信息

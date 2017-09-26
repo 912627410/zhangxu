@@ -37,7 +37,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50  - 25 - 5 - 90 - 30 + 5;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
+      var baseBoxContainerHeight = windowHeight - 50  - 25 - 5 - 90 - 30+20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -577,10 +577,9 @@
     creatMiniPie(miniPie2,3);
     creatMiniPie(miniPie3,3);
 
-    /**
-     * miniChart
-     */
+    /*
 
+    // miniChart
     var miniChart = document.getElementsByClassName('miniChart'),
       miniChart1 = echarts.init(miniChart[0]),
       miniChart2 = echarts.init(miniChart[1]),
@@ -700,6 +699,7 @@
     creatMiniChart(miniChart2,4);
     creatMiniChart(miniChart3,2);
     creatMiniChart(miniChart4,3);
+    */
 
 
   }
