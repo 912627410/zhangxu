@@ -64,7 +64,7 @@
         <label for="ifForced" class="col-sm-3 control-label">{{'ifForced'|translate}}</label>
         <div class="col-sm-5">
           <ui-select id="ifForced" name="ifForced"
-                     ng-model="newAppVersionCtrl.appVersion.ifForced" theme="bootstrap" ng-disabled="disabled" validator="number" >
+                     ng-model="newAppVersionCtrl.appVersion.ifForced" theme="bootstrap" ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
               {{$select.selected.name}}
             </ui-select-match>
