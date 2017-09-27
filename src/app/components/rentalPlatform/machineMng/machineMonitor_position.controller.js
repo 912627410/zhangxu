@@ -14,49 +14,16 @@
     //获取共享deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
     //分页大小
-    vm.pageSize = 8;
+    vm.pageSize = 10;
     var date = new Date();
     //查询开始时间默认为昨天
     date.setDate(date.getDate() - 1);
     vm.queryStartDate = date;
     //结束时间
     vm.queryEndDate = new Date();
-    //最大时间
-    vm.maxDate = new Date();
-    vm.deviceData = {
-      content: [{
-        deviceNum: "AA01FA",
-        address: "山东省济南市历下区姚家街道经十路14775号中润世纪广场",
-        amaplongitudeNum: "37.21312973",
-        amaplatitudeNum: "123.9812738217",
-        locateDateTime: new Date(),
-        recordTime: new Date()
-      }
-      ],
-      last: false,
-      totalElements: 228,
-      totalPages: 19,
-      size: 12,
-      number: 0,
-      first: true,
-      sort: null,
-      numberOfElements: 12
-    }
-
 
     /**
-     * 格式化时间
-     * @param queryStartDate 时间参数
-     * @returns {*}
-     */
-    function formatDate(queryStartDate) {
-      queryStartDate.setMonth(queryStartDate.getMonth() + 1);
-      var formatStartDate = $filter('date')(queryStartDate, 'yyyy-MM-dd HH:mm:ss');
-      return formatStartDate;
-    }
-
-    /**
-     * 获取设备定位数据 http://127.0.0.1:8080/rental/deviceLocusData?page=xx&size=xx&totalElements=xx&deviceNum=xx&sort=locate_date_time,desc;device_num,asc
+     * 获取设备定位数据 http://127.0.0.1:8080/rental/device-locus-data?page=xx&size=xx&total_elements=xx&device_num=xx&sort=locate_date_time,desc
      *
      * @param pageNum 页码
      * @param pageSize 每页多少条数据
@@ -69,11 +36,11 @@
       //时间参数
       if (queryStartDate && queryEndDate) {
         //开始时间
-        var formatStartDate = formatDate(queryStartDate);
-        restCallURL += "?query_start_date=" + formatStartDate;
+        var formatDate = $filter('date')(queryStartDate, 'yyyy-MM-dd HH:mm:ss');
+        restCallURL += "?query_start_date=" + formatDate;
 
         //结束时间
-        var formatEndDate = formatDate(queryEndDate);
+        var formatEndDate = $filter('date')(queryEndDate, 'yyyy-MM-dd HH:mm:ss');
         restCallURL += "&query_end_date=" + formatEndDate;
       } else {
         Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
@@ -92,22 +59,20 @@
       }
       //过滤条件
       if (filter != null && filter != undefined) {
-        restCallURL += "&sort" + filter
+        restCallURL += "&sort=" + filter
       }
-      console.log("restCallURL:" + restCallURL);
       var LocateDataPromis = serviceResource.restCallService(restCallURL, 'GET');
       LocateDataPromis.then(function (data) {
         vm.deviceLocateData = new NgTableParams({}, {dataset: data.content});
-        vm.totalElements = vm.deviceData.totalElements;
-        vm.currentPage = vm.deviceData.number + 1;
+        vm.totalElements = data.totalElements;
+        vm.currentPage = data.number + 1;
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
-
     }
 
     /*加载前8条*/
-    vm.getLocateDateByDate(0, 8, 8, 'locateDateTime,desc', vm.deviceInfo.deviceNum, new Date(1970,0,1,0,0,0), new Date());
+    vm.getLocateDateByDate(0, vm.pageSize, vm.pageSize, 'locate_date,desc', vm.deviceInfo.deviceNum, new Date(1970,0,1,0,0,0), new Date());
 
   }
 })();
