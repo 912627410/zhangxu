@@ -940,7 +940,7 @@
   "staticFullLoad":"静态满载",
   "dynamicNoLoad":"动态空载",
   "dynamicFullLoad":"动态满载",
-  "rentalfleet":"车辆管理",
+  "rentalfleet":"车辆调度",
   "rentaldone": "已处理",
   "rentalUnProcessed": "未处理",
   "rentalProfit":"利润",

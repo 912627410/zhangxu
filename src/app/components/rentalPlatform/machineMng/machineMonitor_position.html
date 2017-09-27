@@ -8,7 +8,7 @@
       <p class="input-group">
         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
                ng-model="vm.queryStartDate" is-open="openStartDate"
-               ng-required="true" max-date="vm.maxDate"
+               ng-required="true" max-date="vm.queryEndDate"
                current-text="今天" clear-text="清除" close-text="关闭"/>
         <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="openStartDate=true">
@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="vm.getLocateDateByDate(0,8,null,'locateDateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+              ng-click="vm.getLocateDateByDate(0,vm.pageSize,null,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
         {{'confirm'|translate}}
       </button>
     </div>
@@ -43,7 +43,6 @@
       <div class="table-responsive">
         <table ng-table="vm.deviceLocateData" class="table">
           <tr ng-repeat="deviceLocation in $data">
-            <td ng-cloak data-title="'terminalNumber'|translate" sortable="'deviceNum'">{{deviceLocation.deviceNum}} </td>
             <td ng-cloak data-title="'address'|translate" sortable="'address'">{{deviceLocation.address}}</td>
             <td ng-cloak data-title="'longitude'|translate" sortable="'amaplongitudeNum'"> {{deviceLocation.amaplongitudeNum}} </td>
             <td ng-cloak data-title="'latitude'|translate" sortable="''">{{deviceLocation.amaplatitudeNum}}</td>
@@ -60,7 +59,7 @@
                       boundary-links="true"
                       rotate="false" max-size="10"
                       total-items="vm.totalElements"
-                      ng-change="vm.getLocateDateByDate(vm.currentPage-1,vm.pageSize,vm.totalElements,'locateDateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
+                      ng-change="vm.getLocateDateByDate(vm.currentPage-1,vm.pageSize,vm.totalElements,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
                       ng-model="vm.currentPage"
                       items-per-page="vm.pageSize"
                       previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
