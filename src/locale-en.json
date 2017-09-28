@@ -721,6 +721,7 @@
   "minlength":"The length is not enough",
   "maxlength":"Exceed maximum allowable length",
   "numberAndCharForPass":"The password must contain letters and Numbers,the length at least six",
+  "nullOrNumber" : "Can only be empty or digits",
   "alarmInformation":"Alarm Info",
   "rentalMng":"Rental",
   "orderMng":"Order",
@@ -865,12 +866,12 @@
   "maintenanceReminder":"Maintenance Reminder",
   "lastMaintenanceDate":"Last Maintenance Date",
   "nextMaintenanceDate":"Next Maintenance Date",
-  "processingAalarm":"Processing Aalarm",
+  "processingAalarm":"Processing Alarm",
   "processAll":"Deal Select",
   "processAlarm":"process",
   "MachineWorkDetails":"Machine Work Details",
   "customizeMessageContent":"Customize Message Content",
-  "MessageContent":"Message Content",
+  "MessageContent":"Message",
   "SMSReceiver":"SMS Receiver",
   "Mailorphone":"Mail Or Phone",
   "viewFence":"view Fence",
@@ -970,6 +971,17 @@
   "normalMode":"Normal mode",
   "suddenBrakeMode":"Sudden brake mode",
   "sendTheLastCommandTimestamp":"Send the last command timestamp",
+  "appManagement": "App Management",
+  "appVersion": "App Version",
+  "appType": "App Type",
+  "appName": "App Name",
+  "versionCode": "Version",
+  "versionContent": "version Content",
+  "versionDesc": "version Desc",
+  "ifForced": "Forced",
+  "releaseDate": "Release Date",
+  "fileSize": "File Size",
+  "downloadUrl": "Url",
 
 
 
@@ -1005,6 +1017,8 @@
   "计划":"Plan",
   "进行中":"Progress",
   "主机厂-运输":"Hosts-transport",
-  "租赁商-运输":"rental-transport"
+  "租赁商-运输":"rental-transport",
+  "checkAlarm":"Please check the alarm information to be processed!",
+  "neglect":"Neglect"
 
 }

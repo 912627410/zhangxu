@@ -36,7 +36,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7 - 25;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7 - 15;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -302,7 +302,7 @@
         }
       })
       if (selected==null||selected.length<=0){
-        Notification.warning("请选择要处理的报警信息!");
+        Notification.warning(languages.findKey('checkAlarm'));
         return;
       }
       //打开模态框
@@ -345,9 +345,8 @@
     }
 
 
-    /**
-     * miniMap
-     */
+    /*
+    //miniMap
     var miniMap = document.getElementsByClassName('miniChart'),
       miniMap1 = echarts.init(miniMap[0]),
       miniMap2 = echarts.init(miniMap[1]),
@@ -469,6 +468,7 @@
     creatMiniChart(miniMap2, 4);
     creatMiniChart(miniMap3, 2);
     creatMiniChart(miniMap4, 3);
+    */
 
     /**
      * 全选或取消全选
@@ -502,6 +502,16 @@
       for (var i = 0; i < vm.notificationList.length; i++) {
         vm.notificationList[i].state = !vm.notificationList[i].state;
       }
+    }
+
+    /**
+     * 忽略报警信息
+     *
+     * @param data
+     * @param index
+     */
+    vm.neglect=function (data,index) {
+
     }
 
   }

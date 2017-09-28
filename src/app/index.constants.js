@@ -285,6 +285,19 @@
     .constant('TEMPLATE_URL', SERVER_BASE_URL + 'template/getAll')   //得到短消息内容
     .constant('TEMPLATE_CREATE_URL', SERVER_BASE_URL + 'template/create')  //添加模版
 
+    //远程升级
+    .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfoPage') //升级的设备信息
+    .constant('UPDATE_FILE_UPLOAD_URL', SERVER_BASE_URL + 'update/upload') //升级文件上传
+    .constant('UPDATE_FILE_UPLOAD_QUERY', SERVER_BASE_URL + 'update/updateFilePage') //分页查询升级文件URL
+    .constant('UPDATE_URL', SERVER_BASE_URL + 'update/update') //升级
+    .constant('CANCEL_UPDATE_URL', SERVER_BASE_URL + 'update/cancelUpdate') // 取消升级
+    .constant('UPDATE_RECORD_URL', SERVER_BASE_URL + 'update/updateRecordPage') //分页查询升级记录
+    .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
+
+    // app管理
+    .constant('APP_VERSION_URL', SERVER_BASE_URL + 'app/appVersion')    // appVersion
+    .constant('APP_VERSION_PAGE_URL', SERVER_BASE_URL + 'app/appVersionPage') // appVersion page
+
     //租赁车辆管理
     .constant('RENTAL_HOME_MAP_GPSDATA_URL',SERVER_BASE_URL + 'rental/homeMapData')//租赁平台首页地图数据
     .constant('RENTAL_ALARM_MSG_URL',SERVER_BASE_URL + 'rental/alarmCount')//租赁平台首页报警消息
@@ -300,6 +313,7 @@
     .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
     .constant('RENTAL_PRCESS_ALARM', SERVER_BASE_URL + 'rental/process-alarm')  //
     .constant('RENTAL_PRCESS_ALARMS', SERVER_BASE_URL + 'rental/process-multiple-alarm')  //
+    .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
 
 
     //租赁客户信息
@@ -334,17 +348,8 @@
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//未出租车辆查询信息
     .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines')
 
-    //远程升级
-    .constant('UPDATE_DEVICE_INFO_QUERY', SERVER_BASE_URL + 'update/updateDeviceInfoPage') //升级的设备信息
-    .constant('UPDATE_FILE_UPLOAD_URL', SERVER_BASE_URL + 'update/upload') //升级文件上传
-    .constant('UPDATE_FILE_UPLOAD_QUERY', SERVER_BASE_URL + 'update/updateFilePage') //分页查询升级文件URL
-    .constant('UPDATE_URL', SERVER_BASE_URL + 'update/update') //升级
-    .constant('CANCEL_UPDATE_URL', SERVER_BASE_URL + 'update/cancelUpdate') // 取消升级
-    .constant('UPDATE_RECORD_URL', SERVER_BASE_URL + 'update/updateRecordPage') //分页查询升级记录
-    .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
-
-
      //租赁
+    .constant('RENTAL_TOTALINCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeTotal') //收入统计上方四个方框 总收入和每种类型的总收入
     .constant('RENTAL_INCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeStatistics')
     .constant('RENTAL_INCOME_ORDER_QUERY', SERVER_BASE_URL + 'rental/asset/getIncomeByOrder')  //收入统计右侧折线图根据订单统计的收入数据
     .constant('RENTAL_MACHINEINCOME_PAGE_URL', SERVER_BASE_URL + 'rental/asset/getIncomeByMachine') //收入统计左侧表格数据信息

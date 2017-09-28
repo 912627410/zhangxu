@@ -722,6 +722,7 @@
   "minlength":"位数不够",
   "maxlength":"超出最大允许长度",
   "numberAndCharForPass":"密码必须包含字母和数字,长度至少为6位",
+  "nullOrNumber" : "只能为空或数字",
   "alarmInformation":"报警信息",
   "rentalMng":"租赁管理",
   "orderMng":"订单管理",
@@ -739,9 +740,9 @@
 
 
   "rentalCurrentLocate":"当前位置",
-  "rentalGeo-FenceWarning":"围栏",
-  "rentalEquipmentWarning":"报警",
-  "rentalMaintenanceReminder":"保养",
+  "rentalGeo-FenceWarning":"围栏报警",
+  "rentalEquipmentWarning":"车辆报警",
+  "rentalMaintenanceReminder":"保养提醒",
   "rentalOff-lineReminder":"离线",
   "rentalEquipmentPreview":"机器预览",
   "rentalTotal":"总数",
@@ -874,7 +875,7 @@
   "lastMaintenanceDate":"上次保养日期",
   "nextMaintenanceDate":"下次保养日期",
   "setFence":"设置围栏",
-  "processingAalarm":"处理报警",
+  "processingAalarm":"处理",
   "processAll":"处理选中的报警",
   "processAlarm":"处理",
   "MachineWorkDetails":"机器工作详情",
@@ -940,7 +941,7 @@
   "staticFullLoad":"静态满载",
   "dynamicNoLoad":"动态空载",
   "dynamicFullLoad":"动态满载",
-  "rentalfleet":"车辆管理",
+  "rentalfleet":"车辆调度",
   "rentaldone": "已处理",
   "rentalUnProcessed": "未处理",
   "rentalProfit":"利润",
@@ -977,6 +978,17 @@
 
 
 
+  "appManagement": "APP管理",
+  "appVersion": "版本管理",
+  "appType": "软件类型",
+  "appName": "软件名称",
+  "versionCode": "版本",
+  "versionContent": "版本内容",
+  "versionDesc": "版本说明",
+  "ifForced": "是否强制升级",
+  "releaseDate": "发布日期",
+  "fileSize": "文件大小",
+  "downloadUrl": "下载地址",
 
 
   "越野剪叉式":"越野剪叉式",
@@ -1010,7 +1022,9 @@
   "租赁商-运输":"租赁商-运输",
   "结束":"结束",
   "计划":"计划",
-  "进行中":"进行中"
+  "进行中":"进行中",
+  "checkAlarm":"请勾选要处`理的报警信息!",
+  "neglect":"忽略"
 
 
 }

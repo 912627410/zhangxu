@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('rentalOrgFenceMngController', rentalOrgFenceMngController);
+    .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalOrgFenceMngController($scope, $window,$state,$confirm, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
+  function rentalFenceMngController($scope, $window,$state,$confirm, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
                                        DEFAULT_SIZE_PER_PAGE,RENTAL_ORG_FENCE_PAGE_URL,RENTAL_ORG_FENCE_DELETE_STATUS) {
     var vm = this;
 
@@ -18,8 +18,6 @@
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
-    //定义页面的喵点
-    vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
 
     /**
      * 自适应高度函数
@@ -106,16 +104,9 @@
       vm.id=null;
     }
 
-    /**
-     * 跳转到更新页面
-     * @param id
-     */
-    vm.update=function(id){
-      $state.go('rental.updateOrgFence', {id: id});
-    }
 
     vm.view=function(id){
-      $state.go('rental.viewOrgFence', {id: id});
+      $state.go('rental.updateOrgFence', {id: id})
     }
 
     vm.delete = function (id) {

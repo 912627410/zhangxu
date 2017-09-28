@@ -1,0 +1,113 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
+    <li class="active">{{'appVersion'| translate}}</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+
+    <div class="col-md-3 text-center">
+      <div class="form-group">
+        <label for="appType" class="col-sm-5 control-label">{{'appType'|translate}}</label>
+        <div class="col-sm-7">
+
+          <ui-select id="appType" name="appType" ng-model="appVersionCtrl.appVersion.appType" theme="bootstrap" ng-disabled="disabled" >
+            <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
+              {{$select.selected.type}}
+            </ui-select-match>
+            <ui-select-choices  repeat="appType.type as appType in appVersionCtrl.appTypeList" >
+              <div ng-class='appType.icon'>&nbsp;&nbsp;&nbsp;&nbsp;{{appType.type}}</div>
+            </ui-select-choices>
+          </ui-select>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+      <div class="form-group">
+        <label for="appName" class="col-sm-5 control-label">{{'appName'|translate}}</label>
+        <div class="col-sm-7">
+          <input id="appName" ng-model="appVersionCtrl.appVersion.appName" placeholder="{{'appName'|translate}}" type="text" class="form-control"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <button class="btn btn-warning" type="button" ng-click="appVersionCtrl.reset()">{{'reset'|translate}}</button>
+
+      <button class="btn btn-primary" type="button" presentation-href="appMng:appVersion:query"
+              ng-click="appVersionCtrl.query(null,null,null,appVersionCtrl.appVersion)">{{'query'|translate}}
+      </button>
+
+      <button class="btn btn-info pull-right" type="button" presentation-href="appMng:appVersion:create"
+              ng-click="appVersionCtrl.newAppVersion('md')">
+        <i class="fa fa-plus"></i> {{'add'|translate}}
+      </button>
+
+    </div>
+  </div>
+
+  <br>
+  <div class="row " style="padding-top: 30px;padding-left: 10px;padding-right: 10px;">
+    <div class="table-responsive">
+
+      <table ng-table="appVersionCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="appVersion in $data">
+          <td class="text-nowrap" align="center" data-title="'appType'|translate" sortable="'fleet.id'">{{appVersion.appType}}</td>
+          <td class="text-nowrap" align="center" data-title="'appName'|translate" sortable="'fleet.id'">{{appVersion.appName}}</td>
+          <td class="text-nowrap" align="center" data-title="'versionCode'|translate" sortable="'fleet.id'">{{appVersion.versionCode}}</td>
+          <!--<td class="col-md-4"    align="center" data-title="'versionContent'|translate" >{{appVersion.versionContent}}</td>-->
+          <td class="text-nowrap" align="center" data-title="'versionDesc'|translate" >{{appVersion.versionDesc}}</td>
+          <td class="text-nowrap" align="center" data-title="'ifForced'|translate" >{{appVersion.ifForced | numberToBoolean}}</td>
+          <td class="text-nowrap" align="center" data-title="'releaseDate'|translate" >{{appVersion.releaseDate | date: 'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" align="center" data-title="'fileSize'|translate" >{{appVersion.fileSize}}</td>
+          <td class="text-nowrap" align="center" data-title="'downloadUrl'|translate" >{{appVersion.downloadUrl}}</td>
+
+          <td class="text-nowrap" align="center" data-title="'operation'|translate" >
+
+            <button type="button" class="btn btn-default btn-xs"
+                    ng-click="appVersionCtrl.versionContentView(appVersion)">{{'versionContent'|translate}}
+            </button>
+
+            <button type="button" class="btn btn-default btn-xs" presentation-href="appMng:appVersion:modify"
+                    ng-click="appVersionCtrl.updateAppVersion(appVersion)">{{'alter'|translate}}
+            </button>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box-footer" ng-show="appVersionCtrl.page.totalElements > 10">
+    <div class="row">
+      <div class="col-md-10">
+        <uib-pagination total-items="appVersionCtrl.page.totalElements"
+                        ng-change="appVersionCtrl.query(appVersionCtrl.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="appVersionCtrl.pageNumber" items-per-page="appVersionCtrl.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                        next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}">
+
+        </uib-pagination>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
