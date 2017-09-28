@@ -493,6 +493,7 @@
       restCallURL += '?type=' + type;
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function(data){
+
         var miniPieOption = {
           title: {
             text: data.content.machineRate + '%',
@@ -566,6 +567,12 @@
             }]
           }]
         };
+
+        //解决两个都是0出现一半,一半的情况
+        if( data.content.rentalMachineCount==0 && data.content.unRentalMachineCount==0){
+          miniPieOption.series[0].data[1].value=1;
+        }
+
         chart.setOption(miniPieOption);
       }, function (reason) {
         Notification.error("获取信息失败");
