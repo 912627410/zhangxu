@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'import'|translate}}{{'calibrationParameters'|translate}}</h3>
+</div>
+<form name="myForm" class="form-horizontal ">
+  <div class="modal-body">
+    <div class="box-body">
+
+      <div class="row">
+        <div class="col-md-6">
+          <input type="file" ngf-select ng-model="calibrationParametersImportController.file" name="file"
+                 accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ngf-max-size="2MB" required
+                 ngf-model-invalid="errorFiles" ng-click="calibrationParametersImportController.clean()">
+          <i ng-show="myForm.file.$error.required" class="text-danger">请选择要导入EXCEL</i><br>
+          <i ng-show="myForm.file.$error.maxSize">上传文件太大
+            {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+          <button type="button" class="btn btn-warning btn-xs" ng-click="calibrationParametersImportController.clean()" ng-show="calibrationParametersImportController.file">移除</button>
+        </div>
+
+      </div>
+      <div class="row">
+        <i ng-if="null!=calibrationParametersImportController.operMsg" style="color: red" >{{calibrationParametersImportController.operMsg}}</i>
+        <br/>
+        <i style="color: red">{{calibrationParametersImportController.errorList}}</i>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="!myForm.$valid" ng-click="calibrationParametersImportController.save(calibrationParametersImportController.file)">保存</button>
+    <button class="btn btn-warning" type="button" ng-click="calibrationParametersImportController.cancel()">取消</button>
+  </div>
+</form>

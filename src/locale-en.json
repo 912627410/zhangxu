@@ -150,6 +150,7 @@
   "endDate": "End",
   "confirm": "Confirm",
   "export": "Export",
+  "import":"Import",
   "dataReturnTime": "Data Back Time",
   "position": "Lacation",
   "speed": "Speed",
@@ -901,7 +902,7 @@
   "chargerSamplingInterval":"Charger Info collection interval(sec)",
   "gpsSleepTimeInterval":"GPS Sleep Time Interval(min)",
   "gpsPositioningWaitTime":"GPS Positioning Wait Time(sec)",
-  "motorParameterAcquisitionInterval":"Motor Parameter Acquisition Interval(sec)",
+  "ECUParameterAcquisitionInterval":"ECU Parameter Acquisition Interval(sec)",
   "setTheParameterAcquisitionInterval":"Set The Parameter Acquisition Interval(sec)",
   "deviceRunningStatusAcquisitionInterval":"Device Running Status Acquisition Interval(sec)",
   "timeSec":"Time(sec)",
@@ -966,6 +967,10 @@
   "beyondValidRange":"Beyond valid range",
   "okSetThisInterval":"Ok set this time interval?",
   "intervalConfirmation":"Time interval setting confirmation",
+  "brakeMode":"Brake mode",
+  "normalMode":"Normal mode",
+  "suddenBrakeMode":"Sudden brake mode",
+  "sendTheLastCommandTimestamp":"Send the last command timestamp",
   "appManagement": "App Management",
   "appVersion": "App Version",
   "appType": "App Type",
@@ -1014,7 +1019,6 @@
   "主机厂-运输":"Hosts-transport",
   "租赁商-运输":"rental-transport",
   "checkAlarm":"Please check the alarm information to be processed!",
-  "neglect":"Neglect",
-  "position":"Position"
+  "neglect":"Neglect"
 
 }

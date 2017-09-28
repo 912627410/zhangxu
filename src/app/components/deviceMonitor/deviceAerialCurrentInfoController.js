@@ -10,7 +10,9 @@
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
                                                languages,SET_MQTT_RETURN_TIME_URL,SEND_MQTT_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
-                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL) {
+                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL,$uibModal,SEND_SET_IP_SMS_URL,SEND_SET_INTER_SMS_URL,
+                                               SEND_SET_START_TIMES_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,SEND_ACTIVE_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,SEND_LOCK_SMS_URL,
+                                               SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -36,6 +38,11 @@
         vm.uploadFrequency = 2;// 默认上传频率2s
         vm.faultCommand = 39; //默认故障命令为39
         vm.parameterType = 0; // 默认车辆参数类型0
+
+        vm.staticNoLoadImportValue = null; //静态空载参数导入值
+        vm.staticFullLoadImportValue = null; //静态满载参数导入值
+        vm.dynamicNoLoadImportValue = null; //动态空载参数导入值
+        vm.dynamicFullLoadImportValue = null; //动态满载参数导入值
 
         // 短信发送成功后的初始化button
         vm.initSmsSendBtn = function () {
@@ -396,7 +403,8 @@
         }
 
         //发送短信
-        vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+      // 原高空车短信下发,现在已弃用
+        /*vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
 
             if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
@@ -439,7 +447,413 @@
                         Notification.error("短信发送出错");
                     })
                 });
+        }*/
+
+      //发送回传地址信息
+      vm.sendSetIpSMS = function (devicenum, host, port) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
         }
+        var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setIpMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送间隔信息
+      vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
+        if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+          Notification.error("请检查时间设置，三个回传时间须全部设置！");
+          return;
+        }
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
+          + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setWorkIntMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送启动次数信息
+      vm.sendSetStartTimesSMS = function (devicenum, startTimes) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setStartTImesMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送工作小时数
+      vm.sendSetWorkHoursSMS = function (devicenum, workHours) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setWorkHoursMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送绑定短信
+      vm.sendActiveLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送解绑短信
+      vm.sendUnActiveLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.unActiveMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送锁车短信
+      vm.sendLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.lockMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送解锁短信
+      vm.sendUnLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.unLockMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送采样时间
+      vm.sendSamplingTimeSMS = function (devicenum, vehicleStateCollect, chargerStateCollect) {
+        if(angular.isUndefined(vehicleStateCollect) ||angular.isUndefined(chargerStateCollect)){
+          Notification.error("请检查时间设置，两个回传时间须全部设置！");
+          return;
+        }
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_SAMPLING_TIME_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&vehicleStateCollect="
+          + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送平台短信猫号码
+      vm.sendSetCatPhoneNumberSMS = function (devicenum, catPhoneNumber) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_CAT_PHONE_NUMBER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&catPhoneNumber=" + catPhoneNumber;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送终端复位短信
+      vm.sendTerminalResetSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_TERMINAL_RESET_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
 
         /**
          * MQTT下发操作命令
@@ -492,17 +906,9 @@
               return;
             }
           }
-          if(type == 33 && (null == content || content == "")) { // 超载百分比
-            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-            return;
-          }
           if(type == 34) { // MQTT设置工作小时数
             if(null == content || content=="") {
               Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-              return;
-            }
-            else if(content*3600>(vm.deviceinfo.upTotalTime+vm.deviceinfo.runTotalTime+300)){
-              Notification.error(languages.findKey('setWorkHoursMessage'));
               return;
             }
             content = Math.round(content*60/5);
@@ -2531,6 +2937,20 @@
 
 
       vm.calibrationParameterType = 1; //默认标定参数类型
+      vm.overloadValue = vm.deviceinfo.overloadPercentage==null?"":vm.deviceinfo.overloadPercentage;
+      if(null != vm.deviceinfo.brakeMode && vm.deviceinfo.brakeMode != "") {
+        if(vm.deviceinfo.brakeMode == 0) {
+          vm.brakeModeSelected = true;
+        } else if(vm.deviceinfo.brakeMode == 1) {
+          vm.brakeModeSelected = false;
+        } else {
+          vm.brakeMode = "0";
+          vm.brakeModeSelected = true;
+        }
+      } else {
+        vm.brakeMode = "0";
+        vm.brakeModeSelected = true;
+      }
 
       /**
        * 初始化标定参数图表
@@ -2540,36 +2960,58 @@
       vm.initCalibrationParameter = function (deviceinfo, calibrationParameterType) {
         vm.calibrationParameterChart = echarts.init(document.getElementById('calibrationParameterChart'));
         vm.calibrationParameterChart.setOption(vm.calibrationParameterConfig);
-        var restURL = DEVCEINFO_CALIBRATION_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum + "&calibrationParameterType=" + calibrationParameterType;
-        var rspData = serviceResource.restCallService(restURL, "GET");
-        rspData.then(function (data) {
-          if(data.code == -1 && deviceinfo.versionNum == "11") {
-            Notification.error('车辆标定参数为空,请稍后刷新');
-            // 写ECU参数类型
-            var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
-            var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
-          } else if(data.code == 0) {
-            vm.calibrationParameterValue = data.content;
-            var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
-            var values = "[";
-            var valuesY = "";
-            var num = parameterArrays.length/2;
-            vm.calibrationParameterData = [];
-            for (var i = 0; i < num; i++) {
-              vm.calibrationParameterData.push([Math.round(parameterArrays[i]), Math.round(parameterArrays[i + num])]);
-              values += Math.round(parameterArrays[i]) + ",";
-              valuesY += Math.round(parameterArrays[i + num]) + ",";
+
+        if(calibrationParameterType == 1 && null != vm.staticNoLoadImportValue && vm.staticNoLoadImportValue != "") { //静态空载并且有导入值
+          vm.calibrationParameterValue = vm.staticNoLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 2 && null != vm.staticFullLoadImportValue && vm.staticFullLoadImportValue != "") { //静态满载并且有导入值
+          vm.calibrationParameterValue = vm.staticFullLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 3 && null != vm.dynamicNoLoadImportValue && vm.dynamicNoLoadImportValue != "") { //动态空载并且有导入值
+          vm.calibrationParameterValue = vm.dynamicNoLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 4 && null != vm.dynamicFullLoadImportValue && vm.dynamicFullLoadImportValue != "") { //动态满载并且有导入值
+          vm.calibrationParameterValue = vm.dynamicFullLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else {
+          var restURL = DEVCEINFO_CALIBRATION_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum + "&calibrationParameterType=" + calibrationParameterType;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            if(data.code == -1 && deviceinfo.versionNum == "11") {
+              Notification.error('车辆标定参数为空,请稍后刷新');
+              // 写ECU参数类型
+              var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
+              var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+            } else if(data.code == 0) {
+              vm.calibrationParameterValue = data.content;
+              vm.processCalibrationParameterData();
             }
-            values += valuesY;
-            values = values.substring(0, values.length - 1);
-            values += "]";
-            vm.calibrationParameterValue = values;
-            vm.refreshCalibrationParameterChart(vm.calibrationParameterData);
-          }
-        }, function (reason) {
-          Notification.error('获取车辆参数失败');
-          Notification.error(reason.data.message);
-        });
+          }, function (reason) {
+            Notification.error('获取车辆参数失败');
+            Notification.error(reason.data.message);
+          });
+        }
+      };
+
+      /**
+       * 处理标定参数数据
+       */
+      vm.processCalibrationParameterData = function() {
+        var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
+        var values = "[";
+        var valuesY = "";
+        var num = parameterArrays.length/2;
+        vm.calibrationParameterData = [];
+        for (var i = 0; i < num; i++) {
+          vm.calibrationParameterData.push([Math.round(parameterArrays[i]), Math.round(parameterArrays[i + num])]);
+          values += Math.round(parameterArrays[i]) + ",";
+          valuesY += Math.round(parameterArrays[i + num]) + ",";
+        }
+        values += valuesY;
+        values = values.substring(0, values.length - 1);
+        values += "]";
+        vm.calibrationParameterValue = values;
+        vm.refreshCalibrationParameterChart(vm.calibrationParameterData);
       };
 
       /**
@@ -2602,18 +3044,18 @@
       };
 
       /**
-       * MQTT下发标定状态和电池电量
+       * MQTT下发标定参数相关值
        * @param deviceNum 设备号
-       * @param calibrationStatusValue 标定状态
-       * @param batteryPowerValue 电池电量
+       * @param parameter1 参数1
+       * @param parameter2 参数2
        * @param type
        */
-      vm.sendMQTTCalibrationParameterValues = function (deviceNum, calibrationStatusValue, batteryPowerValue, type) {
-        if(null==calibrationStatusValue||calibrationStatusValue==''||null==batteryPowerValue||batteryPowerValue==''||null==type) {
+      vm.sendMQTTCalibrationParameterValues = function (deviceNum, parameter1, parameter2, type) {
+        if(null==parameter1||parameter1==""||null==parameter2||parameter2==""||null==type) {
           Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
           return;
         }
-        var content = calibrationStatusValue+','+batteryPowerValue;
+        var content = parameter1+','+parameter2;
         vm.sendMQTTWrite(type, deviceNum, content);
       };
 
@@ -2645,7 +3087,36 @@
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
         });
-      }
+      };
+
+      /**
+       * 标定参数导入
+       * @param size
+         */
+      vm.calibrationParametersImport = function (size) {
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/deviceMonitor/calibrationParametersImport.html',
+          controller: 'calibrationParametersImportController as calibrationParametersImportController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            operatorInfo: function () {
+              return vm.operatorInfo;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (result) {
+          vm.staticNoLoadImportValue = result[0];
+          vm.staticFullLoadImportValue = result[1];
+          vm.dynamicNoLoadImportValue = result[2];
+          vm.dynamicFullLoadImportValue = result[3];
+          vm.initCalibrationParameter(vm.deviceinfo, vm.calibrationParameterType);
+        }, function () {
+          //取消
+        });
+      };
 
 
       //battery data

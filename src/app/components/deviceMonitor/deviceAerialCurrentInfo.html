@@ -714,6 +714,51 @@
         <div class="box-body">
 
           <div class="row form-group">
+            <div class="col-md-2">
+              <label class="control-label">{{'calibrationStatus'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.calibrationStatusValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">{{'batteryPower'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.batteryPowerValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
+                      deviceAerialCurrentInfoController.calibrationStatusValue, deviceAerialCurrentInfoController.batteryPowerValue, 32)">{{'send'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-2">
+              <label class="control-label">{{'overloadPercentage'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.overloadValue" placeholder="{{'DecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">{{'brakeMode'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <select class="form-control" ng-model="deviceAerialCurrentInfoController.brakeMode">
+                <option value="0" ng-selected="deviceAerialCurrentInfoController.brakeModeSelected">{{'normalMode'|translate}}</option>
+                <option value="1" ng-selected="!deviceAerialCurrentInfoController.brakeModeSelected">{{'suddenBrakeMode'|translate}}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, 7)">请求</button>
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
+                      deviceAerialCurrentInfoController.overloadValue, deviceAerialCurrentInfoController.brakeMode, 33)">{{'send'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 50px;">
             <div class="col-md-3">
               <select name="queryType" class="form-control"
                       ng-model="deviceAerialCurrentInfoController.calibrationParameterType"
@@ -727,40 +772,15 @@
             <div class="col-md-9 text-right">
               <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterValue, deviceAerialCurrentInfoController.calibrationParameterType)">{{'send'|translate}}</button>
+
               <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:export"
                       ng-click="deviceAerialCurrentInfoController.calibrationParametersDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum)">{{'export'|translate}}</button>
+
+              <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:import"
+                      ng-click="deviceAerialCurrentInfoController.calibrationParametersImport('mg')">{{'import'|translate}}</button>
+
               <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
                       ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterType)">{{'requestTheLatestData'|translate}}</button>
-            </div>
-          </div>
-
-          <div class="row" style="margin-top: 20px;">
-            <div class="col-md-1">
-              <label class="control-label">{{'calibrationStatus'|translate}}</label>
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.calibrationStatusValue" placeholder="{{'HexadecimalValue'|translate}}" />
-            </div>
-            <div class="col-md-1">
-              <label class="control-label">{{'batteryPower'|translate}}</label>
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.batteryPowerValue" placeholder="{{'HexadecimalValue'|translate}}" />
-            </div>
-            <div class="col-md-2">
-              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
-                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
-                      deviceAerialCurrentInfoController.calibrationStatusValue, deviceAerialCurrentInfoController.batteryPowerValue, 32)">{{'send'|translate}}</button>
-            </div>
-            <div class="col-md-1">
-              <label class="control-label">{{'overloadPercentage'|translate}}</label>
-            </div>
-            <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.overloadValue" placeholder="{{'DecimalValue'|translate}}" />
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
-                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(33, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.overloadValue)">{{'send'|translate}}</button>
             </div>
           </div>
 
@@ -1427,7 +1447,7 @@
 
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(5,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort,null,null,null,null,null,null,null)">{{'send'|translate}}</sms-send-btn>
+                                                ng-click="deviceAerialCurrentInfoController.sendSetIpSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort)">{{'send'|translate}}</sms-send-btn>
 
                                 </div>
                               </div>
@@ -1439,7 +1459,7 @@
                     </div>
 
                     <!--  设置回传间隔  -->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
@@ -1491,7 +1511,8 @@
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                                 class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(8,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendSetInterSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,
+                                                deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower)">{{'send'|translate}}
 
                                   </sms-send-btn>
                                 </div>
@@ -1503,7 +1524,7 @@
                     </div>
 
                     <!-- 设置采样时间 -->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
@@ -1548,7 +1569,8 @@
 
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">
+                                                ng-click="deviceAerialCurrentInfoController.sendSamplingTimeSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,
+                                                deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">
 
                                   </sms-send-btn>
                                 </div>
@@ -1561,7 +1583,7 @@
                     </div>
 
                     <!-- 设置 平台短信猫号码-->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSmsCat">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSmsCat" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'platformGSMmodemNumber'|translate}}</h5>
@@ -1583,7 +1605,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(9,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.catPhoneNumber)">
+                                            ng-click="deviceAerialCurrentInfoController.sendSetCatPhoneNumberSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.catPhoneNumber)">
                               </sms-send-btn>
                             </div>
                           </div>
@@ -1592,7 +1614,7 @@
                     </div>
 
                     <!-- 设置启动次数-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
@@ -1615,7 +1637,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(6,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,deviceAerialCurrentInfoController.startTimes,null,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendSetStartTimesSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.startTimes)">{{'send'|translate}}
 
                               </sms-send-btn>
                             </div>
@@ -1625,7 +1647,7 @@
                     </div>
 
                     <!-- 设置工作小时数 -->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
@@ -1648,7 +1670,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(7,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,deviceAerialCurrentInfoController.workHours,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendSetWorkHoursSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.workHours)">{{'send'|translate}}
                               </sms-send-btn>
                             </div>
 
@@ -1680,7 +1702,7 @@
                                                 class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
 
 
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendActiveLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1694,7 +1716,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendUnActiveLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1727,7 +1749,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-danger"  presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                                ng-click="deviceAerialCurrentInfoController.sendLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}>
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1742,7 +1764,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unLock"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                                ng-click="deviceAerialCurrentInfoController.sendUnLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}>
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1754,7 +1776,7 @@
                     </div>
 
                     <!-- 重置 -->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:reset">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:reset" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'terminalReset'|translate}}</h5>
@@ -1775,7 +1797,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-danger"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(10,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendTerminalResetSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                               </sms-send-btn>
                             </div>
 
@@ -1891,7 +1913,7 @@
                                     <option value="timeSampleCharge">{{'chargerSamplingInterval'|translate}}</option>
                                     <option value="timeSleepTime">{{'gpsSleepTimeInterval'|translate}}</option>
                                     <option value="timeGPSWaitTime">{{'gpsPositioningWaitTime'|translate}}</option>
-                                    <option value="timeSampleMotorParas">{{'motorParameterAcquisitionInterval'|translate}}</option>
+                                    <option value="timeSampleMotorParas">{{'ECUParameterAcquisitionInterval'|translate}}</option>
                                     <option value="timeSampleSetParas">{{'setTheParameterAcquisitionInterval'|translate}}</option>
                                     <option value="timeSampleDeviceRunStatus">{{'deviceRunningStatusAcquisitionInterval'|translate}}</option>
                                   </select>
@@ -2200,6 +2222,30 @@
                                                 ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(34, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.workHours)">{{'send'|translate}}</sms-send-btn>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--下发最后命令时间戳-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:sendTheLastCommandTimestamp">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'sendTheLastCommandTimestamp'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'sendTheLastCommandTimestamp'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row" >
+                            <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                            send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                            ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(35, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'send'|translate}}</sms-send-btn>
                             </div>
                           </div>
                         </div>

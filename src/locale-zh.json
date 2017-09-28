@@ -151,6 +151,7 @@
   "endDate": "结束日期",
   "confirm": "确定",
   "export": "导出",
+  "import":"导入",
   "dataReturnTime": "数据回传时间",
   "position": "位置",
   "speed": "速度",
@@ -906,7 +907,7 @@
   "chargerSamplingInterval":"充电器信息采集间隔(秒)",
   "gpsSleepTimeInterval":"GPS休眠时间间隔(分)",
   "gpsPositioningWaitTime":"GPS定位等待时间(秒)",
-  "motorParameterAcquisitionInterval":"电机参数采集间隔(秒)",
+  "ECUParameterAcquisitionInterval":"ECU参数采集间隔(秒)",
   "setTheParameterAcquisitionInterval":"设置参数采集间隔(秒)",
   "deviceRunningStatusAcquisitionInterval":"设备运行状态采集间隔(秒)",
   "timeSec":"时间(秒)",
@@ -970,6 +971,13 @@
   "beyondValidRange":"超出有效值范围",
   "okSetThisInterval":"确定设置此时间间隔?",
   "intervalConfirmation":"时间间隔设置确认",
+  "brakeMode":"刹车模式",
+  "normalMode":"正常模式",
+  "suddenBrakeMode":"急刹模式",
+  "sendTheLastCommandTimestamp":"下发最后命令时间戳",
+
+
+
   "appManagement": "APP管理",
   "appVersion": "版本管理",
   "appType": "软件类型",
@@ -1015,9 +1023,8 @@
   "结束":"结束",
   "计划":"计划",
   "进行中":"进行中",
-  "checkAlarm":"请勾选要处理的报警信息!",
-  "neglect":"忽略",
-  "position":"位置信息"
+  "checkAlarm":"请勾选要处`理的报警信息!",
+  "neglect":"忽略"
 
 
 }

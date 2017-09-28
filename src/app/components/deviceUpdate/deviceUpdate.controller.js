@@ -30,6 +30,8 @@
       }
       if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      } else {
+        restCallURL += "&search_LIKES_versionNum=11,1001,1002";
       }
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
       deviceDataPromis.then(function (data) {
