@@ -10,7 +10,7 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -65,6 +65,32 @@
     vm.gotoAnchor = function (x) {
       $location.hash(x);
       $anchorScroll();
+
+
+      vm.totalCost = 0;
+      vm.rentalSaleCost =0;
+      vm.rentalManagementCost = 0;
+      vm.rentalFinanceCost = 0;
+      vm.rentalMachineCost = 0;
+
+      vm.queryCostTotal = function () {
+
+        var costTotalURL = RENTAL_TOTALINCOME_URL ;
+        var costTotalData = serviceResource.restCallService(costTotalURL, "GET");
+        costTotalData.then(function (data) {
+          var costTotalData = data.content;
+          vm.rentalMachineCost = costTotalData.machineCost;
+          vm.rentalSaleCost =costTotalData.salesExpenses;
+          vm.rentalManagementCost = costTotalData.managementCost;
+          vm.rentalFinanceCost = costTotalData.financialExpenses;
+          vm.totalIncome = vm.rentalSaleCost + vm.rentalManagementCost + vm.rentalFinanceCost +  vm.rentalMachineCost ;
+
+        }, function (reason) {
+          Notification.error('获取失败');
+        })
+
+      }
+      vm.queryCostTotal();
     }
 
     //开始时间,结束时间

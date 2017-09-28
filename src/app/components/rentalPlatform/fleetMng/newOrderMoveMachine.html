@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'unUsedMachineList'|translate}}
+
+  </h3>
+</div>
+
+<section class="content">
+
+  <div class="row" ng-style="newOrderMoveMachineCtrl.baseBoxContainer">
+    <script id="selectAllHeader" type="text/ng-template">
+      <input type="checkbox"  ng-click="newOrderMoveMachineCtrl.updateAllSelection($event)"
+             ng-model="machineMngCtrl.checked">
+    </script>
+    <div class="col-lg-12 table-responsive "><!--表格框-->
+      <table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="machine in $data">
+          <td class="text-nowrap" data-header="'selectAllHeader'">
+            <input type="checkbox" ng-checked="newOrderMoveMachineCtrl.isSelected(machine.id)"
+                   ng-click="newOrderMoveMachineCtrl.updateSelection($event,machine)" ng-model="machine.checked">
+          </td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+            {{machine.licenseId}}
+          </td>
+
+          <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
+          <td class="text-nowrap" data-title="'工作天数'">
+            <input type="text" class="form-control" ng-model="newOrderMoveMachineCtrl.workdays" placeholder="0" name="workdays" validator="number" typeahead-show-hint="true" />
+          </td>
+
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-12"><!--分页框-->
+
+
+      <uib-pagination total-items="newOrderMoveMachineCtrl.page.totalElements"
+                      ng-change="newOrderMoveMachineCtrl.query(orgMachineListMngController.pageNumber-1,null,null,null)"
+                      max-size="5" ng-model="newOrderMoveMachineCtrl.pageNumber" items-per-page="newOrderMoveMachineCtrl.page.size"
+                      class="pagination-sm" boundary-links="true" rotate="false"
+                      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    </div>
+  </div>
+  <div>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="newOrderMoveMachineCtrl.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="newOrderMoveMachineCtrl.batchMoveMachine()">{{'confirm'|translate}}</button>
+  </div>
+</section>
+
+
