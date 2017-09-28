@@ -17,12 +17,15 @@
     vm.rentalOrgFence.radius = 100; //设置的半径,默认100米
 
     /**
-     * 取消更新
+     * 取消新建围栏
      */
     vm.cancel = function () {
       $location.path("/rental/orgFence");
     };
 
+    /**
+     * 新增围栏
+     */
     vm.ok = function () {
       var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
@@ -38,14 +41,12 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxMapContainerHeight = windowHeight - 50 - 10  - 5 - 90 - 7 ;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
+      var baseBoxMapContainerHeight = windowHeight - 50 - 10  - 8 - 90 ;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
       //地图的自适应高度
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
     }
-
-    //初始化高度
     vm.adjustWindow($window.innerHeight);
 
     //全局的圆对象

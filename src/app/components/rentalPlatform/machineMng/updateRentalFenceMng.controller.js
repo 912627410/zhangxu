@@ -16,8 +16,6 @@
     vm.rentalOrgFence = {};
     vm.rentalOrgFence.radius = 100; //设置的半径,默认100米
 
-    console.log($stateParams.id);
-
     if ($stateParams.id != null) {
       var restCall = RENTAL_ORG_FENCE_URL + "?id=" + $stateParams.id;
       var fencePromis = serviceResource.restCallService(restCall, "GET");
@@ -34,7 +32,7 @@
     };
 
     vm.ok = function () {
-      var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
+      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
         Notification.success("新建订单成功!");
         $location.path("/rental/orgFence");
