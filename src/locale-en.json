@@ -966,6 +966,10 @@
   "beyondValidRange":"Beyond valid range",
   "okSetThisInterval":"Ok set this time interval?",
   "intervalConfirmation":"Time interval setting confirmation",
+  "brakeMode":"Brake mode",
+  "normalMode":"Normal mode",
+  "suddenBrakeMode":"Sudden brake mode",
+  "sendTheLastCommandTimestamp":"Send the last command timestamp",
 
 
 

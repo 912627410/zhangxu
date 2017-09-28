@@ -970,6 +970,10 @@
   "beyondValidRange":"超出有效值范围",
   "okSetThisInterval":"确定设置此时间间隔?",
   "intervalConfirmation":"时间间隔设置确认",
+  "brakeMode":"刹车模式",
+  "normalMode":"正常模式",
+  "suddenBrakeMode":"急刹模式",
+  "sendTheLastCommandTimestamp":"下发最后命令时间戳",
 
 
 

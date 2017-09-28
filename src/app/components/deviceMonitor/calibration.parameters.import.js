@@ -9,7 +9,7 @@
     .controller('calibrationParametersImportController', calibrationParametersImportController);
 
   /** @ngInject */
-  function calibrationParametersImportController($timeout, $uibModalInstance,Upload,$http, CALIBRATION_PARAMETER_IMPORT, Notification, operatorInfo) {
+  function calibrationParametersImportController($timeout, $uibModalInstance,Upload, CALIBRATION_PARAMETER_IMPORT, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -45,44 +45,6 @@
       vm.errorList = null;
       vm.operMsg = null;
     }
-
-    // vm.templateDownload = function () {
-    //   var restCallURL = MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL;
-    //   $http({
-    //     url: restCallURL,
-    //     method: "GET",
-    //     responseType: 'arraybuffer'
-    //   }).success(function (data, status, headers, config) {
-    //     var blob = new Blob([data], {type: "application/vnd.ms-excel"});
-    //     var objectUrl = window.URL.createObjectURL(blob);
-    //
-    //     var anchor = angular.element('<a/>');
-    //
-    //     //兼容多种浏览器
-    //     if (window.navigator.msSaveBlob) { // IE
-    //       window.navigator.msSaveOrOpenBlob(blob, '车辆导入模板.xls')
-    //     } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
-    //       anchor.css({display: 'none'});
-    //       angular.element(document.body).append(anchor);
-    //       anchor.attr({
-    //         href: URL.createObjectURL(blob),
-    //         target: '_blank',
-    //         download:  '车辆导入模板.xls'
-    //       })[0].click();
-    //       anchor.remove();
-    //     } else { // Chrome
-    //       anchor.attr({
-    //         href: URL.createObjectURL(blob),
-    //         target: '_blank',
-    //         download:  '车辆导入模板.xls'
-    //       })[0].click();
-    //     }
-    //
-    //
-    //   }).error(function (data, status, headers, config) {
-    //     Notification.error("下载失败!");
-    //   });
-    // };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
