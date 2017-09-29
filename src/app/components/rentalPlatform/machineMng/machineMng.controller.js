@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielongwang
+ * @date 2017/8/17.
+ * @description 车辆管理controller
  */
 (function() {
   'use strict';

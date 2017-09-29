@@ -1,5 +1,7 @@
 /**
- * Created by riqian.ma on 1/8/17.
+ * @author riqian.ma
+ * @date 1/8/17.
+ * @description 围栏更新的controller
  */
 
 (function () {

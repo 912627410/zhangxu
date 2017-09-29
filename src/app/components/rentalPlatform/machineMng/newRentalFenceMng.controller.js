@@ -1,7 +1,10 @@
 /**
- * Created by riqian.ma on 1/8/17.
+ * @author riqian.ma
+ * @date 1/8/17.
+ * @description 新建围栏controller
+ * @updated1 xielong.wang
+ * @update_date 2017-09-29
  */
-
 (function () {
   'use strict';
 

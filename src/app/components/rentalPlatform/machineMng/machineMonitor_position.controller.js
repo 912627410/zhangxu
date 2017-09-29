@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielongwang
+ * @date 2017/8/17.
+ * @description 车辆历史位置信息controller
  */
 (function () {
   'use strict';
@@ -63,10 +65,6 @@
       }
       var LocateDataPromis = serviceResource.restCallService(restCallURL, 'GET');
       LocateDataPromis.then(function (data) {
-        if (data.content.length<=0){
-          Notification.warning(languages.findKey('noData'));
-          return;
-        }
         vm.deviceLocateData = new NgTableParams({}, {dataset: data.content});
         vm.totalElements = data.totalElements;
         vm.currentPage = data.number + 1;

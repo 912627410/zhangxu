@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielongwang
+ * @date 2017/7/21.
+ * @description 租赁系统首页
  */
 (function () {
   'use strict';

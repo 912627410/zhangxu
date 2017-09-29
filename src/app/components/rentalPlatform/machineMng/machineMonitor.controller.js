@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielong.wang
+ * @date 2017/8/17.
+ * @description 监控controller
  */
 (function () {
   'use strict';
