@@ -1,5 +1,9 @@
 /**
- * Created by riqian.ma on 2017/7/29.
+ * @author riqian.ma
+ * @date 2017/7/29.
+ * @description 围栏修改controller
+ * @updated1 xielong.wang
+ * @update_date 2017/7/29.
  */
 (function () {
   'use strict';

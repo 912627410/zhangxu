@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielong.wang
+ * @date 2017/7/21.
+ * @description 车辆当前状态controller
  */
 (function () {
   'use strict';

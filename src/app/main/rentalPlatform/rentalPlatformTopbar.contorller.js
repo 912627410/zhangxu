@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/20.
+ * @author xielongwang
+ * @date 2017/7/20.
+ * @description topBar的controller
  */
 (function () {
   'use strict';

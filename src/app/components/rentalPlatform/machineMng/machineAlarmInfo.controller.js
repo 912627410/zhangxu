@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielongwang
+ * @date 2017/7/21.
+ * @description 报警信息controller
  */
 (function () {
   'use strict';

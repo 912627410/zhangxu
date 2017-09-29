@@ -1,5 +1,6 @@
 /**
- * Created by xielong.wang
+ * @author xielong.wang
+ * @date 2017-09-29
  * @description 用于设备监控页面共享deviceinfo数据
  */
 (function () {

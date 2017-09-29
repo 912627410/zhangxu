@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielong.wang
+ * @date 2017/8/17.
+ * @description 车辆监控(最新数据)的controller
  */
 (function () {
   'use strict';
@@ -20,7 +22,6 @@
       console.log(args);
     });
 
-    console.log(vm.deviceInfo);
 
   }
 })();
