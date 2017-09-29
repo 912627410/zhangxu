@@ -14,7 +14,7 @@
       <div class="col-lg-2 col-md-2">
         <div class="info-card">
           <div class="info-title">{{'rentalGeoFence'| translate}}</div>
-          <div class="info-data">{{rentalOrgFenceMngController.page.totalElements}}</div>
+          <div class="info-data">{{rentalFenceMngController.page.totalElements}}</div>
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
@@ -33,36 +33,19 @@
     </div>
     <div class="row info-box-container">
       <form class="form-horizontal" role="form">
-
         <div class="form-group">
-
-          <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
+          <label class="col-md-1 control-label">围栏名称</label>
           <div class="col-md-2">
             <p class="input-group">
-
-              <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalOrgFenceMngController.org.label" name="org"/>
-              <span class="input-group-btn">
-            <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalOrgFenceMngController.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
+              <input type="text" id="org" class="form-control" placeholder="围栏名称" ng-model="rentalFenceMngController.org.label" name="org"/>
             </p>
           </div>
-
-
-          <div class="col-md-2">
-            <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
-
-            <input type="checkbox" checked="checked" ng-model="rentalOrgFenceMngController.querySubOrg"/>
-          </div>
-
           <div class="col-md-2">
 
             <button class="btn btn-primary" type="button"
-                    ng-click="rentalOrgFenceMngController.query(null,null,null,rentalOrgFenceMngController.rentalOrgFence)">{{'rentalQuery'|translate}}
+                    ng-click="rentalFenceMngController.query(null,null,null,rentalFenceMngController.rentalOrgFence)">{{'rentalQuery'|translate}}
             </button>
-            <button class="btn btn-default" type="button" ng-click="rentalOrgFenceMngController.reset()">{{'rentalReset'|translate}}</button>
+            <button class="btn btn-default" type="button" ng-click="rentalFenceMngController.reset()">{{'rentalReset'|translate}}</button>
           </div>
 
           <div class="col-md-3"></div>
@@ -70,7 +53,7 @@
           <div class="col-md-1">
 
             <button class="btn btn-primary pull-right" type="button"
-                    ng-click="rentalOrgFenceMngController.new()">{{'rentalAdd'|translate}}
+                    ng-click="rentalFenceMngController.new()">{{'rentalAdd'|translate}}
             </button>
           </div>
 
@@ -80,27 +63,25 @@
 
     </div>
 
-    <div class="row" ng-style="rentalOrgFenceMngController.baseBoxContainer">
+    <div class="row" ng-style="rentalFenceMngController.baseBoxContainer">
 
       <div class="col-lg-12 table-responsive "><!--表格框-->
-        <table ng-table="rentalOrgFenceMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="rentalFenceMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="rentalOrgFence in $data">
-            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{rentalOrgFence.org.label }}</td>
+            <td class="text-nowrap" data-title="'围栏名称'" sortable="'label'">{{rentalOrgFence.fenceName }}</td>
+            <td class="text-nowrap" data-title="'围栏地址'" sortable="'label'">{{rentalOrgFence.fenceAddress }}</td>
             <td class="text-nowrap" data-title="'rentalLongitude'|translate" sortable="'longitude'">{{rentalOrgFence.longitude }}</td>
             <td class="text-nowrap" data-title="'rentalLatitude'|translate" sortable="'latitude'">{{rentalOrgFence.latitude }}</td>
             <td class="text-nowrap" data-title="'rentalRadius'|translate" sortable="'radius'">{{rentalOrgFence.radius }}</td>
             <td class="text-nowrap" data-title="'rentalCreateTime'|translate" sortable="'createTime'">{{rentalOrgFence.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap" data-title="'修改时间'" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
             <td class="text-nowrap" data-title="'rentalOperations'|translate">
-              <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="rentalOrgFenceMngController.update(rentalOrgFence.id)">{{'rentalEdit'| translate}}
-              </button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-click="rentalOrgFenceMngController.view(rentalOrgFence.id)">{{'rentalView'| translate}}
+                      ng-click="rentalFenceMngController.view(rentalOrgFence.id)">管理
               </button>
               <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="rentalOrgFenceMngController.delete(rentalOrgFence.id)">{{'rentalDelete'| translate}}
+                      ng-click="rentalFenceMngController.delete(rentalOrgFence.id)">{{'rentalDelete'| translate}}
               </button>
             </td>
 
@@ -109,9 +90,9 @@
       </div>
       <div class="col-lg-12"><!--分页框-->
 
-        <uib-pagination total-items="rentalOrgFenceMngController.page.totalElements"
-                        ng-change="rentalOrgFenceMngController.query(rentalOrgFenceMngController.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="rentalOrgFenceMngController.pageNumber" items-per-page="rentalOrgFenceMngController.page.size"
+        <uib-pagination total-items="rentalFenceMngController.page.totalElements"
+                        ng-change="rentalFenceMngController.query(rentalFenceMngController.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="rentalFenceMngController.pageNumber" items-per-page="rentalFenceMngController.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
         </uib-pagination>

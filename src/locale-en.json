@@ -720,6 +720,7 @@
   "minlength":"The length is not enough",
   "maxlength":"Exceed maximum allowable length",
   "numberAndCharForPass":"The password must contain letters and Numbers,the length at least six",
+  "nullOrNumber" : "Can only be empty or digits",
   "alarmInformation":"Alarm Info",
   "rentalMng":"Rental",
   "orderMng":"Order",
@@ -965,6 +966,17 @@
   "beyondValidRange":"Beyond valid range",
   "okSetThisInterval":"Ok set this time interval?",
   "intervalConfirmation":"Time interval setting confirmation",
+  "appManagement": "App Management",
+  "appVersion": "App Version",
+  "appType": "App Type",
+  "appName": "App Name",
+  "versionCode": "Version",
+  "versionContent": "version Content",
+  "versionDesc": "version Desc",
+  "ifForced": "Forced",
+  "releaseDate": "Release Date",
+  "fileSize": "File Size",
+  "downloadUrl": "Url",
 
 
 
@@ -1002,6 +1014,7 @@
   "主机厂-运输":"Hosts-transport",
   "租赁商-运输":"rental-transport",
   "checkAlarm":"Please check the alarm information to be processed!",
-  "neglect":"Neglect"
+  "neglect":"Neglect",
+  "position":"Position"
 
 }

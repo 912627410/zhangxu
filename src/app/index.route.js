@@ -212,9 +212,9 @@
         url: '/orgFence',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrgFenceMng.html',
-            controller: 'rentalOrgFenceMngController',
-            controllerAs: 'rentalOrgFenceMngController'
+            templateUrl: 'app/components/rentalPlatform/machineMng/rentalFenceMng.html',
+            controller: 'rentalFenceMngController',
+            controllerAs: 'rentalFenceMngController'
           }
         }
       })
@@ -224,9 +224,9 @@
         url: '/newOrgFence',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrgFenceMng.html',
-            controller: 'newRentalOrgFenceController',
-            controllerAs: 'newRentalOrgFenceController'
+            templateUrl: 'app/components/rentalPlatform/machineMng/newRentalFenceMng.html',
+            controller: 'newRentalFenceController',
+            controllerAs: 'newRentalFenceController'
           }
         }
       })
@@ -236,23 +236,13 @@
         url: '/updateOrgFence/:id',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrgFenceMng.html',
-            controller: 'updateRentalOrgFenceController',
-            controllerAs: 'updateRentalOrgFenceController'
+            templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
+            controller: 'updateRentalFenceController',
+            controllerAs: 'updateRentalFenceController'
           }
         }
       })
-      //组织围栏管理
-      .state('rental.viewOrgFence', {
-        url: '/viewOrgFence/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrgFenceMng.html',
-            controller: 'viewRentalOrgFenceController',
-            controllerAs: 'viewRentalOrgFenceController'
-          }
-        }
-      })
+
 
 
 
@@ -939,7 +929,15 @@
         }
       }
     })
-
+    .state('home.appVersion', {
+      url: '/appVersion',
+      views: {
+        'rightside@home': {
+          templateUrl: 'app/components/appManagement/appVersion.html',
+          controller: 'appVersionController as appVersionCtrl'
+        }
+      }
+    })
 
 
     ;

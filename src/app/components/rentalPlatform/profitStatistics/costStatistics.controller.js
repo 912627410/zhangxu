@@ -10,7 +10,7 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -66,6 +66,42 @@
       $location.hash(x);
       $anchorScroll();
     }
+
+    vm.totalCost = 0;
+    vm.rentalSaleCost =0;
+    vm.rentalManagementCost = 0;
+    vm.rentalFinanceCost = 0;
+    vm.rentalMachineCost = 0;
+
+    vm.queryCostTotal = function () {
+
+      var costTotalURL = RENTAL_TOTALCOST_URL ;
+      var queryDate = new Date();
+      costTotalURL += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
+      var costTotalData = serviceResource.restCallService(costTotalURL, "GET");
+      costTotalData.then(function (data) {
+        var costTotalData = data.content;
+        if(null!=costTotalData.machineCost&&costTotalData.machineCost!=''){
+          vm.rentalMachineCost = costTotalData.machineCost;
+        }
+        if(null!=costTotalData.salesExpenses&&costTotalData.salesExpenses!=''){
+          vm.rentalSaleCost =costTotalData.salesExpenses;
+        }
+        if(null!=costTotalData.managementCost&&costTotalData.managementCost!=''){
+          vm.rentalManagementCost = costTotalData.managementCost;
+        }
+        if(null!=costTotalData.financialExpenses&&costTotalData.financialExpenses!=''){
+          vm.rentalFinanceCost = costTotalData.financialExpenses;
+        }
+
+        vm.totalIncome = vm.rentalSaleCost + vm.rentalManagementCost + vm.rentalFinanceCost +  vm.rentalMachineCost ;
+
+      }, function (reason) {
+        Notification.error('获取失败');
+      })
+
+    }
+    vm.queryCostTotal();
 
     //开始时间,结束时间
     var startDate = new Date();

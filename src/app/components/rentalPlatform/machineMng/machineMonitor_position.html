@@ -1,0 +1,70 @@
+<div class="modal-body" ng-controller="machineMonitorPositionController as vm">
+  <input type="hidden" ng-model="vm.deviceInfo">
+  <div class="row">
+    <div class="col-md-2">
+      <label class="control-label">{{'startDate'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryStartDate" is-open="openStartDate"
+               ng-required="true" max-date="vm.queryEndDate"
+               current-text="今天" clear-text="清除" close-text="关闭"/>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openStartDate=true">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+        </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">{{'endDate'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryEndDate" is-open="openEndDate"
+               ng-required="true" current-text="今天" clear-text="清除" close-text="关闭"/>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openEndDate=true">
+              <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"
+              ng-click="vm.getLocateDateByDate(0,vm.pageSize,null,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+        {{'confirm'|translate}}
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table ng-table="vm.deviceLocateData" class="table">
+          <tr ng-repeat="deviceLocation in $data">
+            <td ng-cloak data-title="'address'|translate" sortable="'address'">{{deviceLocation.address}}</td>
+            <td ng-cloak data-title="'longitude'|translate" sortable="'amaplongitudeNum'"> {{deviceLocation.amaplongitudeNum}} </td>
+            <td ng-cloak data-title="'latitude'|translate" sortable="''">{{deviceLocation.amaplatitudeNum}}</td>
+            <td ng-cloak data-title="'dataAcquisitionTime'|translate" sortable="'locateDateTime'">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td ng-cloak data-title="'recordGenerationTime'|translate" sortable="'recordTime'">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <uib-pagination class="pagination-sm pagination-custom"
+                      boundary-links="true"
+                      rotate="false" max-size="10"
+                      total-items="vm.totalElements"
+                      ng-change="vm.getLocateDateByDate(vm.currentPage-1,vm.pageSize,vm.totalElements,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
+                      ng-model="vm.currentPage"
+                      items-per-page="vm.pageSize"
+                      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+      </uib-pagination>
+    </div>
+  </div>
+</div>
+

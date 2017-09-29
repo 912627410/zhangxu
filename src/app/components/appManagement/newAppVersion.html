@@ -1,0 +1,119 @@
+<div class="modal-header">
+  <h3 class="modal-title">新建APP版本</h3>
+</div>
+<form name="newForm" class="form-horizontal">
+  <div class="modal-body row">
+    <div class="box-body">
+
+      <div class="form-group">
+        <label for="appType" class="col-sm-3 control-label">{{'appType'|translate}}</label>
+        <div class="col-sm-5">
+
+          <ui-select id="appType" name="appType" ng-model="newAppVersionCtrl.appVersion.appType"
+                     theme="bootstrap" ng-disabled="disabled" validator="required">
+            <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
+              {{$select.selected.type}}
+            </ui-select-match>
+            <ui-select-choices  repeat="appType.type as appType in newAppVersionCtrl.appTypeList" >
+              <div ng-class='appType.icon'>&nbsp;&nbsp;&nbsp;&nbsp;{{appType.type}}</div>
+            </ui-select-choices>
+          </ui-select>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'appName'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'appName'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.appName" name="name" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="versionCode" class="col-sm-3 control-label">{{'versionCode'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'versionCode'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.versionCode" id="versionCode" name="versionCode"
+                 validator="required,number" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="versionContent" class="col-sm-3 control-label">{{'versionContent'|translate}}</label>
+        <div class="col-sm-7">
+          <textarea type="text" rows="4" class="form-control" placeholder="{{'versionContent'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.versionContent" id="versionContent"  name="versionContent"
+                 validator="required">
+
+          </textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="versionDesc" class="col-sm-3 control-label">{{'versionDesc'|translate}}</label>
+        <div class="col-sm-7">
+          <textarea type="text" rows="3" class="form-control" placeholder="{{'versionDesc'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.versionDesc"  name="versionDesc" id="versionDesc" validator="required">
+          </textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ifForced" class="col-sm-3 control-label">{{'ifForced'|translate}}</label>
+        <div class="col-sm-5">
+          <ui-select id="ifForced" name="ifForced"
+                     ng-model="newAppVersionCtrl.appVersion.ifForced" theme="bootstrap" ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices  repeat="ifForced.value as ifForced in newAppVersionCtrl.ifForcedList" >
+              <div>{{ifForced.name}}</div>
+            </ui-select-choices>
+          </ui-select>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="releaseDate" class="col-sm-3 control-label">{{'releaseDate'|translate}}</label>
+        <div class="col-sm-5">
+          <p class="input-group">
+            <input type="text" id="releaseDate" name="releaseDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="newAppVersionCtrl.appVersion.releaseDate"
+                   is-open="newAppVersionCtrl.releaseDateOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="newAppVersionCtrl.releaseDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fileSize" class="col-sm-3 control-label">{{'fileSize'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'fileSize'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.fileSize" id="fileSize" name="fileSize"
+                 validator="required,number" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="downloadUrl" class="col-sm-3 control-label">{{'downloadUrl'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'downloadUrl'|translate}}"
+                 ng-model="newAppVersionCtrl.appVersion.downloadUrl" id="downloadUrl" name="downloadUrl"
+                 validator="required" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="newForm" ng-click="newAppVersionCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="newAppVersionCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>

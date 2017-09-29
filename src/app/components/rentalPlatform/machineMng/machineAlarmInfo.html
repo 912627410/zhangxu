@@ -18,52 +18,98 @@
       </ol>
     </section>
     <div class="row info-box-container">
-
-
       <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)" >
+       <div class="info-box  box-light">
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/fence-rental.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><strong ng-bind="machineAlarmInfoCtr.fenceAlarm"></strong></div>
+            </div>
+          </div>
+          <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)" >
             <span class=" info-box-left-text-top">{{'rentalGeo-FenceWarning'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.fenceAlarm"></span>
           </div>
-          <div class="miniChart"></div>
-        </div>
+          <div class="miniChart"></div>-->
+       </div>
       </div>
 
 
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)" >
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/car.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div  ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><strong  ng-bind="machineAlarmInfoCtr.machineAlarm"></strong></div>
+            </div>
+          </div>
+          <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)" >
             <span class=" info-box-left-text-top">{{'rentalEquipmentWarning'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.machineAlarm"></span>
           </div>
-          <div class="miniChart"></div>
+          <div class="miniChart"></div>-->
         </div>
       </div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)">
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/main.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><strong ng-bind="machineAlarmInfoCtr.keepAlarm"></strong></div>
+            </div>
+          </div>
+          <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)">
             <span class=" info-box-left-text-top">{{'rentalMaintenanceReminder'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.keepAlarm"></span>
           </div>
-          <div class="miniChart"></div>
+          <div class="miniChart"></div>-->
         </div>
       </div>
 
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)">
+          <div class="row">
+            <div class="col-md-3 profit-info-height" >
+              <img class="profit-info-height"  style="padding-left: 25px"
+                   src="assets/images/offline.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" >
+              <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
+            </div>
+            <div class="col-md-3 profit-info-height alarm-pointer">
+              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><strong ng-bind="machineAlarmInfoCtr.offLineAlarm"></strong></div>
+            </div>
+          </div>
+          <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)">
             <span class=" info-box-left-text-top">{{'rentalOff-lineReminder'|translate}}</span>
             <span class="info-box-number info-box-left-text-below" ng-bind="machineAlarmInfoCtr.offLineAlarm"></span>
           </div>
-          <div class="miniChart"></div>
+          <div class="miniChart"></div>-->
         </div>
       </div>
 
 
     </div>
-    <div class="row base-box-container alarm-md-box" ng-style="machineAlarmInfoCtr.baseBoxContainer">
+    <div class="row base-box-container alarm-md-box" ng-style="machineAlarmInfoCtr.baseBoxContainer" style="margin-top: 10px">
       <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-4">
           <div class="box base-left-map-box-container">
@@ -180,8 +226,8 @@
                   </tr>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index">
                     <td><input type="checkbox"  ng-model="notification.state" ></td>
-                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer">{{notification.deviceNum}}</a></td>
-                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer">{{notification.licenseId}}</a></td>
+                    <td class="mailbox-subject"><!--<a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer"></a>-->{{notification.deviceNum}}</td>
+                    <td class="mailbox-subject"><!--<a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer"></a>-->{{notification.licenseId}}</td>
                     <td class="mailbox-subject">{{notification.content}}</td>
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
