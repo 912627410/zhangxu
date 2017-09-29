@@ -65,33 +65,43 @@
     vm.gotoAnchor = function (x) {
       $location.hash(x);
       $anchorScroll();
-
-
-      vm.totalCost = 0;
-      vm.rentalSaleCost =0;
-      vm.rentalManagementCost = 0;
-      vm.rentalFinanceCost = 0;
-      vm.rentalMachineCost = 0;
-
-      vm.queryCostTotal = function () {
-
-        var costTotalURL = RENTAL_TOTALINCOME_URL ;
-        var costTotalData = serviceResource.restCallService(costTotalURL, "GET");
-        costTotalData.then(function (data) {
-          var costTotalData = data.content;
-          vm.rentalMachineCost = costTotalData.machineCost;
-          vm.rentalSaleCost =costTotalData.salesExpenses;
-          vm.rentalManagementCost = costTotalData.managementCost;
-          vm.rentalFinanceCost = costTotalData.financialExpenses;
-          vm.totalIncome = vm.rentalSaleCost + vm.rentalManagementCost + vm.rentalFinanceCost +  vm.rentalMachineCost ;
-
-        }, function (reason) {
-          Notification.error('获取失败');
-        })
-
-      }
-      vm.queryCostTotal();
     }
+
+    vm.totalCost = 0;
+    vm.rentalSaleCost =0;
+    vm.rentalManagementCost = 0;
+    vm.rentalFinanceCost = 0;
+    vm.rentalMachineCost = 0;
+
+    vm.queryCostTotal = function () {
+
+      var costTotalURL = RENTAL_TOTALCOST_URL ;
+      var queryDate = new Date();
+      costTotalURL += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
+      var costTotalData = serviceResource.restCallService(costTotalURL, "GET");
+      costTotalData.then(function (data) {
+        var costTotalData = data.content;
+        if(null!=costTotalData.machineCost&&costTotalData.machineCost!=''){
+          vm.rentalMachineCost = costTotalData.machineCost;
+        }
+        if(null!=costTotalData.salesExpenses&&costTotalData.salesExpenses!=''){
+          vm.rentalSaleCost =costTotalData.salesExpenses;
+        }
+        if(null!=costTotalData.managementCost&&costTotalData.managementCost!=''){
+          vm.rentalManagementCost = costTotalData.managementCost;
+        }
+        if(null!=costTotalData.financialExpenses&&costTotalData.financialExpenses!=''){
+          vm.rentalFinanceCost = costTotalData.financialExpenses;
+        }
+
+        vm.totalIncome = vm.rentalSaleCost + vm.rentalManagementCost + vm.rentalFinanceCost +  vm.rentalMachineCost ;
+
+      }, function (reason) {
+        Notification.error('获取失败');
+      })
+
+    }
+    vm.queryCostTotal();
 
     //开始时间,结束时间
     var startDate = new Date();
