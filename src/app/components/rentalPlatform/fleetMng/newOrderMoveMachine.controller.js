@@ -9,12 +9,16 @@
   angular
     .module('GPSCloud')
     .controller('newOrderMoveMachineController', newOrderMoveMachineController);
+
+   // newOrderMoveMachineController.$inject = ["NgTableParams", "ngTableSimpleList"];
   /** @ngInject */
   function newOrderMoveMachineController($rootScope,$window,$scope,NgTableParams,$uibModalInstance,serviceResource,Notification,machineOption,machineType,RENTANL_UNUSED_MACHINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
     var vm = this
     vm.machineType = machineType;
     vm.machineOption = machineOption;
     vm.userInfo = $rootScope.userInfo;
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的machineId
     var originalData ;
 
     vm.queryMachine = function (machineOption,machineType,page,size,sort) {
@@ -85,6 +89,54 @@
         return r.id === machineForm.id;
       });
     }
+
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
+
+      }
+    }
+
+    vm.updateSelection = function ($event, id, status) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
+
+
+    vm.updateAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      vm.tableParams.data.forEach(function (machine) {
+        updateSelected(action, machine.id);
+      })
+
+    }
+
+    vm.isSelected = function (id) {
+
+      return vm.selected.indexOf(id) >= 0;
+    }
+    vm.checkAll = function () {
+      var operStatus = false;
+      if (vm.selectAll) {
+        operStatus = false;
+        vm.selectAll = false;
+      } else {
+        operStatus = true;
+        vm.selectAll = true;
+      }
+
+      vm.deviceinfoList.forEach(function (deviceinfo) {
+        deviceinfo.checked = operStatus;
+      })
+    }
+
 
 
 
