@@ -156,8 +156,8 @@
     .constant('SEND_SET_CAT_PHONE_NUMBER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetCatPhoneNumberSMS')   //发送短消息
     .constant('GET_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/getTerminalResetSMS')   //得到短消息内容
     .constant('SEND_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/sendTerminalResetSMS')   //发送短消息
-    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTReturnTime')   // 设置车队回传时间
-    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTDefaultReturnTime')   // 设置车队默认的回传时间间隔
+    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTReturnTime')   // MQTT设置回传时间
+    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTDefaultReturnTime')   // MQTT设置默认的回传时间间隔
     .constant('SEND_MQTT_READ_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTRead') // MQTT发送读请求命令
     .constant('SEND_MQTT_OPERATED_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTOperated') //MQTT发布操作命令
     .constant('SEND_MQTT_WRITE_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTWrite') //MQTT发布写命令
