@@ -1,0 +1,117 @@
+<!--<div class="modal-header">-->
+  <!--<h3 class="modal-title">{{'unUsedMachineList'|translate}}-->
+
+  <!--</h3>-->
+<!--</div>-->
+
+<!--<section class="content">-->
+
+  <!--<div class="row" ng-style="newOrderMoveMachineCtrl.baseBoxContainer">-->
+    <!--<script id="selectAllHeader" type="text/ng-template">-->
+      <!--<input type="checkbox"  ng-click="newOrderMoveMachineCtrl.updateAllSelection($event)"-->
+             <!--ng-model="machineMngCtrl.checked">-->
+    <!--</script>-->
+    <!--<div class="col-lg-12 table-responsive ">&lt;!&ndash;表格框&ndash;&gt;-->
+      <!--<table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">-->
+        <!--<tr ng-repeat="machine in $data">-->
+          <!--<td class="text-nowrap" data-header="'selectAllHeader'">-->
+            <!--<input type="checkbox" ng-checked="newOrderMoveMachineCtrl.isSelected(machine.id)"-->
+                   <!--ng-click="newOrderMoveMachineCtrl.updateSelection($event,machine)" ng-model="machine.checked">-->
+          <!--</td>-->
+          <!--<td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">-->
+            <!--{{machine.licenseId}}-->
+          <!--</td>-->
+
+          <!--<td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>-->
+          <!--<td class="text-nowrap" data-title="'工作天数'">-->
+            <!--<input type="text" class="form-control" placeholder="0" name="workdays" validator="number" typeahead-show-hint="true" />-->
+          <!--</td>-->
+
+        <!--</tr>-->
+      <!--</table>-->
+    <!--</div>-->
+    <!--<div class="col-lg-12">&lt;!&ndash;分页框&ndash;&gt;-->
+
+
+      <!--<uib-pagination total-items="newOrderMoveMachineCtrl.page.totalElements"-->
+                      <!--ng-change="newOrderMoveMachineCtrl.query(orgMachineListMngController.pageNumber-1,null,null,null)"-->
+                      <!--max-size="5" ng-model="newOrderMoveMachineCtrl.pageNumber" items-per-page="newOrderMoveMachineCtrl.page.size"-->
+                      <!--class="pagination-sm" boundary-links="true" rotate="false"-->
+                      <!--previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div>-->
+    <!--<button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="newOrderMoveMachineCtrl.cancel()">{{'close'|translate}}</button>-->
+    <!--<button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="newOrderMoveMachineCtrl.batchMoveMachine()">{{'confirm'|translate}}</button>-->
+  <!--</div>-->
+<!--</section>-->
+
+<div class="modal-header">
+<h3 class="modal-title">{{'unUsedMachineList'|translate}}
+
+</h3>
+</div>
+<section class="content">
+
+  <div class="row" ng-style="newOrderMoveMachineCtrl.baseBoxContainer">
+    <div class="col-md-12" >
+      <table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="newOrderMoveMachineCtrl.tableForm" disable-filter="newOrderMoveMachineCtrl.isAdding" demo-tracked-table="newOrderMoveMachineCtrl.tableTracker">
+        <tr ng-repeat="machine in $data" ng-form="machineForm" newOrderMoveMachineCtrl-tracked-table-row="machine">
+          <td title="'licenseId'" filter="{licenseId: 'text'}" sortable="'licenseId'" ng-switch="machine.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" newOrderMoveMachineCtrl-tracked-table-cell>
+            <span ng-switch-default class="editable-text">{{machine.licenseId}}</span>
+
+          </td>
+          <td title="'label'"  filter="{label: 'text'}" sortable="'label'" ng-switch="machine.isEditing" ng-class="label.$dirty ? 'bg-warning' : ''" ng-form="label" newOrderMoveMachineCtrl-tracked-table-cell>
+            <span ng-switch-default class="editable-text">{{machine.label}}</span>
+
+          </td>
+          <td title="'Money'" filter="{wordays: 'number'}" sortable="'wordays'" ng-switch="machine.isEditing" ng-class="wordays.$dirty ? 'bg-warning' : ''" ng-form="wordays" newOrderMoveMachineCtrl-tracked-table-cell>
+            <span ng-switch-default class="editable-text">{{machine.wordays}}</span>
+            <div class="controls" ng-class="wordays.$invalid && wordays.$dirty ? 'has-error' : ''" ng-switch-when="true">
+              <input type="number" name="wordays" ng-model="machine.wordays" class="editable-input form-control input-sm" required/>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm" ng-click="newOrderMoveMachineCtrl.save(machine, machineForm)" ng-if="machine.isEditing" ng-disabled="machineForm.$pristine || machineForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>
+            <button class="btn btn-default btn-sm" ng-click="newOrderMoveMachineCtrl.cancel(machine, machineForm)" ng-if="machine.isEditing"><span class="glyphicon glyphicon-remove"></span></button>
+            <button class="btn btn-default btn-sm" ng-click="machine.isEditing = true" ng-if="!machine.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+<!--<div class="row" ng-style="newOrderMoveMachineCtrl.baseBoxContainer">-->
+  <!--<div class="col-md-12">-->
+    <!--<table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="newOrderMoveMachineCtrl.tableForm" disable-filter="newOrderMoveMachineCtrl.isAdding" demo-tracked-table="newOrderMoveMachineCtrl.tableTracker">-->
+
+      <!--<tr ng-repeat="machine in $data" ng-form="machineForm" demo-tracked-table-row="machine">-->
+        <!--<td title="'Name'" filter="{licenseId: 'text'}" sortable="'licenseId'" ng-switch="machine.isEditing" ng-class="licenseId.$dirty ? 'bg-warning' : ''" ng-form="name" demo-tracked-table-cell>-->
+          <!--<span ng-switch-default class="editable-text">{{machine.licenseId}}</span>-->
+          <!--<div class="controls" ng-class="licenseId.$invalid && licenseId.$dirty ? 'has-error' : ''" ng-switch-when="true">-->
+            <!--<input type="text" name="licenseId" ng-model="machine.licenseId" class="editable-input form-control input-sm" required />-->
+          <!--</div>-->
+        <!--</td>-->
+        <!--<td title="'Age'" filter="{label: 'text'}" sortable="'label'" ng-switch="machine.isEditing" ng-class="label.$dirty ? 'bg-warning' : ''" ng-form="label" demo-tracked-table-cell>-->
+          <!--<span ng-switch-default class="editable-text">{{machine.label}}</span>-->
+          <!--<div class="controls" ng-class="label.$invalid && label.$dirty ? 'has-error' : ''" ng-switch-when="true">-->
+            <!--<input type="text" name="label" ng-model="machine.label" class="editable-input form-control input-sm" required/>-->
+          <!--</div>-->
+        <!--</td>-->
+        <!--<td title="'WorkDays'" filter="{workDays: 'number'}" sortable="'workDays'" ng-switch="machine.isEditing" ng-class="workDays.$dirty ? 'bg-warning' : ''" ng-form="workDays" demo-tracked-table-cell>-->
+          <!--<span ng-switch-default class="editable-text">{{machine.wordays}}</span>-->
+          <!--<div class="controls" ng-class="workDays.$invalid && workDays.$dirty ? 'has-error' : ''" ng-switch-when="true">-->
+            <!--<input type="number" name="workDays" ng-model="machine.workDays" class="editable-input form-control input-sm" required/>-->
+          <!--</div>-->
+        <!--</td>-->
+        <!--<td>-->
+          <!--<button class="btn btn-primary btn-sm" ng-click="newOrderMoveMachineCtrl.save(machine, machineForm)" ng-if="machine.isEditing" ng-disabled="machineForm.$pristine || machineForm.$invalid"><span class="glyphicon glyphicon-ok"></span></button>-->
+          <!--<button class="btn btn-default btn-sm" ng-click="newOrderMoveMachineCtrl.cancel(machine, machineForm)" ng-if="machine.isEditing"><span class="glyphicon glyphicon-remove"></span></button>-->
+          <!--<button class="btn btn-default btn-sm" ng-click="machine.isEditing = true" ng-if="!machine.isEditing"><span class="glyphicon glyphicon-pencil"></span></button>-->
+        <!--</td>-->
+      <!--</tr>-->
+    <!--</table>-->
+  <!--</div>-->
+<!--</div>-->
+</section>
+
+
