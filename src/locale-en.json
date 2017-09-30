@@ -1021,6 +1021,8 @@
   "checkAlarm":"Please check the alarm information to be processed!",
   "neglect":"Neglect",
   "profile":"Profile",
-  "setting":"Setting"
+  "setting":"Setting",
+  "faster":"Faster",
+  "slower":"Slower"
 
 }

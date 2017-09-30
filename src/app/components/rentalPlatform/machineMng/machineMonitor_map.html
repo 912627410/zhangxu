@@ -31,23 +31,25 @@
         </span>
       </p>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
       <button class="btn btn-primary" type="button"
-              ng-click="vm.getDeviceWarningData(0,vm.pageSize,null,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+              ng-click="vm.drawMaps('locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
         {{'confirm'|translate}}
       </button>
     </div>
-  </div>
-  <div ng-show="vm.lnglatShow" class="text-right" style="line-height: 34px;">
-          <span style="font-size: 16px;padding: 0 10px;">
-            行使了 <span style="color: red;font-weight: bold;">{{vm.trackMileage}}</span> 米
-          </span>
-    <input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat"
-           style="width: 200px;float: right"/>
+    <div class=" btn-group" style="margin: 0px !important;padding: 0px!important;" role="group" >
+      <div class="btn-group pull-right">
+        <button id="start" class="btn btn-sm" type="button" >{{'startAnimation'|translate}}</button>
+        <button id="stop" class="btn  btn-sm" type="button" >{{'endAnimation'|translate}}</button>
+        <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
+        <button id="faster" class="btn  btn-sm" type="button" >{{'faster'|translate}}</button>
+        <button id="slower" class="btn  btn-sm" type="button"  >{{'slower'|translate}}</button>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="box-body" style="height: 600px" id="deviceDetailMap"></div>
+      <div class="box-body" style="height: 600px" id="trackDetailMap"></div>
     </div>
   </div>
 </div>

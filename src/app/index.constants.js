@@ -22,9 +22,9 @@
     .constant('UPDATE_RECORD_SORT_BY', 'recordTime,desc') //读取设备升级记录时的默认排序规则
     .constant('WEBSOCKET_URL', 'ws://'+ WEBSOCKET_DOMAIN_NAME +':8085/')  //WebSocket 请求地址
 
-    .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
-    .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder,AMap.MarkerClusterer')
-    .constant('AMAP_PLACESEARCH_URL', 'https://webapi.amap.com/maps?v=1.3&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Autocomplete,AMap.PlaceSearch')
+    .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
+    .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder,AMap.MarkerClusterer')
+    .constant('AMAP_PLACESEARCH_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Autocomplete,AMap.PlaceSearch')
     .constant('GOOLE_MAP_SDK_URL','https://maps.googleapis.com/maps/api/js?key=AIzaSyAuPqfrGN8p4Dax8QBo9KvC3YO-ksoI6LU&libraries=drawing,geometry,places,visualization')
 
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
@@ -314,6 +314,7 @@
     .constant('RENTAL_PRCESS_ALARM', SERVER_BASE_URL + 'rental/process-alarm')  //
     .constant('RENTAL_PRCESS_ALARMS', SERVER_BASE_URL + 'rental/process-multiple-alarm')  //
     .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
+    .constant('RENTAL_TRAJECTORY_DATA',SERVER_BASE_URL+'rental/trajectory')//定位历史数据
 
 
     //租赁客户信息

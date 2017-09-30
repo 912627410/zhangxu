@@ -1026,7 +1026,9 @@
   "checkAlarm":"请勾选要处`理的报警信息!",
   "neglect":"忽略",
   "profile":"个人信息",
-  "setting":"设置"
+  "setting":"设置",
+  "faster":"加速",
+  "slower":"减速"
 
 
 }
