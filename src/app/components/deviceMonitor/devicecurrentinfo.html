@@ -812,7 +812,7 @@
           <div class="col-md-1">
             <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateMapData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
@@ -823,7 +823,7 @@
           <div class="col-md-1">
             <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateMapData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusMapData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
                         <span class="input-group-btn">
@@ -831,21 +831,28 @@
                         </span>
             </p>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-2">
             <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:map:query" ng-click="deviceCurrentInfoCtrl.getDeviceMapData(0,10000,null,deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateMapData,deviceCurrentInfoCtrl.endDateMapData)">{{'confirm'|translate}}</button>
           </div>
-          <div class="col-md-3 btn-group " role="group" >
-            <button id="start" class="btn btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'startAnimation'|translate}}</button>
-            <button id="stop" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'endAnimation'|translate}}</button>
-            <button id="move" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'moveAnimation'|translate}}</button>
-          </div>
         </div>
-
-        <div ng-show="deviceCurrentInfoCtrl.lnglatShow" class="text-right" style="line-height: 34px;">
-          <span style="font-size: 16px;padding: 0 10px;">
-            行使了 <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> 米
-          </span>
-          <input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right"/>
+        <div class="row">
+          <div class="col-md-6">
+            <div ng-show="deviceCurrentInfoCtrl.lnglatShow" style="line-height: 34px;">
+              <label class="control-label text-nowrap">经纬度:&nbsp;&nbsp;<input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right;"/></label>
+              <span style="font-size: 16px;padding: 0 10px;">
+                行使了 <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> 公里
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 btn-group" role="group" >
+            <div class="btn-group pull-right">
+              <button id="start" class="btn btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'startAnimation'|translate}}</button>
+              <button id="stop" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'endAnimation'|translate}}</button>
+              <button id="move" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'moveAnimation'|translate}}</button>
+              <button id="faster" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query" ng-disabled="deviceCurrentInfoCtrl.mapFaster">{{'faster'|translate}}</button>
+              <button id="slower" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query" ng-disabled="deviceCurrentInfoCtrl.mapSlower">{{'slower'|translate}}</button>
+            </div>
+          </div>
         </div>
 
         <div class="row">

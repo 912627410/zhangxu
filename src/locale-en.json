@@ -733,6 +733,8 @@
   "machineTypeMng":"MachineTypeMng",
   "SMSstatistics":"SMS statistics",
   "newDevice":"New Device",
+  "faster":"Faster",
+  "slower":"Slower",
   "noInfo":"--",
 
   "modifyCustomerInformation":"Modify Customer Information",
