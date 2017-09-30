@@ -79,6 +79,57 @@
         </div>
       </div>
 
+      <div class="form-group" ng-if="newMachineController.machine.machineType.id==2">
+        <label class="col-sm-2 control-label padding5">车辆类型</label>
+        <div class="col-sm-4">
+          <ui-select name="deviceType" ng-model="newMachineController.machine.deviceType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceType in newMachineController.deviceTypeList">
+              <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <label for="machineState" class="col-sm-2 control-label padding5">车辆高度</label>
+        <div class="col-sm-4">
+          <ui-select name="deviceHeightType" ng-model="newMachineController.machine.deviceHeightType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceHeightType in newMachineController.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group" ng-if="newMachineController.machine.machineType.id==2">
+        <label class="col-sm-2 control-label padding5">车辆品牌</label>
+        <div class="col-sm-4">
+          <ui-select name="deviceManufacture" ng-model="newMachineController.machine.deviceManufacture" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="品牌">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceManufacture in newMachineController.deviceManufactureList">
+              <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <label for="machineState" class="col-sm-2 control-label padding5">车辆驱动</label>
+        <div class="col-sm-4">
+          <ui-select name="devicePowerType" ng-model="newMachineController.machine.devicePowerType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="devicePowerType in newMachineController.devicePowerTypeList">
+              <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
       <div class="form-group">
         <label for="licenseId" class="col-sm-2 control-label padding5">购买价格</label>
         <div class="col-sm-4">

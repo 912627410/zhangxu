@@ -5,10 +5,14 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,
+    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,$window,
                                                Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
-                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT) {
+                                               DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
+                                               languages,SET_MQTT_RETURN_TIME_URL,SEND_MQTT_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
+                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL,$uibModal,SEND_SET_IP_SMS_URL,SEND_SET_INTER_SMS_URL,
+                                               SEND_SET_START_TIMES_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,SEND_ACTIVE_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,SEND_LOCK_SMS_URL,
+                                               SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -30,6 +34,23 @@
         vm.amaplatitudeNum;//选中的维度
         vm.radius = 100; //设置的半径,默认100米
         vm.zoomsize = 8;
+        vm.uploadNum = 1;// 默认上传次数1
+        vm.uploadFrequency = 2;// 默认上传频率2s
+        vm.faultCommand = 39; //默认故障命令为39
+        vm.parameterType = 0; // 默认车辆参数类型0
+
+        vm.staticNoLoadImportValue = null; //静态空载参数导入值
+        vm.staticFullLoadImportValue = null; //静态满载参数导入值
+        vm.dynamicNoLoadImportValue = null; //动态空载参数导入值
+        vm.dynamicFullLoadImportValue = null; //动态满载参数导入值
+
+        // 短信发送成功后的初始化button
+        vm.initSmsSendBtn = function () {
+          $window.sessionStorage["sendBtnStatus"] = true;
+          $window.sessionStorage["sendBtnTime"] = 20000;
+          $window.sessionStorage["sendDeviceNum"] = vm.deviceinfo.deviceNum;
+          vm.sendBtnShow = true;
+        };
 
         if(deviceinfo.machine!=null&&deviceinfo.machine.selectAddress!=null
             &&deviceinfo.machine.amaplongitudeNum!=null&&deviceinfo.machine.amaplatitudeNum!=null
@@ -38,6 +59,61 @@
             vm.amaplongitudeNum=deviceinfo.machine.amaplongitudeNum;//选中的经度
             vm.amaplatitudeNum=deviceinfo.machine.amaplatitudeNum;//选中的维度
             vm.radius=deviceinfo.machine.radius; //设置的半径
+        }
+
+        //未标定时,负载重量和平台高度显示为-
+        if(vm.deviceinfo.calibrationStatus == 192) {
+          if(null == vm.deviceinfo.loadWeight || vm.deviceinfo.loadWeight > 100 || vm.deviceinfo.loadWeight < 0) {
+            vm.deviceinfo.loadWeight = '-';
+          } else {
+            vm.deviceinfo.loadWeight += '%';
+          }
+          if(null == vm.deviceinfo.hostHeight || vm.deviceinfo.hostHeight > 100 || vm.deviceinfo.hostHeight < 0) {
+            vm.deviceinfo.hostHeight = '-';
+          } else {
+            vm.deviceinfo.hostHeight += '%';
+          }
+        } else {
+          vm.deviceinfo.loadWeight = "-";
+          vm.deviceinfo.hostHeight = "-";
+        }
+
+      /**
+       * PCU状态
+       * 行走模式-右转-左转-中位-前进、后退
+       * 升降模式-中位-举升、下降
+       */
+        if(null != vm.deviceinfo.pcuStatus && vm.deviceinfo.pcuStatus.length == 8) {
+          var pcuStatus = vm.deviceinfo.pcuStatus;
+          if(pcuStatus.substring(1,2) == "0") {
+            if(pcuStatus.substring(4,5) == "0") {
+              if(pcuStatus.substring(5,6) == "0") {
+                if(pcuStatus.substring(6,7) == "0") {
+                  if(pcuStatus.substring(7,8) == "0") {
+                    vm.pcuStatus = languages.findKey('retreat');
+                  } else if(pcuStatus.substring(7,8) == "1") {
+                    vm.pcuStatus = languages.findKey('advance');
+                  }
+                } else if(pcuStatus.substring(6,7) == "1") {
+                  vm.pcuStatus = languages.findKey('median');
+                }
+              } else if(pcuStatus.substring(5,6) == "1") {
+                vm.pcuStatus = languages.findKey('turnLeft');
+              }
+            } else if(pcuStatus.substring(4,5) == "1") {
+              vm.pcuStatus = languages.findKey('turnRight');
+            }
+          } else if(pcuStatus.substring(1,2) == "1") {
+            if(pcuStatus.substring(6,7) == "0") {
+              if(pcuStatus.substring(7,8) == "0") {
+                vm.pcuStatus = languages.findKey('decline');
+              } else if(pcuStatus.substring(7,8) == "1") {
+                vm.pcuStatus = languages.findKey('liftUp');
+              }
+            } else if(pcuStatus.substring(6, 7) == "1") {
+              vm.pcuStatus = languages.findKey('median');
+            }
+          }
         }
 
         if (vm.deviceinfo.calibrationVisible=='1'){//由于硬件bug,标定状态特定的车改成标定成功。0代表没有bug，1代表有bug，页面需要显示标定成功 by xielong.wang 2017-07-07
@@ -203,11 +279,11 @@
 
 
         //******************远程控制tab**********************]
-        vm.serverHost = "iot.nvr-china.com";
-        vm.serverPort = "08090";
+        vm.serverHost = vm.deviceinfo.mainGatewayIp == null ? "iot.nvr-china.com" : vm.deviceinfo.mainGatewayIp;
+        vm.serverPort = vm.deviceinfo.mainGatewayPort == null ? "08090" : vm.deviceinfo.mainGatewayPort;
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';
-        vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
+        vm.workHours = $filter('number')(vm.deviceinfo.workDuration, 1);
         if (vm.workHours != null) {
             vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
         }
@@ -327,7 +403,8 @@
         }
 
         //发送短信
-        vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
+      // 原高空车短信下发,现在已弃用
+        /*vm.sendSMS = function (type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) {
 
             if (vm.checkParam(type, devicenum, host, port, startTimes, workHours, secOutsidePower, secLocateInt, secInnerPower,catPhoneNumber,vehicleStateCollect,chargerStateCollect) == false) {
                 Notification.error("请提供要设置的参数");
@@ -370,7 +447,496 @@
                         Notification.error("短信发送出错");
                     })
                 });
+        }*/
+
+      //发送回传地址信息
+      vm.sendSetIpSMS = function (devicenum, host, port) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
         }
+        var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setIpMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送间隔信息
+      vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
+        if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
+          Notification.error("请检查时间设置，三个回传时间须全部设置！");
+          return;
+        }
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
+          + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setWorkIntMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送启动次数信息
+      vm.sendSetStartTimesSMS = function (devicenum, startTimes) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setStartTImesMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送工作小时数
+      vm.sendSetWorkHoursSMS = function (devicenum, workHours) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.setWorkHoursMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送绑定短信
+      vm.sendActiveLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送解绑短信
+      vm.sendUnActiveLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.unActiveMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送锁车短信
+      vm.sendLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.lockMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送解锁短信
+      vm.sendUnLockSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                vm.unLockMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送采样时间
+      vm.sendSamplingTimeSMS = function (devicenum, vehicleStateCollect, chargerStateCollect) {
+        if(angular.isUndefined(vehicleStateCollect) ||angular.isUndefined(chargerStateCollect)){
+          Notification.error("请检查时间设置，两个回传时间须全部设置！");
+          return;
+        }
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_SAMPLING_TIME_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&vehicleStateCollect="
+          + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送平台短信猫号码
+      vm.sendSetCatPhoneNumberSMS = function (devicenum, catPhoneNumber) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_SET_CAT_PHONE_NUMBER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&catPhoneNumber=" + catPhoneNumber;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+      //发送终端复位短信
+      vm.sendTerminalResetSMS = function (devicenum) {
+        if (devicenum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restURL = SEND_TERMINAL_RESET_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+        $confirm({
+          text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+          title: languages.findKey('SMSConfirmation') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        })
+          .then(function () {
+            var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+            rspData.then(function (data) {
+              if (data.code == 0 && data.content.smsStatus == 0) {
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              }
+              else {
+                if (data.code == 0) {
+                  Notification.error(data.content.resultDescribe);
+                } else {
+                  Notification.error(data.content.message);
+                }
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+      };
+
+        /**
+         * MQTT下发操作命令
+         * @param type 类型
+         * @param deviceNum 设备号
+         * @param faultCommand 故障屏蔽码
+         */
+        vm.sendMQTTOperated = function (type, deviceNum, faultCommand) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          var restURL = SEND_MQTT_OPERATED_URL + "?type="+ type + "&deviceNum=" + deviceNum + "&faultCommand=" + faultCommand;
+          $confirm({
+            text: languages.findKey('确定发送此命令?') + '',
+            title: languages.findKey('发送命令确认') + '',
+            ok: languages.findKey('confirm') + '',
+            cancel: languages.findKey('cancel') + ''
+          }).then(function () {
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                Notification.success(data.content);
+                vm.initSmsSendBtn();
+              }
+              else {
+                Notification.error(data.content);
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+        };
+
+        /**
+         * MQTT下发写命令
+         * @param type 类型
+         * @param deviceNum 设备号
+         * @param content 内容
+         */
+        vm.sendMQTTWrite = function (type, deviceNum, content) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          if(type == 18 && null != content) { // 回传地址
+            var port = content.split(",")[1];
+            if(port > 65535) {
+              Notification.error(languages.findKey('maxPortError'));
+              return;
+            }
+          }
+          if(type == 34) { // MQTT设置工作小时数
+            if(null == content || content=="") {
+              Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+              return;
+            }
+            content = Math.round(content*60/5);
+          }
+          var restURL = SEND_MQTT_WRITE_URL + "?type="+ type + "&deviceNum=" + deviceNum;
+          if(null != content) {
+            restURL += "&content=" + content;
+          }
+          $confirm({
+            text: languages.findKey('确定发送此命令?') + '',
+            title: languages.findKey('发送命令确认') + '',
+            ok: languages.findKey('confirm') + '',
+            cancel: languages.findKey('cancel') + ''
+          }).then(function () {
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                Notification.success(data.content);
+                vm.initSmsSendBtn();
+              }
+              else {
+                Notification.error(data.content);
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          });
+        };
 
         //默认显示当前设备的最新地址
         vm.initMapTab = function(deviceInfo){
@@ -384,9 +950,153 @@
                 }
 
 
-                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,centerAddr);
+                serviceResource.refreshMapWithDeviceInfo("deviceDetailMap",deviceInfoList,17,null,centerAddr);
             })
         };
+
+        /**
+         * 得到MQTT相关回传采样时间
+         * @param deviceNum 设备号
+         * @param name 名称
+         */
+          vm.returnTimeQuery = function (deviceNum, name) {
+            if (deviceNum == null) {
+              Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+              return;
+            }
+            if(null == name || name == "") {
+              return;
+            }
+            var restURL = GET_MQTT_RETURN_TIME + "?deviceNum=" + deviceNum + "&returnTimeName=" + name;
+            var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+            restPromise.then(function (data) {
+              if (data.code == 0) {
+                vm.returnTimeParam.time = data.content;
+              }
+            }, function (reason) {
+              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            })
+          };
+
+      /**
+       * 设置回传时间间隔
+       * @param deviceNum
+       * @param returnTimeParam
+       */
+      vm.setReturnTime = function (deviceNum, returnTimeParam) {
+        if(angular.isUndefined(returnTimeParam)){
+          Notification.error("请检查时间设置!");
+          return;
+        }
+        if (deviceNum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+
+        if(null == returnTimeParam.name || "" == returnTimeParam.name) {
+          Notification.error("请选择时间间隔类型");
+          return;
+        }
+
+        if(null == returnTimeParam.time || "" == returnTimeParam.time) {
+          Notification.error("请输入时间");
+          return;
+        }
+
+        var isSend = true; // 是否发送
+        //加载json,判断有效值
+        $http.get('awpReturnTime.json').success(function(data){
+          vm.mqttReturnTime=JSON.parse(JSON.stringify(data));
+          for(var i = 0 ; i<vm.mqttReturnTime.length; i++) {
+            var retrunTime = vm.mqttReturnTime[i];
+            if(retrunTime.name == returnTimeParam.name) {
+              if(returnTimeParam.time < retrunTime.minValue || returnTimeParam.time > retrunTime.maxValue) {
+                Notification.error(languages.findKey('beyondValidRange')+":"+retrunTime.minValue+"~"+retrunTime.maxValue);
+                isSend = false;
+                return;
+              }
+            }
+          }
+          if(isSend) {
+            var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
+            $confirm({
+              text: languages.findKey('okSetThisInterval') + '',
+              title: languages.findKey('intervalConfirmation') + '',
+              ok: languages.findKey('confirm') + '',
+              cancel: languages.findKey('cancel') + ''
+            }).then(function () {
+              var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+              restPromise.then(function (data) {
+                if (data.code == 0) {
+                  Notification.success(data.content);
+                  vm.initSmsSendBtn();
+                }
+                else {
+                  Notification.error(data.content);
+                }
+              }, function (reason) {
+                Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              })
+            });
+          }
+        });
+      };
+
+
+
+      /**
+       * 发送读请求命令
+       * @param deviceNum
+       * @param register
+       * @param dataLength
+       * @param uploadNum
+         * @param uploadFrequency
+         */
+      vm.sendReadCommand = function (deviceNum, register, dataLength, uploadNum, uploadFrequency) {
+        if (deviceNum == null) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        if(null == register || "" == register) {
+          Notification.error("请输入起始地址");
+          return;
+        }
+        if(null == dataLength || "" == dataLength) {
+          Notification.error("请输入数据长度");
+          return;
+        }
+        if(null == uploadNum || uploadNum == "") {
+          Notification.error("请输入上传次数");
+          return;
+        }
+        if(null == uploadFrequency || uploadFrequency == "") {
+          Notification.error("请输入上传频率");
+          return;
+        } else if(uploadFrequency < 1) {
+          Notification.error("上传频率录入有误");
+          return;
+        }
+        var restURL = SEND_MQTT_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
+        $confirm({
+          text: languages.findKey('确定发送读请求命令?') + '',
+          title: languages.findKey('读请求命令确认') + '',
+          ok: languages.findKey('confirm') + '',
+          cancel: languages.findKey('cancel') + ''
+        }).then(function () {
+          var restPromise = serviceResource.restCallService(restURL, "ADD", null);
+          restPromise.then(function (data) {
+            if (data.code == 0) {
+              Notification.success(data.content);
+              vm.initSmsSendBtn();
+            }
+            else {
+              Notification.error(data.content);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+      };
 
         //构造地图对象
         vm.initMap=function(mapId,zoomsize,centeraddr){
@@ -556,7 +1266,7 @@
 
 
                 //读取所有设备的gps信息，home map使用
-                if (deviceInfo.locateStatus === '1' && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
+                if ((deviceInfo.locateStatus === '1' || deviceInfo.locateStatus === 'A' || deviceInfo.locateStatus === 'B') && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
                   vm.addMarkerModelEmcloud(map,deviceInfo,"https://webapi.amap.com/images/marker_sprite.png");
                 }
 
@@ -566,12 +1276,23 @@
 
             })
         };
-
+        var circles=[]; //存放生成的圆
+        var circleEditorList=[]; //存放生成的圆编辑器
           /**
            * 回显电子围栏
            * @param map map
              */
           vm.echoFence = function(map) {
+
+            //每次操作时候,如果圆的个数大于0,则移除第一个圆和圆编辑器
+            if(circleEditorList.length>0){
+              map.remove(circles[0]);
+              circles.pop();
+
+              circleEditorList[0].close();
+              circleEditorList.pop();
+
+            }
             //回显围栏坐标
             if(vm.amaplongitudeNum!=null&&vm.amaplatitudeNum!=null){
               var lnglatXY=[vm.amaplongitudeNum, vm.amaplatitudeNum];
@@ -599,6 +1320,8 @@
               });
 
               circleEditor.open();
+              circles.push(circle);
+              circleEditorList.push(circleEditor);
 
             }
           };
@@ -1114,13 +1837,21 @@
         };
 
         // device data
-        vm.getDeviceData = function(page,size,sort,deviceNum,startDate,endDate){
+        vm.getDeviceData = function(page,size,sort,deviceinfo,startDate,endDate){
           //  $location.search({'page':page||0,'size':size||20,'sort':sort||''});
-            if (vm.operatorInfo){
+            if (vm.operatorInfo && null != deviceinfo){
 
                 var queryCondition;
-                if (deviceNum){
-                    queryCondition = "&deviceNum=" + deviceNum;
+                if (deviceinfo.deviceNum){
+                    queryCondition = "&deviceNum=" + deviceinfo.deviceNum;
+                }
+                if (deviceinfo.versionNum) {
+                  if (queryCondition) {
+                    queryCondition += "&versionNum=" + deviceinfo.versionNum
+                  }
+                  else {
+                    queryCondition += "versionNum=" + deviceinfo.versionNum;
+                  }
                 }
               if (startDate) {
                 var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
@@ -1180,6 +1911,55 @@
 
         };
 
+      //设备位置
+      vm.getDeviceLocation = function(page,size,sort,deviceNum,startDate,endDate){
+        if (deviceNum){
+          var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
+        }
+        if (startDate){
+          var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
+          var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+          if (filterTerm){
+            filterTerm += "&startDate=" + startDateFormated
+          }
+          else{
+            filterTerm += "startDate=" + startDateFormated;
+          }
+        } else {
+          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          return;
+        }
+        if (endDate){
+          endDate = new Date(endDate.getTime()-1000*3600*24);
+          var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
+          var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+          if (filterTerm){
+            filterTerm += "&endDate=" + endDateFormated;
+          }
+          else{
+            filterTerm += "endDate=" + endDateFormated;
+          }
+        } else {
+          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          return;
+        }
+        var deviceDataPromis = serviceResource.queryDeviceSimpleGPSData(page, size, sort, filterTerm);
+        deviceDataPromis.then(function (data) {
+            if(data.content.length>0){
+              vm.deviceLocationList = data.content;
+              vm.page = data.page;
+              vm.deviceData_pagenumber = data.page.number + 1;
+              vm.basePath = "device/devicesimplegpsdata";
+            }else {
+              vm.deviceLocationList = null;
+              Notification.warning("暂无数据！");
+            }
+          }, function (reason) {
+            Notification.error("查询数据出错");
+          }
+        )
+      };
+
         vm.deviceDataDownload = function (deviceNum, startDate, endDate) {
           if (deviceNum) {
             var filterTerm = "deviceNum=" + deviceNum;
@@ -1218,11 +1998,27 @@
             var objectUrl = window.URL.createObjectURL(blob);
 
             var anchor = angular.element('<a/>');
-            anchor.attr({
-              href: objectUrl,
-              target: '_blank',
-              download: deviceNum +'.xls'
-            })[0].click();
+
+            //兼容多种浏览器
+            if (window.navigator.msSaveBlob) { // IE
+              window.navigator.msSaveOrOpenBlob(blob, deviceNum +'.xls')
+            } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+              anchor.css({display: 'none'});
+              angular.element(document.body).append(anchor);
+              anchor.attr({
+                href: URL.createObjectURL(blob),
+                target: '_blank',
+                download:  deviceNum +'.xls'
+              })[0].click();
+              anchor.remove();
+            } else { // Chrome
+              anchor.attr({
+                href: URL.createObjectURL(blob),
+                target: '_blank',
+                download:  deviceNum +'.xls'
+              })[0].click();
+            }
+
 
           }).error(function (data, status, headers, config) {
             Notification.error("下载失败!");
@@ -1705,81 +2501,263 @@
             vm.getDeviceData(page,size,sort,deviceinfo,startDate,endDate);
         };
 
+      //设备位置明细页面
+      vm.refreshPageDateDeviceLocation = function(page,size,sort,deviceinfo,startDate,endDate){
+        vm.getDeviceLocation(page,size,sort,deviceinfo,startDate,endDate);
+      };
+
         //车辆参数
         vm.parameterConfig = {
-            options: {
-                chart: {
-                    type: 'line',
-                    zoomType: 'xy',
-                    width: 840,
-                },
-                credits: {
-                    text: 'nvr-china',
-                    href: 'http://www.nvr-china.com/'
-                },
-                exporting: false,
-                legend: {
-                    enabled: false
+            tooltip: {
+                triggerOn: 'none',
+                formatter: function (params) {
+                    return 'X: ' + Math.round(params.data[0]) + '<br>Y: ' + Math.round(params.data[1]);
                 }
-            },
-            title: {
-                text: false
             },
             xAxis: {
                 min: -127,
-                max: 127,
-                gridLineColor: '#197F07',
-                gridLineWidth: 1
+                max: 127
             },
             yAxis: {
                 min: 0,
-                max: 100,
-                title: false,
-                gridLineColor: '#197F07',
-                gridLineWidth: 1
+                max: 100
             },
             series: [{
-                name: 'value',
+                id: 'a',
+                type: 'line',
+                smooth: true,
+                symbolSize: 10,
                 data: []
             },{
-                name: 'value',
+                id: 'b',
+                type: 'line',
+                smooth: true,
+                symbolSize: 10,
                 data: []
-            }],
-            loading: false,
-            func: function (chart) {
-                $timeout(function () {
-                    chart.reflow();
-                }, 0);
-            }
+            }]
         };
 
-        vm.refreshParameterChart = function (parameterValue,curve) {
+        vm.refreshParameterChart = function (queryParameter) {
+            var name = queryParameter.name;
+            var curve = queryParameter.curve;
             var bIndex1 = curve.bIndex1;
 
-            if(bIndex1 < parameterValue.bJoystickNeutralZone){
-                bIndex1 = parameterValue.bJoystickNeutralZone;
+            if(bIndex1 < vm.parameterValue.bJoystickNeutralZone){
+                bIndex1 = vm.parameterValue.bJoystickNeutralZone;
             }
 
-            var data1 = [bIndex1,curve.bPwmPos1];
-            var data2 = [curve.bIndex2,curve.bPwmPos2];
-            var data3 = [curve.bIndex3,curve.bPwmPos3];
-            var data4 = [curve.bIndex4,curve.bPwmPos4];
-            var data5 = [127,curve.bPwmPosMax];
-            var data6 = [-bIndex1,curve.bPwmNeg1];
-            var data7 = [-curve.bIndex2,curve.bPwmNeg2];
-            var data8 = [-curve.bIndex3,curve.bPwmNeg3];
-            var data9 = [-curve.bIndex4,curve.bPwmNeg4];
-            var data10 = [-127,curve.bPwmNegMax];
+            var data1 = [-bIndex1,curve.bPwmNeg1];
+            var data2 = [-curve.bIndex2,curve.bPwmNeg2];
+            var data3 = [-curve.bIndex3,curve.bPwmNeg3];
+            var data4 = [-curve.bIndex4,curve.bPwmNeg4];
+            var data5 = [-127,curve.bPwmNegMax];
+            var data6 = [bIndex1,curve.bPwmPos1];
+            var data7 = [curve.bIndex2,curve.bPwmPos2];
+            var data8 = [curve.bIndex3,curve.bPwmPos3];
+            var data9 = [curve.bIndex4,curve.bPwmPos4];
+            var data10 = [127,curve.bPwmPosMax];
 
-            vm.parameterConfig.series[0].data = [data1,data2,data3,data4,data5];
-            vm.parameterConfig.series[1].data = [data6,data7,data8,data9,data10];
+          var parameterData1 = [data1,data2,data3,data4,data5]; //左侧曲线数据
+          var parameterData2 = [data6,data7,data8,data9,data10]; //右侧曲线数据
+          var parameterData = [data1,data2,data3,data4,data5,data6,data7,data8,data9,data10];
+
+          vm.parameterChart.setOption({
+            graphic: echarts.util.map(parameterData, function (item, dataIndex) {
+              var data, seriesIndex, id;
+              if(dataIndex < 5) {
+                data = parameterData1;
+                seriesIndex = 0;
+                id = 'a';
+              } else {
+                data = parameterData2;
+                seriesIndex = 1;
+                dataIndex -= 5;
+                id = 'b';
+              }
+              return {
+                type: 'circle',
+                position: vm.parameterChart.convertToPixel('grid', item),
+                shape: {
+                  r: 10
+                },
+                invisible: true,
+                draggable: true,
+                ondrag: echarts.util.curry(onPointDragging, data, id, name, dataIndex),
+                onmousemove: echarts.util.curry(showTooltip, seriesIndex, dataIndex),
+                onmouseout: echarts.util.curry(hideTooltip, dataIndex),
+                z: 100
+              };
+            })
+          });
+          vm.parameterChart.setOption({
+            series: [
+              {
+                data: parameterData1
+              },{
+                data: parameterData2
+              }]
+          });
         };
 
+      function showTooltip(seriesIndex, dataIndex) {
+        vm.parameterChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: seriesIndex,
+          dataIndex: dataIndex
+        });
+      }
+
+      function hideTooltip(dataIndex) {
+        vm.parameterChart.dispatchAction({
+          type: 'hideTip'
+        });
+      }
+
+      function onPointDragging(data, id, name, dataIndex) {
+        data[dataIndex] = vm.parameterChart.convertFromPixel('grid', this.position);
+        data[dataIndex][1] = data[dataIndex][1]< 0 ? 0 : Math.round(data[dataIndex][1]);
+        data[dataIndex][1] = data[dataIndex][1]> 100 ? 100 : Math.round(data[dataIndex][1]);
+        if(id == 'b') {
+          data[dataIndex][0] = data[dataIndex][0] < 0 ? 0: Math.round(data[dataIndex][0]);
+          data[dataIndex][0] = data[dataIndex][0] > 127 ? 127: Math.round(data[dataIndex][0]);
+        } else if(id == 'a') {
+          data[dataIndex][0] = data[dataIndex][0] < -127 ? -127: Math.round(data[dataIndex][0]);
+          data[dataIndex][0] = data[dataIndex][0] > 0 ? 0: Math.round(data[dataIndex][0]);
+        }
+
+
+        if(id == "a") {
+          if(name == "上升曲线") {
+            vm.selectParameter = vm.parameterValue.liftUpCurve;
+          } else {
+            if(name == "快速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveFastCurve;
+            } else if (name == "起升后行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveRisedCurve;
+            } else if (name == "慢速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveSlowCurve;
+            } else if (name == "转向曲线") {
+              vm.selectParameter = vm.parameterValue.steerRisedCurve;
+            }
+
+            /*打开下面的注释,调整曲线时左右两侧对称*/
+            if(dataIndex == 0) {
+              // vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(-data[dataIndex][0]);
+              // vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(-data[dataIndex][0]);
+              // vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(-data[dataIndex][0]);
+              // vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              // vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+              vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
+            }
+          }
+        } else if(id == "b") {
+          if(name == "上升曲线") {
+            vm.selectParameter = vm.parameterValue.liftUpCurve;
+            if(dataIndex == 0) {
+              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+            }
+          } else {
+            if(name == "快速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveFastCurve;
+            } else if (name == "起升后行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveRisedCurve;
+            } else if (name == "慢速行走曲线") {
+              vm.selectParameter = vm.parameterValue.driveSlowCurve;
+            } else if (name == "转向曲线") {
+              vm.selectParameter = vm.parameterValue.steerRisedCurve;
+            }
+
+            /*打开下面的注释,调整曲线时左右两侧对称*/
+            if(dataIndex == 0) {
+              vm.selectParameter.bPwmPos1 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg1 = Math.round(data[dataIndex][1]);
+            } else if (dataIndex == 1) {
+              vm.selectParameter.bIndex2 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos2 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg2 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 2) {
+              vm.selectParameter.bIndex3 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos3 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg3 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 3) {
+              vm.selectParameter.bIndex4 = Math.round(data[dataIndex][0]);
+              vm.selectParameter.bPwmPos4 = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNeg4 = Math.round(data[dataIndex][1]);
+            } else if(dataIndex == 4) {
+              vm.selectParameter.bPwmPosMax = Math.round(data[dataIndex][1]);
+              // vm.selectParameter.bPwmNegMax = Math.round(data[dataIndex][1]);
+            }
+          }
+        }
+
+        if(name == "快速行走曲线") {
+          vm.parameterValue.driveFastCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[0]);
+        } else if (name == "起升后行走曲线") {
+          vm.parameterValue.driveRisedCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[1]);
+        } else if (name == "上升曲线") {
+          vm.parameterValue.liftUpCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[2]);
+        } else if (name == "慢速行走曲线") {
+          vm.parameterValue.driveSlowCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[3]);
+        } else if (name == "转向曲线") {
+          vm.parameterValue.steerRisedCurve = vm.selectParameter;
+          vm.refreshParameterChart(vm.parameterTypeList[4]);
+        }
+      }
+
+
         vm.initParameterTab = function (deviceinfo) {
+            vm.parameterChart = echarts.init(document.getElementById('parameterChart'));
+            vm.parameterChart.setOption(vm.parameterConfig);
+            vm.machineParametersReadonly = true; //默认车辆参数不可编辑
             var restURL = DEVCEINFO_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum;
             var rspData = serviceResource.restCallService(restURL, "GET");
             rspData.then(function (data) {
+              if(data.code == -1 && deviceinfo.versionNum == "11") {
+                Notification.error('车辆参数为空,请稍后刷新');
+                // 写ECU参数类型
+                var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
+                var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+              } else if(data.code == 0) {
                 vm.parameterValue = data.content;
+                vm.parameterValue.bBrakeDelay = data.content.bBrakeDelay*100;
+                vm.parameterValue.bCoilFaultDetectionPeriod = data.content.bCoilFaultDetectionPeriod*10;
+                vm.parameterValue.bSteeringOffDelay = data.content.bSteeringOffDelay*100;
+                vm.parameterValue.bDirectionDelay = data.content.bDirectionDelay*10;
+                vm.parameterValue.bMotorEnableDelay = data.content.bMotorEnableDelay*10;
+                vm.parameterValue.bOverloadStabilizationPeriod = data.content.bOverloadStabilizationPeriod*100;
+                vm.parameterValue.bBatteryLevel1 = (data.content.bBatteryLevel1+100)/10;
+                vm.parameterValue.bBatteryLevel2 = (data.content.bBatteryLevel2+100)/10;
+                vm.parameterValue.bBatteryLevel3 = (data.content.bBatteryLevel3+100)/10;
+                vm.parameterValue.bBatteryLevel4 = (data.content.bBatteryLevel4+100)/10;
+                vm.parameterValue.bBatteryLevel5 = (data.content.bBatteryLevel5+100)/10;
+                vm.parameterValue.bTiltBrakeDelay = data.content.bTiltBrakeDelay*10;
+                vm.parameterValue.bLevelBrakeDelay = data.content.bLevelBrakeDelay*10;
 
                 vm.parameterTypeList=[{
                     name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
@@ -1794,15 +2772,351 @@
                 }];
 
                 vm.queryParameter = vm.parameterTypeList[0];
-                vm.refreshParameterChart(vm.parameterValue,vm.queryParameter.curve);
+                vm.refreshParameterChart(vm.queryParameter);
+              }
             }, function (reason) {
                 Notification.error('获取车辆参数失败');
                 Notification.error(reason.data.message);
             });
         };
 
+        /**
+         * 车辆参数编辑
+         */
+        vm.machineParametersEdit = function () {
+          vm.machineParametersReadonly = false;
+          if(!vm.parameterValue || null == vm.parameterValue || vm.parameterValue == "") {
+            vm.machineParametersReadonly = true;
+          }
+        };
+
+        /**
+         * MQTT下发车辆参数
+         * @param deviceNum
+         * @param parameterValue
+         */
+        vm.sendMQTTParameters = function (deviceNum, parameterValue) {
+          if(null == deviceNum || deviceNum == '') {
+            Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+            return;
+          }
+          var content = "[" + parameterValue.bLiftType +","+ parameterValue.bMajor +","+ parameterValue.bMinor +","+ Math.round(parameterValue.bBrakeDelay/100) +","+ Math.round(parameterValue.bCoilFaultDetectionPeriod/10) +","+ Math.round(parameterValue.bSteeringOffDelay/100) +","+
+            Math.round(parameterValue.bDirectionDelay/10) +","+ Math.round(parameterValue.bMotorEnableDelay/10) +","+ Math.round(parameterValue.bOverloadStabilizationPeriod/100) +","+ parameterValue.bSteeringBoostPwm +","+ parameterValue.bNeutralSteeringPwm +","+
+            parameterValue.bChassisLiftUpPwm +","+ parameterValue.bPlatformLiftUpMaxPwm +","+ parameterValue.bJoystickOffsetCompensation +","+ parameterValue.bJoystickNeutralZone +","+ Math.round(parameterValue.bBatteryLevel1*10-100) +","+ Math.round(parameterValue.bBatteryLevel2*10-100) +","+
+            Math.round(parameterValue.bBatteryLevel3*10-100) +","+ Math.round(parameterValue.bBatteryLevel4*10-100) +","+ Math.round(parameterValue.bBatteryLevel5*10-100) +","+ Math.round(parameterValue.bTiltBrakeDelay/10) +","+ Math.round(parameterValue.bLevelBrakeDelay/10) +","+
+            parameterValue.driveFastCurve.bIndex1 +","+ parameterValue.driveFastCurve.bIndex2 +","+ parameterValue.driveFastCurve.bIndex3 +","+ parameterValue.driveFastCurve.bIndex4 +","+ parameterValue.driveFastCurve.bPwmPos1 +","+ parameterValue.driveFastCurve.bPwmPos2 +","+
+            parameterValue.driveFastCurve.bPwmPos3 +","+ parameterValue.driveFastCurve.bPwmPos4 +","+ parameterValue.driveFastCurve.bPwmPosMax +","+ parameterValue.driveFastCurve.bPwmPosMax +","+ parameterValue.driveFastCurve.bPwmNeg1 +","+ parameterValue.driveFastCurve.bPwmNeg2 +","+
+            parameterValue.driveFastCurve.bPwmNeg3 +","+ parameterValue.driveFastCurve.bPwmNeg4 +","+ parameterValue.driveFastCurve.bPwmNegMax +","+ parameterValue.driveFastCurve.bPwmNegMax +","+ parameterValue.driveFastCurve.bAccelIncrement +","+
+            parameterValue.driveFastCurve.bDecelIncrement +","+ parameterValue.driveFastCurve.bPeriod +","+
+            parameterValue.driveRisedCurve.bIndex1 +","+ parameterValue.driveRisedCurve.bIndex2 +","+ parameterValue.driveRisedCurve.bIndex3 +","+ parameterValue.driveRisedCurve.bIndex4 +","+ parameterValue.driveRisedCurve.bPwmPos1 +","+ parameterValue.driveRisedCurve.bPwmPos2 +","+
+            parameterValue.driveRisedCurve.bPwmPos3 +","+ parameterValue.driveRisedCurve.bPwmPos4 +","+ parameterValue.driveRisedCurve.bPwmPosMax +","+ parameterValue.driveRisedCurve.bPwmPosMax +","+ parameterValue.driveRisedCurve.bPwmNeg1 +","+ parameterValue.driveRisedCurve.bPwmNeg2 +","+
+            parameterValue.driveRisedCurve.bPwmNeg3 +","+ parameterValue.driveRisedCurve.bPwmNeg4 +","+ parameterValue.driveRisedCurve.bPwmNegMax +","+ parameterValue.driveRisedCurve.bPwmNegMax +","+ parameterValue.driveRisedCurve.bAccelIncrement +","+
+            parameterValue.driveRisedCurve.bDecelIncrement +","+ parameterValue.driveRisedCurve.bPeriod +","+
+            parameterValue.liftUpCurve.bIndex1 +","+ parameterValue.liftUpCurve.bIndex2 +","+ parameterValue.liftUpCurve.bIndex3 +","+ parameterValue.liftUpCurve.bIndex4 +","+ parameterValue.liftUpCurve.bPwmPos1 +","+ parameterValue.liftUpCurve.bPwmPos2 +","+
+            parameterValue.liftUpCurve.bPwmPos3 +","+ parameterValue.liftUpCurve.bPwmPos4 +","+ parameterValue.liftUpCurve.bPwmPosMax +","+ parameterValue.liftUpCurve.bPwmPosMax +","+ parameterValue.liftUpCurve.bPwmNeg1 +","+ parameterValue.liftUpCurve.bPwmNeg2 +","+
+            parameterValue.liftUpCurve.bPwmNeg3 +","+ parameterValue.liftUpCurve.bPwmNeg4 +","+ parameterValue.liftUpCurve.bPwmNegMax +","+ parameterValue.liftUpCurve.bPwmNegMax +","+ parameterValue.liftUpCurve.bAccelIncrement +","+
+            parameterValue.liftUpCurve.bDecelIncrement +","+ parameterValue.liftUpCurve.bPeriod +","+
+            parameterValue.driveSlowCurve.bIndex1 +","+ parameterValue.driveSlowCurve.bIndex2 +","+ parameterValue.driveSlowCurve.bIndex3 +","+ parameterValue.driveSlowCurve.bIndex4 +","+ parameterValue.driveSlowCurve.bPwmPos1 +","+ parameterValue.driveSlowCurve.bPwmPos2 +","+
+            parameterValue.driveSlowCurve.bPwmPos3 +","+ parameterValue.driveSlowCurve.bPwmPos4 +","+ parameterValue.driveSlowCurve.bPwmPosMax +","+ parameterValue.driveSlowCurve.bPwmPosMax +","+ parameterValue.driveSlowCurve.bPwmNeg1 +","+ parameterValue.driveSlowCurve.bPwmNeg2 +","+
+            parameterValue.driveSlowCurve.bPwmNeg3 +","+ parameterValue.driveSlowCurve.bPwmNeg4 +","+ parameterValue.driveSlowCurve.bPwmNegMax +","+ parameterValue.driveSlowCurve.bPwmNegMax +","+ parameterValue.driveSlowCurve.bAccelIncrement +","+
+            parameterValue.driveSlowCurve.bDecelIncrement +","+ parameterValue.driveSlowCurve.bPeriod +","+
+            parameterValue.steerRisedCurve.bIndex1 +","+ parameterValue.steerRisedCurve.bIndex2 +","+ parameterValue.steerRisedCurve.bIndex3 +","+ parameterValue.steerRisedCurve.bIndex4 +","+ parameterValue.steerRisedCurve.bPwmPos1 +","+ parameterValue.steerRisedCurve.bPwmPos2 +","+
+            parameterValue.steerRisedCurve.bPwmPos3 +","+ parameterValue.steerRisedCurve.bPwmPos4 +","+ parameterValue.steerRisedCurve.bPwmPosMax +","+ parameterValue.steerRisedCurve.bPwmPosMax +","+ parameterValue.steerRisedCurve.bPwmNeg1 +","+ parameterValue.steerRisedCurve.bPwmNeg2 +","+
+            parameterValue.steerRisedCurve.bPwmNeg3 +","+ parameterValue.steerRisedCurve.bPwmNeg4 +","+ parameterValue.steerRisedCurve.bPwmNegMax +","+ parameterValue.steerRisedCurve.bPwmNegMax +","+ parameterValue.steerRisedCurve.bAccelIncrement +","+
+            parameterValue.steerRisedCurve.bDecelIncrement +","+ parameterValue.steerRisedCurve.bPeriod + "]";
+
+          vm.sendMQTTWrite(27, deviceNum, content);
+        };
+
+      //标定参数
+      vm.calibrationParameterConfig = {
+        tooltip: {
+          triggerOn: 'none',
+          formatter: function (params) {
+            return 'X: ' + Math.round(params.data[0]) + '<br>Y: ' + Math.round(params.data[1]);
+          }
+        },
+        xAxis: {
+          min: 0,
+          max: 4096,
+          name: '高度'
+        },
+        yAxis: {
+          min: 0,
+          max: 4096,
+          name: '电压'
+        },
+        series: [{
+          type: 'line',
+          smooth: true,
+          symbolSize: 10,
+          data: []
+        }]
+      };
+
+      /**
+       * 标定参数图表增加拖拽监听
+       * @param calibrationParameterData 数据
+         */
+      vm.refreshCalibrationParameterChart = function (calibrationParameterData) {
+        vm.calibrationParameterChart.setOption({
+          graphic: echarts.util.map(calibrationParameterData, function (item, dataIndex) {
+            return {
+              type: 'circle',
+              position: vm.calibrationParameterChart.convertToPixel('grid', item),
+              shape: {
+                r: 10
+              },
+              invisible: true,
+              draggable: true,
+              ondrag: echarts.util.curry(onPointDragging2, calibrationParameterData, dataIndex),
+              onmousemove: echarts.util.curry(showTooltip2, dataIndex),
+              onmouseout: echarts.util.curry(hideTooltip2, dataIndex),
+              z: 100
+            };
+          })
+        });
+
+        vm.calibrationParameterChart.setOption({
+          series: [
+            {
+              data: calibrationParameterData
+            }]
+        });
+      };
+
+      function showTooltip2(dataIndex) {
+        vm.calibrationParameterChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: dataIndex
+        });
+      }
+
+      function hideTooltip2(dataIndex) {
+        vm.calibrationParameterChart.dispatchAction({
+          type: 'hideTip'
+        });
+      }
+
+      /**
+       * 标定参数图表拖拽方法
+       * @param data 数据
+       * @param dataIndex 拖拽点的下标
+         */
+      function onPointDragging2(data, dataIndex) {
+        var dataLen = data.length;
+        var y = data[dataIndex][1];
+        var update = vm.calibrationParameterChart.convertFromPixel('grid', this.position);
+        var updateY = Math.round(update[1]) - y;
+        var maxY = data[0][1];
+        var minY = data[0][1];
+        for(var m = 0; m < dataLen; m++) {
+          maxY = data[m][1] > maxY ? data[m][1] : maxY;
+          minY = data[m][1] < minY ? data[m][1] : minY;
+        }
+        updateY = (maxY + updateY) > 4096 ? 0 : updateY;
+        updateY = (minY + updateY) < 0 ? 0 : updateY;
+
+        for(var i = 0;i<data.length;i++) {
+          data[i][1] = data[i][1] + updateY;
+        }
+
+        var dataValue = "[";
+        var dataValueY = "";
+        for(var j = 0;j < dataLen;j++) {
+          dataValue += data[j][0] + ",";
+          dataValueY += data[j][1] + ",";
+        }
+        dataValue += dataValueY;
+        dataValue = dataValue.substring(0, dataValue.length - 1);
+        dataValue += "]";
+        vm.calibrationParameterValue = dataValue;
+        vm.refreshCalibrationParameterChart(data);
+      }
 
 
+      vm.calibrationParameterType = 1; //默认标定参数类型
+      vm.overloadValue = vm.deviceinfo.overloadPercentage==null?"":vm.deviceinfo.overloadPercentage;
+      if(null != vm.deviceinfo.brakeMode && vm.deviceinfo.brakeMode != "") {
+        if(vm.deviceinfo.brakeMode == 0) {
+          vm.brakeModeSelected = true;
+        } else if(vm.deviceinfo.brakeMode == 1) {
+          vm.brakeModeSelected = false;
+        } else {
+          vm.brakeMode = "0";
+          vm.brakeModeSelected = true;
+        }
+      } else {
+        vm.brakeMode = "0";
+        vm.brakeModeSelected = true;
+      }
+
+      /**
+       * 初始化标定参数图表
+       * @param deviceinfo
+       * @param calibrationParameterType 标定参数类型
+         */
+      vm.initCalibrationParameter = function (deviceinfo, calibrationParameterType) {
+        vm.calibrationParameterChart = echarts.init(document.getElementById('calibrationParameterChart'));
+        vm.calibrationParameterChart.setOption(vm.calibrationParameterConfig);
+
+        if(calibrationParameterType == 1 && null != vm.staticNoLoadImportValue && vm.staticNoLoadImportValue != "") { //静态空载并且有导入值
+          vm.calibrationParameterValue = vm.staticNoLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 2 && null != vm.staticFullLoadImportValue && vm.staticFullLoadImportValue != "") { //静态满载并且有导入值
+          vm.calibrationParameterValue = vm.staticFullLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 3 && null != vm.dynamicNoLoadImportValue && vm.dynamicNoLoadImportValue != "") { //动态空载并且有导入值
+          vm.calibrationParameterValue = vm.dynamicNoLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else if(calibrationParameterType == 4 && null != vm.dynamicFullLoadImportValue && vm.dynamicFullLoadImportValue != "") { //动态满载并且有导入值
+          vm.calibrationParameterValue = vm.dynamicFullLoadImportValue;
+          vm.processCalibrationParameterData();
+        } else {
+          var restURL = DEVCEINFO_CALIBRATION_PARAMETER_URL + "?deviceNum=" + deviceinfo.deviceNum + "&calibrationParameterType=" + calibrationParameterType;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function (data) {
+            if(data.code == -1 && deviceinfo.versionNum == "11") {
+              Notification.error('车辆标定参数为空,请稍后刷新');
+              // 写ECU参数类型
+              var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
+              var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+            } else if(data.code == 0) {
+              vm.calibrationParameterValue = data.content;
+              vm.processCalibrationParameterData();
+            }
+          }, function (reason) {
+            Notification.error('获取车辆参数失败');
+            Notification.error(reason.data.message);
+          });
+        }
+      };
+
+      /**
+       * 处理标定参数数据
+       */
+      vm.processCalibrationParameterData = function() {
+        var parameterArrays = vm.calibrationParameterValue.replace("[", "").replace("]", "").split(", ");
+        var values = "[";
+        var valuesY = "";
+        var num = parameterArrays.length/2;
+        vm.calibrationParameterData = [];
+        for (var i = 0; i < num; i++) {
+          vm.calibrationParameterData.push([Math.round(parameterArrays[i]), Math.round(parameterArrays[i + num])]);
+          values += Math.round(parameterArrays[i]) + ",";
+          valuesY += Math.round(parameterArrays[i + num]) + ",";
+        }
+        values += valuesY;
+        values = values.substring(0, values.length - 1);
+        values += "]";
+        vm.calibrationParameterValue = values;
+        vm.refreshCalibrationParameterChart(vm.calibrationParameterData);
+      };
+
+      /**
+       * MQTT下发标定参数
+       * @param deviceNum 设备号
+       * @param calibrationParameterValue 标定参数值
+       * @param calibrationParameterType 标定参数类型
+         */
+      vm.sendMQTTCalibrationParameters = function (deviceNum, calibrationParameterValue, calibrationParameterType) {
+        if(null == deviceNum || deviceNum == '') {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var type;
+        if(calibrationParameterType == 1) {
+          type = 28;
+        } else if(calibrationParameterType == 2) {
+          type = 29;
+        } else if(calibrationParameterType == 3) {
+          type = 30;
+        } else if(calibrationParameterType == 4) {
+          type = 31;
+        }
+
+        if(null == type) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        vm.sendMQTTWrite(type, deviceNum, calibrationParameterValue);
+      };
+
+      /**
+       * MQTT下发标定参数相关值
+       * @param deviceNum 设备号
+       * @param parameter1 参数1
+       * @param parameter2 参数2
+       * @param type
+       */
+      vm.sendMQTTCalibrationParameterValues = function (deviceNum, parameter1, parameter2, type) {
+        if(null==parameter1||parameter1==""||null==parameter2||parameter2==""||null==type) {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var content = parameter1+','+parameter2;
+        vm.sendMQTTWrite(type, deviceNum, content);
+      };
+
+      /**
+       * 标定参数导出
+       * @param deviceNum 设备号
+         */
+      vm.calibrationParametersDownload = function (deviceNum) {
+        if(null == deviceNum || deviceNum == '') {
+          Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+          return;
+        }
+        var restCallURL = CALIBRATION_PARAMETER_EXPORT + "?deviceNum=" + deviceNum;
+        $http({
+          url: restCallURL,
+          method: "GET",
+          responseType: 'arraybuffer'
+        }).success(function (data, status, headers, config) {
+          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+          var objectUrl = window.URL.createObjectURL(blob);
+
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: objectUrl,
+            target: '_blank',
+            download: deviceNum +'标定参数.xls'
+          })[0].click();
+
+        }).error(function (data, status, headers, config) {
+          Notification.error("下载失败!");
+        });
+      };
+
+      /**
+       * 标定参数导入
+       * @param size
+         */
+      vm.calibrationParametersImport = function (size) {
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/deviceMonitor/calibrationParametersImport.html',
+          controller: 'calibrationParametersImportController as calibrationParametersImportController',
+          size: size,
+          backdrop: false,
+          resolve: {
+            operatorInfo: function () {
+              return vm.operatorInfo;
+            }
+          }
+        });
+
+        modalInstance.result.then(function (result) {
+          vm.staticNoLoadImportValue = result[0];
+          vm.staticFullLoadImportValue = result[1];
+          vm.dynamicNoLoadImportValue = result[2];
+          vm.dynamicFullLoadImportValue = result[3];
+          vm.initCalibrationParameter(vm.deviceinfo, vm.calibrationParameterType);
+        }, function () {
+          //取消
+        });
+      };
 
 
       //battery data

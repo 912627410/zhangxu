@@ -1,0 +1,117 @@
+/*************************** Global variable ******************************/
+
+@NVR-BLUE: rgb(1,160,152);
+@NVR-ORANGE: rgb(252,120,57);
+@NVR-RED: rgb(216,122,104);
+@NVR-WHITE: rgb(255,255,255);
+@NVR-GREY: rgb(119,119,119);
+
+
+/*************************** bottons.less ******************************/
+
+.btn-primary{
+  background-color: @NVR-BLUE !important;
+  &:hover{
+    background-color: darken(@NVR-BLUE,5%) !important;
+  }
+}
+
+.btn-danger{
+  background-color: @NVR-RED !important;
+  &:hover{
+    background-color: darken(@NVR-RED,5%) !important;
+  }
+}
+
+/*************************** navs.less ******************************/
+
+.nav-pills {
+  > li {
+    > a:hover{
+      background-color: fade(@NVR-BLUE,10%) !important;
+    }
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @NVR-WHITE !important;
+        background-color: @NVR-BLUE !important;
+      }
+    }
+  }
+}
+
+/*************************** pagination.less ******************************/
+
+.pagination {
+  > li {
+    display: inline; // Remove list-style and block-level defaults
+    > a,
+    > span {
+      color: @NVR-BLUE !important;
+      border-color: fade(@NVR-BLUE,10%) !important;
+    }
+  }
+
+  > li > a,
+  > li > span {
+    &:hover,
+    &:focus {
+      z-index: 2;
+      color: @NVR-BLUE !important;
+      background-color: fade(@NVR-BLUE,10%) !important;
+      border-color: fade(@NVR-BLUE,10%) !important;
+    }
+  }
+
+  > .active > a,
+  > .active > span {
+    &,
+    &:hover,
+    &:focus {
+      z-index: 3;
+      color: @NVR-WHITE !important;
+      background-color: @NVR-BLUE !important;
+      border-color: @NVR-BLUE !important;
+    }
+  }
+
+  > .disabled {
+    > span,
+    > span:hover,
+    > span:focus,
+    > a,
+    > a:hover,
+    > a:focus {
+      color: @NVR-BLUE !important;
+      background-color: @NVR-WHITE !important;
+      border-color: fade(@NVR-BLUE,10%) !important;
+    }
+  }
+}
+
+/*************************** pagination.less ******************************/
+
+.progress-bar{
+  background-color: @NVR-BLUE !important;
+}
+
+.progress-bar-success {
+  .progress-bar-variant(@NVR-BLUE) !important;
+}
+
+.progress-bar-info {
+  .progress-bar-variant(@NVR-ORANGE) !important;
+}
+
+.progress-bar-warning {
+  .progress-bar-variant(@NVR-RED) !important;
+}
+
+.progress-bar-danger {
+  .progress-bar-variant(@NVR-RED)!important;
+}
+.progress-bar-grey {
+  .progress-bar-variant(@NVR-GREY)!important;
+}

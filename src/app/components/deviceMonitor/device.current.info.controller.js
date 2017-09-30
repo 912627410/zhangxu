@@ -18,7 +18,7 @@
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo,
-                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_FLEET_RETURN_TIME_URL, SET_FLEET_DEFAULT_RETURN_TIME_URL,WORK_POINT_URL) {
+                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_MQTT_RETURN_TIME_URL, SET_MQTT_DEFAULT_RETURN_TIME_URL,WORK_POINT_URL) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -592,11 +592,27 @@
           var objectUrl = window.URL.createObjectURL(blob);
 
           var anchor = angular.element('<a/>');
+
+        //兼容多种浏览器
+        if (window.navigator.msSaveBlob) { // IE
+          window.navigator.msSaveOrOpenBlob(blob, deviceNum +'.xls')
+        } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+          anchor.css({display: 'none'});
+          angular.element(document.body).append(anchor);
           anchor.attr({
-            href: objectUrl,
+            href: URL.createObjectURL(blob),
+            target: '_blank',
+            download:deviceNum +'.xls'
+          })[0].click();
+          anchor.remove();
+        } else { // Chrome
+          anchor.attr({
+            href: URL.createObjectURL(blob),
             target: '_blank',
             download: deviceNum +'.xls'
           })[0].click();
+        }
+
 
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
@@ -1542,7 +1558,7 @@
         return;
       }
 
-      var restURL = SET_FLEET_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
+      var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
       $confirm({
         text: languages.findKey('确定设置此时间间隔?') + '',
         title: languages.findKey('时间间隔设置确认') + '',
@@ -1573,7 +1589,7 @@
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
-      var restURL = SET_FLEET_DEFAULT_RETURN_TIME_URL + "?deviceNum="+ deviceNum;
+      var restURL = SET_MQTT_DEFAULT_RETURN_TIME_URL + "?deviceNum="+ deviceNum;
       $confirm({
         text: languages.findKey('确定设置为默认的时间间隔?') + '',
         title: languages.findKey('时间间隔设置确认') + '',

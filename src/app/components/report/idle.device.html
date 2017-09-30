@@ -55,7 +55,7 @@
 
         <td class="text-nowrap" ng-if="device.commStatus=='10'" data-title="'CAN通信状态'" sortable="'commStatus'">不工作</td>
         <td class="text-nowrap" ng-if="device.commStatus=='01'" data-title="'CAN通信状态'" sortable="'commStatus'">工作</td>
-        <td class="text-nowrap" ng-if="device.commStatus=='00' || device.commStatus==null" data-title="'CAN通信状态'" sortable="'commStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.commStatus!='10' && device.commStatus!='01'" data-title="'CAN通信状态'" sortable="'commStatus'">-</td>
 
         <td class="text-nowrap" data-title="'GPRS信号质量'" sortable="'gsmSignal'">{{(device.gsmSignal*100/31) | number:0}}%</td>
         <td class="text-nowrap" data-title="'启动次数'" sortable="'startTimes'">{{device.startTimes}}</td>
@@ -71,9 +71,10 @@
 
         <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'开盖状态'" sortable="'lockerStatus'">未开盖</td>
         <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'开盖状态'" sortable="'lockerStatus'">开盖</td>
-        <td class="text-nowrap" ng-if="device.lockerStatus==null" data-title="'开盖状态'" sortable="'lockerStatus'">-</td>
+        <td class="text-nowrap" ng-if="device.lockerStatus!='00' && device.lockerStatus!='11'" data-title="'开盖状态'" sortable="'lockerStatus'">-</td>
 
-        <td class="text-nowrap" data-title="'实际绑定车架号'" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
+        <td class="text-nowrap" ng-if="device.bindMachineId!=null" data-title="'实际绑定车架号'" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
+        <td class="text-nowrap" ng-if="device.bindMachineId==null" data-title="'实际绑定车架号'" sortable="'bindMachineId'"></td>
         <td class="text-nowrap" data-title="'最后上传时间'" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
         <td class="text-nowrap" data-title="'无信号时长'" sortable="'lastDataUploadTime'">{{(idleDeviceCtrl.queryTime - device.lastDataUploadTime)/3600000 | convertToMins}}</td>
       </tr>

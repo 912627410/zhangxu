@@ -101,8 +101,9 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus=='00'" class="bg-warning text-warning">{{'unbind'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockStatus==null ||(deviceAerialCurrentInfoController.deviceinfo.lockStatus!='10'&& deviceAerialCurrentInfoController.deviceinfo.lockStatus!='00')">{{'noData'|translate}}</td>
                         <td>{{'positioningState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1" class="bg-info text-info">{{'hasBeenpositioning'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" class="bg-warning text-warning">{{'notLocate'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'" class="bg-info text-info">{{'hasBeenpositioning(GPS)'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'" class="bg-info text-info">{{'hasBeenpositioning(B)'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null" class="bg-warning text-warning">{{'notLocate'|translate}}</td>
                         <td>{{'latestAlarmCode'|translate}}</td>
                         <!--报警代码为0时显示为无故障-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.warningCode!=null && deviceAerialCurrentInfoController.deviceinfo.warningCode==0" class="bg-info text-info">{{'noTrouble'|translate }}</td>
@@ -110,28 +111,34 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.warningCode==null">{{'noData'|translate}}</td>
                       </tr>
                       <tr>
+
+                        <!--车辆运行状态为工作时,ecu状态显示根据ecuStatus判断-->
+                        <!--车辆运行状态为不工作时,ecu状态显示为“--”，设备输出信息table均为“--”，设备输入信息table（除了开盖状态）均为“--”，pcu信息table均为“--”-->
                         <td>{{'ECUstate'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0" class="bg-danger text-danger">{{'initialization'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1" class="bg-info text-info">{{'waitingForTheLink'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2" class="bg-info text-info">{{'NVMInitialize'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3" class="bg-info text-info">{{'waitingPlatformInitialization'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4" class="bg-info text-info">{{'protocolInitialization'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5" class="bg-info text-info">{{'workingState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6" class="bg-info text-info">{{'reservedState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7" class="bg-info text-info">{{'speedRegulation'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8" class="bg-info text-info">{{'saveState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9" class="bg-info text-info">{{'limitOperatingState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10" class="bg-info text-info">{{'breakLease'|translate}}</td>
-                        <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10)||deviceAerialCurrentInfoController.deviceinfo.ecuStatus==null">{{'noData'|translate}}</td>
+
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-danger text-danger">{{'initialization'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'waitingForTheLink'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'NVMInitialize'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'waitingPlatformInitialization'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'protocolInitialization'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'workingState'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'reservedState'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'speedRegulation'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'saveState'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'limitOperatingState'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'breakLease'|translate}}</td>
+                        <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.ecuStatus==0 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==1 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==2 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==3 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==4 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==5 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==6 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==7 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==8 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==9 || deviceAerialCurrentInfoController.deviceinfo.ecuStatus==10)||deviceAerialCurrentInfoController.deviceinfo.ecuStatus==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'GPSavailableSatelliteNumber'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.gprssignalStrength}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{deviceAerialCurrentInfoController.deviceinfo.gprssignalStrength}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                         <td>{{'GPSvisibleSatelliteNumber'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.gpssignalStrength}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{deviceAerialCurrentInfoController.deviceinfo.gpssignalStrength}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                       </tr>
                       <tr>
                         <td>{{'Built-inBatteryVoltage'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.builtInVoltage}}V</td>
-                        <td>{{'totalRunningTimeHour'|translate}}</td>
+                        <td>{{'workingHours'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.workDuration | convertToMins }}</td>
                         <td>{{'cylinderPressure'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.oilPressure|number: 2}}MPa</td>
@@ -144,7 +151,8 @@
                       </tr>-->
                       <tr>
                         <td>{{'ECUid'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.ecuID}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuID != 'FFFFFFFF'">{{deviceAerialCurrentInfoController.deviceinfo.ecuID}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuID == 'FFFFFFFF'">-</td>
                         <td>{{'ECUsoftwareVersion'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.ecuSoftVersion}}</td>
                         <td>{{'PCUsoftwareVersion'|translate}}</td>
@@ -158,26 +166,31 @@
                             {{deviceAerialCurrentInfoController.deviceinfo.voltage/1000 |number:2}}mV
                         </td>-->
                         <td>{{'positioningTime'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V'">-</td>
                         <td>{{'returnTime'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <td></td>
                         <td></td>
                       </tr>
                       <td>{{'longitude'|translate}}</td>
-                      <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
+                      <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
+                      <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                       <td>{{'latitude'|translate}}</td>
-                      <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
+                      <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
+                      <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                       <td></td>
                       <td></td>
                       <tr>
                         <td>{{'currentPosition'|translate}}</td>
-                        <td ng-cloak colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.address}}</td>
+                        <td ng-cloak colspan="5" ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.address}}</td>
+                        <td ng-cloak colspan="5" ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V'">-</td>
                       </tr>
                     </table>
                   </tr>
                   <tr>
                     <table class="table table-striped" ng-init="rowInx=0">
+                      <!--车辆运行状态为不工作时,ecu状态显示为“--”，设备输出信息table均为“--”，设备输入信息table（除了开盖状态）均为“--”，pcu信息table均为“--”-->
                       <caption>{{'deviceInputInformation'|translate}}</caption>
                       <tr>
                         <th>{{'name'|translate}}</th>
@@ -189,47 +202,49 @@
                       </tr>
                       <tr>
                         <td>{{'keySwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==1" class="bg-info text-info">{{'platformControl'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==0" class="bg-warning text-warning">{{'offlineControl'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'platformControl'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'offlineControl'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.key==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
+
                         <td>{{'openCoverState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockerStatus=='00'" class="bg-warning text-warning">{{'notOpen'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockerStatus=='11'" class="bg-info text-info">{{'openCover'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockerStatus==null" class="bg-danger text-danger">{{'noData'|translate}}</td>
                         <td>{{'pitProtectionSwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==1" class="bg-info text-info">{{'open'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==null" class="bg-danger text-danger">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'open'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.pothole==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1" class="bg-danger text-danger">{{'noInfo'|translate}}</td>
                       </tr>
                       <tr>
                         <td>{{'panelRisingOperationSwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisUp==1" class="bg-info text-info">{{'open'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisUp!=1" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisUp==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'open'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisUp!=1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'upperLimitSwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==1" class="bg-info text-info">{{'notReachTheLimit'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==0" class="bg-warning text-warning">{{'alreadyReachTheLimit'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'notReachTheLimit'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'alreadyReachTheLimit'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.upLimit==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'leftBrakeCoilState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==null)">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'normal'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'exception'|translate}}</td>
+                        <td ng-if="(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1) || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.leftBrake==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1)">{{'noInfo'|translate}}</td>
                         <!-左刹车线圈状态为空时填充行->
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
                       </tr>
                       <tr>
                         <td>{{'panelDownOperationSwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==1" class="bg-info text-info">{{'open'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==0" class="bg-warning text-warning">{{'shut'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'open'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'shut'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.chassisDown==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'lowerLimitSwitch'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==1" class="bg-info text-info">{{'putAway'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==0" class="bg-warning text-warning">{{'raising'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'putAway'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'raising'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.downLimit==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'rightBrakeCoilState'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==1" class="bg-info text-info">{{'normal'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==0" class="bg-warning text-warning">{{'exception'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==null)">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'normal'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'exception'|translate}}</td>
+                        <td ng-if="(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1) || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.rightBrake==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1)">{{'noInfo'|translate}}</td>
                         <!--右刹车线圈状态为空时填充行-->
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
@@ -237,8 +252,9 @@
                       <tr>
                         <td>{{'tiltState'|translate}}</td>
                         <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.deviceinfo.tilt">
-                          <div ng-cloak ng-switch-when="0">{{'tilt'|translate}}</div>
-                          <div ng-cloak ng-switch-when="1">{{'level'|translate}}</div>
+                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'tilt'|translate}}</div>
+                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'level'|translate}}</div>
+                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                         <td></td>
                         <td></td>
@@ -250,6 +266,7 @@
                   <tr>
                     <table class="table table-striped" ng-init="rowInx=0">
                       <caption>{{'deviceOutputInformation'|translate}}</caption>
+                      <!--车辆运行状态为不工作时,ecu状态显示为“--”，设备输出信息table均为“--”，设备输入信息table（除了开盖状态）均为“--”，pcu信息table均为“--”-->
                       <tr>
                         <th>{{'name'|translate}}</th>
                         <th>{{'state'|translate}}</th>
@@ -260,46 +277,46 @@
                       </tr>
                       <tr>
                         <td>{{'advance'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetForward==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'rise'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetUp==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'turnRight'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetRigth==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                       </tr>
                       <tr>
                         <td>{{'retreat'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetReverse==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'decline'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetDown==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td>{{'turnLeft'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetLeft==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                       </tr>
                       <tr>
                         <!--机器代码 0--15代表液压驱动剪叉车, 16--31代表直流电机驱动剪叉车-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'brake'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==null)">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1) || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetBrakes==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1)">{{'noInfo'|translate}}</td>
                         <td>{{'speaker'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetHorn==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15">{{'speedValve'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==null)">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==null)||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--速度阀为空时填充行-->
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15)"></td>
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15)"></td>
@@ -309,17 +326,17 @@
                       </tr>
                       <tr>
                         <td>{{'pumpEnabled'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16">{{'electricDriveEnabled'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==null)">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1) || (deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.fetMCE2==null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1)">{{'noInfo'|translate}}</td>
                         <td>{{'buzzer'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==1" class="bg-info text-info">{{'yes'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==0" class="bg-warning text-warning">{{'no'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-info text-info">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" class="bg-warning text-warning">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetAlarm==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--电驱使能为空时填充行-->
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
                         <td ng-if="!(deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16)"></td>
@@ -391,8 +408,8 @@
                         <td>{{'pumpMotorSpeed'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.engineRPM}}%</td>
                         <td>{{'CANcommunicationStatus'|translate}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.canStatus!=null && deviceAerialCurrentInfoController.deviceinfo.canStatus==0">{{'CANcommunicationInterrupt'|translate}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.canStatus!=null && deviceAerialCurrentInfoController.deviceinfo.canStatus==1">{{'CANcommunicationNormal'|translate}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.canStatus!=null && (deviceAerialCurrentInfoController.deviceinfo.canStatus==0 || deviceAerialCurrentInfoController.deviceinfo.canStatus=='10')">{{'CANcommunicationInterrupt'|translate}}</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.canStatus!=null && (deviceAerialCurrentInfoController.deviceinfo.canStatus==1 || deviceAerialCurrentInfoController.deviceinfo.canStatus=='01')">{{'CANcommunicationNormal'|translate}}</td>
                         <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.canStatus==null" >{{'noData'|translate}}</td>
                       </tr>
                       <tr>
@@ -400,16 +417,84 @@
                         <td>{{'mainsVoltage'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.voltage==null">{{'noData'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.voltage!=null" >{{deviceAerialCurrentInfoController.deviceinfo.voltage}}V</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'whetherOverload'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceAerialCurrentInfoController.deviceinfo.overloadAlarm=='1'" class="bg-danger text-danger">{{'yes'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceAerialCurrentInfoController.deviceinfo.overloadAlarm=='0'">{{'no'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceAerialCurrentInfoController.deviceinfo.overloadAlarm!='1' && deviceAerialCurrentInfoController.deviceinfo.overloadAlarm!='0'">-</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'"></td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'"></td>
                         <td></td>
                         <td></td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>GPS-CCID</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsCCID}}</td>
+                        <td>GPS{{'totalProductiveHours'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.totalDuration/60 | convertToMins}}</td>
+                        <td>{{'gpsAntenna'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus=='00'">{{'normal'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus=='01'">{{'openCircuit'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus=='10'">{{'shortCircuit'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus!='00' && deviceAerialCurrentInfoController.deviceinfo.wireStatus!='01' && deviceAerialCurrentInfoController.deviceinfo.wireStatus!='10'">-</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>GPS-IMEI</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsIMEI}}</td>
+                        <td>{{'gprsSignalStrength'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gprsSignal!=null">{{deviceAerialCurrentInfoController.deviceinfo.gprsSignal}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gprsSignal==null">-</td>
+                        <td>{{'GPSFactoryDate'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsYearMonthDay}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'upTotalTime'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.upTotalTime | convertToSec}}</td>
+                        <td>{{'runTotalTime'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.runTotalTime | convertToSec}}</td>
+                        <td>{{'faultMasking'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuErrorCodeMask!=null && deviceAerialCurrentInfoController.deviceinfo.ecuErrorCodeMask!='0'">{{'shielded'|translate}}{{deviceAerialCurrentInfoController.deviceinfo.ecuErrorCodeMask}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.ecuErrorCodeMask==null || deviceAerialCurrentInfoController.deviceinfo.ecuErrorCodeMask=='0'">{{'unshielded'|translate}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'GPSFun'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsLocateFeatures=='1'">{{'turnedON'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsLocateFeatures=='0'">{{'closed'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsLocateFeatures!='1' && deviceAerialCurrentInfoController.deviceinfo.gpsLocateFeatures!='0'">-</td>
+                        <td>{{'AGPSFun'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.agpsFeatures=='1'">{{'turnedON'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.agpsFeatures=='0'">{{'closed'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.agpsFeatures!='1' && deviceAerialCurrentInfoController.deviceinfo.agpsFeatures!='0'">-</td>
+                        <td>{{'BaseStationLocationFun'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lbsFeatures=='1'">{{'turnedON'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lbsFeatures=='0'">{{'closed'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lbsFeatures!='1' && deviceAerialCurrentInfoController.deviceinfo.lbsFeatures!='0'">-</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'loadWeight'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.loadWeight}}</td>
+                        <td>{{'hostHeight'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.hostHeight}}</td>
                         <td></td>
                         <td></td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'gsmCelid'|translate}}</td>
+                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmCellid}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'gsmLac'|translate}}</td>
+                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmLac}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+                        <td>{{'gsmRxl'|translate}}</td>
+                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmRxl}}</td>
                       </tr>
                     </table>
                   </tr>
                   <tr>
                     <table class="table table-striped" ng-if="deviceAerialCurrentInfoController.deviceinfo.pcuStatus">
                       <caption>{{'PCUinformation'|translate}}</caption>
+                      <!--车辆运行状态为不工作时,ecu状态显示为“--”，设备输出信息table均为“--”，设备输入信息table（除了开盖状态）均为“--”，pcu信息table均为“--”-->
                       <tr>
                         <th>{{'name'|translate}}</th>
                         <th>{{'state'|translate}}</th>
@@ -421,53 +506,60 @@
                       <tr>
                         <td>{{'turtleSpeedButton'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:0">
-                          <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
-                          <div ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
-                        <td>{{'currentState'|translate}}</td>
+                        <td>{{'currentMode'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:1">
-                          <div ng-switch-when="0">{{'walk'|translate}}</div>
-                          <div ng-switch-when="1">{{'liftUp'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'walkMode'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'liftMode'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                         <td>{{'speakerButton'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:2">
-                          <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
-                          <div ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                       </tr>
                       <tr>
                         <td >{{'enableButton'|translate}}</td>
                         <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:3">
-                          <div ng-cloak ng-switch-when="0">{{'notEnabled'|translate}}</div>
-                          <div ng-cloak ng-switch-when="1">{{'hasEnabled'|translate}}</div>
+                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1"  ng-switch-when="0">{{'notEnabled'|translate}}</div>
+                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1"  ng-switch-when="1">{{'hasEnabled'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                         <td>{{'turnRight'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:4">
-                          <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
-                          <div ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                         <td>{{'turnLeft'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:5">
-                          <div ng-switch-when="0">{{'bounceUp'|translate}}</div>
-                          <div ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'bounceUp'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'press'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                       </tr>
                       <tr>
                         <td>{{'handleCenter'|translate}}</td>
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:6">
-                          <div ng-switch-when="0">{{'no'|translate}}</div>
-                          <div ng-switch-when="1">{{'yes'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'no'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'yes'|translate}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
-                        <td>{{'direction'|translate}}</td>
-                        <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:7">
-                          <div ng-switch-when="0">{{'retreat'|translate}}</div>
-                          <div ng-switch-when="1">{{'advance'|translate}}</div>
-                        </td>
+                        <td>{{'state'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.pcuStatus!=null&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1">{{deviceAerialCurrentInfoController.pcuStatus}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.pcuStatus==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
+
                         <td>{{'handleAnalog'|translate}}</td>
                         <!--该值有符号，后退时-127-->
                         <td ng-switch on="deviceAerialCurrentInfoController.deviceinfo.pcuStatus | limitTo:1:7">
-                          <div ng-switch-when="0">{{deviceAerialCurrentInfoController.deviceinfo.handleAnalog - 127}}</div>
-                          <div ng-switch-when="1">{{deviceAerialCurrentInfoController.deviceinfo.handleAnalog}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1"  ng-switch-when="0">{{deviceAerialCurrentInfoController.deviceinfo.handleAnalog - 127}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1"  ng-switch-when="1">{{deviceAerialCurrentInfoController.deviceinfo.handleAnalog}}</div>
+                          <div ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
                         </td>
                       </tr>
                     </table>
@@ -481,7 +573,7 @@
     </uib-tab>
 
     <!--车辆参数-->
-    <uib-tab ng-if="deviceAerialCurrentInfoController.deviceinfo.parameterValue" select="deviceAerialCurrentInfoController.initParameterTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:vehicleParameters">
+    <uib-tab select="deviceAerialCurrentInfoController.initParameterTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:vehicleParameters">
       <uib-tab-heading>
         {{'machineParameters'|translate}}
       </uib-tab-heading>
@@ -489,88 +581,213 @@
         <div class="box-body">
 
           <div class="row">
-            <div class="col-md-9">
-
-            </div>
             <div class="col-md-3">
               <select name="queryType" class="form-control"
                       ng-model="deviceAerialCurrentInfoController.queryParameter"
-                      ng-change="deviceAerialCurrentInfoController.refreshParameterChart(deviceAerialCurrentInfoController.parameterValue,deviceAerialCurrentInfoController.queryParameter.curve)"
+                      ng-change="deviceAerialCurrentInfoController.refreshParameterChart(deviceAerialCurrentInfoController.queryParameter)"
                       ng-options="queryP.name for queryP in deviceAerialCurrentInfoController.parameterTypeList">
               </select>
+            </div>
+            <div class="col-md-9 text-right">
+              <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:vehicleParameters:read" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, 0)">{{'requestTheLatestData'|translate}}</button>
             </div>
           </div>
 
           <div class="row">
             <div class="col-md-12">
-              <highchart id="parameterChart" config="deviceAerialCurrentInfoController.parameterConfig"></highchart>
+              <div id="parameterChart" style="width: 840px;height: 400px;"></div>
             </div>
           </div>
           <div class="row" style="padding: 0 20px">
-            <div class="col-md-3">本曲线所用的加速次数</div>
-            <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bAccelIncrement}}</div>
-            <div class="col-md-3">本曲线所用的加速次数</div>
-            <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bDecelIncrement}}</div>
-            <div class="col-md-3">本曲线所用的加速次数</div>
-            <div class="col-md-1">{{deviceAerialCurrentInfoController.queryParameter.curve.bPeriod}}</div>
+            <div class="col-md-3"><label class="control-label">本曲线所用的加速次数</label></div>
+            <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bAccelIncrement"/></div>
+            <div class="col-md-3"><label class="control-label">本曲线所用的减速次数</label></div>
+            <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bDecelIncrement"/></div>
+            <div class="col-md-3"><label class="control-label">加减速时时段</label></div>
+            <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bPeriod"/></div>
 
           </div>
-          <div class="row" style="margin-top: 50px;">
+
+          <div class="row" style="padding: 30px 0 10px;">
+            <div class="col-md-12 text-right" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+              <button type="button" class="btn btn-warning" ng-click="deviceAerialCurrentInfoController.machineParametersEdit()" presentation-href="dashboard:deviceMonitor:vehicleParameters:edit">{{'edit'|translate}}</button>
+              <button type="button" class="btn btn-primary" ng-disabled="deviceAerialCurrentInfoController.machineParametersReadonly" presentation-href="dashboard:deviceMonitor:vehicleParameters:send"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.parameterValue)">{{'send'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row">
             <table class="table table-striped" ng-init="rowInx=0">
               <!--<caption>设备输入信息</caption>-->
               <tr>
-                <th>{{'name'|translate}}</th>
-                <th>{{'state'|translate}}</th>
-                <th>{{'name'|translate}}</th>
-                <th>{{'state'|translate}}</th>
-                <th>{{'name'|translate}}</th>
-                <th>{{'state'|translate}}</th>
+                <th width="17%">{{'name'|translate}}</th>
+                <th width="17%">{{'state'|translate}}</th>
+                <th width="17%">{{'name'|translate}}</th>
+                <th width="16%">{{'state'|translate}}</th>
+                <th width="17%">{{'name'|translate}}</th>
+                <th width="16%">{{'state'|translate}}</th>
               </tr>
               <tr>
-                <td>机型</td>
+                <td><label class="control-label">机型</label></td>
                 <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.parameterValue.bLiftType">
-                  <div ng-switch-when="33">小型液驱</div>
-                  <div ng-switch-when="57">大型液压</div>
-                  <div ng-switch-when="84">小型电驱</div>
-                  <div ng-switch-when="120">大型电驱</div>
+                  <div ng-switch-when="33" style="padding-top: 7px;">小型液驱</div>
+                  <div ng-switch-when="57" style="padding-top: 7px;">大型液压</div>
+                  <div ng-switch-when="84" style="padding-top: 7px;">小型电驱</div>
+                  <div ng-switch-when="120" style="padding-top: 7px;">大型电驱</div>
                 </td>
-                <td>刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bBrakeDelay*100}}ms</td>
-                <td>阀故障检测延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bCoilFaultDetectionPeriod*10}}ms</td>
+                <td><label class="control-label">版本号major</label></td>
+                <td><div style="padding-top: 7px;">{{deviceAerialCurrentInfoController.parameterValue.bMajor}}</div></td>
+                <td><label class="control-label">版本号minor</label></td>
+                <td style="padding-top: 7px;"><div style="padding-top: 7px;">{{deviceAerialCurrentInfoController.parameterValue.bMinor}}</div></td>
               </tr>
               <tr>
-                <td class="text-nowrap">转向停止时的延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bSteeringOffDelay*100}}ms</td>
-                <td class="text-nowrap">换向延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bDirectionDelay*10}}ms</td>
-                <td class="text-nowrap">马达使能延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bMotorEnableDelay*10}}ms</td>
+                <td><label class="control-label">刹车延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBrakeDelay"/></td>
+                <td><label class="control-label">阀故障检测延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bCoilFaultDetectionPeriod"/></td>
+                <td class="text-nowrap"><label class="control-label">转向停止时的延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bSteeringOffDelay"/></td>
               </tr>
               <tr>
-                <td class="text-nowrap">过载监控稳定时间</td><td>{{deviceAerialCurrentInfoController.parameterValue.bOverloadStabilizationPeriod*100}}ms</td>
-                <td class="text-nowrap">行走时转向的液压增量</td><td>{{deviceAerialCurrentInfoController.parameterValue.bSteeringBoostPwm}}%</td>
-                <td class="text-nowrap">原地转向的PWM百分比</td><td>{{deviceAerialCurrentInfoController.parameterValue.bNeutralSteeringPwm}}%</td>
+                <td class="text-nowrap"><label class="control-label">换向延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bDirectionDelay"/></td>
+                <td class="text-nowrap"><label class="control-label">马达使能延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bMotorEnableDelay"/></td>
+                <td class="text-nowrap"><label class="control-label">过载监控稳定时间(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bOverloadStabilizationPeriod"/></td>
               </tr>
               <tr>
-                <td class="text-nowrap">车身控制上升速度百分比</td><td>{{deviceAerialCurrentInfoController.parameterValue.bChassisLiftUpPwm}}%</td>
-                <td class="text-nowrap">平台控制上升最大速度</td><td>{{deviceAerialCurrentInfoController.parameterValue.bPlatformLiftUpMaxPwm}}</td>
-                <td class="text-nowrap">手柄误差补偿</td><td>{{deviceAerialCurrentInfoController.parameterValue.bJoystickOffsetCompensation}}</td>
+                <td class="text-nowrap"><label class="control-label">行走时转向的液压增量(%)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bSteeringBoostPwm"/></td>
+                <td class="text-nowrap"><label class="control-label">原地转向的PWM百分比(%)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bNeutralSteeringPwm"/></td>
+                <td class="text-nowrap"><label class="control-label">车身控制上升速度百分比(%)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bChassisLiftUpPwm"/></td>
               </tr>
 
               <tr>
-                <td >手柄中区最大位置</td><td>{{deviceAerialCurrentInfoController.parameterValue.bJoystickNeutralZone}}</td>
-                <td >两格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel1 + 100)/10}}V</td>
-                <td >三格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel2 + 100)/10}}V</td>
+                <td class="text-nowrap"><label class="control-label">平台控制上升最大速度</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bPlatformLiftUpMaxPwm"/></td>
+                <td class="text-nowrap"><label class="control-label">手柄误差补偿</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bJoystickOffsetCompensation"/></td>
+                <td ><label class="control-label">手柄中区最大位置</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bJoystickNeutralZone"/></td>
               </tr>
 
               <tr>
-                <td >四格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel3 + 100)/10}}V</td>
-                <td>五格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel4 + 100)/10}}V</td>
-                <td>六格电量阀值</td><td>{{(deviceAerialCurrentInfoController.parameterValue.bBatteryLevel5 + 100)/10}}V</td>
+                <td ><label class="control-label">两格电量阀值(V)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel1"/></td>
+                <td ><label class="control-label">三格电量阀值(V)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel2"/></td>
+                <td ><label class="control-label">四格电量阀值(V)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel3"/></td>
               </tr>
               <tr>
-                <td>倾斜时刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bTiltBrakeDelay *10}}ms</td>
-                <td>水平时刹车延时</td><td>{{deviceAerialCurrentInfoController.parameterValue.bLevelBrakeDelay *10}}ms</td>
+                <td><label class="control-label">五格电量阀值(V)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel4"/></td>
+                <td><label class="control-label">六格电量阀值(V)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel5"/></td>
+                <td><label class="control-label">倾斜时刹车延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bTiltBrakeDelay"/></td>
+              </tr>
+              <tr>
+                <td><label class="control-label">水平时刹车延时(ms)</label></td>
+                <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bLevelBrakeDelay"/></td>
+                <td></td><td></td>
                 <td></td><td></td>
               </tr>
 
             </table>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
+    <!--车辆标定参数-->
+    <uib-tab select="deviceAerialCurrentInfoController.initCalibrationParameter(deviceAerialCurrentInfoController.deviceinfo, deviceAerialCurrentInfoController.calibrationParameterType)"
+             ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:calibrationParameter">
+      <uib-tab-heading>
+        {{'calibrationParameters'|translate}}
+      </uib-tab-heading>
+      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+        <div class="box-body">
+
+          <div class="row form-group">
+            <div class="col-md-2">
+              <label class="control-label">{{'calibrationStatus'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.calibrationStatusValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">{{'batteryPower'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.batteryPowerValue" placeholder="{{'HexadecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
+                      deviceAerialCurrentInfoController.calibrationStatusValue, deviceAerialCurrentInfoController.batteryPowerValue, 32)">{{'send'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-2">
+              <label class="control-label">{{'overloadPercentage'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" ng-model="deviceAerialCurrentInfoController.overloadValue" placeholder="{{'DecimalValue'|translate}}" />
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">{{'brakeMode'|translate}}</label>
+            </div>
+            <div class="col-md-3">
+              <select class="form-control" ng-model="deviceAerialCurrentInfoController.brakeMode">
+                <option value="0" ng-selected="deviceAerialCurrentInfoController.brakeModeSelected">{{'normalMode'|translate}}</option>
+                <option value="1" ng-selected="!deviceAerialCurrentInfoController.brakeModeSelected">{{'suddenBrakeMode'|translate}}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, 7)">请求</button>
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameterValues(deviceAerialCurrentInfoController.deviceinfo.deviceNum,
+                      deviceAerialCurrentInfoController.overloadValue, deviceAerialCurrentInfoController.brakeMode, 33)">{{'send'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 50px;">
+            <div class="col-md-3">
+              <select name="queryType" class="form-control"
+                      ng-model="deviceAerialCurrentInfoController.calibrationParameterType"
+                      ng-change="deviceAerialCurrentInfoController.initCalibrationParameter(deviceAerialCurrentInfoController.deviceinfo, deviceAerialCurrentInfoController.calibrationParameterType)">
+                <option value="1" ng-selected="true">{{'staticNoLoad'|translate}}</option>
+                <option value="2">{{'staticFullLoad'|translate}}</option>
+                <option value="3">{{'dynamicNoLoad'|translate}}</option>
+                <option value="4">{{'dynamicFullLoad'|translate}}</option>
+              </select>
+            </div>
+            <div class="col-md-9 text-right">
+              <button type="button" class="btn btn-primary" presentation-href="dashboard:deviceMonitor:calibrationParameter:send" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTCalibrationParameters(deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterValue, deviceAerialCurrentInfoController.calibrationParameterType)">{{'send'|translate}}</button>
+
+              <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:export"
+                      ng-click="deviceAerialCurrentInfoController.calibrationParametersDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum)">{{'export'|translate}}</button>
+
+              <button type="button" class="btn btn-default" presentation-href="dashboard:deviceMonitor:calibrationParameter:import"
+                      ng-click="deviceAerialCurrentInfoController.calibrationParametersImport('mg')">{{'import'|translate}}</button>
+
+              <button type="button" class="btn btn-warning" presentation-href="dashboard:deviceMonitor:calibrationParameter:read"
+                      ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(26, deviceAerialCurrentInfoController.deviceinfo.deviceNum, deviceAerialCurrentInfoController.calibrationParameterType)">{{'requestTheLatestData'|translate}}</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div id="calibrationParameterChart" style="width: 840px;height: 450px;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -661,7 +878,7 @@
               </p>
             </div>
             <div class="col-md-2">
-              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
+              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
               <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:export" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
             </div>
 
@@ -669,23 +886,24 @@
           <div class="row">
             <div class="col-md-12">
               <div class="table-responsive">
-                <!-- Default panel contents -->
-                <!-- Table -->
                 <table class="table">
                   <tr>
-                    <th class="text-nowrap">{{'terminalNumber'|translate}}</th>
-                    <th class="text-nowrap">{{'terminalSoftwareVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'MachineType'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'positioningState'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'address'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'longitude'|translate}}</th>
+                    <th class="text-nowrap" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">{{'latitude'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'terminalNumber'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'terminalSoftwareVersion'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'terminalHardwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'machineRunningState'|translate}}</th>
                     <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
-                    <th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>
-                    <th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'ProtocolVersion'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'PCUsoftwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
                     <th class="text-nowrap">{{'GPSvisibleSatelliteNumber'|translate}}</th>
                     <th class="text-nowrap">{{'GPSavailableSatelliteNumber'|translate}}</th>
-                    <th class="text-nowrap">{{'ECUid'|translate}}</th>
-                    <th class="text-nowrap">{{'ECUsoftwareVersion'|translate}}</th>
+                    <!--<th class="text-nowrap">{{'ECUid'|translate}}</th>-->
+                    <!--<th class="text-nowrap">{{'ECUsoftwareVersion'|translate}}</th>-->
                     <th class="text-nowrap">{{'ECUstate'|translate}}</th>
                     <th class="text-nowrap">{{'totalRunningTimeHour'|translate}}</th>
                     <th class="text-nowrap">{{'panelRisingOperationSwitch'|translate}}</th>
@@ -722,18 +940,27 @@
                     <th class="text-nowrap">{{'recordGenerationTime'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceAerialCurrentInfoController.deviceDataList">
+                    <!--定位状态-->
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A')">{{'hasBeenpositioning(GPS)'|translate}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceData.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">{{'notLocate'|translate}}</td>
+                    <!--地址-->
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.address}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
+                    <!--经度-->
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplongitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
+                    <!--纬度-->
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplatitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
                     <!--终端编号-->
-                    <td ng-cloak>{{deviceData.deviceNum}}</td>
+                    <!--<td ng-cloak>{{deviceData.deviceNum}}</td>-->
                     <!--终端软件版本-->
-                    <td ng-if="deviceData.gpsSoftVersion==null">{{'noData'|translate}}</td>
-                    <td ng-cloak ng-if="deviceData.gpsSoftVersion!=null">VER{{deviceData.gpsSoftVersion}}</td>
+                    <!--<td ng-if="deviceData.gpsSoftVersion==null">{{'noData'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="deviceData.gpsSoftVersion!=null">VER{{deviceData.gpsSoftVersion}}</td>-->
                     <!--终端硬件版本-->
-                    <td ng-if="deviceData.gpsHardVersion==null">{{'noData'|translate}}</td>
-                    <td ng-cloak ng-if="deviceData.gpsHardVersion!=null">VER{{deviceData.gpsHardVersion}}</td>
-                    <!--机器类型-->
-                    <td ng-if="deviceData.deviceCode>=0&& deviceData.deviceCode<=15" class="text-nowrap">{{'hydraulicDriveScissors'|translate}}({{deviceData.deviceCode}})</td>
-                    <td ng-if="deviceData.deviceCode>=16&& deviceData.deviceCode<=31" class="text-nowrap">{{'DcMotorDriveForklift'|translate}}({{deviceData.deviceCode}})</td>
-                    <td ng-if="!(deviceData.deviceCode>=0||deviceData.deviceCode<=31)">{{'noData'|translate}}</td>
+                    <!--<td ng-if="deviceData.gpsHardVersion==null">{{'noData'|translate}}</td>-->
+                    <!--<td ng-cloak ng-if="deviceData.gpsHardVersion!=null">VER{{deviceData.gpsHardVersion}}</td>-->
                     <!--车辆运行状态-->
                     <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                     <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
@@ -741,9 +968,9 @@
                     <!--内置电池电压-->
                     <td ng-cloak>{{deviceData.builtInVoltage}}v</td>
                     <!--协议版本-->
-                    <td ng-cloak>{{deviceData.versionNum}}</td>
+                    <!--<td ng-cloak>{{deviceData.versionNum}}</td>-->
                     <!--PCU软件版本-->
-                    <td ng-cloak>{{deviceData.pcuSoftVersion}}</td>
+                    <!--<td ng-cloak>{{deviceData.pcuSoftVersion}}</td>-->
                     <!--GPRS信号质量-->
                     <td ng-cloak>{{deviceData.gsmsignalStrength/31*100 | number :0}}%</td>
                     <!--GPS可见卫星数-->
@@ -751,9 +978,9 @@
                     <!--GPS可用卫星数-->
                     <td ng-cloak>{{deviceData.gprssignalStrength}}</td>
                     <!--ECU ID-->
-                    <td>{{deviceData.ecuID}}</td>
+                    <!--<td>{{deviceData.ecuID}}</td>-->
                     <!--ECU软件版本-->
-                    <td>{{deviceData.ecuSoftVersion}}</td>
+                    <!--<td>{{deviceData.ecuSoftVersion}}</td>-->
                     <!--ECU状态-->
                     <td ng-if="deviceData.ecuStatus==0">{{'initialization'|translate}}</td>
                     <td ng-if="deviceData.ecuStatus==1">{{'waitingForTheLink'|translate}}</td>
@@ -850,8 +1077,8 @@
                     <td ng-if="deviceData.fetAlarm==0" class="bg-warning text-warning">{{'no'|translate}}</td>
                     <td ng-if="deviceData.fetAlarm!==0&&deviceData.fetAlarm!==1" class="text-nowrap">{{'noData'|translate}}</td>
                     <!--平台高度-->
-                    <td ng-if="deviceData.hostHeight!=null">{{deviceData.hostHeight}}{{'m'|translate}}</td>
-                    <td ng-if="deviceData.hostHeight==null">-- {{'m'|translate}}</td>
+                    <td nowrap ng-if="deviceData.calibrationStatus=='192' && deviceData.hostHeight!=null && deviceData.hostHeight<='100' && deviceData.hostHeight >='0'">{{deviceData.hostHeight}}%</td>
+                    <td ng-if="deviceData.calibrationStatus!='192' || deviceData.hostHeight==null || deviceData.hostHeight<'0'|| deviceData.hostHeight>'100'">-</td>
                     <!--油缸压力-->
                     <td ng-cloak>{{25*deviceData.oilPressure/4095 |number: 2}}MPa</td>
                     <!--泵电机转速-->
@@ -876,7 +1103,7 @@
                     <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">{{'noData'|translate}}</td>
                     <!--数据采集时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <!--纪录生成时间-->
+                    <!--平台接收时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
                 </table>
@@ -886,7 +1113,7 @@
           <div class="row">
             <div class="col-md-12">
               <uib-pagination total-items="deviceAerialCurrentInfoController.page.totalElements"
-                              ng-change="deviceAerialCurrentInfoController.getDeviceData(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
+                              ng-change="deviceAerialCurrentInfoController.getDeviceData(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
                               ng-model="deviceAerialCurrentInfoController.deviceData_pagenumber"
                               items-per-page="deviceAerialCurrentInfoController.page.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
@@ -894,7 +1121,80 @@
             </div>
           </div>
         </div>
+      </div>
+    </uib-tab>
 
+    <!--位置信息-->
+    <uib-tab presentation-href="dashboard:deviceMonitor:historyLocateData" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
+      <uib-tab-heading>
+        {{'locationInformation'|translate}}
+      </uib-tab-heading>
+      <div class="modal-body">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="control-label">{{'startDate'|translate}}:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.startDateDeviceData" is-open="deviceAerialCurrentInfoController.startDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" min-date="deviceAerialCurrentInfoController.minDate" max-date="deviceAerialCurrentInfoController.maxDate" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2">
+              <label class="control-label">{{'endDate'|translate}}:</label>
+            </div>
+            <div class="col-md-3">
+              <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" uib-datepicker-popup ng-model="deviceAerialCurrentInfoController.endDateDeviceData" is-open="deviceAerialCurrentInfoController.endDateOpenStatusDeviceData.opened" datepicker-options="dateOptions" ng-required="true" current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="deviceAerialCurrentInfoController.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </p>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="button" ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceLocation(0,8,'locateDateTime,desc',deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <!-- Default panel contents -->
+                <!-- Table -->
+                <table class="table">
+                  <tr>
+                    <th class="text-nowrap"  style="text-align: center;">{{'terminalNumber'|translate}}</th>
+                    <th class="text-nowrap"  style="text-align: center;">{{'address'|translate}}</th>
+                    <th class="text-nowrap"  style="text-align: center;">{{'longitude'|translate}}</th>
+                    <th class="text-nowrap"  style="text-align: center;">{{'latitude'|translate}}</th>
+                    <th class="text-nowrap"  style="text-align: center;">{{'dataAcquisitionTime'|translate}}</th>
+                    <th class="text-nowrap"  style="text-align: center;">{{'recordGenerationTime'|translate}}</th>
+                  </tr>
+                  <tr ng-repeat="deviceLocation in deviceAerialCurrentInfoController.deviceLocationList">
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.deviceNum}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.address}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.amaplongitudeNum}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.amaplatitudeNum}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination total-items="deviceAerialCurrentInfoController.page.totalElements"
+                              ng-change="deviceAerialCurrentInfoController.getDeviceLocation(deviceAerialCurrentInfoController.deviceData_pagenumber-1,8,sort,deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)" max-size="10"
+                              ng-model="deviceAerialCurrentInfoController.deviceData_pagenumber"
+                              items-per-page="deviceAerialCurrentInfoController.page.size"
+                              class="pagination-sm" boundary-links="true" rotate="false"
+                              first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+            </div>
+          </div>
+        </div>
       </div>
     </uib-tab>
 
@@ -1147,7 +1447,7 @@
 
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(5,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort,null,null,null,null,null,null,null)">{{'send'|translate}}</sms-send-btn>
+                                                ng-click="deviceAerialCurrentInfoController.sendSetIpSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.serverHost,deviceAerialCurrentInfoController.serverPort)">{{'send'|translate}}</sms-send-btn>
 
                                 </div>
                               </div>
@@ -1159,7 +1459,7 @@
                     </div>
 
                     <!--  设置回传间隔  -->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setTheIntervalTimeMessageContent'|translate}}</h5>
@@ -1211,7 +1511,8 @@
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                                 class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(8,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendSetInterSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,
+                                                deviceAerialCurrentInfoController.secOutPower,deviceAerialCurrentInfoController.secLocateInt,deviceAerialCurrentInfoController.secInnerPower)">{{'send'|translate}}
 
                                   </sms-send-btn>
                                 </div>
@@ -1223,7 +1524,7 @@
                     </div>
 
                     <!-- 设置采样时间 -->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
@@ -1268,7 +1569,8 @@
 
                                   <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(11,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">
+                                                ng-click="deviceAerialCurrentInfoController.sendSamplingTimeSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,
+                                                deviceAerialCurrentInfoController.vehicleStateCollect,deviceAerialCurrentInfoController.chargerStateCollect)">
 
                                   </sms-send-btn>
                                 </div>
@@ -1281,7 +1583,7 @@
                     </div>
 
                     <!-- 设置 平台短信猫号码-->
-                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSmsCat">
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSmsCat" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'platformGSMmodemNumber'|translate}}</h5>
@@ -1303,7 +1605,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(9,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,deviceAerialCurrentInfoController.catPhoneNumber)">
+                                            ng-click="deviceAerialCurrentInfoController.sendSetCatPhoneNumberSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.catPhoneNumber)">
                               </sms-send-btn>
                             </div>
                           </div>
@@ -1312,7 +1614,7 @@
                     </div>
 
                     <!-- 设置启动次数-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setStartTimesSMS'|translate}}</h5>
@@ -1335,7 +1637,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(6,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,deviceAerialCurrentInfoController.startTimes,null,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendSetStartTimesSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.startTimes)">{{'send'|translate}}
 
                               </sms-send-btn>
                             </div>
@@ -1345,7 +1647,7 @@
                     </div>
 
                     <!-- 设置工作小时数 -->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
@@ -1368,7 +1670,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-primary"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(7,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,deviceAerialCurrentInfoController.workHours,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendSetWorkHoursSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.workHours)">{{'send'|translate}}
                               </sms-send-btn>
                             </div>
 
@@ -1384,7 +1686,7 @@
                           <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
-                               data-placement="right" title="将GPS设备与车辆绑定"> <i class="fa fa-info" ></i> </a>
+                               data-placement="right" title="{{'startLockCarPromptContent'|translate}}"> <i class="fa fa-info" ></i> </a>
                           </div>
                         </div>
                         <div class="box-body">
@@ -1400,7 +1702,7 @@
                                                 class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
 
 
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(1,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendActiveLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1414,7 +1716,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(2,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                                ng-click="deviceAerialCurrentInfoController.sendUnActiveLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1432,7 +1734,7 @@
                           <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
-                               data-placement="right" title="通过GPS锁定车辆，锁车后车辆无法启动。"> <i class="fa fa-info" ></i></a>
+                               data-placement="right" title="{{'lockYourCarPromptContent'|translate}}"> <i class="fa fa-info" ></i></a>
                           </div>
                         </div>
                         <div class="box-body">
@@ -1447,7 +1749,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-danger"  presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(3,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                                ng-click="deviceAerialCurrentInfoController.sendLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}>
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1462,7 +1764,7 @@
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'Unlock'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unLock"
-                                                ng-click="deviceAerialCurrentInfoController.sendSMS(4,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}>
+                                                ng-click="deviceAerialCurrentInfoController.sendUnLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}>
                                   </sms-send-btn>
                                 </div>
                               </div>
@@ -1474,7 +1776,7 @@
                     </div>
 
                     <!-- 重置 -->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:reset">
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:reset" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'terminalReset'|translate}}</h5>
@@ -1495,7 +1797,7 @@
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
                                             send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum"
                                             class="btn btn-danger"
-                                            ng-click="deviceAerialCurrentInfoController.sendSMS(10,deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,null,null,null,null,null,null,null,null)">{{'send'|translate}}
+                                            ng-click="deviceAerialCurrentInfoController.sendTerminalResetSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                               </sms-send-btn>
                             </div>
 
@@ -1510,6 +1812,522 @@
             </div>
           </div>
 
+          <!--高空车MQTT协议 设置上传丶采样时间-->
+          <div class="panel-group" id="mqttCtrl" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a ng-click="mqttCtrl = !mqttCtrl" href="">
+                    <div class="row">
+                      <div class="col-md-12 text-center">MQTT</div>
+                    </div>
+                  </a>
+                </h4>
+              </div>
+
+              <div id="mqttCtrlContent" class="panel-collapse collapse" ng-class="{in: mqttCtrl}">
+                <div class="panel-body">
+                  <div class="row form-group">
+
+                    <!-- 设置回传地址 -->
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setIp">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'setTheReturnAddressMessage'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'setTheReturnAddressMessage'|translate}}"> <i class="fa fa-info" ></i></a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label for="serverHostMQTT" class="col-md-2 control-label text-nowrap">{{'returnAddress'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" id="serverHostMQTT" class="form-control" placeholder="{{'returnAddress'|translate}}"
+                                         ng-model="deviceAerialCurrentInfoController.serverHost" name="serverHostMQTT"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label for="serverPortMQTT" class="col-md-2 control-label text-nowrap">{{'portNumber'|translate}}</label>
+                              </div>
+                              <div class="row" >
+                                <div class="col-md-12">
+                                  <input type="text" id="serverPortMQTT" class="form-control" placeholder="{{'portNumber'|translate}}"
+                                         ng-minlength='4' ng-maxlength='5' validator="number" ng-model="deviceAerialCurrentInfoController.serverPort" name="serverPortMQTT"/>
+                                  <span class="error text-danger" ng-show="deviceDetailForm.serverPortMQTT.$error.maxlength">{{'theLongestFive'|translate}}</span>
+                                  <span class="error text-danger" ng-show="deviceDetailForm.serverPortMQTT.$error.minlength">{{'theShortestFour'|translate}}</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 text-right">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(18, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.serverHost+','+deviceAerialCurrentInfoController.serverPort)">{{'send'|translate}}</sms-send-btn>
+
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- 设置采样间隔 -->
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setInterval">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'setTheSamplingInterval'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'setTheSamplingInterval'|translate}}"> <i class="fa fa-info" ></i></a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">{{'samplingIntervalType'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <select class="form-control" ng-model="deviceAerialCurrentInfoController.returnTimeParam.name" ng-change="deviceAerialCurrentInfoController.returnTimeQuery(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.returnTimeParam.name)">
+                                    <option value="timeBasicInf">{{'productInformationUploadInterval'|translate}}</option>
+                                    <option value="timeUpdate">{{'uploadTimeInterval'|translate}}</option>
+                                    <option value="timeSampleECUSlow">{{'ecuSlowSamplingInterval'|translate}}</option>
+                                    <option value="timeSampleECUFast">{{'ecuFastSamplingInterval'|translate}}</option>
+                                    <option value="timeSampleGPS">{{'gpsInfoSamplingInterval'|translate}}</option>
+                                    <option value="timeSamplePowerBAT">{{'powerBATSamplingInterval'|translate}}</option>
+                                    <option value="timeSampleCharge">{{'chargerSamplingInterval'|translate}}</option>
+                                    <option value="timeSleepTime">{{'gpsSleepTimeInterval'|translate}}</option>
+                                    <option value="timeGPSWaitTime">{{'gpsPositioningWaitTime'|translate}}</option>
+                                    <option value="timeSampleMotorParas">{{'ECUParameterAcquisitionInterval'|translate}}</option>
+                                    <option value="timeSampleSetParas">{{'setTheParameterAcquisitionInterval'|translate}}</option>
+                                    <option value="timeSampleDeviceRunStatus">{{'deviceRunningStatusAcquisitionInterval'|translate}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">{{'samplingTime'|translate}}</label>
+                              </div>
+                              <div class="row" >
+                                <div class="col-md-12">
+                                  <input type="text" id="returnTime" class="form-control" placeholder="{{'time'|translate}}"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.returnTimeParam.time" name="returnTime"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 text-right">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.setReturnTime(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum,deviceAerialCurrentInfoController.returnTimeParam)">{{'send'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--绑定-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:bind">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'startLockCarPromptContent'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-danger"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:bind"
+                                                readonly="readonly"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(1, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'startLockCar'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'unActiveCar'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:unBind"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(2, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'unActiveCar'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--锁车-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:lock">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'lockYourCarPromptContent'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'lockYourCar'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-danger"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:lock"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(3, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'lockYourCar'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'Unlock'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:unLock"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(4, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'Unlock'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--使能GPS定位-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:GPSPositioning">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'GPSPositioning'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'enableGPSPositioning'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'enabled'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:GPSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(20, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'enabled'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'forbidden'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:noGPSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(21, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'forbidden'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--使能AGPS功能-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:AGPSPositioning">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'AGPSFunction'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'enableAGPSPositioning'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'enabled'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:AGPSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(22, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'enabled'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'forbidden'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:noAGPSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(23, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'forbidden'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--使能LBS(基站定位)-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:LBSPositioning">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">LBS({{'BaseStationLocation'|translate}})</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'enableLBS'|translate}}({{'BaseStationLocation'|translate}})"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'enabled'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:LBSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(24, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'enabled'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'forbidden'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:noLBSPositioning"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(25, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'forbidden'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--故障屏蔽-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:faultMasking">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'faultMasking'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'faultMasking'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="row">
+                                <label class="col-md-12 control-label text-nowrap">&nbsp;</label>
+                                <div class="col-md-4" style="padding-left: 10px;padding-right: 0;">
+                                  <input type="text" class="form-control" validator="number" ng-model="deviceAerialCurrentInfoController.faultCommand"/>
+                                </div>
+                                <div class="col-md-4 text-center" style="padding: 0;">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'shield'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-danger"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:faultMasking"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(16, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.faultCommand)">{{'shield'|translate}}</sms-send-btn>
+                                </div>
+                                <div class="col-md-4" style="padding: 0;">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'release'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
+                                                presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:releaseFaultMasking"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(17, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.faultCommand)">{{'release'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--设置工作小时数-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setWorkHours">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'setHoursOfWorkHours'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'setHoursOfWorkHours'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <label for="mqttWorkHours" class="col-md-2 control-label text-nowrap">{{'workingHours'|translate}}</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <input type="text" id="mqttWorkHours" class="form-control" ng-model="deviceAerialCurrentInfoController.workHours" name="mqttWorkHours"/>
+                                </div>
+                                <div class="col-md-6">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(34, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.workHours)">{{'send'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--下发最后命令时间戳-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:sendTheLastCommandTimestamp">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'sendTheLastCommandTimestamp'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'sendTheLastCommandTimestamp'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row" >
+                            <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                            send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                            ng-click="deviceAerialCurrentInfoController.sendMQTTWrite(35, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, null)">{{'send'|translate}}</sms-send-btn>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--  请求数据  -->
+                    <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:setRead">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">请求数据</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="请求数据"> <i class="fa fa-info" ></i></a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row" >
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="register" class="col-md-7 control-label text-nowrap">{{'startAddress'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" id="register" class="form-control" validator="number" ng-model="deviceAerialCurrentInfoController.register" name="register"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="dataLength" class="col-md-7 control-label text-nowrap">{{'dataLength'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" id="dataLength" class="form-control"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.dataLength" name="dataLength"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="uploadNum" class="col-md-7 control-label text-nowrap">{{'uploads'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" id="uploadNum" class="form-control"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.uploadNum" name="uploadNum"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="uploadFrequency" class="col-md-7 control-label text-nowrap">{{'uploadFrequency'|translate}}</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <input type="text" id="uploadFrequency" class="form-control"
+                                         validator="number" ng-model="deviceAerialCurrentInfoController.uploadFrequency" name="uploadFrequency"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12 text-right">
+                              <div class="row">
+                                <label class="col-md-7 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendReadCommand(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.register,
+                                                deviceAerialCurrentInfoController.dataLength, deviceAerialCurrentInfoController.uploadNum, deviceAerialCurrentInfoController.uploadFrequency)">{{'send'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </uib-tab>
@@ -1547,11 +2365,11 @@
         <div class="row">
           <div class="col-md-6">
             <label class="text-nowrap">{{'currentAddress'|translate}}:</label>
-            <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1"> {{deviceAerialCurrentInfoController.deviceinfo.address}}</span>
-            <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1" style="color: red;"> ({{'notLocate' | translate}})</span>
+            <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'"> {{deviceAerialCurrentInfoController.deviceinfo.address}}</span>
+            <span ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus!=1 && deviceAerialCurrentInfoController.deviceinfo.locateStatus!='A' && deviceAerialCurrentInfoController.deviceinfo.locateStatus!='B'" style="color: red;"> ({{'notLocate' | translate}})</span>
           </div>
           <div class="col-md-5">
-            <label class="control-label text-nowrap">{{'coordinate'|translate}}:</label>
+            <label class="control-label text-nowrap">{{'selectCoordinate'|translate}}:</label>
             {{'longitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplongitudeNum}}</span>
             &nbsp;&nbsp;
             {{'latitude'|translate}}:<span style="color: red;"> {{deviceAerialCurrentInfoController.amaplatitudeNum}}</span>
@@ -1579,8 +2397,5 @@
 
   </uib-tabset>
 
-  <div class="modal-footer">
-    <!--<button class="btn btn-primary" type="submit">OK</button>-->
-
-  </div>
+  <div class="modal-footer"></div>
 </form>

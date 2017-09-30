@@ -1,0 +1,62 @@
+<!--报警数据-->
+<div class="modal-body"  ng-controller="machineMonitorWaringController as vm">
+  {{vm.test}}
+  <div class="box-body">
+    <div class="row">
+      <div class="col-md-2">
+        <label class="control-label">{{'startDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="machineMonitorCtrl.startDateDeviceWarningData" is-open="machineMonitorCtrl.startDateOpenStatusDeviceWarningData.opened" datepicker-options="machineMonitorCtrl.dateOptions" min-date="machineMonitorCtrl.minDate" max-date="machineMonitorCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="machineMonitorCtrl.startDateOpenDeviceWarningData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <label class="control-label">{{'endDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="machineMonitorCtrl.endDateDeviceWarningData" is-open="machineMonitorCtrl.endDateOpenStatusDeviceWarningData.opened" datepicker-options="machineMonitorCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="machineMonitorCtrl.endDateOpenDeviceWarningData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" type="button" ng-click="machineMonitorCtrl.getDeviceWarningData(0,8,null,machineMonitorCtrl.deviceInfo.deviceNum,machineMonitorCtrl.startDateDeviceWarningData,machineMonitorCtrl.endDateDeviceWarningData)">{{'confirm'|translate}}</button>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <!-- Default panel contents -->
+          <!-- Table -->
+          <table class="table">
+            <tr>
+              <th class="text-nowrap">{{'terminalNumber'|translate}}</th>
+              <th class="text-nowrap">{{'alarmTime'|translate}}</th>
+              <th class="text-nowrap">{{'dataReturnTime'|translate}}</th>
+              <th class="text-nowrap">{{'faultContent'|translate}}</th>
+            </tr>
+            <tr ng-repeat="deviceWarningData in machineMonitorCtrl.deviceWarningDataList">
+              <td ng-cloak class="text-nowrap">{{deviceWarningData.deviceNum}}</td>
+              <td ng-cloak class="text-nowrap">{{deviceWarningData.warningTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td ng-cloak class="text-nowrap">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td ng-cloak class="text-nowrap">{{deviceWarningData.warningMsg}}</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <uib-pagination total-items="machineMonitorCtrl.deviceWarningDataPage.totalElements" ng-change="machineMonitorCtrl.getDeviceWarningData(machineMonitorCtrl.deviceWarningDataPageNumber-1,8,null,machineMonitorCtrl.deviceInfo.deviceNum,machineMonitorCtrl.startDateDeviceWarningData,machineMonitorCtrl.endDateDeviceWarningData)" max-size="10" ng-model="machineMonitorCtrl.deviceWarningDataPageNumber" items-per-page="machineMonitorCtrl.deviceWarningDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage'|translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>

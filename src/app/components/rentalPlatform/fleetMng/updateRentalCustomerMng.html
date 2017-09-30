@@ -1,0 +1,118 @@
+<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+  <section class="renatlcontent-header">
+    <h1>
+      {{'customerInfo'|translate}}
+      <small></small>
+    </h1>
+  </section>
+
+  <div class="container-fluid">
+
+
+    <div class="box-header with-border">
+      <h3 class="box-title">{{'modifyCustomerInformation'|translate}}</h3>
+    </div>
+    <form name="newrentalCustomerForm2" class="form-horizontal">
+      <div class="modal-body">
+        <div class="box-body">
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'name'|translate}}(<span class="text-red">*</span>)</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'name'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.name" name="name" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalLinkman'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalLinkman'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalCustomerPosition'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalCustomerPosition'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.title" name="title" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalTel'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalTel'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalPhoneNumber'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalPhoneNumber'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
+                     validator="number" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalMail'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalMail'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.email" name="email" typeahead-show-hint="true"
+                     validator="email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalAddress'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalAddress'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.address" name="address" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalPostcode'|translate}}</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalPostcode'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'rentalOrganization'|translate}}</label>
+            <div class="col-md-5">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="updateRentalCustomerController.org.label" name="org" readonly validator="required"/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="updateRentalCustomerController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">{{'description'|translate}}</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" placeholder="{{'description'|translate}}"
+                     ng-model="updateRentalCustomerController.rentalCustomer.description" name="description" typeahead-show-hint="true">
+
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="box-footer">
+      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="updateRentalCustomerController.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="updateRentalCustomerController.cancel()">{{'cancel'|translate}}</button>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>

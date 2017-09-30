@@ -1,0 +1,143 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'customerList'|translate}}
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="orderListMngController.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="orderListMngController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
+  </h3>
+</div>
+<!-- Main content -->
+<section class="content">
+
+  <div class="row info-box-container">
+    <form class="form-horizontal" role="form">
+
+      <div class="form-group">
+
+        <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}</label>
+        <div class="col-md-2">
+          <input type="text" name="id" class="form-control"  ng-model="orderListMngController.rentalOrder.id"
+                 placeholder="{{'rentalOrderNumber'|translate}}"/>
+        </div>
+
+        <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}</label>
+        <div class="col-md-2">
+          <input type="text" name="customerName" class="form-control"  ng-model="orderListMngController.rentalOrder.customerName"
+                 placeholder="{{'rentalCustomer'|translate}}"/>
+        </div>
+        <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
+        <div class="col-md-2">
+          <p class="input-group">
+
+            <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="orderListMngController.org.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="orderListMngController.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </p>
+        </div>
+
+      </div>
+      <div class="form-group">
+
+        <label class="col-md-1 control-label">{{'startingTime'|translate}}</label>
+        <div class="col-md-2">
+          <p class="input-group">
+            <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="orderListMngController.rentalOrder.startDate"
+                   is-open="orderListMngController.startDateSetting.status.opened"
+                   datepicker-options="orderListMngController.startDateSetting.dateOptions" close-text="Close"
+                   message-id="bootstrap" readonly/>
+
+            <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="orderListMngController.startDateSetting.open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+          </p>
+          <span id="bootstrap"></span>
+        </div>
+
+        <label  class="col-md-1 control-label">{{'endTime'|translate}}</label>
+        <div class="col-md-2">
+          <p class="input-group">
+            <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="orderListMngController.rentalOrder.endDate"
+                   is-open="orderListMngController.endDateOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="orderListMngController.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+
+        <label class="col-md-1 control-label">{{'rentalStatus'|translate}}</label>
+        <div class="col-md-2">
+          <ui-select name="status" ng-model="orderListMngController.rentalOrder.status" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+            </ui-select-match>
+            <ui-select-choices repeat="retanlOrderStatus in orderListMngController.retanlOrderStatusList">
+              <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+
+        <div class="col-md-3">
+
+          <button class="btn btn-primary" type="button"
+                  ng-click="orderListMngController.query(null,null,null,orderListMngController.rentalOrder)">{{'query'|translate}}
+          </button>
+          <button class="btn btn-default" type="button" ng-click="orderListMngController.reset()">{{'reset'|translate}}</button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-lg-12 table-responsive "><!--表格框-->
+      <table ng-table="orderListMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="rentalOrder in $data">
+          <td class="text-nowrap">
+            <input type="radio" name="rentalOrder.radio"  ng-value="rentalOrder" ng-model="orderListMngController.selectRadio">
+          </td>
+          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
+          <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
+          <td class="text-nowrap" data-title="'currentState'|translate" sortable="'statusDesc'">{{rentalOrder.statusDesc | translate }}</td>
+          <td class="text-nowrap" data-title="'workAddress'|translate" sortable="'statusDesc'">{{rentalOrder.location }}</td>
+          <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate" >
+            {{machine.machineType.typeName}}
+            <span ng-if="rentalOrder.jc==null">0</span>
+            <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
+            <span ng-if="rentalOrder.zb==null">0</span>
+            <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
+            <span ng-if="rentalOrder.qb==null">0</span>
+            <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
+
+          </td>
+
+        </tr>
+      </table>
+    </div>
+    <div class="col-lg-12"><!--分页框-->
+      <uib-pagination total-items="orderListMngController.page.totalElements"
+                      ng-change="orderListMngController.query(orderListMngController.pageNumber-1,null,null,null)"
+                      max-size="5" ng-model="orderListMngController.pageNumber" items-per-page="orderListMngController.page.size"
+                      class="pagination-sm" boundary-links="true" rotate="false"
+                      first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+      </uib-pagination>
+    </div>
+  </div>
+</section>
+
+</div>

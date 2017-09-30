@@ -23,7 +23,6 @@
         file.upload.then(function (response) {
           $timeout(function () {
             file.result = response.data;
-            console.log(response.data);
             vm.errorList=file.result.content;
             if (vm.errorList.length > 0){
               vm.operMsg = "存在异常数据";
@@ -32,7 +31,6 @@
             }
 
             vm.file=null;
-            console.log(vm.operMsg);
 
           });
         }, function (response) {
@@ -57,11 +55,27 @@
         var objectUrl = window.URL.createObjectURL(blob);
 
         var anchor = angular.element('<a/>');
-        anchor.attr({
-          href: objectUrl,
-          target: '_blank',
-          download: 'SIM卡导入模板.xls'
-        })[0].click();
+
+        //兼容多种浏览器
+        if (window.navigator.msSaveBlob) { // IE
+          window.navigator.msSaveOrOpenBlob(blob, 'SIM卡导入模板.xls')
+        } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+          anchor.css({display: 'none'});
+          angular.element(document.body).append(anchor);
+          anchor.attr({
+            href: URL.createObjectURL(blob),
+            target: '_blank',
+            download: 'SIM卡导入模板.xls'
+          })[0].click();
+          anchor.remove();
+        } else { // Chrome
+          anchor.attr({
+            href: URL.createObjectURL(blob),
+            target: '_blank',
+            download: 'SIM卡导入模板.xls'
+          })[0].click();
+        }
+
 
       }).error(function (data, status, headers, config) {
         Notification.error("下载失败!");

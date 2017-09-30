@@ -121,7 +121,7 @@
 
    // load 'en' table on startup
     $translateProvider.preferredLanguage(current_lang_map);
-    $translateProvider.useSanitizeValueStrategy('escape');
+    $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
   }]);
 
   //设置全局默认Notification
@@ -134,7 +134,8 @@
       verticalSpacing: 20,
       horizontalSpacing: 20,
       positionX: 'center',
-      positionY: 'top'
+      positionY: 'top',
+      replaceMessage:true
     });
 
   }]);

@@ -24,7 +24,7 @@
     });
 
     //验证用户类别
-    if (userInfo.tenantType != null && userInfo.tenantType != '') {
+    if (userInfo.tenantType != null && userInfo.tenantType != '' && userInfo.tenantType!=undefined) {
       var userTypes = userInfo.tenantType.split(",");
 
       if (userTypes.length >= 2) {

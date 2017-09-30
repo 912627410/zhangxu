@@ -38,20 +38,40 @@
       $rootScope.$state.go('login');
       //提示信息
       Notification.success(languages.findKey('successfulExit'));
-    }
+    };
 
     /**
      * 切换语言
      * @param langKey
      */
     vm.changeLanguage = function (langKey) {
+      $rootScope.langkey = langKey;
       $translate.use(langKey);
+      if($scope.langZH){
+        $scope.langZH = false;
+      }else {
+        $scope.langZH = true;
+      }
+      if($scope.langEN){
+        $scope.langEN = false;
+      }else {
+        $scope.langEN = true;
+      }
+    };
+
+    var topButtons = document.getElementsByClassName('sidebar-toggle');
+    topButtons[0].style.backgroundColor = 'rgb(0,160,152)';
+    vm.topButtonClick = function (a) {
+      for(var i = 0;i<topButtons.length;i++){
+        if(i == a){
+          topButtons[i].style.backgroundColor = 'rgb(0,160,152)';
+        }
+        else{
+          topButtons[i].style.backgroundColor = '#262626';
+        }
+      }
     }
 
-
-    vm.goState=function (route) {
-      $rootScope.$state.go(route);
-    }
   }
 
 })();

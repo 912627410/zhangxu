@@ -10,7 +10,7 @@
     .controller('newWorkPointController', newWorkPointController);
 
   /** @ngInject */
-  function newWorkPointController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL, $uibModalInstance,fleet) {
+  function newWorkPointController(AMAP_GEO_CODER_URL, serviceResource, $timeout, Notification, WORK_POINT_URL, $uibModalInstance,languages,fleet) {
     var vm = this;
     vm.workPoint = {
       longitude: null,
@@ -33,7 +33,7 @@
         var amapScale, toolBar, overView;
         var localZoomSize = 14;  //默认缩放级别
         if (zoomsize) {
-          localZoomSize = zoomsize;
+          localZoomSize = zoomsize;f
         }
         var localCenterAddr = [89.149228, 44.831098];//设置中心点
         if (centeraddr) {

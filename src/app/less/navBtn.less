@@ -1,0 +1,159 @@
+.nav-container{
+
+  //default style
+  @nav-white: rgba(255,255,255,1);
+  @nav-black: rgba(0,0,0,1);
+  @nav-yellow: rgba(255,200,0,1);
+  .nav-animate{
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+
+  //nav style
+  position: fixed;
+  top: 75px;
+  right: 50px;
+  z-index: 9999;
+
+  .nav-title {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    background: @NVR-BLUE;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    cursor: pointer;
+    box-shadow: 0 0 16px fade(@nav-black,40%);
+    .nav-animate;
+
+
+    span{
+      //less bug 高度不确定
+      //@offset-w:1px;
+      //@offset-h:10px;
+      //top: calc(~"50% - @{offset-w}");
+      //left: calc(~"50% - @{offset-h}");
+      content: '';
+      top: 29px;
+      left: 20px;
+      width: 20px;
+      height: 2px;
+      background-color: @nav-white;
+      position: absolute;
+      .nav-animate;
+    }
+
+    .btn-icon-1{
+      -webkit-transform: translateY(+6px);
+      -moz-transform: translateY(+6px);
+      -ms-transform: translateY(+6px);
+      -o-transform: translateY(+6px);
+      transform: translateY(+6px);
+    }
+
+    .btn-icon-3{
+      -webkit-transform: translateY(-6px);
+      -moz-transform: translateY(-6px);
+      -ms-transform: translateY(-6px);
+      -o-transform: translateY(-6px);
+      transform: translateY(-6px);
+    }
+
+    .icon-active-1{
+      transform: rotate(45deg);
+    }
+
+    .icon-active-2{
+      display: none;
+    }
+
+    .icon-active-3{
+      transform: rotate(-45deg);
+    }
+
+  }
+
+  .nav-active{
+    @offset:60px;
+    height: calc(~"100%  + @{offset}");
+  }
+
+  .nav-list{
+    color: @nav-white;
+    list-style-type: none;
+    display: block;
+    top: 60px;
+    padding: 0;
+    z-index: 2;
+    position: relative;
+    visibility: hidden;
+    .nav-animate;
+
+    .nav-btn-link{
+      height:42px;
+      font-size: 16px;
+      cursor: pointer;
+      .nav-animate;
+
+      .link{
+        color: fade(@nav-white,0);
+        position: fixed;
+        right: 120px;
+        padding-right: 90px;
+      }
+
+      .link-active{
+        color: @nav-white;
+        right: 80px;
+        .nav-animate;
+
+      }
+
+      .link-icon{
+        position: absolute;
+        right: 0;
+        padding: 2px 20px;
+        font-size: 20px;
+        color: fade(@nav-white,0);
+        .nav-animate;
+
+      }
+
+      .link-icon-active{
+        color: @nav-white;
+      }
+
+      .link-active:hover{
+        color: @nav-yellow;
+      }
+
+      .link-icon-active:hover{
+        color: @nav-yellow;
+      }
+
+    }
+  }
+
+  .nav-list-open{
+    visibility: visible;
+  }
+
+  .nav-overlay{
+    position: fixed;
+    z-index: -1;
+    background-color: fade(@nav-black,80%);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .nav-animate;
+
+  }
+
+}

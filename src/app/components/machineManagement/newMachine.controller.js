@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo,machineTypeInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource,rentalService, Notification, operatorInfo,machineTypeInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.machineTypeList = machineTypeInfo;//车辆类型
@@ -18,6 +18,42 @@
       installTime:new Date(),
     //  buyTime:new Date()
     };
+
+
+    //增加高空车相关选项 by riqian.ma 20170823
+
+    //加载品牌信息
+    var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
+    deviceManufactureListPromise.then(function (data) {
+      vm.deviceManufactureList= data.content;
+      //    console.log(vm.userinfoStatusList);
+    }, function (reason) {
+      Notification.error('获取厂家失败');
+    })
+
+    //加载高度信息
+    var deviceHeightTypeListPromise = rentalService.getDeviceHeightTypeList();
+    deviceHeightTypeListPromise.then(function (data) {
+      vm.deviceHeightTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取高度失败');
+    })
+
+    //加载车辆类型信息
+    var deviceTypeListPromise = rentalService.getDeviceTypeList();
+    deviceTypeListPromise.then(function (data) {
+      vm.deviceTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取类型失败');
+    })
+
+    //加载车辆驱动信息
+    var devicePowerTypeListPromise = rentalService.getDevicePowerTypeList();
+    devicePowerTypeListPromise.then(function (data) {
+      vm.devicePowerTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取驱动类型失败');
+    })
 
     var salaryTypePromise = machineService.getSalaryTypeList();
     salaryTypePromise.then(function (data) {

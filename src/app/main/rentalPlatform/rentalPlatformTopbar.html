@@ -1,53 +1,48 @@
 <header class="renatlHeader">
   <a ui-sref="rental" class="logo navbar-static-top">
-    <img src='assets/images/logo2.png' height="40">
+    <img src='assets/images/logo4.png' height="36">
   </a>
   <nav class="navbar navbar-static-top" role="navigation">
-    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')">-->
-    <!--<img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文-->
-    <!--</a>-->
-    <!--<a class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')">-->
-    <!--<img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English-->
-    <!--</a>-->
 
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow=false">
-      <span ng-mouseover="submenuShow=true" ng-init="submenuShow=false">
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseover="submenuShow=true"  ng-mouseleave="submenuShow=false">
+      <span ng-init="submenuShow=false">
          {{'vehicleManagement'|translate}}
       </span>
       <div ng-show="submenuShow" ng-mouseleave="submenuShow=false">
         <ul>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental')">urrentLocation</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineHistoryData')">history</li>
-          <li ng-click="rentalPlatformTopbarCtr.goState('rental.machineLifeCycle')">alarmInfo</li>
+          <li ><a ui-sref="rental">{{'rentalcurrentPosition'| translate}}</a></li>
+          <li ><a ui-sref="rental.machineCurrentStatus">{{'currentState'| translate}}</a></li>
+          <li ><a ui-sref="rental.orgFence">{{'fenceMng'|translate}}</a></li>
+          <li ><a ui-sref="rental.machineAlarmInfo">{{'alarmInformation'| translate}}</a></li>
         </ul>
       </div>
+    </div>
 
-    </a>
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow1=false">
-      <span ng-mouseover="submenuShow1=true" ng-init="submenuShow1=false">
-          {{'fleetManagement' | translate}}
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(1)" ng-mouseover="submenuShow1=true" ng-mouseleave="submenuShow1=false">
+      <span ng-init="submenuShow1=false">
+          {{'rentalMng'| translate}}
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
-          <li>urrentLocation1</li>
-          <li>urrentLocation2</li>
-          <li>urrentLocation3</li>
+          <li ng-click=""><a ui-sref="rental.order">{{'rentalOrderMng'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.fleet">{{'rentalfleet'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.maintenance">{{'maintenance'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
         </ul>
       </div>
-
-    </a>
-    <a class="sidebar-toggle center" role="button" ng-click="" ng-mouseleave="submenuShow2=false">
+    </div>
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(2)" ng-mouseover="submenuShow2=true" ng-mouseleave="submenuShow2=false">
       <span ng-mouseover="submenuShow2=true" ng-init="submenuShow2=false">
-         {{'profitStatistics'|translate}}
+         {{'assetMng'|translate}}
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li>urrentLocation4</li>
-          <li>urrentLocation5</li>
-          <li>urrentLocation6</li>
+          <li ng-click=""><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.profitStatistics">{{'rentalProfit'| translate}}</a></li>
         </ul>
       </div>
-    </a>
+    </div>
     <a class="settingBox">
       <span ng-click="settingItemShow=true" ng-init="settingItemShow=false" ng-hide="settingItemShow"><i
         class="fa fa-bars"></i></span>
@@ -59,9 +54,10 @@
         <li>logout</li>
       </ul>
     </a>
+
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li class=" " style="width: 160px;">
+        <li class=" " style="width: 200px;margin-right: 30px">
           <div class="search-box">
             <form class="search-form" ng-click="" href="">
               <input class="form-control search-input" type="text" placeholder="Search">
@@ -72,12 +68,19 @@
             </form>
           </div>
         </li>
-
         <li class=" ">
           <a ng-click="" href="">Profile</a>
         </li>
         <li class=" ">
           <a ng-click="" href="">Setting</a>
+        </li>
+        <li>
+          <a class="center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')" ng-init="langZH=false" ng-show="langZH">
+            <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;中文
+          </a>
+          <a class="center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('en')" ng-init="langEN=true" ng-show="langEN">
+            <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;English
+          </a>
         </li>
         <li class="user user-menu">
           <a ng-click="rentalPlatformTopbarCtr.logout()" href="">{{'logout'|translate}}</a>
