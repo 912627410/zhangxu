@@ -2110,12 +2110,12 @@
         };
 
         vm.queryTypeData=[{
-            type:'01',name:'设备状态'
+            type:'01',name:languages.findKey('equipmentState')
         },{
-            type:'02',name:'报警信息'
+            type:'02',name:languages.findKey('alarmInformation')
         },{
             //2016-07-11 由市电电压调整成蓄电池组电压
-            type:'03',name:'蓄电池组电压'
+            type:'03',name:languages.findKey('batteryVoltage')
         }];
 
         vm.queryType=vm.queryTypeData[0].type;
@@ -2174,9 +2174,9 @@
                     var padDate = serviceResource.padLeft('000000000', datedata, true);
                     var fmtData = padDate.substr(0, 2) + ':' + padDate.substr(2, 2) + ':' + padDate.substr(4, 2);
                     if (this.color == '#90ed7d') {
-                      return '<b>工作状态</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>{{"workingState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
                     } else if (this.color == '#f7a35c') {
-                      return '<b>空闲状态</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>{{"idleState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
                     }
                   }
                 }
@@ -2210,7 +2210,7 @@
           },
           yAxis: {
             title: {
-              text: '时间'
+              text: languages.findKey('time')
             },
             labels: {
               formatter: function () {
@@ -2221,7 +2221,7 @@
             }
           },
           series: [{
-            name: '工作状态',
+            name: languages.findKey('workingState'),
             marker: {
               symbol: 'circle'
             },
