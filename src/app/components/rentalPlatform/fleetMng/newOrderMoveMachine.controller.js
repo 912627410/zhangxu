@@ -57,7 +57,7 @@
           // dataset: data.content
         });
         vm.page = data.page;
-        // vm.pageNumber = data.page.number + 1;
+        //vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
         Notification.error("获取车辆数据失败");
@@ -142,10 +142,18 @@
 
 
 
-    // vm.close = function () {
-    //   $uibModalInstance.dismiss('cancel');
-    // };
+    vm.moveConfirm = function () {
+      if (vm.selected.length == 0) {
+        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
 
+        return;
+      }
+
+    };
+
+    vm.moveCancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    }
 
 
 

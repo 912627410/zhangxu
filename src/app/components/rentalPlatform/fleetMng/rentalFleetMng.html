@@ -1,6 +1,6 @@
 <style type="text/css">
   .tableScroll {
-    height: 300px;
+    height: 400px;
     overflow: scroll;
   }
 
@@ -35,29 +35,10 @@
     <div class="row form-group" style="padding: 10px">
 
 
-      <section class="content" ng-style="rentalFleetMngController.baseBoxContainer">
+      <section class="content" ng-style="rentalFleetMngCtr.baseBoxContainer">
         <div class="row">
           <div class="col-md-5">
-            <label class="col-md-2 control-label">{{'rentalSelectOrder'| translate}}</label>
-            <div class="col-md-6">
-              <p class="input-group">
-
-                <input type="text" id="leftRentalOrder" class="form-control"
-                       ng-model="rentalFleetMngController.leftRentalOrder.id" name="leftRentalOrder"
-                       validator="required" readonly/>
-                <span class="input-group-btn">
-          <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectLeftOrder('lg')">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-              </p>
-            </div>
-            <div class="col-md2">
-              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.leftReset()">
-                {{'cancel'|translate}}
-              </button>
-            </div>
+            <label class="col-md-2 control-label">仓库</label>
           </div>
           <div class="col-md-2"></div>
           <div class="col-md-5">
@@ -66,18 +47,18 @@
               <p class="input-group">
 
                 <input type="text" id="rightRentalOrder" class="form-control"
-                       ng-model="rentalFleetMngController.rightRentalOrder.id" name="rightRentalOrder"
+                       ng-model="rentalFleetMngCtr.rightRentalOrder.id" name="rightRentalOrder"
                        validator="required" readonly/>
                 <span class="input-group-btn">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalFleetMngController.selectRightOrder('lg')">
+            <button type="button" class="btn btn-default" ng-click="rentalFleetMngCtr.selectRightOrder('lg')">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
               </p>
             </div>
             <div class="col-md2">
-              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngController.rightReset()">
+              <button class="btn btn-warning" type="button" ng-click="rentalFleetMngCtr.rightReset()">
                 {{'cancel'|translate}}
               </button>
             </div>
@@ -91,37 +72,32 @@
         <div>
           <div class="col-md-5">
             <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">{{'rentalOrderNumber'| translate}}:{{rentalFleetMngController.leftRentalOrder.id}}</h3>
-
-                <span ng-if="rentalFleetMngController.leftRentalOrder!=null">
-                <button class="btn btn-primary pull-right" type="button"
-                        ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams,rentalFleetMngController.leftRentalOrderId,'lg')">{{'dispatch'|translate}}
-                </button>
-
-                  </span>
-              </div>
               <!-- /.box-header -->
-              <div style="height: 300px;overflow: scroll">
-                <table ng-table="rentalFleetMngController.tableParams"
+              <div >
+                <table ng-table="rentalFleetMngCtr.tableParams"
                        class="table table-condensed table-bordered table-striped text-nowrap">
                   <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
-                      on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams,rentalFleetMngController.tableParams2,rentalFleetMngController.rightRentalOrderId)">
+                      on-drop-success="rentalFleetMngCtr.dropSuccessHandler2($event,$index,rentalFleetMngCtr.tableParams,rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.rightRentalOrderId)">
 
-                    <td class="text-nowrap" data-title="'ID'">
-                      {{rentalOrderMachine.id}}
-                    </td>
-                    <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">
-                      {{rentalOrderMachine.machine.licenseId}}
-                    </td>
-
-                    <td class="text-nowrap" data-title="'terminalno'|translate">
-                      {{rentalOrderMachine.machine.statusDesc}}
-                    </td>
+                    <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'">{{rentalOrderMachine.machineLicenseId}}</td>
+                    <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{rentalOrderMachine.deviceNum}}</td>
+                    <td data-title="'type'|translate" sortable="'deviceType'">{{rentalOrderMachine.deviceType | translate}}</td>
+                    <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{rentalOrderMachine.manufacture|translate}}</td>
+                    <td data-title="'highlyType'|translate" sortable="'heightType'">{{rentalOrderMachine.heightType | translate}}</td>
 
                   </tr>
                 </table>
 
+              </div>
+              <div class=""><!--分页框-->
+                <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                                total-items="rentalFleetMngCtr.totalElements"
+                                ng-change="rentalFleetMngCtr.leftQuery(rentalFleetMngCtr.currentPage-1,rentalFleetMngCtr.pageSize,rentalFleetMngCtr.totalElements,null)"
+                                max-size="10"
+                                ng-model="rentalFleetMngCtr.currentPage"
+                                items-per-page="rentalFleetMngCtr.pageSize"
+                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                </uib-pagination>
               </div>
               <!-- /.box-body -->
             </div>
@@ -133,32 +109,27 @@
           <div class="col-md-5">
             <div class="box">
               <div class="box-header with-border">
-                <h3 class="box-title">{{'rentalOrderNumber'| translate}}:{{rentalFleetMngController.rightRentalOrder.id}}</h3>
-                <span ng-if="rentalFleetMngController.rightRentalOrder!=null">
+                <h3 class="box-title">{{'rentalOrderNumber'| translate}}:{{rentalFleetMngCtr.rightRentalOrder.id}}</h3>
+                <span ng-if="rentalFleetMngCtr.rightRentalOrder!=null">
                 <button class="btn btn-primary pull-right" type="button"
-                        ng-click="rentalFleetMngController.getMachineFromOrg(rentalFleetMngController.tableParams2,rentalFleetMngController.rightRentalOrderId,'lg')">{{'dispatch'|translate}}
+                        ng-click="rentalFleetMngCtr.getMachineFromOrg(rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.rightRentalOrderId,'lg')">{{'dispatch'|translate}}
                 </button>
 
                   </span>
               </div>
               <!-- /.box-header -->
-              <div style="height: 300px;overflow: scroll">
-                <table ng-table="rentalFleetMngController.tableParams2"
+              <div style="height: 400px;overflow: scroll">
+                <table ng-table="rentalFleetMngCtr.tableParams2"
                        class="table table-condensed table-bordered table-striped text-nowrap">
                   <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
-                      on-drop-success="rentalFleetMngController.dropSuccessHandler2($event,$index,rentalFleetMngController.tableParams2,rentalFleetMngController.tableParams,rentalFleetMngController.leftRentalOrderId)">
-                    <td class="text-nowrap" data-title="'ID'">
-                      {{rentalOrderMachine.id}}
-                    </td>
+                      on-drop-success="rentalFleetMngCtr.dropSuccessHandler2($event,$index,rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.tableParams,rentalFleetMngCtr.leftRentalOrderId)">
 
 
-                    <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate">
-                      {{rentalOrderMachine.machine.licenseId}}
-                    </td>
-
-                    <td class="text-nowrap" data-title="'terminalno'|translate">
-                      {{rentalOrderMachine.machine.statusDesc}}
-                    </td>
+                    <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'"> {{rentalOrderMachine.machine.licenseId}}</td>
+                    <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{rentalOrderMachine.machine.deviceinfo.deviceNum}}</td>
+                    <td data-title="'type'|translate" sortable="'deviceType'">{{rentalOrderMachine.machine.deviceType.name | translate}}</td>
+                    <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{rentalOrderMachine.machine.deviceManufacture.name|translate}}</td>
+                    <td data-title="'highlyType'|translate" sortable="'heightType'">{{rentalOrderMachine.machine.deviceHeightType.name | translate}}</td>
 
 
                   </tr>

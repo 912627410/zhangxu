@@ -12,8 +12,11 @@
     <input type="checkbox"  ng-click="newOrderMoveMachineCtrl.updateAllSelection($event)"
     ng-model="machineMngCtrl.checked">
     </script>
-    <div class="col-md-12" >
-      <table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable" ng-form="newOrderMoveMachineCtrl.tableForm" disable-filter="newOrderMoveMachineCtrl.isAdding" demo-tracked-table="newOrderMoveMachineCtrl.tableTracker">
+    <div class="col-md-12 table-responsive" >
+      <table ng-table="newOrderMoveMachineCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table demoTable"
+             ng-form="newOrderMoveMachineCtrl.tableForm"
+             disable-filter="newOrderMoveMachineCtrl.isAdding"
+             demo-tracked-table="newOrderMoveMachineCtrl.tableTracker">
 
         <tr ng-repeat="machine in $data"  ng-form="machineForm" newOrderMoveMachineCtrl-tracked-table-row="machine" >
           <td class="text-nowrap" data-header="'selectAllHeader'">
@@ -41,8 +44,19 @@
           </td>
         </tr>
       </table>
+
+      <uib-pagination total-items="newOrderMoveMachineCtrl.page.totalElements"
+                        ng-change="newOrderMoveMachineCtrl.queryMachine(newOrderMoveMachineCtrl.machineOption,newOrderMoveMachineCtrl.machineType,newOrderMoveMachineCtrl.pageNumber-1,null,null)"
+                        max-size="5" ng-model="newOrderMoveMachineCtrl.pageNumber" items-per-page="newOrderMoveMachineCtrl.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
     </div>
   </div>
+  <div class="pull-right">
+    <button class="btn btn-primary" type="button" ng-click="newOrderMoveMachineCtrl.moveConfirm()">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newOrderMoveMachineCtrl.moveCancel()">{{'cancel'|translate}}</button>
+  </div>
+
 
 </section>
 

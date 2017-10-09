@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -17,12 +17,10 @@
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
+    vm.pageSize = 15;
 
 
-    vm.leftRentalOrderId;
     vm.rightRentalOrderId;
-    // vm.leftRentalOrderId=181889905;
-    // vm.rightRentalOrderId=181889930;
 
 
     /**
@@ -40,27 +38,41 @@
     vm.adjustWindow($window.innerHeight);
 
 
-    vm.leftQuery = function (page, size, sort, id) {
-
-      vm.leftRentalOrderId=id;
-
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?sort=" + sortUrl;
-      restCallURL += "&id="+vm.leftRentalOrderId;
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-        vm.tableParams = new NgTableParams({
-        }, {
-          dataset: data.content
-        });
 
 
+
+    vm.leftQuery = function (currentPage, pageSize, totalElements, searchConditions) {
+
+      var restCallURL = RENTAL_MACHINE_DATA_URL;
+      var pageUrl = currentPage || 0;
+      var sizeUrl = pageSize || vm.pageSize;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      if (totalElements != null && totalElements != undefined) {
+        restCallURL += "&totalElements=" + totalElements;
+      }
+      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
+        restCallURL += "&orgId=" + vm.org.id;
+      }
+
+      var machineDataPromis = serviceResource.restCallService(restCallURL, "GET");
+      machineDataPromis.then(function (data) {
+        vm.machineDataList = data.content;
+        vm.tableParams = new NgTableParams({}, {dataset: vm.machineDataList});
+        vm.totalElements = data.totalElements;
+        vm.currentPage = data.number + 1;
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
-      });
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+
     };
+
+    vm.machineStatusLoadData = function (machineStatus) {
+      vm.searchConditions={};
+      vm.searchConditions.status = machineStatus;
+      vm.leftQuery(0, vm.pageSize, null, null);
+    };
+    vm.machineStatusLoadData(7);
+
 
     vm.rightQuery = function (page, size, sort, id) {
 
@@ -85,9 +97,6 @@
       });
     };
 
-
-    // vm.leftQuery();
-    // vm.rightQuery();
 
     vm.validateOperPermission=function(){
       return permissions.getPermissions("machine:oper");
@@ -146,16 +155,16 @@
 
       sourceArray.data.splice(index,1);
 
-      vm.updateOrderMachineInfo(rentalOrderMachine.machine.id,rentalOrderId,rentalOrderMachine.id,destArray);
+      vm.updateOrderMachineInfo(rentalOrderMachine.machineId,rentalOrderId,destArray);
     };
 
 
 
 
     //批量设置为已处理
-    vm.updateOrderMachineInfo = function (machineId,addOrderId,delId,destArray) {
+    vm.updateOrderMachineInfo = function (machineId,addOrderId,destArray) {
 
-      var orderMachines = {"addOrderId": addOrderId, "delId": delId, "addMachineId": machineId};
+      var orderMachines = {"addOrderId": addOrderId, "addMachineId": machineId};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
       restPromise.then(function (data) {
 
@@ -302,10 +311,6 @@
     };
 
     //重置查询框
-    vm.leftReset = function () {
-      vm.leftRentalOrder = null;
-    }
-
     vm.rightReset = function () {
       vm.rightRentalOrder = null;
     }
