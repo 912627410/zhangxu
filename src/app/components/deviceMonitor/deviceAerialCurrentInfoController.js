@@ -10,7 +10,7 @@
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
                                                languages,SET_MQTT_RETURN_TIME_URL,SEND_MQTT_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
-                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL) {
+                                               DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT) {
         var vm = this;
 
         var userInfo = $rootScope.userInfo;
@@ -36,6 +36,7 @@
         vm.uploadFrequency = 2;// 默认上传频率2s
         vm.faultCommand = 39; //默认故障命令为39
         vm.parameterType = 0; // 默认车辆参数类型0
+        vm.latestAlarmInfo = serviceResource.getWarningInfo(vm.deviceinfo.warningCode).description;
 
         // 短信发送成功后的初始化button
         vm.initSmsSendBtn = function () {
@@ -83,28 +84,28 @@
               if(pcuStatus.substring(5,6) == "0") {
                 if(pcuStatus.substring(6,7) == "0") {
                   if(pcuStatus.substring(7,8) == "0") {
-                    vm.pcuStatus = languages.findKey('retreat');
+                    vm.pcuStatusDesc = languages.findKey('retreat');
                   } else if(pcuStatus.substring(7,8) == "1") {
-                    vm.pcuStatus = languages.findKey('advance');
+                    vm.pcuStatusDesc = languages.findKey('advance');
                   }
                 } else if(pcuStatus.substring(6,7) == "1") {
-                  vm.pcuStatus = languages.findKey('median');
+                  vm.pcuStatusDesc = languages.findKey('not');
                 }
               } else if(pcuStatus.substring(5,6) == "1") {
-                vm.pcuStatus = languages.findKey('turnLeft');
+                vm.pcuStatusDesc = languages.findKey('turnLeft');
               }
             } else if(pcuStatus.substring(4,5) == "1") {
-              vm.pcuStatus = languages.findKey('turnRight');
+              vm.pcuStatusDesc = languages.findKey('turnRight');
             }
           } else if(pcuStatus.substring(1,2) == "1") {
             if(pcuStatus.substring(6,7) == "0") {
               if(pcuStatus.substring(7,8) == "0") {
-                vm.pcuStatus = languages.findKey('decline');
+                vm.pcuStatusDesc = languages.findKey('decline');
               } else if(pcuStatus.substring(7,8) == "1") {
-                vm.pcuStatus = languages.findKey('liftUp');
+                vm.pcuStatusDesc = languages.findKey('liftUp');
               }
             } else if(pcuStatus.substring(6, 7) == "1") {
-              vm.pcuStatus = languages.findKey('median');
+              vm.pcuStatusDesc = languages.findKey('not');
             }
           }
         }
