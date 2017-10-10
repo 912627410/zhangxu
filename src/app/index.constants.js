@@ -83,6 +83,7 @@
     .constant('MACHINE_STORAGE_URL',SERVER_BASE_URL+"machine/getStorage")
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //车辆管理数据批量导出
     .constant('MACHINEANDDEVCE_ORG_JUDGE', SERVER_BASE_URL + 'machine/machineAndDeviceOrgJudge')   //判断设备所属组织与车辆所属组织是否一致
+    .constant('MACHINE_ENGINE_TYPE', SERVER_BASE_URL + 'machine/machineEngineType') //判断发动机类型
 
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
