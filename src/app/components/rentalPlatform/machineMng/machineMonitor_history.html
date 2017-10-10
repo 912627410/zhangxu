@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-1">
       <button class="btn btn-primary" type="button"
-              ng-click="vm.getHistoryRunData(0,vm.pageSize,null,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+              ng-click="vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
         {{'confirm'|translate}}
       </button>
     </div>
@@ -49,70 +49,102 @@
   <div class="row">
     <div class="col-md-12" style="overflow-x: auto;">
       <table ng-table="vm.deviceHistoryRunData" class="table table-responsive history-tab-tr-nowrap" export-csv='csv'>
-        <tr ng-repeat="deviceWarningData in $data">
-          <!--数据回传时间-->
-          <td data-title="'dataReturnTime'|translate">{{}} </td>
-          <!--定位时间-->
-          <td data-title="'positioningTime'|translate">{{}} </td>
-          <!--gpsSpeed 速度-->
-          <td data-title="'speed'|translate">{{}} </td>
-          <!--总工时-->
-          <td data-title="'totalProductiveHours'|translate">{{}}
-          </td>
-          <!--燃油液位-->
-          <td data-title="'fuelLevel'|translate">{{}}
-          </td>
-          <!--发动机转速-->
-          <td data-title="'engineSpeed'|translate">{{}}
-          </td>
-          <!--水温-->
-          <td data-title="'waterTemperature'|translate">{{}}
-          </td>
-          <!--串口通信状态-->
-          <td data-title="'CANCommunicationStatus'|translate">{{}}
-          </td>
-          <!--供电方式-->
-          <td data-title="'powerSupplyMode'|translate">{{}}
-          </td>
-          <!--变矩器油温-->
-          <td data-title="'torqueConverterOilTemperature'|translate">{{}}
-          </td>
-          <!--制动气压-->
-          <td data-title="'brakePressure'|translate">{{}}
-          </td>
-          <!--gsm信号质量-->
-          <td data-title="'GPRSSignalQuality'|translate">{{}}
-          </td>
-          <!--运行监控-->
-          <td data-title="'operationMonitoring'|translate">{{}}
-          </td>
-          <!--锁车状态-->
-          <td data-title="'lockedCarStatus'|translate">{{}}
-          </td>
-          <!--开关机状态-->
-          <td data-title="'ACCState'|translate">{{}}
-          </td>
-          <!--发电机状态-->
-          <td data-title="'generatorState'|translate">{{}}
-          </td>
-          <!--电压-->
-          <td data-title="'vehicleMountedBatteryVoltage'|translate">{{}}
-          </td>
+        <tr ng-repeat="deviceData in $data">
+          <!--数据采集时间-->
+          <td data-title="'数据采集时间'">{{deviceData.dataGenerateTime  | date:'yyyy-MM-dd HH:mm:ss'}} </td>
+          <!--机器代码-->
+          <td data-title="'机器代码'">{{deviceData.deviceCode}} </td>
+          <!--ECU ID 号-->
+          <td data-title="'ECU ID号'">{{deviceData.ecuID}} </td>
+          <!--PCU软件版本-->
+          <td data-title="'PCU软件版本'">{{deviceData.pcuSoftVersion}} </td>
+          <!--ECU软件版本-->
+          <td data-title="'ECU软件版本'">{{deviceData.ecuSoftVersion}} </td>
+          <!--电池电量-->
+          <td data-title="'电池电量'">{{deviceData.batteryPower | batteryPowerConvert |unitConversionFilter:1:" V"}} </td>
+          <!--平台高度-->
+          <!--<td data-title="'平台高度'">{{deviceData.hostHeight}} </td>-->
+          <!--行走速度-->
+          <td data-title="'行走速度'">{{deviceData.hostSpeed |unitConversionFilter:1:" %"}} </td>
+          <!--油缸压力-->
+          <td data-title="'油缸压力'">{{deviceData.oilPressure |unitConversionFilter:1:" MPa"}}  </td>
+          <!--电机转速-->
+          <td data-title="'电机转速'">{{deviceData.engineRPM |unitConversionFilter:1:" %"}}  </td>
+          <!--最大快速行走速度百分比-->
+          <td data-title="'最大快速行走速度百分比'">{{deviceData.highSpeedPercent |unitConversionFilter:1:" %"}}  </td>
+          <!--最大慢速行走速度百分比-->
+          <td data-title="'最大快速行走速度百分比'">{{deviceData.lowSpeedPercent |unitConversionFilter:1:" %"}}  </td>
+          <!--最大上升速度百分比-->
+          <td data-title="'最大快速行走速度百分比'">{{deviceData.maxUpSpeedPercent |unitConversionFilter:1:" %"}}  </td>
+          <!--最大起身后行走速度百分比-->
+          <td data-title="'最大快速行走速度百分比'">{{deviceData.maxStandSpeedPercent |unitConversionFilter:1:" %"}}  </td>
+          <!--工作时间(总工时)-->
+          <td data-title="'totalProductiveHours'|translate">{{deviceData.workDuration | workDurationConvert | convertToMins}}</td>
+          <!--液位开关(燃油液位)-->
+          <td data-title="'fuelLevel'|translate">{{deviceData.liquidLevelSw |stateConversionFilter:'{"0":"不正常","1":"正常"}'}}</td>
+          <!--车辆状态-->
+          <td data-title="'车辆状态'">{{deviceData.machineStatus |stateConversionFilter:'{"0":"不工作","1":"工作"}'}}</td>
+          <!--内置电池电压-->
+          <td data-title="'内置电池电压'">{{deviceData.builtInVoltage|unitConversionFilter:1:" V"}}</td>
+          <!--GSM信号强度-->
+          <td data-title="'GSM信号强度'">{{deviceData.gsmsignalStrength |unitConversionFilter:1:" %"}}</td>
           <!--可见卫星数-->
-          <td data-title="'visibleSatelliteNumber'|translate">{{}}
-          </td>
+          <td data-title="'visibleSatelliteNumber'|translate">{{deviceData.gpssignalStrength}}</td>
           <!--可用卫星数-->
-          <td data-title="'usableSatelliteNumber'|translate">{{}}
-          </td>
-          <!--定位所用时间-->
-          <td data-title="'locateDuration'|translate">{{}}
-          </td>
-          <!--ECU锁车状态-->
-          <td data-title="'ecuLockStatus'|translate">{{}}
-          </td>
-          <!--机油压力-->
-          <td data-title="'oilPress'|translate">{{}}
-          </td>
+          <td data-title="'usableSatelliteNumber'|translate">{{deviceData.gprssignalStrength}}</td>
+          <!--超载报警-->
+          <td data-title="'超载报警'">{{deviceData.overloadAlarm|stateConversionFilter:'{"0":"未超载","1":"已超载"}'}}</td>
+          <!--手柄模拟量-->
+          <td data-title="'手柄模拟量'">{{deviceData.handleAnalog}}</td>
+          <!--电池采集盒状态-->
+          <td data-title="'电池采集盒状态'">{{deviceData.batteryBoxStatus|stateConversionFilter:'{"0":"Ver1","1":"Ver1","2":"异常"}'}}</td>
+
+          <!--机器操作状态(输出)begin-->
+          <td data-title="'前进'">{{deviceData.fetForward |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'后退'">{{deviceData.fetReverse |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'上升'">{{deviceData.fetUp |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'下降'">{{deviceData.fetDown |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'右转'">{{deviceData.fetRigth |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'左转'">{{deviceData.fetLeft |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'刹车'">{{deviceData.fetBrakes |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'电驱使能一'">{{deviceData.fetMCE |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'喇叭'">{{deviceData.fetHorn |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'速度阀'">{{deviceData.fetParallel |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'电驱使能二'">{{deviceData.fetMCE2 |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <td data-title="'蜂鸣器'">{{deviceData.fetAlarm |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <!--机器操作状态(输出)end-->
+
+          <!--机器操作状态(输入)begin-->
+          <td data-title="'下控面板下降操作开关'">{{deviceData.chassisDown |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'坑洞保护开关'">{{deviceData.pothole |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'限行开关'">{{deviceData.driveLimitSw |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'外置倾角开关'">{{deviceData.tilt |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'下控面板上升操作开关'">{{deviceData.chassisUp |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'右刹车线圈状态'">{{deviceData.rightBrake |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'下限位开关'">{{deviceData.downLimit |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'上限位开关'">{{deviceData.upLimit |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'左刹车线圈状态'">{{deviceData.leftBrake |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <td data-title="'钥匙开关'">{{deviceData.key |stateConversionFilter:'{"0":"关闭","1":"打开"}'}}</td>
+          <!--机器操作状态(输入)end-->
+
+          <!--ECU状态begin-->
+          <td data-title="'ECU状态'">{{deviceData.ecuStatus
+            |stateConversionFilter:'{"0":"初始化","1":"等待链接","2":"NVM初始化","3":"等待平台初始化","4":"协议初始化","5":"工作状态","6":"预留状态","7":"速度调节","8":"保存TRIP ANGLE状态","9":"限制操作状态","10":"Break Lease"}'}}</td>
+          <!--ECU状态end-->
+
+          <!--机器称重标定状态begin-->
+          <td data-title="'机器称重标定状态'">{{deviceData.calibrationStatus==null?"无数据":deviceData.calibrationStatus}}</td>
+          <!--机器称重标定状态end-->
+
+          <!--PCU信息begin-->
+          <td data-title="'龟速按键'">{{deviceData.pcuStatus | limitTo:1:0 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
+          <td data-title="'当前模式'">{{deviceData.pcuStatus | limitTo:1:1 |stateConversionFilter:'{"0":"行走模式","1":"升降模式"}'}}</td>
+          <td data-title="'喇叭按键'">{{deviceData.pcuStatus | limitTo:1:2 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
+          <td data-title="'使能按键'">{{deviceData.pcuStatus | limitTo:1:3 |stateConversionFilter:'{"0":"未使能","1":"hasEnabled"}'}}</td>
+          <td data-title="'右转'">{{deviceData.pcuStatus | limitTo:1:4 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
+          <td data-title="'左转'">{{deviceData.pcuStatus | limitTo:1:5 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
+          <td data-title="'手柄中位'">{{deviceData.pcuStatus | limitTo:1:6 |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
+          <!--PCU信息end-->
         </tr>
       </table>
     </div>
@@ -123,7 +155,7 @@
                       boundary-links="true"
                       rotate="false" max-size="10"
                       total-items="vm.totalElements"
-                      ng-change="vm.getDeviceWarningData(vm.currentPage-1,vm.pageSize,vm.totalElements,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
+                      ng-change="vm.getHistoryRunData(vm.currentPage-1,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
                       ng-model="vm.currentPage"
                       items-per-page="vm.pageSize"
                       previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">

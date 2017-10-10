@@ -32,7 +32,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
