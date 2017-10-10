@@ -226,8 +226,8 @@
                   </tr>
                   <tr ng-repeat="notification in machineAlarmInfoCtr.notificationList track by $index">
                     <td><input type="checkbox"  ng-model="notification.state" ></td>
-                    <td class="mailbox-subject"><!--<a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer"></a>-->{{notification.deviceNum}}</td>
-                    <td class="mailbox-subject"><!--<a ng-click="machineAlarmInfoCtr.machineMonitor(notification.deviceNum)" class="alarm-pointer"></a>-->{{notification.licenseId}}</td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.licenseId)" class="alarm-pointer">{{notification.deviceNum}}</a></td>
+                    <td class="mailbox-subject"><a ng-click="machineAlarmInfoCtr.machineMonitor(notification.licenseId)" class="alarm-pointer">{{notification.licenseId}}</a></td>
                     <td class="mailbox-subject">{{notification.content}}</td>
                     <td class="mailbox-date">{{notification.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>
