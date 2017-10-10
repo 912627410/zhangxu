@@ -140,7 +140,7 @@
           <td data-title="'龟速按键'">{{deviceData.pcuStatus | limitTo:1:0 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
           <td data-title="'当前模式'">{{deviceData.pcuStatus | limitTo:1:1 |stateConversionFilter:'{"0":"行走模式","1":"升降模式"}'}}</td>
           <td data-title="'喇叭按键'">{{deviceData.pcuStatus | limitTo:1:2 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
-          <td data-title="'使能按键'">{{deviceData.pcuStatus | limitTo:1:3 |stateConversionFilter:'{"0":"未使能","1":"hasEnabled"}'}}</td>
+          <td data-title="'使能按键'">{{deviceData.pcuStatus | limitTo:1:3 |stateConversionFilter:'{"0":"未使能","1":"已使能"}'}}</td>
           <td data-title="'右转'">{{deviceData.pcuStatus | limitTo:1:4 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
           <td data-title="'左转'">{{deviceData.pcuStatus | limitTo:1:5 |stateConversionFilter:'{"0":"弹起","1":"按下"}'}}</td>
           <td data-title="'手柄中位'">{{deviceData.pcuStatus | limitTo:1:6 |stateConversionFilter:'{"0":"否","1":"是"}'}}</td>
