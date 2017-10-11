@@ -5,7 +5,7 @@
   <div class="modal-body">
     <div class="box-body form-horizontal">
       <div class="form-group">
-        <label for="updateFile" class="col-sm-2 control-label">选择文件</label>
+        <label for="updateFile" class="col-sm-2 control-label">{{'selectFile'|translate}}</label>
         <div class="col-sm-10">
           <input type="file" ngf-select id="updateFile" ng-model="newUpdateFileCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="updateFile" />
         </div>
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="newUpdateFileCtrl.ok(newUpdateFileCtrl.file)" >保存</button>
-    <button class="btn btn-warning" type="button" ng-click="newUpdateFileCtrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="newUpdateFileCtrl.ok(newUpdateFileCtrl.file)" >{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newUpdateFileCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

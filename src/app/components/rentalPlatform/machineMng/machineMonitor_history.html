@@ -28,8 +28,8 @@
                 deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
       </div>
       <div class="col-md-3">
-        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
-        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'exportCurrentPage'|translate}}</a>
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'exportAll'|translate}}</a>
       </div>
     </div>
     <div class="row">

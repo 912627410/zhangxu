@@ -28,7 +28,7 @@
     <uib-pagination total-items="selectUpdateFileCtrl.page.totalElements" ng-change="selectUpdateFileCtrl.query(selectUpdateFileCtrl.pageNumber-1,null,null,selectUpdateFileCtrl.versionNum)" max-size="15" ng-model="selectUpdateFileCtrl.pageNumber" items-per-page="selectUpdateFileCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="selectUpdateFileCtrl.ok(selectUpdateFileCtrl.updateFile)" >确定</button>
-    <button class="btn btn-warning" type="button" ng-click="selectUpdateFileCtrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="selectUpdateFileCtrl.ok(selectUpdateFileCtrl.updateFile)" >{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="selectUpdateFileCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

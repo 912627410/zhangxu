@@ -80,7 +80,7 @@
             + '</br>工作时长: ' + params.data[1] + '小时';
         }
       },
-      xAxis: {name: '日期', type: 'time', boundaryGap: true},
+      xAxis: {name: languages.findKey('date'), type: 'time', boundaryGap: true},
       yAxis: {name: '工作时长(小时)', type: 'value', minInterval: 1}
     };
     var scatterChart1 = echarts.init(document.getElementById('scatterChart1'));
@@ -161,7 +161,7 @@
         containLabel: true
       },
       xAxis: {
-        name: '工作时长',
+        name: languages.findKey('workHours'),
         type: 'category',
         data: ['0-2h', '2-4h', '4-6h', '6-8h', '8-10h', '10-12h', '12-14h', '14-16h', '16-18h', '18-20h', '20-22h', '22-24h'],
         axisTick: {alignWithLabel: true}

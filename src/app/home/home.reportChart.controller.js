@@ -59,7 +59,7 @@
       //x轴坐标显示
       xAxis: {
         title: {
-          text: '日期'
+          text: languages.findKey('date')
         },
         categories:[],
         labels: {

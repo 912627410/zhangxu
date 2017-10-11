@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
+  function machineMngController($rootScope, $scope,languages, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
                                 treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
                                 MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
                                 MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT,USER_MACHINE_TYPE_URL) {
@@ -361,7 +361,7 @@
 
 
     vm.removeDevice = function (machine) {
-      $confirm({text: '确定要解绑吗?',title: '解绑确认', ok: '确定', cancel: '取消'})
+      $confirm({text: languages.findKey('confirm'),title: '解绑确认', ok: '确定', cancel: '取消'})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(MACHINE_UNBIND_DEVICE_URL, machine.id);
           restPromise.then(function (data) {
