@@ -9,7 +9,7 @@
     .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalFenceMngController($scope, $window, $state, $confirm, $location, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, permissions, rentalService,
+  function rentalFenceMngController($scope, $window, $state, $confirm, languages,$location, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, permissions, rentalService,
                                     RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT) {
     var vm = this;
     vm.pageSize = 12;
@@ -120,10 +120,10 @@
           var restCall = RENTAL_ORG_FENCE_DELETE_STATUS + "?id=" + id;
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");
           restPromise.then(function (data) {
-            Notification.success("删除成功!");
+            Notification.error(languages.findKey('delSuccess'));
             vm.query(null, null, null, null);
           }, function (reason) {
-            Notification.error("删除成功出错!");
+            Notification.error(languages.findKey('delFail'));
           });
         });
     };

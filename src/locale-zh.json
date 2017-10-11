@@ -101,7 +101,6 @@
   "engineFailureTwo": "发动机故障2",
   "coolantTemperatureHigh": "冷却液温度高",
   "lowOilPressure": "机油压力低",
-  "name": "名称",
   "GPSProtocolVersion": "GPS协议版本",
   "ProtocolVersion": "协议版本",
   "GPSVelocity": "GPS速度",
@@ -755,7 +754,6 @@
 
   "modifyCustomerInformation":"修改客户",
 
-
   "rentalCurrentLocate":"当前位置",
   "rentalGeo-FenceWarning":"围栏报警",
   "rentalEquipmentWarning":"车辆报警",
@@ -875,7 +873,7 @@
   "rentalBoomLiftNubmers":"直臂数量",
   "rentalArticulatingBoomLiftNumbers":"曲臂数量",
   "newCustomer":"新建客户",
-  "AutomaticMatching":"自动匹配",
+  "automaticMatching":"自动匹配",
   "workAddress":"工作地址",
   "customerList":"客户列表",
   "unUsedMachineList":"未分配车辆列表",
@@ -1158,7 +1156,41 @@
   "计划":"计划",
   "进行中":"进行中",
   "checkAlarm":"请勾选要处`理的报警信息!",
-  "neglect":"忽略"
+
+  "neglect":"忽略",
+  "profile":"个人信息",
+  "setting":"设置",
+  "faster":"加速",
+  "slower":"减速",
+
+  "fenceName":"围栏名称",
+  "fenceAddress":"围栏地址",
+  "founder":"创建人",
+  "modificationTime":"修改时间",
+  "modifier":"修改人",
+  "manage":"管理",
+  "newFence":"新建围栏",
+
+  "fuzzyAddress":"地址(支持模糊查询)",
+
+  "description":"描述",
+  "name":"名称",
+  "organizationalInformation":"组织信息",
+  "运输":"运输",
+  "numbers":"数量",
+  "height":"高度",
+  "dayPrice":"单价(/天)",
+  "transferVehicle":"调拨车辆",
+  "exCurrentPage":"导出当前页",
+  "exAll":"全部导出",
+  "delSuccess":"删除成功!",
+  "delFail":"删除失败!",
+  "isDelete":"确定要删除吗？",
+  "delConfirmation":"删除确认",
+  "enDrive":"发动机驱动",
+  "hyDrive":"液压驱动",
+  "elDrive":"电驱动"
+
 
 
 }

@@ -30,10 +30,10 @@
         <label for="name" class="col-sm-3 control-label">类型</label>
         <div class="col-sm-8">
           <ui-select name="type" ng-model="newRoleController.roleInfo.type" theme="bootstrap" ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true" placeholder="类型">{{$select.selected.desc}}
+            <ui-select-match allow-clear="true" placeholder="类型">{{$select.selected.desc|translate}}
             </ui-select-match>
             <ui-select-choices repeat="roleType.value as roleType in newRoleController.roleTypeList">
-              <div ng-bind-html="roleType.desc | highlight: $select.search"></div>
+              <div ng-bind-html="roleType.desc | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>
