@@ -72,7 +72,19 @@
         restCallURL += "&totalElements=" + totalElements;
       }
       if (searchConditions!=null){
-        restCallURL = commonFactory.processSearchConditions(restCallURL, searchConditions);
+        //restCallURL = commonFactory.processSearchConditions(restCallURL, searchConditions);
+        if(searchConditions.licenseId!=null){
+         restCallURL += "&licenseId=" + searchConditions.licenseId;
+        }
+        if(searchConditions.typeId!=null){
+          restCallURL += "&typeId=" + searchConditions.typeId;
+        }
+        if(searchConditions.powerTypeId!=null){
+          restCallURL += "&powerTypeId=" + searchConditions.powerTypeId;
+        }
+        if(searchConditions.heightTypeId!=null){
+          restCallURL += "&heightTypeId=" + searchConditions.heightTypeId;
+        }
       }
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
         restCallURL += "&orgId=" + vm.org.id;

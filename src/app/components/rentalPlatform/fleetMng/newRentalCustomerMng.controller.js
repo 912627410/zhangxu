@@ -10,14 +10,11 @@
     .controller('newRentalCustomerController', newRentalCustomerController);
 
   /** @ngInject */
-  function newRentalCustomerController($rootScope,$scope,$http,$confirm,$location,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification) {
+  function newRentalCustomerController($rootScope,$scope,$http,$confirm,$location,$uibModalInstance,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification) {
     var vm = this;
     var path="/rental/customer";
     vm.operatorInfo =$rootScope.userInfo;
-    vm.cancel = function () {
-      $location.path(path);
 
-    };
 
     //组织树的显示
     vm.openTreeInfo=function() {
@@ -33,12 +30,15 @@
       vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
         Notification.success("新建客户成功!");
-        $location.path(path);
-
+        $uibModalInstance.close(data.content);
       },function (reason) {
         Notification.error(reason.data.message);
       })
     }
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
 
   }
 })();

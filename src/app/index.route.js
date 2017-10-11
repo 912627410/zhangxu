@@ -131,7 +131,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMng.html',
             controller: 'rentalFleetMngController',
-            controllerAs: 'rentalFleetMngController'
+            controllerAs: 'rentalFleetMngCtr'
           }
         }
       })

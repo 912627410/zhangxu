@@ -9,7 +9,7 @@
     .controller('customerListController', customerListController);
 
   /** @ngInject */
-  function customerListController($scope, $uibModalInstance,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,permissions) {
+  function customerListController($scope, $uibModalInstance,$uibModal,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,permissions) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
@@ -44,6 +44,7 @@
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
+        //vm.customerList = data.content;
 
         vm.tableParams = new NgTableParams({
           // initial sort order
@@ -82,7 +83,24 @@
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
-
     vm.query();
+
+    vm.addNewcustomer = function (){
+      var modalInstance= $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+        controller: 'newRentalCustomerController',
+        controllerAs:'newRentalCustomerCtrl',
+        size: 'lg'
+      });
+      modalInstance.result.then(function (newVal) {
+
+        vm.tableParams.data.splice(0, 0, newVal);
+
+      }, function () {
+        //取消
+      });
+    }
   }
 })();

@@ -1,21 +1,10 @@
-<div class="machine-content" xmlns="http://www.w3.org/1999/html">
+<div class="modal-header" >
+    <h3 class="box-title">{{'newCustomer'|translate}}</h3>
+</div>
 
-  <section class="renatlcontent-header">
-    <h1>
-      <small>{{'rentalCurrentLocate'|translate}}:</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-      <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
-    </ol>
-  </section>
-
+<div>
   <div class="container-fluid">
 
-
-    <div class="box-header with-border">
-      <h3 class="box-title">{{'newCustomer'|translate}}</h3>
-    </div>
     <form name="newrentalCustomerForm2" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
@@ -24,7 +13,7 @@
             <label class="col-sm-3 control-label">{{'name'|translate}}(<span class="text-red">*</span>)</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'name'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.name" name="name" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.name" name="name" typeahead-show-hint="true"
                      validator="required" />
             </div>
           </div>
@@ -32,14 +21,14 @@
             <label class="col-sm-3 control-label">{{'rentalLinkman'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalLinkman'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">{{'rentalCustomerPosition'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalCustomerPosition'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.title" name="title" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.title" name="title" typeahead-show-hint="true"
                      validator="required"  />
             </div>
           </div>
@@ -47,14 +36,14 @@
             <label class="col-sm-3 control-label">{{'rentalTel'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalTel'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">{{'rentalPhoneNumber'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalPhoneNumber'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
                      validator="telephoneNo" />
             </div>
           </div>
@@ -63,7 +52,7 @@
             <label class="col-sm-3 control-label">{{'rentalMail'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalMail'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.email" name="email" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.email" name="email" typeahead-show-hint="true"
                      validator="email" />
             </div>
           </div>
@@ -71,7 +60,7 @@
             <label class="col-sm-3 control-label">{{'rentalAddress'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalAddress'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.address" name="address" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.address" name="address" typeahead-show-hint="true"
                      validator="required" />
             </div>
           </div>
@@ -79,7 +68,7 @@
             <label class="col-sm-3 control-label">{{'rentalPostcode'|translate}}</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalPostcode'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"
                      validator="postcode"/>
             </div>
           </div>
@@ -88,10 +77,10 @@
             <div class="col-md-5">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="newRentalCustomerController.org.label" name="org" readonly validator="required"/>
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="newRentalCustomerCtrl.org.label" name="org" readonly validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="newRentalCustomerController.openTreeInfo()">
+            <button type="button" class="btn btn-default" ng-click="newRentalCustomerCtrl.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
@@ -102,7 +91,7 @@
             <label class="col-sm-3 control-label">{{'description'|translate}}</label>
             <div class="col-sm-5">
               <textarea class="form-control" placeholder="{{'description'|translate}}"
-                     ng-model="newRentalCustomerController.rentalCustomer.description" name="description" typeahead-show-hint="true">
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.description" name="description" typeahead-show-hint="true">
 
               </textarea>
             </div>
@@ -110,9 +99,9 @@
         </div>
       </div>
     </form>
-    <div class="box-footer">
-      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalCustomerController.ok()">{{'confirm'|translate}}</button>
-      <button class="btn btn-warning" type="button" ng-click="newRentalCustomerController.cancel()">{{'cancel'|translate}}</button>
+    <div class="box-footer pull-right">
+      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalCustomerCtrl.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="newRentalCustomerCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 
 

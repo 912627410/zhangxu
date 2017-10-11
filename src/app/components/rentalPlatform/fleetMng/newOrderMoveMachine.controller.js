@@ -9,12 +9,16 @@
   angular
     .module('GPSCloud')
     .controller('newOrderMoveMachineController', newOrderMoveMachineController);
+
+   // newOrderMoveMachineController.$inject = ["NgTableParams", "ngTableSimpleList"];
   /** @ngInject */
   function newOrderMoveMachineController($rootScope,$window,$scope,NgTableParams,$uibModalInstance,serviceResource,Notification,machineOption,machineType,RENTANL_UNUSED_MACHINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
     var vm = this
     vm.machineType = machineType;
     vm.machineOption = machineOption;
     vm.userInfo = $rootScope.userInfo;
+    vm.selectAll = false;//是否全选标志
+    vm.selected = []; //选中的machineId
     var originalData ;
 
     vm.queryMachine = function (machineOption,machineType,page,size,sort) {
@@ -53,7 +57,7 @@
           // dataset: data.content
         });
         vm.page = data.page;
-        // vm.pageNumber = data.page.number + 1;
+        //vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
         Notification.error("获取车辆数据失败");
@@ -86,14 +90,70 @@
       });
     }
 
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
+
+      }
+    }
+
+    vm.updateSelection = function ($event, id, status) {
+
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
+
+
+    vm.updateAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      vm.tableParams.data.forEach(function (machine) {
+        updateSelected(action, machine.id);
+      })
+
+    }
+
+    vm.isSelected = function (id) {
+
+      return vm.selected.indexOf(id) >= 0;
+    }
+    vm.checkAll = function () {
+      var operStatus = false;
+      if (vm.selectAll) {
+        operStatus = false;
+        vm.selectAll = false;
+      } else {
+        operStatus = true;
+        vm.selectAll = true;
+      }
+
+      vm.deviceinfoList.forEach(function (deviceinfo) {
+        deviceinfo.checked = operStatus;
+      })
+    }
 
 
 
 
-    // vm.close = function () {
-    //   $uibModalInstance.dismiss('cancel');
-    // };
 
+
+    vm.moveConfirm = function () {
+      if (vm.selected.length == 0) {
+        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+
+        return;
+      }
+
+    };
+
+    vm.moveCancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    }
 
 
 

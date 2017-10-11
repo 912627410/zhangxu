@@ -293,6 +293,7 @@
 
       return vm.selected.indexOf(id) >= 0;
     }
+
     vm.checkAll = function () {
       var operStatus = false;
       if (vm.selectAll) {

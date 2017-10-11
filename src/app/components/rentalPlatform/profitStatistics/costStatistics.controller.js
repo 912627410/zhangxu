@@ -226,7 +226,7 @@
       },
       series: [
         {
-          name:'访问来源',
+          name:'成本',
           type:'pie',
           selectedMode: 'single',
           radius: '60%',
