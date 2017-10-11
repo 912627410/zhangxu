@@ -10,8 +10,9 @@
     .controller('machineMonitorWaringController', machineMonitorWaringController);
 
   /** @ngInject */
-  function machineMonitorWaringController($rootScope,$window,$scope,$http, $location, $timeout,serviceResource,NgTableParams,languages,Notification, $filter,sharedDeviceInfoFactory,RENTAL_ALARM_MSG_DATA_URL) {
+  function machineMonitorWaringController($rootScope,$window,$scope,$http, $location, $timeout,serviceResource,ngTableDefaults,NgTableParams,languages,Notification, $filter,sharedDeviceInfoFactory,RENTAL_ALARM_MSG_DATA_URL) {
     var vm = this;
+    ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
     //获取共享数据deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
     //分页大小
@@ -32,7 +33,7 @@
      * @param queryStartDate 开始时间
      * @param queryEndDate  结束时间
      */
-    vm.getDeviceWarningData=function (pageNum, pageSize, totalElements, filter, deviceNum, queryStartDate, queryEndDate) {
+    vm.getDeviceWarningData=function (pageNum, pageSize, totalElements, filter, licenseId, queryStartDate, queryEndDate) {
       var restCallURL= RENTAL_ALARM_MSG_DATA_URL;
       //时间参数
       if (queryStartDate && queryEndDate) {
@@ -55,8 +56,8 @@
         restCallURL += "&totalElements=" + totalElements;
       }
       //设备号
-      if (deviceNum != null && deviceNum != undefined) {
-        restCallURL += "&deviceNum=" + deviceNum;
+      if (licenseId != null && licenseId != undefined) {
+        restCallURL += "&licenseId=" + licenseId;
       }
       //过滤条件
       if (filter != null && filter != undefined) {

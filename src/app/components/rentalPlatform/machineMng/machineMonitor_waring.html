@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary" type="button"
-              ng-click="vm.getDeviceWarningData(0,vm.pageSize,null,'record_time,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+              ng-click="vm.getDeviceWarningData(0,vm.pageSize,null,'record_time,desc',vm.deviceInfo.licenseId,vm.queryStartDate,vm.queryEndDate)">
         {{'confirm'|translate}}
       </button>
     </div>
@@ -43,10 +43,10 @@
       <div class="table-responsive">
         <table ng-table="vm.deviceWarningData" class="table history-tab-tr-nowrap">
           <tr  ng-repeat="deviceWarningData in $data">
-            <td ng-cloak data-title="'terminalNumber'|translate" >{{deviceWarningData.deviceNum}}</td>
+            <td ng-cloak data-title="'deviceNum'|translate" >{{deviceWarningData.deviceNum}}</td>
             <td ng-cloak data-title="'rentalMachineID'|translate" >{{deviceWarningData.licenseId}}</td>
-            <td ng-cloak data-title="'alarmTime'|translate">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td ng-cloak data-title="'content'|translate" >{{deviceWarningData.content}}</td>
+            <td ng-cloak data-title="'alarmTime'|translate">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           </tr>
         </table>
       </div>
@@ -58,7 +58,7 @@
                       boundary-links="true"
                       rotate="false" max-size="10"
                       total-items="vm.totalElements"
-                      ng-change="vm.getDeviceWarningData(vm.currentPage-1,vm.pageSize,vm.totalElements,'record_time,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)"
+                      ng-change="vm.getDeviceWarningData(vm.currentPage-1,vm.pageSize,vm.totalElements,'record_time,desc',vm.deviceInfo.licenseId,vm.queryStartDate,vm.queryEndDate)"
                       ng-model="vm.currentPage"
                       items-per-page="vm.pageSize"
                       previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
