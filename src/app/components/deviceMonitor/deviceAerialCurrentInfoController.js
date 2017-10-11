@@ -209,7 +209,7 @@
                     }
                 }
             },
-            title: '电压',
+            title: languages.findKey('voltage'),
             yAxis: {
                 stops: [
                     [0.1, '#55BF3B'], // green
@@ -432,7 +432,7 @@
               }
                 restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
-            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
+            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function () {
                     var rspData = serviceResource.restCallService(restURL, "ADD");  //post请求
                     rspData.then(function (data) {
@@ -489,7 +489,7 @@
       //发送间隔信息
       vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
         if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-          Notification.error("请检查时间设置，三个回传时间须全部设置！");
+          Notification.error(languages.findKey('checktheTimeSettings'));
           return;
         }
         if (devicenum == null) {
@@ -751,7 +751,7 @@
       //发送采样时间
       vm.sendSamplingTimeSMS = function (devicenum, vehicleStateCollect, chargerStateCollect) {
         if(angular.isUndefined(vehicleStateCollect) ||angular.isUndefined(chargerStateCollect)){
-          Notification.error("请检查时间设置，两个回传时间须全部设置！");
+          Notification.error(languages.findKey('checktheTimeSettings'));
           return;
         }
         if (devicenum == null) {
@@ -1459,7 +1459,7 @@
             }
 
             var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-            $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+            $confirm({text: text,title: '围栏设置确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function() {
                     var machieId;
                     if(deviceinfo.machine.id!=null){
@@ -1501,7 +1501,7 @@
           return false;
         }
         var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
-        $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
+        $confirm({text: text, title: '取消电子围栏', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
           .then(function () {
             var fence = {
               id: deviceinfo.machine.id,
@@ -2136,7 +2136,7 @@
               floating: true,
               backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
               borderWidth: 1,
-              labelFormat: '{name}' + '<br><b>绿色：工作</b><br><b>黄色：空闲 </b><br>'
+              labelFormat: '{name}' + '<br><b>'+languages.findKey('greenWork')+'</b><br><b>'+languages.findKey('yellowFree') +'</b><br>'
             },
             plotOptions: {
               series: {
@@ -2187,7 +2187,7 @@
             type: 'datetime',
             title: {
               enabled: true,
-              text: '日期'
+              text: languages.findKey('date')
             },
             startOnTick: true,
             endOnTick: true,
@@ -2229,7 +2229,7 @@
             data: []
           }],
           title: {
-            text: '工作状态热点分布'
+            text: languages.findKey('hotspotDistribution')
           },
           loading: false,
           // function to trigger reflow in bootstrap containers
@@ -2307,7 +2307,7 @@
           xAxis: {
             title: {
               enabled: true,
-              text: '日期'
+              text: languages.findKey('date')
             },
             showLastLabel: true,
             type: 'datetime',
@@ -2330,7 +2330,7 @@
           },
           yAxis: {
             title: {
-              text: '报警时间'
+              text: languages.findKey('alarmTime')
             },
             startOnTick: true,
             endOnTick: true,
@@ -2347,13 +2347,13 @@
             }
           },
           series: [{
-            name: '报警信息',
+            name: languages.findKey('alarmInformation'),
             color: 'rgba(205, 51, 51, .5)',
             turboThreshold: 100000,
             data:[]
           }],
           title: {
-            text: '报警信息'
+            text: languages.findKey('alarmInformation')
           },
           loading: false,
           func: function (chart) {
@@ -2403,7 +2403,7 @@
           },
           xAxis: {
             title: {
-              text: '日期'
+              text: languages.findKey('date')
             },
             labels: {
               formatter: function () {
@@ -2425,7 +2425,7 @@
             }
           },
           series: [{
-            name: '蓄电池组电压',
+            name: languages.findKey('batteryVoltage'),
             color: 'rgba(223, 83, 83, .5)',
             turboThreshold: 100000,
             tooltip: {
@@ -2440,7 +2440,7 @@
             }
           }],
           title: {
-            text: '蓄电池组电压变化'
+            text:  languages.findKey('batteryVoltageVariation')
           },
           loading: false,
           // function to trigger reflow in bootstrap containers
@@ -2481,7 +2481,7 @@
 
         vm.refreshPageDate = function (queryType, deviceNum, startDate, endDate) {
             if (Math.floor((endDate - startDate) / 24 / 3600 / 1000) > 2) {
-                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: '确认 ', cancel: '取消'}).then(
+                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')}).then(
                     function () {
                         vm.queryChart(vm.queryType, vm.deviceinfo.deviceNum, vm.startDate, vm.endDate);
                     }
@@ -2760,15 +2760,15 @@
                 vm.parameterValue.bLevelBrakeDelay = data.content.bLevelBrakeDelay*10;
 
                 vm.parameterTypeList=[{
-                    name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
+                    name:languages.findKey('fastWalkingCurve'),curve : vm.parameterValue.driveFastCurve
                 },{
-                    name:'起升后行走曲线',curve : vm.parameterValue.driveRisedCurve
+                    name:languages.findKey('walkingCurveAfterLifting'),curve : vm.parameterValue.driveRisedCurve
                 },{
-                    name:'上升曲线',curve : vm.parameterValue.liftUpCurve
+                    name:languages.findKey('risingCurve'),curve : vm.parameterValue.liftUpCurve
                 },{
-                    name:'慢速行走曲线',curve : vm.parameterValue.driveSlowCurve
+                    name:languages.findKey('slowWalkingCurve'),curve : vm.parameterValue.driveSlowCurve
                 },{
-                    name:'转向曲线',curve : vm.parameterValue.steerRisedCurve
+                    name:languages.findKey('steeringCurve'),curve : vm.parameterValue.steerRisedCurve
                 }];
 
                 vm.queryParameter = vm.parameterTypeList[0];
@@ -2844,7 +2844,7 @@
         yAxis: {
           min: 0,
           max: 4096,
-          name: '电压'
+          name: languages.findKey('voltage')
         },
         series: [{
           type: 'line',
@@ -3266,14 +3266,14 @@
       vm.batteryIn = {
         options: {
           title: {
-            text: '电池充电监控'
+            text: languages.findKey('chargingMonitoring')
           }
         }
       };
       vm.batteryOut = {
         options: {
           title: {
-            text: '电池放电监控'
+            text: languages.findKey('dischargeMonitoring')
           }
         }
       };
@@ -3290,14 +3290,14 @@
               zoomType: 'x'
             },
             title: {
-              text: '电池充电监控'
+              text: languages.findKey('chargingMonitoring')
             },
             xAxis: {
               type: 'datetime',
               categories:time,
               title: {
                 enabled: true,
-                text: '日期'
+                text: languages.findKey('date')
               },
               showLastLabel: true,
               tickInterval:100,
@@ -3310,7 +3310,7 @@
             },
             yAxis: {
               title: {
-                text: '电压 (V)',
+                text: languages.findKey('voltage'),
                 rotation:0,
                 align: 'high',
                 y:-20,
@@ -3351,14 +3351,14 @@
               zoomType: 'x'
             },
             title: {
-              text: '电池放电监控'
+              text: languages.findKey('dischargeMonitoring')
             },
             xAxis: {
               type: 'datetime',
               categories:time,
               title: {
                 enabled: true,
-                text: '日期'
+                text: languages.findKey('date')
               },
               tickInterval:100,
               showLastLabel: true,
@@ -3370,7 +3370,7 @@
             },
             yAxis: {
               title: {
-                text: '电压 (V)',
+                text: languages.findKey('voltage'),
                 rotation:0,
                 align: 'high',
                 y:-20,

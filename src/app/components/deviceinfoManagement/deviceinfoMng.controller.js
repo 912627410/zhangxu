@@ -324,6 +324,8 @@
     //导出至Excel
     vm.excelExport=function (org) {
 
+
+
       if (org&&org.id) {
         var filterTerm = "id=" + org.id;
         var restCallURL = DEVCEDINFO_EXCELEXPORT;

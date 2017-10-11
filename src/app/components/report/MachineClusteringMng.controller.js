@@ -75,7 +75,7 @@
       legend: {},
       xAxis: [
         {
-          name: '日期',
+          name: languages.findKey('date'),
           type: 'time',
           scale: true,
           axisLabel: {

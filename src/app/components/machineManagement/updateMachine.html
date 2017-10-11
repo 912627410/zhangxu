@@ -21,9 +21,9 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label padding5" style="padding-right: 0px;">绑定终端</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5" style="padding-right: 0px;">{{'rentalBindingTterminal'|translate}}</label>
         <div class="col-sm-2" style="padding-right: 0px;">
-          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" style="padding: 6px 10px;" placeholder="手工输入6位号码或扫条码"
+          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" style="padding: 6px 10px;" placeholder="{{'enterScanBarcode'|translate}}"
                  ng-model="updateMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
                  ng-minlength='6' ng-maxlength='26' ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)" ng-readonly="updateMachineController.roleSwitch"/>
           <label class="text-blue" ng-if="updateMachineController.deviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.deviceNumContentFromScanner}}</label>
@@ -34,16 +34,16 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" name="newDeviceChk" ng-model="updateMachineController.newDeviceChk" id="newDeviceChk">
-              更换
+              {{'replace'|translate}}
             </label>
           </div>
         </div>
       </div>
 
       <div class="form-group" ng-show="updateMachineController.newDeviceChk">
-        <label for="newDeviceNum" class="col-sm-2 control-label padding5">新终端</label>
+        <label for="newDeviceNum" class="col-sm-2 control-label padding5">{{'newTerminal'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="newDeviceNum" name="newDeviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
+          <input type="text" id="newDeviceNum" name="newDeviceNum"  class="form-control" placeholder="{{'enterScanBarcode'|translate}}"
                  ng-model="updateMachineController.newDeviceNum" ng-minlength='6' ng-maxlength='26'
                  ng-change="updateMachineController.newDeviceNumInputChanged(updateMachineController.newDeviceNum)"/>
           <label class="text-blue" ng-if="updateMachineController.newDeviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.newDeviceNumContentFromScanner}}</label>
@@ -51,18 +51,18 @@
           <span class="error text-danger" ng-show="updateMachineForm.newDeviceNum.$error.minlength">最短6位</span>
         </div>
         <div class="col-sm-2">
-          <button class="btn btn-danger" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.changeGPS(updateMachineController.machine,updateMachineController.newDeviceNum)">更换</button>
+          <button class="btn btn-danger" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.changeGPS(updateMachineController.machine,updateMachineController.newDeviceNum)">{{'replace'|translate}}</button>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label padding5">发动机类型</label>
+        <label class="col-sm-2 control-label padding5">{{'engineType'|translate}}</label>
         <div class="col-sm-4">
 
           <!--车队用户只可以查看不可以修改的字段-->
           <ui-select id="engineType" name="engineType" ng-model="updateMachineController.machine.engineType.id" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
-            <ui-select-match allow-clear="true" placeholder="发动机类型">{{$select.selected.engineName}}
+            <ui-select-match allow-clear="true" placeholder="{{'engineType'|translate}}">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in updateMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
               <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
@@ -71,17 +71,17 @@
 
           <ui-select id="engineType" name="engineType" ng-model="updateMachineController.machine.engineType.id" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
-            <ui-select-match  placeholder="发动机类型">{{$select.selected.engineName}}
+            <ui-select-match  placeholder="{{'engineType'|translate}}">{{$select.selected.engineName}}
             </ui-select-match>
             <ui-select-choices  repeat="engineType.id as engineType in updateMachineController.engineTypeList | propsFilter: {engineName: $select.search}" >
               <div  ng-bind-html="engineType.engineName | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
-        <label for="org" class="col-sm-2 control-label padding5">所属组织</label>
+        <label for="org" class="col-sm-2 control-label padding5">{{'organisation'|translate}}</label>
         <div class="col-sm-4">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="所属组织"
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                    ng-model="updateMachineController.machine.org.label" name="org" readonly validator="required"/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="updateMachineController.openTreeInfo()" ng-disabled="updateMachineController.disableSwitch">
@@ -93,11 +93,11 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label padding5">车辆类型</label>
+        <label class="col-sm-2 control-label padding5">{{'vehicleType'|translate}}</label>
         <div class="col-sm-4">
           <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
-            <ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}
+            <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.typeName}}
             </ui-select-match>
             <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
               <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
@@ -106,7 +106,7 @@
 
           <ui-select id="machineType" name="machineType" ng-model="updateMachineController.machine.machineType" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
-            <ui-select-match  placeholder="车辆类型">{{$select.selected.typeName}}
+            <ui-select-match  placeholder="{{'vehicleType'|translate}}">{{$select.selected.typeName}}
             </ui-select-match>
             <ui-select-choices  repeat="machineType in updateMachineController.machineTypeList | propsFilter: {typeName: $select.search}" >
               <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
@@ -114,11 +114,11 @@
           </ui-select>
         </div>
 
-        <label for="machineState" class="col-sm-2 control-label padding5">车辆状态</label>
+        <label for="machineState" class="col-sm-2 control-label padding5">{{'rentalVehicleState'|translate}}</label>
         <div class="col-sm-4">
           <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchOne">
-            <ui-select-match allow-clear="true" placeholder="车辆状态">{{$select.selected.machineState}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
               <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
@@ -127,7 +127,7 @@
 
           <ui-select id="machineState" name="machineState" ng-model="updateMachineController.machine.machineState" theme="bootstrap"
                      ng-disabled="updateMachineController.disableSwitch" ng-show="updateMachineController.clearSwitchTwice">
-            <ui-select-match  placeholder="车辆状态">{{$select.selected.machineState}}
+            <ui-select-match  placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState}}
             </ui-select-match>
             <ui-select-choices  repeat="machineState.code as machineState in updateMachineController.machineStateList | propsFilter: {machineState: $select.search}" >
               <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
@@ -137,15 +137,15 @@
       </div>
 
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label padding5">购买价格</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">{{'buyPrice'|translate}}</label>
         <div class="col-sm-4">
 
-          <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
+          <input type="text" id="buyPrice" class="form-control" placeholder="{{'buyPrice'|translate}}"
                  ng-model="updateMachineController.machine.buyPrice" name="buyPrice" typeahead-show-hint="true"/>
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label padding5">购买时间</label>
+        <label for="licenseId" class="col-sm-2 control-label padding5">{{'buyTime'|translate}}</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -161,19 +161,19 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="upkeepPrice" class="col-sm-2 control-label padding5">保养费用</label>
+        <label for="upkeepPrice" class="col-sm-2 control-label padding5">{{'rentalMaintenanceCost'|translate}}</label>
         <div class="col-sm-4">
 
-          <input type="text" id="upkeepPrice" class="form-control" placeholder="保养费用"
+          <input type="text" id="upkeepPrice" class="form-control" placeholder="{{'rentalMaintenanceCost'|translate}}"
                  ng-model="updateMachineController.machine.upkeepPrice" name="upkeepPrice" typeahead-show-hint="true"/>
         </div>
 
-        <label for="upkeepPriceType" class="col-sm-2 control-label padding5">保养费用类型</label>
+        <label for="upkeepPriceType" class="col-sm-2 control-label padding5">{{'maintenanceCostCategory'|translate}}</label>
         <div class="col-sm-4">
 
 
           <ui-select type="text" name="upkeepPriceType"  id="upkeepPriceType"  ng-model="updateMachineController.machine.upkeepPriceType"  on-remove="removed($item, $model)" theme="bootstrap"  >
-            <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+            <ui-select-match  allow-clear="true" placeholder="{{'pleaseSelect'|translate}}">{{$select.selected.desc}} </ui-select-match>
             <ui-select-choices  repeat="upkeepPriceType.value as upkeepPriceType in updateMachineController.upkeepPriceTypeList | propsFilter: {desc: $select.search}" >
               <div  ng-bind-html="upkeepPriceType.desc | highlight: $select.search"></div>
             </ui-select-choices>
@@ -181,17 +181,17 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="salary" class="col-sm-2 control-label padding5">员工工资</label>
+        <label for="salary" class="col-sm-2 control-label padding5">{{'employeeWage'|translate}}</label>
         <div class="col-sm-4">
 
-          <input type="text" id="salary" class="form-control" placeholder="员工工资"
+          <input type="text" id="salary" class="form-control" placeholder="{{'employeeWage'|translate}}"
                  ng-model="updateMachineController.machine.salary" name="salary" typeahead-show-hint="true"/>
         </div>
 
-        <label for="salaryType" class="col-sm-2 control-label padding5">员工工资类型</label>
+        <label for="salaryType" class="col-sm-2 control-label padding5">{{'wageTypes'|translate}}</label>
         <div class="col-sm-4">
           <ui-select type="text" id="salaryType" name="salaryType"  ng-model="updateMachineController.machine.salaryType"  on-remove="removed($item, $model)" theme="bootstrap"  >
-            <ui-select-match  allow-clear="true" placeholder="请选择状态">{{$select.selected.desc}} </ui-select-match>
+            <ui-select-match  allow-clear="true" placeholder="{{'pleaseSelect'|translate}}">{{$select.selected.desc}} </ui-select-match>
             <ui-select-choices  repeat="salaryType.value as salaryType in updateMachineController.salaryTypeList | propsFilter: {desc: $select.search}" >
               <div  ng-bind-html="salaryType.desc | highlight: $select.search"></div>
             </ui-select-choices>
@@ -201,20 +201,20 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="fuelTank" class="col-sm-2 control-label padding5">油箱容量(升)</label>
+        <label for="fuelTank" class="col-sm-2 control-label padding5">{{'tankCapacity'|translate}}</label>
         <div class="col-sm-4">
 
-          <input type="text" id="fuelTank" class="form-control" placeholder="油箱容量(升)"
+          <input type="text" id="fuelTank" class="form-control" placeholder="{{'tankCapacity'|translate}}"
                  ng-model="updateMachineController.machine.fuelTank" name="fuelTank" typeahead-show-hint="true"/>
 
         </div>
 
-        <label for="fuelConfig" class="col-sm-2 control-label padding5">燃油类型</label>
+        <label for="fuelConfig" class="col-sm-2 control-label padding5">{{'fuelType'|translate}}</label>
         <div class="col-sm-4">
 
           <ui-select id="fuelConfig" name="fuelConfig" ng-model="updateMachineController.machine.fuelConfig.id" theme="bootstrap"
                      ng-disabled="disabled" >
-            <ui-select-match allow-clear="true" placeholder="燃油类型">{{$select.selected.name + ' ( '+$select.selected.fuelTypeDesc +' ) '}}
+            <ui-select-match allow-clear="true" placeholder="{{'fuelType'|translate}}">{{$select.selected.name + ' ( '+$select.selected.fuelTypeDesc +' ) '}}
             </ui-select-match>
             <ui-select-choices  repeat="fuelConfig.id as fuelConfig in updateMachineController.fuelConfigList | propsFilter: {name: $select.search}" >
               <div  ng-bind-html="fuelConfig.name +' ( '+fuelConfig.fuelTypeDesc +' ) '| highlight: $select.search"></div>
@@ -226,9 +226,9 @@
       </div>
       <div class="form-group">
 
-        <label for="depreciableLife" class="col-sm-2 control-label padding5">折旧年限</label>
+        <label for="depreciableLife" class="col-sm-2 control-label padding5">{{'depreciationPeriod'|translate}}</label>
         <div class="col-sm-4">
-          <input type="text" id="depreciableLife" class="form-control" placeholder="折旧年限"
+          <input type="text" id="depreciableLife" class="form-control" placeholder="{{'depreciationPeriod'|translate}}"
                  ng-model="updateMachineController.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
         </div>
 
@@ -241,19 +241,19 @@
 
     <div class="map-body col-sm-5">
       <div class="form-group">
-        <label for="currentAddress" class="col-sm-3 control-label padding5">车辆当前位置</label>
+        <label for="currentAddress" class="col-sm-3 control-label padding5">{{'currentPosition'|translate}}</label>
         <div class="col-sm-5">
-          <input type="text" id="currentAddress" class="form-control" placeholder="车辆当前位置"
+          <input type="text" id="currentAddress" class="form-control" placeholder="{{'currentPositionofVehicle'|translate}}"
                  ng-model="updateMachineController.machine.currentAddress" name="currentAddress" typeahead-show-hint="true"/>
         </div>
-        <input class="btn col-sm-3" type="button" class="btn" value="地图上显示" id="showMachineAddress" ng-click="updateMachineController.showAddress(updateMachineController.machine.currentAddress)">
+        <input class="btn col-sm-3" type="button" class="btn" value="{{'showontheMap'|translate}}" id="showMachineAddress" ng-click="updateMachineController.showAddress(updateMachineController.machine.currentAddress)">
       </div>
       <div class="box" id="machineMap" style="height:350px;width: 330px;"></div>
 
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.ok(updateMachineController.machine)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="updateMachineController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.ok(updateMachineController.machine)">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateMachineController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

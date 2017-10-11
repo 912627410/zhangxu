@@ -99,7 +99,7 @@
       xAxis: {
         title: {
           enabled: true,
-          text: '日期'
+          text: languages.findKey('date')
         },
         showLastLabel: true,
         type: 'datetime',

@@ -1494,7 +1494,7 @@
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
       if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        Notification.error(languages.findKey('checktheTimeSettings'));
         return;
       }
       if (devicenum == null) {
@@ -1622,7 +1622,7 @@
             zoomType: 'xy',
           }
         },
-        title: {text: '设备工作分析'},
+        title: {text: languages.findKey('equipmentJobAnalysis')},
         xAxis: [],
         yAxis: []
       }
@@ -1638,12 +1638,12 @@
           }
         },
         title: {
-          text: '工作时长分析',
+          text: languages.findKey('analysisOfWorkHours'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text: languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1652,10 +1652,10 @@
         },
         //y轴坐标显示
         yAxis: {
-          title: {text: '单位(/h)'},
+          title: {text: languages.findKey('unit(/h)')},
         },
         series: [{
-          name: '工作时长',
+          name: languages.findKey('workHours'),
           color: 'rgb(124, 181, 236)',
           data:[]
         }],
@@ -1676,12 +1676,12 @@
           }
         },
         title: {
-          text: '启动次数分析',
+          text: languages.findKey('analysisOfStartsNumber'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text: languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1689,9 +1689,9 @@
           }
         },
         //y轴坐标显示
-        yAxis: {title: {text: '单位/次'}},
+        yAxis: {title: {text: languages.findKey('unit(/times)')}},
         series: [{
-          name: '启动次数',
+          name: languages.findKey('numberOfStarts'),
           color: 'rgb(144, 238, 126)',
           data:[]
         }],
@@ -1712,12 +1712,12 @@
           }
         },
         title: {
-          text: '设备单次工作时长分析',
+          text: languages.findKey('analysisOfMachineSingleWorkHours'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text:languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1725,9 +1725,9 @@
           }
         },
         //y轴坐标显示
-        yAxis: {title: {text: '单位/次'}},
+        yAxis: {title: {text: languages.findKey('unit(/times)')}},
         series: [{
-          name: '启动次数',
+          name: languages.findKey('numberOfStarts'),
           data:[]
         }],
         size: {
@@ -1810,7 +1810,7 @@
               zoomType: 'xy'
             }
           },
-          title: {text: '设备工作分析'},
+          title: {text: languages.findKey('equipmentJobAnalysis')},
           //x轴坐标显示
           xAxis: {
             categories: categoriesdata2
@@ -1904,15 +1904,15 @@
               enabled: false
             }
           },
-          title: {text: '启动次数分析'},
+          title: {text: languages.findKey('analysisOfWorkHours')},
           //x轴坐标显示
           xAxis: {
             categories: locateDateArray
           },
           //y轴坐标显示
-          yAxis: {title: {text: '单位/次'}},
+          yAxis: {title: {text: languages.findKey('unit(/times)')}},
           series: [{
-            name: '启动次数',
+            name: languages.findKey('numberOfStarts'),
             color: 'rgb(144, 238, 126)',
             data: startTimesArray
           }],
@@ -1932,7 +1932,7 @@
               enabled: false
             }
           },
-          title: {text: '工作时长分析'},
+          title: {text: languages.findKey('analysisOfWorkHours')},
           //x轴坐标显示
           xAxis: {
             categories: locateDateArray
@@ -1941,10 +1941,10 @@
           yAxis: {
             max: 24,
             tickAmount: 4,
-            title: {text: '单位/H'}
+            title: {text: languages.findKey('unit(/h)')}
           },
           series: [{
-            name: '工作时长',
+            name: languages.findKey('workHours'),
             color: 'rgb(124, 181, 236)',
             data: totalDurationArray
           }],
@@ -2081,7 +2081,7 @@
           avgWorkTime += worktimeList[i].y*5/100;
         }
         avgWorkTime /= worktimeList.length;
-        avgWorkTime > 8 ? vm.workTimeLabelTitle = '工作时间长' :vm.workTimeLabelTitle = '工作时间较短';
+        avgWorkTime > 8 ? vm.workTimeLabelTitle = languages.findKey('longerWorkingHours') :vm.workTimeLabelTitle = languages.findKey('shorterWorkingHours');
 
         // 启动次数
         var avgStartTimes = 0;
@@ -2089,7 +2089,7 @@
           avgStartTimes += startTimesList[i].y;
         }
         avgStartTimes /= startTimesList.length;
-        avgStartTimes > 3 ? vm.startTimesLabelTitle = '使用频率高' : vm.startTimesLabelTitle = '使用频率低';
+        avgStartTimes > 3 ? vm.startTimesLabelTitle = languages.findKey('highFrequency') : vm.startTimesLabelTitle = languages.findKey('lowFrequency');
 
         vm.worktimeList = worktimeList;
         vm.startTimesList = startTimesList;
@@ -2112,7 +2112,7 @@
           speedList.push(speedPoint);
         }
 
-        overSpeedList.length >3 ? vm.speedLabelTitle = '经常超速' : vm.speedLabelTitle = '驾驶习惯良好';
+        overSpeedList.length >3 ? vm.speedLabelTitle = languages.findKey('frequentSpeeding') : vm.speedLabelTitle = languages.findKey('goodDrivingHabits');
 
         vm.speedList = speedList;
 
@@ -2157,7 +2157,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title: vm.workTimeLabelTitle || '工作时间较短',
+          title: vm.workTimeLabelTitle || languages.findKey('shorterWorkingHours'),
           isSelected:false,
           backgroundColor: itemColorList[1],
           marginLeft: itemLeftList[1],
@@ -2176,7 +2176,7 @@
                 enabled: false
               },
               title: {
-                text: '工作时间'
+                text: languages.findKey('workingHours')
               },
               tooltip: {
                 formatter: function () {
@@ -2195,7 +2195,7 @@
             },
             yAxis: {
               title: {
-                text: '小时'
+                text: languages.findKey('hour')
               },
               plotLines: [{ // mark the 90
                 color: 'red',
@@ -2208,7 +2208,7 @@
               }]
             },
             series: [{
-              name: '工作时长',
+              name: languages.findKey('workHours'),
               data: vm.worktimeList
             }]
           }
@@ -2217,7 +2217,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title : vm.startTimesLabelTitle || '使用频率低' ,
+          title : vm.startTimesLabelTitle || languages.findKey('lowFrequency') ,
           isSelected:false,
           backgroundColor: itemColorList[2],
           marginLeft: itemLeftList[2],
@@ -2227,7 +2227,7 @@
                 type: 'column'
               },
               title: {
-                text: '开机次数'
+                text: languages.findKey('bootTimes')
               },
               credits: {
                 enabled: false
@@ -2255,7 +2255,7 @@
             },
             yAxis: {
               title: {
-                text: '开机次数'
+                text: languages.findKey('bootTimes')
               },
               plotLines: [{ // mark the 90
                 color: 'red',
@@ -2264,7 +2264,7 @@
               }]
             },
             series: [{
-              name: '开机次数',
+              name: languages.findKey('bootTimes'),
               data: vm.startTimesList
             }]
           }
@@ -2273,7 +2273,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title : vm.speedLabelTitle ||'驾驶习惯良好' ,
+          title : vm.speedLabelTitle ||languages.findKey('goodDrivingHabits') ,
           isSelected:false,
           backgroundColor: itemColorList[3],
           marginLeft: itemLeftList[3],
@@ -2292,7 +2292,7 @@
                 enabled: false
               },
               title: {
-                text: '驾驶习惯指数'
+                text: languages.findKey('drivingHabit')
               },
               tooltip: {
                 formatter: function () {
@@ -2313,7 +2313,7 @@
               min:60
             },
             series: [{
-              name: '驾驶习惯指数',
+              name: languages.findKey('drivingHabit'),
               data: vm.speedList
             }]
           }
@@ -2342,7 +2342,7 @@
                   enabled: false
                 },
                 title: {
-                  text: '平均油耗'
+                  text: languages.findKey('averageFuelConsumption')
                 },
                 tooltip: {
                   formatter: function () {
@@ -2428,15 +2428,15 @@
         },
       },
       title: {
-        text: '发动机性能',
+        text: languages.findKey('enginePerformance'),
         x: -80
       },
       pane: {
         size: '80%'
       },
       xAxis: {
-        categories: ['油耗', '温度', '扭矩指数', '功率指数',
-          '转速指数', '平均故障时间间隔'],
+        categories: [languages.findKey('fuelConsumption'), languages.findKey('temperature'), languages.findKey('torque'), languages.findKey('power'),
+          languages.findKey('rotatingSpeed'), languages.findKey('MTBF')],
         tickmarkPlacement: 'on',
         lineWidth: 0
       },
@@ -2476,7 +2476,7 @@
           enabled: false
         },
         title: {
-          text: '发动机评分'
+          text: languages.findKey('engineRating')
         },
         pane: {
           center: ['50%', '85%'],
@@ -2528,7 +2528,7 @@
         enabled: false
       },
       series: [{
-        name: '发动机评分',
+        name: languages.findKey('engineRating'),
         data: [80],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;">{y}</span><br/>'
@@ -2789,7 +2789,7 @@
       }
 
       var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-      $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+      $confirm({text: text,title: '围栏设置确认', ok:languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
 
 
