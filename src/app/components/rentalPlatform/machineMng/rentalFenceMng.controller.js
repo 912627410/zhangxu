@@ -9,7 +9,7 @@
     .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalFenceMngController($scope, $window, $state, $confirm, $location, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, permissions, rentalService,
+  function rentalFenceMngController($scope, $window, $state, $confirm, languages,$location, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, permissions, rentalService,
                                     RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT) {
     var vm = this;
     vm.pageSize = 12;
@@ -115,15 +115,16 @@
      * @param id
      */
     vm.delete = function (id) {
-      $confirm({text: '确定要删除吗?', title: '删除确认', ok: '确定', cancel: '取消'})
+      $confirm({text: languages.findKey('isDelete'), title: languages.findKey('delConfirmation'),
+        ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function () {
           var restCall = RENTAL_ORG_FENCE_DELETE_STATUS + "?id=" + id;
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");
           restPromise.then(function (data) {
-            Notification.success("删除成功!");
+            Notification.error(languages.findKey('delSuccess'));
             vm.query(null, null, null, null);
           }, function (reason) {
-            Notification.error("删除成功出错!");
+            Notification.error(languages.findKey('delFail'));
           });
         });
     };

@@ -32,11 +32,11 @@
                      on-select="newWorkLineCtrl.drawLine()"
                      ng-model="newWorkLineCtrl.workLine.beginPoint" theme="bootstrap"
                      validator="required">
-            <ui-select-match allow-clear="true" placeholder="起点">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="起点">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices
               repeat="workPoint in newWorkLineCtrl.startPointList | propsFilter: {name: $select.search}">
-              <div ng-bind-html="workPoint.name | highlight: $select.search"></div>
+              <div ng-bind-html="workPoint.name | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>

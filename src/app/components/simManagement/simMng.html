@@ -64,10 +64,10 @@
     <div class="col-md-3">
       <ui-select name="status" ng-model="simMngCtrl.sim.provider" theme="bootstrap"
                  ng-disabled="disabled">
-        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+        <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
         </ui-select-match>
         <ui-select-choices repeat="simProvider in simMngCtrl.sim.simProviderList">
-          <div ng-bind-html="simProvider.desc | highlight: $select.search"></div>
+          <div ng-bind-html="simProvider.desc | highlight: $select.search|translate"></div>
         </ui-select-choices>
       </ui-select>
     </div>
