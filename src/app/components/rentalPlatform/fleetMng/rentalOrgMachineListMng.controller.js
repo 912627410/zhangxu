@@ -76,14 +76,17 @@
         if(searchConditions.licenseId!=null){
          restCallURL += "&licenseId=" + searchConditions.licenseId;
         }
-        if(searchConditions.typeId!=null){
-          restCallURL += "&typeId=" + searchConditions.typeId;
+        if(searchConditions.type!=null){
+          restCallURL += "&typeId=" + searchConditions.type.id;
         }
-        if(searchConditions.powerTypeId!=null){
-          restCallURL += "&powerTypeId=" + searchConditions.powerTypeId;
+        if(searchConditions.powerType!=null){
+          restCallURL += "&powerTypeId=" + searchConditions.powerType.id;
         }
-        if(searchConditions.heightTypeId!=null){
-          restCallURL += "&heightTypeId=" + searchConditions.heightTypeId;
+        if(searchConditions.heightType!=null){
+          restCallURL += "&heightTypeId=" + searchConditions.heightType.id;
+        }
+        if(searchConditions.factory!=null){
+          restCallURL += "&factoryId=" + searchConditions.factory.id;
         }
       }
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
