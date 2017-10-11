@@ -89,7 +89,7 @@
     vm.drawPointAggregation = function (mapId, pointArray, zone, langkey) {
       //点聚合方式和自定义回调函数弹出框
       serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, langkey, [104.06, 30.83], true, function (item) {
-        var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + item.deviceNum;
+        var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + item.machineLicenseId;
         var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
         deviceDataPromis.then(function (data) {
           //打开模态框

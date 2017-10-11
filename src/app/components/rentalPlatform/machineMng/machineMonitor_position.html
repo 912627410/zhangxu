@@ -41,13 +41,20 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table ng-table="vm.deviceLocateData" class="table">
+        <table ng-table="vm.deviceLocateData" class="table table-responsive  history-tab-tr-nowrap">
           <tr ng-repeat="deviceLocation in $data">
+            <td ng-cloak data-title="'dataAcquisitionTime'|translate" sortable="'locateDateTime'">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td ng-cloak data-title="'address'|translate" sortable="'address'">{{deviceLocation.address}}</td>
+            <td ng-cloak data-title="'gps速度'" sortable="'gpsSpeed'">{{deviceLocation.gpsSpeed | unitConversionFilter:0.01:" km/H"}}</td>
+            <td ng-cloak data-title="'gps高度(装置所处位置高度)'" sortable="'gpsHeight'">{{deviceLocation.gpsHeight |unitConversionFilter:1:" m"}}</td>
+            <td ng-cloak data-title="'是否激活'" sortable="'lockStatus'">{{deviceLocation.lockStatus |stateConversionFilter:'{"00":"未激活","10":"已激活"}'}}</td>
+            <td ng-cloak data-title="'GPS电源检测'" sortable="'gpspowerStatus'">{{deviceLocation.gpspowerStatus |stateConversionFilter:'{"00":"正常","0":"正常","01":"无电源","10":"无信号"}'}}</td>
+            <td ng-cloak data-title="'开盖状态'" sortable="'lockerStatus'">{{deviceLocation.lockerStatus|stateConversionFilter:'{"0":"未开盖","00":"未开盖","11":"已开盖"}'}}</td>
+            <td ng-cloak data-title="'CAN通信是否正常'" sortable="'canStatus'">{{deviceLocation.canStatus |stateConversionFilter:'{"0":"通信中断","1":"通信正常"}'}}</td>
             <td ng-cloak data-title="'longitude'|translate" sortable="'amaplongitudeNum'"> {{deviceLocation.amaplongitudeNum}} </td>
             <td ng-cloak data-title="'latitude'|translate" sortable="''">{{deviceLocation.amaplatitudeNum}}</td>
-            <td ng-cloak data-title="'dataAcquisitionTime'|translate" sortable="'locateDateTime'">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td ng-cloak data-title="'recordGenerationTime'|translate" sortable="'recordTime'">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <!--平台接收时间-->
+           <!-- <td ng-cloak data-title="'recordGenerationTime'|translate" sortable="'recordTime'">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
           </tr>
         </table>
       </div>

@@ -9,7 +9,7 @@
     .controller('rentalCustomerMngController', rentalCustomerMngController);
 
   /** @ngInject */
-  function rentalCustomerMngController($scope, $window, $location,$state,$filter, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL) {
+  function rentalCustomerMngController($scope, $window, $location,$state,$filter, $anchorScroll, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -113,9 +113,22 @@
 
 
     vm.new=function(){
-      $state.go('rental.newCustomer');
-    }
+      var modalInstance= $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+        controller: 'newRentalCustomerController',
+        controllerAs:'newRentalCustomerCtrl',
+        size: 'lg'
+      });
+      modalInstance.result.then(function (newVal) {
+        vm.machineCount += 1;
+        vm.customConfigParams.data.splice(0, 0, newVal);
+      }, function () {
+        //取消
+      });
 
+    }
 
   }
 })();

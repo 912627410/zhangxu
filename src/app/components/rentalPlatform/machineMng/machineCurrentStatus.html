@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid table-wrapper" style="margin-top: 8px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
+    <div class="container-fluid table-wrapper" style="margin-top: 5px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
       <div class="col-lg-12 form-group table-form-group tab-content-search"><!--搜索框-->
         <div class="tab-content-search-box col-lg-2 col-md-2">
           <label>{{'rentalMachineID'|translate}}:</label>
@@ -65,7 +65,7 @@
         </div>
         <div class="tab-content-search-box col-lg-2 col-md-2">
           <label>{{'rentalDeviceID'|translate}}:</label>
-          <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum" />
+          <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"  />
         </div>
         <div class="tab-content-search-box col-lg-2 col-md-2">
           <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'rentalMachineType'|translate}}:</label>
@@ -102,7 +102,7 @@
                 <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td data-title="'operation'|translate" style="text-align: center" >
                 <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">{{'equipmentMonitoring'|translate}}</button>
-                  <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalManagement'|translate}}</button>
+                  <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}</button>
                 </td>
               </tr>
             </table>

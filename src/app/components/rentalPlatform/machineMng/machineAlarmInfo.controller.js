@@ -195,8 +195,8 @@
      *
      * @param deviceNum
      */
-    vm.machineMonitor = function (deviceNum) {
-      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
+    vm.machineMonitor = function (licenseId) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + licenseId;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
         //打开模态框
