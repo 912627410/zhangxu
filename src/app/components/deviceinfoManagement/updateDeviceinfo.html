@@ -18,7 +18,7 @@
         <div class="col-sm-10">
           <ui-select  name="phoneNumber" ng-model="updateDeviceinfoController.deviceinfo.sim" theme="bootstrap"
                       ng-disabled="disabled" >
-            <ui-select-match allow-clear="true"  placeholder="{{'lastFourSIMNumber'|translate}}">{{$select.selected.phoneNumber}}
+            <ui-select-match allow-clear="true"  placeholder="{{'lastFourSIMNumber'|translate}}">{{$select.selected.phoneNumber|translate}}
             </ui-select-match>
             <ui-select-choices repeat="sim in updateDeviceinfoController.simList"
                                refresh="updateDeviceinfoController.refreshSimList($select.search)"
