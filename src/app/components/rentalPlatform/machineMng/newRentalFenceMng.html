@@ -2,7 +2,7 @@
   <div class="row">
     <section class="renatlcontent-header">
       <div class="col-md-4">
-        <h4>新建围栏</h4>
+        <h4>{{'newFence'|translate}}</h4>
       </div>
       <div class="col-md-8">
         <a ui-sref="rental.orgFence" class="pull-right"><i class="fa fa-fw fa-mail-reply"></i></a>
@@ -14,7 +14,7 @@
 
     </div>
     <div class="form-group col-md-8">
-      <label class="col-sm-2 control-label">围栏地址</label>
+      <label class="col-sm-2 control-label">{{'fenceAddress'|translate}}</label>
       <input type="text" class="form-control col-sm-4" id="tipinput"
              placeholder="{{'search'|translate}}"
              ng-model="newRentalFenceController.rentalOrgFence.fenceAddress"/>
@@ -24,9 +24,9 @@
     <form name="newRentalFence" class="form-horizontal row">
       <div class="box-body col-sm-4">
         <div class="form-group">
-          <label class="col-sm-3 control-label">名称</label>
+          <label class="col-sm-3 control-label">{{'name'|translate}}</label>
           <div class="col-md-7">
-            <input type="text" id="org" class="form-control" placeholder="围栏名称"
+            <input type="text" id="org" class="form-control" placeholder="{{'fenceName'|translate}}"
                    ng-model="newRentalFenceController.rentalOrgFence.fenceName" validator="required"/>
           </div>
         </div>

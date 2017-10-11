@@ -1004,7 +1004,7 @@
   "玉柴":"yuchai",
   "测试":"Test",
   "在库":"In library",
-  "待售":"For sale,",
+  "待售":"For sale",
   "已售":"sold",
   "维修":"maintenance",
   "待租":"For rent",
@@ -1023,6 +1023,40 @@
   "profile":"Profile",
   "setting":"Setting",
   "faster":"Faster",
-  "slower":"Slower"
+  "slower":"Slower",
+
+
+  "fenceName":"Fence Name",
+  "fenceAddress":"Fence Address",
+  "founder":"Founder",
+  "modificationTime":"Modification Time",
+  "modifier":"Modifier",
+  "manage":"Manage",
+  "newFence":"New Fence",
+  "fuzzyAddress":"Address(support for fuzzy queries)",
+
+  "description":"Description",
+  "organizationalInformation":"Organizational Information",
+  "selectedOrg":"The Selected Organization ",
+  "运输":"Transport",
+
+  "numbers":"Numbers",
+  "height":"Height",
+  "dayPrice":"Price(/day)",
+  "transferVehicle":"Transfer Vehicle",
+  "exCurrentPage":"Export Current Page",
+  "exAll":"Export All",
+  "delSuccess":"Deleted Successfully!",
+  "delFail":"Delete Failed!",
+  "isDelete":"Are you sure want to delete them?",
+  "delConfirmation":"Delete Confirmation",
+  "enDrive":"Engine Drive",
+  "hyDrive":"Hydraulic Drive",
+  "elDrive":"Electric Drive"
+
+
+
+
+
 
 }

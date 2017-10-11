@@ -77,7 +77,7 @@
           <label>{{'highlyType'|translate}}</label>
           <ui-select name="deviceHeightType" ng-model="profitStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
@@ -88,7 +88,7 @@
           <label class="">{{'rentalBrand'|translate}}</label>
           <ui-select name="deviceManufacture" ng-model="profitStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="machineMF in profitStatisticsCtr.machineMFList">
               <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>

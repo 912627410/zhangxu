@@ -39,11 +39,11 @@
     </div>
     <div class="col-md-3">
       <a class="btn" title="ExportHistoryData"
-         ng-click="vm.excelExport(vm.deviceInfo.deviceNum,vm.deviceInfo.versionNum,vm.queryStartDate,vm.queryEndDate)">全部导出</a>
+         ng-click="vm.excelExport(vm.deviceInfo.deviceNum,vm.deviceInfo.versionNum,vm.queryStartDate,vm.queryEndDate)">{{'exAll'|translate}}</a>
       <a class="btn" title="ExportHistoryData"
          ng-click='csv.generate()'
          ng-href="{{csv.link()}}"
-         download="{{vm.deviceInfo.deviceNum}}{{'historicalData'|translate}}.csv">导出本页</a>
+         download="{{vm.deviceInfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'exCurrentPage'|translate}}</a>
     </div>
   </div>
   <div class="row">

@@ -114,10 +114,10 @@
                   <ui-select name="statusRequiredOnly{{$index}}" message-id="statusRequiredOnly{{$index}}"
                              ng-model="maintenanceList.status" theme="bootstrap"
                              ng-disabled="disabled" validator="required">
-                    <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+                    <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
                     </ui-select-match>
                     <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceController.listStatusList">
-                      <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search"></div>
+                      <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search|translate"></div>
                     </ui-select-choices>
                   </ui-select>
                   <span id="statusRequiredOnly{{$index}}"></span>

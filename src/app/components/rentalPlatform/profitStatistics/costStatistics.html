@@ -80,7 +80,7 @@
           <!--</select>-->
           <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
@@ -97,7 +97,7 @@
 
           <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
               <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>
