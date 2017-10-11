@@ -228,7 +228,7 @@
     }
 
     vm.statusDisable = function (userinfo) {
-      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: '确定', cancel: '取消'})
+      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(USER_STATUS_DISABLE_URL, userinfo.id);
           restPromise.then(function (data) {
@@ -242,7 +242,7 @@
     };
 
     vm.statusEnable = function (userinfo) {
-      $confirm({text: '确定要启用吗?',title: '启用确认', ok: '确定', cancel: '取消'})
+      $confirm({text: '确定要启用吗?',title: '启用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(USER_STATUS_ENABLE_URL, userinfo.id);
           restPromise.then(function (data) {

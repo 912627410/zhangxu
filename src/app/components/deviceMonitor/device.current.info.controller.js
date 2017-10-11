@@ -2789,7 +2789,7 @@
       }
 
       var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-      $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+      $confirm({text: text,title: '围栏设置确认', ok:languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
 
 

@@ -432,7 +432,7 @@
               }
                 restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
-            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
+            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function () {
                     var rspData = serviceResource.restCallService(restURL, "ADD");  //post请求
                     rspData.then(function (data) {
@@ -1459,7 +1459,7 @@
             }
 
             var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-            $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+            $confirm({text: text,title: '围栏设置确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function() {
                     var machieId;
                     if(deviceinfo.machine.id!=null){
@@ -1501,7 +1501,7 @@
           return false;
         }
         var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
-        $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
+        $confirm({text: text, title: '取消电子围栏', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
           .then(function () {
             var fence = {
               id: deviceinfo.machine.id,
@@ -2481,7 +2481,7 @@
 
         vm.refreshPageDate = function (queryType, deviceNum, startDate, endDate) {
             if (Math.floor((endDate - startDate) / 24 / 3600 / 1000) > 2) {
-                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: '确认 ', cancel: '取消'}).then(
+                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')}).then(
                     function () {
                         vm.queryChart(vm.queryType, vm.deviceinfo.deviceNum, vm.startDate, vm.endDate);
                     }
