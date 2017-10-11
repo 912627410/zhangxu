@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">批量导入Sim</h3>
+    <h3 class="modal-title">{{'batchImportSIM'|translate}}</h3>
 </div>
 <form name="myForm" class="form-horizontal ">
   <div class="modal-body">
@@ -12,7 +12,7 @@
           <i ng-show="myForm.file.$error.required">*required</i><br>
           <i ng-show="myForm.file.$error.maxSize">File too large
             {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
-          <button ng-click="uploadSimController.file = null" ng-show="uploadSimController.file">移除</button>
+          <button ng-click="uploadSimController.file = null" ng-show="uploadSimController.file">{{'remove'|translate}}</button>
         </div>
 
       </div>
@@ -28,9 +28,9 @@
   </div>
   </div>
   <div class="modal-footer">
-    <a href style="float: left" ng-click="uploadSimController.templateDownload()">导入模板下载</a>
-    <button class="btn btn-primary" type="button" ng-disabled="!myForm.$valid" ng-click="uploadSimController.upload(uploadSimController.file)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="uploadSimController.cancel()">取消</button>
+    <a href style="float: left" ng-click="uploadSimController.templateDownload()">{{'downloadImportTemplate'|translate}}</a>
+    <button class="btn btn-primary" type="button" ng-disabled="!myForm.$valid" ng-click="uploadSimController.upload(uploadSimController.file)">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="uploadSimController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>
 

@@ -115,8 +115,7 @@
      * @param id
      */
     vm.delete = function (id) {
-      $confirm({text: languages.findKey('isDelete'), title: languages.findKey('delConfirmation'),
-        ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
+      $confirm({text: languages.findKey('areYouWanttoDeleteIt'), title: languages.findKey('deleteConfirmation'), ok: languages.findKey('confirm'), cancel:languages.findKey('cancel')})
         .then(function () {
           var restCall = RENTAL_ORG_FENCE_DELETE_STATUS + "?id=" + id;
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");

@@ -600,11 +600,11 @@
             </div>
           </div>
           <div class="row" style="padding: 0 20px">
-            <div class="col-md-3"><label class="control-label">本曲线所用的加速次数</label></div>
+            <div class="col-md-3"><label class="control-label">{{'accelerateTimesoftheCurve'|translate}}</label></div>
             <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bAccelIncrement"/></div>
-            <div class="col-md-3"><label class="control-label">本曲线所用的减速次数</label></div>
+            <div class="col-md-3"><label class="control-label">{{'decelerationTimesoftheCurve'|translate}}</label></div>
             <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bDecelIncrement"/></div>
-            <div class="col-md-3"><label class="control-label">加减速时时段</label></div>
+            <div class="col-md-3"><label class="control-label">{{'variableSpeedPeriod'|translate}}</label></div>
             <div class="col-md-1" style="padding: 0;"><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.queryParameter.curve.bPeriod"/></div>
 
           </div>
@@ -629,70 +629,70 @@
                 <th width="16%">{{'state'|translate}}</th>
               </tr>
               <tr>
-                <td><label class="control-label">机型</label></td>
+                <td><label class="control-label">{{'protocolType'|translate}}</label></td>
                 <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.parameterValue.bLiftType">
-                  <div ng-switch-when="33" style="padding-top: 7px;">小型液驱</div>
-                  <div ng-switch-when="57" style="padding-top: 7px;">大型液压</div>
-                  <div ng-switch-when="84" style="padding-top: 7px;">小型电驱</div>
-                  <div ng-switch-when="120" style="padding-top: 7px;">大型电驱</div>
+                  <div ng-switch-when="33" style="padding-top: 7px;">{{'smallHydraulic'|translate}}</div>
+                  <div ng-switch-when="57" style="padding-top: 7px;">{{'largeHydraulic'|translate}}</div>
+                  <div ng-switch-when="84" style="padding-top: 7px;">{{'smallArmature'|translate}}</div>
+                  <div ng-switch-when="120" style="padding-top: 7px;">{{'largeArmature'|translate}}</div>
                 </td>
-                <td><label class="control-label">版本号major</label></td>
+                <td><label class="control-label">{{'majorversionNumber'|translate}}</label></td>
                 <td><div style="padding-top: 7px;">{{deviceAerialCurrentInfoController.parameterValue.bMajor}}</div></td>
-                <td><label class="control-label">版本号minor</label></td>
+                <td><label class="control-label">{{'minorversionNumber'|translate}}</label></td>
                 <td style="padding-top: 7px;"><div style="padding-top: 7px;">{{deviceAerialCurrentInfoController.parameterValue.bMinor}}</div></td>
               </tr>
               <tr>
-                <td><label class="control-label">刹车延时(ms)</label></td>
+                <td><label class="control-label">{{'brakeDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBrakeDelay"/></td>
-                <td><label class="control-label">阀故障检测延时(ms)</label></td>
+                <td><label class="control-label">{{'faultDetectionDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bCoilFaultDetectionPeriod"/></td>
-                <td class="text-nowrap"><label class="control-label">转向停止时的延时(ms)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'steeringOffDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bSteeringOffDelay"/></td>
               </tr>
               <tr>
-                <td class="text-nowrap"><label class="control-label">换向延时(ms)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'directionDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bDirectionDelay"/></td>
-                <td class="text-nowrap"><label class="control-label">马达使能延时(ms)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'motorEnableDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bMotorEnableDelay"/></td>
-                <td class="text-nowrap"><label class="control-label">过载监控稳定时间(ms)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'overloadStabilization'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bOverloadStabilizationPeriod"/></td>
               </tr>
               <tr>
-                <td class="text-nowrap"><label class="control-label">行走时转向的液压增量(%)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'hydraulicIncrementofWalkingSteering'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bSteeringBoostPwm"/></td>
-                <td class="text-nowrap"><label class="control-label">原地转向的PWM百分比(%)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'PWMPercentageofLocalSteering'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bNeutralSteeringPwm"/></td>
-                <td class="text-nowrap"><label class="control-label">车身控制上升速度百分比(%)</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'aotobodyControlRisingSpeedPercentage'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bChassisLiftUpPwm"/></td>
               </tr>
 
               <tr>
-                <td class="text-nowrap"><label class="control-label">平台控制上升最大速度</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'platformControlMaxRisingSpeed'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bPlatformLiftUpMaxPwm"/></td>
-                <td class="text-nowrap"><label class="control-label">手柄误差补偿</label></td>
+                <td class="text-nowrap"><label class="control-label">{{'handleErrorCompensation'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bJoystickOffsetCompensation"/></td>
-                <td ><label class="control-label">手柄中区最大位置</label></td>
+                <td ><label class="control-label">{{'neutralZone'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bJoystickNeutralZone"/></td>
               </tr>
 
               <tr>
-                <td ><label class="control-label">两格电量阀值(V)</label></td>
+                <td ><label class="control-label">{{'twoGridCapacity'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel1"/></td>
-                <td ><label class="control-label">三格电量阀值(V)</label></td>
+                <td ><label class="control-label">{{'threeGridCapacity'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel2"/></td>
-                <td ><label class="control-label">四格电量阀值(V)</label></td>
+                <td ><label class="control-label">{{'fourGridCapacity'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel3"/></td>
               </tr>
               <tr>
-                <td><label class="control-label">五格电量阀值(V)</label></td>
+                <td><label class="control-label">{{'fiveGridCapacity'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel4"/></td>
-                <td><label class="control-label">六格电量阀值(V)</label></td>
+                <td><label class="control-label">{{'sixGridCapacity'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bBatteryLevel5"/></td>
-                <td><label class="control-label">倾斜时刹车延时(ms)</label></td>
+                <td><label class="control-label">{{'tiltBrakingDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bTiltBrakeDelay"/></td>
               </tr>
               <tr>
-                <td><label class="control-label">水平时刹车延时(ms)</label></td>
+                <td><label class="control-label">{{'horizontalBrakingDelay'|translate}}</label></td>
                 <td><input type="text" ng-readonly="deviceAerialCurrentInfoController.machineParametersReadonly" class="form-control" ng-model="deviceAerialCurrentInfoController.parameterValue.bLevelBrakeDelay"/></td>
                 <td></td><td></td>
                 <td></td><td></td>
@@ -1298,10 +1298,10 @@
                     <table class="table table-striped">
                       <caption>{{'batteryBasicInformation'|translate}}</caption>
                       <tr>
-                        <th>终端编号</th>
-                        <th>充电状态</th>
-                        <th>连接类型</th>
-                        <th>安装状态</th>
+                        <th>{{'terminalNumber'|translate}}</th>
+                        <th>{{'chargingState'|translate}}</th>
+                        <th>{{'connectType'|translate}}</th>
+                        <th>{{'installState'|translate}}</th>
                       </tr>
                       <tr>
                         <td>{{batteryFormData.deviceNum}}</td>

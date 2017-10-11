@@ -5,7 +5,7 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="typeName" class="col-sm-3 control-label">车辆类型</label>
+        <label for="typeName" class="col-sm-3 control-label">{{'vehicleType'|translate}}</label>
         <div class="col-sm-8">
           <input type="text" id="typeName" class="form-control" placeholder="车辆类型名称"
                  ng-model="newMachineTypeCtrl.machineTypeInfo.typeName" name="typeName" typeahead-show-hint="true"
@@ -21,7 +21,7 @@
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="newMachineTypeForm" ng-click="newMachineTypeCtrl.ok(newMachineTypeCtrl.machineTypeInfo)">增加</button>
-    <button class="btn btn-warning" type="button" ng-click="newMachineTypeCtrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" validation-submit="newMachineTypeForm" ng-click="newMachineTypeCtrl.ok(newMachineTypeCtrl.machineTypeInfo)">{{'add'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newMachineTypeCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

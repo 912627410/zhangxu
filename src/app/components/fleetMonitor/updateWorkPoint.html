@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h3 class="modal-title">修改作业点
-    <button class="btn btn-warning pull-right" type="button" ng-click="updateWorkPointCtrl.cancel()">取消</button>
+    <button class="btn btn-warning pull-right" type="button" ng-click="updateWorkPointCtrl.cancel()">{{'cancel'|translate}}</button>
 
   </h3>
 
@@ -91,7 +91,7 @@
         <div class="col-sm-7">
           <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" ng-model="updateWorkPointCtrl.tipinput"/>
         </div>
-        <button type="button" class="btn btn-primary" value="地图上显示" id="showMachineAddress"
+        <button type="button" class="btn btn-primary" value="{{'showontheMap'|translate}}" id="showMachineAddress"
                 ng-click="updateWorkPointCtrl.showAddress(updateWorkPointCtrl.tipinput)">定位
         </button>
       </div>

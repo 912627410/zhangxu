@@ -38,7 +38,7 @@
         if(ws){
           closeWebSocket();
         }
-        vm.initMonitorQuery();
+        vm.initLineQuery(vm.fleet);
       });
     }
 
@@ -64,11 +64,13 @@
             for(var i = 0 ;i < lineLength;i++){
               vm.chartTop.push(380*i +20);
             }
+            vm.chartsH = parseInt(vm.chartTop[lineLength-1] + 400);
+            document.getElementById("fleetChart").style.height = vm.chartsH+'px';
+            vm.refreshChart("fleetChart", vm.workLineList);
+            vm.initMonitorQuery();
+          } else {
+            vm.fleetChart = echarts.init(document.getElementById("fleetChart"));
           }
-          vm.chartsH = parseInt(vm.chartTop[lineLength-1] + 400);
-          document.getElementById("fleetChart").style.height = vm.chartsH+'px';
-
-          vm.refreshChart("fleetChart", vm.workLineList);
 
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
@@ -76,6 +78,8 @@
       )
 
     };
+
+    vm.initLineQuery(vm.fleet);
 
     /**
      * 初始化数据
@@ -92,7 +96,6 @@
         }
       });
     };
-    vm.initMonitorQuery();
 
     vm.refreshChart = function (chartId, lineList) {
 
@@ -379,8 +382,6 @@
       lockReconnect = true;
       reconnect(null);
     };
-
-    vm.initLineQuery(vm.fleet);
 
   }
 })();
