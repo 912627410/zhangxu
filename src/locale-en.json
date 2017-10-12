@@ -1068,7 +1068,6 @@
   "rotatingSpeed": "Rotating speed",
   "MTBF": "Mean Time Between Failure",
   "equipmentJobAnalysis": "Analysis of equipment job",
-  "workingHours": "Work hours",
   "bootTimes": "Boot times",
   "drivingHabit": "Driving habit",
   "goodDrivingHabits": "Good driving habits",
@@ -1150,40 +1149,43 @@
   "neglect":"Neglect",
   "profile":"Profile",
   "setting":"Setting",
-  "faster":"Faster",
-  "slower":"Slower",
-
 
   "fenceName":"Fence Name",
   "fenceAddress":"Fence Address",
   "founder":"Founder",
-  "modificationTime":"Modification Time",
+  "modificationTime":"Modified Time",
   "modifier":"Modifier",
   "manage":"Manage",
   "newFence":"New Fence",
-  "fuzzyAddress":"Address(support for fuzzy queries)",
+  "fuzzyAddress":"Address(Fuzzy Search)",
 
   "description":"Description",
   "organizationalInformation":"Organizational Information",
   "selectedOrg":"The Selected Organization ",
   "运输":"Transport",
-  "name":"name",
-  "numbers":"Numbers",
-  "height":"Height",
+  "name":"Name",
   "dayPrice":"Price(/day)",
   "transferVehicle":"Transfer Vehicle",
   "exCurrentPage":"Export Current Page",
   "exAll":"Export All",
-  "delSuccess":"Deleted Successfully!",
+  "delSuccess":"Deleted Successful!",
   "delFail":"Delete Failed!",
-  "isDelete":"Are you sure want to delete them?",
+  "isDelete":"Are you sure want to delete ?",
   "delConfirmation":"Delete Confirmation",
   "enDrive":"Engine Drive",
   "hyDrive":"Hydraulic Drive",
-  "elDrive":"Electric Drive"
+  "elDrive":"Electric Drive",
+  "发动机驱动":"Engine Drive",
+  "液压驱动":"Hydraulic Drive",
+  "电驱动":"Electric Drive",
 
-
-
+  "newOrderSucc":"New Order Successful!",
+  "transVehicleSucc":" Vehicle Transfer Successful!",
+  "transVehiclFail":"Failed to transfer the vehicle",
+  "selTime":"Please select the order start time and end time!",
+  "selOrDiff":"The selected order cannot be the same!",
+  "newCustomerSucc":"New customer successful!",
+  "upOrderSucc":"Update order successful!"
 
 
 

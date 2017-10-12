@@ -10,7 +10,7 @@
     .controller('updateRentalOrderController', updateRentalOrderController);
 
   /** @ngInject */
-  function updateRentalOrderController($rootScope,$window,$scope,$timeout,$stateParams,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL, Notification) {
+  function updateRentalOrderController($rootScope,$window,$scope,$timeout,$stateParams,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL, Notification,languages) {
     var vm = this;
     vm.rentalOrder={};
 
@@ -86,7 +86,7 @@
 
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.rentalOrder);
       rspdata.then(function (data) {
-        Notification.success("更新订单成功!");
+        Notification.success(languages.findKey('upOrderSucc'));
         $location.path(path);
 
       },function (reason) {
