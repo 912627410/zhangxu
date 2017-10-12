@@ -320,17 +320,18 @@
                       <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
                         <!--基站号-->
                         <td>{{'gsmCelid'|translate}}</td>
-                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmCellid}}</td>
+                        <td colspan="3">{{deviceAerialCurrentInfoController.deviceinfo.gsmCellid}}</td>
+                        <!--接受信号质量-->
+                        <td>{{'gsmRxl'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gsmRxl}}</td>
                       </tr>
                       <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
                         <!--基站小区号-->
                         <td>{{'gsmLac'|translate}}</td>
-                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmLac}}</td>
-                      </tr>
-                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
-                        <!--接受信号质量-->
-                        <td>{{'gsmRxl'|translate}}</td>
-                        <td colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.gsmRxl}}</td>
+                        <td colspan="3">{{deviceAerialCurrentInfoController.deviceinfo.gsmLac}}</td>
+                        <!--实际绑定车号-->
+                        <td>{{'bindMachineId'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.bindMachineId}}</td>
                       </tr>
 
                       <!--TODO -->
@@ -448,11 +449,9 @@
                         <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsPowerStatus==null" >{{'noData'|translate}}</td>
                         <!--倾斜状态-->
                         <td>{{'tiltState'|translate}}</td>
-                        <td class="text-nowrap" ng-switch on="deviceAerialCurrentInfoController.deviceinfo.tilt">
-                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="0">{{'tilt'|translate}}</div>
-                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus==1" ng-switch-when="1">{{'level'|translate}}</div>
-                          <div ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</div>
-                        </td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.tilt==0&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1">{{'tilt'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.tilt==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1">{{'level'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1||(deviceAerialCurrentInfoController.deviceinfo.tilt!=0&&deviceAerialCurrentInfoController.deviceinfo.tilt!=1)">{{'noInfo'|translate}}</td>
                         <!--预留-->
                         <td></td>
                         <td></td>
@@ -544,6 +543,7 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1||deviceAerialCurrentInfoController.deviceinfo.lockState==0">{{'lockedCarStatus'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1">{{'lockedCar'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==0">{{'unlockedCar'|translate}}</td>
+                        <!--锁车状态为空时填充行-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
                         <!--预留-->

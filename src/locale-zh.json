@@ -964,7 +964,7 @@
   "GPSFactoryDate":"GPS出厂日期",
   "gsmCelid":"基站号",
   "gsmLac":"基站小区号",
-  "gsmRxl":"接受信号质量",
+  "gsmRxl":"接收信号质量",
   "setWorkHoursMessage":"工作小时数不得大于上升总时间+行走总时间+5分钟",
   "calibrationStatus":"标定状态",
   "overloadPercentage":"超载百分比",
