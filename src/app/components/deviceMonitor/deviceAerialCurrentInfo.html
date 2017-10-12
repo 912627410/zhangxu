@@ -333,17 +333,6 @@
                         <td>{{'bindMachineId'|translate}}</td>
                         <td>{{deviceAerialCurrentInfoController.deviceinfo.bindMachineId}}</td>
                       </tr>
-
-                      <!--TODO -->
-                      <tr presentation-href="dashboard:deviceMonitor:currentData:query:allData">
-                        <!--油缸压力-->
-                        <td>{{'cylinderPressure'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.oilPressure|number: 2}}MPa</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
                     </table>
                   </tr>
 
@@ -536,9 +525,9 @@
                         <td></td>
                       </tr>
                       <tr presentation-href="dashboard:deviceMonitor:currentData:query:allData">
-                        <!--限制举升-->
-                        <td></td>
-                        <td></td>
+                        <!--油缸压力-->
+                        <td>{{'cylinderPressure'|translate}}</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.oilPressure|number: 2}}MPa</td>
                         <!--锁车状态-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1||deviceAerialCurrentInfoController.deviceinfo.lockState==0">{{'lockedCarStatus'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1">{{'lockedCar'|translate}}</td>
