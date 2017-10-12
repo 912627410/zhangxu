@@ -100,10 +100,33 @@
      * 跳转到更新页面
      * @param id
      */
-    vm.update=function(id){
-      $state.go('rental.updateCustomer', {id: id});
+    // vm.update=function(id){
+    //   $state.go('rental.updateCustomer', {id: id});
+    // }
+    //修改客户信息
+    vm.update=function(customerId){
+      var modalInstance= $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
+        controller: 'updateRentalCustomerController',
+        controllerAs:'updateRentalCustomerController',
+        size: 'lg',
+        resolve: {
+          customreId: function () {
+            return customerId;
+          }
+        }
+      });
+      modalInstance.result.then(function (newVal) {
+        // vm.machineCount += 1;
+        // vm.customConfigParams.data.splice(0, 0, newVal);
+      }, function () {
+        //取消
+      });
     }
- /**
+
+     /**
      * 跳转到查看页面
      * @param id
      */
