@@ -1,13 +1,4 @@
 <div class="profit-content" ng-controller="incomeStatisticsController as incomeStatisticsCtr" resize>
-
-  <!--<nav-btn>-->
-    <!--<nav-title></nav-title>-->
-    <!--<nav-list>-->
-      <!--<nav-item ng-click="incomeStatisticsCtr.gotoAnchor(item.title)"></nav-item>-->
-    <!--</nav-list>-->
-    <!--<nav-overlay></nav-overlay>-->
-  <!--</nav-btn>-->
-  <!--Income statistics-->
   <div id="income" class="container-fluid  profitItem ">
     <section class="renatlcontent-header">
       <h1>
@@ -24,7 +15,7 @@
         <div class="info-box  box-light">
           <div class="info-box-left-text"  style="cursor:pointer;">
             <span class="info-box-left-text-top">{{'rentalTotalIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >{{incomeStatisticsCtr.totalIncome}}</span>
+            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.totalIncome}}</span>
           </div>
           <div class="miniChart"></div>
         </div>
@@ -33,7 +24,7 @@
         <div class="info-box  box-light">
           <div class="info-box-left-text"  style=" cursor:pointer;">
             <span class=" info-box-left-text-top">{{'rentalScissorLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below">{{incomeStatisticsCtr.jcTotalIncome}}</span>
+            <span class="info-box-number info-box-left-text-below">¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
           </div>
           <div class="miniChart"></div>
         </div>
@@ -42,7 +33,7 @@
         <div class="info-box  box-light">
           <div class="info-box-left-text"   style=" cursor:pointer;">
             <span class=" info-box-left-text-top">{{'rentalBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >{{incomeStatisticsCtr.zbTotalIncome}}</span>
+            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
           </div>
           <div class="miniChart"></div>
         </div>
@@ -51,11 +42,85 @@
         <div class="info-box  box-light">
           <div class="info-box-left-text"   style=" cursor:pointer;">
             <span class="info-box-left-text-top">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >{{incomeStatisticsCtr.qbTotalIncome}}</span>
+            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
           </div>
           <div class="miniChart"></div>
         </div>
       </div>
+    </div>
+    <div class="container-fluid table-wrapper" style="margin-top: 15px;">
+      <div  class=" col-md-2">
+        <div class="row">
+          <label class="control-label">{{'rentalQueryType'|translate}}</label>
+        </div >
+        <div class="row">
+          <select class="form-control" style="width: 125px;display: inline-block;" ng-change="incomeStatisticsCtr.change(incomeStatisticsCtr.queryType)" ng-model="incomeStatisticsCtr.queryType">
+            <option value="1" ng-selected="true">{{'rentalByOrder'|translate}}</option>
+            <option value="2">{{'rentalByMachine'|translate}}</option>
+          </select>
+        </div>
+
+      </div>
+      <div  class=" col-md-10" ng-show="incomeStatisticsCtr.orderQuery">
+          <div class="form-group">
+            <div class="row info-box-container">
+              <label class="col-md-1 control-label">{{'rentalWorkLocation'|translate}}</label>
+              <div class="col-md-2" >
+                <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
+              </div>
+
+
+              <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}</label>
+              <div class="col-md-2" >
+                <input type="text" name="customerName" class="form-control"  ng-model="incomeStatisticsCtr.rentalOrder.customerName"
+                       placeholder="{{'rentalCustomerName'|translate}}"/>
+              </div>
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="row info-box-container">
+              <div class="col-md-1">
+                <label class="control-label">{{'rentalStartingDate'|translate}}</label>
+              </div>
+              <div class="col-md-2">
+                <p class="input-group" >
+                  <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                         ng-model="incomeStatisticsCtr.endDate"
+                         is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                         datepicker-options="incomeStatisticsCtr.dateOptions"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" required readonly="readonly" />
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </p>
+              </div>
+              <div class="col-md-1">
+                <label class="control-label">{{'rentalEndDate'|translate}}</label>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group" >
+                  <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                         ng-model="incomeStatisticsCtr.endDate"
+                         is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                         datepicker-options="incomeStatisticsCtr.dateOptions"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
+                  <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button  type="button" class="btn btn-sm btn-primary searchButton" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
+                <button  type="button" class="btn btn-sm btn-default searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div  class="col-md-10"></div>
     </div>
 
     <div class="info-box-container searchLine row">
@@ -66,68 +131,7 @@
           <option value="2">{{'rentalByMachine'|translate}}</option>
         </select>
       </div>
-      <div class="col-md-10" ng-show="incomeStatisticsCtr.orderQuery" >
-        <div class="forminline" >
-          <label>{{'rentalWorkLocation'|translate}}</label>
-          <div class="forminline" style="width: 150px;">
-            <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
-          </div>
-        </div>
 
-        <div class="forminline" >
-          <label>{{'rentalCustomerName'|translate}}</label>
-          <div class="forminline" style="width: 150px;">
-            <input type="text" name="customerName" class="form-control"  ng-model="incomeStatisticsCtr.rentalOrder.customerName"
-                   placeholder="{{'rentalCustomerName'|translate}}"/>
-          </div>
-        </div>
-
-        <div class="form-inline forminline" style="width: 18%;vertical-align: top;">
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalStartingDate'|translate}}:</label>
-            <div class="input-group" >
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                     ng-model="incomeStatisticsCtr.startDate"
-                     is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
-                     datepicker-options="incomeStatisticsCtr.dateOptions"
-                     min-date="incomeStatisticsCtr.minDate"
-                     max-date="incomeStatisticsCtr.maxDate"
-
-                     ng-required="true"
-                     current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
-              <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-
-                        </span>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="form-inline  forminline"  style="width: 18%;vertical-align: top;" >
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalEndDate'|translate}}:</label>
-            <div class="input-group" >
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                     ng-model="incomeStatisticsCtr.endDate"
-                     is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
-                     datepicker-options="incomeStatisticsCtr.dateOptions"
-                     ng-required="true" current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
-              <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-            </div>
-          </div>
-        </div>
-
-        <button  type="button" class="btn btn-sm btn-primary searchButton" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
-        <button  type="button" class="btn btn-sm btn-default searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
-
-      </div>
       <div class="col-md-10" ng-show="incomeStatisticsCtr.machineQuery">
         <div class="forminline" >
           <label >{{'rentalMachineType'|translate}}</label>
@@ -212,6 +216,7 @@
         <button  type="button" class="btn btn-sm btn-default  searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
       </div>
     </div>
+
     <div class="row incomePic" >
       <div class="col-md-6 leftSelect">
         <div class="liBox" >
@@ -223,9 +228,9 @@
                   <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
                   <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{rentalOrder.id}}</td>
                   <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
-                  <td class="text-nowrap" data-title="'rentalWorkLocation'|translate" sortable="'statusDesc'">{{rentalOrder.location }}</td>
-                  <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'statusDesc'">{{rentalOrder.deposit }}</td>
-                  <td class="text-nowrap" data-title="'rentalIncomeReceivable'|translate" sortable="'statusDesc'">{{rentalOrder.totalAmt }}</td>
+                  <td class="text-nowrap" data-title="'rentalWorkLocation'|translate" sortable="'rentalWorkLocation'">{{rentalOrder.location }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceived'|translate" sortable="'rentalIncomeReceived'">{{rentalOrder.deposit }}</td>
+                  <td class="text-nowrap" data-title="'rentalIncomeReceivable'|translate" sortable="'rentalIncomeReceivable'">{{rentalOrder.totalAmt }}</td>
                 </tr>
               </table>
             </div>
