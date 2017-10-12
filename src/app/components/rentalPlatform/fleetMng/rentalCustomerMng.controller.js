@@ -9,12 +9,11 @@
     .controller('rentalCustomerMngController', rentalCustomerMngController);
 
   /** @ngInject */
-  function rentalCustomerMngController($scope, $window, $location,$state,$filter, $anchorScroll, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL) {
+  function rentalCustomerMngController($window,$state, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
-
 
 
     //组织树的显示
@@ -38,7 +37,7 @@
     //初始化高度
     vm.adjustWindow($window.innerHeight);
 
-
+    //分页查询客户信息
     vm.query = function (page, size, sort, customer) {
       var restCallURL = RENTAL_CUSTOMER_PAGE_URL;
       var pageUrl = page || 0;
@@ -81,13 +80,8 @@
         Notification.error("获取客户数据失败");
       });
     };
-
-
     vm.query(null,null,null,null);
 
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("machine:oper");
-    }
 
     //重置查询框
     vm.reset = function () {
@@ -96,34 +90,39 @@
       vm.querySubOrg=false;
     }
 
-    /**
-     * 跳转到更新页面
-     * @param id
-     */
-    // vm.update=function(id){
-    //   $state.go('rental.updateCustomer', {id: id});
-    // }
+
     //修改客户信息
-    vm.update=function(customerId){
-      var modalInstance= $uibModal.open({
+    vm.updateCustomer = function(customer){
+
+      var customerUrl=RENTAL_CUSTOMER_URL+"?id="+ customer.id;
+      var rspdata = serviceResource.restCallService(customerUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalCustomer=data.content;
+
+        var modalInstance= $uibModal.open({
         animation: true,
-        backdrop: false,
         templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
         controller: 'updateRentalCustomerController',
-        controllerAs:'updateRentalCustomerController',
+        controllerAs:'updateRentalCustomerCtrl',
         size: 'lg',
         resolve: {
-          customreId: function () {
-            return customerId;
+          rentalCustomer: function () {
+            return rentalCustomer;
           }
         }
       });
-      modalInstance.result.then(function (newVal) {
-        // vm.machineCount += 1;
-        // vm.customConfigParams.data.splice(0, 0, newVal);
-      }, function () {
-        //取消
-      });
+        modalInstance.result.then(function (result) {
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+        }, function () {
+          //取消
+        });
+      })
     }
 
      /**
@@ -134,12 +133,12 @@
       $state.go('rental.viewCustomer', {id: id});
     }
 
-
+    //新建客户信息
     vm.new=function(){
       var modalInstance= $uibModal.open({
         animation: true,
         backdrop: false,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomer.html',
         controller: 'newRentalCustomerController',
         controllerAs:'newRentalCustomerCtrl',
         size: 'lg'

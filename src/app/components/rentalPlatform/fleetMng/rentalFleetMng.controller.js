@@ -116,39 +116,6 @@
     }
 
 
-    //更新fleet
-    vm.updateFleet = function (fleet, size, type) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalFleetMng.html',
-        controller: 'updateRentalFleetController as updateRentalFleetController',
-        size: size,
-        backdrop: false,
-        resolve: {
-          fleet: function () {
-            return fleet;
-          },type: function () {
-            return type;
-          }
-        }
-      });
-
-      modalInstance.result.then(function(result) {
-
-        var tabList=vm.tableParams.data;
-        //更新内容
-        for(var i=0;i<tabList.length;i++){
-          if(tabList[i].id==result.id){
-            tabList[i]=result;
-          }
-        }
-
-      }, function(reason) {
-
-      });
-    };
-
 
     /**
      * 左拖动触发事件
@@ -357,8 +324,8 @@
       var dest=destArray;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrgMachineListMng.html',
-        controller: 'orgMachineListMngController as orgMachineListMngController',
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalUnUsedMachineList.html',
+        controller: 'rentalUnUsedMachineListController as rentalUnUsedMachineListCtrl',
         size: size,
         backdrop: false,
         resolve: {

@@ -27,11 +27,11 @@
               <p class="input-group">
 
                 <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
-                       ng-model="newRentalMaintenanceController.machine.licenseId" name="licenseId" readonly
+                       ng-model="newRentalMaintenanceCtrl.machine.licenseId" name="licenseId" readonly
                        validator="required"/>
                 <span class="input-group-btn">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="newRentalMaintenanceController.selectMachine('lg')">
+            <button type="button" class="btn btn-default" ng-click="newRentalMaintenanceCtrl.selectMachine('lg')">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
@@ -40,12 +40,12 @@
 
             <label  class="col-md-1 control-label">{{'rentalMaintenanceCertification'|translate}}</label>
             <div class="col-md-2">
-              <input type="text" name="reason" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.reason"
+              <input type="text" name="reason" class="form-control"  ng-model="newRentalMaintenanceCtrl.maintenance.reason"
                      placeholder="{{'rentalMaintenanceCertification'|translate}}"/>
             </div>
             <label class="col-md-1 control-label">{{'rentalMaintenanceDescripition'|translate}}</label>
             <div class="col-md-5">
-              <input type="text" name="description" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.description"
+              <input type="text" name="description" class="form-control"  ng-model="newRentalMaintenanceCtrl.maintenance.description"
                      placeholder="{{'rentalMaintenanceDescripition'|translate}}"/>
             </div>
 
@@ -56,14 +56,14 @@
             <label class="col-md-1 control-label">{{'rentalTotalMaintenanceCost'|translate}}</label>
             <div class="col-md-2">
               <input type="text" name="totalMaintentanceCost"
-                     class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalMaintentanceCost"
+                     class="form-control"  ng-model="newRentalMaintenanceCtrl.maintenance.totalMaintentanceCost"
                      placeholder="{{'rentalTotalMaintenanceCost'|translate}}" validator="required"/>
 
             </div>
 
             <label  class="col-md-1 control-label">{{'rentalTotalLaborCost'|translate}}</label>
             <div class="col-md-2">
-              <input type="text" name="totalOperatorCost" class="form-control"  ng-model="newRentalMaintenanceController.maintenance.totalOperatorCost"
+              <input type="text" name="totalOperatorCost" class="form-control"  ng-model="newRentalMaintenanceCtrl.maintenance.totalOperatorCost"
                      placeholder="{{'rentalTotalLaborCost'|translate}}" validator="required"/>
             </div>
 
@@ -73,9 +73,9 @@
 
           <div class="col-lg-12 table-responsive "><!--表格框-->
             <script id="selectAllHeader" type="text/ng-template">
-              <input type="checkbox"  ng-click="newRentalMaintenanceController.updateAllSelection($event)">
+              <input type="checkbox"  ng-click="newRentalMaintenanceCtrl.updateAllSelection($event)">
             </script>
-            <table ng-table="newRentalMaintenanceController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+            <table ng-table="newRentalMaintenanceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="maintenanceList in $data">
 
                 <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
@@ -98,7 +98,7 @@
 
                     <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
-                          ng-click="newRentalMaintenanceController.open($event,maintenanceList)">
+                          ng-click="newRentalMaintenanceCtrl.open($event,maintenanceList)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
@@ -116,7 +116,7 @@
                              ng-disabled="disabled" validator="required">
                     <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
                     </ui-select-match>
-                    <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceController.listStatusList">
+                    <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceCtrl.listStatusList">
                       <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search"></div>
                     </ui-select-choices>
                   </ui-select>
@@ -131,8 +131,8 @@
       </div>
     </form>
     <div class="box-footer">
-      <button class="btn btn-primary" type="button" validation-submit="form" ng-click="newRentalMaintenanceController.ok()">{{'confirm'|translate}}</button>
-      <button class="btn btn-warning" type="button" ng-click="newRentalMaintenanceController.cancel()">{{'cancel'|translate}}</button>
+      <button class="btn btn-primary" type="button" validation-submit="form" ng-click="newRentalMaintenanceCtrl.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="newRentalMaintenanceCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 
 
