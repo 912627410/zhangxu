@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="row form-group" ng-show="machineComparedMngCtrl.only">
-      <label class="control-label col-md-2">车辆类型:</label>
+      <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
       <div class="controls col-md-3">
         <input type="radio" name="vehicleType" value="A1" ng-model="machineComparedMngCtrl.machineType" />小挖
         <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
@@ -77,13 +77,13 @@
     </div>
     <div ng-show="machineComparedMngCtrl.contrast">
       <div class="row form-group">
-        <label class="control-label col-md-2">车辆类型:</label>
+        <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
         <div class="controls col-md-3">
           <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />小挖
           <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
           <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>中挖
         </div>
-        <label class="control-label col-md-2">车辆类型:</label>
+        <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
         <div class="controls col-md-3">
           <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />小挖
           <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
@@ -119,13 +119,13 @@
           <div style="position: relative;">
             <div
               style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              {{'averageWorkingHours'|translate}}
             </div>
             <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+              <li>总平均：6.24{{'hour'|translate}}</li>
+              <li style="color: #00bb9c;">挖掘机：6.39{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99{{'hour'|translate}}<span></span><img src="assets/images/down.png"/></li>
             </ul>
             <a class="backChina" style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina1();">
               <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
@@ -139,13 +139,13 @@
           <div style="position: relative;">
             <div
               style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              {{'averageWorkingHours'|translate}}
             </div>
             <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+              <li>总平均：6.24{{'hour'|translate}}</li>
+              <li style="color: #00bb9c;">挖掘机：6.39{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99{{'hour'|translate}}<span></span><img src="assets/images/down.png"/></li>
             </ul>
             <a class="backChina"  style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina2();">
               <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
@@ -160,7 +160,7 @@
       <label class="control-label col-md-3">热度分布</label>
       <div class="controls">
         <select class="form-control col-md-5" ng-model="machineComparedMngCtrl.heatType3">
-          <option value="1" ng-selected="true">开工热度分布</option>
+          <option value="1" ng-selected="true">{{'startHeatDistribution'|translate}}</option>
           <option value="0">销售热度分布</option>
         </select>
       </div>

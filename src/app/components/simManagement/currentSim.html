@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">SIM卡状态(查询的数据来自运营商)</h3>
+  <h3 class="modal-title">{{'SIMState(DataComesfromOperators)'|translate}}</h3>
 </div>
 <form name="myForm" class="form-horizontal ">
   <div class="modal-body">
@@ -43,9 +43,9 @@
       <hr/>
       <div class="row">
         <div class="form-group">
-          <label for="gprs" class="col-md-2 control-label text-nowrap">GPRS流量</label>
+          <label for="gprs" class="col-md-2 control-label text-nowrap">{{'GPRSTraffic'|translate}}</label>
           <div class="col-md-8">
-            <input type="text" readonly id="gprs" class="form-control" placeholder="GPRS流量"
+            <input type="text" readonly id="gprs" class="form-control" placeholder="{{'GPRSTraffic'|translate}}"
                    ng-model="currentSimController.gprs" name="unActiveMsg"/>
           </div>
           <div class="col-md-2">

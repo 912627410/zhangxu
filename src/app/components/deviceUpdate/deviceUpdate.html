@@ -47,11 +47,11 @@
     </div>
     <div class="col-md-3">
       <select class="form-control" ng-model="deviceUpdateCtrl.queryDeviceType">
-        <option value="A1">{{'smallExcavator'|translate}}</option>
-        <option value="2,3,30,1001,1002">{{'oreMachine'|translate}}</option>
-        <option value="40">{{'mediumExcavator'|translate}}</option>
-        <option value="1">{{'loader'|translate}}</option>
-        <option value="A001">{{'arialVehicle'|translate}}</option>
+        <!--<option value="A1">{{'smallExcavator'|translate}}</option>-->
+        <option value="1001,1002">{{'oreMachine'|translate}}</option>
+        <!--<option value="40">{{'mediumExcavator'|translate}}</option>-->
+        <!--<option value="1">{{'loader'|translate}}</option>-->
+        <option value="11">{{'arialVehicle'|translate}}</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -85,8 +85,9 @@
             </td>
             <td class="text-nowrap" data-title="'设备号'" sortable="'deviceNum'">{{deviceinfo.deviceNum}}</td>
             <td class="text-nowrap" data-title="'整机编号/车号'" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
-            <td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum=='A001'||deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</td>
-            <td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum!='A001'&&deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</td>
+            <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum=='A001'||deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</td>-->
+            <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum!='A001'&&deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</td>-->
+            <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
             <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
             <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion!=null">VER{{deviceinfo.gpsSoftVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion==null"></td>

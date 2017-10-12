@@ -63,6 +63,10 @@
       }
       var LocateDataPromis = serviceResource.restCallService(restCallURL, 'GET');
       LocateDataPromis.then(function (data) {
+        if (data.content.length<=0){
+          Notification.warning(languages.findKey('noData'));
+          return;
+        }
         vm.deviceLocateData = new NgTableParams({}, {dataset: data.content});
         vm.totalElements = data.totalElements;
         vm.currentPage = data.number + 1;

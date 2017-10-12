@@ -14,9 +14,14 @@
   function fleetMapMonitorController(WORK_POINT_URL,$scope,$rootScope,$timeout,fleetTreeFactory, Map, AMAP_GEO_CODER_URL,languages,WEBSOCKET_URL,DEVCE_PAGED_QUERY, serviceResource, Notification) {
     var vm = this;
     vm.workPointList = [];
-    vm.fleet = $rootScope.fleetChart[0];
     vm.operatorInfo = $rootScope.userInfo;
     vm.markerMap = angular.copy(Map);
+
+    var fleetChart = $rootScope.fleetChart[0];
+    while (fleetChart.children.length > 0) {
+      fleetChart = fleetChart.children[0];
+    }
+    vm.fleet = fleetChart;
 
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
@@ -271,9 +276,10 @@
 
     var initEventHandle = function() {
       ws.onclose = function () {
-        reconnect(wsUrl);
+        // reconnect(wsUrl);
       };
       ws.onerror = function () {
+        // Notification.error("fleetMap WebSocket Error!");
         reconnect(wsUrl);
       };
       ws.onopen = function () {
@@ -298,12 +304,12 @@
 
     var reconnect = function(url) {
       if(lockReconnect) return;
-      lockReconnect = true;
+      // lockReconnect = true;
       //没连接上会一直重连，设置延迟避免请求过多
       setTimeout(function () {
         vm.createWebSocket(url);
-        lockReconnect = false;
-      }, 2000);
+        // lockReconnect = false;
+      }, 3000);
     };
 
     //心跳检测
@@ -333,6 +339,8 @@
       ws.close();
       ws.onclose = function () { };
       heartCheck.reset();
+      lockReconnect = true;
+      reconnect(null);
     }
 
   }

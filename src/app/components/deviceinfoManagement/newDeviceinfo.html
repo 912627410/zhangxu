@@ -7,7 +7,7 @@
       <div class="form-group">
         <label for="deviceNum" class="col-sm-2 control-label">{{'deviceNum'|translate}}</label>
         <div class="col-sm-10">
-          <input type="text" id="deviceNum" class="form-control" placeholder="手工输入6位号码或扫条码" ng-minlength='6' ng-maxlength='26'
+          <input type="text" id="deviceNum" class="form-control" placeholder="{{'enterScanBarcode'|translate}}" ng-minlength='6' ng-maxlength='26'
                  ng-model="newDeviceinfoController.deviceinfo.deviceNum" name="deviceNum" typeahead-show-hint="false"
                  ng-change="newDeviceinfoController.deviceNumInputChanged(newDeviceinfoController.deviceinfo.deviceNum)"
                  validator="required,numberAndCharAndDot" checkurl="http://www.baidu.com"/>
@@ -30,12 +30,12 @@
         <div class="col-sm-10">
           <ui-select name="phoneNumber" ng-model="newDeviceinfoController.deviceinfo.sim" theme="bootstrap"
                      ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true" placeholder="输入SIM卡号后4位">{{$select.selected.phoneNumber}}
+            <ui-select-match allow-clear="true" placeholder="{{'lastFourSIMNumber'|translate}}">{{$select.selected.phoneNumber}}
             </ui-select-match>
             <ui-select-choices repeat="sim in newDeviceinfoController.simList"
                                refresh="newDeviceinfoController.refreshSimList($select.search)"
                                refresh-delay="0">
-              <div ng-bind-html="sim.phoneNumber | highlight: $select.search"></div>
+              <div ng-bind-html="sim.phoneNumber | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -47,7 +47,7 @@
           <select validator="required" name="deviceMF" required class="form-control"
                   ng-model="newDeviceinfoController.deviceinfo.protocalType"
                   ng-options="protocalType.value as protocalType.desc for protocalType in newDeviceinfoController.protocalTypeList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>
@@ -56,7 +56,7 @@
         <label class="col-sm-2 control-label">{{'type'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceType" ng-options="deviceType.id as deviceType.name for deviceType in newDeviceinfoController.deviceTypeList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>
@@ -64,7 +64,7 @@
         <label class="col-sm-2 control-label">{{'Manufacturer'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceManufacture" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceManufacture" ng-options="deviceMF.id as deviceMF.name for deviceMF in newDeviceinfoController.deviceMFList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>
@@ -72,7 +72,7 @@
         <label for="devicepowertype" class="col-sm-2 control-label">{{'driveType'|translate}}</label>
         <div class="col-sm-10">
           <select id="devicePowerType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.devicePowerType" ng-options="devicePowerType.id as devicePowerType.name for devicePowerType in newDeviceinfoController.devicePowerTypeList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>
@@ -80,7 +80,7 @@
         <label class="col-sm-2 control-label">{{'highlyType'|translate}}</label>
         <div class="col-sm-10">
           <select name="deviceHeightType" class="form-control" ng-model="newDeviceinfoController.deviceinfo.deviceHeightType" ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in newDeviceinfoController.deviceHeightTypeList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>

@@ -120,7 +120,7 @@
 
 
     vm.statusDisable = function (privilegeInfo) {
-      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: '确定', cancel: '取消'})
+      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           privilegeInfo.status =0;
           var restPromise = serviceResource.restUpdateRequest(PRIVILEGE_URL, privilegeInfo);
@@ -135,7 +135,7 @@
     };
 
     vm.statusEnable = function (privilegeInfo) {
-      $confirm({text: '确定要启用吗?',title: '启用确认', ok: '确定', cancel: '取消'})
+      $confirm({text: '确定要启用吗?',title: '启用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           privilegeInfo.status =1;
           var restPromise = serviceResource.restUpdateRequest(PRIVILEGE_URL, privilegeInfo);

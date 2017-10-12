@@ -47,10 +47,10 @@
                         <div>{{deviceNum}}</div>
                       </div>
                       <div class="info-middle" style="background-color: white;">
-                        经度: {{latitude}}<br>
-                        纬度: {{longitude}}<br>
-                        当前位置:{{address}}<br>
-                        平台接收时间:{{lastDataUploadTime}}<br>
+                        {{'longitude'|translate}}: {{latitude}}<br>
+                        {{'latitude'|translate}}: {{longitude}}<br>
+                        {{'currentPosition'|translate}}:{{address}}<br>
+                        {{'returnTime'|translate}}:{{lastDataUploadTime}}<br>
                       </div>
                     </div>
                   </div>
@@ -151,7 +151,7 @@
         <option value="2,3,30,1001,1002">{{'oreMachine'|translate}}</option>
         <option value="40">{{'mediumExcavator'|translate}}</option>
         <option value="1">{{'loader'|translate}}</option>
-        <option value="A001">{{'arialVehicle'|translate}}</option>
+        <option value="A001,11">{{'arialVehicle'|translate}}</option>
       </select>
     </div>
     <div class="col-md-offset-7 col-md-2">

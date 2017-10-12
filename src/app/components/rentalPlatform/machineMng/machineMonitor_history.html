@@ -28,8 +28,8 @@
                 deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
       </div>
       <div class="col-md-3">
-        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
-        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'exportCurrentPage'|translate}}</a>
+        <a class="btn"  title="Export Table" presentation-href="dashboard:deviceMonitor:historyData:export"  ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'exportAll'|translate}}</a>
       </div>
     </div>
     <div class="row">
@@ -207,11 +207,13 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-md-12">
         <uib-pagination total-items="deviceCurrentInfoCtrl.deviceDataPage.totalElements" ng-change="deviceCurrentInfoCtrl.getDeviceData(deviceCurrentInfoCtrl.deviceDataPageNumber-1,8,null,deviceCurrentInfoCtrl.totalElements,false,
                   deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)" max-size="10" ng-model="deviceCurrentInfoCtrl.deviceDataPageNumber" items-per-page="deviceCurrentInfoCtrl.deviceDataPage.size" class="pagination-sm" boundary-links="true" rotate="false" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
       </div>
+
     </div>
   </div>
 </div>

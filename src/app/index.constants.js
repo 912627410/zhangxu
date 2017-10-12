@@ -40,6 +40,7 @@
     .constant('DEVCEINFO_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceParameter')   //设备参数
     .constant('DEVCEINFO_CALIBRATION_PARAMETER_URL', SERVER_BASE_URL + 'deviceMonitor/deviceCalibrationParameter')   //设备标定参数
     .constant('CALIBRATION_PARAMETER_EXPORT', SERVER_BASE_URL + 'deviceMonitor/calibrationParameterExport')  //标定参数数据导出
+    .constant('CALIBRATION_PARAMETER_IMPORT', SERVER_BASE_URL + 'deviceMonitor/calibrationParameterImport')  //标定参数数据导入
     .constant('DEVCEINFO_URL', SERVER_BASE_URL + 'device/deviceinfo')   //设备crud
     .constant('DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/devicedata')   //分页查询设备数据URL
     .constant('BATTERY_CHART_DATA', SERVER_BASE_URL + 'deviceCharger/historyData')   //充电设备电压数据URL
@@ -149,8 +150,14 @@
     .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
-    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTReturnTime')   // 设置车队回传时间
-    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTDefaultReturnTime')   // 设置车队默认的回传时间间隔
+    .constant('GET_SET_SAMPLING_TIME_SMS_URL', SERVER_BASE_URL + 'sms/getSetSamplingTimeSMS')   //得到短消息内容
+    .constant('SEND_SET_SAMPLING_TIME_SMS_URL', SERVER_BASE_URL + 'sms/sendSetSamplingTimeSMS')   //发送短消息
+    .constant('GET_SET_CAT_PHONE_NUMBER_SMS_URL', SERVER_BASE_URL + 'sms/getSetCatPhoneNumberSMS')   //得到短消息内容
+    .constant('SEND_SET_CAT_PHONE_NUMBER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetCatPhoneNumberSMS')   //发送短消息
+    .constant('GET_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/getTerminalResetSMS')   //得到短消息内容
+    .constant('SEND_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/sendTerminalResetSMS')   //发送短消息
+    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTReturnTime')   // MQTT设置回传时间
+    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTDefaultReturnTime')   // MQTT设置默认的回传时间间隔
     .constant('SEND_MQTT_READ_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTRead') // MQTT发送读请求命令
     .constant('SEND_MQTT_OPERATED_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTOperated') //MQTT发布操作命令
     .constant('SEND_MQTT_WRITE_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTWrite') //MQTT发布写命令
@@ -330,9 +337,10 @@
 
     //组织围栏
     .constant('RENTAL_ORG_FENCE_PAGE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//
+    .constant('RENTAL_ORG_FENCE_COUNT',SERVER_BASE_URL + 'rental/orgFence/fence-count')//
     .constant('RENTAL_ORG_FENCE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFence')//
     .constant('RENTAL_ORG_FENCE_STATUS',SERVER_BASE_URL + 'rental/orgFence/statusList')//
-    .constant('RENTAL_ORG_FENCE_DELETE_STATUS',SERVER_BASE_URL + 'rental/orgFence/delete')//
+      .constant('RENTAL_ORG_FENCE_DELETE_STATUS',SERVER_BASE_URL + 'rental/orgFence/delete')//
 
     //租赁车辆信息
     .constant('RENTAL_ORDER_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/orderMachine/page')//租赁订单信息

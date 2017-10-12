@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h3 class="modal-title">批量导入设备</h3>
+  <h3 class="modal-title">{{'batchImportEquipment'|translate}}</h3>
 </div>
 <form name="uploadForm" class="form-horizontal w5c-form "  w5c-form-validate="vm.validateOptions"   >
   <div class="modal-body">
     <div class="box-body">
       <div class="row">
         <div class="col-md-6">
-          单文件：<input ng-file-select type="file"/>
+          {{'singleFile'|translate}}<input ng-file-select type="file"/>
         </div>
       </div>
 
@@ -15,8 +15,8 @@
   </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" w5c-form-submit="" presentation-href="deviceMng:gps:import">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="uploadDeviceinfoController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" w5c-form-submit="" presentation-href="deviceMng:gps:import">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="uploadDeviceinfoController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>
 
