@@ -96,7 +96,7 @@
         vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
 
       }, function (reason) {
-        Notification.error('获取失败');
+        Notification.error(languages.findKey('getFail'));
       })
 
     }
@@ -149,7 +149,7 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
 
@@ -159,7 +159,7 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
 
@@ -243,7 +243,7 @@
    //根据订单参数进行收入统计
     vm.queryByOrder = function (page, size, sort,rentalOrder) {
       if(vm.startDate==null||vm.endDate==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
         return;
       }
       vm.leftOrderListQuery  (page, size, sort, rentalOrder);
@@ -291,7 +291,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
     //右侧根据订单统计的收入数据
@@ -326,7 +326,7 @@
         option.series[1].data = incomeDate;
         lineChart.setOption(option);
       },function (reason) {
-        Notification.error("按订单参数查询获取收入数据失败")
+        Notification.error(languages.findKey('getDataFbyorder'));
       })
     }
 
@@ -334,7 +334,7 @@
     //根据车辆参数进行收入统计
     vm.queryByMachine = function (page, size, sort,rentalMachine) {
       if(vm.startDate==null||vm.endDate==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
         return;
       }
       vm.leftMachineListQuery (page, size, sort, rentalMachine);
@@ -381,7 +381,7 @@
           vm.pageNumber =  data.number + 1;
         }, function (reason) {
           vm.machineList = null;
-          Notification.error("获取车辆数据失败");
+          Notification.error(languages.findKey('getDataVeFail'));
         });
 
 
@@ -423,7 +423,7 @@
         option.series[1].data = incomeDate;
         lineChart.setOption(option);
       },function (reason) {
-        Notification.error("按车辆参数查询获取收入数据失败")
+        Notification.error(languages.findKey('getDateFbyvehicle'));
       })
     }
 

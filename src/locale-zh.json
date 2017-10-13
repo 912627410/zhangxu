@@ -1192,9 +1192,30 @@
   "selTime":"请选择订单开始时间和结束时间!",
   "selOrDiff":"选择的订单不能一样!",
   "newCustomerSucc":"新建客戶成功!",
-  "upOrderSucc":"更新订单成功!"
-
-
+  "upOrderSucc":"更新订单成功!",
+  "selSEtime":"请选择开始时间或者结束时间!",
+  "getFail":"获取失败!",
+  "getHtFail":"获取高度类型失败!",
+  "getVendorFail":"获取厂商失败!",
+  "getDataFbyorder":"按订单参数查询获取收入数据失败!",
+  "getDataVeFail":"获取车辆数据失败!",
+  "getDateFbyvehicle":"按车辆参数查询获取收入数据失败!",
+  "getStatusFail":"获取状态失败!",
+  "getDriFail":"获取驱动类型失败!",
+  "getHeFail":"获取高度失败!",
+  "getTypeFail":"获取类型失败!",
+  "getDevTypeFail":"获取设备类型失败!",
+  "newDevSucc":"新建设备信息成功!",
+  "getProFail":"获取协议类型失败!",
+  "modiDevInfSucc":"修改设备信息成功!",
+  "getLabourCostTypeFail":"获取人工成本类型失败!",
+  "getMaCostTypeFail":"获取保养费用类型失败!",
+  "getVeStaFail":"获取车辆状态失败!",
+  "getEnTypeFail":"获取发动机类型失败!",
+  "getVeHeiFail":"获取车辆高度失败!",
+  "getStaGroupFail":"获取状态分组失败!",
+  "getIncomeInf":"获取收入统计信息失败!",
+  "getProFail":"获取利润数据失败!"
 
 
 

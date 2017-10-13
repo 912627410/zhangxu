@@ -66,7 +66,7 @@
       engineTypeData.then(function (data) {
         vm.engineTypeList = data;
       }, function (reason) {
-        Notification.error('获取发动机类型失败');
+        Notification.error(languages.findKey('getEnTypeFail'));
       })
     };
 
@@ -78,7 +78,7 @@
       machineStatePromise.then(function (data) {
         vm.machineStateList = data;
       }, function (reason) {
-        Notification.error('获取车辆状态失败');
+        Notification.error(languages.findKey('getVeStaFail'));
       })
     };
 
@@ -102,7 +102,7 @@
      machineHeightType.then(function (data) {
        vm.machineHeightType = data.content;
      }, function (reason) {
-       Notification.error('获取车辆高度失败');
+       Notification.error(languages.findKey('getVeHeiFail'));
      })
    }
 
