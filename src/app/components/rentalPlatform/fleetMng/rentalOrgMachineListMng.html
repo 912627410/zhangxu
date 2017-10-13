@@ -40,7 +40,7 @@
         <div class="col-md-2">
           <ui-select name="deviceType" ng-model="orgMachineListMngController.searchConditions.typeId" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="deviceType in orgMachineListMngController.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search|translate"></div>

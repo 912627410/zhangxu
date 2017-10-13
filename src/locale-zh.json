@@ -1067,7 +1067,6 @@
   "rotatingSpeed": "转速指数",
   "MTBF": "平均故障时间间隔",
   "equipmentJobAnalysis": "设备工作分析",
-  "workingHours": "工作时间",
   "bootTimes": "开机次数",
   "drivingHabit": "驾驶习惯指数",
   "goodDrivingHabits": "驾驶习惯良好",
@@ -1107,7 +1106,6 @@
   "perday": "台天",
   "bootTime": "开机时间",
   "shutdownTime": "关机时间",
-
   "checktheTimeSettings":"请检查时间设置，回传时间须全部设置",
 
 
@@ -1185,8 +1183,7 @@
   "neglect":"忽略",
   "profile":"个人信息",
   "setting":"设置",
-  "faster":"加速",
-  "slower":"减速",
+
 
   "fenceName":"围栏名称",
   "fenceAddress":"围栏地址",
@@ -1195,15 +1192,11 @@
   "modifier":"修改人",
   "manage":"管理",
   "newFence":"新建围栏",
-
   "fuzzyAddress":"地址(支持模糊查询)",
-
   "description":"描述",
   "name":"名称",
   "organizationalInformation":"组织信息",
   "运输":"运输",
-  "numbers":"数量",
-  "height":"高度",
   "dayPrice":"单价(/天)",
   "transferVehicle":"调拨车辆",
   "exCurrentPage":"导出当前页",
@@ -1214,7 +1207,19 @@
   "delConfirmation":"删除确认",
   "enDrive":"发动机驱动",
   "hyDrive":"液压驱动",
-  "elDrive":"电驱动"
+  "elDrive":"电驱动",
+  "发动机驱动":"发动机驱动",
+  "液压驱动":"液压驱动",
+  "电驱动":"电驱动",
+  "newOrderSucc":"新建订单成功!",
+  "transVehicle":"调入车辆成功!",
+  "transVehiclFail":"调入车辆失败!",
+  "selTime":"请选择订单开始时间和结束时间!",
+  "selOrDiff":"选择的订单不能一样!",
+  "newCustomerSucc":"新建客戶成功!",
+  "upOrderSucc":"更新订单成功!"
+
+
 
 
 
