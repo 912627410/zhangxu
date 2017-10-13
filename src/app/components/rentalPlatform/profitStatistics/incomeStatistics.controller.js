@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages,MACHINE_DEVICETYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -141,6 +141,16 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
+
+    /**
+     * 得到机器类型集合
+     */
+      var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+        vm.machineTypeList = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
 
 
     //查询高度类型

@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, MACHINE_DEVICETYPE_URL,Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     var xAxisDate = [];
@@ -69,7 +69,15 @@
       $anchorScroll();
     }
 
-
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");

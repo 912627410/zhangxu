@@ -27,7 +27,8 @@
               Total
             </span>
             <div>
-              {{profitStatisticsCtr.incomeStatisticInfo.totalMachines}}
+              <!--{{profitStatisticsCtr.incomeStatisticInfo.totalMachines}}-->
+              ¥3200
             </div>
           </section>
         </div>
@@ -45,8 +46,8 @@
         <div class="info-box ">
           <h4>{{'rentalAccumulatedProfits'|translate}}</h4>
           <section>
-            <span>54.321（元）</span>
-            <div><i>↑</i>12%</div>
+            <span>¥666</span>
+            <div><i  style="font-size: 28px;">↑</i>5%</div>
           </section>
         </div>
       </div>
@@ -54,8 +55,8 @@
         <div class="info-box ">
           <h4>{{'rentalNewProfit'|translate}}</h4>
           <section>
-            <span>52.1（元）</span>
-            <div><i>↑</i>6%</div>
+            <span>¥100</span>
+            <div><i style="font-size: 28px;">↑</i>6%</div>
           </section>
         </div>
       </div>
@@ -63,23 +64,19 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label>{{'rentalMachineType'|translate}}</label>
+          <label>{{'deviceType'|translate}}</label>
           <div class="forminline" style="width: 150px;">
-            <select class="form-control" ng-model="profitStatisticsCtr.machineType">
-              <option value="1">{{'rentalScissorLift'|translate}}</option>
-              <option value="2">{{'rentalBoomLift'|translate}}</option>
-              <option value="3">{{'rentalArticulatingBoomLift'|translate}}</option>
-            </select>
+            <ui-select  ng-model="profitStatisticsCtr.machineType" ng-disabled="disabled" required>
+              <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
+              <ui-select-choices repeat="machineType.id as machineType in profitStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
 
         <div class="forminline" >
           <label>{{'highlyType'|translate}}</label>
-          <!--<select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"-->
-                  <!--ng-model="profitStatisticsCtr.queryDeviceHeightType"-->
-                  <!--ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in profitStatisticsCtr.deviceHeightTypeList">-->
-            <!--<option value=""></option>-->
-          <!--</select>-->
 
           <ui-select name="deviceHeightType" ng-model="profitStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
@@ -91,12 +88,7 @@
           </ui-select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">{{'rentalBrand'|translate}}</label>
-          <!--<select name="machineManufacture" class="form-control forminline " style="width: 150px;"-->
-                  <!--ng-model="profitStatisticsCtr.queryManufacture"-->
-                  <!--ng-options="machineMF.id as machineMF.name for machineMF in profitStatisticsCtr.machineMFList">-->
-            <!--<option value=""></option>-->
-          <!--</select>-->
+          <label class="">{{'brandType'|translate}}</label>
 
           <ui-select name="deviceManufacture" ng-model="profitStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
