@@ -1179,6 +1179,8 @@
   "modelComparison": "车型对比",
   "viewTheContrastResults": "查看对比结果",
   "singleModel": "单一车型",
+  "averageWorkingHours": "平均开工时间",
+  "averageWorkingFrequency": "平均开工次数",
 
   "checktheTimeSettings":"请检查时间设置，回传时间须全部设置",
 

@@ -1181,6 +1181,8 @@
   "modelComparison": "Model comparison",
   "viewTheContrastResults": "View the contrast results",
   "singleModel": "Single model",
+  "averageWorkingHours": "Average working hours",
+  "averageWorkingFrequency": "Average work frequency",
 
   "checktheTimeSettings":"Please check the time setting, and the return time must be fully set.",
 
