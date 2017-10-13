@@ -12,7 +12,12 @@
   function fleetLineMonitorController($rootScope,$scope,$filter,WORK_LINE_URL,WORK_INITIAL_MONITOR,Map,fleetTreeFactory, WEBSOCKET_URL,Notification,serviceResource,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.fleet = $rootScope.fleetChart[0];
+
+    var fleetChart = $rootScope.fleetChart[0];
+    while (fleetChart.children.length > 0) {
+      fleetChart = fleetChart.children[0];
+    }
+    vm.fleet = fleetChart;
 
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
@@ -33,7 +38,7 @@
         if(ws){
           closeWebSocket();
         }
-        vm.initMonitorQuery();
+        vm.initLineQuery(vm.fleet);
       });
     }
 
@@ -59,11 +64,13 @@
             for(var i = 0 ;i < lineLength;i++){
               vm.chartTop.push(380*i +20);
             }
+            vm.chartsH = parseInt(vm.chartTop[lineLength-1] + 400);
+            document.getElementById("fleetChart").style.height = vm.chartsH+'px';
+            vm.refreshChart("fleetChart", vm.workLineList);
+            vm.initMonitorQuery();
+          } else {
+            vm.fleetChart = echarts.init(document.getElementById("fleetChart"));
           }
-          vm.chartsH = parseInt(vm.chartTop[lineLength-1] + 400);
-          document.getElementById("fleetChart").style.height = vm.chartsH+'px';
-
-          vm.refreshChart("fleetChart", vm.workLineList);
 
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
@@ -71,6 +78,8 @@
       )
 
     };
+
+    vm.initLineQuery(vm.fleet);
 
     /**
      * 初始化数据
@@ -87,7 +96,6 @@
         }
       });
     };
-    vm.initMonitorQuery();
 
     vm.refreshChart = function (chartId, lineList) {
 
@@ -206,10 +214,10 @@
 
     var initEventHandle = function() {
       ws.onclose = function () {
-        reconnect(wsUrl);
+        // reconnect(wsUrl);
       };
       ws.onerror = function () {
-        Notification.error("WebSocket Error!");
+        // Notification.error("fleetLine WebSocket Error!");
         reconnect(wsUrl);
       };
       ws.onopen = function () {
@@ -231,12 +239,12 @@
 
     var reconnect = function(url) {
       if(lockReconnect) return;
-      lockReconnect = true;
+      // lockReconnect = true;
       //没连接上会一直重连，设置延迟避免请求过多
       setTimeout(function () {
         vm.createWebSocket(url);
-        lockReconnect = false;
-      }, 2000);
+        // lockReconnect = false;
+      }, 3000);
     };
 
     //心跳检测
@@ -371,9 +379,9 @@
       ws.close();
       ws.onclose = function () { };
       heartCheck.reset();
+      lockReconnect = true;
+      reconnect(null);
     };
-
-    vm.initLineQuery(vm.fleet);
 
   }
 })();

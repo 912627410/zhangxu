@@ -9,7 +9,7 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL) {
+  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -206,7 +206,7 @@
         //如果选择的订单和左边的一样,则直接提示重新选择
         if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
           vm.leftRentalOrder=null;
-          Notification.error(" 选择的订单不能一样!");
+          Notification.error(languages.findKey('selOrDiff'));
           return;
         }
 
@@ -239,7 +239,7 @@
         //如果选择的订单和左边的一样,则直接提示重新选择
         if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
           vm.rightRentalOrder=null;
-          Notification.error(" 选择的订单不能一样!");
+          Notification.error(languages.findKey('selOrDiff'));
           return;
         }
 
@@ -284,7 +284,7 @@
         restPromise.then(function (data) {
 
           if(data.code==0){
-            Notification.success("调入车辆成功!");
+            Notification.success(languaes.findKey('transVehicle'));
             var result=data.content;
             for(var i=0;i<result.length;i++){
               dest.data.splice(0, 0, result[i]);
@@ -293,7 +293,7 @@
 
 
         }, function (reason) {
-          Notification.error(" 调入车辆失败!");
+          Notification.error(languaes.findKey('transVehiclFail'));
         });
 
 
