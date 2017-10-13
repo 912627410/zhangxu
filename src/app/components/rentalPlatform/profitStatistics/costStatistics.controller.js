@@ -104,7 +104,7 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
     //查询厂商List
@@ -113,7 +113,7 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //重置搜索框
@@ -128,7 +128,7 @@
 
     vm.queryCost = function (page, size, sort,startDate,endDate) {
       if(startDate==null||endDate==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
       }
       if(null!=startDate&&null!=endDate){
         var restCallURL = RENTAL_COST_PAGED_URL;

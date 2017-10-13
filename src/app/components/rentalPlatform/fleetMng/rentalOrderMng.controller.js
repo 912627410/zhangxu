@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
+  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
                                     DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS) {
     var vm = this;
     vm.totalOrders=0;
@@ -34,7 +34,7 @@
 
 
     }, function (reason) {
-      Notification.error('获取状态失败');
+      Notification.error(languages.findKey('getStatusFail'));
     })
 
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
@@ -54,7 +54,7 @@
 
       }
     }, function (reason) {
-      Notification.error('获取状态分组失败');
+      Notification.error(languages.findKey('getStaGroupFail'));
     })
 
 
@@ -175,7 +175,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
 
