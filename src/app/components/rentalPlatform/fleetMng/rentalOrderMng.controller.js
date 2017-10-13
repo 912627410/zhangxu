@@ -175,16 +175,11 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error("获取订单数据失败");
       });
     };
-
-
     vm.query(null,null,null,null);
 
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("machine:oper");
-    }
 
     vm.new=function(id){
       $state.go('rental.newOrder');

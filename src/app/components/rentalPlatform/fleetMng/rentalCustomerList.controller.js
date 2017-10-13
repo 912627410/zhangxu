@@ -89,7 +89,7 @@
       var modalInstance= $uibModal.open({
         animation: true,
         backdrop: false,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomer.html',
         controller: 'newRentalCustomerController',
         controllerAs:'newRentalCustomerCtrl',
         size: 'lg'

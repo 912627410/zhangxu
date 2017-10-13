@@ -135,38 +135,15 @@
           }
         }
       })
-
-      //租赁车队新增管理
-      .state('rental.newFleet', {
-        url: '/newFleet',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFleetMng.html',
-            controller: 'newRentalFleetController',
-            controllerAs: 'newRentalFleetController'
-          }
-        }
-      })
-      //租赁车队修改管理
-      .state('rental.updateFleet', {
-        url: '/updateFleet',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalFleetMng.html',
-            controller: 'updateRentalFleetController',
-            controllerAs: 'updateRentalFleetController'
-          }
-        }
-      })
-
-           //租赁订单管理
+        
+      //租赁订单管理
       .state('rental.order', {
         url: '/order',
         views: {
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrderMng.html',
             controller: 'rentalOrderMngController',
-            controllerAs: 'rentalOrderMngController'
+            controllerAs: 'rentalOrderMngCtrl'
           }
         }
       })
@@ -176,9 +153,9 @@
         url: '/newOrder',
         views: {
           'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrderMng.html',
+            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
             controller: 'newRentalOrderController',
-            controllerAs: 'newRentalOrderController'
+            controllerAs: 'newRentalOrderCtrl'
           }
         }
       })
@@ -190,7 +167,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
             controller: 'updateRentalOrderController',
-            controllerAs: 'updateRentalOrderController'
+            controllerAs: 'updateRentalOrderCtrl'
           }
         }
       })
@@ -201,7 +178,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrderMng.html',
             controller: 'viewRentalOrderController',
-            controllerAs: 'viewRentalOrderController'
+            controllerAs: 'viewRentalOrderCtrl'
           }
         }
       })
@@ -243,10 +220,6 @@
         }
       })
 
-
-
-
-
       //租赁客户管理
       .state('rental.customer', {
         url: '/customer',
@@ -258,29 +231,6 @@
           }
         }
       })
-      //添加租赁客户信息
-      .state('rental.newCustomer', {
-        url: '/newCustomer',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
-            controller: 'newRentalCustomerController',
-            controllerAs: 'newRentalCustomerController'
-          }
-        }
-      })
-
-      //修改租赁客户信息
-      .state('rental.updateCustomer', {
-        url: '/updateCustomer/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
-            controller: 'updateRentalCustomerController',
-            controllerAs: 'updateRentalCustomerController'
-          }
-        }
-      })
 
       //查看租赁客户信息
       .state('rental.viewCustomer', {
@@ -289,7 +239,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalCustomerMng.html',
             controller: 'viewRentalCustomerController',
-            controllerAs: 'viewRentalCustomerController'
+            controllerAs: 'viewRentalCustomerCtrl'
           }
         }
       })
@@ -301,7 +251,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalMaintenanceMng.html',
             controller: 'rentalMaintenanceController',
-            controllerAs: 'rentalMaintenanceController'
+            controllerAs: 'rentalMaintenanceCtrl'
           }
         }
       })
@@ -312,7 +262,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalMaintenanceMng.html',
             controller: 'newRentalMaintenanceController',
-            controllerAs: 'newRentalMaintenanceController'
+            controllerAs: 'newRentalMaintenanceCtrl'
           }
         }
       })
@@ -324,7 +274,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalMaintenanceMng.html',
             controller: 'updateRentalMaintenanceController',
-            controllerAs: 'updateRentalMaintenanceController'
+            controllerAs: 'updateRentalMaintenanceCtrl'
           }
         }
       })
@@ -336,7 +286,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalMaintenanceMng.html',
             controller: 'viewRentalMaintenanceController',
-            controllerAs: 'viewRentalMaintenanceController'
+            controllerAs: 'viewRentalMaintenanceCtrl'
           }
         }
       })

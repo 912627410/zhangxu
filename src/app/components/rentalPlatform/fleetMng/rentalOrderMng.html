@@ -14,26 +14,26 @@
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngController.totalOrders}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
 
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngController.planOrders}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngController.processOrders}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngController.fininshOrders}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.fininshOrders}}</div>
         </div>
       </div>
     </div>
@@ -45,23 +45,23 @@
 
             <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}</label>
             <div class="col-md-2">
-              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.id"
+              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.id"
                      placeholder="{{'rentalOrderNumber'|translate}}"/>
             </div>
 
             <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}</label>
             <div class="col-md-2">
-              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngController.rentalOrder.customerName"
+              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
                      placeholder="{{'rentalCustomer'|translate}}"/>
             </div>
             <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
             <div class="col-md-2">
               <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalOrderMngController.org.label" name="org"/>
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalOrderMngCtrl.org.label" name="org"/>
                 <span class="input-group-btn">
             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalOrderMngController.openTreeInfo()">
+            <button type="button" class="btn btn-default" ng-click="rentalOrderMngCtrl.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
@@ -75,14 +75,14 @@
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
-                       ng-model="rentalOrderMngController.rentalOrder.startDate"
-                       is-open="rentalOrderMngController.startDateSetting.status.opened"
-                       datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
+                       ng-model="rentalOrderMngCtrl.rentalOrder.startDate"
+                       is-open="rentalOrderMngCtrl.startDateSetting.status.opened"
+                       datepicker-options="rentalOrderMngCtrl.startDateSetting.dateOptions" close-text="Close"
                        message-id="bootstrap" readonly/>
 
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
-                          ng-click="rentalOrderMngController.startDateSetting.open($event)">
+                          ng-click="rentalOrderMngCtrl.startDateSetting.open($event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
@@ -94,12 +94,12 @@
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                       ng-model="rentalOrderMngController.rentalOrder.endDate"
-                       is-open="rentalOrderMngController.endDateOpenStatus.opened"
+                       ng-model="rentalOrderMngCtrl.rentalOrder.endDate"
+                       is-open="rentalOrderMngCtrl.endDateOpenStatus.opened"
                        datepicker-options="dateOptions" close-text="Close" readonly/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
-                        ng-click="rentalOrderMngController.endDateOpen($event)">
+                        ng-click="rentalOrderMngCtrl.endDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
               </span>
               </p>
@@ -107,11 +107,11 @@
 
             <label class="col-md-1 control-label">{{'rentalStatus'|translate}}</label>
             <div class="col-md-2">
-              <ui-select name="status" ng-model="rentalOrderMngController.rentalOrder.status" theme="bootstrap"
+              <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"
                          ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalStatus'|translate}}">{{$select.selected.desc}}
                 </ui-select-match>
-                <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngController.retanlOrderStatusList">
+                <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngCtrl.retanlOrderStatusList">
                   <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -120,23 +120,23 @@
             <div class="col-md-2">
 
               <button class="btn btn-primary" type="button"
-                      ng-click="rentalOrderMngController.query(null,null,null,rentalOrderMngController.rentalOrder)">{{'rentalQuery'|translate}}
+                      ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
               </button>
-              <button class="btn btn-default" type="button" ng-click="rentalOrderMngController.reset()">{{'rentalReset'|translate}}</button>
+              <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
             </div>
 
             <div class="col-md-1">
-              <button class="btn btn-primary" type="button" ng-click="rentalOrderMngController.new()">{{'rentalAdd'|translate}}</button>
+              <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">{{'rentalAdd'|translate}}</button>
             </div>
           </div>
 
         </form>
 
       </div>
-      <div class="row" ng-style="rentalOrderMngController.baseBoxContainer">
+      <div class="row" ng-style="rentalOrderMngCtrl.baseBoxContainer">
 
         <div class="col-lg-12 table-responsive "><!--表格框-->
-          <table ng-table="rentalOrderMngController.tableParams" class="table table-condensed table-bordered text-nowrap">
+          <table ng-table="rentalOrderMngCtrl.tableParams" class="table table-condensed table-bordered text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
               <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">{{rentalOrder.id}}</td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
@@ -156,19 +156,19 @@
 
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
-                        ng-click="rentalOrderMngController.update(rentalOrder.id)">{{'rentalEdit'| translate}}
+                        ng-click="rentalOrderMngCtrl.update(rentalOrder.id)">{{'rentalEdit'| translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="rentalOrderMngController.view(rentalOrder.id)">{{'rentalView'| translate}}
+                        ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
                 </button>
               </td>
             </tr>
           </table>
         </div>
         <div class="col-lg-12"><!--分页框-->
-          <uib-pagination total-items="rentalOrderMngController.page.totalElements"
-                          ng-change="rentalOrderMngController.query(rentalOrderMngController.pageNumber-1,null,null,null)"
-                          max-size="5" ng-model="rentalOrderMngController.pageNumber" items-per-page="rentalOrderMngController.page.size"
+          <uib-pagination total-items="v.page.totalElements"
+                          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
+                          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
                           class="pagination-sm" boundary-links="true" rotate="false"
                           previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
           </uib-pagination>
