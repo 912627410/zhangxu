@@ -115,26 +115,37 @@
                         ng-click="rentalFleetMngCtr.getMachineFromOrg(rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.rightRentalOrderId,'lg')">{{'dispatch'|translate}}
                 </button>
 
+                  <button class="btn btn-primary pull-right" type="button"
+                          ng-click="rentalFleetMngCtr.bringUpBatch(rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.tableParams,rentalFleetMngCtr.rightRentalOrderId,'lg')">批量调出
+                </button>
                   </span>
               </div>
               <!-- /.box-header -->
               <div style="height: 400px;overflow: scroll">
-                <table ng-table="rentalFleetMngCtr.tableParams2"
-                       class="table table-condensed table-bordered table-striped text-nowrap">
-                  <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
-                      on-drop-success="rentalFleetMngCtr.dropSuccessHandler2($event,$index,rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.tableParams,rentalFleetMngCtr.rightRentalOrderId)">
+                <script id="selectAllHeader" type="text/ng-template">
+                  <input type="checkbox"  ng-click="rentalFleetMngCtr.updateAllSelection($event)"
+                         ng-model="rentalFleetMngCtr.checked">
+                </script>
+                <div class="col-lg-12 table-responsive ">
+                  <table ng-table="rentalFleetMngCtr.tableParams2"
+                         class="table table-condensed table-bordered table-striped text-nowrap">
+                    <tr ng-repeat="rentalOrderMachine in $data" ui-draggable="true" drag="on-drag-enter"
+                        on-drop-success="rentalFleetMngCtr.dropSuccessHandler2($event,$index,rentalFleetMngCtr.tableParams2,rentalFleetMngCtr.tableParams,rentalFleetMngCtr.rightRentalOrderId)">
+
+                      <td class="text-nowrap" data-header="'selectAllHeader'">
+                        <input type="checkbox" ng-checked="rentalFleetMngCtr.isSelected(rentalOrderMachine.id)"
+                               ng-click="rentalFleetMngCtr.updateSelection($event,rentalOrderMachine.machine.id)" ng-model="rentalOrderMachine.checked">
+                      </td>
+                      <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'"> {{rentalOrderMachine.machine.licenseId}}</td>
+                      <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{rentalOrderMachine.machine.deviceinfo.deviceNum}}</td>
+                      <td data-title="'type'|translate" sortable="'deviceType'">{{rentalOrderMachine.machine.deviceType.name | translate}}</td>
+                      <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{rentalOrderMachine.machine.deviceManufacture.name|translate}}</td>
+                      <td data-title="'highlyType'|translate" sortable="'heightType'">{{rentalOrderMachine.machine.deviceHeightType.name | translate}}</td>
 
 
-                    <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'"> {{rentalOrderMachine.machine.licenseId}}</td>
-                    <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{rentalOrderMachine.machine.deviceinfo.deviceNum}}</td>
-                    <td data-title="'type'|translate" sortable="'deviceType'">{{rentalOrderMachine.machine.deviceType.name | translate}}</td>
-                    <td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{rentalOrderMachine.machine.deviceManufacture.name|translate}}</td>
-                    <td data-title="'highlyType'|translate" sortable="'heightType'">{{rentalOrderMachine.machine.deviceHeightType.name | translate}}</td>
-
-
-                  </tr>
-                </table>
-
+                    </tr>
+                  </table>
+                </div>
               </div>
               <!-- /.box-body -->
 
