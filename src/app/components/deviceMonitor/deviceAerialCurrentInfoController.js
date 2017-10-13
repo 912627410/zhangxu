@@ -38,6 +38,7 @@
         vm.uploadFrequency = 2;// 默认上传频率2s
         vm.faultCommand = 39; //默认故障命令为39
         vm.parameterType = 0; // 默认车辆参数类型0
+        vm.latestAlarmInfo = serviceResource.getWarningInfo(vm.deviceinfo.warningCode).description;
 
         vm.staticNoLoadImportValue = null; //静态空载参数导入值
         vm.staticFullLoadImportValue = null; //静态满载参数导入值
@@ -90,28 +91,28 @@
               if(pcuStatus.substring(5,6) == "0") {
                 if(pcuStatus.substring(6,7) == "0") {
                   if(pcuStatus.substring(7,8) == "0") {
-                    vm.pcuStatus = languages.findKey('retreat');
+                    vm.pcuStatusDesc = languages.findKey('retreat');
                   } else if(pcuStatus.substring(7,8) == "1") {
-                    vm.pcuStatus = languages.findKey('advance');
+                    vm.pcuStatusDesc = languages.findKey('advance');
                   }
                 } else if(pcuStatus.substring(6,7) == "1") {
-                  vm.pcuStatus = languages.findKey('median');
+                  vm.pcuStatusDesc = languages.findKey('not');
                 }
               } else if(pcuStatus.substring(5,6) == "1") {
-                vm.pcuStatus = languages.findKey('turnLeft');
+                vm.pcuStatusDesc = languages.findKey('turnLeft');
               }
             } else if(pcuStatus.substring(4,5) == "1") {
-              vm.pcuStatus = languages.findKey('turnRight');
+              vm.pcuStatusDesc = languages.findKey('turnRight');
             }
           } else if(pcuStatus.substring(1,2) == "1") {
             if(pcuStatus.substring(6,7) == "0") {
               if(pcuStatus.substring(7,8) == "0") {
-                vm.pcuStatus = languages.findKey('decline');
+                vm.pcuStatusDesc = languages.findKey('decline');
               } else if(pcuStatus.substring(7,8) == "1") {
-                vm.pcuStatus = languages.findKey('liftUp');
+                vm.pcuStatusDesc = languages.findKey('liftUp');
               }
             } else if(pcuStatus.substring(6, 7) == "1") {
-              vm.pcuStatus = languages.findKey('median');
+              vm.pcuStatusDesc = languages.findKey('not');
             }
           }
         }

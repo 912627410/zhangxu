@@ -799,7 +799,7 @@
             warningMsg.description = "ECU与GPS握手失败报警	可行走不可举升";
             break;
           case '41':
-            warningMsg.description = "通过平台锁定车辆状态（仅适用于带有GPS功能的ECU）";
+            warningMsg.description = "通过平台锁定车辆状态";
             warningMsg.action = "可行走不可举升";
             break;
           case '42':
@@ -843,7 +843,7 @@
             warningMsg.action = "停止起升和行走";
             break;
           case '58':
-            warningMsg.description = "刹车线圈错误(因为刹车线圈是可选项，该功能暂时屏蔽)";
+            warningMsg.description = "刹车线圈错误";
             warningMsg.action = "停止起升和行走";
             break;
           case '68':
