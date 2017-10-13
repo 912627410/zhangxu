@@ -72,7 +72,7 @@
       },
       tooltip: {
         formatter: function (params) {
-          return '车辆编号: ' + params.seriesName
+          return languages.findKey('vehicleNumber')+':' + params.seriesName
 
 
             + '</br>' +languages.findKey('bootTime')+':'+$filter('date')(params.data[0],'yyyy-MM-dd hh:mm:ss')
@@ -134,7 +134,7 @@
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         },
         formatter: function (params) {
-          return languages.findKey('vehicleQuantity') + params.data + languages.findKey('perday');
+          return languages.findKey('vehicleQuantity') +':'+ params.data +' '+ languages.findKey('perday');
         }
       },
       toolbox: {
@@ -166,7 +166,7 @@
         data: ['0-2h', '2-4h', '4-6h', '6-8h', '8-10h', '10-12h', '12-14h', '14-16h', '16-18h', '18-20h', '20-22h', '22-24h'],
         axisTick: {alignWithLabel: true}
       },
-      yAxis: {name: languages.findKey('vehicleQuantity')+languages.findKey('perday'), type: 'value', minInterval: 1},
+      yAxis: {name: languages.findKey('vehicleQuantity')+' '+languages.findKey('perday'), type: 'value', minInterval: 1},
       series: []
     };
     var barChart = echarts.init(document.getElementById('barChart'));

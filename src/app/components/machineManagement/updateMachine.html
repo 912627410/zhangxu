@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">修改车辆信息</h3>
+    <h3 class="modal-title">{{'modifyVehicleInformation'|translate}}</h3>
 </div>
 <!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
   <!--<div >{{updateUserinfoCtrl.dynamicPopover.content}}</div>-->
@@ -27,8 +27,8 @@
                  ng-model="updateMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
                  ng-minlength='6' ng-maxlength='26' ng-change="updateMachineController.deviceNumInputChanged(updateMachineController.machine.deviceinfo.deviceNum)" ng-readonly="updateMachineController.roleSwitch"/>
           <label class="text-blue" ng-if="updateMachineController.deviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.deviceNumContentFromScanner}}</label>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">最长26位</span>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">最短6位</span>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
         </div>
         <div class="col-sm-2 padding5" ng-hide="updateMachineController.roleSwitch">
           <div class="checkbox">
@@ -47,8 +47,8 @@
                  ng-model="updateMachineController.newDeviceNum" ng-minlength='6' ng-maxlength='26'
                  ng-change="updateMachineController.newDeviceNumInputChanged(updateMachineController.newDeviceNum)"/>
           <label class="text-blue" ng-if="updateMachineController.newDeviceNumFromScanner == true">扫码输入终端号:{{updateMachineController.newDeviceNumContentFromScanner}}</label>
-          <span class="error text-danger" ng-show="updateMachineForm.newDeviceNum.$error.maxlength">最长26位</span>
-          <span class="error text-danger" ng-show="updateMachineForm.newDeviceNum.$error.minlength">最短6位</span>
+          <span class="error text-danger" ng-show="updateMachineForm.newDeviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+          <span class="error text-danger" ng-show="updateMachineForm.newDeviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
         </div>
         <div class="col-sm-2">
           <button class="btn btn-danger" type="button" validation-submit="updateMachineForm" ng-click="updateMachineController.changeGPS(updateMachineController.machine,updateMachineController.newDeviceNum)">{{'replace'|translate}}</button>

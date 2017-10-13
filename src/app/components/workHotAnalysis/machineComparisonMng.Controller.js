@@ -10,7 +10,7 @@
     .controller('machineComparedMngController', machineComparedMngController);
 
   /** @ngInject */
-  function machineComparedMngController($rootScope, $scope, $http, $filter,Notification) {
+  function machineComparedMngController($rootScope, languages,$scope, $http, $filter,Notification) {
     var vm = this;
     var mapChart1;
     var mapChart2;
@@ -63,11 +63,11 @@
 
     var chinaOption1 = {
       title: {
-        text: '车辆开工热度分布',
+        text: languages.findKey('vehicleStartHeatDistribution'),
         textStyle:{
           fontSize: 26,
         },
-        subtext: '全国',
+        subtext: languages.findKey('nationwide'),
         subtextStyle:{
           fontSize: 17,
         },
@@ -83,13 +83,13 @@
           },
           formatter: function(params) {
             if(params.componentSubType == 'map') {
-              var unit =  '小时' ;
-              var name = '平均开工时长';
+              var unit =  languages.findKey('hour') ;
+              var name = languages.findKey('averageStartingTime');
 
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + languages.findKey('vehicleQuantity') +' : ' + params.data.count + languages.findKey('carQuantifier');
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
@@ -123,7 +123,7 @@
         precision: 2,
         seriesIndex: [0],
         color: ['#075e89','#FFFFFF'],
-        text: ['高', '低']
+        text: [languages.findKey('high'),languages.findKey('low')]
       },
       geo: {
         map: 'china',
@@ -141,7 +141,7 @@
       },
       series: [
         {
-          name: '开工热度',
+          name: languages.findKey('startHeat'),
           type: 'map',
           map: 'china',
           scaleLimit: {
@@ -226,11 +226,11 @@
     };
     var chinaOption2 = {
       title: {
-        text: '车辆销售热度分布',
+        text: languages.findKey('saleHeatDistribution'),
         textStyle:{
           fontSize: 21,
         },
-        subtext: '全国',
+        subtext: languages.findKey('nationwide'),
         subtextStyle:{
           fontSize: 12,
         },
@@ -246,13 +246,13 @@
           },
           formatter: function(params) {
             if(params.componentSubType == 'map') {
-              var unit =  '小时' ;
-              var name = '平均开工时长';
+              var unit =  languages.findKey('hour') ;
+              var name = languages.findKey('averageStartingTime');
 
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + languages.findKey('vehicleQuantity') +' : '  + params.data.count + languages.findKey('carQuantifier');
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
@@ -286,7 +286,7 @@
         precision: 2,
         seriesIndex: [0],
         color: ['orangered','yellow','lightskyblue'],
-        text: ['高', '低']
+        text: [languages.findKey('high'),languages.findKey('low')]
       },
       geo: {
         map: 'china',
@@ -304,7 +304,7 @@
       },
       series: [
         {
-          name: '销售热度',
+          name:languages.findKey('soldHeat'),
           type: 'map',
           map: 'china',
           scaleLimit: {
@@ -391,13 +391,13 @@
     //地图大图初始化  默认显示小挖全国开工热度分布
       var mapChart1 = vm.echartsInit('mapContainer1');
           var mapOption1 = chinaOption1;
-          mapOption1.title.text = "小挖开工热度分布";
+          mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
           mapChart1.setOption(mapOption1);
 
       var backButtons = document.getElementsByClassName("backChina");
 
       mapChart1.on("click", function (param){
-        mapOption1.title.text = "小挖开工热度分布";
+        mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
         mapOption1.title. textStyle={fontSize: 26};
         mapOption1.title. subtextStyle={fontSize: 17};
         console.log("click");
@@ -431,18 +431,18 @@
       subMapOption1.title.left = "center";
       subMapOption1.title. textStyle={fontSize: 17};
       subMapOption1.title. subtextStyle={fontSize: 8};
-      subMapOption1.title.text = "小挖开工热度分布";
+      subMapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
       subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
 
       subMap1.setOption(subMapOption1);
 
       var subMapOption2 = chinaOption1;
-      subMapOption1.title.text = "装载机开工热度分布";
+      subMapOption1.title.text = languages.findKey('loader')+languages.findKey('startHeatDistribution');
       subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
       subMap2.setOption(subMapOption1);
 
       var subMapOption3 = chinaOption1;
-      subMapOption1.title.text = "中挖开工热度分布";
+      subMapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('startHeatDistribution');
       subMapOption1.visualMap.color= ['#075e89','#FFFFFF'];
       subMap3.setOption(subMapOption1);
     }
@@ -451,7 +451,7 @@
     var mmuChart1 = echarts.init(document.getElementById('mmu-container1'));
     var mmuOption1 = {
       title: {
-        text: '开工变化趋势',
+        text: languages.findKey('startingChangeTrend'),
         padding: [10, 20]
       },
       toolbox: {
@@ -511,7 +511,7 @@
         data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
       yAxis: {
-        name: '开工时长(小时)',
+        name: languages.findKey('workingTime')+'('+languages.findKey('hour')+')',
         type: 'value',
         minInterval: 1,
         axisLine: {
@@ -566,9 +566,9 @@
       lineContainerList[1].style.width = "0%";
       mmuChart1 = echarts.init(lineContainerList[0]);
       if(heatType1==1){
-        mmuOption1.title.text = "开工变化趋势";
+        mmuOption1.title.text = languages.findKey('startingChangeTrend');
       }else if(heatType1==0){
-        mmuOption1.title.text = "销售变化趋势";
+        mmuOption1.title.text = languages.findKey('salesChangeTrend');
       }
       mmuChart1.setOption(mmuOption1);
 
@@ -582,28 +582,28 @@
       mapOption1.title. subtextStyle={fontSize: 17};
       if(machineType1=="A1"){
         if(heatType1==1){
-          mapOption1.title.text = "小挖开工热度分布";
+          mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
           mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
-          mapOption1.title.text = "小挖销售热度分布";
+          mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('saleHeatDistribution');
           mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
       if(machineType1=="1,2,3"){
         if(heatType1==1){
-          mapOption1.title.text = "装载机开工热度分布";
+          mapOption1.title.text = languages.findKey('loader')+languages.findKey('startHeatDistribution');
           mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
-          mapOption1.title.text = "装载机销售热度分布";
+          mapOption1.title.text = languages.findKey('loader')+languages.findKey('saleHeatDistribution');
           mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
       if(machineType1=="40"){
         if(heatType1==1){
-          mapOption1.title.text = "中挖开工热度分布";
+          mapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('startHeatDistribution');
           mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
         }else if(heatType1==0){
-          mapOption1.title.text = "中挖销售热度分布";
+          mapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('saleHeatDistribution');
           mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         }
       }
@@ -681,28 +681,28 @@
         mapOption2.title. subtextStyle={fontSize: 12};
         if(machineType1=="A1"){
           if(heatType1==1){
-            mapOption1.title.text = "小挖开工热度分布";
+            mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
             mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
-            mapOption1.title.text = "小挖销售热度分布";
+            mapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('saleHeatDistribution');
             mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType1=="1,2,3"){
           if(heatType1==1){
-            mapOption1.title.text = "装载机开工热度分布";
+            mapOption1.title.text = languages.findKey('loader')+languages.findKey('startHeatDistribution');
             mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
-            mapOption1.title.text = "装载机销售热度分布";
+            mapOption1.title.text = languages.findKey('loader')+languages.findKey('saleHeatDistribution');
             mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType1=="40"){
           if(heatType1==1){
-            mapOption1.title.text = "中挖开工热度分布";
+            mapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('startHeatDistribution');
             mapOption1.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType1==0){
-            mapOption1.title.text = "中挖销售热度分布";
+            mapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('saleHeatDistribution');
             mapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
@@ -710,29 +710,29 @@
 
         if(machineType2=="A1"){
           if(heatType2==1){
-            mapOption2.title.text = "小挖开工热度分布";
+            mapOption2.title.text = languages.findKey('smallExcavator')+languages.findKey('startHeatDistribution');
             mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
-            mapOption2.title.text = "小挖销售热度分布";
+            mapOption2.title.text = languages.findKey('smallExcavator')+languages.findKey('saleHeatDistribution');
             mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
 
           }
         }
         if(machineType2=="1,2,3"){
           if(heatType2==1){
-            mapOption2.title.text = "装载机开工热度分布";
+            mapOption2.title.text = languages.findKey('loader')+languages.findKey('startHeatDistribution');
             mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
-            mapOption2.title.text = "装载机销售热度分布";
+            mapOption2.title.text = languages.findKey('loader')+languages.findKey('saleHeatDistribution');
             mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
         if(machineType2=="40"){
           if(heatType2==1){
-            mapOption2.title.text = "中挖开工热度分布";
+            mapOption2.title.text = languages.findKey('mediumExcavator')+languages.findKey('startHeatDistribution');
             mapOption2.visualMap.color= ['#075e89','#FFFFFF'];
           }else if(heatType2==0){
-            mapOption2.title.text = "中挖销售热度分布";
+            mapOption2.title.text = languages.findKey('mediumExcavator')+languages.findKey('saleHeatDistribution');
             mapOption2.visualMap.color= ['orangered','yellow','lightskyblue'];
           }
         }
@@ -815,15 +815,15 @@
 
         var mmuChart1 = echarts.init(lineContainerList[0]);
         if(heatType1==1){
-          mmuOption1.title.text = "开工变化趋势";
+          mmuOption1.title.text = languages.findKey('startingChangeTrend');
         }else if(heatType1==0){
-          mmuOption1.title.text = "销售变化趋势";
+          mmuOption1.title.text = languages.findKey('salesChangeTrend');
         }
         mmuChart1.setOption(mmuOption1);
         var mmuChart2 = echarts.init(lineContainerList[1]);
         var mmuOption2 = {
           title: {
-            text: '开工变化趋势',
+            text: languages.findKey('startingChangeTrend'),
             padding: [10, 20]
           },
           toolbox: {
@@ -883,7 +883,7 @@
             data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
           },
           yAxis: {
-            name: '车辆数量(台)',
+            name: languages.findKey('vehicleQuantity')+ languages.findKey('carQuantifier'),
             type: 'value',
             minInterval: 1,
             axisLine: {
@@ -915,9 +915,9 @@
           ]
         };
         if(heatType2==1){
-          mmuOption2.title.text = "开工变化趋势";
+          mmuOption2.title.text = languages.findKey('startingChangeTrend');
         }else if(heatType2==0){
-          mmuOption2.title.text = "销售变化趋势";
+          mmuOption2.title.text = languages.findKey('salesChangeTrend');
         }
         mmuChart2.setOption(mmuOption2);
 
@@ -965,7 +965,7 @@
               precision: 2,
               seriesIndex: [0],
               color: ['#075e89','#f6f3d2'],
-              text: ['高', '低']
+              text: [languages.findKey('high'),languages.findKey('low')]
             },
             toolbox: {
               show: true,
@@ -1015,17 +1015,17 @@
         subMapOption1.title.left = "center";
         subMapOption1.title. textStyle={fontSize: 17};
         subMapOption1.title. subtextStyle={fontSize: 8};
-        subMapOption1.title.text = "小挖销售热度分布";
+        subMapOption1.title.text = languages.findKey('smallExcavator')+languages.findKey('saleHeatDistribution');
         subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap1.setOption(subMapOption1);
 
         var subMapOption2 = chinaOption2;
-        subMapOption1.title.text = "装载机销售热度分布";
+        subMapOption1.title.text = languages.findKey('loader')+languages.findKey('saleHeatDistribution');
         subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap2.setOption(subMapOption1);
 
         var subMapOption3 = chinaOption2;
-        subMapOption1.title.text = "中挖销售热度分布";
+        subMapOption1.title.text = languages.findKey('mediumExcavator')+languages.findKey('saleHeatDistribution');
         subMapOption1.visualMap.color= ['orangered','yellow','lightskyblue'];
         subMap3.setOption(subMapOption1);
       }

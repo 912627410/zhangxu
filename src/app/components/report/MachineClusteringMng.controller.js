@@ -9,7 +9,7 @@
     .controller('MachineClusteringMngController', MachineClusteringMngController);
 
   /** @ngInject */
-  function MachineClusteringMngController($rootScope, $scope, $http, $filter) {
+  function MachineClusteringMngController($rootScope, languages,$scope, $http, $filter) {
     var vm = this;
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
@@ -43,12 +43,12 @@
     var rightChart = echarts.init(document.getElementById('rightChart'));
     var rightOption = {
       title: {
-        text: '聚类探索散点图'
+        text: languages.findKey('clusteringScatterplot')
       },
       tooltip: {
         trigger: "item",
         formatter: function (params) {
-          return "工作日期：" + params.data[0] + "<br/>" + "数值:" + params.data[1];
+          return languages.findKey('workDate')+"：" + params.data[0] + "<br/>" + languages.findKey('value')+"：" + params.data[1];
         }
       },
       grid: {
@@ -88,7 +88,7 @@
       ],
       yAxis: [
         {
-          name: '数值',
+          name: languages.findKey('value'),
           type: 'value',
           scale: true,
           axisLabel: {
@@ -102,7 +102,7 @@
       ],
       series: [
         {
-          name: '全部',
+          name: languages.findKey('rentalMachineTotal'),
           type: 'scatter',
           data: [],
           symbolSize: 5,

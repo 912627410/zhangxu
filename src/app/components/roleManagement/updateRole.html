@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">修改角色信息</h3>
+    <h3 class="modal-title">{{'modifyRole'|translate}}</h3>
 </div>
 <form  name="updateRoleForm"  class="form-horizontal">
   <div class="modal-body">
@@ -30,7 +30,7 @@
         <label for="name" class="col-sm-3 control-label">{{'type'|translate}}</label>
         <div class="col-sm-8">
           <ui-select name="type" ng-model="updateRoleController.roleInfo.type" theme="bootstrap" ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true" placeholder="类型">{{$select.selected.desc|translate}}
+            <ui-select-match allow-clear="true" placeholder="{{'type'|translate}}">{{$select.selected.desc|translate}}
             </ui-select-match>
             <ui-select-choices repeat="roleType.value as roleType in updateRoleController.roleTypeList">
               <div ng-bind-html="roleType.desc | highlight: $select.search|translate"></div>

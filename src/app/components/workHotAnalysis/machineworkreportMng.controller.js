@@ -10,7 +10,7 @@
     .controller('machineworkreportMngController', machineworkreportMngController);
 
   /** @ngInject */
-  function machineworkreportMngController($rootScope, $scope, $http, $filter,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE) {
+  function machineworkreportMngController($rootScope, $scope, languages,$http, $filter,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE) {
     var vm = this;
     vm.hourGap = 4;
     vm.selected = []; //选中的省份id
@@ -54,7 +54,7 @@
 
       var option = {
         title: {
-          text: '车辆工作报告',
+          text: languages.findKey('vehiclesWorkReport'),
           left: 'center'
         },
         tooltip: {
@@ -66,9 +66,9 @@
             if (names.length > 1) {
               addr = names[1];
             }
-            return "产品类型：" + params.seriesName.split(' ')[0] + "<br />"
-              + "车辆编号：" + deviceNo + "<br />"
-              + "地理位置：" + addr;
+            return languages.findKey('productType')+"：" + params.seriesName.split(' ')[0] + "<br />"
+              + languages.findKey('vehicleNumber')+"：" + deviceNo + "<br />"
+              + languages.findKey('geographicalPosition')+"：" + addr;
           }
         },
         toolbox: {
@@ -112,7 +112,7 @@
 
 
     var devicePointList = {
-      seriesName:"装载机|3",
+      seriesName:languages.findKey('loader')+"|3",
       mapPointList:[
         {address:"山东省滨州市邹平县明集镇集茂路21号",
           name:"VLG0955NVF0600739|山东省滨州市邹平县明集镇集茂路21号",
@@ -204,16 +204,16 @@
     }
     var heatmapOption = {
       title: {
-        text: '工作热力图',
+        text: languages.findKey('thermodynamicDiagram'),
         left: 'center',
-        subtext: '全国',
+        subtext: languages.findKey('nationwide'),
       },
       tooltip: {
         trigger: 'item',
         formatter: function (params) {
-          return "工作日期：" + params.value[0] + "<br />"
-            + "工作时长：" + params.value[1] + "<br />"
-            + "车辆数量：" + params.value[2] + " 台";
+          return languages.findKey('workDate')+"：" + params.value[0] + "<br />"
+            + languages.findKey('workHours')+"：" + params.value[1] + "<br />"
+            + languages.findKey('vehicleQuantity')+"："+ params.value[2] + languages.findKey('carQuantifier');
         }
       },
       toolbox: {
@@ -241,7 +241,7 @@
         containLabel: true
       },
       xAxis: {
-        name: '工作日期',
+        name: languages.findKey('workDate'),
         type: 'category',
         data: [],
         splitArea: {
@@ -249,7 +249,7 @@
         }
       },
       yAxis: {
-        name: '工作时长(小时)',
+        name: languages.findKey('workHours')+'('+languages.findKey('hour')+')',
         type: 'category',
         data: hourName[1],
         splitArea: {
@@ -265,7 +265,7 @@
         bottom: '10%'
       },
       series: [{
-        name: '车辆数量',
+        name: languages.findKey('vehicleQuantity'),
         type: 'heatmap',
         data: [],
         label: {

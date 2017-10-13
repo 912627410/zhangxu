@@ -12,8 +12,8 @@
                  ng-change="newDeviceinfoController.deviceNumInputChanged(newDeviceinfoController.deviceinfo.deviceNum)"
                  validator="required,numberAndCharAndDot" checkurl="http://www.baidu.com"/>
           <label class="text-blue" ng-if="newDeviceinfoController.deviceNumFromScanner == true">扫码输入终端号:{{newDeviceinfoController.deviceNumContentFromScanner}}</label>
-          <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.maxlength">最长26位</span>
-          <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.minlength">最短6位</span>
+          <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+          <span class="error text-danger" ng-show="newDeviceForm.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
 
         </div>
       </div>

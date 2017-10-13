@@ -20,8 +20,8 @@
                  ng-model="newMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
                  ng-minlength='6' ng-maxlength='26' ng-change="newMachineController.deviceNumInputChanged(newMachineController.machine.deviceinfo.deviceNum)"/>
           <label class="text-blue" ng-if="newMachineController.deviceNumFromScanner == true">扫码输入终端号:{{newMachineController.deviceNumContentFromScanner}}</label>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">最长26位</span>
-          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">最短6位</span>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
         </div>
       </div>
 

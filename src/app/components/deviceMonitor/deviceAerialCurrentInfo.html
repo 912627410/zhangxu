@@ -1578,7 +1578,7 @@
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setSamplingTime" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">
                       <div class="box box-success">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">设置采样时间({{'theInputRange'|translate}})</h5>
+                          <h5 class="box-title text-gray">{{'setTheSamplingTime'|translate}}({{'theInputRange'|translate}})</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="设置"> <i class="fa fa-info" ></i></a>
@@ -1734,7 +1734,7 @@
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
                       <div class="box box-danger">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                          <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="{{'startLockCarPromptContent'|translate}}"> <i class="fa fa-info" ></i> </a>
@@ -1748,7 +1748,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'binding'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
 
@@ -1765,7 +1765,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
-                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'unbundling'|translate}}"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
                                                 ng-click="deviceAerialCurrentInfoController.sendUnActiveLockSMS(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum)">{{'send'|translate}}
                                   </sms-send-btn>
@@ -2004,7 +2004,7 @@
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:bind">
                       <div class="box box-danger">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                          <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="{{'startLockCarPromptContent'|translate}}"> <i class="fa fa-info" ></i> </a>
@@ -2018,7 +2018,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'binding'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-danger"
                                                 presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:bind"
                                                 readonly="readonly"
@@ -2032,7 +2032,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'unActiveCar'|translate}}"
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'unbundling'|translate}}"
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-warning"
                                                 presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:unBind"
                                                 ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(2, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'unActiveCar'|translate}}</sms-send-btn>

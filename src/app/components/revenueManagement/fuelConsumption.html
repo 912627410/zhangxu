@@ -86,9 +86,9 @@
     </div>
     <div class="col-md-3">
       <select class="form-control" ng-model="fuelConsumptionCtrl.fuelRecord.type">
-        <option value="">请选择</option>
-        <option value="1">白班</option>
-        <option value="0">夜班</option>
+        <option value="">{{'pleaseSelect'|translate}}</option>
+        <option value="1">{{'dayShift'|translate}}</option>
+        <option value="0">{{'nightShift'|translate}}</option>
       </select>
     </div>
   </div>
@@ -142,7 +142,7 @@
              placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-offset-10 col-md-2 text-right">
-      <button class="btn btn-primary" type="button" ng-click="fuelConsumptionCtrl.historyStatistics(fuelConsumptionCtrl.statistics)">统计历史油耗</button>
+      <button class="btn btn-primary" type="button" ng-click="fuelConsumptionCtrl.historyStatistics(fuelConsumptionCtrl.statistics)">{{'fuelConsumptionStatistics'|translate}}</button>
     </div>
   </div>
 
@@ -171,7 +171,7 @@
   <div class="box-footer">
     <uib-pagination total-items="fuelConsumptionCtrl.page.totalElements" ng-change="fuelConsumptionCtrl.query(fuelConsumptionCtrl.pageNumber-1,null,null,fuelConsumptionCtrl.fuelRecord)"
                     max-size="5" ng-model="fuelConsumptionCtrl.pageNumber" items-per-page="fuelConsumptionCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"
-                    first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页"></uib-pagination>
+                    first-text="{{'pagingHomePage' | translate}}"last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}"  previous-text="{{'previousPage'|translate}}"></uib-pagination>
   </div>
 
 </section>

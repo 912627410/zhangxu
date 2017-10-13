@@ -9,7 +9,7 @@
     .controller('machineSpeedingController', machineSpeedingController);
 
   /** @ngInject */
-  function machineSpeedingController($rootScope, $scope , $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
+  function machineSpeedingController($rootScope, $scope ,languages, $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -111,7 +111,7 @@
       },
       yAxis: {
         title: {
-          text: '速度(KM/H)'
+          text: languages.findKey('speed')+'(KM/H)'
         },
         startOnTick: true,
         endOnTick: true,
@@ -129,7 +129,7 @@
         data: []
       }],
       title: {
-        text:'超速报警实时监控'
+        text:languages.findKey('overspeedAlarmMonitoring')
       },
       credits: { // 版权信息
         enabled:false

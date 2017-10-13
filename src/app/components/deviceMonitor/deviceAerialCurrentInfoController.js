@@ -2416,7 +2416,7 @@
           },
           yAxis: {
             title: {
-              text: '伏特(V)'
+              text: languages.findKey('volt(V)')
             },
             tickPositions: [0, 5, 10, 15, 20, 25, 30],
             labels: {
