@@ -18,72 +18,72 @@
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}</label>
               <div class="col-md-5">
-                {{viewRentalOrderController.customer.name}}
+                {{viewRentalOrderCtrl.customer.name}}
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'amount'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.totalAmt}}
+                {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'deposit'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.deposit}}
+                {{viewRentalOrderCtrl.rentalOrder.deposit}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.payType}}
+                {{viewRentalOrderCtrl.rentalOrder.payType}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'startingTime'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.startDate | date:'yyyy-MM-dd'}}
+                {{viewRentalOrderCtrl.rentalOrder.startDate | date:'yyyy-MM-dd'}}
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'endTime'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.endDate | date:'yyyy-MM-dd'}}
+                {{viewRentalOrderCtrl.rentalOrder.endDate | date:'yyyy-MM-dd'}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'rentalWorkLocation'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.location}}
+                {{viewRentalOrderCtrl.rentalOrder.location}}
               </div>
             </div>
           <div class="form-group">
               <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.jc}}
+                {{viewRentalOrderCtrl.rentalOrder.jc}}
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.zb}}
+                {{viewRentalOrderCtrl.rentalOrder.zb}}
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.qb}}
+                {{viewRentalOrderCtrl.rentalOrder.qb}}
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
               <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.description}}
+                {{viewRentalOrderCtrl.rentalOrder.description}}
               </div>
             </div>
 
@@ -91,14 +91,14 @@
               <!--<label class="col-sm-3 control-label"></label>-->
               <!--<div class="col-sm-5">-->
                 <!--<label>-->
-                  <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="viewRentalOrderController.locationAlarmReceiverChk" id="locationAlarmReceiver" disabled="disabled" >-->
+                  <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="viewRentalOrderCtrl.locationAlarmReceiverChk" id="locationAlarmReceiver" disabled="disabled" >-->
                   <!--{{'AbnormalAlarmReceivingMachine'|translate}}-->
                 <!--</label>-->
               <!--</div>-->
             <!--</div>-->
 
             <div class="form-group">
-              <button class="btn btn-warning" type="button" ng-click="viewRentalOrderController.cancel()">
+              <button class="btn btn-warning" type="button" ng-click="viewRentalOrderCtrl.cancel()">
                 {{'cancel'|translate}}
               </button>
             </div>

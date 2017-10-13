@@ -119,7 +119,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMachineMng.html',
             controller: 'rentalFleetMachineMngController',
-            controllerAs: 'rentalFleetMachineMngController'
+            controllerAs: 'rentalFleetMachineMngCtrl'
           }
         }
       })
@@ -135,7 +135,7 @@
           }
         }
       })
-        
+
       //租赁订单管理
       .state('rental.order', {
         url: '/order',

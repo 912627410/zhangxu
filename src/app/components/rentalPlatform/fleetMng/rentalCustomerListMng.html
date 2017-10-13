@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title">{{'customerList'|translate}}
-  <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="customerListController.cancel()">{{'close'|translate}}</button>
-  <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListController.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
+  <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="customerListCtrl.cancel()">{{'close'|translate}}</button>
+  <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="customerListCtrl.ok(deviceCurrentInfoCtrl.deviceinfo.id)">{{'confirm'|translate}}</button>
   </h3>
 </div>
 
@@ -16,7 +16,7 @@
       <label class="control-label">{{'rentalCustomerName'|translate}}</label>
     </div>
     <div class="col-md-3">
-      <input type="text" name="name" class="form-control"  ng-model="customerListController.customer.name"
+      <input type="text" name="name" class="form-control"  ng-model="customerListCtrl.customer.name"
              placeholder="{{'rentalCustomerName'|translate}}"/>
     </div>
 
@@ -24,15 +24,15 @@
       <label class="control-label">{{'phoneNumber'|translate}}:</label>
     </div>
     <div class="col-md-3">
-      <input type="text" name="mobile" class="form-control"  ng-model="customerListController.customer.mobile"
+      <input type="text" name="mobile" class="form-control"  ng-model="customerListCtrl.customer.mobile"
              placeholder="{{'phoneNumber'|translate}}" />
     </div>
 
 
     <div class="col-md-3">
-      <button class="btn btn-primary" type="button"  ng-click="customerListController.query(null,null,null,customerListController.customer)">{{'query'|translate}}
+      <button class="btn btn-primary" type="button"  ng-click="customerListCtrl.query(null,null,null,customerListCtrl.customer)">{{'query'|translate}}
       </button>
-      <button class="btn btn-default" type="button" ng-click="customerListController.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-default" type="button" ng-click="customerListCtrl.reset()">{{'reset'|translate}}</button>
 
 
     </div>
@@ -45,10 +45,10 @@
     <div class="col-md-3">
       <p class="input-group">
 
-        <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="customerListController.org.label" name="org" required/>
+        <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="customerListCtrl.org.label" name="org" required/>
         <span class="input-group-btn">
             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="customerListController.openTreeInfo()">
+            <button type="button" class="btn btn-default" ng-click="customerListCtrl.openTreeInfo()">
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
@@ -59,10 +59,10 @@
       <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
     </div>
     <div class="col-md-1">
-      <input type="checkbox" checked="checked" ng-model="customerListController.querySubOrg"/>
+      <input type="checkbox" checked="checked" ng-model="customerListCtrl.querySubOrg"/>
     </div>
     <div class="col-md-3 pull-right">
-      <button class="btn btn-primary" type="button" ng-click="customerListController.addNewcustomer()">{{'add'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="customerListCtrl.addNewcustomer()">{{'add'|translate}}</button>
     </div>
 
 
@@ -78,10 +78,10 @@
   <div class="row " style="padding: 10px">
       <div class="table-responsive">
 
-        <table ng-table="customerListController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="customerListCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="customer in $data">
             <td class="text-nowrap">
-              <input type="radio" name="customer.radio"  ng-value="customer" ng-model="customerListController.selectRadio">
+              <input type="radio" name="customer.radio"  ng-value="customer" ng-model="customerListCtrl.selectRadio">
             </td>
 
             <td class="text-nowrap" data-title="'id'" sortable="'id'">{{customer.id}}</td>
@@ -96,9 +96,9 @@
 
       </div>
 
-        <uib-pagination total-items="customerListController.page.totalElements"
-                        ng-change="customerListController.query(customerListController.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="customerListController.pageNumber" items-per-page="customerListController.page.size"
+        <uib-pagination total-items="customerListCtrl.page.totalElements"
+                        ng-change="customerListCtrl.query(customerListCtrl.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="customerListCtrl.pageNumber" items-per-page="customerListCtrl.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
       </div>

@@ -861,6 +861,7 @@
   "AutomaticMatching":"自动匹配",
   "workAddress":"工作地址",
   "customerList":"客户列表",
+  "rantalOrderList":"订单列表",
   "unUsedMachineList":"未分配车辆列表",
   "rentalSetFence":"设置围栏",
   "rentalcurrentPosition":"当前位置",
