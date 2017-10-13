@@ -112,7 +112,7 @@
 
 
     var devicePointList = {
-      seriesName:"装载机|3",
+      seriesName:languages.findKey('loader')+"|3",
       mapPointList:[
         {address:"山东省滨州市邹平县明集镇集茂路21号",
           name:"VLG0955NVF0600739|山东省滨州市邹平县明集镇集茂路21号",

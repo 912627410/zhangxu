@@ -320,7 +320,7 @@
         }
       },
       legend: {
-        data:[ '工作车辆数量','月均工作时长']
+        data:[ languages.findKey('quantityofWorkingVehicles'),languages.findKey('monthlyWorkingHours')]
       },
       grid: {
         left: '3%',
@@ -398,7 +398,7 @@
       ],
       series: [
         {
-          name:'工作车辆数量',
+          name:languages.findKey('quantityofWorkingVehicles'),
           type:'bar',
           barMaxWidth: '35',
           itemStyle: {
@@ -477,7 +477,7 @@
           ]
         },
         {
-          name:'月均工作时长',
+          name:languages.findKey('monthlyWorkingHours'),
           type:'line',
           //smooth: true,
           yAxisIndex: 1,

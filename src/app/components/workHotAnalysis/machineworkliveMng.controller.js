@@ -135,7 +135,7 @@
       },
       position:[
         {
-          seriesName:"装载机",
+          seriesName:languages.findKey('loader'),
           activeMachineCount:3465,
           activePresent:"Infinity",
           machineCount:0,
@@ -157,7 +157,7 @@
               workDate:"2017-01-02"
             }]
         },{
-          seriesName:"挖掘机",
+          seriesName:languages.findKey('excavator'),
           activeMachineCount:461,
           activePresent:"Infinity",
           machineCount:0,
@@ -197,7 +197,7 @@
 
       point.forEach(function (item, i) {
         series.push({
-          name: item.seriesName + ' 活跃数: ' + item.activeMachineCount + TAI_CN,
+          name: item.seriesName +' '+languages.findKey('activeNumber')+ ': ' + item.activeMachineCount + languages.findKey('carQuantifier'),
           type: 'scatter',
           coordinateSystem: 'geo',
           data: convertData(item.seriesName, item.mapPointList, data.log),
@@ -215,7 +215,7 @@
         });
         legendData.push(item.seriesName
           //+ ' 在役数: ' + item.machineCount + TAI_CN
-          + ' 活跃数: ' + item.activeMachineCount + TAI_CN);
+          + ' '+languages.findKey('activeNumber')+ ': ' + item.activeMachineCount + languages.findKey('carQuantifier'));
         //+ ', 占比: ' + item.activePresent + '%');
 
       });

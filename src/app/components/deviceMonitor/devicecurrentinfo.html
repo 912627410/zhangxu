@@ -1118,7 +1118,7 @@
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
                       <div class="box box-danger">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                          <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="将GPS设备与车辆绑定"> <i class="fa fa-info" ></i> </a>
@@ -1132,7 +1132,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'startLockCar'|translate}}"
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'binding'|translate}}"
                                                 send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
                                                 class="btn btn-danger" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind"
                                                 ng-click="deviceCurrentInfoCtrl.sendActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
@@ -1147,7 +1147,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
-                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'LockCar'|translate}}"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="{{'unbundling'|translate}}"
                                                 class="btn btn-warning" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:unBind"
                                                 ng-click="deviceCurrentInfoCtrl.sendUnActiveLockSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
                                   </sms-send-btn>
@@ -1230,7 +1230,7 @@
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:keyboardControl:bind">
                       <div class="box box-success">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">{{'startLockCar'|translate}}</h5>
+                          <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="通过键盘绑定车辆的GPS"> <i class="fa fa-info" ></i></a>
@@ -1254,7 +1254,7 @@
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:keyboardControl:unBind">
                       <div class="box box-success">
                         <div class="box-header">
-                          <h5 class="box-title text-gray">{{'unActiveCar'|translate}}</h5>
+                          <h5 class="box-title text-gray">{{'unbundling'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
                                data-placement="right" title="通过键盘解除绑定的GPS设备"> <i class="fa fa-info" ></i></a>
