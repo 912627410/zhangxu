@@ -9,7 +9,7 @@
     .controller('machineNeutralSlidingController', machineNeutralSlidingController);
 
   /** @ngInject */
-  function machineNeutralSlidingController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
+  function machineNeutralSlidingController($rootScope, $scope ,languages,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;

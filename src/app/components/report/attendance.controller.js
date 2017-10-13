@@ -9,7 +9,7 @@
     .controller('attendanceController', attendanceController);
 
   /** @ngInject */
-  function attendanceController($rootScope, $scope ,$filter, $http, treeFactory,  Notification, serviceResource, DEVICEREPORT_ATTENDANCE_URL, DEVICEREPORT_EXPORT_URL) {
+  function attendanceController($rootScope, $scope ,languages,$filter, $http, treeFactory,  Notification, serviceResource, DEVICEREPORT_ATTENDANCE_URL, DEVICEREPORT_EXPORT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.querySubOrg = true;
@@ -71,21 +71,21 @@
           min: 0,
           max: 100,
           title: {
-            text: '车辆出勤率'
+            text: languages.findKey('machineAttendance')
           }
         },
         legend: {
           enabled: false
         },
         tooltip: {
-          pointFormat: '设备编号: <b>{point.deviceNum} </b><br>' +
-          '出勤率: <b>{point.y:.1f} %</b><br>' +
-          '总工作时长: <b>{point.totalDuration} 小时</b><br>' +
-          '累计里程: <b>{point.totalMileage} KM</b><br>'
+          pointFormat: languages.findKey('deviceNum')+': <b>{point.deviceNum} </b><br>' +
+          languages.findKey('attendance')+':<b>{point.y:.1f} %</b><br>' +
+          languages.findKey('totalWorkingHours')+': <b>{point.totalDuration} '+languages.findKey('hour')+'</b><br>' +
+          languages.findKey('totalMileage')+': <b>{point.totalMileage} KM</b><br>'
         }
 
       },
-      title: {text: '车辆出勤率'},
+      title: {text: languages.findKey('machineAttendance')},
       series: [{
         data: [],
         dataLabels: {

@@ -10,7 +10,7 @@
     .controller('barDistributionMngController', barDistributionMngController);
 
   /** @ngInject */
-  function barDistributionMngController($rootScope, $scope, $http, $filter) {
+  function barDistributionMngController($rootScope, languages,$scope, $http, $filter) {
     var vm = this;
     vm.maxDate = new Date();
     vm.dateOptions = {
@@ -124,7 +124,7 @@
           "台湾"]
       },
       yAxis: {
-        name: '车辆数量(台)',
+        name: languages.findKey('vehicleQuantity')+ languages.findKey('carQuantifier'),
         boundaryGap: ['0%', '10%'],
         minInterval: 1,
         type: 'value',
@@ -509,7 +509,7 @@
           {name: "LG953", value: 1}
         ]
       },{
-        name: '其他',
+        name: languages.findKey('other'),
         type: 'bar',
         stack: '总量',
         barMaxWidth: '30',

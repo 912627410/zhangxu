@@ -10,7 +10,7 @@
     .controller('machineworkliveMngController', machineworkliveMngController);
 
   /** @ngInject */
-  function machineworkliveMngController($rootScope, $scope, $http, $filter) {
+  function machineworkliveMngController($rootScope,languages, $scope, $http, $filter) {
     var vm = this;
     var cityName = '';
     var cityEnName = '';
@@ -36,7 +36,7 @@
     var myChart = echarts.init(document.getElementById('chart-panel'));
     var option = {
       title: {
-        text: '车辆工作实况',
+        text: languages.findKey('vehicleWork'),
         left: 'center',
         subtextStyle: {
           fontSize: 14,
@@ -69,9 +69,9 @@
           if (names.length > 1) {
             addr = names[1];
           }
-          return "产品类型：" + params.seriesName.split(' ')[0] + "<br />"
-            + "车辆编号：" + deviceNo + "<br />"
-            + "地理位置：" + addr;
+          return languages.findKey('productType')+"：" + params.seriesName.split(' ')[0] + "<br />"
+            + languages.findKey('vehicleNumber')+"：" + deviceNo + "<br />"
+            + languages.findKey('geographicalPosition')+"：" + addr;
         }
       },
       legend: {
@@ -220,7 +220,7 @@
 
       });
 
-      option.title.text = ' 车辆工作实况';
+      option.title.text = languages.findKey('vehicleWork');
       option.series = series;
       option.legend.data = legendData;
 

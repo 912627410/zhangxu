@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">工作地区：</label>
+              <label class="control-label">{{'workArea'|translate}}：</label>
               <div class="controls">
                 <span style="width: 48%;display: inline-block;" >
                   <select required="" class="form-control"  ng-model="machineworkreportMngController.province" ng-options="m.name for m in machineworkreportMngController.division" >
@@ -101,7 +101,7 @@
 
       <div class="hoursdiv">
         <div id="hoursd">
-          时间间隔：<input id="hour2" name="hourGap" class="required" type="radio" value="2"/><label
+          {{'timeInterval'|translate}}：<input id="hour2" name="hourGap" class="required" type="radio" value="2"/><label
           for="hour2">2{{'hour'|translate}}</label>
           <input id="hour4" name="hourGap" class="required" type="radio" value="4"
                  checked="checked"/><label for="hour4">4{{'hour'|translate}}</label>

@@ -19,18 +19,18 @@
             </div>
             <br>
             <div class="control-group">
-              <label class="control-label">汇总周期：</label>
+              <label class="control-label">{{'summaryCycle'|translate}}：</label>
               <div class="controls">
-                <select class="form-control" ng-model="barDistributionMngController.cycleType" placeholder="请选择">
-                  <option value="1">按月</option>
-                  <option value="0">按季度</option>
+                <select class="form-control" ng-model="barDistributionMngController.cycleType" placeholder="{{'pleaseSelect'|translate}}">
+                  <option value="1">{{'monthly'|translate}}</option>
+                  <option value="0">{{'quarterly'|translate}}</option>
                 </select>
               </div>
             </div>
 
             <br>
             <div class="control-group">
-              <label class="control-label">开工月份：</label>
+              <label class="control-label">{{'startMonth'|translate}}：</label>
               <div class="controls">
                 <p class="input-group">
                   <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom1}}"
@@ -54,7 +54,7 @@
               <div class="controls">
                 <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="车辆开工区域分布"
                         presentation-href="statAnalysis:workHeat:arealDistribution:query"
-                        ng-click="barDistributionMngController.drawDistribution()">车辆开工区域分布</button>
+                        ng-click="barDistributionMngController.drawDistribution()">{{'distributionofVehicleStartArea'|translate}}</button>
               </div>
             </div>
           </form>
@@ -67,14 +67,14 @@
     <div id="topic-container" class="topic-container">
       &nbsp;
       <span id="sapnWorkMonth"></span>
-      <span id="sapnWorkProvince">全国</span>
-      车辆开工区域分布
+      <span id="sapnWorkProvince">{{'nationwide'|translate}}</span>
+      {{'distributionofVehicleStartArea'|translate}}
       <span class="return-mask" style="display: none;">
                 <i class="icon-reply"></i>
-                <a class="return-word" href="javascript:void(0);" onclick="groupEvent()">返回到全国</a>
+                <a class="return-word" href="javascript:void(0);" onclick="groupEvent()">{{'returntoTheWholeCountry'|translate}}</a>
             </span>
     </div>
-    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示汇总周期内各区域工作车辆数量(点击省份柱体或名称可下钻至省份视图) </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> {{'numberofWorkVehiclesinEachRegionDuringtheCyclePeriod'|translate}} </div>
     <div id="area-container" class="chart-container"> </div>
   </div>
 

@@ -9,7 +9,7 @@
     .controller('machineSpeedingController', machineSpeedingController);
 
   /** @ngInject */
-  function machineSpeedingController($rootScope, $scope , $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
+  function machineSpeedingController($rootScope, $scope ,languages, $filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;

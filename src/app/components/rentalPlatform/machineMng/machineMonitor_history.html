@@ -97,11 +97,11 @@
               <!--<th  class="text-nowrap">{{'ecuLockStatus'|translate}}</th>-->
               <!--实际绑定车号-->
               <th  class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</th>
-              <th  class="text-nowrap">累计里程</th>
-              <th  class="text-nowrap">气压表2</th>
-              <th  class="text-nowrap">机油压力</th>
-              <th  class="text-nowrap">阶段工作时间</th>
-              <th  class="text-nowrap">阶段里程</th>
+              <th  class="text-nowrap">{{'totalMileage'|translate}}</th>
+              <th  class="text-nowrap">{{'pressureMeter'|translate}}</th>
+              <th  class="text-nowrap">{{'oilPress'|translate}}</th>
+              <th  class="text-nowrap">{{'momentWorkTime'|translate}}</th>
+              <th  class="text-nowrap">{{'momentMileage'|translate}}</th>
             </tr>
             <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
               <!--数据回传时间-->

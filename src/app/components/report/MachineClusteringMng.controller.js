@@ -9,7 +9,7 @@
     .controller('MachineClusteringMngController', MachineClusteringMngController);
 
   /** @ngInject */
-  function MachineClusteringMngController($rootScope, $scope, $http, $filter) {
+  function MachineClusteringMngController($rootScope, languages,$scope, $http, $filter) {
     var vm = this;
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);

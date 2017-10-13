@@ -10,7 +10,7 @@
     .controller('machineComparedMngController', machineComparedMngController);
 
   /** @ngInject */
-  function machineComparedMngController($rootScope, $scope, $http, $filter,Notification) {
+  function machineComparedMngController($rootScope, languages,$scope, $http, $filter,Notification) {
     var vm = this;
     var mapChart1;
     var mapChart2;
@@ -63,11 +63,11 @@
 
     var chinaOption1 = {
       title: {
-        text: '车辆开工热度分布',
+        text: languages.findKey('vehicleStartHeatDistribution'),
         textStyle:{
           fontSize: 26,
         },
-        subtext: '全国',
+        subtext: languages.findKey('nationwide'),
         subtextStyle:{
           fontSize: 17,
         },
@@ -89,7 +89,7 @@
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + languages.findKey('vehicleQuantity') +' : ' + params.data.count + languages.findKey('carQuantifier');
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
@@ -123,7 +123,7 @@
         precision: 2,
         seriesIndex: [0],
         color: ['#075e89','#FFFFFF'],
-        text: ['高', '低']
+        text: [languages.findKey('high'),languages.findKey('low')]
       },
       geo: {
         map: 'china',
@@ -141,7 +141,7 @@
       },
       series: [
         {
-          name: '开工热度',
+          name: languages.findKey('startHeat'),
           type: 'map',
           map: 'china',
           scaleLimit: {
@@ -230,7 +230,7 @@
         textStyle:{
           fontSize: 21,
         },
-        subtext: '全国',
+        subtext: languages.findKey('nationwide'),
         subtextStyle:{
           fontSize: 12,
         },
@@ -286,7 +286,7 @@
         precision: 2,
         seriesIndex: [0],
         color: ['orangered','yellow','lightskyblue'],
-        text: ['高', '低']
+        text: [languages.findKey('high'),languages.findKey('low')]
       },
       geo: {
         map: 'china',
@@ -304,7 +304,7 @@
       },
       series: [
         {
-          name: '销售热度',
+          name:languages.findKey('soldHeat'),
           type: 'map',
           map: 'china',
           scaleLimit: {
@@ -883,7 +883,7 @@
             data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
           },
           yAxis: {
-            name: '车辆数量(台)',
+            name: languages.findKey('vehicleQuantity')+ languages.findKey('carQuantifier'),
             type: 'value',
             minInterval: 1,
             axisLine: {
@@ -965,7 +965,7 @@
               precision: 2,
               seriesIndex: [0],
               color: ['#075e89','#f6f3d2'],
-              text: ['高', '低']
+              text: [languages.findKey('high'),languages.findKey('low')]
             },
             toolbox: {
               show: true,
