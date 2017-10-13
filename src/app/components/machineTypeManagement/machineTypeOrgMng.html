@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">隶属组织信息
+  <h3 class="modal-title">{{'affiliatedOrganizationInfo'|translate}}
   </h3>
 </div>
 
@@ -9,7 +9,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">组织名称</label>
+      <label class="control-label">{{'organizationName'|translate}}</label>
 
     </div>
     <div class="col-md-3">
@@ -28,7 +28,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">组织总数:  {{machineTypeOrgMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'organizationNumber'|translate}}:  {{machineTypeOrgMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
       <button class="btn btn-warning pull-right" type="button" ng-click="machineTypeOrgMngCtrl.cancel()">{{'cancel'|translate}}</button>
@@ -51,8 +51,8 @@
           </td>
 
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{orgInfo.id}}</td>
-          <td class="text-nowrap" data-title="'组织名称'" sortable="'typeName'">{{orgInfo.label}}</td>
-          <td class="text-nowrap" data-title="'组织简称'" sortable="'name'">{{orgInfo.name}}</td>
+          <td class="text-nowrap" data-title="'organizationName'|translate" sortable="'typeName'">{{orgInfo.label}}</td>
+          <td class="text-nowrap" data-title="'organizationAbbreviation'|translate" sortable="'name'">{{orgInfo.name}}</td>
           <!--<td class="text-nowrap" data-title="'组织名称'" sortable="'parentId'">{{orgInfo.parentId}}</td>-->
 
           <td class="text-nowrap" data-title="'createTime'|translate" sortable="'orgCreateTime'">{{orgInfo.orgCreateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

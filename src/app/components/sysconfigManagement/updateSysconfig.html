@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">修改系统参数</h3>
+  <h3 class="modal-title">{{'modifySystemParameters'|translate}}</h3>
 </div>
 <!--<script type="text/ng-template" id="myPopoverTemplate.html">-->
 <!--<div >{{updateUserinfoCtrl.dynamicPopover.content}}</div>-->
@@ -12,28 +12,28 @@
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="name" class="col-sm-3 control-label">参数名称</label>
+        <label for="name" class="col-sm-3 control-label">{{'parameterName'|translate}}</label>
         <div class="col-sm-9">
-          <input type="text" id="name" class="form-control" placeholder="参数名称"
+          <input type="text" id="name" class="form-control" placeholder="{{'parameterName'|translate}}"
                  ng-model="updateSysconfigController.sysconfig.name" name="name" typeahead-show-hint="true"
                  validator="required"/>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="value" class="col-sm-3 control-label">参数值</label>
+        <label for="value" class="col-sm-3 control-label">{{'parameterValue'|translate}}</label>
         <div class="col-sm-9">
 
-          <textarea rows="3" id="value" class="form-control" placeholder="参数值"
+          <textarea rows="3" id="value" class="form-control" placeholder="{{'parameterValue'|translate}}"
                     ng-model="updateSysconfigController.sysconfig.value" name="value" typeahead-show-hint="true"
                     validator="required" ></textarea>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="description" class="col-sm-3 control-label">参数描述</label>
+        <label for="description" class="col-sm-3 control-label">{{'parameterDescription'|translate}}</label>
         <div class="col-sm-9">
-          <textarea rows="3" id="description" class="form-control" placeholder="参数描述"
+          <textarea rows="3" id="description" class="form-control" placeholder="{{'parameterDescription'|translate}}"
                     ng-model="updateSysconfigController.sysconfig.description" name="description" typeahead-show-hint="true"
                     validator="required"  ></textarea>
         </div>

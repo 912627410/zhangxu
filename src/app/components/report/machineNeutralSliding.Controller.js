@@ -111,7 +111,7 @@
       },
       yAxis: {
         title: {
-          text: '速度(KM/H)'
+          text: languages.findKey('speed')+'(KM/H)'
         },
         startOnTick: true,
         endOnTick: true,
@@ -129,7 +129,7 @@
         data: []
       }],
       title: {
-        text:'空档滑行实时监控'
+        text:languages.findKey('NeutralSlidingMonitoring')
       },
       credits: { // 版权信息
         enabled:false

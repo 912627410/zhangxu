@@ -28,11 +28,11 @@
   </div>
   <div class="row form-group">
     <div class="col-md-2">
-      <label class="control-label">所属组织</label>
+      <label class="control-label">{{'organisation'|translate}}</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="所属组织"
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                ng-model="deviceUpdateCtrl.queryOrg.label" name="org" readonly required/>
         <span class="input-group-btn">
            <!--打开组织树-->
@@ -88,7 +88,7 @@
             <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum=='A001'||deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</td>-->
             <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum!='A001'&&deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</td>-->
             <td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>
-            <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
+            <td class="text-nowrap" data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
             <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion!=null">VER{{deviceinfo.gpsSoftVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.gpsSoftVersion==null"></td>
             <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.updatingVersion!=null">VER{{deviceinfo.deviceUpdate.updatingVersion/100 | number: 2}}</td>

@@ -128,7 +128,7 @@
                      ng-checked="machineworkreportMngController.isSelected(provinceinfo.value)"
                      ng-click="machineworkreportMngController.updateSelection($event,provinceinfo.value)"
                      ng-model="provinceinfo.checked"></td>
-            <td class=" text-nowrap" data-title="'工作省份'" >
+            <td class=" text-nowrap" data-title="'workingProvince'|translate" >
               <span ng-if="!machineworkreportMngController.validateOperPermission()">{{provinceinfo.value}}</span>
             </td>
           </tr>
