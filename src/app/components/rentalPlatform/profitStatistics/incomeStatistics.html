@@ -85,14 +85,19 @@
               <div class="col-md-2">
                 <p class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                         ng-model="incomeStatisticsCtr.endDate"
-                         is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                         ng-model="incomeStatisticsCtr.startDate"
+                         is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
                          datepicker-options="incomeStatisticsCtr.dateOptions"
-                         ng-required="true" current-text="{{'today'|translate}}"
+                         min-date="incomeStatisticsCtr.minDate"
+                         max-date="incomeStatisticsCtr.maxDate"
+
+                         ng-required="true"
+                         current-text="{{'today'|translate}}"
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}" required readonly="readonly" />
                   <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+
                         </span>
                 </p>
               </div>
@@ -100,7 +105,7 @@
                 <label class="control-label">{{'rentalEndDate'|translate}}</label>
               </div>
               <div class="col-md-2">
-                <div class="input-group" >
+                <p class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                          ng-model="incomeStatisticsCtr.endDate"
                          is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
@@ -111,7 +116,7 @@
                   <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
-                </div>
+                </p>
               </div>
               <div class="col-md-4">
                 <button  type="button" class="btn btn-sm btn-primary searchButton" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>

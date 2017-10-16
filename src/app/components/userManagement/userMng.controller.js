@@ -9,7 +9,7 @@
     .controller('userMngController', userMngController);
 
   /** @ngInject */
-  function userMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,
+  function userMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,languages,
                              USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL,ROLE_MENU_LIST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;

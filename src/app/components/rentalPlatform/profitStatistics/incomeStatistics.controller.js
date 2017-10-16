@@ -76,8 +76,15 @@
     vm.qbTotalIncome = 0;
 
     vm.queryIncomeByType = function () {
-      //查询高度类型
-      var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16 ---start---
+      vm.jcTotalIncome =91200;
+      vm.zbTotalIncome = 63000;
+      vm.qbTotalIncome = 61200;
+      vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
+
+      //查询总收入和各种类型的车辆的总收入
+      /**var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
       var incomeTotalData = serviceResource.restCallService(incomeTotalURL, "GET");
       incomeTotalData.then(function (data) {
         vm.incomeTotalData = data.content;
@@ -97,7 +104,7 @@
 
       }, function (reason) {
         Notification.error(languages.findKey('getFail'));
-      })
+      })*/
 
     }
     vm.queryIncomeByType();
@@ -216,7 +223,7 @@
       },
       grid: {
         left: '3%',
-        right: '4%',
+        right: '6%',
         bottom: '3%',
         containLabel: true
       },
@@ -378,22 +385,82 @@
         }
       }
 
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
+        // var rspData = serviceResource.restCallService(restCallURL, "GET");
+        // rspData.then(function (data) {
+        //
+        //   vm.machineIncometableParams = new NgTableParams({
+        //     // initial sort order
+        //     // sorting: { name: "desc" }
+        //   }, {
+        //     dataset: data.content
+        //   });
+        //   vm.machineTotalElements = data.totalElements;
+        //   vm.pageNumber =  data.number + 1;
+        // }, function (reason) {
+        //   vm.machineList = null;
+        //   Notification.error(languages.findKey('getDataVeFail'));
+        // });
 
-          vm.machineIncometableParams = new NgTableParams({
-            // initial sort order
-            // sorting: { name: "desc" }
-          }, {
-            dataset: data.content
-          });
-          vm.machineTotalElements = data.totalElements;
-          vm.pageNumber =  data.number + 1;
-        }, function (reason) {
-          vm.machineList = null;
-          Notification.error(languages.findKey('getDataVeFail'));
-        });
-
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
+      var rspData = {content:[{heightType: "0-8米",
+        licenseId: "H05000536",
+        machineType: "剪叉",
+        manufacture: "临工重机",
+        orderEndData: 1505059200000 ,
+        orderId: 3438466400,
+        orderMachines: null,
+        realIncome: 200,
+        totalAmt: 27500,
+        totalDays: 4,
+        workDays: 2},{heightType: "0-8米",
+        licenseId: "H05010407",
+        machineType: "剪叉",
+        manufacture: "临工重机",
+        orderEndData: 1505836800000,
+        orderId: 3438466400,
+        orderMachines: null,
+        realIncome: 400,
+        totalAmt: 27500,
+        totalDays: 4,
+        workDays: 1},{heightType: "8-12米",
+        licenseId: "H05000601",
+        machineType: "剪叉",
+        manufacture: "临工重机",
+        orderEndData: 1505836800000,
+        orderId: 3438466400,
+        orderMachines: null,
+        realIncome: null,
+        totalAmt: 27500,
+        totalDays: 6,
+        workDays: 1},{heightType: "0-8米",
+        licenseId: "H05000536",
+        machineType: "剪叉",
+        manufacture: "临工重机",
+        orderEndData: 1505836800000,
+        orderId: 3438466400,
+        orderMachines: null,
+        realIncome: 200,
+        totalAmt: 27500,
+        totalDays: 6,
+        workDays: 1}],
+        first: true,
+        last: false,
+        number: 0,
+        numberOfElements: 10,
+        size: 10,
+        sort: null,
+        totalElements: 44,
+        totalPages: 1
+      }
+      vm.machineIncometableParams = new NgTableParams({
+        // initial sort order
+        // sorting: { name: "desc" }
+      }, {
+        dataset: rspData.content
+      });
+      vm.machineTotalElements = rspData.totalElements;
+      vm.pageNumber =  rspData.number + 1;
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
 
     }
     //右侧根据车辆统计的收入数据
@@ -420,7 +487,7 @@
         }
       }
 
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      /*var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         vm.incomeData = data.content;
         for(var i = 0;i<vm.incomeData.length;i++){
@@ -434,7 +501,31 @@
         lineChart.setOption(option);
       },function (reason) {
         Notification.error(languages.findKey('getDateFbyvehicle'));
-      })
+      })**/
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16  ----start-----
+      var rspData = {
+        content:[{
+          accountsReceivable: 13750.00,
+          realIncome: 200,
+          statisticalCycle: 1505059200000
+        },{
+          accountsReceivable: 16041.66,
+          realIncome: 600,
+          statisticalCycle: 1505836800000
+        }
+        ]
+      }
+      vm.incomeData = rspData.content;
+      for(var i = 0;i<vm.incomeData.length;i++){
+        xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
+        realComeDate.push(vm.incomeData[i].realIncome.toFixed(2));
+        incomeDate.push(vm.incomeData[i].accountsReceivable.toFixed(2));
+      }
+      option.xAxis[0].data = xAxisDate;
+      option.series[0].data = realComeDate;
+      option.series[1].data = incomeDate;
+      lineChart.setOption(option);
+      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16  ----end-----
     }
 
     //上方四个曲线图

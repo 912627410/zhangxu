@@ -159,8 +159,99 @@
         }
 
 
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
+        // var rspData = serviceResource.restCallService(restCallURL, "GET");
+        // rspData.then(function (data) {
+        //   vm.tableParams = new NgTableParams({
+        //     // initial sort order
+        //     // sorting: { name: "desc" }
+        //   }, {
+        //     dataset: data.content
+        //   });
+        //   vm.page = data.page;
+        //   vm.pageNumber = data.page.number + 1;
+        // },function (reason) {
+        //   Notification.error("获取成本数据失败")
+        // })
+
+
+        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
+        var data = {content:[{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 530.7,
+          machineLicenseId: "H05024197",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 460,
+          machineLicenseId: "H05000536",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 530.7,
+          machineLicenseId: "H05010407",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 350,
+          machineLicenseId: "H05000601",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 350,
+          machineLicenseId: "H05000601",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 642,
+          machineLicenseId: "H05000608",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null},{artificialCost: 20,
+          depreciationCost: 410.7,
+          financialExpenses: null,
+          heightTypeName: "0-8米",
+          machineCost: 150,
+          machineLicenseId: "H05000644",
+          machineManufacture: "临工重机",
+          machineTypeName: "剪叉",
+          maintenanceCost: 100,
+          managementCost: null,
+          salesExpenses: null}],
+          page:{number: 0,
+          size: 10,
+          totalElements: 1,
+          totalPages: 1}
+
+        }
           vm.tableParams = new NgTableParams({
             // initial sort order
             // sorting: { name: "desc" }
@@ -169,9 +260,8 @@
           });
           vm.page = data.page;
           vm.pageNumber = data.page.number + 1;
-        },function (reason) {
-          Notification.error("获取成本数据失败")
-        })
+
+        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
       }
 
     }
@@ -198,15 +288,15 @@
       },
       series: [
         {
-          name:'访问来源',
+          name:'成本',
           type:'pie',
           selectedMode: 'single',
           radius: '60%',
           data:[
-            {value:335, name:languages.findKey('rentalMachineCost'), selected:true},
-            {value:679, name:languages.findKey('rentalSaleCost')},
-            {value:1548, name:languages.findKey('rentalManagementCost')},
-            {value:666, name:languages.findKey('rentalFinanceCost')}
+            {value:3013.4, name:languages.findKey('rentalMachineCost'), selected:true},
+            {value:2850, name:languages.findKey('rentalSaleCost')},
+            {value:2600, name:languages.findKey('rentalManagementCost')},
+            {value:1500, name:languages.findKey('rentalFinanceCost')}
           ]
         }
       ]
