@@ -9,7 +9,8 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope, $scope, machineService, $http, $uibModal, $uibModalInstance, treeFactory, MACHINEANDDEVCE_ORG_JUDGE, DEIVCIE_FETCH_UNUSED_URL, MACHINE_URL, ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo) {
+  function newMachineController($rootScope, $scope, machineService, $http, $uibModal, $uibModalInstance, treeFactory, MACHINEANDDEVCE_ORG_JUDGE, DEIVCIE_FETCH_UNUSED_URL, MACHINE_URL,
+                                ENGINE_TYPE_LIST_URL, serviceResource, Notification, operatorInfo, MACHINE_ENGINE_TYPE) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.notice;
@@ -206,6 +207,27 @@
       });
     }
 
+    /**
+     * 根据车号判断发动机类型
+     * @param licenseId 车号
+       */
+    vm.validateEngineType = function (licenseId) {
+      if(licenseId && null!=licenseId) {
+        var restCallURL = MACHINE_ENGINE_TYPE + "?licenseId=" + licenseId;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          if (data.code === 0) {
+            vm.machine.engineType = data.content;
+            Notification.success("请核对发动机类型是否正确");
+          } else {
+            vm.machine.engineType = null;
+            Notification.error(data.content);
+          }
+        }, function (reason) {
+          Notification.error("自动获取发动机类型失败");
+        });
+      }
+    };
 
   }
 })();
