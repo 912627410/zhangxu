@@ -1459,7 +1459,7 @@
             <div class="col-md-4" style="padding: 0px;">
               <div style="float:left;margin-top: -5px;">
                 <div><input type="radio" name="radio" value="DASHBOARD" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;{{'comprehensiveAnalysis'|translate}}</div>
-                <div><input type="radio" name="radio" value="STATEQUANTITY" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;{{'dataDisplay'|translate}}</div>
+                <div><input type="radio" name="radio" value="{{'stateQuantity'|translate}}" ng-model="deviceCurrentInfoCtrl.checkedRad">&nbsp;{{'dataDisplay'|translate}}</div>
               </div>
               <button type="button" style="float:left;margin-left: 18px;" ng-class="deviceCurrentInfoCtrl.checkedRad=='DASHBOARD'?'disabled':''"
                       class="btn btn-default" ng-click="deviceCurrentInfoCtrl.selectSensor(deviceCurrentInfoCtrl.checkedRad)">{{'stateQuantity'|translate}}</button>

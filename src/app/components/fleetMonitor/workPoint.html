@@ -50,7 +50,7 @@
           <!--<span>{{'totalNumberOfRecords'|translate}} {{workPointCtrl.page.totalElements}}</span>-->
         <!--</div>-->
         <div class="btn-group col-md-12 right">
-          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workPoint:create"  ng-click="workPointCtrl.create()">{{'create'|translate}}{{'workPoint'|translate}}</a>
+          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workPoint:create"  ng-click="workPointCtrl.create()">{{'addWorkingPlace'|translate}}</a>
         </div>
       </div>
 
@@ -100,7 +100,7 @@
         <!--<span>{{'totalNumberOfRecords'|translate}} {{workPointCtrl.page.totalElements}}</span>-->
         <!--</div>-->
         <div class="btn-group col-md-12 right">
-          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workLine:create"  ng-click="workPointCtrl.createLine()">{{'create'|translate}}{{'workLine'|translate}}</a>
+          <a class="btn btn-default pull-right"  presentation-href="fleetMng:workLine:create"  ng-click="workPointCtrl.createLine()">{{'addWorkingLine'|translate}}</a>
         </div>
       </div>
 
@@ -125,7 +125,7 @@
                         presentation-href="fleetMng:workLine:modify" ng-click="workPointCtrl.closeMonitor(workLine)">{{'closeMonitor'|translate}}
                 </button>
                 <button type="button" class="btn btn-danger btn-xs" ng-show="workLine.status == 1"
-                        presentation-href="fleetMng:workLine:disable" ng-click="workPointCtrl.remove(workLine)">删除
+                        presentation-href="fleetMng:workLine:disable" ng-click="workPointCtrl.remove(workLine)">{{'rentalDelete'|translate}}
                 </button>
               </td>
             </tr>
