@@ -1064,7 +1064,7 @@
   "temperature": "温度",
   "torque": "扭矩指数",
   "power": "功率指数",
-  "rotatingSpeed": "转速指数",
+  "rotatingSpeedIndex": "转速指数",
   "MTBF": "平均故障时间间隔",
   "equipmentJobAnalysis": "设备工作分析",
   "bootTimes": "开机次数",
@@ -1251,13 +1251,14 @@
   "newEquipmentDriveType":"新建设备驱动类型",
   "affiliatedOrganization":"隶属组织",
   "protocolTemplate":"协议模版",
-  "serialNumber":"序号",
+  "serialNumbers":"序号",
   "equipmentType":"设备类型",
   "return":"返回",
   "addTemplate":"添加模版",
   "addDataPoints":"添加数据点",
   "emptyDataPoints":"清空数据点",
   "newAPPVersion":"新建APP版本",
+  "":"修改作业点",
 
   "appManagement": "APP管理",
   "appVersion": "版本管理",
@@ -1366,7 +1367,6 @@
   "selOrDiff":"选择的订单不能一样!",
   "newCustomerSucc":"新建客戶成功!",
   "upOrderSucc":"更新订单成功!"
-
 
 
 
