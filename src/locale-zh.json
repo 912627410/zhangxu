@@ -1048,7 +1048,7 @@
   "enterScanBarcode":"手工输入6位号码或扫条码",
   "lastFourSIMNumber":"输入SIM卡号后4位",
   "batteryVoltageVariation":"蓄电池组电压变化",
-    "chargingMonitoring":"电池充电监控",
+  "chargingMonitoring":"电池充电监控",
   "dischargeMonitoring":"电池放电监控",
   "voltage":"电压(V)",
   "chargingState":"充电状态",
@@ -1320,12 +1320,6 @@
   "versionAfterUpgrade":"升级后版本",
   "upgradeResults":"升级结果",
   "operationCompletionTime":"操作完成时间",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-  "":"",
-
 
   "越野剪叉式":"越野剪叉式",
   "自行走剪叉式":"自行走剪叉式",
