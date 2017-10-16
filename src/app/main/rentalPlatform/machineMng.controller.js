@@ -255,7 +255,7 @@
       rspData.then(function (data) {
 
         function getLocalTime(nS) {
-          return new Date(parseInt(nS)).toLocaleString().substr(0,9)
+          return new Date(parseInt(nS)).toLocaleString().substr(0,10)
         }
 
         for(var i=0,len = data.content.startDate.length;i<len;i++){
