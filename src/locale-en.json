@@ -856,8 +856,8 @@
   "rentalFinanceCost":"Financial Cost",
   "rentalMachineType":"Model",
   "rentalHeight":"Height",
-  "rentalNewProfit":"New Profit",
-  "rentalAccumulatedProfits":"Accumulate Profits",
+  "rentalNewProfit":"Week Profit",
+"rentalAccumulatedProfits":"Quarter Profit ",
   "rentalTotalOrder":"Order",
   "rentalSelectMachine":"Machine Order",
   "rentalMaintenanceCategories":"Maintenance Categories",
@@ -876,6 +876,7 @@
   "automaticMatching":"Automatic Matching",
   "workAddress":"Work Address",
   "customerList":"Customer List",
+  "rantalOrderList":"Order List",
   "unUsedMachineList":"unUsed Machine List",
   "rentalSetFence":"Set Geo-Fence",
 
