@@ -215,7 +215,7 @@
 
       }
     }, function (reason) {
-      Notification.error('获取状态分组失败');
+      Notification.error(languages.findKey('getStaGroupFail'));
     })
 
 

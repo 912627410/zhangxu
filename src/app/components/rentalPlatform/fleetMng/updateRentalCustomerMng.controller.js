@@ -10,7 +10,7 @@
     .controller('updateRentalCustomerController', updateRentalCustomerController);
 
   /** @ngInject */
-  function updateRentalCustomerController($rootScope,$scope,$http,$confirm,$location,$stateParams,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification) {
+  function updateRentalCustomerController($rootScope,$scope,$http,$confirm,$location,$stateParams,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification,languages) {
     var vm = this;
     var path="/rental/customer";
     vm.operatorInfo =$rootScope.userInfo;
@@ -49,7 +49,7 @@
       var rspdata = serviceResource.restUpdateRequest(RENTAL_CUSTOMER_URL,vm.rentalCustomer);
       vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
-        Notification.success("新建客户成功!");
+        Notification.success(languages.findKey('newCustomerSucc'));
         $location.path(path);
 
       },function (reason) {

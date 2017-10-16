@@ -9,7 +9,7 @@
     .controller('rentalFleetMachineMngController', rentalFleetMachineMngController);
 
   /** @ngInject */
-  function rentalFleetMachineMngController($scope, $window, $location, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
+  function rentalFleetMachineMngController($scope, $window, $location, $anchorScroll, serviceResource,languages,NgTableParams,ngTableDefaults,Notification,treeFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,MACHINE_PAGE_URL) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -30,7 +30,7 @@
       vm.deviceManufactureList= data.content;
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取厂家失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //加载高度信息
@@ -38,7 +38,7 @@
     deviceHeightTypeListPromise.then(function (data) {
       vm.deviceHeightTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取高度失败');
+      Notification.error(languages.findKey('getHeFail'));
     })
 
   //加载车辆类型信息
@@ -46,7 +46,7 @@
     deviceTypeListPromise.then(function (data) {
       vm.deviceTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取类型失败');
+      Notification.error(languages.findKey('getTypeFail'));
     })
 
   //加载车辆驱动信息
@@ -54,7 +54,7 @@
     devicePowerTypeListPromise.then(function (data) {
       vm.devicePowerTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取驱动类型失败');
+      Notification.error(languages.findKey('getDriFail'));
     })
 
 
@@ -99,7 +99,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
 

@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, MACHINE_DEVICETYPE_URL,Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     var xAxisDate = [];
@@ -69,14 +69,22 @@
       $anchorScroll();
     }
 
-
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
    //查询厂商List
@@ -85,7 +93,7 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
 
@@ -214,14 +222,14 @@
       })
       //console.log(incomeStatisticInfo.totalOrders);
     }, function (reason) {
-      Notification.error('获取收入统计信息失败');
+      Notification.error(languages.findKey('getIncomeInf'));
     })
     vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
     vm.queryProfit = function (queryStartData,queryEndData) {
       if(queryStartData==null||queryEndData==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
       }
       if(null!=queryStartData&&null!=queryEndData){
         var xAxisDate = [];
@@ -259,7 +267,7 @@
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
         },function (reason) {
-          Notification.error("获取利润数据失败")
+          Notification.error(languages.findKey('getProFail'));
         })
       }
 

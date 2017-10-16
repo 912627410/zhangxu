@@ -10,7 +10,7 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,MACHINE_DEVICETYPE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -96,7 +96,15 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
-
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
 
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
@@ -104,7 +112,7 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
     //查询厂商List
@@ -113,7 +121,7 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //重置搜索框
@@ -128,7 +136,7 @@
 
     vm.queryCost = function (page, size, sort,startDate,endDate) {
       if(startDate==null||endDate==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
       }
       if(null!=startDate&&null!=endDate){
         var restCallURL = RENTAL_COST_PAGED_URL;
