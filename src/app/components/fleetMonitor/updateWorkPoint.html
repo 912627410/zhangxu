@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">修改作业点
+  <h3 class="modal-title">{{'modifyWorkPoint'|translate}}
     <button class="btn btn-warning pull-right" type="button" ng-click="updateWorkPointCtrl.cancel()">{{'cancel'|translate}}</button>
 
   </h3>
@@ -92,7 +92,7 @@
           <input type="text" id="tipinput" class="form-control" placeholder="{{'search'|translate}}" ng-model="updateWorkPointCtrl.tipinput"/>
         </div>
         <button type="button" class="btn btn-primary" value="{{'showontheMap'|translate}}" id="showMachineAddress"
-                ng-click="updateWorkPointCtrl.showAddress(updateWorkPointCtrl.tipinput)">定位
+                ng-click="updateWorkPointCtrl.showAddress(updateWorkPointCtrl.tipinput)">{{'positioning'|translate}}
         </button>
       </div>
       <div class="box-body" id="newWorkPointMap" style="height:400px;width: 400px;"></div>
