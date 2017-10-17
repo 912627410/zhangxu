@@ -859,6 +859,7 @@
   "automaticMatching":"Automatic Matching",
   "workAddress":"Work Address",
   "customerList":"Customer List",
+  "rantalOrderList":"Order List",
   "unUsedMachineList":"unUsed Machine List",
   "rentalSetFence":"Set Geo-Fence",
 

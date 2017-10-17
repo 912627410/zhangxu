@@ -76,7 +76,7 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalMaintenanceMachineListMng.html',
-        controller: 'maintenanceMachineListMngController as maintenanceMachineListMngController',
+        controller: 'maintenanceMachineListMngController as maintenanceMachineListMngCtrl',
         size: size,
         backdrop: false,
         resolve: {

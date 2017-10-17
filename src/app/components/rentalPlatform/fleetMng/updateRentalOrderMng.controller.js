@@ -101,7 +101,7 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
-        controller: 'customerListController as customerListController',
+        controller: 'customerListController as customerListCtrl',
         size: size,
         backdrop: false,
         resolve: {
