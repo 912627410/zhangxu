@@ -22,6 +22,7 @@
     vm.pageSize = 12;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的车辆id List
+    vm.selectedObj = []; //选中的订单车辆obj
     //搜索条件定义
     vm.searchConditions = {};
     var rentalMachineLeft = {
@@ -131,9 +132,9 @@
 
 
     //左拖动触发事件(从订单调拨回仓库)
-    vm.updateOrderMachineInfo1 = function (machineId,addOrderId,delId,destArray) {
+    vm.updateOrderMachineInfo1 = function (machineId,orderId,orderMachineId,destArray) {
 
-      var orderMachines = {"addOrderId": addOrderId, "delId": delId,"addMachineId": machineId};
+      var orderMachines = {"orderId": orderId, "orderMachineId": orderMachineId,"addMachineId": machineId};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
       restPromise.then(function (data) {
 
@@ -169,11 +170,11 @@
     };
 
     //右拖动触发事件(从仓库调入订单)
-    vm.updateOrderMachineInfo2 = function (machineId,addOrderId,delId,destArray) {
+    vm.updateOrderMachineInfo2 = function (machineId,addOrderId,orderMachineId,destArray) {
       var rentalOrderMachineLeft = {
 
       }
-      var orderMachines = {"addOrderId": addOrderId, "delId": delId,"addMachineId": machineId};
+      var orderMachines = {"orderId": addOrderId, "orderMachineId": orderMachineId,"addMachineId": machineId};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_OPER_URL, orderMachines);
       restPromise.then(function (data) {
         var rentalMachineLeft = {
@@ -219,13 +220,6 @@
       modalInstance.result.then(function (result) {
         vm.rightRentalOrder=result;
 
-        //如果选择的订单和左边的一样,则直接提示重新选择
-        if(null!=vm.leftRentalOrder&&null!=vm.rightRentalOrder&&vm.rightRentalOrder.id==vm.leftRentalOrder.id){
-          vm.rightRentalOrder=null;
-          Notification.error(" 选择的订单不能一样!");
-          return;
-        }
-
         if(null!=vm.rightRentalOrder){
          vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
         }
@@ -262,7 +256,7 @@
         if(result.length==0){
           return;
         }
-        var rentalOrderMachineOperVo = {"addMachineIdList": result, "addOrderId": rentalOrderId,"operationType":2};
+        var rentalOrderMachineOperVo = {"addMachineIdList": result, "orderId": rentalOrderId,"operationType":2};
         var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
         restPromise.then(function (data) {
 
@@ -282,22 +276,36 @@
       });
     };
 
-    var updateSelected = function (action, id) {
+    var updateSelected = function (action, id,selectRentalMachineLeft) {
       if (action == 'add' && vm.selected.indexOf(id) == -1) {
         vm.selected.push(id);
+        vm.selectedObj.push(selectRentalMachineLeft)
       }
       if (action == 'remove' && vm.selected.indexOf(id) != -1) {
         var idx = vm.selected.indexOf(id);
         vm.selected.splice(idx, 1);
-
+        vm.selectedObj.splice(idx, 1);
       }
     }
 
-    vm.updateSelection = function ($event, id, status) {
+    vm.updateSelection = function ($event, id, licenseId,deviceNum,deviceTypeName,deviceManufactureName,deviceHeightTypeName,status) {
 
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      updateSelected(action, id);
+      var selectRentalMachineLeft = {
+        deviceNum:'',
+        deviceType:'',
+        heightType:'',
+        machineId:'',
+        machineLicenseId:'',
+        manufacture:''
+      }
+      selectRentalMachineLeft.deviceNum = deviceNum;
+      selectRentalMachineLeft.machineLicenseId = licenseId;
+      selectRentalMachineLeft.deviceType = deviceTypeName;
+      selectRentalMachineLeft.heightType = deviceHeightTypeName;
+      selectRentalMachineLeft.manufacture = deviceManufactureName;
+      updateSelected(action, id,selectRentalMachineLeft);
     }
 
 
@@ -305,13 +313,14 @@
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       vm.tableParams2.data.forEach(function (rentalOrderMachine) {
-        updateSelected(action, rentalOrderMachine.id);
+        updateSelected(action, rentalOrderMachine.id,rentalOrderMachine);
       })
 
     }
 
     vm.isSelected = function (id) {
 
+      // return (vm.selected.indexOf(id) >= 0&&JSON.stringify(vm.selectedObj).indexOf(JSON.stringify(selectRentalMachineLeft))!=-1);
       return vm.selected.indexOf(id) >= 0;
     }
 
@@ -337,25 +346,27 @@
 
         return;
       }
-      var MachineIdList =  vm.selected;
-      var rentalOrderMachineOperVo = {"addMachineIdList": vm.selected, "addOrderId": rentalOrderId,"operationType":1};
+      var orderMachineIdList =  vm.selectedObj;
+      var rentalOrderMachineOperVo = {"orderMachineIdList": vm.selected, "orderId": rentalOrderId,"operationType":1};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
 
         if(data.code==0){
           Notification.success("批量调出车辆成功!");
           vm.selected = [];
-          for(var i = 0;i<MachineIdList.length;i++){
-            var rentalOrderMachine=sourceArray.data[0];
-            sourceArray.data.splice(0,1);
 
-            var machineLeft=sourceArray.data[0];
-            rentalMachineLeft.deviceNum = machineLeft.machine.deviceinfo.deviceNum;
-            rentalMachineLeft.deviceType = machineLeft.machine.deviceType.name;
-            rentalMachineLeft.heightType = machineLeft.machine.deviceHeightType.name;
-            rentalMachineLeft.machineId =machineLeft.machine.id;
-            rentalMachineLeft.machineLicenseId = machineLeft.machine.licenseId;
-            rentalMachineLeft.manufacture =machineLeft.machine.deviceManufacture.name;
+          for(var i = 0;i<vm.selectedObj.length;i++){
+
+            var rentalOrderMachineRight=vm.selectedObj[i];
+
+            rentalMachineLeft.deviceNum = rentalOrderMachineRight.deviceNum;
+            rentalMachineLeft.deviceType = rentalOrderMachineRight.deviceType;
+            rentalMachineLeft.heightType = rentalOrderMachineRight.heightType;
+            rentalMachineLeft.machineId =rentalOrderMachineRight.machineId;
+            rentalMachineLeft.machineLicenseId = rentalOrderMachineRight.machineLicenseId;
+            rentalMachineLeft.manufacture =rentalOrderMachineRight.manufacture;
+
+            sourceArray.data.splice(0,1);
             destArray.data.splice(0, 0, rentalMachineLeft);
             rentalMachineLeft = {
               deviceNum:'',

@@ -112,17 +112,6 @@
       }
     })
 
-      //租赁车辆管理
-      .state('rental.machine', {
-        url: '/rentalMachine',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMachineMng.html',
-            controller: 'rentalFleetMachineMngController',
-            controllerAs: 'rentalFleetMachineMngCtrl'
-          }
-        }
-      })
 
       //租赁车队管理
       .state('rental.fleet', {
@@ -148,7 +137,7 @@
         }
       })
 
-      //租赁订单管理
+      //租赁订单管理--新建订单
       .state('rental.newOrder', {
         url: '/newOrder',
         views: {
@@ -160,7 +149,7 @@
         }
       })
 
-      //租赁订单管理
+      //租赁订单管理--更新订单
       .state('rental.updateOrder', {
         url: '/updateOrder/:id',
         views: {
@@ -171,7 +160,7 @@
           }
         }
       })
-
+      //租赁订单管理--查看订单
       .state('rental.viewOrder', {
         url: '/viewOrder/:id',
         views: {

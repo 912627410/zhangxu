@@ -134,7 +134,8 @@
 
                       <td class="text-nowrap" data-header="'selectAllHeader'">
                         <input type="checkbox" ng-checked="rentalFleetMngCtr.isSelected(rentalOrderMachine.id)"
-                               ng-click="rentalFleetMngCtr.updateSelection($event,rentalOrderMachine.machine.id)" ng-model="rentalOrderMachine.checked">
+                               ng-click="rentalFleetMngCtr.updateSelection($event,rentalOrderMachine.id,rentalOrderMachine.machine.licenseId,rentalOrderMachine.machine.deviceinfo.deviceNum,rentalOrderMachine.machine.deviceType.name,rentalOrderMachine.machine.deviceManufacture.name,rentalOrderMachine.machine.deviceHeightType.name)"
+                               ng-model="rentalOrderMachine.checked">
                       </td>
                       <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'"> {{rentalOrderMachine.machine.licenseId}}</td>
                       <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{rentalOrderMachine.machine.deviceinfo.deviceNum}}</td>
