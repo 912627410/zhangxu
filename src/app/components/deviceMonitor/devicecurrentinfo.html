@@ -1599,7 +1599,97 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6" presentation-href="sms:customizedSMS" ng-show={{deviceCurrentInfoCtrl.versionNum=="2002"}}>
+                    <div class="col-md-3" presentation-href="sms:activeLockSms">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">开盖锁车功能</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="开盖锁车功能"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="打开"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,1)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="关闭"
+                                                class="btn btn-warning" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,2)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" presentation-href="sms:activeLockSms">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">61天无信号锁车</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="61天无信号锁车功能"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="打开"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,3)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="关闭"
+                                                class="btn btn-warning" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,4)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6" presentation-href="sms:customizedSMS">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">自定义短信（内部调试）</h5>
