@@ -50,34 +50,23 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label>{{'rentalMachineType'| translate}}</label>
-          <!--<div class="forminline" style="width: 150px;">-->
-            <!--<ui-select id="machineType" name="machineType" ng-model="costStatisticsCtr.machineType" theme="bootstrap"-->
-                       <!--ng-disabled="disabled" >-->
-              <!--<ui-select-match allow-clear="true" placeholder="车辆类型">{{$select.selected.typeName}}-->
-              <!--</ui-select-match>-->
-              <!--<ui-select-choices  repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {typeName: $select.search}" >-->
-                <!--<div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>-->
-              <!--</ui-select-choices>-->
-            <!--</ui-select>-->
-          <!--</div>-->
+          <label>{{'deviceType'| translate}}</label>
+
           <div class="forminline" style="width: 150px;">
-            <select class="form-control" ng-model="costStatisticsCtr.machineType">
-              <option value="1">{{'rentalScissorLift'| translate}}</option>
-              <option value="2">{{'rentalBoomLift'| translate}}</option>
-              <option value="3">{{'rentalArticulatingBoomLift'| translate}}</option>
-            </select>
+            <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
+              <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
+              <ui-select-choices repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
+              </ui-select-choices>
+            </ui-select>
           </div>
+
 
         </div>
 
         <div class="forminline" >
           <label>{{'rentalHeight'| translate}}</label>
-          <!--<select name="deviceHeightType"  class="form-control forminline" style="width: 150px;"-->
-                  <!--ng-model="costStatisticsCtr.queryDeviceHeightType"-->
-                  <!--ng-options="deviceHeightType.id as deviceHeightType.name for deviceHeightType in costStatisticsCtr.deviceHeightTypeList">-->
-            <!--<option value=""></option>-->
-          <!--</select>-->
+
           <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name}}
@@ -89,11 +78,7 @@
         </div>
         <div class="forminline" style="width: 17%">
           <label class="">{{'rentalBrand'| translate}}</label>
-          <!--<select name="machineManufacture" class="form-control forminline " style="width: 150px;"-->
-                  <!--ng-model="costStatisticsCtr.queryManufacture"-->
-                  <!--ng-options="machineMF.id as machineMF.name for machineMF in costStatisticsCtr.machineMFList">-->
-            <!--<option value=""></option>-->
-          <!--</select>-->
+
 
           <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
@@ -168,10 +153,8 @@
                           max-size="15"
                           ng-model="costStatisticsCtr.pageNumber"
                           items-per-page="costStatisticsCtr.page.size" class="pagination-sm"
-                          boundary-links="true" rotate="false"  first-text="{{'pagingHomePage' | translate}}"
-                          last-text="{{'lastPage'|translate}}"
-                          next-text="{{'nextPage'|translate}}"
-                          previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                          boundary-links="true" rotate="false"
+                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
         </div>
       </div>
       <div class="rightPic col-md-6">

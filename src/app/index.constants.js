@@ -362,6 +362,8 @@
     .constant('RENTAL_COST_PAGED_URL', SERVER_BASE_URL + 'rental/asset/getCostStatistics')  //成本统计
     .constant('RENTAL_PROFIT_URL', SERVER_BASE_URL + 'rental/asset/getProfitStatistics')  //利润统计
     .constant('RENTAL_ASSET_STATISTICS_DATA_URL', SERVER_BASE_URL + 'rental/asset/assetTopData')  //利润统计上方车辆和订单总数
+    .constant('RENTAL_TOTALPROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getTotalProfit')   //总利润
+    .constant('RENTAL_PROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getProfitsDetails')   //各时间段利润及同比
 
 
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势
