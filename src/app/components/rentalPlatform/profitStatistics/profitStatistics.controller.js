@@ -135,7 +135,7 @@
       var queryQuarter = getQuarterFromMonth(date)
       var queryMonth = date.getMonth().valueOf()+1;
       var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
-      totalProfitUrl += "?quertYear=" + date.getFullYear();
+      totalProfitUrl += "?queryYear=" + date.getFullYear();
       totalProfitUrl += "&queryMonth=" + queryMonth;
       totalProfitUrl += "&queryQuarter=" + queryQuarter;
       var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
