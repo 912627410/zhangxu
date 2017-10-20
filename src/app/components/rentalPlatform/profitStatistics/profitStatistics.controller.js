@@ -251,9 +251,35 @@
           restCallURL += "&machineType=" + vm.machineType;
         }
 
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
-          vm.profitData = data.content;
+        // var rspData = serviceResource.restCallService(restCallURL, "GET");
+        // rspData.then(function (data) {
+        //   vm.profitData = data.content;
+        //   for(var i = 0;i<vm.profitData.length;i++){
+        //     xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
+        //     jcProfitDate.push(vm.profitData[i].jcProfit.toFixed(2));
+        //     zbProfitDate.push(vm.profitData[i].zbProfit.toFixed(2));
+        //     qbProfitDate.push(vm.profitData[i].qbProfit.toFixed(2));
+        //   }
+        //   console.log(profitBarOption.xAxis[0])
+        //   profitBarOption.xAxis.data = xAxisDate;
+        //   profitBarOption.series[0].data = jcProfitDate;
+        //   profitBarOption.series[1].data = zbProfitDate;
+        //   profitBarOption.series[2].data = qbProfitDate;
+        //   profitBar.setOption(profitBarOption);
+        // },function (reason) {
+        //   Notification.error(languages.findKey('getProFail'));
+        // })
+        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
+        var data = {content:[{jcProfit: 423.91,
+          qbProfit: 0.00,
+          statisticalCycle: 1505059200000,
+          zbProfit: 0.00},{
+          jcProfit: 312.30,
+          qbProfit: 0.00,
+          statisticalCycle: 1505836800000,
+          zbProfit: 0.00}]
+        }
+        vm.profitData = data.content;
           for(var i = 0;i<vm.profitData.length;i++){
             xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
             jcProfitDate.push(vm.profitData[i].jcProfit.toFixed(2));
@@ -266,9 +292,15 @@
           profitBarOption.series[1].data = zbProfitDate;
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
+
         },function (reason) {
           Notification.error(languages.findKey('getProfFail'));
         })
+
+
+        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
+
+
       }
 
     }
