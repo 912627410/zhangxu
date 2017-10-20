@@ -16,6 +16,7 @@
     var jcProfitDate = [];
     var zbProfitDate = [];
     var qbProfitDate = [];
+    vm.rentalTotalProfit = 0;
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -104,7 +105,9 @@
       totalProfitUrl += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
       var totalProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
       totalProfitData.then(function (data) {
-        vm.rentalTotalProfit = data.content.totalProfit
+        if(null!=data.content.totalProfit){
+          vm.rentalTotalProfit = data.content.totalProfit
+        }
       })
     }
     vm.totalProfit();
@@ -136,7 +139,7 @@
       var queryMonth = date.getMonth().valueOf()+1;
       var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
       totalProfitUrl += "?queryYear=" + date.getFullYear();
-      totalProfitUrl += "&queryMonth=" + queryMonth;
+      //totalProfitUrl += "&queryMonth=" + queryMonth;
       totalProfitUrl += "&queryQuarter=" + queryQuarter;
       var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
       detailsProfitData.then(function (data) {
