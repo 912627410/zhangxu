@@ -267,7 +267,7 @@
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
         },function (reason) {
-          Notification.error(languages.findKey('getProFail'));
+          Notification.error(languages.findKey('getProfFail'));
         })
       }
 
