@@ -293,9 +293,9 @@
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
 
-        },function (reason) {
-          Notification.error(languages.findKey('getProfFail'));
-        })
+        // },function (reason) {
+        //   Notification.error(languages.findKey('getProfFail'));
+        // })
 
 
         //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
