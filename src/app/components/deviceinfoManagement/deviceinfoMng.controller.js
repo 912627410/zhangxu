@@ -55,7 +55,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.deviceinfoList = {};
-        Notification.error("获取设备数据失败");
+        Notification.error(languages.findKey('failedToGetDeviceData'));
       });
     };
 
@@ -130,7 +130,7 @@
         });
 
         }, function (reason) {
-          Notification.error('获取设备信息失败');
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
 
@@ -213,7 +213,7 @@
     vm.batchMoveOrg = function () {
       vm.org = {label: ""};    //所属组织
       if (vm.selected.length == 0) {
-        Notification.warning({message: '请选择要调拨的设备', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: languages.findKey('selectTheEquipmentToBeAllocated'), positionY: 'top', positionX: 'center'});
         return;
       }
 
@@ -297,7 +297,7 @@
         }
 
         }, function (reason) {
-          Notification.error('获取设备信息失败');
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
     };
@@ -369,7 +369,7 @@
 
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
         });
       }else {
         Notification.error("请选择所属组织!");

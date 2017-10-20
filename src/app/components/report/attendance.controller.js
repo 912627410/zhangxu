@@ -208,7 +208,7 @@
         }
 
       }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
+        Notification.error(languages.findKey('failedToDownload'));
       });
 
     }

@@ -9,7 +9,7 @@
     .controller('updateRoleController', updateRoleController);
 
   /** @ngInject */
-  function updateRoleController($uibModalInstance,ROLE_URL,treeFactory,serviceResource,permissions, ROLE_TYPE_URL,Notification,roleInfo) {
+  function updateRoleController($uibModalInstance,ROLE_URL,languages,treeFactory,serviceResource,permissions, ROLE_TYPE_URL,Notification,roleInfo) {
     var vm = this;
     vm.roleInfo=roleInfo;
 
@@ -27,7 +27,7 @@
         }
 
       }, function (reason) {
-        Notification.error('获取角色类型失败');
+        Notification.error(languages.findKey('failedToGetTheRoleType'));
       })
 
     }
@@ -35,7 +35,7 @@
     vm.ok = function (roleInfo) {
 
       if(roleInfo.type==null){
-        Notification.error('类型为空');
+        Notification.error(languages.findKey('theTypeIsEmpty'));
         return;
       }
 
@@ -43,7 +43,7 @@
       restPromise.then(function (data){
 
         if(data.code===0){
-          Notification.success("修改角色信息成功!");
+          Notification.success(languages.findKey('successfullyModifiedRoleInfo'));
           $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);

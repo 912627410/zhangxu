@@ -9,7 +9,7 @@
     .controller('ecuNotActiveController', ecuNotActiveController);
 
   /** @ngInject */
-  function ecuNotActiveController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_ECU_NOTACTIVE_QUERY, DEVCE_ECU_NOTACTIVE_EXCELEXPORT) {
+  function ecuNotActiveController($rootScope, $http, languages,NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_ECU_NOTACTIVE_QUERY, DEVCE_ECU_NOTACTIVE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -33,7 +33,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取数据失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       });
     };
 
@@ -73,7 +73,7 @@
 
 
       }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
+        Notification.error(languages.findKey('failedToDownload'));
       });
     };
   }

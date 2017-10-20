@@ -32,7 +32,7 @@
         vm.userinfoList = data.content;
 
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error(languages.findKey('failedToGetRoleData'));
       });
 
     }
@@ -42,7 +42,7 @@
       vm.my_data = angular.copy([$rootScope.orgChart[0]]);
       vm.my_tree_handler(vm.my_data);
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     // select user
@@ -184,7 +184,7 @@
 
 
       }, function (reason) {
-        Notification.error('获取用户信息失败');
+        Notification.error(languages.findKey('failureToGetUserInfo'));
       });
     };
 
@@ -215,7 +215,7 @@
         vm.userinfoList = data.content;
 
       }, function (reason) {
-        Notification.error("获取用户数据失败");
+        Notification.error(languages.findKey('failedToGetUserData'));
       });
     }
 
@@ -228,28 +228,28 @@
     }
 
     vm.statusDisable = function (userinfo) {
-      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
+      $confirm({text: languages.findKey('areYouWantToDisableIt'),title: languages.findKey('disableConfirmation'), ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(USER_STATUS_DISABLE_URL, userinfo.id);
           restPromise.then(function (data) {
-            Notification.success("禁用成功!");
+            Notification.success(languages.findKey('disableSuccess'));
             vm.updateTable(data.content);
 
           }, function (reason) {
-            Notification.error("禁用出错!");
+            Notification.error(languages.findKey('disableError'));
           });
         });
     };
 
     vm.statusEnable = function (userinfo) {
-      $confirm({text: '确定要启用吗?',title: '启用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
+      $confirm({text: languages.findKey('areYouWantToEnableIt'),title: languages.findKey('enableConfirmation'), ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(USER_STATUS_ENABLE_URL, userinfo.id);
           restPromise.then(function (data) {
-            Notification.success("启用成功!");
+            Notification.success(languages.findKey('enableSuccess'));
             vm.updateTable(data.content);
           }, function (reason) {
-            Notification.error("启用出错!");
+            Notification.error(languages.findKey('enableError'));
           });
         });
     };
@@ -270,7 +270,7 @@
     vm.userRoleManage = function (size) {
 
       if(vm.selectedUser==null){
-        Notification.warning("请先选择用户再进行操作");
+        Notification.warning(languages.findKey('selectUserFirstToOperate'));
         return;
       }
 
@@ -334,7 +334,7 @@
         }).success(function (data, status, headers, config) {
           if(status == '204'){
 
-            Notification.warning('选择的用户角色权限列表为空');
+            Notification.warning(languages.findKey('theSelectedUserRolesPriviligeListIsEmpty'));
             return;
           }
           var blob = new Blob([data], { type: "application/vnd.ms-excel" });
@@ -368,10 +368,10 @@
           })[0].click();
 
         }).error(function (data, status, headers, config) {
-          Notification.error("导出失败!");
+          Notification.error(languages.findKey('exportFailure'));
         });
       }else {
-        Notification.warning({message: '请选择要导出的用户', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: languages.findKey('pleaseSelectTheUserToExport'), positionY: 'top', positionX: 'center'});
       }
 
     }
