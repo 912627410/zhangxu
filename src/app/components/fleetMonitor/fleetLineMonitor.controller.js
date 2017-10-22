@@ -22,6 +22,7 @@
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
     var wsUrl = WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
+    var heartBeatMsg = "HeartBeat"; //心跳消息
 
     vm.lineColor = [];
     for(var i = 0;i < 21;i++) {
@@ -214,7 +215,7 @@
 
     var initEventHandle = function() {
       ws.onclose = function () {
-        // reconnect(wsUrl);
+        reconnect(wsUrl);
       };
       ws.onerror = function () {
         // Notification.error("fleetLine WebSocket Error!");
@@ -229,21 +230,26 @@
         //拿到任何消息都说明当前连接是正常的
         heartCheck.reset().start();
 
-        var monitorVo = JSON.parse(evt.data);
-        if(monitorVo.fleet != vm.fleet.id) {
-          return;
+        if(evt.data == heartBeatMsg) {
+          //心跳响应
+          // console.log("心跳响应:" + evt.data);
+        } else {
+          var monitorVo = JSON.parse(evt.data);
+          if(monitorVo.fleet != vm.fleet.id) {
+            return;
+          }
+          vm.updateChart(monitorVo);
         }
-        vm.updateChart(monitorVo);
       }
     };
 
     var reconnect = function(url) {
       if(lockReconnect) return;
-      // lockReconnect = true;
+      lockReconnect = true;
       //没连接上会一直重连，设置延迟避免请求过多
-      setTimeout(function () {
+      vm.reconnectTimeOut = setTimeout(function () {
         vm.createWebSocket(url);
-        // lockReconnect = false;
+        lockReconnect = false;
       }, 3000);
     };
 
@@ -259,7 +265,7 @@
         this.timeoutObj = setTimeout(function(){
           //这里发送一个心跳，后端收到后，返回一个心跳消息，
           //onmessage拿到返回的心跳就说明连接正常
-          ws.send("HeartBeat");
+          ws.send(heartBeatMsg);
         }, this.timeout)
       }
     };
@@ -376,11 +382,12 @@
     });
 
     var closeWebSocket = function() {
-      ws.close();
-      ws.onclose = function () { };
-      heartCheck.reset();
-      lockReconnect = true;
-      reconnect(null);
+      if(ws) {
+        ws.close();
+        heartCheck.reset();
+        clearTimeout(vm.reconnectTimeOut);
+        lockReconnect = true;
+      }
     };
 
   }

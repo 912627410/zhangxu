@@ -1416,7 +1416,10 @@
   "getVeHeiFail":"获取车辆高度失败!",
   "getStaGroupFail":"获取状态分组失败!",
   "getIncomeInf":"获取收入统计信息失败!",
-  "getProFail":"获取利润数据失败!"
+  "getProFail":"获取利润数据失败!",
+  "successfulOperation":"操作成功",
+  "operationFailed":"操作失败,状态码",
+  "softVersionNumError":"版本号取值范围：0.00~99.99"
 
 
 }

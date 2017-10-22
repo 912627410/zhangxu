@@ -45,6 +45,83 @@
         vm.dynamicNoLoadImportValue = null; //动态空载参数导入值
         vm.dynamicFullLoadImportValue = null; //动态满载参数导入值
 
+
+        var ws;//websocket实例
+        var lockReconnect = false;//避免重复连接
+        var wsUrl = WEBSOCKET_URL + "webSocketServer/mqttSendStatus?token=" + vm.operatorInfo.authtoken;
+        var heartBeatMsg = "HeartBeat"; //心跳消息
+        vm.createWebSocket = function(url) {
+          try {
+            ws = new WebSocket(url);
+            initEventHandle();
+          } catch (e) {
+            reconnect(url);
+          }
+        };
+        var initEventHandle = function() {
+          ws.onclose = function () {
+            reconnect(wsUrl);
+          };
+          ws.onerror = function () {
+            reconnect(wsUrl);
+          };
+          ws.onopen = function () {
+            //心跳检测重置
+            heartCheck.reset().start();
+          };
+          ws.onmessage = function (evt) {
+            //如果获取到消息，心跳检测重置
+            //拿到任何消息都说明当前连接是正常的
+            heartCheck.reset().start();
+            if(evt.data == heartBeatMsg) {
+              //心跳响应
+              // console.log("心跳响应:" + evt.data);
+            } else {
+              if(evt.data == 0) {
+                Notification.success(languages.findKey('successfulOperation'));
+              } else {
+                Notification.error(languages.findKey('operationFailed')+':'+evt.data);
+              }
+            }
+          }
+        };
+        var reconnect = function(url) {
+          if(lockReconnect) return;
+          lockReconnect = true;
+          //没连接上会一直重连，设置延迟避免请求过多
+          vm.reconnectTimeOut = setTimeout(function () {
+            vm.createWebSocket(url);
+            lockReconnect = false;
+          }, 3000);
+        };
+        //心跳检测
+        var heartCheck = {
+          timeout: 60000,//60秒
+          timeoutObj: null,
+          reset: function(){
+            clearTimeout(this.timeoutObj);
+            return this;
+          },
+          start: function(){
+            this.timeoutObj = setTimeout(function(){
+              //这里发送一个心跳，后端收到后，返回一个心跳消息，
+              //onmessage拿到返回的心跳就说明连接正常
+              ws.send(heartBeatMsg);
+            }, this.timeout)
+          }
+        };
+        $scope.$on("$destroy",function () {
+          if(ws) {
+            ws.close();
+            heartCheck.reset();
+            clearTimeout(vm.reconnectTimeOut);
+            lockReconnect = true;
+          }
+        });
+        if(vm.deviceinfo.versionNum == '11') {
+          vm.createWebSocket(wsUrl);
+        }
+
         // 短信发送成功后的初始化button
         vm.initSmsSendBtn = function () {
           $window.sessionStorage["sendBtnStatus"] = true;
@@ -877,14 +954,13 @@
             var restPromise = serviceResource.restCallService(restURL, "ADD", null);
             restPromise.then(function (data) {
               if (data.code == 0) {
-                Notification.success(data.content);
                 vm.initSmsSendBtn();
               }
               else {
                 Notification.error(data.content);
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
             })
           });
         };
@@ -927,14 +1003,13 @@
             var restPromise = serviceResource.restCallService(restURL, "ADD", null);
             restPromise.then(function (data) {
               if (data.code == 0) {
-                Notification.success(data.content);
                 vm.initSmsSendBtn();
               }
               else {
                 Notification.error(data.content);
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
             })
           });
         };
@@ -975,7 +1050,7 @@
                 vm.returnTimeParam.time = data.content;
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(reason.data.message);
             })
           };
 
@@ -1029,14 +1104,13 @@
               var restPromise = serviceResource.restCallService(restURL, "ADD", null);
               restPromise.then(function (data) {
                 if (data.code == 0) {
-                  Notification.success(data.content);
                   vm.initSmsSendBtn();
                 }
                 else {
                   Notification.error(data.content);
                 }
               }, function (reason) {
-                Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+                Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
               })
             });
           }
@@ -1087,14 +1161,13 @@
           var restPromise = serviceResource.restCallService(restURL, "ADD", null);
           restPromise.then(function (data) {
             if (data.code == 0) {
-              Notification.success(data.content);
               vm.initSmsSendBtn();
             }
             else {
               Notification.error(data.content);
             }
           }, function (reason) {
-            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
           })
         });
       };
