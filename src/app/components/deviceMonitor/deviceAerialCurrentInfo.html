@@ -482,7 +482,6 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--泵电机转速-->
                         <td>{{'pumpMotorSpeed'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.engineRPM}}%</td>
                         <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.engineRPM>=0&&deviceAerialCurrentInfoController.deviceinfo.engineRPM<=100">{{deviceAerialCurrentInfoController.deviceinfo.engineRPM}}%</td>
                         <td ng-cloak ng-if="!(deviceAerialCurrentInfoController.deviceinfo.engineRPM>=0&&deviceAerialCurrentInfoController.deviceinfo.engineRPM<=100)">-</td>
                         <!--速度阀/电驱使能2-->
