@@ -35,9 +35,9 @@
 
   <div ng-show="machineMonitorCtrl.lnglatShow" class="text-right" style="line-height: 34px;">
           <span style="font-size: 16px;padding: 0 10px;">
-            行使了 <span style="color: red;font-weight: bold;">{{machineMonitorCtrl.trackMileage}}</span> 米
+            {{'traveled'|translate}} <span style="color: red;font-weight: bold;">{{machineMonitorCtrl.trackMileage}}</span> {{'m'|translate}}
           </span>
-    <input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right"/>
+    <input type="text" id="lnglat" class="form-control" placeholder="{{'latitudeAndLongitude'|translate}}" name="lnglat" style="width: 200px;float: right"/>
   </div>
 
   <div class="row">
