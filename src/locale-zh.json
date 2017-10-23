@@ -1270,7 +1270,7 @@
   "versionDesc": "版本说明",
   "ifForced": "是否强制升级",
   "releaseDate": "发布日期",
-  "fileSize": "文件大小",
+  "fileSize":"文件大小",
   "downloadUrl": "下载地址",
   "dataReceptionTime":"数据接收时间",
   "fenceSet":"围栏设置",
@@ -1416,7 +1416,32 @@
   "getVeHeiFail":"获取车辆高度失败!",
   "getStaGroupFail":"获取状态分组失败!",
   "getIncomeInf":"获取收入统计信息失败!",
-  "getProFail":"获取利润数据失败!"
+  "getProfFail":"获取利润数据失败!",
+  "忽略":"忽略",
+  "已执行":"已执行",
+  "未执行":"未执行",
+  "newCuS":"新建客户成功!",
+  "newMaInS":"新建保养信息成功!",
+  "modMaInS":"修改保养信息成功!",
+  "faGetState":"获取状态集合失败!",
+  "faGetWorkData":"获取作业面数据失败!",
+  "VehAllSu":"借调车辆成功!",
+  "VehAllFa":"借调车辆出错!",
+  "rVehAllSu":"车辆调拨成功!",
+  "rVehAllFa":"车辆调拨失败!",
+  "FaGetCu":"获取客户数据失败!",
+
+  "A-1 检查手册和标贴":"A-1 检查手册和标贴",
+  "A-2 检查前操作":"A-2 检查前操作",
+  "A-3 功能测试":"A-3 功能测试",
+  "A-4 30天的维护":"A-4 30天的维护",
+  "MoCuInSuc":"修改客户信息成功!"
+
+
+
+
+
+
 
 
 }

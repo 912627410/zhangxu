@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll,rentalService, serviceResource,NgTableParams,ngTableDefaults,
-                                       Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL,RENTAL_MAINTENANCE_GROUP_BY_STATUS) {
+                                       Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL,RENTAL_MAINTENANCE_GROUP_BY_STATUS,languages) {
     var vm = this;
     vm.totalOrders=0;
     vm.planOrders=0;
@@ -73,14 +73,14 @@
       vm.statusList= data;
 
     }, function (reason) {
-      Notification.error('获取状态集合失败');
+      Notification.error(languages.findKey('faGetState'));
     })
     var listStatusPromise = rentalService.getMaintenanceListStatusList();
     listStatusPromise.then(function (data) {
       vm.listStatusList= data;
 
     }, function (reason) {
-      Notification.error('获取状态集合失败');
+      Notification.error(languages.findKey('faGetState'));
     })
 
     /**
@@ -152,7 +152,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取客户数据失败");
+        Notification.error(languages.findKey('FaGetCu'));
       });
     };
 

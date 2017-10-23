@@ -10,7 +10,7 @@
     .controller('appVersionController', appVersionController);
 
   /** @ngInject */
-  function appVersionController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource ,APP_VERSION_PAGE_URL) {
+  function appVersionController($rootScope, $uibModal, NgTableParams, ngTableDefaults, Notification, serviceResource ,APP_VERSION_PAGE_URL,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.appTypeList = [
@@ -51,7 +51,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 

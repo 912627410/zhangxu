@@ -10,7 +10,7 @@
     .controller('viewRentalMaintenanceController', viewRentalMaintenanceController);
 
   /** @ngInject */
-  function viewRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification) {
+  function viewRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages) {
     var vm = this;
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
@@ -29,7 +29,7 @@
       vm.listStatusList= data;
 
     }, function (reason) {
-      Notification.error('获取状态集合失败');
+      Notification.error(languages.findKey('faGetState'));
     })
 
     //组织树的显示

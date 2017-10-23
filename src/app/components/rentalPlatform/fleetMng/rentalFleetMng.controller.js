@@ -58,7 +58,7 @@
 
 
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 
@@ -81,7 +81,7 @@
           dataset: data.content
         });
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 
@@ -160,14 +160,14 @@
       restPromise.then(function (data) {
 
         if(data.code==0){
-          Notification.success("车辆调拨成功!");
+          Notification.success(languages.findKey('rVehAllSu'));
 
           destArray.data.splice(0, 0, data.content);
         }
 
 
       }, function (reason) {
-        Notification.error(" 车辆调拨失败!");
+        Notification.error(languages.findKey('rVehAllFa'));
       });
 
 

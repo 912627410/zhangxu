@@ -10,7 +10,7 @@
     .controller('updateRentalMaintenanceController', updateRentalMaintenanceController);
 
   /** @ngInject */
-  function updateRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification) {
+  function updateRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages) {
     var vm = this;
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
@@ -29,7 +29,7 @@
       vm.listStatusList= data;
 
     }, function (reason) {
-      Notification.error('获取状态集合失败');
+      Notification.error(languages.findKey('faGetState'));
     })
 
     //组织树的显示
@@ -86,7 +86,7 @@
 
       var rspdata = serviceResource.restUpdateRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
       rspdata.then(function (data) {
-        Notification.success("新建客户成功!");
+        Notification.success(languages.findKey('modMaInS'));
         $location.path(path);
 
       },function (reason) {
