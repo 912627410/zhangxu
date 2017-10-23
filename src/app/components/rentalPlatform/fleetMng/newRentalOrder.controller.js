@@ -13,15 +13,23 @@
   function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification) {
     var vm = this;
     vm.rentalOrder={};
+    //订单车辆类型 List
     vm.rentalOrderMachineTypeVos = [];
-    vm.zbOption = {
-      type_fk :1
+    vm.addRentalOrderOption = {
+      orderVo:'',
+      orderMachineTypeVoList:'',
+      orderMachineVoList:''
+
+    }
+
+    vm.jcOption = {
+      deviceType :{id:1}
     }
     vm.qbOption = {
-      type_fk :2
+      deviceType :{id:2}
     }
-    vm.jcOption = {
-      type_fk :3
+    vm.zbOption = {
+      deviceType :{id:3}
     }
 
     vm.rightBoxBottomHeight=20;
@@ -154,14 +162,19 @@
         Notification.error("请选择订单开始时间和结束时间");
       }
 
+        vm.rentalOrder.jc = vm.zbOption.quantity;
+        vm.rentalOrder.zb= vm.zbOption.quantity;
+        vm.rentalOrder.qb = vm.qbOption.quantity;
         vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
-
         vm.rentalOrderMachineTypeVos.push(vm.zbOption)
         vm.rentalOrderMachineTypeVos.push(vm.jcOption)
         vm.rentalOrderMachineTypeVos.push(vm.qbOption)
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
-        var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
+       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
+       vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+
+        var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
           Notification.success("新建订单成功!");
 

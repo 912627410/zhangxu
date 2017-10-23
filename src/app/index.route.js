@@ -150,16 +150,16 @@
       })
 
       //租赁订单管理--更新订单
-      .state('rental.updateOrder', {
-        url: '/updateOrder/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
-            controller: 'updateRentalOrderController',
-            controllerAs: 'updateRentalOrderCtrl'
-          }
-        }
-      })
+      // .state('rental.updateOrder', {
+      //   url: '/updateOrder/:id',
+      //   views: {
+      //     'main@rental': {
+      //       templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
+      //       controller: 'updateRentalOrderController',
+      //       controllerAs: 'updateRentalOrderCtrl'
+      //     }
+      //   }
+      // })
       //租赁订单管理--查看订单
       .state('rental.viewOrder', {
         url: '/viewOrder/:id',

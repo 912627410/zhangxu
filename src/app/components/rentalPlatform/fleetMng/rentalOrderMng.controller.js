@@ -9,8 +9,8 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
-                                    DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS) {
+  function rentalOrderMngController( $window,$state,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
+                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL) {
     var vm = this;
     vm.totalOrders=0;
     vm.planOrders=0;
@@ -18,7 +18,7 @@
     vm.fininshOrders=0;
 
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     //定义偏移量
@@ -27,15 +27,14 @@
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
 
 
-    //加载品牌信息
+    //订单状态List
     var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
     retanlOrderStatusListPromise.then(function (data) {
       vm.retanlOrderStatusList= data;
-
-
     }, function (reason) {
       Notification.error('获取状态失败');
     })
+
 
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
     groupByStatusListPromise.then(function (data) {
@@ -125,7 +124,7 @@
 
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
@@ -192,12 +191,44 @@
       vm.id=null;
     }
 
-    /**
-     * 跳转到更新页面
-     * @param id
-     */
+
+    //租赁订单管理--更新订单
     vm.update=function(id){
-      $state.go('rental.updateOrder', {id: id});
+      //$state.go('rental.updateOrder', {id: id});
+      var orderUrl=RENTAL_ORDER_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(orderUrl,"GET");
+      rspdata.then(function (data) {
+        var retalOrder=data.content.orderVo;
+        var orderMachineTypeVoList=data.content.orderMachineTypeVoList;
+
+        var modalInstance= $uibModal.open({
+          animation: true,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
+          controller: 'updateRentalOrderController',
+          controllerAs:'updateRentalOrderCtrl',
+          size: 'lg',
+          resolve: {
+            retalOrder: function () {
+              return retalOrder;
+            },
+            orderMachineTypeVoList: function () {
+              return orderMachineTypeVoList;
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+        }, function () {
+          //取消
+        });
+      })
+
     }
 
     vm.view=function(id){
