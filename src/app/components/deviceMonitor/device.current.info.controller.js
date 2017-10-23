@@ -77,7 +77,7 @@
       if (vm.deviceinfo.maintainNoticeNum != null && vm.deviceinfo.maintainNoticeNum > 0) {
         //存在保养提醒
         var maintainNotice = {
-          title: '该设备需要保养',
+          title: languages.findKey('theEquipmentNeedsMaintenance'),
           url: "app/components/deviceMonitor/maintainNotice.html",
           controller: "maintainNoticeController as maintainNoticeCtrl"
 
@@ -500,7 +500,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (endDate) {
@@ -513,7 +513,7 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (!newReq){
@@ -560,7 +560,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       }else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
 
@@ -574,7 +574,7 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       }else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       var restCallURL = DEVCEDATA_EXCELEXPORT;
@@ -615,7 +615,7 @@
 
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
       });
 
     }
@@ -707,7 +707,7 @@
       if (phoneNumber&&!angular.isUndefined(phoneNumber)) {
         var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
       }else {
-        Notification.warning('设备未绑定sim卡！');
+        Notification.warning(languages.findKey('theDeviceDoesNotBindTheSimCard'));
         return;
       }
       if(filterTerm) {
@@ -716,7 +716,7 @@
       var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {
           if (data.length == 0) {
-            Notification.warning('无下发短信');
+            Notification.warning(languages.findKey('noSendTextMessages'));
           } else {
             ngTableDefaults.settings.counts = [];
             vm.lockDataTable = new NgTableParams({
@@ -727,7 +727,7 @@
             });
           }
         }, function (reason) {
-          Notification.error('获取锁车短信内容失败！');
+          Notification.error(languages.findKey('failedToGetLockSMSContent'));
         }
       )
     }
@@ -998,7 +998,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (endDate) {
@@ -1011,7 +1011,7 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
 
@@ -1494,7 +1494,7 @@
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
       if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-        Notification.error(languages.findKey('checktheTimeSettings'));
+        Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
         return;
       }
       if (devicenum == null) {
@@ -1540,7 +1540,7 @@
        */
     vm.setReturnTime = function (deviceNum, returnTimeParam) {
       if(angular.isUndefined(returnTimeParam)){
-        Notification.error("请检查时间设置!");
+        Notification.error(languages.findKey('checktheTimeSettings'));
         return;
       }
       if (deviceNum == null) {
@@ -1549,19 +1549,19 @@
       }
 
       if(null == returnTimeParam.name || "" == returnTimeParam.name) {
-        Notification.error("请选择时间间隔类型");
+        Notification.error(languages.findKey('chooseTheTypeOfTimeInterval'));
         return;
       }
 
       if(null == returnTimeParam.time || "" == returnTimeParam.time) {
-        Notification.error("请输入时间");
+        Notification.error(languages.findKey('pleaseEnterTheTime'));
         return;
       }
 
       var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
       $confirm({
         text: languages.findKey('确定设置此时间间隔?') + '',
-        title: languages.findKey('时间间隔设置确认') + '',
+        title: languages.findKey('intervalConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
       })
@@ -1591,8 +1591,8 @@
       }
       var restURL = SET_MQTT_DEFAULT_RETURN_TIME_URL + "?deviceNum="+ deviceNum;
       $confirm({
-        text: languages.findKey('确定设置为默认的时间间隔?') + '',
-        title: languages.findKey('时间间隔设置确认') + '',
+        text: languages.findKey('setAsTheDefaultTimeInterval') + '',
+        title: languages.findKey('intervalConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
       })
@@ -1769,7 +1769,7 @@
         loadWorkAnalysisChart(deviceNum, dateFormat(startDate) ,dateFormat(endDate));
       } else {
         if (vm.checkedRad != 'DASHBOARD' && (vm.sensorItem == null || angular.equals({}, vm.sensorItem))) {
-          Notification.error("请选择条目！");
+          Notification.error(languages.findKey('pleaseSelectTopic'));
           return;
         }
         var sensor = {
@@ -1789,7 +1789,7 @@
       rspPromise.analysisPostgres(sensor, function (sensorData) {
         //判断数据
         if (sensorData == null || sensorData.length == 0) {
-          Notification.error("暂无数据！");
+          Notification.error(languages.findKey('noDataYet'));
           return;
         }
         //时间轴
@@ -1879,7 +1879,7 @@
       promis.then(function (data) {
         var sensorData = data;
         if (sensorData == null || sensorData.length == 0) {
-          Notification.error("暂无数据！");
+          Notification.error(languages.findKey('noDataYet'));
           return;
         }
 
@@ -2180,7 +2180,7 @@
               },
               tooltip: {
                 formatter: function () {
-                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' 小时';
+                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' '+languages.findKey('hour');
                 }
               },
             },
@@ -2202,7 +2202,7 @@
                 width: 2,
                 value: 8,
                 label: {
-                  text: "8小时",
+                  text: "8"+languages.findKey('hour'),
                   align: 'left'
                 }
               }]

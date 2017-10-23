@@ -6,7 +6,7 @@
     .controller('privilegeMngController', privilegeMngController);
 
   /** @ngInject */
-  function privilegeMngController($rootScope,$confirm, $uibModal, Notification, commonFactory,serviceResource,
+  function privilegeMngController($rootScope,$confirm, languages,$uibModal, Notification, commonFactory,serviceResource,
                                   PRIVILEGE_ROLE_URL,PRIVILEGE_URL,MENU_URL) {
     var vm = this;
     vm.my_data = [];
@@ -18,7 +18,7 @@
       promise.then(function (data) {
         vm.my_data = commonFactory.unflatten(data.content);
       }, function (reason) {
-        Notification.error('获取菜单失败');
+        Notification.error(languages.findKey('failedToGetMenu'));
       });
     }
 
@@ -54,7 +54,7 @@
         vm.privList =  data.content;
 
       }, function (reason) {
-        Notification.error("获取权限数据失败");
+        Notification.error(languages.findKey('failedToGetPriviligeInfo'));
       });
     }
 
@@ -69,7 +69,7 @@
     vm.newPrivilege = function (size) {
 
       if(vm.selectedMenu ==null){
-        Notification.warning("请先选择权限所属菜单")
+        Notification.warning(languages.findKey('selectTheMenuThatContainsThePrivilige'))
       }
 
       var modalInstance = $uibModal.open({
@@ -120,30 +120,30 @@
 
 
     vm.statusDisable = function (privilegeInfo) {
-      $confirm({text: '确定要禁用吗?',title: '禁用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
+      $confirm({text: languages.findKey('areYouWantToDisableIt'),title: languages.findKey('disableConfirmation'), ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           privilegeInfo.status =0;
           var restPromise = serviceResource.restUpdateRequest(PRIVILEGE_URL, privilegeInfo);
           restPromise.then(function (data) {
-            Notification.success("禁用成功!");
+            Notification.success(languages.findKey('disableSuccess'));
             vm.updateTable(data.content);
 
           }, function (reason) {
-            Notification.error("禁用出错!");
+            Notification.error(languages.findKey('disableError'));
           });
         });
     };
 
     vm.statusEnable = function (privilegeInfo) {
-      $confirm({text: '确定要启用吗?',title: '启用确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
+      $confirm({text: languages.findKey('areYouWantToEnableIt'),title: languages.findKey('enableConfirmation'), ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           privilegeInfo.status =1;
           var restPromise = serviceResource.restUpdateRequest(PRIVILEGE_URL, privilegeInfo);
           restPromise.then(function (data) {
-            Notification.success("启用成功!");
+            Notification.success(languages.findKey('enableSuccess'));
             vm.updateTable(data.content);
           }, function (reason) {
-            Notification.error("启用出错!");
+            Notification.error(languages.findKey('enableError'));
           });
         });
     };
@@ -167,7 +167,7 @@
       roleUserPromise.then(function (data) {
         vm.roleList = data.content;
       }, function (reason) {
-        Notification.error('获取权限状态失败');
+        Notification.error(languages.findKey('failedToGetPriviligeStatus'));
       })
 
     }
@@ -200,7 +200,7 @@
 
     vm.newMenu = function () {
       if(vm.selectedMenu == null){
-        Notification.warning("请先选择上级菜单！");
+        Notification.warning(languages.findKey('selectTheSuperiorMenu'));
         return;
       }
 

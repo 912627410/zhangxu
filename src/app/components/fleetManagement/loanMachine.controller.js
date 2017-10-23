@@ -10,7 +10,7 @@
     .controller('loanMachineController', loanMachineController);
 
   /** @ngInject */
-  function loanMachineController($rootScope, $scope, $uibModal, permissions,ngTableDefaults,$uibModalInstance,$filter, NgTableParams, Notification, serviceResource,MACHINE_MOVE_FLEET_URL,MACHINE_MOVE_ORG_URL,MACHINE_PAGE_URL,fleet) {
+  function loanMachineController($rootScope, $scope, $uibModal, permissions,ngTableDefaults,$uibModalInstance,$filter, NgTableParams, Notification, serviceResource,MACHINE_MOVE_FLEET_URL,MACHINE_MOVE_ORG_URL,MACHINE_PAGE_URL,fleet,languages) {
     var vm = this;
     vm.fleet = fleet;
     vm.selectAll = false;//是否全选标志
@@ -135,10 +135,10 @@
         })
         vm.selected=[]; //把选中的设备设置为空
 
-        Notification.success("借调车辆成功!");
+        Notification.success(languages.findKey('VehAllSu'));
         $uibModalInstance.close();
       }, function (reason) {
-        Notification.error("借调车辆出错!");
+        Notification.error(languages.findKey('VehAllFa'));
       });
 
 

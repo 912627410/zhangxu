@@ -49,7 +49,7 @@
       var rspdata = serviceResource.restUpdateRequest(RENTAL_CUSTOMER_URL,vm.rentalCustomer);
       vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
-        Notification.success(languages.findKey('newCustomerSucc'));
+        Notification.success(languages.findKey('MoCuInSuc'));
         $location.path(path);
 
       },function (reason) {

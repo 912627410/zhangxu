@@ -10,7 +10,7 @@
     .controller('uploadMachineController', uploadMachineController);
 
   /** @ngInject */
-  function uploadMachineController($scope,$timeout, $uibModalInstance,Upload,$http, MACHINE_UPLOAD_URL,MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL, Notification, operatorInfo) {
+  function uploadMachineController($scope,$timeout,languages, $uibModalInstance,Upload,$http, MACHINE_UPLOAD_URL,MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -24,17 +24,17 @@
       file.upload.then(function (response) {
         $timeout(function (data) {
           if(response.data.code == 1){
-            Notification.success("导入成功,新增" + response.data.content.length + "条车辆记录");
+            Notification.success(languages.findKey('importSuccessful')+",新增" + response.data.content.length + "条车辆记录");
             $uibModalInstance.close(response.data.content);
 
           }else{
             vm.errorList = response.data.content;
-            Notification.error('导入失败,存在异常数据');
+            Notification.error(languages.findKey('failedToImport')+','+languages.findKey('exceptionDataExists'));
           }
 
         });
       }, function (response) {
-        Notification.error('导入失败,存在异常数据!');
+        Notification.error(languages.findKey('failedToImport')+','+languages.findKey('exceptionDataExists'));
 
       }, function (evt) {
         // Math.min is to fix IE which reports 200% sometimes
@@ -82,7 +82,7 @@
 
 
       }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
+        Notification.error(languages.findKey('failedToDownload'));
       });
     };
 

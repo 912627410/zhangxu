@@ -70,7 +70,7 @@
                 <tr ng-repeat="maintenanceList in $data">
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
-                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
+                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content|translate}}</td>
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">
                     <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="{{'rentalMaintenanceCost'|translate}}" readonly/>

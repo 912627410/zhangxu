@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function orgController($rootScope,$scope,Notification) {
+  function orgController($rootScope,languages,$scope,Notification) {
     var vm = this;
     vm.selectedOrg;
     vm.searchText = '';     //搜索的数据
@@ -26,7 +26,7 @@
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = [$rootScope.orgChart[0]];
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     vm.search = function (searchText) {

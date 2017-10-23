@@ -9,7 +9,7 @@
     .controller('newRoleController', newRoleController);
 
   /** @ngInject */
-  function newRoleController($scope, $uibModalInstance,ROLE_URL,treeFactory, serviceResource,ROLE_TYPE_URL, Notification,permissions) {
+  function newRoleController($scope, languages,$uibModalInstance,ROLE_URL,treeFactory, serviceResource,ROLE_TYPE_URL, Notification,permissions) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
@@ -34,7 +34,7 @@
         // })
 
       }, function (reason) {
-        Notification.error('获取组织类型失败');
+        Notification.error(languages.findKey('failedToGetOrganizationType'));
       })
 
     }
@@ -51,7 +51,7 @@
      var restPromise = serviceResource.restAddRequest(ROLE_URL, roleInfo);
       restPromise.then(function (data) {
         if(data.code===0){
-          Notification.success("新建角色信息成功!");
+          Notification.success(languages.findKey('newRoleInformationSuccessful'));
           $uibModalInstance.close(data.content);
         }else{
           vm.roleInfo = roleInfo;

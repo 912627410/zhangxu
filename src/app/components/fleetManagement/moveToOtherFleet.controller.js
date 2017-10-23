@@ -10,7 +10,7 @@
     .controller('moveToOtherFleetController', moveToOtherFleetController);
 
   /** @ngInject */
-  function moveToOtherFleetController($rootScope, $scope, $uibModal, $uibModalInstance,$confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEET_PAGE_URL,MACHINE_MOVE_FLEET_URL,machine) {
+  function moveToOtherFleetController($rootScope, $scope, $uibModal, $uibModalInstance,$confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, FLEET_PAGE_URL,MACHINE_MOVE_FLEET_URL,machine,languages) {
     var vm = this;
     vm.machine = machine;
     vm.operatorInfo = $rootScope.userInfo;
@@ -46,7 +46,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 
@@ -71,12 +71,12 @@
       var restPromise = serviceResource.restUpdateRequest(MACHINE_MOVE_FLEET_URL, moveOrg);
       restPromise.then(function (data) {
         //更新页面显示
-        Notification.success("借调车辆成功!");
+        Notification.success(languages.findKey('VehAllSu'));
 
         $uibModalInstance.close(fleet);
 
       }, function (reason) {
-        Notification.error("借调车辆出错!");
+        Notification.error(languages.findKey('VehAllFa'));
       });
 
 

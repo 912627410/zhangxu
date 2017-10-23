@@ -9,7 +9,7 @@
     .controller('normalUnboundController', normalUnboundController);
 
   /** @ngInject */
-  function normalUnboundController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_NORMAL_UNBOUND_QUERY, DEVCE_NORMAL_UNBOUND_EXPORT) {
+  function normalUnboundController($rootScope, $http,languages, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_NORMAL_UNBOUND_QUERY, DEVCE_NORMAL_UNBOUND_EXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -33,7 +33,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取数据失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       });
     };
 
@@ -77,7 +77,7 @@
         })[0].click();
 
       }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
+        Notification.error(languages.findKey('failedToDownload'));
       });
     };
   }
