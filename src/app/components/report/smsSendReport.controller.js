@@ -81,7 +81,7 @@
           });
 
         }, function (reason) {
-          Notification.error("获取数据失败");
+          Notification.error(languages.findKey('rentalGetDataError'));
         });
 
       }

@@ -6,7 +6,7 @@
   angular
     .module('GPSCloud')
     .controller('selectUpdateFileController', selectUpdateFileController);
-  function selectUpdateFileController($rootScope, ngTableDefaults, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDevice, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
+  function selectUpdateFileController($rootScope, ngTableDefaults,languages, $confirm, $uibModalInstance, serviceResource, Notification, NgTableParams, updateDevice, UPDATE_FILE_UPLOAD_QUERY, UPDATE_FILE_DATA_BY, UPDATE_URL) {
     var vm = this;
     vm.updateDevice = updateDevice;
     vm.checked = null; //选中的设备id
@@ -29,7 +29,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取升级文件信息失败");
+        Notification.error(languages.findKey('failedToGetUpgradeFileInfo'));
       });
     };
     vm.query(null, null, null, null);
@@ -40,7 +40,7 @@
     };
     vm.ok = function () {
       if(null == vm.checked || vm.checked == ""){
-        Notification.warning({message: '请选择升级文件', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: languages.findKey('pleaseSelectUpgradeFile'), positionY: 'top', positionX: 'center'});
         return;
       }
       var updateDevice = angular.copy(vm.updateDevice);
@@ -74,14 +74,14 @@
         vm.confirmUpdate = false;
       }
       $confirm({
-        title:"操作提示",
+        title:languages.findKey('operationHints'),
         text: content
       }).then(function () {
         if(vm.confirmUpdate) {
           var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
           restPromise.then(function (data) {
             if(data.code == 0){
-              Notification.success("升级指令已下发!");
+              Notification.success(languages.findKey('upgradeInstructionsHaveBeenIssued'));
               $uibModalInstance.close();
             } else if(data.code == -1){
             } else {

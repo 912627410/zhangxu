@@ -6,7 +6,7 @@
     .controller('rolePrivilegeMngController', rolePrivilegeMngController);
 
   /** @ngInject */
-  function rolePrivilegeMngController($rootScope, $uibModalInstance, MENU_URL, Notification, serviceResource,
+  function rolePrivilegeMngController($rootScope, $uibModalInstance, languages,MENU_URL, Notification, serviceResource,
                                        commonFactory, ROLE_PRIVILEGE_URL, roleInfo, PRIVILEGE_URL) {
     var vm = this;
     vm.selected = [];
@@ -40,7 +40,7 @@
         vm.my_data = commonFactory.unflatten(data.content);;
         vm.selectRole(vm.roleInfo);
       }, function (reason) {
-        Notification.error('获取菜单失败');
+        Notification.error(languages.findKey('failedToGetMenu'));
       });
 
     }
@@ -102,13 +102,13 @@
       promise.then(function (data) {
 
         if(data.code ==0){
-          Notification.success("修改角色权限成功");
+          Notification.success(languages.findKey('successfullyModifiedRolePrivilige'));
           $uibModalInstance.close(data.content);
 
         }
 
       }, function (reason) {
-        Notification.error("获取menu数据失败");
+        Notification.error(languages.findKey('failedToGetMenuData'));
       });
     }
 

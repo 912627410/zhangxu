@@ -9,7 +9,7 @@
     .controller('idleDeviceController', idleDeviceController);
 
   /** @ngInject */
-  function idleDeviceController($rootScope, $http, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_PAGED_QUERY, DEVCE_NOUPLOAD_DATA_EXCELEXPORT) {
+  function idleDeviceController($rootScope, $http,languages, NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_PAGED_QUERY, DEVCE_NOUPLOAD_DATA_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryTime = null;
@@ -66,7 +66,7 @@
         vm.queryTime = new Date();
       }, function (reason) {
         //vm.machineList = null;
-        Notification.error("获取数据失败");
+        Notification.error(languages.findKey('rentalGetDataError'));
       });
     };
 
@@ -118,7 +118,7 @@
 
 
       }).error(function (data, status, headers, config) {
-        Notification.error("下载失败!");
+        Notification.error(languages.findKey('failedToDownload'));
       });
     };
   }

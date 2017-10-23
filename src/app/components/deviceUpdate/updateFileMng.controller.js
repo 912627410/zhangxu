@@ -6,7 +6,7 @@
   angular
     .module('GPSCloud')
     .controller('updateFileMngController', updateFileMngController);
-  function updateFileMngController($rootScope, ngTableDefaults, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource) {
+  function updateFileMngController($rootScope, ngTableDefaults, languages,$scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -48,7 +48,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取升级文件信息失败");
+        Notification.error(languages.findKey('failedToGetUpgradeFileInfo'));
       });
     };
     vm.query(null, null, null, null);

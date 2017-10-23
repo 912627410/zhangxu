@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function fleetController($rootScope,$scope,Notification) {
+  function fleetController($rootScope,languages,$scope,Notification) {
     var vm = this;
     vm.selectedFleet;
     vm.searchText = '';     //搜索的数据
@@ -26,7 +26,7 @@
     if ($rootScope.fleetChart && $rootScope.fleetChart.length > 0) {
       vm.my_data = [$rootScope.fleetChart[0]];
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     vm.search = function (searchText) {

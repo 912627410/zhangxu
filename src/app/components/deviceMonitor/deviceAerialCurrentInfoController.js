@@ -490,7 +490,7 @@
       //发送间隔信息
       vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
         if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-          Notification.error(languages.findKey('checktheTimeSettings'));
+          Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
           return;
         }
         if (devicenum == null) {
@@ -752,7 +752,7 @@
       //发送采样时间
       vm.sendSamplingTimeSMS = function (devicenum, vehicleStateCollect, chargerStateCollect) {
         if(angular.isUndefined(vehicleStateCollect) ||angular.isUndefined(chargerStateCollect)){
-          Notification.error(languages.findKey('checktheTimeSettings'));
+          Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
           return;
         }
         if (devicenum == null) {
@@ -986,7 +986,7 @@
        */
       vm.setReturnTime = function (deviceNum, returnTimeParam) {
         if(angular.isUndefined(returnTimeParam)){
-          Notification.error("请检查时间设置!");
+          Notification.error(languages.findKey('checktheTimeSettings'));
           return;
         }
         if (deviceNum == null) {
@@ -995,12 +995,12 @@
         }
 
         if(null == returnTimeParam.name || "" == returnTimeParam.name) {
-          Notification.error("请选择时间间隔类型");
+          Notification.error(languages.findKey('chooseTheTypeOfTimeInterval'));
           return;
         }
 
         if(null == returnTimeParam.time || "" == returnTimeParam.time) {
-          Notification.error("请输入时间");
+          Notification.error(languages.findKey('pleaseEnterTheTime'));
           return;
         }
 
@@ -1059,28 +1059,28 @@
           return;
         }
         if(null == register || "" == register) {
-          Notification.error("请输入起始地址");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('startAddress'));
           return;
         }
         if(null == dataLength || "" == dataLength) {
-          Notification.error("请输入数据长度");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('dataLength'));
           return;
         }
         if(null == uploadNum || uploadNum == "") {
-          Notification.error("请输入上传次数");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('uploads'));
           return;
         }
         if(null == uploadFrequency || uploadFrequency == "") {
-          Notification.error("请输入上传频率");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('uploadFrequency'));
           return;
         } else if(uploadFrequency < 1) {
-          Notification.error("上传频率录入有误");
+          Notification.error(languages.findKey('incorrectUploadFrequency'));
           return;
         }
         var restURL = SEND_MQTT_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
         $confirm({
-          text: languages.findKey('确定发送读请求命令?') + '',
-          title: languages.findKey('读请求命令确认') + '',
+          text: languages.findKey('areYouSureToSendAReadRequestCommand') + '',
+          title: languages.findKey('readRequestCommandConfirmation') + '',
           ok: languages.findKey('confirm') + '',
           cancel: languages.findKey('cancel') + ''
         }).then(function () {
@@ -1443,19 +1443,19 @@
                 return false;
             }
             if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
-                Notification.error('无效的地址');
+                Notification.error(languages.findKey('invalid')+languages.findKey('address'));
                 return false;
             }
             if(!vm.amaplongitudeNum&&typeof(vm.amaplongitudeNum)=="undefined"){
-                Notification.error('无效的经度');
+                Notification.error(languages.findKey('invalid')+languages.findKey('longitude'));
                 return false;
             }
             if(!vm.amaplatitudeNum&&typeof(vm.amaplatitudeNum)=="undefined"){
-                Notification.error('无效的维度');
+                Notification.error(languages.findKey('invalid')+languages.findKey('latitude'));
                 return false;
             }
             if(!vm.radius||typeof(vm.radius)=="undefined"||isNaN(vm.radius)){
-                Notification.error('无效的半径');
+                Notification.error(languages.findKey('invalid')+languages.findKey('rentalRadius'));
                 return false;
             }
 
@@ -1728,7 +1728,7 @@
                         vm.refreshMapTab(lineArr);
                     }
                 }, function (reason) {
-                    Notification.error("查询数据出错");
+                    Notification.error(languages.findKey('queryingDataError'));
                 }
             )
         };
@@ -1864,7 +1864,7 @@
                   queryCondition += "startDate=" + startDateFormated;
                 }
               } else {
-                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
                 return;
               }
               if (endDate) {
@@ -1878,7 +1878,7 @@
                   queryCondition += "endDate=" + endDateFormated;
                 }
               } else {
-                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
                 return;
               }
 
@@ -1901,10 +1901,10 @@
                     vm.deviceData_pagenumber = data.page.number + 1;
                     vm.basePath = "device/devicedata";
                   }else {
-                    Notification.warning("暂无数据！");
+                    Notification.warning(languages.findKey('noDataYet'));
                   }
                 },function(reason){
-                    serviceResource.handleRsp("获取数据失败",reason);
+                    serviceResource.handleRsp(languages.findKey('rentalGetDataError'),reason);
                     vm.deviceInfoList = null;
                 });
             }
@@ -1927,7 +1927,7 @@
             filterTerm += "startDate=" + startDateFormated;
           }
         } else {
-          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
           return;
         }
         if (endDate){
@@ -1941,7 +1941,7 @@
             filterTerm += "endDate=" + endDateFormated;
           }
         } else {
-          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
           return;
         }
         var deviceDataPromis = serviceResource.queryDeviceSimpleGPSData(page, size, sort, filterTerm);
@@ -1953,10 +1953,10 @@
               vm.basePath = "device/devicesimplegpsdata";
             }else {
               vm.deviceLocationList = null;
-              Notification.warning("暂无数据！");
+              Notification.warning(languages.findKey('noDataYet'));
             }
           }, function (reason) {
-            Notification.error("查询数据出错");
+            Notification.error(languages.findKey('queryingDataError'));
           }
         )
       };
@@ -1965,7 +1965,7 @@
           if (deviceNum) {
             var filterTerm = "deviceNum=" + deviceNum;
           }else {
-            Notification.error("输入的设备编号有误");
+            Notification.error(languages.findKey('theDeviceNumberEnteredIsIncorrect'));
             return;
           }
 
@@ -1973,7 +1973,7 @@
             filterTerm += "&startDate=" + $filter('date')(startDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
 
@@ -1981,7 +1981,7 @@
             filterTerm += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
           var restCallURL = DEVCEDATA_EXCELEXPORT;
@@ -2022,7 +2022,7 @@
 
 
           }).error(function (data, status, headers, config) {
-            Notification.error("下载失败!");
+            Notification.error(languages.findKey('failedToDownload'));
           });
         }
 
@@ -2071,7 +2071,7 @@
                   }
                   vm.warningConfig.series[0].data = vm.warningList;
                 }, function (reason) {
-                  serviceResource.handleRsp("获取报警数据失败", reason);
+                  serviceResource.handleRsp(languages.findKey('failedToGetAlarmData'), reason);
                   vm.warningConfig.series[0].data = null;
                 });
             }
@@ -3086,7 +3086,7 @@
           })[0].click();
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
         });
       };
 
@@ -3206,7 +3206,7 @@
               queryCondition += "startDate=" + startDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
           if (endDate) {
@@ -3219,7 +3219,7 @@
               queryCondition += "endDate=" + endDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
 

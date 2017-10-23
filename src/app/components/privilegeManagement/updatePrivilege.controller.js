@@ -9,7 +9,7 @@
     .controller('updatePrivilegeController', updatePrivilegeController);
 
   /** @ngInject */
-  function updatePrivilegeController($uibModalInstance,PRIVILEGE_URL,serviceResource, Notification,privilegeInfo) {
+  function updatePrivilegeController($uibModalInstance,PRIVILEGE_URL,languages,serviceResource, Notification,privilegeInfo) {
     var vm = this;
     vm.privilegeInfo=privilegeInfo;
 
@@ -18,7 +18,7 @@
       restPromise.then(function (data){
 
         if(data.code===0){
-          Notification.success("修改角色信息成功!");
+          Notification.success(languages.findKey('successfullyModifiedRoleInfo'));
           $uibModalInstance.close(data.content);
         }else{
           Notification.error(data.message);
