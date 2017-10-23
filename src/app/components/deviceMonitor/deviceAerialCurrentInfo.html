@@ -186,11 +186,13 @@
                         <!--GPS软件版本-->
                         <td>{{'GPSSoftwareVersion'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion==null">{{'noData'|translate}}</td>
-                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion}}</td>
+                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null&&deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion}}</td>
+                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null&&deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion/100}}</td>
                         <!--GPS硬件版本-->
                         <td>{{'GPSHardwareVersion'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsHardVersion==null">{{'noData'|translate}}</td>
-                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsHardVersion}}</td>
+                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null&&deviceAerialCurrentInfoController.deviceinfo.versionNum!='11'">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsHardVersion}}</td>
+                        <td ng-cloak  ng-if="deviceAerialCurrentInfoController.deviceinfo.gpsSoftVersion!=null&&deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'">VER{{deviceAerialCurrentInfoController.deviceinfo.gpsHardVersion/100}}</td>
                         <!--SIM卡号-->
                         <td>{{'SIMCardNumber'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.sim.phoneNumber}}</td>
@@ -480,7 +482,8 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.fetMCE==null||deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--泵电机转速-->
                         <td>{{'pumpMotorSpeed'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.engineRPM}}%</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.engineRPM>=0&&deviceAerialCurrentInfoController.deviceinfo.engineRPM<=100">{{deviceAerialCurrentInfoController.deviceinfo.engineRPM}}%</td>
+                        <td ng-cloak ng-if="!(deviceAerialCurrentInfoController.deviceinfo.engineRPM>=0&&deviceAerialCurrentInfoController.deviceinfo.engineRPM<=100)">-</td>
                         <!--速度阀/电驱使能2-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15">{{'speedValve'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15 && deviceAerialCurrentInfoController.deviceinfo.fetParallel==1&&deviceAerialCurrentInfoController.deviceinfo.machineStatus==1">{{'yes'|translate}}</td>
@@ -2281,7 +2284,7 @@
                     <!--下发最后命令时间戳-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:sendTheLastCommandTimestamp">
                       <div class="box box-success">
-                        <div class="box-header">
+                        <div class="box-header" style="padding-right: 50px;">
                           <h5 class="box-title text-gray">{{'sendTheLastCommandTimestamp'|translate}}</h5>
                           <div class="box-tools pull-right">
                             <a type="button" class="btn" data-toggle="tooltip"
@@ -2289,9 +2292,6 @@
                           </div>
                         </div>
                         <div class="box-body">
-                          <div class="row" >
-                            <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
-                          </div>
                           <div class="row">
                             <div class="col-md-12">
                               <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"

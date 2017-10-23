@@ -22,6 +22,7 @@
       numberAndChar: /^[a-zA-Z0-9]+$/,
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
       numberAndDot: /^[0-9.]+$/,
+      softVersionNum: /^\d{1,2}(\.\d{1,2})?$/,
       //numberAndCharForPass:/[a-zA-Z0-9_]{8,10}/,
       //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
       numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
@@ -74,6 +75,10 @@
       },
       numberAndDot: {
         error: "{{'numberAndDot' |translate}}",
+        success: ''
+      },
+      softVersionNum: {
+        error: "{{'softVersionNumError' |translate}}",
         success: ''
       },
       minlength: {
