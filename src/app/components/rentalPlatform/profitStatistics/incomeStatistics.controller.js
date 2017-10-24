@@ -10,7 +10,7 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,Notification,$filter,DEVCE_MF,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams,$uibModal, $location,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,Notification,$filter,DEVCE_MF,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -168,6 +168,30 @@
     })
 
 
+    //选择订单客户
+    vm.selectCustomer = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
+        controller: 'customerListController as customerListCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.rentalOrder.rentalCustomer=result;
+        console.log(result)
+      }, function () {
+      });
+    };
+
+
     //切换查询类型
     vm.orderQuery = true;
     vm.machineQuery = false;
@@ -266,8 +290,8 @@
 
       if (null != rentalOrder) {
 
-        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
+        if (null != rentalOrder.rentalCustomer.name&&rentalOrder.rentalCustomer.name!="") {
+          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.rentalCustomer.name;
         }
 
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
@@ -309,8 +333,8 @@
       restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
       if (null != rentalOrder) {
 
-        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-          restCallURL += "&customerName="+ vm.customerName; + rentalOrder.customerName;
+        if (null != rentalOrder.rentalCustomer.id&&rentalOrder.rentalCustomer.id!="") {
+          restCallURL += "&customerId="+ rentalOrder.rentalCustomer.id;
         }
 
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {

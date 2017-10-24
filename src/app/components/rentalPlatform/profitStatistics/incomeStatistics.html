@@ -71,9 +71,20 @@
 
 
             <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}</label>
-            <div class="col-md-2" >
-              <input type="text" name="customerName" class="form-control"  ng-model="incomeStatisticsCtr.rentalOrder.customerName"
-                     placeholder="{{'rentalCustomerName'|translate}}"/>
+            <div class="col-md-2">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
+                       ng-model="incomeStatisticsCtr.rentalOrder.rentalCustomer.name" name="customerName"
+                       placeholder="{{'rentalCustomerName'|translate}}"
+                       validator="required" readonly/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default"  ng-click="incomeStatisticsCtr.selectCustomer('lg')">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
             </div>
           </div>
         </div>
@@ -128,14 +139,6 @@
       <div  class="col-md-10" ng-show="incomeStatisticsCtr.machineQuery">
         <div class="form-group">
           <div class="row info-box-container">
-            <!--<label class="col-md-1 control-label">{{'rentalMachineType'|translate}}</label>-->
-            <!--<div class="forminline" style="width: 150px;">-->
-            <!--<select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">-->
-            <!--<option value="1">{{'rentalScissorLift'|translate}}</option>-->
-            <!--<option value="2">{{'rentalBoomLift'|translate}}</option>-->
-            <!--<option value="3">{{'rentalArticulatingBoomLift'|translate}}</option>-->
-            <!--</select>-->
-            <!--</div>-->
 
             <label class="col-md-1 control-label padding5">{{'vehicleType'|translate}}</label>
             <div class="col-md-2">
