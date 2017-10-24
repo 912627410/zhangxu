@@ -1,55 +1,55 @@
 <div class="modal-header">
-  <h3 class="modal-title">修改SIM</h3>
+  <h3 class="modal-title">{{'modifySIMInfo'|translate}}</h3>
 </div>
 <form name="newMachineForm"class="form-horizontal w5c-form"  w5c-form-validate="vm.validateOptions">
   <input type="hidden" ng-model="updateSimController.sim.statusDesc"/>
   <div class="modal-body">
     <div class="box-body">
         <div class="form-group">
-          <label for="phoneNumber" class="col-sm-2 control-label">SIM卡号</label>
+          <label for="phoneNumber" class="col-sm-2 control-label">{{'SIMCardNumber'|translate}}</label>
           <div class="col-sm-10">
-            <input type="text" id="phoneNumber" class="form-control" placeholder="SIM卡号"
+            <input type="text" id="phoneNumber" class="form-control" placeholder="{{'SIMCardNumber'|translate}}"
                    ng-model="updateSimController.sim.phoneNumber" name="phoneNumber" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="serialNumber" class="col-sm-2 control-label">序列号</label>
+          <label for="serialNumber" class="col-sm-2 control-label">{{'simSerialNumber'|translate}}</label>
           <div class="col-sm-10">
-            <input type="text" id="serialNumber" class="form-control" placeholder="序列号"
+            <input type="text" id="serialNumber" class="form-control" placeholder="{{'simSerialNumber'|translate}}"
                    ng-model="updateSimController.sim.serialNumber" name="serialNumber" required/>
           </div>
         </div>
 
       <div class="form-group">
-        <label class="col-sm-2 control-label">供应商</label>
+        <label class="col-sm-2 control-label">{{'supplier'|translate}}</label>
         <div class="col-sm-10">
           <select name="simProvider"  class="form-control"
                   ng-model="updateSimController.sim.provider"
                   ng-options="simProvider.value as simProvider.desc for simProvider in updateSimController.sim.simProviderList">
-            <option value="">请选择...</option>
+            <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
       </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">价格(元)</label>
+          <label class="col-sm-2 control-label">{{'price(RMB)'|translate}}</label>
           <div class="col-sm-10">
-            <input type="text" id="price" class="form-control" placeholder="价格(元)"
+            <input type="text" id="price" class="form-control" placeholder="{{'price(RMB)'|translate}}"
                    ng-model="updateSimController.sim.price" name="price" />
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">流量限额(MB)</label>
+          <label class="col-sm-2 control-label">{{'dataLimit'|translate}}</label>
           <div class="col-sm-10">
-            <input type="text" id="gsmDataLimit" class="form-control" placeholder="流量限额(MB)"
+            <input type="text" id="gsmDataLimit" class="form-control" placeholder="{{'dataLimit'|translate}}"
                    ng-model="updateSimController.sim.gsmDataLimit" name="gsmDataLimit" />
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">开通时间</label>
+          <label class="col-sm-2 control-label">{{'serviceBeginDate'|translate}}</label>
           <div class="col-sm-10">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">服务结束时间</label>
+          <label class="col-sm-2 control-label">{{'serviceEndDate'|translate}}</label>
           <div class="col-sm-10">
             <p class="input-group">
               <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -79,9 +79,9 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-2 control-label">备注</label>
+          <label class="col-sm-2 control-label">{{'remarks'|translate}}</label>
           <div class="col-sm-10">
-            <input type="text" id="description" class="form-control" placeholder="备注"
+            <input type="text" id="description" class="form-control" placeholder="{{'remarks'|translate}}"
                    ng-model="updateSimController.sim.description" name="description"/>
           </div>
         </div>
@@ -92,7 +92,7 @@
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" w5c-form-submit="updateSimController.ok(updateSimController.sim)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="updateSimController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" w5c-form-submit="updateSimController.ok(updateSimController.sim)">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateSimController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

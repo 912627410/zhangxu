@@ -1,13 +1,13 @@
 <div class="modal-header">
-  <h3 class="modal-title">修改车辆类型</h3>
+  <h3 class="modal-title">{{'modifyVehicleType'|translate}}</h3>
 </div>
 <form name="updateMachineTypeForm" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="typeName" class="col-sm-3 control-label">车辆类型</label>
+        <label for="typeName" class="col-sm-3 control-label">{{'vehicleType'|translate}}</label>
         <div class="col-sm-8">
-          <input type="text" id="typeName" class="form-control" placeholder="车辆类型名称"
+          <input type="text" id="typeName" class="form-control" placeholder="{{'vehicleTypeName'|translate}}"
                  ng-model="updateMachineTypeCtrl.machineTypeInfo.typeName" name="typeName" typeahead-show-hint="true"
                  validator="required"/>
         </div>
@@ -21,7 +21,7 @@
 
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="updateMachineTypeForm" ng-click="updateMachineTypeCtrl.ok(updateMachineTypeCtrl.machineTypeInfo)">更新</button>
-    <button class="btn btn-warning" type="button" ng-click="updateMachineTypeCtrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" validation-submit="updateMachineTypeForm" ng-click="updateMachineTypeCtrl.ok(updateMachineTypeCtrl.machineTypeInfo)">{{'update'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateMachineTypeCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

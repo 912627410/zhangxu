@@ -14,13 +14,19 @@
   function fleetMapMonitorController(WORK_POINT_URL,$scope,$rootScope,$timeout,fleetTreeFactory, Map, AMAP_GEO_CODER_URL,languages,WEBSOCKET_URL,DEVCE_PAGED_QUERY, serviceResource, Notification) {
     var vm = this;
     vm.workPointList = [];
-    vm.fleet = $rootScope.fleetChart[0];
     vm.operatorInfo = $rootScope.userInfo;
     vm.markerMap = angular.copy(Map);
+
+    var fleetChart = $rootScope.fleetChart[0];
+    while (fleetChart.children.length > 0) {
+      fleetChart = fleetChart.children[0];
+    }
+    vm.fleet = fleetChart;
 
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
     var wsUrl = WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
+    var heartBeatMsg = "HeartBeat"; //心跳消息
 
     vm.openFleetTree = function () {
       fleetTreeFactory.treeShow(function (selectedItem) {
@@ -167,21 +173,21 @@
           map.addControl(overView);
         });
 
-        map.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
-          var autoOptions = {
-            city: "北京", //城市，默认全国
-            input: "tipinput"//使用联想输入的input的id
-          };
-          var auto= new AMap.Autocomplete(autoOptions);
-          var placeSearch = new AMap.PlaceSearch({
-            city:'北京',
-            map:map
-          });
-          AMap.event.addListener(auto, "select", function(e){
-            //TODO 针对选中的poi实现自己的功能
-            placeSearch.search(e.poi.name)
-          });
-        });
+        // map.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+        //   var autoOptions = {
+        //     city: "北京", //城市，默认全国
+        //     input: "tipinput"//使用联想输入的input的id
+        //   };
+        //   var auto= new AMap.Autocomplete(autoOptions);
+        //   var placeSearch = new AMap.PlaceSearch({
+        //     city:'北京',
+        //     map:map
+        //   });
+        //   AMap.event.addListener(auto, "select", function(e){
+        //     //TODO 针对选中的poi实现自己的功能
+        //     placeSearch.search(e.poi.name)
+        //   });
+        // });
 
 
         for( var i=0; i <workPointList.length; i ++){
@@ -274,6 +280,7 @@
         reconnect(wsUrl);
       };
       ws.onerror = function () {
+        // Notification.error("fleetMap WebSocket Error!");
         reconnect(wsUrl);
       };
       ws.onopen = function () {
@@ -285,13 +292,17 @@
         //拿到任何消息都说明当前连接是正常的
         heartCheck.reset().start();
 
-        var monitorVo = JSON.parse(evt.data);
-        var newPoint = new AMap.LngLat(monitorVo.longitude, monitorVo.latitude);
-
-        if(vm.markerMap.containsKey(monitorVo.deviceNum)){
-          var marker = vm.markerMap.get(monitorVo.deviceNum);
-          marker.moveTo(newPoint, 500);
-          vm.markerMap.put(monitorVo.deviceNum, marker);
+        if(evt.data == heartBeatMsg) {
+          //心跳响应
+          // console.log("心跳响应:" + evt.data);
+        } else {
+          var monitorVo = JSON.parse(evt.data);
+          var newPoint = new AMap.LngLat(monitorVo.longitude, monitorVo.latitude);
+          if(vm.markerMap.containsKey(monitorVo.deviceNum)){
+            var marker = vm.markerMap.get(monitorVo.deviceNum);
+            marker.moveTo(newPoint, 500);
+            vm.markerMap.put(monitorVo.deviceNum, marker);
+          }
         }
       }
     };
@@ -300,10 +311,10 @@
       if(lockReconnect) return;
       lockReconnect = true;
       //没连接上会一直重连，设置延迟避免请求过多
-      setTimeout(function () {
+      vm.reconnectTimeOut = setTimeout(function () {
         vm.createWebSocket(url);
         lockReconnect = false;
-      }, 2000);
+      }, 3000);
     };
 
     //心跳检测
@@ -318,7 +329,7 @@
         this.timeoutObj = setTimeout(function(){
           //这里发送一个心跳，后端收到后，返回一个心跳消息，
           //onmessage拿到返回的心跳就说明连接正常
-          ws.send("HeartBeat");
+          ws.send(heartBeatMsg);
         }, this.timeout)
       }
     };
@@ -330,9 +341,12 @@
     });
 
     var closeWebSocket = function() {
-      ws.close();
-      ws.onclose = function () { };
-      heartCheck.reset();
+      if(ws) {
+        ws.close();
+        heartCheck.reset();
+        clearTimeout(vm.reconnectTimeOut);
+        lockReconnect = true;
+      }
     }
 
   }

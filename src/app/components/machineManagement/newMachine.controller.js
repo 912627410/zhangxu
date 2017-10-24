@@ -9,7 +9,7 @@
     .controller('newMachineController', newMachineController);
 
   /** @ngInject */
-  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource,rentalService, Notification, operatorInfo,machineTypeInfo) {
+  function newMachineController($rootScope,$scope,machineService,$http,$timeout,AMAP_PLACESEARCH_URL, $uibModal,$uibModalInstance,languages,treeFactory, DEIVCIE_FETCH_UNUSED_URL,MACHINE_URL,ENGINE_TYPE_LIST_URL, serviceResource,rentalService, Notification, operatorInfo,machineTypeInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.machineTypeList = machineTypeInfo;//车辆类型
@@ -28,7 +28,7 @@
       vm.deviceManufactureList= data.content;
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取厂家失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //加载高度信息
@@ -36,7 +36,7 @@
     deviceHeightTypeListPromise.then(function (data) {
       vm.deviceHeightTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取高度失败');
+      Notification.error(languages.findKey('getHeFail'));
     })
 
     //加载车辆类型信息
@@ -44,7 +44,7 @@
     deviceTypeListPromise.then(function (data) {
       vm.deviceTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取类型失败');
+      Notification.error(languages.findKey('getTypeFail'));
     })
 
     //加载车辆驱动信息
@@ -52,7 +52,7 @@
     devicePowerTypeListPromise.then(function (data) {
       vm.devicePowerTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取驱动类型失败');
+      Notification.error(languages.findKey('getDriFail'));
     })
 
     var salaryTypePromise = machineService.getSalaryTypeList();
@@ -60,7 +60,7 @@
       vm.salaryTypeList= data;
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取人工成本类型失败');
+      Notification.error(languages.findKey('getLabourCostTypeFail'));
     })
 
     var upkeepPriceTypePromise = machineService.getUpkeepPriceTypeList();
@@ -68,7 +68,7 @@
       vm.upkeepPriceTypeList= data;
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取保养费用类型失败');
+      Notification.error(languages.findKey('getMaCostTypeFail'));
     })
 
     // var fuelTypePromise = machineService.getFuelTypeList();
@@ -84,7 +84,7 @@
       vm.machineStateList= data;
       console.log(vm.machineStateList);
     }, function (reason) {
-      Notification.error('获取车辆状态失败');
+      Notification.error(languages.findKey('getVeStaFail'));
     })
 
 
@@ -125,7 +125,7 @@
     engineTypeData.then(function (data) {
       vm.engineTypeList = data;
     }, function (reason) {
-      Notification.error('获取发动机类型失败');
+      Notification.error(languages.findKey('getEnTypeFail'));
     })
 
 

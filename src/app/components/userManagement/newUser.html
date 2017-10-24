@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">新建用户</h3>
+    <h3 class="modal-title">{{'newUser'|translate}}</h3>
 </div>
 <form name="newUserForm" class="form-horizontal" ng-submit="addUserCtrl.ok(addUserCtrl.newUser)">
     <div class="modal-body">
@@ -70,7 +70,7 @@
                     <label for="confirmPassword" class="col-sm-2 control-label">{{'repeatPassword'|translate}}</label>
                     <div class="col-sm-10">
                         <input type="password" id="confirmPassword" class="form-control" placeholder="{{'repeatPassword'|translate}}" ng-model="addUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="addUserCtrl.newUser.password" validator="numberAndCharForPass"/>
-                      <div class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">密码两次输入不匹配</div>
+                      <div class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">{{'mismatching'|translate}}</div>
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@
                   <div class="checkbox">
                     <label>
                       <input type="checkbox" name="locationAlarmReceiver" ng-model="addUserCtrl.locationAlarmReceiverChk" id="locationAlarmReceiver">
-                      接收机器位置异常报警(勾选时会收到机器超出电子围栏报警信息)
+                      {{'AbnormalAlarmReceivingMachine'|translate}}
                     </label>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
             </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-show="newUserForm.confirmPassword.$valid">添加</button>
-        <button class="btn btn-warning" type="button" ng-click="addUserCtrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="submit" ng-show="newUserForm.confirmPassword.$valid">{{'rentalAdd'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="addUserCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 </form>

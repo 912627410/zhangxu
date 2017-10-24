@@ -9,7 +9,8 @@
     .controller('rentalCustomerMngController', rentalCustomerMngController);
 
   /** @ngInject */
-  function rentalCustomerMngController($window,$state, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL) {
+
+  function rentalCustomerMngController($window,$state, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL,languages) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -77,7 +78,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取客户数据失败");
+        Notification.error(languages.findKey('FaGetCu'));
       });
     };
     vm.query(null,null,null,null);

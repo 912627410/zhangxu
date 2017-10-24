@@ -44,6 +44,7 @@
             </ui-select-match>
             <ui-select-choices repeat="deviceType in rentalUnUsedMachineListCtrl.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+
             </ui-select-choices>
           </ui-select>
         </div>
@@ -51,10 +52,12 @@
         <div class="col-md-2">
           <ui-select name="devicePowerType" ng-model="rentalUnUsedMachineListCtrl.searchConditions.powerType" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-            <ui-select-choices repeat="devicePowerType in rentalUnUsedMachineListCtrl.devicePowerTypeList">
-              <div ng-bind-html="devicePowerType.name | highlight: $select.search"></div>
+
+            <ui-select-choices repeat="devicePowerType in orgMachineListMngController.devicePowerTypeList">
+              <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
+
             </ui-select-choices>
           </ui-select>
         </div>
@@ -67,10 +70,12 @@
         <div class="col-md-2">
           <ui-select name="deviceHeightType" ng-model="rentalUnUsedMachineListCtrl.searchConditions.heightType" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-            <ui-select-choices repeat="deviceHeightType in rentalUnUsedMachineListCtrl.deviceHeightTypeList">
-              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
+
+            <ui-select-choices repeat="deviceHeightType in orgMachineListMngController.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search|translate"></div>
+
             </ui-select-choices>
           </ui-select>
         </div>
@@ -78,10 +83,12 @@
         <div class="col-md-2">
           <ui-select name="deviceManufacture" ng-model="rentalUnUsedMachineListCtrl.searchConditions.factory" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-            <ui-select-choices repeat="deviceManufacture in rentalUnUsedMachineListCtrl.deviceManufactureList">
-              <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+
+            <ui-select-choices repeat="deviceManufacture in orgMachineListMngController.deviceManufactureList">
+              <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
+
             </ui-select-choices>
           </ui-select>
         </div>
@@ -116,10 +123,10 @@
 
           <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
           <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
-            {{machine.typeName}}</td>
-          <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName }}</td>
-          <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{machine.powerTypeName}}</td>
-          <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName}}</td>
+            {{machine.typeName|translate}}</td>
+          <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName|translate}}</td>
+          <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{machine.powerTypeName|translate}}</td>
+          <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName|translate}}</td>
 
         </tr>
       </table>

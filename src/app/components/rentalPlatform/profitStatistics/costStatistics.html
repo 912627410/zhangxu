@@ -24,6 +24,8 @@
         <div class="info-card">
           <div class="info-title">{{'rentalMachineCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalMachineCost}}</div>
+          <!--<div class="info-data">¥68928</div>-->
+
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -31,18 +33,24 @@
 
           <div class="info-title">{{'rentalSaleCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalSaleCost}}</div>
+          <!--<div class="info-data">¥62466</div>-->
+
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalManagementCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalManagementCost}}</div>
+          <!--<div class="info-data">¥51696</div>-->
+
         </div>
       </div>
       <div class="col-lg-23 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalFinanceCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalFinanceCost}}</div>
+          <!--<div class="info-data">¥32310</div>-->
+
         </div>
       </div>
     </div>
@@ -65,11 +73,11 @@
         </div>
 
         <div class="forminline" >
-          <label>{{'rentalHeight'| translate}}</label>
 
+          <label>{{'highlyType'| translate}}</label>
           <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
@@ -77,15 +85,15 @@
           </ui-select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">{{'rentalBrand'| translate}}</label>
 
+          <label class="">{{'brandType'| translate}}</label>
 
           <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
-              <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>
+              <div ng-bind-html="machineMF.name | highlight: $select.search |translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>

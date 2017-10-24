@@ -6,7 +6,7 @@
     .controller('roleUserMngController', roleUserMngController);
 
   /** @ngInject */
-  function roleUserMngController($rootScope,  $uibModalInstance, ROLE_USER_URL, Notification, serviceResource,roleInfo,USER_PAGE_URL) {
+  function roleUserMngController($rootScope,languages,  $uibModalInstance, ROLE_USER_URL, Notification, serviceResource,roleInfo,USER_PAGE_URL) {
     var vm = this;
     vm.roleInfo = roleInfo;
     vm.selected = [];
@@ -24,7 +24,7 @@
         }
 
       }, function (reason) {
-        Notification.error('获取权限状态失败');
+        Notification.error(languages.findKey('failedToGetPriviligeStatus'));
       })
     }
 
@@ -35,7 +35,7 @@
 
       vm.getRoleUsers(vm.roleInfo);
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     // select org
@@ -56,7 +56,7 @@
         vm.userinfoList = data.content;
 
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error(languages.findKey('failedToGetRoleData'));
       });
 
     }
@@ -98,13 +98,13 @@
       promise.then(function (data) {
 
         if(data.code ==0){
-          Notification.success("修改角色权限成功");
+          Notification.success(languages.findKey('successfullyModifiedRolePrivilige'));
           $uibModalInstance.close(data.content);
 
         }
 
       }, function (reason) {
-        Notification.error("获取menu数据失败");
+        Notification.error(languages.findKey('failedToGetMenuData'));
       });
     }
 

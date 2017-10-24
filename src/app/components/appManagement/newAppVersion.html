@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">新建APP版本</h3>
+  <h3 class="modal-title">{{'newAPPVersion'|translate}}</h3>
 </div>
 <form name="newForm" class="form-horizontal">
   <div class="modal-body row">
@@ -12,7 +12,7 @@
           <ui-select id="appType" name="appType" ng-model="newAppVersionCtrl.appVersion.appType"
                      theme="bootstrap" ng-disabled="disabled" validator="required">
             <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
-              {{$select.selected.type}}
+              {{$select.selected.type|translate}}
             </ui-select-match>
             <ui-select-choices  repeat="appType.type as appType in newAppVersionCtrl.appTypeList" >
               <div ng-class='appType.icon'>&nbsp;&nbsp;&nbsp;&nbsp;{{appType.type}}</div>
@@ -66,7 +66,7 @@
           <ui-select id="ifForced" name="ifForced"
                      ng-model="newAppVersionCtrl.appVersion.ifForced" theme="bootstrap" ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'appType'|translate}}">
-              {{$select.selected.name}}
+              {{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices  repeat="ifForced.value as ifForced in newAppVersionCtrl.ifForcedList" >
               <div>{{ifForced.name}}</div>

@@ -9,7 +9,9 @@
     .controller('rentalFleetMngController', rentalFleetMngController);
 
   /** @ngInject */
+
   function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll,languages,commonFactory, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL) {
+
     var vm = this;
     vm.rightRentalOrderId;
 
@@ -79,6 +81,7 @@
 
     };
 
+
     //左侧仓库车辆数据查询  默认查询登录用户所属组织及其下级组织的在库待租车辆
     vm.machineStatusLoadData = function (machineStatus) {
       vm.searchConditions={};
@@ -107,7 +110,7 @@
           dataset: data.content
         });
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 
@@ -139,13 +142,13 @@
       restPromise.then(function (data) {
 
         if(data.code==0){
-          Notification.success("车辆调拨成功!");
+          Notification.success(languages.findKey('rVehAllSu'));
 
           destArray.data.splice(0, 0, data.content);
         }
 
       }, function (reason) {
-        Notification.error(" 车辆调拨失败!");
+        Notification.error(languages.findKey('rVehAllFa'));
       });
 
     };
@@ -194,6 +197,7 @@
           rentalMachineLeft.machineLicenseId = data.content.machine.licenseId;
           rentalMachineLeft.manufacture = data.content.machine.deviceManufacture.name;
           destArray.data.splice(0, 0, rentalMachineLeft);
+
         }
 
       }, function (reason) {
@@ -219,7 +223,6 @@
 
       modalInstance.result.then(function (result) {
         vm.rightRentalOrder=result;
-
         if(null!=vm.rightRentalOrder){
          vm.rightQuery(null,null,null,vm.rightRentalOrder.id);
         }
@@ -261,14 +264,14 @@
         restPromise.then(function (data) {
 
           if(data.code==0){
-            Notification.success("调入车辆成功!");
+            Notification.success(languaes.findKey('transVehicle'));
             var result=data.content;
             for(var i=0;i<result.length;i++){
               dest.data.splice(0, 0, result[i]);
             }
           }
         }, function (reason) {
-          Notification.error(" 调入车辆失败!");
+          Notification.error(languaes.findKey('transVehiclFail'));
         });
 
 

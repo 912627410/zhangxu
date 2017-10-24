@@ -10,7 +10,7 @@
     .controller('newRentalOrderController', newRentalOrderController);
 
   /** @ngInject */
-  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification) {
+  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification,languages) {
     var vm = this;
     vm.rentalOrder={};
     //订单车辆类型 List
@@ -159,7 +159,7 @@
 
     vm.ok = function () {
       if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
-        Notification.error("请选择订单开始时间和结束时间");
+        Notification.error(languages.findKey('selTime'));
       }
 
         vm.rentalOrder.jc = vm.zbOption.quantity;
@@ -176,7 +176,7 @@
 
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
-          Notification.success("新建订单成功!");
+          Notification.success(languages.findKey('newOrderSucc'));
 
           //$location.path(path);
         },function (reason) {

@@ -45,7 +45,7 @@
         var formatEndDate = $filter('date')(queryEndDate, 'yyyy-MM-dd HH:mm:ss');
         restCallURL += "&query_end_date=" + formatEndDate;
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       //分页参数

@@ -18,7 +18,7 @@
                                        GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_INFLUX,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,deviceinfo,
-                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_MQTT_RETURN_TIME_URL, SET_MQTT_DEFAULT_RETURN_TIME_URL) {
+                                       MACHINE_FENCE,ngTableDefaults, NgTableParams, SET_MQTT_RETURN_TIME_URL, SET_MQTT_DEFAULT_RETURN_TIME_URL,WORK_POINT_URL) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
@@ -29,6 +29,10 @@
     vm.workTimeOptModel = 1;
     vm.startTimesOptModel = 1;
     $scope.notices = [];
+
+    /*地图轨迹加减速初始状态*/
+    vm.mapFaster = false;
+    vm.mapSlower = true;
 
     // 短信发送成功后的初始化button
     vm.initSmsSendBtn = function () {
@@ -73,7 +77,7 @@
       if (vm.deviceinfo.maintainNoticeNum != null && vm.deviceinfo.maintainNoticeNum > 0) {
         //存在保养提醒
         var maintainNotice = {
-          title: '该设备需要保养',
+          title: languages.findKey('theEquipmentNeedsMaintenance'),
           url: "app/components/deviceMonitor/maintainNotice.html",
           controller: "maintainNoticeController as maintainNoticeCtrl"
 
@@ -496,7 +500,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (endDate) {
@@ -509,7 +513,7 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (!newReq){
@@ -556,7 +560,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       }else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
 
@@ -570,7 +574,7 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       }else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       var restCallURL = DEVCEDATA_EXCELEXPORT;
@@ -611,7 +615,7 @@
 
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
       });
 
     }
@@ -703,7 +707,7 @@
       if (phoneNumber&&!angular.isUndefined(phoneNumber)) {
         var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
       }else {
-        Notification.warning('设备未绑定sim卡！');
+        Notification.warning(languages.findKey('theDeviceDoesNotBindTheSimCard'));
         return;
       }
       if(filterTerm) {
@@ -712,7 +716,7 @@
       var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {
           if (data.length == 0) {
-            Notification.warning('无下发短信');
+            Notification.warning(languages.findKey('noSendTextMessages'));
           } else {
             ngTableDefaults.settings.counts = [];
             vm.lockDataTable = new NgTableParams({
@@ -723,7 +727,7 @@
             });
           }
         }, function (reason) {
-          Notification.error('获取锁车短信内容失败！');
+          Notification.error(languages.findKey('failedToGetLockSMSContent'));
         }
       )
     }
@@ -759,8 +763,9 @@
     /**
      * 参数: 地图轨迹gps 数据
      * @param lineAttr
+     * @param mileageArr
      */
-    vm.refreshMapTabCar = function (lineAttr) {
+    vm.refreshMapTabCar = function (lineAttr, mileageArr) {
 
       vm.lnglatShow = true;
 
@@ -781,6 +786,7 @@
       }
       /**************************************结束 ***********************************************************/
       var marker;
+      vm.markerSpeed = 500; // 小车移动速度
 
       var carPostion = lineAttr[0];
 
@@ -800,6 +806,27 @@
 
       AMap.plugin(["AMap.RangingTool"], function () {
       });
+
+      /*如果是车队的车，在地图中显示料点*/
+      if(null != deviceinfo.machine && null != deviceinfo.machine.deviceinfo && null != deviceinfo.machine.deviceinfo.fleet) {
+        var fleetId = deviceinfo.machine.deviceinfo.fleet.id;
+        var restCallURL = WORK_POINT_URL + "?page=0&size=6&sort=id&search_EQ_fleet.id=" + fleetId;
+        var restPromise = serviceResource.restCallService(restCallURL, "GET");
+        restPromise.then(function (data) {
+          vm.workPointList = data.content;
+          if(vm.workPointList!=null && vm.workPointList.length > 0){
+            for( var i=0; i < vm.workPointList.length; i ++){
+              var workPoint = vm.workPointList[i];
+              var circle = createCircle(workPoint);
+              circle.setMap(map);
+              var marker1 = createMarker(workPoint);
+              marker1.setMap(map);
+            }
+          }
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        })
+      }
 
       //为地图注册click事件获取鼠标点击出的经纬度坐标
       var clickEventListener = map.on('click', function(e) {
@@ -836,9 +863,17 @@
       /*每一步移动完成触发事件*/
       AMap.event.addListener(marker, "moveend", function () {
         markerMovingControl._currentIndex++;
-        var distances = parseInt(startLat.distance(marker.getPosition()).toString().split('.')[0]);
+        var totalMileage = mileageArr[markerMovingControl._currentIndex];
+        var totalMileage1 = mileageArr[markerMovingControl._currentIndex - 1];
+        var distances;
+        if(totalMileage == undefined || totalMileage == null || totalMileage == ''
+          || totalMileage1 == undefined || totalMileage1 == null || totalMileage1 == '') {
+          distances = 0;
+        } else {
+          distances = (totalMileage - totalMileage1)*0.1;
+        }
         lastDistabce += distances;
-        vm.trackMileage = lastDistabce;
+        vm.trackMileage = lastDistabce.toFixed(1);
         $scope.$apply();
         startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
       })
@@ -853,23 +888,87 @@
         $scope.$apply();
         startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
         markerMovingControl._currentIndex = 0;
-        markerMovingControl._marker.moveAlong(lineAttr, 500);
+        markerMovingControl._marker.moveAlong(lineAttr, vm.markerSpeed);
       }, false);
       /*暂停事件*/
       AMap.event.addDomListener(document.getElementById('stop'), 'click', function () {
         markerMovingControl._marker.stopMove();
-        var distabcess2 = lastDistabce;
-        var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
-        distabcess2 += distances;
-        vm.trackMileage = distabcess2;
-        $scope.$apply();
+        // var distabcess2 = lastDistabce;
+        // var distances = parseInt(startLat.distance(markerMovingControl._marker.getPosition()).toString().split('.')[0]);
+        // distabcess2 += distances;
+        // vm.trackMileage = distabcess2;
+        // $scope.$apply();
       }, false);
       /*继续移动事件*/
       AMap.event.addDomListener(document.getElementById('move'), 'click', function () {
-        var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1)
+        var lineArr2 = lineAttr.slice(markerMovingControl._currentIndex + 1);
         lineArr2.unshift(marker.getPosition());
-        markerMovingControl._marker.moveAlong(lineArr2, 500);
+        markerMovingControl._marker.moveAlong(lineArr2, vm.markerSpeed);
       }, false);
+      /*加速移动事件*/
+      AMap.event.addDomListener(document.getElementById('faster'), 'click', function () {
+        if(vm.markerSpeed < 3000) {
+          vm.markerSpeed += 1000;
+        }
+        if(vm.markerSpeed > 3000) {
+          vm.mapFaster = true;
+        }
+        vm.mapSlower = false;
+        var lineArr3 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+        lineArr3.unshift(marker.getPosition());
+        markerMovingControl._marker.moveAlong(lineArr3, vm.markerSpeed);
+      }, false);
+      /*减速移动事件*/
+      AMap.event.addDomListener(document.getElementById('slower'), 'click', function () {
+        if(vm.markerSpeed > 1000) {
+          vm.markerSpeed -= 1000;
+        }
+        if (vm.markerSpeed < 1000) {
+          vm.mapSlower = true;
+        }
+        vm.mapFaster = false;
+        var lineArr4 = lineAttr.slice(markerMovingControl._currentIndex + 1);
+        lineArr4.unshift(marker.getPosition());
+        markerMovingControl._marker.moveAlong(lineArr4, vm.markerSpeed);
+      }, false);
+    };
+
+    /*料点画圆*/
+    var createCircle = function (workPoint) {
+      var circle,strokeColor,fillColor;
+      if(workPoint.type == 1){
+        strokeColor="#6495ED"; //线颜色
+        fillColor= "#A2B5CD"; //填充颜色
+      }else if(workPoint.type = 2){
+        strokeColor= "#F33"; //线颜色
+        fillColor="#ee2200"; //填充颜色
+      }
+      circle = new AMap.Circle({
+        center: [workPoint.longitude, workPoint.latitude],// 圆心位置
+        radius: workPoint.radius, //半径
+        strokeColor: strokeColor, //线颜色
+        strokeOpacity: 1, //线透明度
+        strokeWeight: 3, //线粗细度
+        fillColor: fillColor, //填充颜色
+        fillOpacity: 0.35, //填充透明度
+        extData: workPoint.id
+      });
+      return circle;
+    };
+
+    /*料点标注*/
+    var createMarker = function (workPoint) {
+      var marker = new AMap.Marker({
+        position: [workPoint.longitude, workPoint.latitude],
+        title: workPoint.name,
+        draggable: false
+      });
+      // 设置label标签
+      marker.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+        offset: new AMap.Pixel(20, 20),//修改label相对于maker的位置
+        content: workPoint.name
+      });
+      return marker;
     };
 
     /**
@@ -899,7 +998,7 @@
           filterTerm += "startDate=" + startDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
       if (endDate) {
@@ -912,12 +1011,14 @@
           filterTerm += "endDate=" + endDateFormated;
         }
       } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
 
       var lineArr = [];
       var lineArr2 = [];
+      var mileageArr = [];
+      var mileageArr2 = [];
       var deviceDataPromis = serviceResource.queryDeviceSimpleData(page, size, sort, filterTerm);
       deviceDataPromis.then(function (data) {
           var deviceMapDataList = data.content;
@@ -928,13 +1029,15 @@
             vm.deviceMapDataList = _.sortBy(deviceMapDataList, "locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
               lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
-            })
+              mileageArr.push(deviceData.totalMileage);
+            });
             for (var i = 0; i < lineArr.length; i++) {
               if(i == 0 || lineArr[i].lat != lineArr[i - 1].lat || lineArr[i].lng != lineArr[i - 1].lng) {
                 lineArr2.push(lineArr[i]);
+                mileageArr2.push(mileageArr[i]);
               }
             }
-            vm.refreshMapTabCar(lineArr2);
+            vm.refreshMapTabCar(lineArr2, mileageArr2);
           }
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
@@ -1391,7 +1494,7 @@
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
       if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-        Notification.error("请检查时间设置，三个回传时间须全部设置！");
+        Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
         return;
       }
       if (devicenum == null) {
@@ -1437,7 +1540,7 @@
        */
     vm.setReturnTime = function (deviceNum, returnTimeParam) {
       if(angular.isUndefined(returnTimeParam)){
-        Notification.error("请检查时间设置!");
+        Notification.error(languages.findKey('checktheTimeSettings'));
         return;
       }
       if (deviceNum == null) {
@@ -1446,19 +1549,19 @@
       }
 
       if(null == returnTimeParam.name || "" == returnTimeParam.name) {
-        Notification.error("请选择时间间隔类型");
+        Notification.error(languages.findKey('chooseTheTypeOfTimeInterval'));
         return;
       }
 
       if(null == returnTimeParam.time || "" == returnTimeParam.time) {
-        Notification.error("请输入时间");
+        Notification.error(languages.findKey('pleaseEnterTheTime'));
         return;
       }
 
       var restURL = SET_MQTT_RETURN_TIME_URL + "?deviceNum="+ deviceNum + "&returnTimeName=" + returnTimeParam.name + "&returnTime=" + returnTimeParam.time;
       $confirm({
         text: languages.findKey('确定设置此时间间隔?') + '',
-        title: languages.findKey('时间间隔设置确认') + '',
+        title: languages.findKey('intervalConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
       })
@@ -1488,8 +1591,8 @@
       }
       var restURL = SET_MQTT_DEFAULT_RETURN_TIME_URL + "?deviceNum="+ deviceNum;
       $confirm({
-        text: languages.findKey('确定设置为默认的时间间隔?') + '',
-        title: languages.findKey('时间间隔设置确认') + '',
+        text: languages.findKey('setAsTheDefaultTimeInterval') + '',
+        title: languages.findKey('intervalConfirmation') + '',
         ok: languages.findKey('confirm') + '',
         cancel: languages.findKey('cancel') + ''
       })
@@ -1519,7 +1622,7 @@
             zoomType: 'xy',
           }
         },
-        title: {text: '设备工作分析'},
+        title: {text: languages.findKey('equipmentJobAnalysis')},
         xAxis: [],
         yAxis: []
       }
@@ -1535,12 +1638,12 @@
           }
         },
         title: {
-          text: '工作时长分析',
+          text: languages.findKey('analysisOfWorkHours'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text: languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1549,10 +1652,10 @@
         },
         //y轴坐标显示
         yAxis: {
-          title: {text: '单位(/h)'},
+          title: {text: languages.findKey('unit(/h)')},
         },
         series: [{
-          name: '工作时长',
+          name: languages.findKey('workHours'),
           color: 'rgb(124, 181, 236)',
           data:[]
         }],
@@ -1573,12 +1676,12 @@
           }
         },
         title: {
-          text: '启动次数分析',
+          text: languages.findKey('analysisOfStartsNumber'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text: languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1586,9 +1689,9 @@
           }
         },
         //y轴坐标显示
-        yAxis: {title: {text: '单位/次'}},
+        yAxis: {title: {text: languages.findKey('unit(/times)')}},
         series: [{
-          name: '启动次数',
+          name: languages.findKey('numberOfStarts'),
           color: 'rgb(144, 238, 126)',
           data:[]
         }],
@@ -1609,12 +1712,12 @@
           }
         },
         title: {
-          text: '设备单次工作时长分析',
+          text: languages.findKey('analysisOfMachineSingleWorkHours'),
         },
         //x轴坐标显示
         xAxis: {
           title: {
-            text: '日期'
+            text:languages.findKey('date')
           },
           categories:[],
           labels: {
@@ -1622,9 +1725,9 @@
           }
         },
         //y轴坐标显示
-        yAxis: {title: {text: '单位/次'}},
+        yAxis: {title: {text: languages.findKey('unit(/times)')}},
         series: [{
-          name: '启动次数',
+          name: languages.findKey('numberOfStarts'),
           data:[]
         }],
         size: {
@@ -1666,7 +1769,7 @@
         loadWorkAnalysisChart(deviceNum, dateFormat(startDate) ,dateFormat(endDate));
       } else {
         if (vm.checkedRad != 'DASHBOARD' && (vm.sensorItem == null || angular.equals({}, vm.sensorItem))) {
-          Notification.error("请选择条目！");
+          Notification.error(languages.findKey('pleaseSelectTopic'));
           return;
         }
         var sensor = {
@@ -1686,7 +1789,7 @@
       rspPromise.analysisPostgres(sensor, function (sensorData) {
         //判断数据
         if (sensorData == null || sensorData.length == 0) {
-          Notification.error("暂无数据！");
+          Notification.error(languages.findKey('noDataYet'));
           return;
         }
         //时间轴
@@ -1707,7 +1810,7 @@
               zoomType: 'xy'
             }
           },
-          title: {text: '设备工作分析'},
+          title: {text: languages.findKey('equipmentJobAnalysis')},
           //x轴坐标显示
           xAxis: {
             categories: categoriesdata2
@@ -1776,7 +1879,7 @@
       promis.then(function (data) {
         var sensorData = data;
         if (sensorData == null || sensorData.length == 0) {
-          Notification.error("暂无数据！");
+          Notification.error(languages.findKey('noDataYet'));
           return;
         }
 
@@ -1801,15 +1904,15 @@
               enabled: false
             }
           },
-          title: {text: '启动次数分析'},
+          title: {text: languages.findKey('analysisOfWorkHours')},
           //x轴坐标显示
           xAxis: {
             categories: locateDateArray
           },
           //y轴坐标显示
-          yAxis: {title: {text: '单位/次'}},
+          yAxis: {title: {text: languages.findKey('unit(/times)')}},
           series: [{
-            name: '启动次数',
+            name: languages.findKey('numberOfStarts'),
             color: 'rgb(144, 238, 126)',
             data: startTimesArray
           }],
@@ -1829,7 +1932,7 @@
               enabled: false
             }
           },
-          title: {text: '工作时长分析'},
+          title: {text: languages.findKey('analysisOfWorkHours')},
           //x轴坐标显示
           xAxis: {
             categories: locateDateArray
@@ -1838,10 +1941,10 @@
           yAxis: {
             max: 24,
             tickAmount: 4,
-            title: {text: '单位/H'}
+            title: {text: languages.findKey('unit(/h)')}
           },
           series: [{
-            name: '工作时长',
+            name: languages.findKey('workHours'),
             color: 'rgb(124, 181, 236)',
             data: totalDurationArray
           }],
@@ -1978,7 +2081,7 @@
           avgWorkTime += worktimeList[i].y*5/100;
         }
         avgWorkTime /= worktimeList.length;
-        avgWorkTime > 8 ? vm.workTimeLabelTitle = '工作时间长' :vm.workTimeLabelTitle = '工作时间较短';
+        avgWorkTime > 8 ? vm.workTimeLabelTitle = languages.findKey('longerWorkingHours') :vm.workTimeLabelTitle = languages.findKey('shorterWorkingHours');
 
         // 启动次数
         var avgStartTimes = 0;
@@ -1986,7 +2089,7 @@
           avgStartTimes += startTimesList[i].y;
         }
         avgStartTimes /= startTimesList.length;
-        avgStartTimes > 3 ? vm.startTimesLabelTitle = '使用频率高' : vm.startTimesLabelTitle = '使用频率低';
+        avgStartTimes > 3 ? vm.startTimesLabelTitle = languages.findKey('highFrequency') : vm.startTimesLabelTitle = languages.findKey('lowFrequency');
 
         vm.worktimeList = worktimeList;
         vm.startTimesList = startTimesList;
@@ -2009,7 +2112,7 @@
           speedList.push(speedPoint);
         }
 
-        overSpeedList.length >3 ? vm.speedLabelTitle = '经常超速' : vm.speedLabelTitle = '驾驶习惯良好';
+        overSpeedList.length >3 ? vm.speedLabelTitle = languages.findKey('frequentSpeeding') : vm.speedLabelTitle = languages.findKey('goodDrivingHabits');
 
         vm.speedList = speedList;
 
@@ -2054,7 +2157,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title: vm.workTimeLabelTitle || '工作时间较短',
+          title: vm.workTimeLabelTitle || languages.findKey('shorterWorkingHours'),
           isSelected:false,
           backgroundColor: itemColorList[1],
           marginLeft: itemLeftList[1],
@@ -2073,11 +2176,11 @@
                 enabled: false
               },
               title: {
-                text: '工作时间'
+                text: languages.findKey('workingHours')
               },
               tooltip: {
                 formatter: function () {
-                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' 小时';
+                  return $filter('date')(this.x, 'yyyy-MM-dd') + '<br>' + this.y + ' '+languages.findKey('hour');
                 }
               },
             },
@@ -2092,20 +2195,20 @@
             },
             yAxis: {
               title: {
-                text: '小时'
+                text: languages.findKey('hour')
               },
               plotLines: [{ // mark the 90
                 color: 'red',
                 width: 2,
                 value: 8,
                 label: {
-                  text: "8小时",
+                  text: "8"+languages.findKey('hour'),
                   align: 'left'
                 }
               }]
             },
             series: [{
-              name: '工作时长',
+              name: languages.findKey('workHours'),
               data: vm.worktimeList
             }]
           }
@@ -2114,7 +2217,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title : vm.startTimesLabelTitle || '使用频率低' ,
+          title : vm.startTimesLabelTitle || languages.findKey('lowFrequency') ,
           isSelected:false,
           backgroundColor: itemColorList[2],
           marginLeft: itemLeftList[2],
@@ -2124,7 +2227,7 @@
                 type: 'column'
               },
               title: {
-                text: '开机次数'
+                text: languages.findKey('bootTimes')
               },
               credits: {
                 enabled: false
@@ -2152,7 +2255,7 @@
             },
             yAxis: {
               title: {
-                text: '开机次数'
+                text: languages.findKey('bootTimes')
               },
               plotLines: [{ // mark the 90
                 color: 'red',
@@ -2161,7 +2264,7 @@
               }]
             },
             series: [{
-              name: '开机次数',
+              name: languages.findKey('bootTimes'),
               data: vm.startTimesList
             }]
           }
@@ -2170,7 +2273,7 @@
 
       $timeout(function () {
         vm.itemList.push({
-          title : vm.speedLabelTitle ||'驾驶习惯良好' ,
+          title : vm.speedLabelTitle ||languages.findKey('goodDrivingHabits') ,
           isSelected:false,
           backgroundColor: itemColorList[3],
           marginLeft: itemLeftList[3],
@@ -2189,7 +2292,7 @@
                 enabled: false
               },
               title: {
-                text: '驾驶习惯指数'
+                text: languages.findKey('drivingHabit')
               },
               tooltip: {
                 formatter: function () {
@@ -2210,7 +2313,7 @@
               min:60
             },
             series: [{
-              name: '驾驶习惯指数',
+              name: languages.findKey('drivingHabit'),
               data: vm.speedList
             }]
           }
@@ -2239,7 +2342,7 @@
                   enabled: false
                 },
                 title: {
-                  text: '平均油耗'
+                  text: languages.findKey('averageFuelConsumption')
                 },
                 tooltip: {
                   formatter: function () {
@@ -2325,15 +2428,15 @@
         },
       },
       title: {
-        text: '发动机性能',
+        text: languages.findKey('enginePerformance'),
         x: -80
       },
       pane: {
         size: '80%'
       },
       xAxis: {
-        categories: ['油耗', '温度', '扭矩指数', '功率指数',
-          '转速指数', '平均故障时间间隔'],
+        categories: [languages.findKey('fuelConsumption'), languages.findKey('temperature'), languages.findKey('torque'), languages.findKey('power'),
+          languages.findKey('rotatingSpeed'), languages.findKey('MTBF')],
         tickmarkPlacement: 'on',
         lineWidth: 0
       },
@@ -2373,7 +2476,7 @@
           enabled: false
         },
         title: {
-          text: '发动机评分'
+          text: languages.findKey('engineRating')
         },
         pane: {
           center: ['50%', '85%'],
@@ -2425,7 +2528,7 @@
         enabled: false
       },
       series: [{
-        name: '发动机评分',
+        name: languages.findKey('engineRating'),
         data: [80],
         dataLabels: {
           format: '<div style="text-align:center"><span style="font-size:25px;">{y}</span><br/>'
@@ -2686,7 +2789,7 @@
       }
 
       var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-      $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+      $confirm({text: text,title: '围栏设置确认', ok:languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
 
 

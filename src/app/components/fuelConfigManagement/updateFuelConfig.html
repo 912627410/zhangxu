@@ -1,34 +1,34 @@
 <div class="modal-header">
-  <h3 class="modal-title">修改燃油配置</h3>
+  <h3 class="modal-title">{{'modifyFuelConfiguration'|translate}}</h3>
 </div>
 <form name="updateForm" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label for="fuelType" class="col-sm-2 control-label">燃油类型</label>
+        <label for="fuelType" class="col-sm-2 control-label">{{'fuelType'|translate}}</label>
         <div class="col-sm-10">
           <ui-select id="fuelType" name="fuelType" ng-model="updateFuelConfigController.fuelConfig.fuelType" theme="bootstrap"
                      ng-disabled="disabled" validator="required">
-            <ui-select-match allow-clear="true" placeholder="燃油类型">{{$select.selected.desc}}
+            <ui-select-match allow-clear="true" placeholder="{{'fuelType'|translate}}">{{$select.selected.desc|translate}}
             </ui-select-match>
             <ui-select-choices  repeat="fuelType.value as fuelType in updateFuelConfigController.fuelTypeList | propsFilter: {desc: $select.search}" >
-              <div  ng-bind-html="fuelType.desc | highlight: $select.search"></div>
+              <div  ng-bind-html="fuelType.desc | highlight: $select.search|translate"></div>
             </ui-select-choices>
           </ui-select>
         </div>
       </div>
       <div class="form-group">
-        <label for="price" class="col-sm-2 control-label">价格</label>
+        <label for="price" class="col-sm-2 control-label">{{'price'|translate}}</label>
         <div class="col-sm-10">
-          <input type="text" id="price" class="form-control" placeholder="价格"
+          <input type="text" id="price" class="form-control" placeholder="{{'price'|translate}}"
                  ng-model="updateFuelConfigController.fuelConfig.price" name="price"  validator="required,numberAndDot"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">所属组织</label>
+        <label class="col-sm-2 control-label">{{'organisation'|translate}}</label>
         <div class="col-sm-10">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="所属组织"
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
                    ng-model="updateFuelConfigController.fuelConfig.orgEntity.label" name="org" readonly validator="required"/>
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="updateFuelConfigController.openTreeInfo()">
@@ -61,7 +61,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" presentation-href="fuelConfig:oper"  validation-submit="updateForm"  ng-click="updateFuelConfigController.ok(updateFuelConfigController.fuelConfig)">保存</button>
-    <button class="btn btn-warning" type="button" ng-click="updateFuelConfigController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" presentation-href="fuelConfig:oper"  validation-submit="updateForm"  ng-click="updateFuelConfigController.ok(updateFuelConfigController.fuelConfig)">{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateFuelConfigController.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

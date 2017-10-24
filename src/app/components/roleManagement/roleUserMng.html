@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">包含用户信息
+  <h3 class="modal-title">{{'includeUserInformation'|translate}}
   </h3>
 </div>
 
@@ -27,7 +27,7 @@
       <div class="panel-group" id="userPanel">
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h4 class="panel-title text-center">用户列表</h4>
+            <h4 class="panel-title text-center">{{'userList' | translate}}</h4>
           </div>
           <div class="panel-body" style="height: 400px;overflow:auto;">
 
@@ -54,8 +54,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" presentation-href="system:role:roleUser:modify" ng-click="roleUserMngController.ok()">确定</button>
-    <button class="btn btn-warning" type="button" ng-click="roleUserMngController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" presentation-href="system:role:roleUser:modify" ng-click="roleUserMngController.ok()">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="roleUserMngController.cancel()">{{'cancel'|translate}}</button>
   </div>
 
 </section>

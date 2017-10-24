@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">包含车辆类型信息
+  <h3 class="modal-title">{{'supportfuzzyqueries'|translate}}
   </h3>
 </div>
 
@@ -9,7 +9,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">类型查询</label>
+      <label class="control-label">{{'typeQuery'|translate}}</label>
 
     </div>
     <div class="col-md-3">
@@ -28,7 +28,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">车辆类型总数:  {{orgMachineTypeMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfVehiclesType'|translate}}:  {{orgMachineTypeMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
       <button class="btn btn-warning pull-right" type="button" ng-click="orgMachineTypeMngCtrl.cancel()">{{'cancel'|translate}}</button>
@@ -51,7 +51,7 @@
           </td>
 
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{machineTypeInfo.id}}</td>
-          <td class="text-nowrap" data-title="'车辆类型'" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
+          <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
           <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{machineTypeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <!--<td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{machineTypeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
 

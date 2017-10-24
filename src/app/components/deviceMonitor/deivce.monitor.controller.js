@@ -297,10 +297,10 @@
 
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
         });
       }else {
-          Notification.error("请选择需要导出的组织!");
+          Notification.error(languages.findKey('selectTheOrganizationToExport'));
       }
 
     }

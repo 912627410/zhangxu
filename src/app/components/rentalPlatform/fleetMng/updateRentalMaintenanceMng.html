@@ -70,7 +70,7 @@
                 <tr ng-repeat="maintenanceList in $data">
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
-                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
+                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content|translate}}</td>
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">
                     <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="{{'rentalMaintenanceCost'|translate}}"/>
@@ -105,10 +105,12 @@
                     <ui-select name="statusRequiredOnly{{$index}}" message-id="statusRequiredOnly{{$index}}"
                                ng-model="maintenanceList.status" theme="bootstrap"
                                ng-disabled="disabled" validator="required">
-                      <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc}}
+                      <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
                       </ui-select-match>
-                      <ui-select-choices repeat="maintenanceListStatus in updateRentalMaintenanceCtrl.listStatusList">
-                        <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search"></div>
+
+                      <ui-select-choices repeat="maintenanceListStatus in updateRentalMaintenanceController.listStatusList">
+                        <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search|translate"></div>
+
                       </ui-select-choices>
                     </ui-select>
                     <span id="statusRequiredOnly{{$index}}"></span>

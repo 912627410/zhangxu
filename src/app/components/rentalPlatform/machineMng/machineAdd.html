@@ -68,7 +68,7 @@
         <label class="col-sm-4 control-label padding5">{{'highlyType'|translate}}</label>
         <div class="col-sm-8">
           <ui-select  ng-model="vm.machine.manufacture " ng-disabled="disabled" required>
-            <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate |translate}}</ui-select-match>
+            <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate }}</ui-select-match>
             <ui-select-choices repeat="heightType.id as heightType in vm.machineHeightType | propsFilter: {name: $select.search}">
               <div ng-bind-html="heightType.name | highlight: $select.search|translate"></div>
             </ui-select-choices>

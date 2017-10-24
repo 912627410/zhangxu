@@ -111,7 +111,7 @@
     //批量升级
     vm.batchUpdate = function(size){
       if(vm.selected.length == 0){
-        Notification.warning({message: '请选择要升级的设备', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: languages.findKey('pleaseSelectTheDeviceToUpgrade'), positionY: 'top', positionX: 'center'});
         return;
       }
       var modalInstance = $uibModal.open({
@@ -140,8 +140,8 @@
         devices: [deviceinfo]
       };
       $confirm({
-        title:"操作提示",
-        text:"您确定要取消升级?"
+        title:languages.findKey('operationHints'),
+        text:languages.findKey('areYouWantToCancelTheUpgrade')
       }).then(function () {
         var restPromise = serviceResource.restAddRequest(CANCEL_UPDATE_URL, updateDataVo);
         restPromise.then(function (data) {

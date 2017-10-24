@@ -1,16 +1,16 @@
 <section>
   <ol class="breadcrumb" style="padding:10px;border-bottom:1px solid #cccccc">
     <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
-    <li><a href="#">统计分析</a></li>
-    <li><a href="#">开工热度分析</a></li>
-    <li class="active">开工与销售热度</li>
+    <li><a href="#">{{'statisticalAnalysis'|translate}}</a></li>
+    <li><a href="#">{{'startHeatAnalysis'|translate}}</a></li>
+    <li class="active">{{'startAndSaleHeat'|translate}}</li>
   </ol>
 </section>
 <div class="mainBox"  id="machineCompared">
   <div class="leftBox " >
     <div class="row form-group">
       <div class="control-group" >
-        <label class="control-label col-md-2">起始日期：</label>
+        <label class="control-label col-md-2">{{'startDate'|translate}}：</label>
         <div class="controls col-md-3">
           <p class="input-group">
             <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -30,7 +30,7 @@
           </p>
         </div>
 
-        <label class="control-label col-md-2">结束日期：</label>
+        <label class="control-label col-md-2">{{'endDate'|translate}}：</label>
         <div class="controls col-md-3">
           <p class="input-group">
             <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -59,55 +59,55 @@
       </div>
     </div>
     <div class="row form-group" ng-show="machineComparedMngCtrl.only">
-      <label class="control-label col-md-2">车辆类型:</label>
+      <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="vehicleType" value="A1" ng-model="machineComparedMngCtrl.machineType" />小挖
-        <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />装载机
-        <input type="radio" name="vehicleType" value="40"  ng-model="machineComparedMngCtrl.machineType"/>中挖
+        <input type="radio" name="vehicleType" value="A1" ng-model="machineComparedMngCtrl.machineType" />{{'smallExcavator'|translate}}
+        <input type="radio" name="vehicleType" value="1,2,3" ng-model="machineComparedMngCtrl.machineType" />{{'loader'|translate}}
+        <input type="radio" name="vehicleType" value="40"  ng-model="machineComparedMngCtrl.machineType"/>{{'mediumExcavator'|translate}}
       </div>
-      <label class="control-label col-md-2">车辆热度类型:</label>
+      <label class="control-label col-md-2">{{'vehicHeatType'|translate}}:</label>
       <div class="controls col-md-3">
-        <input type="radio" name="heat" value="1" ng-model="machineComparedMngCtrl.heatType" />开工热度
-        <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />销售热度
+        <input type="radio" name="heat" value="1" ng-model="machineComparedMngCtrl.heatType" />{{'startHeat'|translate}}
+        <input type="radio" name="heat" value="0" ng-model="machineComparedMngCtrl.heatType" />{{'soldHeat'|translate}}
       </div>
       <div class="col-md-2">
-        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∨ 车型对比
+        <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∨ {{'modelComparison'|translate}}
         </button>
       </div>
     </div>
     <div ng-show="machineComparedMngCtrl.contrast">
       <div class="row form-group">
-        <label class="control-label col-md-2">车辆类型:</label>
+        <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />小挖
-          <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />装载机
-          <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>中挖
+          <input type="radio" name="vehicleType1" value="A1" ng-model="machineComparedMngCtrl.machineType1" />{{'smallExcavator'|translate}}
+          <input type="radio" name="vehicleType1" value="1,2,3" ng-model="machineComparedMngCtrl.machineType1" />{{'loader'|translate}}
+          <input type="radio" name="vehicleType1" value="40"  ng-model="machineComparedMngCtrl.machineType1"/>{{'mediumExcavator'|translate}}
         </div>
-        <label class="control-label col-md-2">车辆类型:</label>
+        <label class="control-label col-md-2">{{'vehicleType'|translate}}:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />小挖
-          <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />装载机
-          <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>中挖
+          <input type="radio" name="vehicleType2" value="A1" ng-model="machineComparedMngCtrl.machineType2" />{{'smallExcavator'|translate}}
+          <input type="radio" name="vehicleType2" value="1,2,3" ng-model="machineComparedMngCtrl.machineType2" />{{'loader'|translate}}
+          <input type="radio" name="vehicleType2" value="40"  ng-model="machineComparedMngCtrl.machineType2"/>{{'mediumExcavator'|translate}}
         </div>
         <div class="col-md-2">
           <button class="btn btn-primary" type="button" presentation-href="statAnalysis:workHeat:salesHeat:query"
-                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">查看对比结果
+                  ng-click="machineComparedMngCtrl.viewResults(machineComparedMngCtrl.machineType1,machineComparedMngCtrl.machineType2,machineComparedMngCtrl.heatType1,machineComparedMngCtrl.heatType2)">{{'viewTheContrastResults'|translate}}
           </button>
         </div>
       </div>
       <div class="row form-group">
-        <label class="control-label col-md-2">车辆热度类型:</label>
+        <label class="control-label col-md-2">{{'vehicHeatType'|translate}}:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />开工热度
-          <input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />销售热度
+          <input type="radio" name="heat1" value="1" ng-model="machineComparedMngCtrl.heatType1" />{{'startHeat'|translate}}
+          <input type="radio" name="heat1" value="0" ng-model="machineComparedMngCtrl.heatType1" />{{'soldHeat'|translate}}
         </div>
-        <label class="control-label col-md-2">车辆热度类型:</label>
+        <label class="control-label col-md-2">{{'vehicHeatType'|translate}}:</label>
         <div class="controls col-md-3">
-          <input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />开工热度
-          <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />销售热度
+          <input type="radio" name="heat2" value="1" ng-model="machineComparedMngCtrl.heatType2" />{{'startHeat'|translate}}
+          <input type="radio" name="heat2" value="0" ng-model="machineComparedMngCtrl.heatType2" />{{'soldHeat'|translate}}
         </div>
         <div class="col-md-2">
-          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∧ 单一车型
+          <button class="btn btn-primary" type="button" ng-click="machineComparedMngCtrl.toggle()">∧ {{'singleModel'|translate}}
           </button>
         </div>
       </div>
@@ -119,16 +119,16 @@
           <div style="position: relative;">
             <div
               style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              {{'averageWorkingHours'|translate}}
             </div>
             <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+              <li>{{'totalAverage'|translate}}：6.24{{'hour'|translate}}</li>
+              <li style="color: #00bb9c;">{{'excavator'|translate}}：6.39{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">{{'smallExcavator'|translate}}：5.78{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">{{'mediumExcavator'|translate}}：4.99{{'hour'|translate}}<span></span><img src="assets/images/down.png"/></li>
             </ul>
             <a class="backChina" style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina1();">
-              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+              <img src="assets/images/back.png" alt="{{'returntoTheWholeCountry'|translate}}" style="width: 40px;height: 40px;">
             </a>
           </div>
         </div>
@@ -139,16 +139,16 @@
           <div style="position: relative;">
             <div
               style="position: absolute; left: 0;top: 0;width: 30px;word-wrap: break-word;padding:0px 8px ;border-right: 1px solid #cccccc;">
-              平均工作时长
+              {{'averageWorkingHours'|translate}}
             </div>
             <ul style="position: absolute;list-style: none;line-height: 28px;">
-              <li>总平均：6.24小时</li>
-              <li style="color: #00bb9c;">挖掘机：6.39小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #00bb9c;">小&nbsp;&nbsp;&nbsp;挖：5.78小时<span></span><img src="assets/images/up.png"/></li>
-              <li style="color: #eb4f38;">中&nbsp;&nbsp;&nbsp;挖：4.99小时<span></span><img src="assets/images/down.png"/></li>
+              <li>{{'totalAverage'|translate}}：6.24{{'hour'|translate}}</li>
+              <li style="color: #00bb9c;">{{'excavator'|translate}}：6.39{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #00bb9c;">{{'smallExcavator'|translate}}：5.78{{'hour'|translate}}<span></span><img src="assets/images/up.png"/></li>
+              <li style="color: #eb4f38;">{{'mediumExcavator'|translate}}：4.99{{'hour'|translate}}<span></span><img src="assets/images/down.png"/></li>
             </ul>
             <a class="backChina"  style="width: 40px; height: 40px;display: block;position: absolute;right: 5px;top: 140px;display: none;" ng-click="machineComparedMngCtrl.backChina2();">
-              <img src="assets/images/back.png" alt="返回到全国" style="width: 40px;height: 40px;">
+              <img src="assets/images/back.png" alt="{{'returntoTheWholeCountry'|translate}}" style="width: 40px;height: 40px;">
             </a>
           </div>
         </div>
@@ -157,16 +157,16 @@
   </div>
   <div class="rightBox" style="position: absolute;right: 0px; top: 0px;height: 900px;width: 30%;">
     <div class="row form-group" style="padding:20px 10px;">
-      <label class="control-label col-md-3">热度分布</label>
+      <label class="control-label col-md-3">{{'heatDistribution'|translate}}</label>
       <div class="controls">
         <select class="form-control col-md-5" ng-model="machineComparedMngCtrl.heatType3">
-          <option value="1" ng-selected="true">开工热度分布</option>
-          <option value="0">销售热度分布</option>
+          <option value="1" ng-selected="true">{{'startHeatDistribution'|translate}}</option>
+          <option value="0">{{'soldHeat'|translate}}</option>
         </select>
       </div>
       <div class="col-md-2">
         <button class="btn btn-primary" type="button" presentation-href="statAnalysis:workHeat:salesHeat:query"
-                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType3)">查看
+                ng-click="machineComparedMngCtrl.showMachineHeatDetails(machineComparedMngCtrl.heatType3)">{{'look'|translate}}
         </button>
       </div>
     </div>

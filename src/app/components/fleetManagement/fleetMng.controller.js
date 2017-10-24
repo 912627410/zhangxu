@@ -10,7 +10,7 @@
     .controller('fleetMngController', fleetMngController);
 
   /** @ngInject */
-  function fleetMngController($rootScope, $scope, $uibModal,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource ,FLEET_PAGE_URL,FLEET_URL,ORG_ID_URL) {
+  function fleetMngController($rootScope, $scope, $uibModal,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource ,FLEET_PAGE_URL,FLEET_URL,ORG_ID_URL,languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -46,7 +46,7 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 

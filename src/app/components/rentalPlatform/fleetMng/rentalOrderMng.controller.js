@@ -10,7 +10,8 @@
 
   /** @ngInject */
   function rentalOrderMngController( $window,$state,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL) {
+                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
+
     var vm = this;
     vm.totalOrders=0;
     vm.planOrders=0;
@@ -32,7 +33,7 @@
     retanlOrderStatusListPromise.then(function (data) {
       vm.retanlOrderStatusList= data;
     }, function (reason) {
-      Notification.error('获取状态失败');
+      Notification.error(languages.findKey('getStatusFail'));
     })
 
 
@@ -53,7 +54,7 @@
 
       }
     }, function (reason) {
-      Notification.error('获取状态分组失败');
+      Notification.error(languages.findKey('getStaGroupFail'));
     })
 
 
@@ -174,7 +175,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取订单数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
     vm.query(null,null,null,null);

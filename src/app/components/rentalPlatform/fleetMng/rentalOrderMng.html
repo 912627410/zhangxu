@@ -109,10 +109,12 @@
             <div class="col-md-2">
               <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"
                          ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalStatus'|translate}}">{{$select.selected.desc}}
+                <ui-select-match allow-clear="true" placeholder="{{'rentalStatus'|translate}}">{{$select.selected.desc|translate}}
                 </ui-select-match>
-                <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngCtrl.retanlOrderStatusList">
-                  <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search"></div>
+
+                <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngController.retanlOrderStatusList">
+                  <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search |translate"></div>
+
                 </ui-select-choices>
               </ui-select>
             </div>
@@ -121,6 +123,7 @@
 
               <button class="btn btn-primary" type="button"
                       ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
+
               </button>
               <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
             </div>

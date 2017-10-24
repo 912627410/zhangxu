@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label">工作地区：</label>
+              <label class="control-label">{{'workArea'|translate}}：</label>
               <div class="controls">
                 <span style="width: 48%;display: inline-block;" >
                   <select required="" class="form-control"  ng-model="machineworkreportMngController.province" ng-options="m.name for m in machineworkreportMngController.division" >
@@ -101,18 +101,18 @@
 
       <div class="hoursdiv">
         <div id="hoursd">
-          时间间隔：<input id="hour2" name="hourGap" class="required" type="radio" value="2"/><label
-          for="hour2">2小时</label>
+          {{'timeInterval'|translate}}：<input id="hour2" name="hourGap" class="required" type="radio" value="2"/><label
+          for="hour2">2{{'hour'|translate}}</label>
           <input id="hour4" name="hourGap" class="required" type="radio" value="4"
-                 checked="checked"/><label for="hour4">4小时</label>
+                 checked="checked"/><label for="hour4">4{{'hour'|translate}}</label>
           <input id="hour6" name="hourGap" class="required" type="radio" value="6"/><label
-          for="hour6">6小时</label>
+          for="hour6">6{{'hour'|translate}}</label>
           <input id="hour8" name="hourGap" class="required" type="radio" value="8"/><label
-          for="hour8">8小时</label>
+          for="hour8">8{{'hour'|translate}}</label>
         </div>
       </div>
       <div id="provinceName">
-        <input id="drawHeatmap" class="btn btn-mini btn-primary" type="button" value="绘制" ng-click="machineworkreportMngController.draw();"/>
+        <input id="drawHeatmap" class="btn btn-mini btn-primary" type="button" value="{{'draw'|translate}}" ng-click="machineworkreportMngController.draw();"/>
       </div>
         <div id="provinceCond">
         <script id="selectAllHeader" type="text/ng-template">
@@ -128,7 +128,7 @@
                      ng-checked="machineworkreportMngController.isSelected(provinceinfo.value)"
                      ng-click="machineworkreportMngController.updateSelection($event,provinceinfo.value)"
                      ng-model="provinceinfo.checked"></td>
-            <td class=" text-nowrap" data-title="'工作省份'" >
+            <td class=" text-nowrap" data-title="'workingProvince'|translate" >
               <span ng-if="!machineworkreportMngController.validateOperPermission()">{{provinceinfo.value}}</span>
             </td>
           </tr>

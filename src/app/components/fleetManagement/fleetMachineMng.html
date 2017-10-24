@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">车辆维护
+  <h3 class="modal-title">{{'vehicleMaintenance'|translate}}
     <button class="btn btn-warning pull-right" type="button" ng-click="fleetMachineMngCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
@@ -8,7 +8,7 @@
   <div class="table-responsive mailbox-messages">
     <table ng-table="fleetMachineMngCtrl.ownTableParams" class="table table-condensed table-bordered table-striped">
       <tbody>
-      <h4 class="text text-green">拥有车辆</h4>
+      <h4 class="text text-green">{{'ownMachine'|translate}}</h4>
       <tr ng-repeat="machine in $data">
         <td class="col-md-3" align="center" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
         <td class="col-md-2" align="center" data-title="'deviceNum'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
@@ -22,7 +22,7 @@
         </td>
         <td class="col-md-2" align="center" data-title="'operation'|translate">
           <button type="button" class="btn btn-primary btn-xs" ng-if="machine.fleet.label==machine.org.label||machine.fleet.label==null"
-                  ng-click="fleetMachineMngCtrl.moveToOtherFleet(machine)">借调至其它车队
+                  ng-click="fleetMachineMngCtrl.moveToOtherFleet(machine)">{{'secondmentToOtherFleet'|translate}}
           </button>
         </td>
       </tr>
@@ -43,8 +43,8 @@
     </tr>
     <table ng-table="fleetMachineMngCtrl.otherTableParams" class="table table-condensed table-bordered table-striped">
       <tbody>
-      <h4 class="text text-green">借调车辆
-        <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="fleetMachineMngCtrl.loanMachine('fleet')">借调车辆</button>
+      <h4 class="text text-green">{{'secondedVehicles'|translate}}
+        <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="fleetMachineMngCtrl.loanMachine('fleet')">{{'secondedVehicles'|translate}}</button>
       </h4>
       <tr ng-repeat="machine in $data" ng-class="{}">
         <td class="col-md-3" align="center" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
@@ -56,7 +56,7 @@
         <td class="col-md-2" align="center" data-title="'currentFleet'|translate" sortable="'fleet.label'">{{machine.fleet.label}}</td>
         <td class="col-md-2" align="center" data-title="'operation'|translate">
           <button type="button" class="btn btn-primary btn-xs" ng-if="machine.org.id!=machine.fleet.id"
-                  ng-click="fleetMachineMngCtrl .backToOrg(machine)">归还车辆
+                  ng-click="fleetMachineMngCtrl .backToOrg(machine)">{{'returnVehicle'|translate}}
           </button>
         </td>
       </tr>

@@ -10,7 +10,7 @@
     .controller('updateRentalOrderController', updateRentalOrderController);
 
   /** @ngInject */
-  function updateRentalOrderController($rootScope,$window,$uibModalInstance,$stateParams,$uibModal,$location,treeFactory,serviceResource,rentalService,RENTAL_ORDER_URL, Notification,retalOrder,orderMachineTypeVoList) {
+  function updateRentalOrderController($rootScope,$window,$uibModalInstance,$stateParams,$uibModal,$location,treeFactory,serviceResource,rentalService,RENTAL_ORDER_URL, Notification,retalOrder,orderMachineTypeVoList,languages) {
     var vm = this
     vm.rentalOrder= retalOrder;
     vm.jcOption = {
@@ -33,7 +33,6 @@
       }
       if(vm.orderMachineTypeVoList[i].deviceType.id = 3){
         vm.qbOption = vm.orderMachineTypeVoList[i]
-
       }
     }
 
@@ -143,7 +142,7 @@
 
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.rentalOrder);
       rspdata.then(function (data) {
-        Notification.success("更新订单成功!");
+        Notification.success(languages.findKey('upOrderSucc'));
         $location.path(path);
 
       },function (reason) {

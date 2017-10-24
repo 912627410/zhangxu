@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">包含权限信息
+  <h3 class="modal-title">{{'includePriviligeInfo' | translate}}
   </h3>
 </div>
 
@@ -11,7 +11,7 @@
       <div class="panel-group" id="orgPanel">
         <div class="panel panel-success">
           <div class="panel-heading">
-            <h4 class="panel-title text-center">菜单信息</h4>
+            <h4 class="panel-title text-center">{{'menuinformation' | translate}}</h4>
           </div>
           <div class="panel-body" style="height: 400px;overflow:auto;">
             <abn-tree tree-data="rolePrivilegeMngController.my_data"
@@ -27,7 +27,7 @@
         <div class="panel panel-success">
           <div class="panel-heading">
             <h4 class="panel-title text-center">
-              权限列表
+              {{'priviligeList' | translate}}
             </h4>
           </div>
           <div class="panel-body" style="height: 400px;overflow:auto;">
@@ -51,8 +51,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="rolePrivilegeMngController.ok()">确定</button>
-    <button class="btn btn-warning" type="button" ng-click="rolePrivilegeMngController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="rolePrivilegeMngController.ok()">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="rolePrivilegeMngController.cancel()">{{'cancel'|translate}}</button>
   </div>
 
 </section>

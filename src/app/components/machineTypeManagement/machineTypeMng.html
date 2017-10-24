@@ -4,7 +4,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
-    <li class="active">车辆类型管理</li>
+    <li class="active">{{'vehicleTypeManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -14,7 +14,7 @@
 
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">类型查询</label>
+      <label class="control-label">{{'typeQuery'|translate}}</label>
 
     </div>
     <div class="col-md-3">
@@ -33,7 +33,7 @@
   </div>
   <div class="row">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">车辆类型总数:  {{machineTypeMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfVehiclesType'|translate}}:  {{machineTypeMngCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
 
@@ -50,7 +50,7 @@
         <tr ng-repeat="machineTypeInfo in $data">
 
           <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{machineTypeInfo.id}}</td>
-          <td class="text-nowrap" data-title="'车辆类型'" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
+          <td class="text-nowrap" data-title="'vehicleType'|translate" sortable="'typeName'">{{machineTypeInfo.typeName}}</td>
           <td class="text-nowrap" data-title="'createTime'|translate" sortable="'createTime'">{{machineTypeInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <!--<td class="text-nowrap" data-title="'updateTime'|translate" sortable="'updateTime'">{{machineTypeInfo.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
           <td class="text-nowrap"  data-title="'operation'|translate" >
@@ -58,7 +58,7 @@
                     ng-click="machineTypeMngCtrl.updateMachineType(machineTypeInfo)">{{'alter'|translate}}
             </button>
             <button type="button" class="btn btn-default btn-xs"
-                    ng-click="machineTypeMngCtrl.orgMng(machineTypeInfo,'lg')">隶属组织
+                    ng-click="machineTypeMngCtrl.orgMng(machineTypeInfo,'lg')">{{'affiliatedOrganization'|translate}}
             </button>
           </td>
 

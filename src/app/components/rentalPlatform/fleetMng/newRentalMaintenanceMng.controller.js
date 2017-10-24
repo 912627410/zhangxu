@@ -10,7 +10,7 @@
     .controller('newRentalMaintenanceController', newRentalMaintenanceController);
 
   /** @ngInject */
-  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_MAINTENANCE_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification) {
+  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_MAINTENANCE_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification,languages) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -37,7 +37,7 @@
       vm.listStatusList= data;
 
     }, function (reason) {
-      Notification.error('获取状态集合失败');
+      Notification.error(languages.findKey('faGetState'));
     })
 
 
@@ -58,7 +58,7 @@
       var rspdata = serviceResource.restAddRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
 
       rspdata.then(function (data) {
-        Notification.success("新建保养信息成功!");
+        Notification.success(languages.findKey('newMaInS'));
         $location.path(path);
 
       },function (reason) {
@@ -121,7 +121,7 @@
         });
 
       }, function (reason) {
-        Notification.error("获取作业面数据失败");
+        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
 

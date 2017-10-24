@@ -79,7 +79,7 @@
       machineHeightType.then(function (data) {
         vm.machineHeightType = data.content;
       }, function (reason) {
-        Notification.error('获取车辆状态失败');
+        Notification.error(languages.findKey('getVeStaFail'));
       })
     }
 

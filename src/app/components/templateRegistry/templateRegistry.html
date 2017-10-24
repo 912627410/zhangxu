@@ -1,16 +1,16 @@
 <div  style="width: 100%">
   <div style="margin-left: 20px;">
     <div>
-      <p style="font-size: 24px;margin-top:25px;line-height: 36px;">协议版本号: <i>{{templateRegistryMngController.versionNumber}}</i></p>
+      <p style="font-size: 24px;margin-top:25px;line-height: 36px;">{{'protocolVersionNumber'|translate}}: <i>{{templateRegistryMngController.versionNumber}}</i></p>
     </div>
     <br>
     <div class="row" style="">
       <table class="table table-striped" style="text-align: center;" >
         <tr >
-          <td class="text-nowrap">名称</td>
-          <td class="text-nowrap">中文名称</td>
-          <td class="text-nowrap">类型</td>
-          <td class="text-nowrap">长度</td>
+          <td class="text-nowrap">{{'name'|translate}}</td>
+          <td class="text-nowrap">{{'chineseName'|translate}}</td>
+          <td class="text-nowrap">{{'type'|translate}}</td>
+          <td class="text-nowrap">{{'length'|translate}}</td>
           <td class="text-nowrap">register</td>
           <td class="text-nowrap">converter</td>
         </tr>
@@ -25,8 +25,8 @@
       </table>
       <div  style="position: relative;">
         <div style="position: absolute;right: 20px;">
-          <button class="btn btn-primary  " style="margin-right: 20px" ng-click="templateRegistryMngController.register('lg');">添加</button>
-          <button class="btn btn-primary  " ng-click="templateRegistryMngController.confirm(templateRegistryMngController.jsonData)">保存</button>
+          <button class="btn btn-primary  " style="margin-right: 20px" ng-click="templateRegistryMngController.register('lg');">{{'add'|translate}}</button>
+          <button class="btn btn-primary  " ng-click="templateRegistryMngController.confirm(templateRegistryMngController.jsonData)">{{'save'|translate}}</button>
         </div>
       </div>
     </div>

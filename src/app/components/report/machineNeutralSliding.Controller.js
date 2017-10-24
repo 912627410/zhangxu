@@ -9,7 +9,7 @@
     .controller('machineNeutralSlidingController', machineNeutralSlidingController);
 
   /** @ngInject */
-  function machineNeutralSlidingController($rootScope, $scope ,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
+  function machineNeutralSlidingController($rootScope, $scope ,languages,$filter, NgTableParams, ngTableDefaults, Notification, serviceResource, WEBSOCKET_URL, MACHINE_TRANSPORTINFO_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -99,7 +99,7 @@
       xAxis: {
         title: {
           enabled: true,
-          text: '日期'
+          text: languages.findKey('date')
         },
         showLastLabel: true,
         type: 'datetime',
@@ -111,7 +111,7 @@
       },
       yAxis: {
         title: {
-          text: '速度(KM/H)'
+          text: languages.findKey('speed')+'(KM/H)'
         },
         startOnTick: true,
         endOnTick: true,
@@ -129,7 +129,7 @@
         data: []
       }],
       title: {
-        text:'空档滑行实时监控'
+        text:languages.findKey('NeutralSlidingMonitoring')
       },
       credits: { // 版权信息
         enabled:false

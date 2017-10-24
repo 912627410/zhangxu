@@ -194,7 +194,7 @@
             enabled:false
           },
           title: {
-            text: '工作纪录'
+            text: languages.findKey('workRecord')
           },
           subtitle: {
             text: ''
@@ -204,7 +204,7 @@
           },
           yAxis: [{
             title: {
-              text: '总趟数',
+              text: languages.findKey('totalTimes'),
               style: {
                 color: 'rgb(124, 181, 236)',
                 fontWeight: 'bold',
@@ -214,7 +214,7 @@
 
           },{
             title: {
-              text: '平均趟数',
+              text: languages.findKey('averageTimes'),
               style: {
                 color: 'rgb(194, 53, 49)',
                 fontWeight: 'bold',
@@ -227,13 +227,13 @@
           series: [{
             type: 'column',
             color: 'rgb(124, 181, 236)',
-            name: '<b style="font-size: 14px;">总趟数</b>',
+            name: '<b style="font-size: 14px;">'+languages.findKey('totalTimes')+'</b>',
             data: totalRecords
           },{
             type: 'spline',
             color: 'rgb(194, 53, 49)',
             yAxis: 1,
-            name: '<b style="font-size: 14px;">平均趟数</b>',
+            name: '<b style="font-size: 14px;">'+languages.findKey('averageTimes')+'</b>',
             data: averageRecords
           }]
         };
@@ -275,7 +275,7 @@
           tickInterval: 5,
           min: 0,
           title: {
-            text: '活跃车数(辆)',
+            text: languages.findKey('activeCarNumber'),
             style: {
               color: 'rgb(124, 181, 236)',
               fontWeight: 'bold',
@@ -285,7 +285,7 @@
 
         },{
           title: {
-            text: '总里程数(KM)',
+            text: languages.findKey('totalMileages')+'(KM)',
             style: {
               color: 'rgb(194, 53, 49)',
               fontWeight: 'bold',
@@ -299,12 +299,12 @@
           type: 'column',
           color: 'rgb(194, 53, 49)',
           yAxis: 1,
-          name: '<b style="font-size: 14px;">总里程数</b>',
+          name: '<b style="font-size: 14px;">'+languages.findKey('totalMileages')+'</b>',
           data: totalMileage
         },{
           type: 'spline',
           color: 'rgb(124, 181, 236)',
-          name: '<b style="font-size: 14px;">活跃车数</b>',
+          name: '<b style="font-size: 14px;">'+languages.findKey('activeCarNumber')+'</b>',
           data: machineNum
         }]
       };

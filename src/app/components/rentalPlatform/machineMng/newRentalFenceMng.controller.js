@@ -13,7 +13,7 @@
     .controller('newRentalFenceController', newRentalFenceController);
 
   /** @ngInject */
-  function newRentalFenceController($rootScope, $window, $scope, $timeout, $http, $confirm, $uibModal, $location, treeFactory, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_GEO_CODER_URL,AMAP_PLACESEARCH_URL,Notification) {
+  function newRentalFenceController($rootScope, $window, $scope, $timeout, $http,languages, $confirm, $uibModal, $location, treeFactory, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_GEO_CODER_URL,AMAP_PLACESEARCH_URL,Notification) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = {};
@@ -32,7 +32,7 @@
     vm.ok = function () {
       var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
-        Notification.success("新建订单成功!");
+        Notification.success(languages.findKey('newOrderSucc'));
         $location.path("/rental/orgFence");
       }, function (reason) {
         Notification.error(reason.data.message);
