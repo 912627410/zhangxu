@@ -413,34 +413,7 @@
             clockWise: false,
             radius: ['60%', '65%'],
             hoverAnimation: false,
-            data: [{
-              value: data.content.rentalMachineCount,
-              name: '01',
-              itemStyle: {
-                normal: {
-                  color: 'rgb(0,160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  }
-                  // shadowBlur: 20,
-                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
-                },
-                emphasis: {
-                  color: 'rgb(0,160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  },
-                  shadowBlur: 10,
-                  shadowColor: 'rgb(40, 40, 40, 0.2)'
-                }
-              }
-            }, {
+            data: [ {
               value: data.content.unRentalMachineCount,
               name: 'invisible',
               itemStyle: {
@@ -465,6 +438,33 @@
                   },
                   shadowBlur: 10,
                   shadowColor: 'rgba(40, 40, 40, 0.2)'
+                }
+              }
+            },{
+              value: data.content.rentalMachineCount,
+              name: '01',
+              itemStyle: {
+                normal: {
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(40, 40, 40, 0.2)'
                 }
               }
             }
@@ -514,33 +514,7 @@
             clockWise: false,
             radius: ['50%', '60%'],
             hoverAnimation: false,
-            data: [{
-              value: data.content.rentalMachineCount,
-              itemStyle: {
-                normal: {
-                  color: 'rgba(0,160,152,1)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  }
-                  // shadowBlur: 20,
-                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
-                },
-                emphasis: {
-                  color: 'rgb(0, 160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  },
-                  shadowBlur: 10,
-                  shadowColor: 'rgb(0, 160,152)'
-                }
-              }
-            }, {
+            data: [ {
               value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
@@ -564,6 +538,32 @@
                   },
                   shadowBlur: 10,
                   shadowColor: 'rgb(200,200,200)'
+                }
+              }
+            },{
+              value: data.content.rentalMachineCount,
+              itemStyle: {
+                normal: {
+                  color: 'rgba(0,160,152,1)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(0, 160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(0, 160,152)'
                 }
               }
             }]
