@@ -58,7 +58,7 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label>{{'deviceType'| translate}}:</label>
+          <label class="font-nomal">{{'deviceType'| translate}}:</label>
 
           <div class="forminline" style="width: 150px;">
             <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
@@ -74,7 +74,7 @@
 
         <div class="forminline" >
 
-          <label>{{'highlyType'| translate}}:</label>
+          <label class="font-nomal">{{'highlyType'| translate}}:</label>
           <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
@@ -86,7 +86,7 @@
         </div>
         <div class="forminline" style="width: 17%">
 
-          <label class="">{{'brandType'| translate}}:</label>
+          <label class="font-nomal">{{'brandType'| translate}}:</label>
 
           <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
@@ -99,7 +99,7 @@
         </div>
         <div class="form-inline forminline" style="width: 18%">
           <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalStartingDate'|translate}}:</label>
+            <label class="control-label text-nowrap font-nomal" >{{'rentalStartingDate'|translate}}:</label>
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="costStatisticsCtr.startDateDeviceData"
@@ -120,7 +120,7 @@
         </div>
         <div class="form-inline  forminline"  style="width: 18%" >
           <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalEndDate'|translate}}:</label>
+            <label class="control-label text-nowrap font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="input-group" >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="costStatisticsCtr.endDateDeviceData"

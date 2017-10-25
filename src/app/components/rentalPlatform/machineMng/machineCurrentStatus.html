@@ -60,15 +60,15 @@
     <div class="container-fluid table-wrapper" style="margin-top: 5px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
       <div class="col-lg-12 form-group table-form-group tab-content-search"><!--搜索框-->
         <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label>{{'rentalMachineID'|translate}}:</label>
+          <label class=" font-nomal">{{'rentalMachineID'|translate}}:</label>
           <input class="input-search" type="text" name="licenseId" id="licenseId" placeholder="{{'rentalMachineID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
         </div>
         <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label>{{'rentalDeviceID'|translate}}:</label>
+          <label class=" font-nomal">{{'rentalDeviceID'|translate}}:</label>
           <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"  />
         </div>
         <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'rentalMachineType'|translate}}:</label>
+          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2 font-nomal">{{'rentalMachineType'|translate}}:</label>
           <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;padding: 0px;" class="col-lg-8 col-md-8">
             <ui-select-match allow-clear="true"  placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}</ui-select-match>
             <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
@@ -76,7 +76,7 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <div class="tab-content-search-box col-lg-2 col-md-2">
+        <div class="tab-content-search-box col-lg-2 col-md-2 font-nomal">
           <label>{{'address'|translate}}:</label>
           <input class="input-search" name="address" id="address" placeholder="{{'address'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.address" />
         </div>
