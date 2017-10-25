@@ -1,18 +1,20 @@
-<div class="machine-content" >
-
+<div class="modal-header" >
   <div class="container-fluid">
-
     <div class="box-header with-border">
-
-      <h3 class="box-title">{{'customerInfo'|translate}}</h3>
+      <h3 class="box-title">{{'modifyOrderInformation'|translate}}</h3>
 
     </div>
-    <form name="newrentalOrderForm2" class="form-horizontal">
+    <form name="updateRentalOrderForm" class="form-horizontal">
       <div class="box-body">
         <div class="form-group">
           <label for="orderNumber" class="col-md-2 control-label">订单号</label>
           <div class="col-md-3">
             <input type="text" class="form-control" id="orderNumber" placeholder="订单号" ng-model="updateRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
+          </div>
+
+          <label class="col-md-2 control-label">{{'amount'|translate}}</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
           </div>
         </div>
         <div class="form-group">
@@ -36,20 +38,6 @@
           </div>
 
         </div>
-
-        <div class="form-group">
-          <label class="col-md-2 control-label">{{'deposit'|translate}}</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
-          </div>
-
-          <label class="col-md-2 control-label">{{'amount'|translate}}</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
-          </div>
-
-        </div>
-
         <div class="form-group">
           <label class="col-md-2 control-label">{{'rentalStartingDate'|translate}}</label>
           <div class="col-md-3">
@@ -79,28 +67,31 @@
             </p>
           </div>
         </div>
-
         <div class="form-group">
+          <label class="col-md-2 control-label">{{'deposit'|translate}}</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
+          </div>
+
           <label class="col-md-2 control-label">{{'rentalWorkLocation'|translate}}</label>
           <div class="col-md-3">
             <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.rentalOrder.location" name="location" validator="required" typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-2 control-label">{{'descritpion'|translate}}</label>
-          <div class="col-md-3">
-						<textarea class="form-control" placeholder="{{'descritpion'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.description" name="description" typeahead-show-hint="true">
-
-              </textarea>
-          </div>
         </div>
 
         <div class="form-group">
-          <div class="col-md-1">
-            <label class=" control-label">剪叉:</label>
+          <label class="col-md-2 control-label">{{'descritpion'|translate}}</label>
+          <div class="col-md-3">
+						<textarea class="form-control" placeholder="{{'descritpion'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.description" name="description" typeahead-show-hint="true">
+              </textarea>
           </div>
-          <div class="col-md-11">
 
-            <label class="col-md-1 control-label">数量</label>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-1 control-label">剪叉: 数量</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.jcOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
@@ -139,12 +130,8 @@
         </div>
 
         <div class="form-group">
-          <div class="col-md-1">
-            <label class=" control-label">直臂:</label>
-          </div>
-          <div class="col-md-11">
-
-            <label class="col-md-1 control-label">数量</label>
+          <div class="row">
+            <label class="col-md-1 control-label">直臂: 数量</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
@@ -182,11 +169,8 @@
         </div>
 
         <div class="form-group">
-          <div class="col-md-1">
-            <label class=" control-label">曲臂:</label>
-          </div>
-          <div class="col-md-11">
-            <label class="col-md-1 control-label">数量</label>
+          <div class="row">
+            <label class="col-md-1 control-label">曲臂: 数量</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
@@ -225,8 +209,7 @@
         </div>
 
         <div class="form-group">
-          <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2" ng-click="updateRentalOrderCtrl.commit()">{{'confirm'|translate}}
-          </button>
+          <button class="btn btn-primary" type="button" ng-click="updateRentalOrderCtrl.ok();">{{'confirm'|translate}}</button>
           <button class="btn btn-warning" type="button" ng-click="updateRentalOrderCtrl.cancel()">
             {{'cancel'|translate}}
           </button>

@@ -264,14 +264,14 @@
         restPromise.then(function (data) {
 
           if(data.code==0){
-            Notification.success(languaes.findKey('transVehicle'));
+            Notification.success(languages.findKey('transVehicle'));
             var result=data.content;
             for(var i=0;i<result.length;i++){
               dest.data.splice(0, 0, result[i]);
             }
           }
         }, function (reason) {
-          Notification.error(languaes.findKey('transVehiclFail'));
+          Notification.error(languages.findKey('transVehiclFail'));
         });
 
 
@@ -392,6 +392,10 @@
     //重置查询框
     vm.rightReset = function () {
       vm.rightRentalOrder = null;
+      vm.tableParams2 = new NgTableParams({
+      }, {
+        dataset: null
+      });
     }
 
 

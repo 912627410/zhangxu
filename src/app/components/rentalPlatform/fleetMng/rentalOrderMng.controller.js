@@ -205,8 +205,7 @@
         var modalInstance= $uibModal.open({
           animation: true,
           templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
-          controller: 'updateRentalOrderController',
-          controllerAs:'updateRentalOrderCtrl',
+          controller: 'updateRentalOrderController as updateRentalOrderCtrl',
           size: 'lg',
           resolve: {
             retalOrder: function () {

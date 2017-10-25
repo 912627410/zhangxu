@@ -1476,6 +1476,7 @@
   "液压驱动":"液压驱动",
   "电驱动":"电驱动",
   "newOrderSucc":"新建订单成功!",
+  "modifyOrderInformation":"修改订单信息",
   "transVehicle":"调入车辆成功!",
   "transVehiclFail":"调入车辆失败!",
   "selTime":"请选择订单开始时间和结束时间!",

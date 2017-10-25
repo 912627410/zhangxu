@@ -11,8 +11,15 @@
 
   /** @ngInject */
   function updateRentalOrderController($rootScope,$window,$uibModalInstance,$stateParams,$uibModal,$location,treeFactory,serviceResource,rentalService,RENTAL_ORDER_URL, Notification,retalOrder,orderMachineTypeVoList,languages) {
-    var vm = this
+    var vm = this;
+    vm.operatorInfo =$rootScope.userInfo;
     vm.rentalOrder= retalOrder;
+    vm.addRentalOrderOption = {
+      orderVo:'',
+      orderMachineTypeVoList:'',
+      orderMachineVoList:''
+
+    }
     vm.jcOption = {
       deviceType :{id:1}
     }
@@ -36,9 +43,9 @@
       }
     }
 
-    vm.operatorInfo =$rootScope.userInfo;
-    vm.customer=vm.rentalOrder.rentalCustomer;
-    vm.org=vm.rentalOrder.org;
+
+    // vm.customer=vm.rentalOrder.rentalCustomer;
+    // vm.org=vm.rentalOrder.org;
 
     vm.rightBoxBottomHeight=20;
     vm.rightBoxTopHeightTemp=20;
@@ -131,16 +138,27 @@
     }
 
 
+    vm.ok = function () {
 
+      if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
+        Notification.error(languages.findKey('selTime'));
+      }
 
+      vm.rentalOrder.jc = vm.zbOption.quantity;
+      vm.rentalOrder.zb= vm.zbOption.quantity;
+      vm.rentalOrder.qb = vm.qbOption.quantity;
+      vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
+      vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+      vm.rentalOrderMachineTypeVos.push(vm.jcOption)
+      vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+      vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
-    vm.commit = function () {
+      vm.addRentalOrderOption.orderVo = vm.rentalOrder;
+      vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
 
-      vm.rentalOrder.rentalCustomer=vm.customer;
+      // vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
 
-      vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
-
-      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.rentalOrder);
+      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('upOrderSucc'));
         $location.path(path);
@@ -168,23 +186,42 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.customer=result;
+        vm.rentalOrder.rentalCustomer = result;
       }, function () {
       });
     };
 
 
-
-
-
-
-
-
-
-
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    // 订单关联车辆
+    vm.addMachine=function (size,machineOption,machineType) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newOrderMoveMachine.html',
+        controller: 'newOrderMoveMachineController',
+        controllerAs:'newOrderMoveMachineCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          machineOption: function () {
+            return machineOption;
+          },
+          machineType: function () {
+            return machineType;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.customer=result;
+      }, function () {
+      });
+    };
+
 
 
   }
