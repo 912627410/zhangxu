@@ -26,6 +26,7 @@
     vm.openTreeInfo=function() {
       treeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
+        vm.rentalCustomer.org = selectedItem;
       });
     }
 

@@ -34,7 +34,7 @@
           <td title="'工作天数'" filter="{wordays: 'number'}" sortable="'wordays'" ng-switch="machine.isEditing" ng-class="wordays.$dirty ? 'bg-warning' : ''" ng-form="wordays" newOrderMoveMachineCtrl-tracked-table-cell>
             <span ng-switch-default class="editable-text">{{machine.wordays}}</span>
             <div class="controls" ng-class="wordays.$invalid && wordays.$dirty ? 'has-error' : ''" ng-switch-when="true">
-              <input type="number" name="wordays" ng-model="machine.wordays" class="editable-input form-control input-sm" required/>
+              <input type="number" name="wordays" ng-model="machine.wordays" class="editable-input form-control input-sm" min="0" required/>
             </div>
           </td>
           <td>
