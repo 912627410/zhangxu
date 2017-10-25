@@ -13,38 +13,67 @@
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text"  style="cursor:pointer;">
-            <span class="info-box-left-text-top">{{'rentalTotalIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.totalIncome}}</span>
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/rental_income.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalTotalIncome'|translate}}</span>
+            </div>
+            <div class="col-md-3 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.totalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box  box-light">
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_shear.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalScissorLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-3 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text"  style=" cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalScissorLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below">¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_straight.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalBoomLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-3 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box  box-light">
-          <div class="info-box-left-text"   style=" cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_crank.png"/>
+            </div>
+            <div class="col-md-6 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-3 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text"   style=" cursor:pointer;">
-            <span class="info-box-left-text-top">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
-          </div>
-          <div class="miniChart"></div>
         </div>
       </div>
     </div>
@@ -222,7 +251,7 @@
             </div>
 
             <div class="col-md-4">
-              <button  type="button" class="btn btn-sm btn-primary  searchButton" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">Search</button>
+              <button  type="button" class="btn btn-sm btn-primary  searchButton" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">{{'query'|translate}}</button>
               <button  type="button" class="btn btn-sm btn-default  searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
             </div>
           </div>

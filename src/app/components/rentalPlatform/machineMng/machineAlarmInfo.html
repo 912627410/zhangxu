@@ -187,7 +187,7 @@
                           <button class="btn btn-primary" type="button"
                                   ng-click="machineAlarmInfoCtr.getMsgByAlarmType(0,machineAlarmInfoCtr.pageSize,null,machineAlarmInfoCtr.searchConditions)">{{'query'|translate}}
                           </button>
-                          <button class="btn btn-danger" type="button"
+                          <button class="btn btn-default" type="button"
                                   ng-click="machineAlarmInfoCtr.searchConditions=null">{{'reset'|translate}}
                           </button>
                         </div>
@@ -235,8 +235,8 @@
                         <span class="alarmSpan2"  ng-if="notification.processStatus == true">{{'rentaldone'|translate}}</span>
                     </td>
                     <td >
-                      <button type="button" class="btn progress-bar-grey btn-xs btn-font-color"  ng-click="machineAlarmInfoCtr.neglect(notification,$index)">{{'neglect'|translate}}</button>
                       <button type="button" class="btn progress-bar-warning btn-xs btn-font-color"  ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
+                      <button type="button" class="btn progress-bar-grey btn-xs btn-font-color"  ng-click="machineAlarmInfoCtr.neglect(notification,$index)">{{'neglect'|translate}}</button>
                     </td>
                   </tr>
                 </table>

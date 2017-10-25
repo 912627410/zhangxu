@@ -265,13 +265,53 @@
         {
           name:languages.findKey('rentalIncomeReceived'),
           type:'line',
-          areaStyle: {normal: {}},
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgb(0,0,0)',
+              borderColor: '#fff',
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgb(200,200,200)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgb(200,200,200)'
+            }
+          },
           data:realComeDate
         },
         {
           name:languages.findKey('rentalIncomeReceivable'),
           type:'line',
-          areaStyle: {normal: {}},
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgb(0,160,152)',
+              borderColor: '#fff',
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgb(0,160,152)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgb(0,160,152)'
+            }
+          },
           data:incomeDate
         }
       ]
@@ -466,104 +506,7 @@
       })
     }
 
-    //上方四个曲线图
-    var miniChart = document.getElementsByClassName('miniChart'),
-      miniChart1 = echarts.init(miniChart[0]),
-      miniChart2 = echarts.init(miniChart[1]),
-      miniChart3 = echarts.init(miniChart[2]),
-      miniChart4 = echarts.init(miniChart[3]),
-      miniOption = {
-        tooltip: {
-          showContent: false,
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line',
-            lineStyle:{
-              color:'rgba(124, 181, 236, 0.5)'
-            }
-          }
-        },
-        grid: {
-          top:'35%',
-          left: '0%',
-          right: '5%',
-          bottom: '0%',
-          containLabel: true
-        },
-        xAxis: {
-          boundaryGap: false,
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(124, 181, 236, 0.5)'
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          data: ['', '', '']
-        },
-        yAxis: {
-          type: 'value',
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: {
-          name: languages.findKey('rentalIncomeReceived'),
-          type: 'line',
-          label: {
-            emphasis: {
-              show: true,
-              textStyle:{
-                color: 'rgba(124, 181, 236, 1)'
-              },
-              formatter: function(param) {
-                return param.data[3];
-              },
-              position: 'top'
-            }
-          },
-          itemStyle: {
-            normal: {
-              opacity: 0
-            },
-            emphasis: {
-              color: 'rgba(124, 181, 236, 1)',
-              borderColor: '#fff',
-              borderWidth: 2,
-              opacity: 1
-            }
-          },
-          lineStyle: {
-            normal: {
-              width:1,
-              color: 'rgba(124, 181, 236, 1)'
-            }
-          },
-          areaStyle: {
-            normal: {
-              color: 'rgba(124, 181, 236, 0.25)'
-            }
-          },
-          data: [60, 70, 100],
-          smooth: true,
-          smoothMonotone: 'x'
-        }
-      };
 
-    miniChart1.setOption(miniOption);
-    miniChart2.setOption(miniOption);
-    miniChart3.setOption(miniOption);
-    miniChart4.setOption(miniOption);
 
 
   }
