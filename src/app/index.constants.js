@@ -316,6 +316,7 @@
     .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
     .constant('RENTAL_TRAJECTORY_DATA',SERVER_BASE_URL+'rental/trajectory')//定位历史数据
     .constant('RENTAL_DEVCE_DATA_PAGED_QUERY',SERVER_BASE_URL+'rental/deviceHistoryData')//定位历史数据
+    .constant('RENTAL_DEVCE_MONITOR_DATA',SERVER_BASE_URL+'rental/monitor')//设备监控(数据)
 
 
     //租赁客户信息

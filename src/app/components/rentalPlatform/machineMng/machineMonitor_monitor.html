@@ -4,42 +4,215 @@
     <div class="row">
       <div class="col-md-6">
         <span>{{'GSMsignalStrength'|translate}}</span>
-        <uib-progressbar max="100" value="vm.deviceInfo.gsmsignalStrength" type="warning"><span
-          style="color:white; white-space:nowrap;">{{vm.deviceInfo.gsmsignalStrength}}/100</span></uib-progressbar>
+        <uib-progressbar max="100" value="vm.deviceInfoMonitor.gsmsignalStrength" type="warning"><span style="color:#000; white-space:nowrap;">{{vm.deviceInfoMonitor.gsmsignalStrength}}/100</span></uib-progressbar>
       </div>
       <div class="col-md-6">
         <span>{{'batteryPower'|translate}}</span>
-        <uib-progressbar max="25.6" value="vm.deviceInfo.voltage"><span style="color:white; white-space:nowrap;">{{vm.deviceInfo.voltage| number : 2}}V/25.6V</span>
-        </uib-progressbar>
+        <uib-progressbar max="25.6" value="vm.deviceInfoMonitor.voltage"><span style="color:#000; white-space:nowrap;">{{vm.deviceInfoMonitor.voltage| number : 2}}V/25.6V</span></uib-progressbar>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="row detailMargin">
           <table class="table table-striped" ng-init="rowInx=0">
+            <!--基本信息-->
             <tr>
               <table class="table table-striped" ng-init="rowInx=0">
-                <caption>{{'deviceBasicInformation'|translate}}</caption>
-              </table>
+                <caption>{{'rentalBasicinfo'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <!--车号-->
+                  <td>{{'machineNumberAndCarNumber'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machine==null">{{'UnboundMachineCurrent'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machine!=null">{{vm.deviceInfoMonitor.machine.licenseId}}</td>
+                  <!--车辆类型-->
+                  <td>{{'vehicleType'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=0 && vm.deviceInfoMonitor.deviceCode<=15">{{'hydraulicDriveScissors'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
+                  <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=16 && vm.deviceInfoMonitor.deviceCode<=31">{{'DcMotorDriveForklift'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
+                  <td ng-if="vm.deviceInfoMonitor.deviceCode==null">{{'noData'|translate}}</td>
+
+                  <!--蓄电池液位-->
+                  <td>{{'batteryLevelSwitch'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==1">{{'normal'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==0">{{'exception'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==null">{{'noData'|translate}}</td>
+                </tr>
+                <tr>
+                  <!--车辆运行状态-->
+                  <td>{{'machineRunningState'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1">{{'work'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1">{{'notWork'|translate}}</td>
+                  <!--工作小时数-->
+                  <td>{{'workingHours'|translate}}</td>
+                  <td ng-cloak>{{vm.deviceInfoMonitor.workDuration | convertToMins }}</td>
+                  <!--围栏设置-->
+                  <td>{{'electronicFenceStatus'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machine.fenceStatus=='0'">{{'fenceSetlocationIsAbnormal'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machine.fenceStatus=='1'">{{'fenceSetlocationIsNormal'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machine.fenceStatus==null">{{'notSetFence'|translate}}</td>
+                </tr>
+                <tr>
+                  <!--最新报警时间-->
+                  <td>{{'lastAlarmTime'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.warningCode!=0">{{vm.deviceInfoMonitor.warningTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.warningCode==0">-</td>
+                  <!--最新报警信息, 报警代码为0时显示为无故障-->
+                  <td>{{'lastAlarmTime'|translate}}</td>
+                  <td colspan="3" ng-if="vm.deviceInfoMonitor.warningCode==null || (vm.deviceInfoMonitor.warningCode!=null && vm.deviceInfoMonitor.warningCode==0)">{{'not'|translate }}</td>
+                  <td colspan="3" ng-if="vm.deviceInfoMonitor.warningCode!=null && vm.deviceInfoMonitor.warningCode!=0">{{deviceAerialCurrentInfoController.latestAlarmInfo}}</td>
+                </tr>
+                <tr>
+                  <!--定位状态-->
+                  <td>{{'positioningState'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A'">{{'hasBeenpositioning(GPS)'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V' || vm.deviceInfoMonitor.locateStatus==null">{{'notLocate'|translate}}</td>
+                  <!--定位时间-->
+                  <td>{{'positioningDate'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A' || vm.deviceInfoMonitor.locateStatus=='B'">{{vm.deviceInfoMonitor.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V'">-</td>
+                  <!--GPS内置电池电压-->
+                  <td>GPS{{'Built-inBatteryVoltage'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.builtInVoltage!=null">{{vm.deviceInfoMonitor.builtInVoltage}}V</td>
+                  <td ng-if="vm.deviceInfoMonitor.builtInVoltage==null"></td>
+                </tr>
+                <tr>
+                  <!--经度-->
+                  <td>{{'longitude'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A' || vm.deviceInfoMonitor.locateStatus=='B'">{{vm.deviceInfoMonitor.amaplongitudeNum | number:5}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V' || vm.deviceInfoMonitor.locateStatus==null">-</td>
+                  <!--纬度-->
+                  <td>{{'latitude'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A' || vm.deviceInfoMonitor.locateStatus=='B'">{{vm.deviceInfoMonitor.amaplatitudeNum | number:5}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V' || vm.deviceInfoMonitor.locateStatus==null">-</td>
+                  <!--预留-->
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <!--当前位置-->
+                  <td>{{'currentPosition'|translate}}</td>
+                  <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A' || vm.deviceInfoMonitor.locateStatus=='B'">{{vm.deviceInfoMonitor.address}}</td>
+                  <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V'">-</td>
+                </tr>
+               </table>
             </tr>
+            <!--工作状态-->
             <tr>
               <table class="table table-striped" ng-init="rowInx=0">
-                <caption>{{'deviceInputInformation'|translate}}</caption>
-              </table>
-            </tr>
-            <tr>
-              <table class="table table-striped" ng-init="rowInx=0">
-                <caption>{{'deviceOutputInformation'|translate}}</caption>
-              </table>
-            </tr>
-            <tr>
-              <table class="table table-striped" ng-init="rowInx=0">
-                <caption>{{'deviceOtherInformation'|translate}}</caption>
-              </table>
-            </tr>
-            <tr>
-              <table class="table table-striped" ng-if="vm.deviceInfo.pcuStatus">
-                <caption>{{'PCUinformation'|translate}}</caption>
+                <caption>{{'workingState'|translate}}</caption>
+                <tr>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                  <th>{{'name'|translate}}</th>
+                  <th>{{'state'|translate}}</th>
+                </tr>
+                <tr>
+                  <!--平台控制 (下控/上控/电源关闭)-->
+                  <td>{{'platControl'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.key==1&&vm.deviceInfoMonitor.machineStatus==1">{{'upControl'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.key==0&&vm.deviceInfoMonitor.machineStatus==1">{{'downControl'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.key==null||vm.deviceInfoMonitor.machineStatus!=1">{{'powerOff'|translate}}</td>
+                  <!--坑洞保护板-->
+                  <td>{{'pileProtectionBoard'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.pothole==1&&vm.deviceInfoMonitor.machineStatus==1">{{'open'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.pothole==0&&vm.deviceInfoMonitor.machineStatus==1">{{'shut'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.pothole==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--预留-->
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <!--上升操作开关-->
+                  <td>{{'risingOperationSwitch'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.chassisUp==1&&vm.deviceInfoMonitor.machineStatus==1">{{'open'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.chassisUp!=1&&vm.deviceInfoMonitor.machineStatus==1">{{'shut'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--下降操作开关-->
+                  <td>{{'downOperationSwitch'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.chassisDown==1&&vm.deviceInfoMonitor.machineStatus==1">{{'open'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.chassisDown==0&&vm.deviceInfoMonitor.machineStatus==1">{{'shut'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.chassisDown==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--预留-->
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <!--上限位开关-->
+                  <td>{{'upperLimitSwitch'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.upLimit==1&&vm.deviceInfoMonitor.machineStatus==1">{{'notReachTheLimit'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.upLimit==0&&vm.deviceInfoMonitor.machineStatus==1">{{'alreadyReachTheLimit'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.upLimit==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--下限位开关-->
+                  <td>{{'lowerLimitSwitch'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.downLimit==1&&vm.deviceInfoMonitor.machineStatus==1">{{'putAway'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.downLimit==0&&vm.deviceInfoMonitor.machineStatus==1">{{'raising'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.downLimit==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--预留-->
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <!--车辆运动（前进、后退）-->
+                  <td>{{'vehicleMovement'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetForward==1">{{'advance'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetReverse==1">{{'retreat'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1||(vm.deviceInfoMonitor.fetForward!=1&&vm.deviceInfoMonitor.fetReverse!=1)">{{'noInfo'|translate}}</td>
+                  <!--车辆转向（左转、右转）-->
+                  <td>{{'vehicleSteering'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetLeft==1">{{'turnLeft'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetRigth==1">{{'turnRight'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1||(vm.deviceInfoMonitor.fetLeft!=1&&vm.deviceInfoMonitor.fetRigth!=1)">{{'noInfo'|translate}}</td>
+                  <!--车辆举升（上升、下降）-->
+                  <td>{{'vehicleLiftUp'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetUp==1">{{'rise'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus==1&&vm.deviceInfoMonitor.fetDown==1">{{'decline'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1||(vm.deviceInfoMonitor.fetUp!=1&&vm.deviceInfoMonitor.fetDown!=1)">{{'noInfo'|translate}}</td>
+                </tr>
+                <tr>
+                  <!--当前行走速度-->
+                  <td ng-if="!(vm.deviceInfoMonitor.fetDown==1 || vm.deviceInfoMonitor.fetUp==1)&&(vm.deviceInfoMonitor.fetForward==1 || vm.deviceInfoMonitor.fetReverse==1)">{{'currentWalkingSpeed'|translate}}</td>
+                  <td ng-if="!(vm.deviceInfoMonitor.fetForward==1 || vm.deviceInfoMonitor.fetReverse!=1)&&(vm.deviceInfoMonitor.fetDown==1 || vm.deviceInfoMonitor.fetUp==1)">{{'currentRisingSpeed'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetForward==1 || vm.deviceInfoMonitor.fetReverse==1||vm.deviceInfoMonitor.fetDown==1 || vm.deviceInfoMonitor.fetUp==1">{{vm.deviceInfoMonitor.hostSpeed}}</td>
+                  <!--喇叭（开、关）-->
+                  <td>{{'speaker'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetHorn==1&&vm.deviceInfoMonitor.machineStatus==1">{{'open'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetHorn==0&&vm.deviceInfoMonitor.machineStatus==1">{{'shut'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetHorn==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--蜂鸣器（开、关）-->
+                  <td>{{'buzzer'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetAlarm==1&&vm.deviceInfoMonitor.machineStatus==1">{{'open'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetAlarm==0&&vm.deviceInfoMonitor.machineStatus==1">{{'shut'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.fetAlarm==null||vm.deviceInfoMonitor.machineStatus!=1">{{'noInfo'|translate}}</td>
+                  <!--当前行走速度和当前上升速度同时为空时填充行-->
+                  <td ng-if="!(vm.deviceInfoMonitor.fetForward==1 || vm.deviceInfoMonitor.fetReverse==1|| vm.deviceInfoMonitor.fetDown==1 || vm.deviceInfoMonitor.fetUp==1)"></td>
+                  <td ng-if="!(vm.deviceInfoMonitor.fetForward==1 || vm.deviceInfoMonitor.fetReverse==1|| vm.deviceInfoMonitor.fetDown==1 || vm.deviceInfoMonitor.fetUp==1)"></td>
+                </tr>
+                <tr>
+                  <!--供电方式-->
+                  <td>{{'powerSupplyMode'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus=='00'">{{'outElectric'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus=='01'">{{'inElectric'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus!=null && vm.deviceInfoMonitor.gpsPowerStatus!='00'&& vm.deviceInfoMonitor.gpsPowerStatus!='01'">{{'other'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus==null" >{{'noData'|translate}}</td>
+                  <!--倾斜状态-->
+                  <td>{{'tiltState'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.tilt==0&&vm.deviceInfoMonitor.machineStatus==1">{{'tilt'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.tilt==1&&vm.deviceInfoMonitor.machineStatus==1">{{'level'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.machineStatus!=1||(vm.deviceInfoMonitor.tilt!=0&&vm.deviceInfoMonitor.tilt!=1)">{{'noInfo'|translate}}</td>
+                  <!--预留-->
+                  <td></td>
+                  <td></td>
+                </tr>
               </table>
             </tr>
           </table>
