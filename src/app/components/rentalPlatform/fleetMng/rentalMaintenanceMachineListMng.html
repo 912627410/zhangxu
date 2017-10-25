@@ -43,7 +43,7 @@
             <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
             </ui-select-match>
 
-            <ui-select-choices repeat="deviceType in maintenanceMachineListMngController.deviceTypeList">
+            <ui-select-choices repeat="deviceType in maintenanceMachineListMngCtrl.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search|translate"></div>
 
             </ui-select-choices>
@@ -56,7 +56,7 @@
             <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
 
-            <ui-select-choices repeat="devicePowerType in maintenanceMachineListMngController.devicePowerTypeList">
+            <ui-select-choices repeat="devicePowerType in maintenanceMachineListMngCtrl.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
 
             </ui-select-choices>
@@ -73,13 +73,10 @@
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-<<<<<<< HEAD
+
             <ui-select-choices repeat="deviceHeightType in maintenanceMachineListMngCtrl.deviceHeightTypeList">
-              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
-=======
-            <ui-select-choices repeat="deviceHeightType in maintenanceMachineListMngController.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search|translate"></div>
->>>>>>> REL2.00
+
             </ui-select-choices>
           </ui-select>
         </div>
@@ -89,13 +86,10 @@
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-<<<<<<< HEAD
+
             <ui-select-choices repeat="deviceManufacture in maintenanceMachineListMngCtrl.deviceManufactureList">
-              <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
-=======
-            <ui-select-choices repeat="deviceManufacture in maintenanceMachineListMngController.deviceManufactureList">
               <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
->>>>>>> REL2.00
+
             </ui-select-choices>
           </ui-select>
         </div>
