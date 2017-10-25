@@ -10,7 +10,7 @@
     </ol>
   </section>
 
-  <div class="container-fluid">
+  <div class="container-fluid table-wrapper" style="padding-top: 10px;">
 
 
     <div class="box-header with-border">
@@ -29,7 +29,7 @@
                 <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
                        ng-model="newRentalMaintenanceCtrl.machine.licenseId" name="licenseId" readonly
                        validator="required"/>
-                <span class="input-group-btn">
+                <span class="input-group-btn" style="vertical-align: top;">
           <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="newRentalMaintenanceCtrl.selectMachine('lg')">
               <i class="fa fa-sitemap"></i>
@@ -117,7 +117,7 @@
                     <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
                     </ui-select-match>
 
-                    <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceController.listStatusList">
+                    <ui-select-choices repeat="maintenanceListStatus in newRentalMaintenanceCtrl.listStatusList">
                       <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search|translate"></div>
                     </ui-select-choices>
                   </ui-select>
