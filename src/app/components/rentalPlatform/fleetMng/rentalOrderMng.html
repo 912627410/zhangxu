@@ -77,8 +77,11 @@
                 <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngController.rentalOrder.startDate"
                        is-open="rentalOrderMngController.startDateSetting.status.opened"
-                       datepicker-options="rentalOrderMngController.startDateSetting.dateOptions" close-text="Close"
-                       message-id="bootstrap" readonly/>
+                       datepicker-options="rentalOrderMngController.startDateSetting.dateOptions"
+                       message-id="bootstrap"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"readonly/>
 
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -96,7 +99,10 @@
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngController.rentalOrder.endDate"
                        is-open="rentalOrderMngController.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" close-text="Close" readonly/>
+                       datepicker-options="dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"readonly/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalOrderMngController.endDateOpen($event)">
