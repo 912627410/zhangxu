@@ -12,18 +12,18 @@
 
       <div class="form-group">
 
-        <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}</label>
+        <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}:</label>
         <div class="col-md-2">
           <input type="text" name="id" class="form-control"  ng-model="orderListMngCtrl.rentalOrder.id"
                  placeholder="{{'rentalOrderNumber'|translate}}"/>
         </div>
 
-        <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}</label>
+        <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}:</label>
         <div class="col-md-2">
           <input type="text" name="customerName" class="form-control"  ng-model="orderListMngCtrl.rentalOrder.customerName"
                  placeholder="{{'rentalCustomer'|translate}}"/>
         </div>
-        <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}</label>
+        <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
         <div class="col-md-2">
           <p class="input-group">
 
@@ -40,7 +40,7 @@
       </div>
       <div class="form-group">
 
-        <label class="col-md-1 control-label">{{'startingTime'|translate}}</label>
+        <label class="col-md-1 control-label">{{'startingTime'|translate}}:</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
@@ -59,7 +59,7 @@
           <span id="bootstrap"></span>
         </div>
 
-        <label  class="col-md-1 control-label">{{'endTime'|translate}}</label>
+        <label  class="col-md-1 control-label">{{'endTime'|translate}}:</label>
         <div class="col-md-2">
           <p class="input-group">
             <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -74,7 +74,7 @@
           </p>
         </div>
 
-        <label class="col-md-1 control-label">{{'rentalStatus'|translate}}</label>
+        <label class="col-md-1 control-label">{{'rentalStatus'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="status" ng-model="orderListMngCtrl.rentalOrder.status" theme="bootstrap"
                      ng-disabled="disabled">
