@@ -13,18 +13,23 @@
   function viewRentalOrderController($rootScope,$window,$scope,$timeout,$stateParams,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL, Notification) {
     var vm = this;
     vm.rentalOrder={};
+    vm.jcOption = {
+      deviceType :{id:1}
+    }
+    vm.qbOption = {
+      deviceType :{id:2}
+    }
+    vm.zbOption = {
+      deviceType :{id:3}
+    }
 
-    vm.radius = 100; //设置的半径,默认100米
 
     var path="/rental/order";
     vm.operatorInfo =$rootScope.userInfo;
-    vm.cancel = function () {
+    vm.back = function () {
       $location.path(path);
 
     };
-
-
-
 
 
     vm.rightBoxBottomHeight=20;
@@ -56,7 +61,6 @@
     //初始化高度
     vm.adjustWindow($window.innerHeight);
 
-//=========
 
 
     //查询要修改的客户信息
@@ -66,19 +70,21 @@
       var rspdata = serviceResource.restCallService(url,"GET");
 
       rspdata.then(function (data) {
-        vm.rentalOrder=data.content;
-        vm.customer=vm.rentalOrder.rentalCustomer;
-        vm.org=vm.rentalOrder.org;
-        vm.selectAddress=vm.rentalOrder.location;
-        vm.amaplongitudeNum=vm.rentalOrder.longitude;
-        vm.amaplatitudeNum=vm.rentalOrder.latitude
 
-        if (vm.rentalOrder.locationAlarmReceiver ==1){
-          vm.locationAlarmReceiverChk=true;
+        vm.rentalOrder = data.content.orderVo;
+        vm.orderMachineTypeVoList = data.content.orderMachineTypeVoList;
+        for(var i = 0;i<vm.orderMachineTypeVoList.length;i++){
+          if(vm.orderMachineTypeVoList[i].deviceType.id == 1){
+            vm.jcOption = vm.orderMachineTypeVoList[i]
+          }
+          if(vm.orderMachineTypeVoList[i].deviceType.id == 2){
+            vm.zbOption = vm.orderMachineTypeVoList[i]
+          }
+          if(vm.orderMachineTypeVoList[i].deviceType.id == 3){
+            vm.qbOption = vm.orderMachineTypeVoList[i]
+          }
         }
-        else{
-          vm.locationAlarmReceiverChk=false;
-        }
+
 
       },function (reason) {
         Notification.error(reason.data.message);
