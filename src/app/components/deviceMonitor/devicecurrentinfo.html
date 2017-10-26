@@ -928,7 +928,7 @@
                     <td></td>
                   </tr>
                   <!--装载机通信协议2010 Start-->
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>开盖锁车使能</td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.autoLockSwitch | limitTo:1:0">
                       <div ng-switch-when="0">关</div>
@@ -942,7 +942,7 @@
                     <td>光敏电阻电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>天线电压高</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltH}}mV</td>
                     <td>天线电压低</td>
@@ -950,7 +950,7 @@
                     <td>硬件版本电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.hardwareVerVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>仪表或控制器软件版本</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.extDeviceVersion}}</td>
                     <td>发动机工作时间</td>
@@ -958,15 +958,15 @@
                     <td>GPS工作时间</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.gpsOpeDuration/10}}小时</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>基站号</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.lac}},{{deviceCurrentInfoCtrl.deviceinfo.lac1}},{{deviceCurrentInfoCtrl.deviceinfo.lac2}},{{deviceCurrentInfoCtrl.deviceinfo.lac3}},{{deviceCurrentInfoCtrl.deviceinfo.lac4}},{{deviceCurrentInfoCtrl.deviceinfo.lac5}},{{deviceCurrentInfoCtrl.deviceinfo.lac6}}</td>
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.lac}},{{deviceCurrentInfoCtrl.deviceinfo.lac1}},{{deviceCurrentInfoCtrl.deviceinfo.lac2}},{{deviceCurrentInfoCtrl.deviceinfo.lac3}},{{deviceCurrentInfoCtrl.deviceinfo.lac4}},{{deviceCurrentInfoCtrl.deviceinfo.lac5}},{{deviceCurrentInfoCtrl.deviceinfo.lac6}}</td>
                     <td>基站信号强度</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.rxl}},{{deviceCurrentInfoCtrl.deviceinfo.rxl1}},{{deviceCurrentInfoCtrl.deviceinfo.rxl2}},{{deviceCurrentInfoCtrl.deviceinfo.rxl3}},{{deviceCurrentInfoCtrl.deviceinfo.rxl4}},{{deviceCurrentInfoCtrl.deviceinfo.rxl5}},{{deviceCurrentInfoCtrl.deviceinfo.rxl6}}</td>
                   </tr>
-                  <tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>基站小区号</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.cellid}},{{deviceCurrentInfoCtrl.deviceinfo.cellid1}},{{deviceCurrentInfoCtrl.deviceinfo.cellid2}},{{deviceCurrentInfoCtrl.deviceinfo.cellid3}},{{deviceCurrentInfoCtrl.deviceinfo.cellid4}},{{deviceCurrentInfoCtrl.deviceinfo.cellid5}},{{deviceCurrentInfoCtrl.deviceinfo.cellid6}}</td>
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.cellid}},{{deviceCurrentInfoCtrl.deviceinfo.cellid1}},{{deviceCurrentInfoCtrl.deviceinfo.cellid2}},{{deviceCurrentInfoCtrl.deviceinfo.cellid3}},{{deviceCurrentInfoCtrl.deviceinfo.cellid4}},{{deviceCurrentInfoCtrl.deviceinfo.cellid5}},{{deviceCurrentInfoCtrl.deviceinfo.cellid6}}</td>
                   </tr>
                   <!--装载机通信协议2010 end-->
 
@@ -1661,7 +1661,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="sms:activeLockSms">
+                    <div class="col-md-3" presentation-href="sms:activeLockSms" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">开盖锁车功能</h5>
@@ -1706,7 +1706,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="sms:activeLockSms">
+                    <div class="col-md-3" presentation-href="sms:activeLockSms" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">61天无信号锁车</h5>
@@ -1751,7 +1751,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6" presentation-href="sms:customizedSMS">
+                    <div class="col-md-6" presentation-href="sms:customizedSMS" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">自定义短信（内部调试）</h5>
@@ -1796,6 +1796,38 @@
                                   </sms-send-btn>
                                 </div>
                               </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" presentation-href="sms:sendSetSericalNumSMS" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">初始化流水号</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="初始化流水号"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="发送"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:sendSetSericalNumSMS"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetSericalNumSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
 
                             </div>
                           </div>
