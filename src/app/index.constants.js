@@ -3,7 +3,7 @@
   'use strict';
    var SERVER_BASE_URL = 'http://localhost:8080/rest/';
    var WEBSOCKET_DOMAIN_NAME = 'localhost';
-  //生产环境的https协议地址
+  //生产环境的https协议地址git
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
     .module('GPSCloud')

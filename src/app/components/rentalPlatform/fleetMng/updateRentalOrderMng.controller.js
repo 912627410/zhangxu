@@ -32,13 +32,13 @@
 
     vm.orderMachineTypeVoList = orderMachineTypeVoList;
     for(var i = 0;i<vm.orderMachineTypeVoList.length;i++){
-      if(vm.orderMachineTypeVoList[i].deviceType.id = 1){
+      if(vm.orderMachineTypeVoList[i].deviceType.id == 1){
         vm.jcOption = vm.orderMachineTypeVoList[i]
       }
-      if(vm.orderMachineTypeVoList[i].deviceType.id = 2){
-        vm.qbOption = vm.orderMachineTypeVoList[i]
+      if(vm.orderMachineTypeVoList[i].deviceType.id == 2){
+        vm.zbOption = vm.orderMachineTypeVoList[i]
       }
-      if(vm.orderMachineTypeVoList[i].deviceType.id = 3){
+      if(vm.orderMachineTypeVoList[i].deviceType.id == 3){
         vm.qbOption = vm.orderMachineTypeVoList[i]
       }
     }
@@ -144,7 +144,7 @@
         Notification.error(languages.findKey('selTime'));
       }
 
-      vm.rentalOrder.jc = vm.zbOption.quantity;
+      vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
       vm.rentalOrder.qb = vm.qbOption.quantity;
       vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
