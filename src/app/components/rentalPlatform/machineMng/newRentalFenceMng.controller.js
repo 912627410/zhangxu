@@ -32,7 +32,7 @@
     vm.ok = function () {
       var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
-        Notification.success(languages.findKey('newOrderSucc'));
+        Notification.success(languages.findKey('newFenceSucc'));
         $location.path("/rental/orgFence");
       }, function (reason) {
         Notification.error(reason.data.message);

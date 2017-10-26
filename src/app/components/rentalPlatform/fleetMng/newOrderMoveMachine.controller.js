@@ -12,7 +12,7 @@
 
    // newOrderMoveMachineController.$inject = ["NgTableParams", "ngTableSimpleList"];
   /** @ngInject */
-  function newOrderMoveMachineController($rootScope,$window,$scope,NgTableParams,$uibModalInstance,serviceResource,Notification,machineOption,machineType,RENTANL_UNUSED_MACHINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
+  function newOrderMoveMachineController($rootScope,$window,languages,NgTableParams,$uibModalInstance,serviceResource,Notification,machineOption,machineType,RENTANL_UNUSED_MACHINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
     var vm = this
     vm.machineType = machineType;
     vm.machineOption = machineOption;
@@ -140,14 +140,23 @@
 
 
 
-
-
+    var orderMachineVo = {
+      machine:'',
+      workdays:''
+    }
+    var orderMachineVoList = [];
     vm.moveConfirm = function () {
       if (vm.selected.length == 0) {
         Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
 
-        return;
       }
+      for (var i =0;i<vm.selected.length;i++){
+        orderMachineVo.machine = vm.selected[i];
+        orderMachineVo.workdays = vm.selected.workdays;
+        orderMachineVoList.push(orderMachineVo);
+      }
+      $uibModalInstance.close(orderMachineVoList);
+
 
     };
 

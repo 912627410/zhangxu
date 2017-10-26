@@ -13,6 +13,7 @@
   function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification,languages) {
     var vm = this;
     vm.rentalOrder={};
+    var path="/rental/order";
     //订单车辆类型 List
     vm.rentalOrderMachineTypeVos = [];
     vm.addRentalOrderOption = {
@@ -123,7 +124,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.customer=result;
+        vm.orderMachineVoList=result;
       }, function () {
       });
     };
@@ -173,10 +174,13 @@
 
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;
        vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+       vm.addRentalOrderOption.orderMachineVoList = vm.orderMachineVoList;
 
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
+          // $uibModalInstance.close(data.content);
           Notification.success(languages.findKey('newOrderSucc'));
+          $location.path(path);
 
           //$location.path(path);
         },function (reason) {

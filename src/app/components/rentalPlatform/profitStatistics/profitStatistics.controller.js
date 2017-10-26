@@ -134,14 +134,34 @@
     }
 
     //各时间段利润
+    // vm.profitsDetails = function () {
+    //   var date = new Date();
+    //   var queryQuarter = getQuarterFromMonth(date)
+    //   var queryMonth = date.getMonth().valueOf()+1;
+    //   var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
+    //   totalProfitUrl += "?queryYear=" + date.getFullYear();
+    //   //totalProfitUrl += "&queryMonth=" + queryMonth;
+    //   totalProfitUrl += "&queryQuarter=" + queryQuarter;
+    //   var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
+    //   detailsProfitData.then(function (data) {
+    //     var profitData  = data.content;
+    //     vm.yearProfit = profitData.yearProfit;
+    //     vm.yearRate = profitData.yearRate;
+    //     vm.quarterProfit = profitData.quarterProfit;
+    //     vm.quarterRate = profitData.quarterRate;
+    //
+    //   })
+    // }
+    // vm.profitsDetails();
+
     vm.profitsDetails = function () {
       var date = new Date();
-      var queryQuarter = getQuarterFromMonth(date)
-      var queryMonth = date.getMonth().valueOf()+1;
+      var queryQuarter = 2
+      var queryMonth = 0;
       var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
-      totalProfitUrl += "?queryYear=" + date.getFullYear();
+      totalProfitUrl += "?queryYear=" + 2016;
       //totalProfitUrl += "&queryMonth=" + queryMonth;
-      totalProfitUrl += "&queryQuarter=" + queryQuarter;
+      totalProfitUrl += "&queryQuarter=" + 2;
       var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
       detailsProfitData.then(function (data) {
         var profitData  = data.content;
@@ -153,6 +173,7 @@
       })
     }
     vm.profitsDetails();
+
 
 
     var startDate = new Date();
