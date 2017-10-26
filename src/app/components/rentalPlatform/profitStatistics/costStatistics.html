@@ -1,13 +1,5 @@
 <div class="profit-content" ng-controller="costStatisticsController as costStatisticsCtr" resize>
 
-  <!--<nav-btn>-->
-    <!--<nav-title></nav-title>-->
-    <!--<nav-list>-->
-      <!--<nav-item ng-click="costStatisticsCtr.gotoAnchor(item.title)"></nav-item>-->
-    <!--</nav-list>-->
-    <!--<nav-overlay></nav-overlay>-->
-  <!--</nav-btn>-->
-  <!--Cost statistics-->
   <div id="Cost" class="container-fluid profitItem">
     <section class="renatlcontent-header">
       <h1>
@@ -45,7 +37,7 @@
 
         </div>
       </div>
-      <div class="col-lg-23 col-md-3">
+      <div class="col-lg-3 col-md-3">
         <div class="info-card">
           <div class="info-title">{{'rentalFinanceCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalFinanceCost|number:2}}</div>
@@ -55,90 +47,94 @@
       </div>
     </div>
 
-    <div class="info-box-container searchLine">
-      <div >
-        <div class="forminline" >
-          <label>{{'deviceType'| translate}}:</label>
+    <div class="info-box-container">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-md-1 control-label">{{'deviceType'| translate}}:</label>
+            <div class="col-md-2">
+              <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
+                <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
+                <ui-select-choices repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
+                  <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
 
-          <div class="forminline" style="width: 150px;">
-            <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="machineType.id as machineType in costStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
-              </ui-select-choices>
-            </ui-select>
-          </div>
+            <label class="col-md-1 control-label">{{'highlyType'| translate}}:</label>
+            <div class="col-md-2">
+              <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
+                  <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
 
 
-        </div>
-
-        <div class="forminline" >
-
-          <label>{{'highlyType'| translate}}:</label>
-          <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
-            </ui-select-match>
-            <ui-select-choices repeat="deviceHeightType in costStatisticsCtr.deviceHeightTypeList">
-              <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-        <div class="forminline" style="width: 17%">
-
-          <label class="">{{'brandType'| translate}}:</label>
-
-          <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
-            </ui-select-match>
-            <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
-              <div ng-bind-html="machineMF.name | highlight: $select.search |translate"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-        <div class="form-inline forminline" style="width: 18%">
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalStartingDate'|translate}}:</label>
-            <div class="input-group" >
-              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                     ng-model="costStatisticsCtr.startDateDeviceData"
-                     is-open="costStatisticsCtr.startDateOpenStatusDeviceData.opened"
-                     datepicker-options="costStatisticsCtr.dateOptions"
-                     min-date="costStatisticsCtr.minDate"
-                     max-date="costStatisticsCtr.maxDate"
-
-                     ng-required="true"
-                     current-text="{{'today'|translate}}"
-                     clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
-              <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="costStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+            <label class="col-md-1 control-label">{{'brandType'| translate}}:</label>
+            <div class="col-md-2">
+              <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
+                  <div ng-bind-html="machineMF.name | highlight: $select.search |translate"></div>
+                </ui-select-choices>
+              </ui-select>
             </div>
           </div>
-        </div>
-        <div class="form-inline  forminline"  style="width: 18%" >
-          <div class="form-group">
-            <label class="control-label text-nowrap" >{{'rentalEndDate'|translate}}:</label>
-            <div class="input-group" >
+
+
+      <div class="form-group">
+
+            <label class="control-label col-md-1" >{{'rentalStartingDate'|translate}}:</label>
+            <div class="col-md-2 ">
+              <div class="input-group" >
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="costStatisticsCtr.startDateDeviceData"
+                       is-open="costStatisticsCtr.startDateOpenStatusDeviceData.opened"
+                       datepicker-options="costStatisticsCtr.dateOptions"
+                       min-date="costStatisticsCtr.minDate"
+                       max-date="costStatisticsCtr.maxDate"
+
+                       ng-required="true"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" required readonly="readonly" />
+                <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="costStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+              </div>
+            </div>
+
+
+            <label class="control-label col-md-1" >{{'rentalEndDate'|translate}}:</label>
+          <div class="col-md-2">
+            <div class="input-group " >
               <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                      ng-model="costStatisticsCtr.endDateDeviceData"
                      is-open="costStatisticsCtr.endDateOpenStatusDeviceData.opened"
                      datepicker-options="costStatisticsCtr.dateOptions"
                      ng-required="true" current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" required readonly="readonly" style="width: 120px;"/>
+                     close-text="{{'close'|translate}}" required readonly="readonly" />
               <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="costStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
             </div>
           </div>
+        <div class="col-md-3 pull-right">
+          <button  type="button" class="btn btn-primary searchButton" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
+          <button  type="button" class="btn btn-default searchButton" ng-click="costStatisticsCtr.reset()">{{'reset'|translate}}</button>
         </div>
 
-        <button  type="button" class="btn btn-primary searchButton" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
-        <button  type="button" class="btn btn-default searchButton" ng-click="costStatisticsCtr.reset()">{{'reset'|translate}}</button>
       </div>
+
+
+
+    </form>
     </div>
 
     <div class="row costPic">
