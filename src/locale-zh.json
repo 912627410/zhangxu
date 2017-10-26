@@ -317,5 +317,8 @@
   "download": "直接下载",
   "scanQRcode": "扫码下载",
   "comingSoon": "敬请期待",
-  "noMessage": "--"
+  "noMessage": "--",
+  "surealevel":"尿素液位",
+  "OilTemperature": "油温"
+
 }

@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope,$http, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
+  function machineMngController($rootScope, $scope,$http, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT,MACHINE_BIND_DEVICE_RECORD) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     // vm.org = {label: ""};    //所属组织
@@ -202,11 +202,31 @@
           var objectUrl = window.URL.createObjectURL(blob);
 
           var anchor = angular.element('<a/>');
-          anchor.attr({
-            href: objectUrl,
-            target: '_blank',
-            download: org.label +'.xls'
-          })[0].click();
+
+          //兼容多种浏览器
+          if (window.navigator.msSaveBlob) { // IE
+            window.navigator.msSaveOrOpenBlob(blob, org.label +'.xls')
+          } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+
+            anchor.css({display: 'none'});
+            angular.element(document.body).append(anchor);
+
+
+            anchor.attr({
+              href: URL.createObjectURL(blob),
+              target: '_blank',
+              download: org.label +'.xls'
+            })[0].click();
+
+            anchor.remove();
+          } else { // Chrome
+            anchor.attr({
+              href: URL.createObjectURL(blob),
+              target: '_blank',
+              download: org.label +'.xls'
+            })[0].click();
+          }
+
 
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
@@ -375,6 +395,39 @@
         });
       }, function (reason) {
         Notification.error('获取调拨日志失败');
+      });
+    }
+
+
+    vm.queryBindDevice = function (machine,size) {
+      var singlUrl = MACHINE_BIND_DEVICE_RECORD + "?machineId=" + machine.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "QUERY");
+
+      deviceinfoPromis.then(function (data) {
+        var recordlog = data;
+        var machineId =  machine.id;
+
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/machineManagement/machineBindDeviceRecord.html',
+          controller: 'machineBindDeviceRecordController as machineBindDeviceRecordCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            machineId:function () {
+              return machineId;
+            },
+            recordlog:function () {
+              return recordlog;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+
+        });
+      }, function (reason) {
+        Notification.error('获取历史绑定设备信息失败');
       });
     }
   }

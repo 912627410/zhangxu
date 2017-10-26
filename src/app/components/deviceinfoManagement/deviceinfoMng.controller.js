@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION,MACHINE_BIND_DEVICE_RECORD) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -328,11 +328,32 @@
           var objectUrl = window.URL.createObjectURL(blob);
 
           var anchor = angular.element('<a/>');
-          anchor.attr({
-            href: objectUrl,
-            target: '_blank',
-            download:org.label +'.xls'
-          })[0].click();
+
+
+          //兼容多种浏览器
+          if (window.navigator.msSaveBlob) { // IE
+            window.navigator.msSaveOrOpenBlob(blob, org.label +'.xls')
+          } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
+
+            anchor.css({display: 'none'});
+            angular.element(document.body).append(anchor);
+
+
+            anchor.attr({
+              href: URL.createObjectURL(blob),
+              target: '_blank',
+              download: org.label +'.xls'
+            })[0].click();
+
+            anchor.remove();
+          } else { // Chrome
+            anchor.attr({
+              href: URL.createObjectURL(blob),
+              target: '_blank',
+              download: org.label +'.xls'
+            })[0].click();
+          }
+
 
         }).error(function (data, status, headers, config) {
           Notification.error("下载失败!");
@@ -375,6 +396,38 @@
         });
       }, function (reason) {
         Notification.error('获取调拨日志失败');
+      });
+    }
+
+    vm.queryBindDevice = function (deviceinfo,size) {
+      var singlUrl = MACHINE_BIND_DEVICE_RECORD + "?deviceNum=" + deviceinfo.deviceNum;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "QUERY");
+
+      deviceinfoPromis.then(function (data) {
+        var recordlog = data;
+        var deviceNum =  deviceinfo.deviceNum;
+
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/deviceinfoManagement/deviceBindMachineRecord.html',
+          controller: 'deviceBindMachineRecordController as deviceBindMachineRecordCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            deviceNum:function () {
+              return deviceNum;
+            },
+            recordlog:function () {
+              return recordlog;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+
+        });
+      }, function (reason) {
+        Notification.error('获取设备历史绑定车辆信息失败');
       });
     }
 

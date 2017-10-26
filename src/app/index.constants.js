@@ -83,6 +83,7 @@
     .constant('MACHINE_STORAGE_URL',SERVER_BASE_URL+"machine/getStorage")
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //车辆管理数据批量导出
     .constant('MACHINEANDDEVCE_ORG_JUDGE', SERVER_BASE_URL + 'machine/machineAndDeviceOrgJudge')   //判断设备所属组织与车辆所属组织是否一致
+    .constant('MACHINE_ENGINE_TYPE', SERVER_BASE_URL + 'machine/machineEngineType') //判断发动机类型
 
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
@@ -235,6 +236,7 @@
 
 
     .constant('MACHINE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询车辆调拨日志
+    .constant('MACHINE_BIND_DEVICE_RECORD', SERVER_BASE_URL + 'audit/queryMachineBindDeviceRecord')   //设备车辆历史绑定记录
     .constant('DEVCE_ALLOCATION', SERVER_BASE_URL + 'audit/queryallocationlog')   //查询设备调拨日志
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
