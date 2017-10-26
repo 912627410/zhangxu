@@ -24,7 +24,7 @@
     vm.queryIncome={machineType:"",
       heightType:"",
       machineManufacture:""};
-
+   vm.rentalOrder = {}
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -339,7 +339,6 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != rentalOrder) {
-
         if (null != rentalOrder.rentalCustomer.name&&rentalOrder.rentalCustomer.name!="") {
           restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.rentalCustomer.name;
         }
@@ -347,9 +346,6 @@
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
           restCallURL += "&search_LIKE_location=" + rentalOrder.workplace;
         }
-
-        //订单状态为结束的订单
-        restCallURL += "&search_EQ_status=" + '3';
       }
       if (null != vm.startDate&&vm.startDate!="") {
         restCallURL += "&search_DGT_endDate=" + $filter('date')(vm.startDate, 'yyyy-MM-dd');
@@ -358,7 +354,8 @@
       if (null != vm.endDate&&vm.endDate!="") {
         restCallURL += "&search_DLT_endDate=" + $filter('date')(vm.endDate, 'yyyy-MM-dd');
       }
-
+      //订单状态为结束的订单
+      restCallURL += "&search_EQ_status=" + '3';
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         vm.orderIncometableParams = new NgTableParams({

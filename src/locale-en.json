@@ -1467,7 +1467,9 @@
   "电驱动":"Electric Drive",
 
   "newOrderSucc":"New Order Successful!",
+  "newFenceSucc":"New Fence Successful!",
   "modifyOrderInformation":"Modify Order Information",
+  "modifyFenceInformation":"Modify Fence Successful!",
   "transVehicleSucc":" Vehicle Transfer Successful!",
   "transVehiclFail":"Failed to transfer the vehicle",
   "selTime":"Please select the order start time and end time!",

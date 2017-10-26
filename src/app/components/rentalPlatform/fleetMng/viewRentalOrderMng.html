@@ -1,117 +1,157 @@
 <div class="machine-content" xmlns="http://www.w3.org/1999/html">
-  <!--<section class="renatlcontent-header">-->
-    <!--<h1>-->
-      <!--{{'customerInfo'|translate}}-->
-      <!--<small></small>-->
-    <!--</h1>-->
-  <!--</section>-->
 
   <div class="container-fluid">
 
-
     <div class="box-header with-border">
       <h3 class="box-title">{{'rentalOrderDetail'|translate}}</h3>
+
     </div>
-    <form name="newrentalOrderForm2" class="form-horizontal">
-      <div class="modal-body">
-        <div class="box-body">
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}</label>
-              <div class="col-md-5">
-                {{viewRentalOrderCtrl.customer.name}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'amount'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
-              </div>
+    <form name="updateRentalOrderForm" class="form-horizontal">
+      <div class="box-body">
+        <div class="form-group">
+          <label  class="col-md-2 control-label">订单号</label>
+          <div class="col-md-3">
+           {{viewRentalOrderCtrl.rentalOrder.orderNumber}}
+          </div>
+
+          <label class="col-md-2 control-label">{{'amount'|translate}}</label>
+          <div class="col-md-3">
+            {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">{{'rentalCustomerName'|translate}}</label>
+          <div class="col-md-3">
+            <p class="input-group">
+              {{viewRentalOrderCtrl.rentalOrder.rentalCustomer.name}}
+            </p>
+          </div>
+
+          <label class="col-md-2 control-label">{{'paymentMethod'|translate}}</label>
+          <div class="col-md-3">
+            {{viewRentalOrderCtrl.rentalOrder.payType}}
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">{{'rentalStartingDate'|translate}}</label>
+          <div class="col-md-3">
+            <p class="input-group">
+             {{viewRentalOrderCtrl.rentalOrder.startDate}}
+            </p>
+          </div>
+
+          <label class="col-md-2 control-label">{{'rentalEndDate'|translate}}</label>
+          <div class="col-md-3">
+            <p class="input-group">
+             {{viewRentalOrderCtrl.rentalOrder.endDate}}
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label">{{'deposit'|translate}}</label>
+          <div class="col-md-3">
+            {{viewRentalOrderCtrl.rentalOrder.deposit}}
+          </div>
+
+          <label class="col-md-2 control-label">{{'rentalWorkLocation'|translate}}</label>
+          <div class="col-md-3">
+            {{viewRentalOrderCtrl.rentalOrder.location}}
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label">{{'descritpion'|translate}}</label>
+          <div class="col-md-3">
+					{{viewRentalOrderCtrl.rentalOrder.description}}
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-1 control-label">剪叉: 数量</label>
+            <div class="col-md-1">
+              {{viewRentalOrderCtrl.jcOption.quantity}}
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'deposit'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.deposit}}
-              </div>
+            <label class="col-md-1 control-label">高度</label>
+            <div class="col-md-2">
+              {{viewRentalOrderCtrl.jcOption.deviceHeightType.name}}
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.payType}}
-              </div>
+            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+            <div class="col-md-2">
+             {{viewRentalOrderCtrl.jcOption.deviceManufacture.name}}
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'startingTime'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.startDate | date:'yyyy-MM-dd'}}
-              </div>
+            <label class="col-md-1 control-label">单价(/天)</label>
+            <div class="col-md-1">
+             {{viewRentalOrderCtrl.jcOption.price}}
             </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'endTime'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.endDate | date:'yyyy-MM-dd'}}
-              </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-1 control-label">直臂: 数量</label>
+            <div class="col-md-1">
+              {{viewRentalOrderCtrl.zbOption.quantity}}
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalWorkLocation'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.location}}
-              </div>
-            </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.jc}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.zb}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.qb}}
-              </div>
+            <label class="col-md-1 control-label">高度</label>
+            <div class="col-md-2">
+              {{viewRentalOrderCtrl.zbOption.deviceHeightType.name}}
             </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderCtrl.rentalOrder.description}}
-              </div>
+            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+            <div class="col-md-2">
+              {{viewRentalOrderCtrl.zbOption.deviceManufacture.name}}
             </div>
 
-            <!--<div class="form-group">-->
-              <!--<label class="col-sm-3 control-label"></label>-->
-              <!--<div class="col-sm-5">-->
-                <!--<label>-->
-                  <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="viewRentalOrderCtrl.locationAlarmReceiverChk" id="locationAlarmReceiver" disabled="disabled" >-->
-                  <!--{{'AbnormalAlarmReceivingMachine'|translate}}-->
-                <!--</label>-->
-              <!--</div>-->
-            <!--</div>-->
+            <label class="col-md-1 control-label">单价(/天)</label>
+            <div class="col-md-1">
+              {{viewRentalOrderCtrl.zbOption.price}}
+            </div>
+        </div>
 
-            <div class="form-group">
-              <button class="btn btn-primary" type="button" ng-click="viewRentalOrderCtrl.cancel()">
-                {{'return'|translate}}
-              </button>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-1 control-label">曲臂: 数量</label>
+            <div class="col-md-1">
+              {{viewRentalOrderCtrl.qbOption.quantity}}
+            </div>
+
+            <label class="col-md-1 control-label">高度</label>
+            <div class="col-md-2">
+              {{viewRentalOrderCtrl.qbOption.deviceHeightType.name}}
+            </div>
+
+            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+            <div class="col-md-2">
+             {{viewRentalOrderCtrl.qbOption.deviceManufacture.name}}
+            </div>
+
+            <label class="col-md-1 control-label">单价(/天)</label>
+            <div class="col-md-1">
+             {{viewRentalOrderCtrl.qbOption.price}}
             </div>
 
           </div>
+
         </div>
+
+        <div class="form-group">
+          <button class="btn btn-warning" type="button" ng-click="viewRentalOrderCtrl.back()">
+            {{'return'|translate}}
+          </button>
+        </div>
+
+      </div>
     </form>
-    <div class="box-footer">
-
-    </div>
-
-
   </div>
 
-
 </div>
+
+
