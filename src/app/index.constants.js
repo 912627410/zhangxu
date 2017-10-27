@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-   var SERVER_BASE_URL = 'http://localhost:808/rest/';
+   var SERVER_BASE_URL = 'http://localhost:8080 /rest/';
    var WEBSOCKET_DOMAIN_NAME = 'localhost';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
