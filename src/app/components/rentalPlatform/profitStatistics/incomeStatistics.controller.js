@@ -25,6 +25,7 @@
       heightType:"",
       machineManufacture:""};
    vm.rentalOrder = {}
+
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -195,8 +196,8 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.rentalOrder.rentalCustomer=result;
-        console.log(result)
+        vm.rentalOrder.rentalCustomer=vm.rentalCustomer;
+
       }, function () {
       });
     };
@@ -339,7 +340,7 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != rentalOrder) {
-        if (null != rentalOrder.rentalCustomer.name&&rentalOrder.rentalCustomer.name!="") {
+        if (null != rentalOrder.rentalCustomer&&null != rentalOrder.rentalCustomer.name&&rentalOrder.rentalCustomer.name!="") {
           restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.rentalCustomer.name;
         }
 
@@ -380,7 +381,7 @@
       restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
       if (null != rentalOrder) {
 
-        if (null != rentalOrder.rentalCustomer.id&&rentalOrder.rentalCustomer.id!="") {
+        if (null != rentalOrder.rentalCustomer&&null != rentalOrder.rentalCustomer.id&&rentalOrder.rentalCustomer.id!="") {
           restCallURL += "&customerId="+ rentalOrder.rentalCustomer.id;
         }
 
