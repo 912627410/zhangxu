@@ -6,7 +6,8 @@
   angular
     .module('GPSCloud')
     .controller('updateFileMngController', updateFileMngController);
-  function updateFileMngController($rootScope, ngTableDefaults, languages,$scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource) {
+  function updateFileMngController($rootScope, ngTableDefaults, languages,$scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY,
+                                   DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource, $confirm, REMOVE_UPDATE_FILE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -17,21 +18,11 @@
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || UPDATE_FILE_DATA_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      if(null != vm.queryVersionNum&&null != ""){
-        var arr = vm.queryVersionNum.split(".");
-        var versionNumber;
-        if(arr.length == 2){
-          if(arr[1].length == 1){
-            versionNumber = vm.queryVersionNum*10;
-          }else if(arr[1].length == 2){
-            versionNumber = vm.queryVersionNum*100;
-          }else{
-            versionNumber = vm.queryVersionNum;
-          }
-        }else{
-          versionNumber = vm.queryVersionNum;
-        }
-        restCallURL += "&search_LIKE_versionNum=" + (versionNumber);
+      if(null != vm.queryVersionNum && vm.queryVersionNum != "") {
+        restCallURL += "&search_LIKE_versionNum=" + (vm.queryVersionNum);
+      }
+      if(null != vm.querySoftVersion && vm.querySoftVersion != ""){
+        restCallURL += "&search_EQ_softVersion=" + (Math.round(vm.querySoftVersion*100));
       }
       if(null != vm.queryFileName&&null != ""){
         restCallURL += "&search_LIKE_fileName=" + (vm.queryFileName);
@@ -39,6 +30,7 @@
       if(null != vm.queryApplicableProducts&&null != ""){
         restCallURL += "&search_LIKE_applicableProducts=" + (vm.queryApplicableProducts);
       }
+      restCallURL += "&search_EQ_status=1";
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
       updateFilePromis.then(function(data){
         vm.updateFileList = data.content;
@@ -97,8 +89,33 @@
     //重置查询框
     vm.reset = function() {
       vm.queryVersionNum = null;
+      vm.querySoftVersion = null;
       vm.queryFileName = null;
       vm.queryApplicableProducts = null;
     }
+
+    //删除
+    vm.removeFile = function (fileId) {
+      if(fileId != null) {
+        $confirm({
+          title:languages.findKey('deleteConfirmation'),
+          text: languages.findKey('areYouWanttoDeleteIt')
+        }).then(function () {
+          var restURL = REMOVE_UPDATE_FILE_URL + "?updateFileId=" + fileId;
+          var rspData = serviceResource.restCallService(restURL, "GET");
+          rspData.then(function(data){
+            if(data.code == 0) {
+              vm.query(0,null,null,vm.update);
+              Notification.success(data.content);
+            } else {
+              Notification.error(data.content);
+            }
+          }, function (reason) {
+            Notification.error(reason.data.message);
+          })
+        })
+      }
+    }
+
   }
 })();
