@@ -274,7 +274,7 @@
           grid: {
             top:'5%',
             left: '3%',
-            right: '4%',
+            right: '6%',
             bottom: '3%',
             containLabel: true
           },
@@ -290,6 +290,7 @@
               show: false
             },
             axisLabel: {
+              interval:0,
               textStyle: {
                 color: '#000'
               }
@@ -572,7 +573,7 @@
 
         //解决两个都是0出现一半,一半的情况
         if( data.content.rentalMachineCount==0 && data.content.unRentalMachineCount==0){
-          miniPieOption.series[0].data[1].value=1;
+          miniPieOption.series[0].data[0].value=1;
         }
 
         chart.setOption(miniPieOption);

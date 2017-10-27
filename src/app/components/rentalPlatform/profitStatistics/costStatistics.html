@@ -59,7 +59,8 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">{{'highlyType'| translate}}:</label>
+            <label class="col-md-2 control-label font-nomal">{{'highlyType'| translate}}:</label>
+
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap"
                          ng-disabled="disabled">
@@ -72,13 +73,14 @@
             </div>
 
 
-            <label class="col-md-1 control-label font-nomal">{{'brandType'| translate}}:</label>
+            <label class="col-md-2 control-label font-nomal">{{'brandType'| translate}}:</label>
+
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap"
                          ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
                 </ui-select-match>
-                <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
+                <ui-select-choices repeat=i"machineMF in costStatisticsCtr.machineMFList">
                   <div ng-bind-html="machineMF.name | highlight: $select.search |translate"></div>
                 </ui-select-choices>
               </ui-select>
@@ -103,7 +105,10 @@
                         </span>
               </div>
             </div>
-            <label class="control-label col-md-1 font-nomal" >{{'rentalEndDate'|translate}}:</label>
+
+
+            <label class="control-label col-md-2 font-nomal" >{{'rentalEndDate'|translate}}:</label>
+
           <div class="col-md-2">
             <div class="input-group " >
               <input type="text" class="form-control " uib-datepicker-popup="yyyy-MM-dd"
@@ -118,9 +123,10 @@
                         </span>
             </div>
           </div>
-        <div class="col-md-3 pull-right">
-          <button  type="button" class="btn btn-primary searchButton" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
-          <button  type="button" class="btn btn-default searchButton" ng-click="costStatisticsCtr.reset()">{{'reset'|translate}}</button>
+        <div class="col-md-4 ">
+          <button  type="button" class="btn btn-default searchButton pull-right" ng-click="costStatisticsCtr.reset()">{{'reset'|translate}}</button>
+          <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
+
         </div>
 
       </div>
