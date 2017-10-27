@@ -12,16 +12,16 @@
     </section>
     <div class="row info-box-container">
 
-      <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+      <div class="col-lg-3 col-md-3 col-xs-3">
+        <div class=" info-card cost-info-height">
           <div class="info-title">{{'rentalMachineCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalMachineCost|number:2}}</div>
           <!--<div class="info-data">¥68928</div>-->
 
         </div>
       </div>
-      <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+      <div class="col-lg-3 col-md-3 col-xs-3">
+        <div class=" info-card cost-info-height">
 
           <div class="info-title">{{'rentalSaleCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalSaleCost|number:2}}</div>
@@ -29,16 +29,16 @@
 
         </div>
       </div>
-      <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+      <div class="col-lg-3 col-md-3 col-xs-3">
+        <div class=" info-card cost-info-height">
           <div class="info-title">{{'rentalManagementCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalManagementCost|number:2}}</div>
           <!--<div class="info-data">¥51696</div>-->
 
         </div>
       </div>
-      <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+      <div class="col-lg-3 col-md-3 col-xs-3">
+        <div class=" info-card cost-info-height">
           <div class="info-title">{{'rentalFinanceCost'| translate}}</div>
           <div class="info-data">{{costStatisticsCtr.rentalFinanceCost|number:2}}</div>
           <!--<div class="info-data">¥32310</div>-->
@@ -46,10 +46,9 @@
         </div>
       </div>
     </div>
-
-    <div class="info-box-container">
+    <div class="info-box-container costPic">
       <form class="form-horizontal" role="form">
-        <div class="form-group">
+        <div class="form-group row">
             <label class="col-md-1 control-label font-nomal">{{'deviceType'| translate}}:</label>
             <div class="col-md-2">
               <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
@@ -85,9 +84,7 @@
               </ui-select>
             </div>
           </div>
-
-
-      <div class="form-group">
+      <div class="form-group row">
             <label class="control-label col-md-1 font-nomal" >{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2 ">
               <div class="input-group" >
@@ -132,39 +129,38 @@
 
     </form>
     </div>
+    <div class="info-box-container costPic">
+      <div class="row">
+        <div class="leftTable col-md-6">
+          <div class="table-responsive">
+            <table ng-table="costStatisticsCtr.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+              <tr ng-repeat="costdata in $data">
+                <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="''">{{costdata.machineLicenseId}}</td>
+                <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="''">{{costdata.machineTypeName |translate}}</td>
+                <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="''">{{costdata.heightTypeName |translate}}</td>
+                <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="''">{{costdata.machineManufacture |translate}}</td>
+                <td class="text-nowrap" data-title="'rentalMachineCost'|translate" sortable="''">{{costdata.machineCost|number:2}}</td>
+              </tr>
+            </table>
+          </div>
 
-    <div class="row costPic">
-      <div class="leftTable col-md-6">
-        <div class="table-responsive">
-          <table ng-table="costStatisticsCtr.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-            <tr ng-repeat="costdata in $data">
-              <td class="text-nowrap" data-title="'rentalMachineID'|translate" sortable="''">{{costdata.machineLicenseId}}</td>
-              <td class="text-nowrap" data-title="'rentalMachineType'|translate" sortable="''">{{costdata.machineTypeName |translate}}</td>
-              <td class="text-nowrap" data-title="'rentalHeight'|translate" sortable="''">{{costdata.heightTypeName |translate}}</td>
-              <td class="text-nowrap" data-title="'rentalBrand'|translate" sortable="''">{{costdata.machineManufacture |translate}}</td>
-              <td class="text-nowrap" data-title="'rentalMachineCost'|translate" sortable="''">{{costdata.machineCost|number:2}}</td>
-            </tr>
-          </table>
+          <div class="box-footer">
+            <uib-pagination total-items="costStatisticsCtr.page.totalElements"
+                            ng-change="costStatisticsCtr.queryCost(costStatisticsCtr.pageNumber-1,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)"
+                            max-size="15"
+                            ng-model="costStatisticsCtr.pageNumber"
+                            items-per-page="costStatisticsCtr.page.size" class="pagination-sm"
+                            boundary-links="true" rotate="false"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+          </div>
         </div>
-
-        <div class="box-footer">
-          <uib-pagination total-items="costStatisticsCtr.page.totalElements"
-                          ng-change="costStatisticsCtr.queryCost(costStatisticsCtr.pageNumber-1,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)"
-                          max-size="15"
-                          ng-model="costStatisticsCtr.pageNumber"
-                          items-per-page="costStatisticsCtr.page.size" class="pagination-sm"
-                          boundary-links="true" rotate="false"
-                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        <div class="rightPic col-md-6">
+          <div id="topPie" ng-style="costStatisticsCtr.baseBoxContainer" ></div>
         </div>
       </div>
-      <div class="rightPic col-md-6">
-        <div id="topPie" ng-style="costStatisticsCtr.baseBoxContainer" ></div>
-      </div>
+
     </div>
   </div>
-
-
-
 
 
 </div>
