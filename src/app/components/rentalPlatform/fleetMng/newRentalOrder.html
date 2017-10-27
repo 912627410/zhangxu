@@ -8,13 +8,13 @@
     <form name="newrentalOrderForm" class="form-horizontal">
       <div class="box-body">
         <div class="form-group">
-          <label for="orderNumber" class="col-md-2 control-label">订单号</label>
+          <label for="orderNumber" class="col-md-2 control-label">{{'rentalOrderNumber'|translate}}:</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="orderNumber" placeholder="订单号" ng-model="newRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
+            <input type="text" class="form-control" id="orderNumber" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-md-2 control-label">{{'rentalCustomerName'|translate}}</label>
+          <label class="col-md-2 control-label">{{'rentalCustomerName'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group">
 
@@ -28,7 +28,7 @@
             </p>
           </div>
 
-          <label class="col-md-2 control-label">{{'paymentMethod'|translate}}</label>
+          <label class="col-md-2 control-label">{{'paymentMethod'|translate}}:</label>
           <div class="col-md-3">
             <input type="text" class="form-control" placeholder="{{'paymentMethod'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.payType" name="payType" typeahead-show-hint="true" validator="required" />
           </div>
@@ -36,12 +36,12 @@
         </div>
 
         <div class="form-group">
-          <label class="col-md-2 control-label">{{'deposit'|translate}}</label>
+          <label class="col-md-2 control-label">{{'deposit'|translate}}:</label>
           <div class="col-md-3">
             <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
           </div>
 
-          <label class="col-md-2 control-label">{{'amount'|translate}}</label>
+          <label class="col-md-2 control-label">{{'amount'|translate}}:</label>
           <div class="col-md-3">
             <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
           </div>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group">
-          <label class="col-md-2 control-label">{{'rentalStartingDate'|translate}}</label>
+          <label class="col-md-2 control-label">{{'rentalStartingDate'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group">
               <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.startDate" is-open="newRentalOrderCtrl.startDateSetting.status.opened" datepicker-options="newRentalOrderCtrl.startDateSetting.dateOptions" close-text="Close" message-id="bootstrap" readonly/>
@@ -65,7 +65,7 @@
 
           </div>
 
-          <label class="col-md-2 control-label">{{'rentalEndDate'|translate}}</label>
+          <label class="col-md-2 control-label">{{'rentalEndDate'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group">
               <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.endDate" is-open="newRentalOrderCtrl.endDateOpenStatus.opened" datepicker-options="dateOptions" close-text="Close" readonly/>
@@ -79,12 +79,12 @@
         </div>
 
         <div class="form-group">
-          <label class="col-md-2 control-label">{{'rentalWorkLocation'|translate}}</label>
+          <label class="col-md-2 control-label">{{'rentalWorkLocation'|translate}}:</label>
           <div class="col-md-3">
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.rentalOrder.location" name="location" validator="required" typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-2 control-label">{{'descritpion'|translate}}</label>
+          <label class="col-md-2 control-label">{{'descritpion'|translate}}:</label>
           <div class="col-md-3">
 						<textarea class="form-control" placeholder="{{'descritpion'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.description" name="description" typeahead-show-hint="true">
 
@@ -98,12 +98,12 @@
           </div>
           <div class="col-md-11">
 
-          <label class="col-md-1 control-label">数量</label>
+          <label class="col-md-1 control-label">数量:</label>
           <div class="col-md-1">
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-1 control-label">高度</label>
+          <label class="col-md-1 control-label">高度:</label>
           <div class="col-md-2">
             <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.jcOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -114,7 +114,7 @@
             </ui-select>
           </div>
 
-          <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+          <label class="col-md-1 control-label">{{'rentalBrand'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.jcOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
@@ -125,7 +125,7 @@
             </ui-select>
           </div>
 
-          <label class="col-md-1 control-label">单价(/天)</label>
+          <label class="col-md-1 control-label">单价(/天):</label>
           <div class="col-md-1">
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
           </div>
@@ -142,12 +142,12 @@
           </div>
           <div class="col-md-11">
 
-            <label class="col-md-1 control-label">数量</label>
+            <label class="col-md-1 control-label">数量:</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label">高度</label>
+            <label class="col-md-1 control-label">高度:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.zbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -158,7 +158,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.zbOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
@@ -169,7 +169,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label">单价(/天)</label>
+            <label class="col-md-1 control-label">单价(/天):</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
@@ -184,12 +184,12 @@
             <label class=" control-label">曲臂:</label>
           </div>
           <div class="col-md-11">
-            <label class="col-md-1 control-label">数量</label>
+            <label class="col-md-1 control-label">数量:</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label">高度</label>
+            <label class="col-md-1 control-label">高度:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.qbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -200,7 +200,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}</label>
+            <label class="col-md-1 control-label">{{'rentalBrand'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.qbOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
@@ -211,7 +211,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label">单价(/天)</label>
+            <label class="col-md-1 control-label">单价(/天):</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
