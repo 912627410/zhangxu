@@ -81,12 +81,13 @@
               <td class="text-nowrap" data-title="'modificationTime'|translate" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td class="text-nowrap" data-title="'modifier'|translate" sortable="'updateTime'">{{rentalOrgFence.updateUser}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-default btn-xs"
-                        ng-click="rentalFenceMngController.view(rentalOrgFence.id)">{{'manage'|translate}}
-                </button>
                 <button type="button" class="btn btn-danger btn-xs"
                         ng-click="rentalFenceMngController.delete(rentalOrgFence.id)">{{'rentalDelete'| translate}}
                 </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="rentalFenceMngController.view(rentalOrgFence.id)">{{'manage'|translate}}
+                </button>
+
               </td>
 
 
