@@ -24,20 +24,18 @@
         <form name="queryForm" class="form-horizontal" role="form">
 
           <div class="form-group">
-
-            <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
                      placeholder="{{'rentalCustomerName'|translate}}"/>
             </div>
-
-            <label class="col-md-1 control-label">{{'rentalPhoneNumber'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
                      placeholder="{{'rentalPhoneNumber'|translate}}" />
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
@@ -55,7 +53,7 @@
               <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
               <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
             </div>-->
-            <div class="col-md-offset-1 col-md-1">
+            <div class="col-md-offset-1 col-md-1 font-nomal">
 
               <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
               </button>

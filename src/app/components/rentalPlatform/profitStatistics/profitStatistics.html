@@ -75,7 +75,7 @@
     <div class="info-box-container profitPic">
       <form class="form-horizontal" role="form">
         <div class="form-group row" >
-          <label  class="col-md-1 control-label">{{'deviceType'|translate}}:</label>
+          <label  class="col-md-1 control-label font-nomal">{{'deviceType'|translate}}:</label>
           <div class="col-md-2">
             <ui-select  ng-model="profitStatisticsCtr.machineType" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
@@ -84,8 +84,7 @@
               </ui-select-choices>
             </ui-select>
           </div>
-
-          <label class="col-md-1 control-label">{{'highlyType'|translate}}:</label>
+          <label class="col-md-1 control-label font-nomal">{{'highlyType'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceHeightType" ng-model="profitStatisticsCtr.queryDeviceHeightType" theme="bootstrap"
                        ng-disabled="disabled">
@@ -98,7 +97,7 @@
           </div>
 
 
-          <label class="col-md-1 control-label">{{'brandType'|translate}}:</label>
+          <label class="col-md-1 control-label font-nomal">{{'brandType'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceManufacture" ng-model="profitStatisticsCtr.queryManufacture" theme="bootstrap"
                        ng-disabled="disabled">
@@ -112,7 +111,7 @@
         </div>
 
         <div class="form-group  row" >
-            <label class="control-label col-md-1" >{{'rentalStartingDate'|translate}}:</label>
+            <label class="control-label col-md-1 font-nomal " >{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2 ">
                 <div class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
@@ -131,7 +130,7 @@
                 </div>
               </div>
 
-            <label class="control-label col-md-1" >{{'rentalEndDate'|translate}}:</label>
+            <label class="control-label col-md-1 font-nomal" >{{'rentalEndDate'|translate}}:</label>
             <div class="col-md-2 ">
                 <div class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"

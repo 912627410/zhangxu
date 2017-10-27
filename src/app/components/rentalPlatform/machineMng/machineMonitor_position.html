@@ -2,14 +2,16 @@
   <input type="hidden" ng-model="vm.deviceInfo">
   <div class="row">
     <div class="col-md-2">
-      <label class="control-label">{{'startDate'|translate}}:</label>
+      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
                ng-model="vm.queryStartDate" is-open="openStartDate"
                ng-required="true" max-date="vm.queryEndDate"
-               current-text="今天" clear-text="清除" close-text="关闭"/>
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
         <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="openStartDate=true">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -18,13 +20,15 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label">{{'endDate'|translate}}:</label>
+      <label class="control-label font-nomal">{{'endDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
                ng-model="vm.queryEndDate" is-open="openEndDate"
-               ng-required="true" current-text="今天" clear-text="清除" close-text="关闭"/>
+               ng-required="true" current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
         <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="openEndDate=true">
               <i class="glyphicon glyphicon-calendar"></i></button>

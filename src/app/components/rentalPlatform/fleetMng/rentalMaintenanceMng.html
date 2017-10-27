@@ -24,13 +24,13 @@
 
           <div class="form-group">
 
-            <label class="col-md-1 control-label">{{'rentalMachineID'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalMachineID'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceCtrl.machine.licenseId"
                      placeholder="{{'rentalMachineID'|translate}}"/>
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
@@ -47,13 +47,16 @@
               <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
               <input type="checkbox" checked="checked" ng-model="v.querySubOrg"/>
             </div>-->
-            <label class="col-md-1 control-label">{{'rentalStartingDate'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalMaintenanceCtrl.rentalOrder.startDate"
                        is-open="rentalMaintenanceCtrl.startDateSetting.status.opened"
-                       datepicker-options="rentalMaintenanceCtrl.startDateSetting.dateOptions" close-text="Close"
+                       datepicker-options="rentalMaintenanceCtrl.startDateSetting.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"
                        validator="required" message-id="bootstrap" readonly/>
 
                 <span class="input-group-btn">
@@ -66,13 +69,16 @@
               <span id="bootstrap"></span>
             </div>
 
-            <label  class="col-md-1 control-label">{{'rentalEndDate'|translate}}:</label>
+            <label  class="col-md-1 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalMaintenanceCtrl.rentalOrder.endDate"
                        is-open="rentalMaintenanceCtrl.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" ng-readonly="true" close-text="Close"/>
+                       datepicker-options="dateOptions" ng-readonly="true"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalMaintenanceCtrl.endDateOpen($event)">

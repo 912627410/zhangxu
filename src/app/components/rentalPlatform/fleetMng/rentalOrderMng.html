@@ -43,18 +43,18 @@
 
           <div class="form-group">
 
-            <label class="col-md-1 control-label">{{'rentalOrderNumber'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.id"
                      placeholder="{{'rentalOrderNumber'|translate}}"/>
             </div>
 
-            <label  class="col-md-1 control-label">{{'rentalCustomer'|translate}}:</label>
+            <label  class="col-md-1 control-label font-nomal">{{'rentalCustomer'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
                      placeholder="{{'rentalCustomer'|translate}}"/>
             </div>
-            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
@@ -71,13 +71,16 @@
           </div>
           <div class="form-group">
 
-            <label class="col-md-1 control-label">{{'rentalStartingDate'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngCtrl.rentalOrder.startDate"
                        is-open="rentalOrderMngCtrl.startDateSetting.status.opened"
-                       datepicker-options="rentalOrderMngCtrl.startDateSetting.dateOptions" close-text="Close"
+                       datepicker-options="rentalOrderMngCtrl.startDateSetting.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"
                        message-id="bootstrap" readonly/>
 
                 <span class="input-group-btn">
@@ -90,13 +93,16 @@
               <span id="bootstrap"></span>
             </div>
 
-            <label  class="col-md-1 control-label">{{'rentalEndDate'|translate}}:</label>
+            <label  class="col-md-1 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngCtrl.rentalOrder.endDate"
                        is-open="rentalOrderMngCtrl.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" close-text="Close" readonly/>
+                       datepicker-options="dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}" readonly/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalOrderMngCtrl.endDateOpen($event)">
@@ -105,7 +111,7 @@
               </p>
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalStatus'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalStatus'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"
                          ng-disabled="disabled">
