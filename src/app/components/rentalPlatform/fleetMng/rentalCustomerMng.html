@@ -24,38 +24,36 @@
         <form name="queryForm" class="form-horizontal" role="form">
 
           <div class="form-group">
-
-            <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}:</label>
-            <div class="col-md-1" style="padding: 0px;">
+            <label class="col-md-1 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
+            <div class="col-md-2">
               <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
                      placeholder="{{'rentalCustomerName'|translate}}"/>
             </div>
-
-            <label class="col-md-1 control-label">{{'rentalPhoneNumber'|translate}}:</label>
-            <div class="col-md-1" style="padding: 0px;">
+            <label class="col-md-1 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
+            <div class="col-md-2">
               <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
                      placeholder="{{'rentalPhoneNumber'|translate}}" />
             </div>
 
-            <label class="col-md-1 control-label">{{'rentalOrganization'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
                 <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" required/>
                 <span class="input-group-btn">
             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
+                  <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
+                    <i class="fa fa-sitemap"></i>
+                  </button>
+                </span>
               </p>
             </div>
 
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
               <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
               <input type="checkbox" checked="checked" ng-model="rentalCustomerMngController.querySubOrg"/>
-            </div>
-            <div class="col-md-2">
+            </div>-->
+            <div class="col-md-offset-1 col-md-1 font-nomal">
 
               <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
               </button>
