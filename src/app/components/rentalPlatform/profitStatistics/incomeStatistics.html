@@ -11,66 +11,66 @@
     </section>
 
     <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
             <div class="col-md-3 profit-info-height">
               <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
                    src="assets/images/rental_income.png"/>
             </div>
-            <div class="col-md-6 profit-info-height" style="text-align: center;">
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalTotalIncome'|translate}}</span>
             </div>
-            <div class="col-md-3 profit-info-height ">
+            <div class="col-md-4 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.totalIncome}}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
+      <div class="col-md-3 col-sm-6 col-xs-3">
+        <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
             <div class="col-md-3 profit-info-height">
               <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
                    src="assets/images/orderlist_shear.png"/>
             </div>
-            <div class="col-md-6 profit-info-height" style="text-align: center;">
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalScissorLiftIncome'|translate}}</span>
             </div>
-            <div class="col-md-3 profit-info-height ">
+            <div class="col-md-4 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
             <div class="col-md-3 profit-info-height">
               <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
                    src="assets/images/orderlist_straight.png"/>
             </div>
-            <div class="col-md-6 profit-info-height" style="text-align: center;">
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalBoomLiftIncome'|translate}}</span>
             </div>
-            <div class="col-md-3 profit-info-height ">
+            <div class="col-md-4 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
             <div class="col-md-3 profit-info-height">
               <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
                    src="assets/images/orderlist_crank.png"/>
             </div>
-            <div class="col-md-6 profit-info-height" style="text-align: center;">
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
             </div>
-            <div class="col-md-3 profit-info-height ">
+            <div class="col-md-4 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
             </div>
           </div>
@@ -93,13 +93,12 @@
       <div  class=" col-md-10" ng-show="incomeStatisticsCtr.orderQuery">
         <div class="form-group">
           <div class="row info-box-container">
-            <label class="col-md-1 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
+            <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
             <div class="col-md-2" >
               <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
             </div>
+            <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
 
-
-            <label class="col-md-1 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
 
@@ -119,7 +118,8 @@
         </div>
         <div class="form-group">
           <div class="row info-box-container">
-            <div class="col-md-1">
+
+            <div class="col-md-2">
               <label class="control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             </div>
             <div class="col-md-2">
@@ -141,7 +141,8 @@
                         </span>
               </p>
             </div>
-            <div class="col-md-1">
+
+            <div class="col-md-2">
               <label class="control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             </div>
             <div class="col-md-2">
