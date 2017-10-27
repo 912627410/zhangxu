@@ -40,7 +40,6 @@
     <div class="container-fluid table-wrapper" style="margin-top: 15px">
       <div class="row info-box-container">
         <form class="form-horizontal" role="form">
-
           <div class="form-group">
 
             <label class="col-md-1 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
@@ -70,7 +69,6 @@
 
           </div>
           <div class="form-group">
-
             <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
@@ -82,7 +80,6 @@
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"
                        message-id="bootstrap" readonly/>
-
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
                           ng-click="rentalOrderMngCtrl.startDateSetting.open($event)">
@@ -125,22 +122,33 @@
               </ui-select>
             </div>
 
-            <div class="col-md-2">
-
-              <button class="btn btn-primary" type="button"
-                      ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
-
-              </button>
-              <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
+            <div class="col-md-3">
+              <div class="col-md-offset-3 col-md-8">
+              <div class="col-md-10">
+                <button class="btn btn-primary" type="button"
+                        ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
+                </button>
+                <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">{{'rentalAdd'|translate}}</button>
+              </div>
+            </div>
             </div>
 
-            <div class="col-md-1">
-              <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">{{'rentalAdd'|translate}}</button>
-            </div>
+            <!--            <div class="col-md-offset-1 col-md-2">
+                          <div class="col-md-10">
+                          <button class="btn btn-primary" type="button"
+                                  ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
+                          </button>
+                          <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
+                        </div>
+                          <div class="col-md-2">
+                          <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">{{'rentalAdd'|translate}}</button>
+                          </div>
+                      </div>-->
           </div>
-
         </form>
-
       </div>
       <div class="row" ng-style="rentalOrderMngCtrl.baseBoxContainer">
 
