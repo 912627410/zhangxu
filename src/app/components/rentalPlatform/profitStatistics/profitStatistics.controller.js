@@ -228,6 +228,7 @@
       legend: {
         data: [languages.findKey('rentalScissorLift'), languages.findKey('rentalArticulatingBoomLift'), languages.findKey('rentalBoomLift')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(143,159,255)'],
       grid: {
         left: '3%',
         right: '4%',
