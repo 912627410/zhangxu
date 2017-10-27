@@ -583,7 +583,7 @@
     }
 
     creatMiniPie(miniPie1,1);
-    creatMiniPie(miniPie2,3);
+    creatMiniPie(miniPie2,2);
     creatMiniPie(miniPie3,3);
 
     /*
