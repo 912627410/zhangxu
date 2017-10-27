@@ -105,7 +105,7 @@
         templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
         controller: 'updateRentalCustomerController',
         controllerAs:'updateRentalCustomerCtrl',
-        size: 'lg',
+        size: 'md',
         resolve: {
           rentalCustomer: function () {
             return rentalCustomer;
@@ -142,7 +142,7 @@
         templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomer.html',
         controller: 'newRentalCustomerController',
         controllerAs:'newRentalCustomerCtrl',
-        size: 'lg'
+        size: 'md'
       });
       modalInstance.result.then(function (newVal) {
         vm.machineCount += 1;
