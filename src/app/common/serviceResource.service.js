@@ -226,7 +226,7 @@
         deviceinfoPromis.then(function (data) {
             $rootScope.deviceinfoMonitor = data.content;
             var templateUrl, controller;
-            if($rootScope.deviceinfoMonitor.versionNum == 'A001') {
+            if($rootScope.deviceinfoMonitor.versionNum == 'A001' || $rootScope.deviceinfoMonitor.versionNum == '11') {
               templateUrl = 'app/components/deviceMonitor/deviceAerialCurrentInfo.html';
               controller = 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController';
             } else {
