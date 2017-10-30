@@ -6,7 +6,7 @@
     .controller('userRoleMngController', userRoleMngController);
 
   /** @ngInject */
-  function userRoleMngController($rootScope,  $uibModalInstance,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
+  function userRoleMngController($rootScope,  $uibModalInstance,languages,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
     var vm = this;
     vm.selected = [];
     vm.userinfo = userinfo;
@@ -41,7 +41,7 @@
       vm.queryUserRole(vm.userinfo);
       vm.querySysRole();
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     // select org
@@ -58,7 +58,7 @@
         vm.roleList = data.content;
 
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error(languages.findKey('failedToGetRoleData'));
       });
 
     }
@@ -100,12 +100,12 @@
       promise.then(function (data) {
 
         if(data.code ==0){
-          Notification.success("修改用户角色成功");
+          Notification.success(languages.findKey('successfullyModifiedUserRole'));
           $uibModalInstance.close(data.content);
         }
 
       }, function (reason) {
-        Notification.error("修改失败");
+        Notification.error(languages.findKey('modificationFailed'));
       });
     }
 

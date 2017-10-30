@@ -10,7 +10,8 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -34,7 +35,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -5 - 25 - 52  - 60-50 ;//50 topBar的高,5间距,25面包屑导航,52msgBox高,60 search;line
+      var baseBoxContainerHeight = windowHeight - 50 -5 - 25 - 52  - 60-50-70 ;//50 topBar的高,5间距,25面包屑导航,52msgBox高,60 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -132,7 +133,25 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
 
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
 
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
@@ -140,7 +159,7 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
     //查询厂商List
@@ -149,7 +168,7 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //重置搜索框
@@ -164,7 +183,7 @@
 
     vm.queryCost = function (page, size, sort,startDate,endDate) {
       if(startDate==null||endDate==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
       }
       if(null!=startDate&&null!=endDate){
         var restCallURL = RENTAL_COST_PAGED_URL;
@@ -200,6 +219,7 @@
         },function (reason) {
           Notification.error("获取成本数据失败")
         })
+
       }
 
     }
@@ -224,6 +244,7 @@
         x: 'left',
         data:[languages.findKey('rentalMachineCost'),languages.findKey('rentalSaleCost'),languages.findKey('rentalManagementCost'),languages.findKey('rentalFinanceCost')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(255,130,133)','rgb(143,159,255)'],
       series: [
         {
           name:'成本',
@@ -231,10 +252,10 @@
           selectedMode: 'single',
           radius: '60%',
           data:[
-            {value:335, name:languages.findKey('rentalMachineCost'), selected:true},
-            {value:679, name:languages.findKey('rentalSaleCost')},
-            {value:1548, name:languages.findKey('rentalManagementCost')},
-            {value:666, name:languages.findKey('rentalFinanceCost')}
+            {value:3013.4, name:languages.findKey('rentalMachineCost'), selected:true},
+            {value:2850, name:languages.findKey('rentalSaleCost')},
+            {value:2600, name:languages.findKey('rentalManagementCost')},
+            {value:1500, name:languages.findKey('rentalFinanceCost')}
           ]
         }
       ]

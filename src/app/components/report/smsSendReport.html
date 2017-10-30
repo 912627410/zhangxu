@@ -7,7 +7,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> {{'statisticalAnalysis'|translate}}</a></li>
-    <li class="active">短信发送统计</li>
+    <li class="active">{{'SMSstatistics'|translate}}</li>
   </ol>
 </section>
 
@@ -18,7 +18,7 @@
   <div class="row">
 
     <div class="col-md-1">
-      <label class="control-label text-nowrap">开始时间: </label>
+      <label class="control-label text-nowrap">{{'rentalStartingDate'|translate}}: </label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
@@ -29,9 +29,9 @@
                is-open="startDateOpenStatus"
                datepicker-options="dateOptions"
                ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-md-1">
-      <label class="control-label text-nowrap">结束时间: </label>
+      <label class="control-label text-nowrap">{{'rentalStartingDate'|translate}}: </label>
     </div>
     <div class="col-md-2">
       <p class="input-group">
@@ -53,9 +53,9 @@
                is-open="endDateOpenStatus"
                datepicker-options="dateOptions"
                ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -66,7 +66,7 @@
     </div>
 
     <div class="col-md-1 text-nowrap">
-      <label class="control-label">统计类型</label>
+      <label class="control-label">{{'statisticsType'|translate}}</label>
     </div>
     <div class="col-md-2">
       <select name="queryType" class="form-control"
@@ -88,18 +88,18 @@
       <table ng-table="smsSendReportCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="smsReport in $data" style="text-align:center;">
 
-          <td class="text-nowrap" data-title="'日期'" ng-if="queryDate.reportType!=7">{{smsReport.sendTime |date:'yyyy-MM-dd'}}</td>
-          <td class="text-nowrap" data-title="'类型'" ng-if="queryDate.reportType==7">{{smsReport.sendType}}</td>
-          <td class="text-nowrap" data-title="'发送失败'" >{{smsReport.sendFail}}</td>
-          <td class="text-nowrap" data-title="'发送成功'" >{{smsReport.sendSuccess}}</td>
-          <td class="text-nowrap" data-title="'总计'" >{{smsReport.sendTotal}}</td>
+          <td class="text-nowrap" data-title="'date'|translate" ng-if="queryDate.reportType!=7">{{smsReport.sendTime |date:'yyyy-MM-dd'}}</td>
+          <td class="text-nowrap" data-title="'type'|translate" ng-if="queryDate.reportType==7">{{smsReport.sendType}}</td>
+          <td class="text-nowrap" data-title="'sendFiled'|translate" >{{smsReport.sendFail}}</td>
+          <td class="text-nowrap" data-title="'sendSuccessfully'|translate" >{{smsReport.sendSuccess}}</td>
+          <td class="text-nowrap" data-title="'total'|translate" >{{smsReport.sendTotal}}</td>
 
         </tr>
         <tr style="text-align:center;">
-          <td class="text-nowrap" data-title="'累计'">累计</td>
-          <td class="text-nowrap" data-title="'发送失败'">{{smsSendReportCtrl.sendFail}}</td>
-          <td class="text-nowrap" data-title="'发送成功'" >{{smsSendReportCtrl.sendSuccess}}</td>
-          <td class="text-nowrap" data-title="'总计'" >{{smsSendReportCtrl.sendTotal}}</td>
+          <td class="text-nowrap" data-title="'cumulative'|translate">{{'cumulative'|translate}}</td>
+          <td class="text-nowrap" data-title="'sendFiled'|translate">{{smsSendReportCtrl.sendFail}}</td>
+          <td class="text-nowrap" data-title="'sendSuccessfully'|translate" >{{smsSendReportCtrl.sendSuccess}}</td>
+          <td class="text-nowrap" data-title="'total'|translate" >{{smsSendReportCtrl.sendTotal}}</td>
 
         </tr>
       </table>

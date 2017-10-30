@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function updateDeviceinfoController($rootScope, $scope,$http,$uibModal, $uibModalInstance, treeFactory,SIM_FETCH_UNUSED_URL, DEVCE_HIGHTTYPE,DEVCE_POWERTYPE,DEVCE_MF,
-                                      DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo) {
+                                      DEIVCIE_TYPE_LIST_URL, DEIVCIE_PROTOCAL_TYPE_LIST_URL, DEVCEINFO_URL, serviceResource, Notification, deviceinfo,languages) {
     var vm = this;
     vm.deviceinfo = deviceinfo;
     vm.operatorInfo = $rootScope.userInfo;
@@ -56,7 +56,7 @@
     deviceTypeData.then(function (data) {
       vm.deviceTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取设备类型失败');
+      Notification.error(languages.findKey('getDevTypeFail'));
     })
 
     //得到协议类型集合
@@ -64,7 +64,7 @@
     protocalTypeData.then(function (data) {
       vm.protocalTypeList = data;
     }, function (reason) {
-      Notification.error('获取协议类型失败');
+      Notification.error(languages.findKey('getProFail'));
     })
 
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
@@ -72,21 +72,21 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
     var devicePowerTypeUrl = DEVCE_POWERTYPE + "?search_EQ_status=1";
     var devicePowerTypeData = serviceResource.restCallService(devicePowerTypeUrl, "GET");
     devicePowerTypeData.then(function (data) {
       vm.devicePowerTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取驱动类型失败');
+      Notification.error(languages.findKey('getDriFail'));
     })
     var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
     var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
     deviceMFData.then(function (data) {
       vm.deviceMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
 
     //日期控件相关
@@ -178,7 +178,7 @@
       var restPromise = serviceResource.restUpdateRequest(DEVCEINFO_URL, operDeviceinfo);
       restPromise.then(function (data) {
         if(data.code===0){
-          Notification.success("修改设备信息成功!");
+          Notification.success(languages.findKey('modiDevInfSucc'));
 
           $uibModalInstance.close(data.content);
 

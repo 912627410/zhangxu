@@ -10,7 +10,7 @@
     .controller('machineWorkingHoursController', machineWorkingHoursController);
 
   /** @ngInject */
-  function machineWorkingHoursController($rootScope, $scope,$http,$filter) {
+  function machineWorkingHoursController($rootScope, languages,$scope,$http,$filter) {
     var vm = this;
 
     vm.startDateDeviceData = new Date();
@@ -31,15 +31,15 @@
     var myChartTop = echarts.init(document.getElementById('divRightTop'));
     var optionTop = {
       title: {
-        text: '车辆工作时长分布'
+        text: languages.findKey('machineWorkingLengthDistribution')
       },
       tooltip: {
         trigger: 'item',
         formatter: function (params) {
-          return "车辆编号：" + params.seriesName + "<br/>"
-            + "累计工作时长：" + params.data[0] + " 小时" + "<br/>"
-            + "当日工作时长：" + params.data[1] + " 小时" + "<br/>"
-            + "开工日期：" + params.data[2];
+          return languages.findKey('vehicleNumber')+' : ' + params.seriesName + "<br/>"
+            + languages.findKey('cumulativeHours')+' : ' + params.data[0] + " " +languages.findKey('hour')+ "<br/>"
+            + languages.findKey('workingHoursofTheDay')+' : ' + params.data[1] + " " +languages.findKey('hour')+ "<br/>"
+            + languages.findKey('startTime')+' : ' + params.data[2];
         }
       },
       grid: {
@@ -67,7 +67,7 @@
       legend: {},
       xAxis: [
         {
-          name: '累计工作时长(小时)',
+          name: languages.findKey('cumulativeHours')+'('+languages.findKey('hour')+')',
           nameLocation: 'middle',
           type: 'value',
           scale: true,
@@ -79,7 +79,7 @@
       ],
       yAxis: [
         {
-          name: '当日工作时长(小时)',
+          name: languages.findKey('workingHoursofTheDay')+'('+languages.findKey('hour')+')',
           type: 'value',
           scale: true,
           max : 24,

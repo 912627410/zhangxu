@@ -9,7 +9,7 @@
     .controller('machineMngController', machineMngController);
 
   /** @ngInject */
-  function machineMngController($rootScope, $scope, $uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
+  function machineMngController($rootScope, $scope, languages,$uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
                                 treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
                                 MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
                                 MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT,USER_MACHINE_TYPE_URL) {
@@ -63,7 +63,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
 
@@ -250,7 +250,7 @@
 
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
         });
       }else {
         Notification.error("请选择所属组织!");
@@ -362,7 +362,7 @@
 
 
     vm.removeDevice = function (machine) {
-      $confirm({text: '确定要解绑吗?',title: '解绑确认', ok: '确定', cancel: '取消'})
+      $confirm({text: languages.findKey('areYouWanttoUnbundling'),title: languages.findKey('unbundlingConfirmation'), ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
         .then(function() {
           var restPromise = serviceResource.restUpdateRequest(MACHINE_UNBIND_DEVICE_URL, machine.id);
           restPromise.then(function (data) {

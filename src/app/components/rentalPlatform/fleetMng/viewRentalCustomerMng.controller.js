@@ -14,7 +14,7 @@
     var vm = this;
     var path="/rental/customer";
     vm.operatorInfo =$rootScope.userInfo;
-    vm.cancel = function () {
+    vm.back = function () {
       $location.path(path);
 
     };

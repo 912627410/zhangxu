@@ -9,18 +9,18 @@
     .controller('smsSendReportController', smsSendReportController);
 
   /** @ngInject */
-  function smsSendReportController($rootScope, $scope ,$filter, NgTableParams,ngTableDefaults, Notification, serviceResource, SMS_SEND_REPORT_URL) {
+  function smsSendReportController($rootScope, languages,$scope ,$filter, NgTableParams,ngTableDefaults, Notification, serviceResource, SMS_SEND_REPORT_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.settings.counts = [];
 
     // 默认查询7天
     $scope.reportTypeList=[{
-      type:5,name:'日报'
+      type:5,name:languages.findKey('dailyReport')
     },{
-      type:3,name:'月报'
+      type:3,name:languages.findKey('monthlyReport')
     },{
-      type:7,name:'短信类型'
+      type:7,name:languages.findKey('SMSType')
     }];
 
     // 默认查询7天 日报
@@ -81,7 +81,7 @@
           });
 
         }, function (reason) {
-          Notification.error("获取数据失败");
+          Notification.error(languages.findKey('rentalGetDataError'));
         });
 
       }

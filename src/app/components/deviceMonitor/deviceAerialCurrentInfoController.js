@@ -38,11 +38,89 @@
         vm.uploadFrequency = 2;// 默认上传频率2s
         vm.faultCommand = 39; //默认故障命令为39
         vm.parameterType = 0; // 默认车辆参数类型0
+        vm.latestAlarmInfo = serviceResource.getWarningInfo(vm.deviceinfo.warningCode).description;
 
         vm.staticNoLoadImportValue = null; //静态空载参数导入值
         vm.staticFullLoadImportValue = null; //静态满载参数导入值
         vm.dynamicNoLoadImportValue = null; //动态空载参数导入值
         vm.dynamicFullLoadImportValue = null; //动态满载参数导入值
+
+
+        var ws;//websocket实例
+        var lockReconnect = false;//避免重复连接
+        var wsUrl = WEBSOCKET_URL + "webSocketServer/mqttSendStatus?token=" + vm.operatorInfo.authtoken;
+        var heartBeatMsg = "HeartBeat"; //心跳消息
+        vm.createWebSocket = function(url) {
+          try {
+            ws = new WebSocket(url);
+            initEventHandle();
+          } catch (e) {
+            reconnect(url);
+          }
+        };
+        var initEventHandle = function() {
+          ws.onclose = function () {
+            reconnect(wsUrl);
+          };
+          ws.onerror = function () {
+            reconnect(wsUrl);
+          };
+          ws.onopen = function () {
+            //心跳检测重置
+            heartCheck.reset().start();
+          };
+          ws.onmessage = function (evt) {
+            //如果获取到消息，心跳检测重置
+            //拿到任何消息都说明当前连接是正常的
+            heartCheck.reset().start();
+            if(evt.data == heartBeatMsg) {
+              //心跳响应
+              // console.log("心跳响应:" + evt.data);
+            } else {
+              if(evt.data == 0) {
+                Notification.success(languages.findKey('successfulOperation'));
+              } else {
+                Notification.error(languages.findKey('operationFailed')+':'+evt.data);
+              }
+            }
+          }
+        };
+        var reconnect = function(url) {
+          if(lockReconnect) return;
+          lockReconnect = true;
+          //没连接上会一直重连，设置延迟避免请求过多
+          vm.reconnectTimeOut = setTimeout(function () {
+            vm.createWebSocket(url);
+            lockReconnect = false;
+          }, 3000);
+        };
+        //心跳检测
+        var heartCheck = {
+          timeout: 60000,//60秒
+          timeoutObj: null,
+          reset: function(){
+            clearTimeout(this.timeoutObj);
+            return this;
+          },
+          start: function(){
+            this.timeoutObj = setTimeout(function(){
+              //这里发送一个心跳，后端收到后，返回一个心跳消息，
+              //onmessage拿到返回的心跳就说明连接正常
+              ws.send(heartBeatMsg);
+            }, this.timeout)
+          }
+        };
+        $scope.$on("$destroy",function () {
+          if(ws) {
+            ws.close();
+            heartCheck.reset();
+            clearTimeout(vm.reconnectTimeOut);
+            lockReconnect = true;
+          }
+        });
+        if(vm.deviceinfo.versionNum == '11') {
+          vm.createWebSocket(wsUrl);
+        }
 
         // 短信发送成功后的初始化button
         vm.initSmsSendBtn = function () {
@@ -90,28 +168,28 @@
               if(pcuStatus.substring(5,6) == "0") {
                 if(pcuStatus.substring(6,7) == "0") {
                   if(pcuStatus.substring(7,8) == "0") {
-                    vm.pcuStatus = languages.findKey('retreat');
+                    vm.pcuStatusDesc = languages.findKey('retreat');
                   } else if(pcuStatus.substring(7,8) == "1") {
-                    vm.pcuStatus = languages.findKey('advance');
+                    vm.pcuStatusDesc = languages.findKey('advance');
                   }
                 } else if(pcuStatus.substring(6,7) == "1") {
-                  vm.pcuStatus = languages.findKey('median');
+                  vm.pcuStatusDesc = languages.findKey('not');
                 }
               } else if(pcuStatus.substring(5,6) == "1") {
-                vm.pcuStatus = languages.findKey('turnLeft');
+                vm.pcuStatusDesc = languages.findKey('turnLeft');
               }
             } else if(pcuStatus.substring(4,5) == "1") {
-              vm.pcuStatus = languages.findKey('turnRight');
+              vm.pcuStatusDesc = languages.findKey('turnRight');
             }
           } else if(pcuStatus.substring(1,2) == "1") {
             if(pcuStatus.substring(6,7) == "0") {
               if(pcuStatus.substring(7,8) == "0") {
-                vm.pcuStatus = languages.findKey('decline');
+                vm.pcuStatusDesc = languages.findKey('decline');
               } else if(pcuStatus.substring(7,8) == "1") {
-                vm.pcuStatus = languages.findKey('liftUp');
+                vm.pcuStatusDesc = languages.findKey('liftUp');
               }
             } else if(pcuStatus.substring(6, 7) == "1") {
-              vm.pcuStatus = languages.findKey('median');
+              vm.pcuStatusDesc = languages.findKey('not');
             }
           }
         }
@@ -209,7 +287,7 @@
                     }
                 }
             },
-            title: '电压',
+            title: languages.findKey('voltage'),
             yAxis: {
                 stops: [
                     [0.1, '#55BF3B'], // green
@@ -432,7 +510,7 @@
               }
                 restURL += "&vehicleStateCollect=" + vehicleStateCollect + "&chargerStateCollect=" + chargerStateCollect;
             }
-            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: '确定', cancel: '取消'})
+            $confirm({text: '确定要发送此短信吗?', title: '短信发送确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function () {
                     var rspData = serviceResource.restCallService(restURL, "ADD");  //post请求
                     rspData.then(function (data) {
@@ -489,7 +567,7 @@
       //发送间隔信息
       vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
         if(angular.isUndefined(secOutsidePower) ||angular.isUndefined(secLocateInt)||angular.isUndefined(secInnerPower) ){
-          Notification.error("请检查时间设置，三个回传时间须全部设置！");
+          Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
           return;
         }
         if (devicenum == null) {
@@ -751,7 +829,7 @@
       //发送采样时间
       vm.sendSamplingTimeSMS = function (devicenum, vehicleStateCollect, chargerStateCollect) {
         if(angular.isUndefined(vehicleStateCollect) ||angular.isUndefined(chargerStateCollect)){
-          Notification.error("请检查时间设置，两个回传时间须全部设置！");
+          Notification.error(languages.findKey('checktheTimeSettingsFullySet'));
           return;
         }
         if (devicenum == null) {
@@ -876,14 +954,13 @@
             var restPromise = serviceResource.restCallService(restURL, "ADD", null);
             restPromise.then(function (data) {
               if (data.code == 0) {
-                Notification.success(data.content);
                 vm.initSmsSendBtn();
               }
               else {
                 Notification.error(data.content);
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
             })
           });
         };
@@ -926,14 +1003,13 @@
             var restPromise = serviceResource.restCallService(restURL, "ADD", null);
             restPromise.then(function (data) {
               if (data.code == 0) {
-                Notification.success(data.content);
                 vm.initSmsSendBtn();
               }
               else {
                 Notification.error(data.content);
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
             })
           });
         };
@@ -974,7 +1050,7 @@
                 vm.returnTimeParam.time = data.content;
               }
             }, function (reason) {
-              Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+              Notification.error(reason.data.message);
             })
           };
 
@@ -985,7 +1061,7 @@
        */
       vm.setReturnTime = function (deviceNum, returnTimeParam) {
         if(angular.isUndefined(returnTimeParam)){
-          Notification.error("请检查时间设置!");
+          Notification.error(languages.findKey('checktheTimeSettings'));
           return;
         }
         if (deviceNum == null) {
@@ -994,12 +1070,12 @@
         }
 
         if(null == returnTimeParam.name || "" == returnTimeParam.name) {
-          Notification.error("请选择时间间隔类型");
+          Notification.error(languages.findKey('chooseTheTypeOfTimeInterval'));
           return;
         }
 
         if(null == returnTimeParam.time || "" == returnTimeParam.time) {
-          Notification.error("请输入时间");
+          Notification.error(languages.findKey('pleaseEnterTheTime'));
           return;
         }
 
@@ -1028,14 +1104,13 @@
               var restPromise = serviceResource.restCallService(restURL, "ADD", null);
               restPromise.then(function (data) {
                 if (data.code == 0) {
-                  Notification.success(data.content);
                   vm.initSmsSendBtn();
                 }
                 else {
                   Notification.error(data.content);
                 }
               }, function (reason) {
-                Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+                Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
               })
             });
           }
@@ -1058,42 +1133,41 @@
           return;
         }
         if(null == register || "" == register) {
-          Notification.error("请输入起始地址");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('startAddress'));
           return;
         }
         if(null == dataLength || "" == dataLength) {
-          Notification.error("请输入数据长度");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('dataLength'));
           return;
         }
         if(null == uploadNum || uploadNum == "") {
-          Notification.error("请输入上传次数");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('uploads'));
           return;
         }
         if(null == uploadFrequency || uploadFrequency == "") {
-          Notification.error("请输入上传频率");
+          Notification.error(languages.findKey('pleaseEnterThe')+languages.findKey('uploadFrequency'));
           return;
         } else if(uploadFrequency < 1) {
-          Notification.error("上传频率录入有误");
+          Notification.error(languages.findKey('incorrectUploadFrequency'));
           return;
         }
         var restURL = SEND_MQTT_READ_URL + "?deviceNum="+ deviceNum + "&register=" + register + "&dataLength=" + dataLength + "&uploadNum=" + uploadNum + "&uploadFrequency=" + uploadFrequency;
         $confirm({
-          text: languages.findKey('确定发送读请求命令?') + '',
-          title: languages.findKey('读请求命令确认') + '',
+          text: languages.findKey('areYouSureToSendAReadRequestCommand') + '',
+          title: languages.findKey('readRequestCommandConfirmation') + '',
           ok: languages.findKey('confirm') + '',
           cancel: languages.findKey('cancel') + ''
         }).then(function () {
           var restPromise = serviceResource.restCallService(restURL, "ADD", null);
           restPromise.then(function (data) {
             if (data.code == 0) {
-              Notification.success(data.content);
               vm.initSmsSendBtn();
             }
             else {
               Notification.error(data.content);
             }
           }, function (reason) {
-            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+            Notification.error(languages.findKey('sendFiled') + ": " + reason.data.message);
           })
         });
       };
@@ -1442,24 +1516,24 @@
                 return false;
             }
             if(!vm.selectAddress&&typeof(vm.selectAddress)=="undefined"){
-                Notification.error('无效的地址');
+                Notification.error(languages.findKey('invalid')+languages.findKey('address'));
                 return false;
             }
             if(!vm.amaplongitudeNum&&typeof(vm.amaplongitudeNum)=="undefined"){
-                Notification.error('无效的经度');
+                Notification.error(languages.findKey('invalid')+languages.findKey('longitude'));
                 return false;
             }
             if(!vm.amaplatitudeNum&&typeof(vm.amaplatitudeNum)=="undefined"){
-                Notification.error('无效的维度');
+                Notification.error(languages.findKey('invalid')+languages.findKey('latitude'));
                 return false;
             }
             if(!vm.radius||typeof(vm.radius)=="undefined"||isNaN(vm.radius)){
-                Notification.error('无效的半径');
+                Notification.error(languages.findKey('invalid')+languages.findKey('rentalRadius'));
                 return false;
             }
 
             var text="距离: "+vm.radius+"(米),   地址: "+vm.selectAddress+",  坐标: 经度 "+vm.amaplongitudeNum+" 维度 "+vm.amaplatitudeNum +" "
-            $confirm({text: text,title: '围栏设置确认', ok: '确定', cancel: '取消'})
+            $confirm({text: text,title: '围栏设置确认', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
                 .then(function() {
                     var machieId;
                     if(deviceinfo.machine.id!=null){
@@ -1501,7 +1575,7 @@
           return false;
         }
         var text = "确认取消：" + deviceinfo.machine.licenseId + " 车的电子围栏功能吗？";
-        $confirm({text: text, title: '取消电子围栏', ok: '确定', cancel: '取消'})
+        $confirm({text: text, title: '取消电子围栏', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')})
           .then(function () {
             var fence = {
               id: deviceinfo.machine.id,
@@ -1727,7 +1801,7 @@
                         vm.refreshMapTab(lineArr);
                     }
                 }, function (reason) {
-                    Notification.error("查询数据出错");
+                    Notification.error(languages.findKey('queryingDataError'));
                 }
             )
         };
@@ -1863,7 +1937,7 @@
                   queryCondition += "startDate=" + startDateFormated;
                 }
               } else {
-                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
                 return;
               }
               if (endDate) {
@@ -1877,7 +1951,7 @@
                   queryCondition += "endDate=" + endDateFormated;
                 }
               } else {
-                Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+                Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
                 return;
               }
 
@@ -1900,10 +1974,10 @@
                     vm.deviceData_pagenumber = data.page.number + 1;
                     vm.basePath = "device/devicedata";
                   }else {
-                    Notification.warning("暂无数据！");
+                    Notification.warning(languages.findKey('noDataYet'));
                   }
                 },function(reason){
-                    serviceResource.handleRsp("获取数据失败",reason);
+                    serviceResource.handleRsp(languages.findKey('rentalGetDataError'),reason);
                     vm.deviceInfoList = null;
                 });
             }
@@ -1926,7 +2000,7 @@
             filterTerm += "startDate=" + startDateFormated;
           }
         } else {
-          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
           return;
         }
         if (endDate){
@@ -1940,7 +2014,7 @@
             filterTerm += "endDate=" + endDateFormated;
           }
         } else {
-          Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+          Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
           return;
         }
         var deviceDataPromis = serviceResource.queryDeviceSimpleGPSData(page, size, sort, filterTerm);
@@ -1952,10 +2026,10 @@
               vm.basePath = "device/devicesimplegpsdata";
             }else {
               vm.deviceLocationList = null;
-              Notification.warning("暂无数据！");
+              Notification.warning(languages.findKey('noDataYet'));
             }
           }, function (reason) {
-            Notification.error("查询数据出错");
+            Notification.error(languages.findKey('queryingDataError'));
           }
         )
       };
@@ -1964,7 +2038,7 @@
           if (deviceNum) {
             var filterTerm = "deviceNum=" + deviceNum;
           }else {
-            Notification.error("输入的设备编号有误");
+            Notification.error(languages.findKey('theDeviceNumberEnteredIsIncorrect'));
             return;
           }
 
@@ -1972,7 +2046,7 @@
             filterTerm += "&startDate=" + $filter('date')(startDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
 
@@ -1980,7 +2054,7 @@
             filterTerm += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
           var restCallURL = DEVCEDATA_EXCELEXPORT;
@@ -2021,7 +2095,7 @@
 
 
           }).error(function (data, status, headers, config) {
-            Notification.error("下载失败!");
+            Notification.error(languages.findKey('failedToDownload'));
           });
         }
 
@@ -2070,7 +2144,7 @@
                   }
                   vm.warningConfig.series[0].data = vm.warningList;
                 }, function (reason) {
-                  serviceResource.handleRsp("获取报警数据失败", reason);
+                  serviceResource.handleRsp(languages.findKey('failedToGetAlarmData'), reason);
                   vm.warningConfig.series[0].data = null;
                 });
             }
@@ -2110,12 +2184,12 @@
         };
 
         vm.queryTypeData=[{
-            type:'01',name:'设备状态'
+            type:'01',name:languages.findKey('equipmentState')
         },{
-            type:'02',name:'报警信息'
+            type:'02',name:languages.findKey('alarmInformation')
         },{
             //2016-07-11 由市电电压调整成蓄电池组电压
-            type:'03',name:'蓄电池组电压'
+            type:'03',name:languages.findKey('batteryVoltage')
         }];
 
         vm.queryType=vm.queryTypeData[0].type;
@@ -2136,7 +2210,7 @@
               floating: true,
               backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
               borderWidth: 1,
-              labelFormat: '{name}' + '<br><b>绿色：工作</b><br><b>黄色：空闲 </b><br>'
+              labelFormat: '{name}' + '<br><b>'+languages.findKey('greenWork')+'</b><br><b>'+languages.findKey('yellowFree') +'</b><br>'
             },
             plotOptions: {
               series: {
@@ -2174,9 +2248,9 @@
                     var padDate = serviceResource.padLeft('000000000', datedata, true);
                     var fmtData = padDate.substr(0, 2) + ':' + padDate.substr(2, 2) + ':' + padDate.substr(4, 2);
                     if (this.color == '#90ed7d') {
-                      return '<b>工作状态</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>{{"workingState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
                     } else if (this.color == '#f7a35c') {
-                      return '<b>空闲状态</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>{{"idleState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
                     }
                   }
                 }
@@ -2187,7 +2261,7 @@
             type: 'datetime',
             title: {
               enabled: true,
-              text: '日期'
+              text: languages.findKey('date')
             },
             startOnTick: true,
             endOnTick: true,
@@ -2210,7 +2284,7 @@
           },
           yAxis: {
             title: {
-              text: '时间'
+              text: languages.findKey('time')
             },
             labels: {
               formatter: function () {
@@ -2221,7 +2295,7 @@
             }
           },
           series: [{
-            name: '工作状态',
+            name: languages.findKey('workingState'),
             marker: {
               symbol: 'circle'
             },
@@ -2229,7 +2303,7 @@
             data: []
           }],
           title: {
-            text: '工作状态热点分布'
+            text: languages.findKey('hotspotDistribution')
           },
           loading: false,
           // function to trigger reflow in bootstrap containers
@@ -2307,7 +2381,7 @@
           xAxis: {
             title: {
               enabled: true,
-              text: '日期'
+              text: languages.findKey('date')
             },
             showLastLabel: true,
             type: 'datetime',
@@ -2330,7 +2404,7 @@
           },
           yAxis: {
             title: {
-              text: '报警时间'
+              text: languages.findKey('alarmTime')
             },
             startOnTick: true,
             endOnTick: true,
@@ -2347,13 +2421,13 @@
             }
           },
           series: [{
-            name: '报警信息',
+            name: languages.findKey('alarmInformation'),
             color: 'rgba(205, 51, 51, .5)',
             turboThreshold: 100000,
             data:[]
           }],
           title: {
-            text: '报警信息'
+            text: languages.findKey('alarmInformation')
           },
           loading: false,
           func: function (chart) {
@@ -2403,7 +2477,7 @@
           },
           xAxis: {
             title: {
-              text: '日期'
+              text: languages.findKey('date')
             },
             labels: {
               formatter: function () {
@@ -2415,7 +2489,7 @@
           },
           yAxis: {
             title: {
-              text: '伏特(V)'
+              text: languages.findKey('volt(V)')
             },
             tickPositions: [0, 5, 10, 15, 20, 25, 30],
             labels: {
@@ -2425,7 +2499,7 @@
             }
           },
           series: [{
-            name: '蓄电池组电压',
+            name: languages.findKey('batteryVoltage'),
             color: 'rgba(223, 83, 83, .5)',
             turboThreshold: 100000,
             tooltip: {
@@ -2440,7 +2514,7 @@
             }
           }],
           title: {
-            text: '蓄电池组电压变化'
+            text:  languages.findKey('batteryVoltageVariation')
           },
           loading: false,
           // function to trigger reflow in bootstrap containers
@@ -2481,7 +2555,7 @@
 
         vm.refreshPageDate = function (queryType, deviceNum, startDate, endDate) {
             if (Math.floor((endDate - startDate) / 24 / 3600 / 1000) > 2) {
-                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: '确认 ', cancel: '取消'}).then(
+                $confirm({text: '因数据量较大，若选择时间超过三天，查询可能会较慢，确认继续吗？', title: '消息提示', ok: languages.findKey('confirm'), cancel: languages.findKey('cancel')}).then(
                     function () {
                         vm.queryChart(vm.queryType, vm.deviceinfo.deviceNum, vm.startDate, vm.endDate);
                     }
@@ -2760,15 +2834,15 @@
                 vm.parameterValue.bLevelBrakeDelay = data.content.bLevelBrakeDelay*10;
 
                 vm.parameterTypeList=[{
-                    name:'快速行走曲线',curve : vm.parameterValue.driveFastCurve
+                    name:languages.findKey('fastWalkingCurve'),curve : vm.parameterValue.driveFastCurve
                 },{
-                    name:'起升后行走曲线',curve : vm.parameterValue.driveRisedCurve
+                    name:languages.findKey('walkingCurveAfterLifting'),curve : vm.parameterValue.driveRisedCurve
                 },{
-                    name:'上升曲线',curve : vm.parameterValue.liftUpCurve
+                    name:languages.findKey('risingCurve'),curve : vm.parameterValue.liftUpCurve
                 },{
-                    name:'慢速行走曲线',curve : vm.parameterValue.driveSlowCurve
+                    name:languages.findKey('slowWalkingCurve'),curve : vm.parameterValue.driveSlowCurve
                 },{
-                    name:'转向曲线',curve : vm.parameterValue.steerRisedCurve
+                    name:languages.findKey('steeringCurve'),curve : vm.parameterValue.steerRisedCurve
                 }];
 
                 vm.queryParameter = vm.parameterTypeList[0];
@@ -2844,7 +2918,7 @@
         yAxis: {
           min: 0,
           max: 4096,
-          name: '电压'
+          name: languages.findKey('voltage')
         },
         series: [{
           type: 'line',
@@ -3085,7 +3159,7 @@
           })[0].click();
 
         }).error(function (data, status, headers, config) {
-          Notification.error("下载失败!");
+          Notification.error(languages.findKey('failedToDownload'));
         });
       };
 
@@ -3205,7 +3279,7 @@
               queryCondition += "startDate=" + startDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
           if (endDate) {
@@ -3218,7 +3292,7 @@
               queryCondition += "endDate=" + endDateFormated;
             }
           } else {
-            Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+            Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
             return;
           }
 
@@ -3266,14 +3340,14 @@
       vm.batteryIn = {
         options: {
           title: {
-            text: '电池充电监控'
+            text: languages.findKey('chargingMonitoring')
           }
         }
       };
       vm.batteryOut = {
         options: {
           title: {
-            text: '电池放电监控'
+            text: languages.findKey('dischargeMonitoring')
           }
         }
       };
@@ -3290,14 +3364,14 @@
               zoomType: 'x'
             },
             title: {
-              text: '电池充电监控'
+              text: languages.findKey('chargingMonitoring')
             },
             xAxis: {
               type: 'datetime',
               categories:time,
               title: {
                 enabled: true,
-                text: '日期'
+                text: languages.findKey('date')
               },
               showLastLabel: true,
               tickInterval:100,
@@ -3310,7 +3384,7 @@
             },
             yAxis: {
               title: {
-                text: '电压 (V)',
+                text: languages.findKey('voltage'),
                 rotation:0,
                 align: 'high',
                 y:-20,
@@ -3351,14 +3425,14 @@
               zoomType: 'x'
             },
             title: {
-              text: '电池放电监控'
+              text: languages.findKey('dischargeMonitoring')
             },
             xAxis: {
               type: 'datetime',
               categories:time,
               title: {
                 enabled: true,
-                text: '日期'
+                text: languages.findKey('date')
               },
               tickInterval:100,
               showLastLabel: true,
@@ -3370,7 +3444,7 @@
             },
             yAxis: {
               title: {
-                text: '电压 (V)',
+                text: languages.findKey('voltage'),
                 rotation:0,
                 align: 'high',
                 y:-20,

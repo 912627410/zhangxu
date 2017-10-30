@@ -19,11 +19,11 @@
 
             </div>
             <div class="control-group">
-              <label class="control-label">热度类型：</label>
+              <label class="control-label">{{'heatType'|translate}}：</label>
               <div class="controls">
                   <select class="form-control" ng-model="workStartMngController.experimentalcar" placeholder="{{'pleaseSelect'|translate}}">
-                    <option value="0">平均开工时间</option>
-                    <option value="1">平均开工次数</option>
+                    <option value="0">{{'averageWorkHours'|translate}}</option>
+                    <option value="1">{{'averageWorkingFrequency'|translate}}</option>
                   </select>
                 </div>
             </div>
@@ -50,9 +50,9 @@
 
             <div class="control-group">
               <div class="controls">
-                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'车辆开工热度分布'|translate}}"
+                <button id="btnSubmit" class="btn btn-primary btn-block" type="button" value="{{'vehicleStartHeatDistribution'|translate}}"
                         presentation-href="statAnalysis:workHeat:workHeat:query"
-                        ng-click="workStartMngController.drawWorkHot();">{{'车辆开工热度分布'|translate}}</button>
+                        ng-click="workStartMngController.drawWorkHot();">{{'vehicleStartHeatDistribution'|translate}}</button>
               </div>
             </div>
           </form>
@@ -66,47 +66,47 @@
     <div id="topic-container" class="topic-container">
       &nbsp;
       <span id="sapnWorkMonth"></span>
-      <span id="sapnWorkProvince">全国</span>
-      车辆开工热度分布
+      <span id="sapnWorkProvince">{{'nationwide'|translate}}</span>
+      {{'vehicleStartHeatDistribution'|translate}}
       <span class="return-mask" style="display: none;">
                 <i class="icon-reply"></i>
-                <a class="return-word" href="javascript:void(0);" onclick="groupEvent()">返回到全国</a>
+                <a class="return-word" href="javascript:void(0);" onclick="groupEvent()">{{'returntoTheWholeCountry'|translate}}</a>
             </span>
     </div>
     <div id="map-container" class="chart-container" style="height: 350px;"> </div>
-    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示热度类型(开工时长或开机次数)与工作车辆数量的关系 </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> {{'relationshipBetweenHeatTypeAndNumberofWorkingVehicles'|translate}} </div>
     <div id="pds-container" class="chart-container"> </div>
-    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> 展示各省热度类型(开工时长或开机次数)与活跃车辆数,销售车辆数的关系 </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i> {{'relationshipBetweenHeatTypeAndNumberofactiveVehiclesAndtheNumberofVehiclesSold'|translate}} </div>
     <div class="table-container">
       <div class="table-header">
-        <span class="table-header-text">各省数据<i ng-click="" style="margin-left: 20px;color:#EBA174;">显示更多</i></span>
+        <span class="table-header-text">{{'provincialData'|translate}}<i ng-click="" style="margin-left: 20px;color:#EBA174;">{{'showMore'|translate}}</i></span>
         <a class="table-show-all" id="showAllProvince"></a>
       </div>
       <table id="areaTop" class="table table-striped table-bordered table-condensed table-hover">
         <thead>
         <tr>
-          <th>省份名称</th>
-          <th>平均开工时长(小时)</th>
-          <th>活跃车辆数(台)</th>
-          <th>销售车辆数(台)</th>
-          <th>占比(活:销)</th>
+          <th>{{'provinceName'|translate}}</th>
+          <th>{{'averageStartingTime'|translate}}({{'hour'|translate}})</th>
+          <th>{{'numberofActiveVehicles'|translate}}{{'carQuantifier'|translate}}</th>
+          <th>{{'numberofVehiclesSold'|translate}}{{'carQuantifier'|translate}}</th>
+          <th>{{'proportionActiveSold'|translate}}</th>
         </tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
-    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i>  展示车辆各年份月度工作情况 </div>
+    <div class="tips-container">&nbsp;<i class="icon-chevron-down"></i>  {{'monthlyWorkofVehicleinEachYear'|translate}} </div>
     <div id="mmu-container" class="chart-container"> </div>
 
     <div id="areaTop-all" style="display:none;">
       <table class="table table-striped table-bordered table-condensed table-hover" >
         <thead>
         <tr>
-          <th>省份名称</th>
-          <th>平均开工时长(小时)</th>
-          <th>活跃车辆数(台)</th>
-          <th>销售车辆数(台)</th>
-          <th>占比(活:销)</th>
+          <th>{{'provinceName'|translate}}</th>
+          <th>{{'averageStartingTime'|translate}}({{'hour'|translate}})</th>
+          <th>{{'numberofActiveVehicles'|translate}}{{'carQuantifier'|translate}}</th>
+          <th>{{'numberofVehiclesSold'|translate}}{{'carQuantifier'|translate}}</th>
+          <th>{{'proportionActiveSold'|translate}}</th>
         </tr>
         </thead>
         <tbody></tbody>

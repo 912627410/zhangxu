@@ -9,13 +9,15 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE,RENTAL_PROFIT_DATA_URL, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,MACHINE_DEVICETYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL,RENTAL_TOTALPROFIT_DATA_URL) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     var xAxisDate = [];
     var jcProfitDate = [];
     var zbProfitDate = [];
     var qbProfitDate = [];
+    vm.rentalTotalProfit = 0;
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -32,7 +34,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20-60;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -69,6 +71,15 @@
       $anchorScroll();
     }
 
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
 
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
@@ -76,7 +87,7 @@
     deviceHeightTypeData.then(function (data) {
       vm.deviceHeightTypeList = data.content;
     }, function (reason) {
-      Notification.error('获取高度类型失败');
+      Notification.error(languages.findKey('getHtFail'));
     })
 
    //查询厂商List
@@ -85,8 +96,64 @@
     deviceMFData.then(function (data) {
       vm.machineMFList = data.content;
     }, function (reason) {
-      Notification.error('获取厂商失败');
+      Notification.error(languages.findKey('getVendorFail'));
     })
+
+    //总利润查询
+    vm.totalProfit = function () {
+      var queryDate = new Date();
+      var totalProfitUrl = RENTAL_TOTALPROFIT_DATA_URL;
+      totalProfitUrl += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
+      var totalProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
+      totalProfitData.then(function (data) {
+        if(null!=data.content.totalProfit){
+          vm.rentalTotalProfit = data.content.totalProfit
+        }
+      })
+    }
+    vm.totalProfit();
+
+    //获得季度
+    function getQuarterFromMonth(date){
+      var quarter = 0;
+      if(date.getMonth()>=0&&date.getMonth()<3){
+        quarter = 1;
+      }
+      if(date.getMonth()>2&&date.getMonth()<6){
+        quarter = 2;
+      }
+
+      if(date.getMonth()>5&&date.getMonth()<9){
+        quarter = 3;
+      }
+
+      if(date.getMonth()>8&&date.getMonth()<11){
+        quarter = 4;
+      }
+      return quarter;
+    }
+
+    //各时间段利润
+    vm.profitsDetails = function () {
+      var date = new Date();
+      var queryQuarter = getQuarterFromMonth(date)
+      var queryMonth = date.getMonth().valueOf()+1;
+      var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
+      totalProfitUrl += "?queryYear=" + date.getFullYear();
+      //totalProfitUrl += "&queryMonth=" + queryMonth;
+      totalProfitUrl += "&queryQuarter=" + queryQuarter;
+      var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
+      detailsProfitData.then(function (data) {
+        var profitData  = data.content;
+        vm.yearProfit = profitData.yearProfit;
+        vm.yearRate = profitData.yearRate;
+        vm.quarterProfit = profitData.quarterProfit;
+        vm.quarterRate = profitData.quarterRate;
+
+      })
+    }
+    vm.profitsDetails();
+
 
 
     var startDate = new Date();
@@ -128,6 +195,7 @@
     }
 
 
+
     //profit
     var profitBar = echarts.init(document.getElementById('profitBar'));
     var profitBarOption = {
@@ -140,6 +208,7 @@
       legend: {
         data: [languages.findKey('rentalScissorLift'), languages.findKey('rentalArticulatingBoomLift'), languages.findKey('rentalBoomLift')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(143,159,255)'],
       grid: {
         left: '3%',
         right: '4%',
@@ -195,33 +264,29 @@
     profitBar.setOption(profitBarOption);
 
 
+
     var incomeStatisticInfo = {
-      totalMachines: 0,
       totalOrders: 0,
     };
 
     var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
     rspdata.then(function (data) {
 
-      var MachineStatisticsList = data.machineStatistics;
-      MachineStatisticsList.forEach(function (machineStatistics) {
-        incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
-      })
-     //console.log(incomeStatisticInfo.totalMachines);
+
       var RentalOrderStatisticsList = data.rentalOrderStatistics;
       RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
         incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
       })
       //console.log(incomeStatisticInfo.totalOrders);
     }, function (reason) {
-      Notification.error('获取收入统计信息失败');
+      Notification.error(languages.findKey('getIncomeInf'));
     })
     vm.incomeStatisticInfo = incomeStatisticInfo;
 
 
     vm.queryProfit = function (queryStartData,queryEndData) {
       if(queryStartData==null||queryEndData==null){
-        Notification.error("请选择开始时间或者结束时间");
+        Notification.error(languages.findKey('selSEtime'));
       }
       if(null!=queryStartData&&null!=queryEndData){
         var xAxisDate = [];
@@ -259,7 +324,7 @@
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
         },function (reason) {
-          Notification.error("获取利润数据失败")
+          Notification.error(languages.findKey('getProFail'));
         })
       }
 

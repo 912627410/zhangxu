@@ -9,7 +9,7 @@
     .controller('workStartMngController', workStartMngController);
 
   /** @ngInject */
-  function workStartMngController($rootScope, $scope, $http, $filter) {
+  function workStartMngController($rootScope, languages,$scope, $http, $filter) {
     var vm = this;
 
 
@@ -36,8 +36,8 @@
     var mapChart = echarts.init(document.getElementById('map-container'));
     var chinaOption = {
       title: {
-        text: '车辆开工热度分布',
-        subtext: '全国',
+        text: languages.findKey('vehicleStartHeatDistribution'),
+        subtext: languages.findKey('nationwide'),
         left: 'center'
       },
       tooltip: [
@@ -49,13 +49,13 @@
           },
           formatter: function(params) {
             if(params.componentSubType == 'map') {
-              var unit =  '小时' ;
-              var name = '平均开工时长';
+              var unit =  languages.findKey('hour') ;
+              var name = languages.findKey('averageStartingTime');
 
               if(params.value) {
                 return params.data.name + '<br />'
                   + name + '：' +  params.data.value + unit +  '<br />'
-                  + '车辆数量：' + params.data.count + ' 台';
+                  + languages.findKey('vehicleQuantity') +' : ' + params.data.count + languages.findKey('carQuantifier');
               }
               return params.name + '<br />'
                 + name + '：' + 0 + unit +  '<br />'
@@ -90,7 +90,7 @@
         precision: 2,
         seriesIndex: [0],
         color: ['#980000','#f6f3d2','#075e89'],
-        text: ['高', '低']
+        text: [languages.findKey('high'),languages.findKey('low')]
       },
       geo: {
         map: 'china',
@@ -109,7 +109,7 @@
       },
       series: [
         {
-          name: '开工热度',
+          name: languages.findKey('startHeat'),
           type: 'map',
           map: 'china',
           // roam: true,
@@ -244,7 +244,7 @@
               precision: 2,
               seriesIndex: [0],
               color: ['#980000', '#f6f3d2', '#075e89'],
-              text: ['高', '低']
+              text: [languages.findKey('high'),languages.findKey('low')]
             },
             toolbox: {
               show: true,
@@ -290,7 +290,7 @@
     var pdsChart = echarts.init(document.getElementById('pds-container'));
     var pdsOption = {
       title: {
-        text: '区域工作车辆分布',
+        text: languages.findKey('regionalVehicleDistribution'),
         padding: [10, 20]
       },
       tooltip: {
@@ -320,7 +320,7 @@
         }
       },
       legend: {
-        data:[ '工作车辆数量','月均工作时长']
+        data:[ languages.findKey('quantityofWorkingVehicles'),languages.findKey('monthlyWorkingHours')]
       },
       grid: {
         left: '3%',
@@ -353,7 +353,7 @@
       yAxis: [
         {
           type: 'value',
-          name: '车辆数量(台)',
+          name: languages.findKey('vehicleQuantity')+languages.findKey('carQuantifier'),
           boundaryGap: ['0%', '10%'],
           minInterval: 1,
           splitLine: {
@@ -377,7 +377,7 @@
         },
         {
           type: 'value',
-          name: '工作时长(小时)',
+          name: languages.findKey('workHours')+'('+languages.findKey('hour')+')',
           boundaryGap: ['0%', '10%'],
           axisLine: {
             show: false
@@ -398,7 +398,7 @@
       ],
       series: [
         {
-          name:'工作车辆数量',
+          name:languages.findKey('quantityofWorkingVehicles'),
           type:'bar',
           barMaxWidth: '35',
           itemStyle: {
@@ -477,7 +477,7 @@
           ]
         },
         {
-          name:'月均工作时长',
+          name:languages.findKey('monthlyWorkingHours'),
           type:'line',
           //smooth: true,
           yAxisIndex: 1,
@@ -566,7 +566,7 @@
     var mmuChart = echarts.init(document.getElementById('mmu-container'));
     var mmuOption = {
       title: {
-        text: '月度工作车辆分布',
+        text: languages.findKey('monthlyVehicleDistribution'),
         padding: [10, 20]
       },
       toolbox: {
@@ -626,7 +626,7 @@
         data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
       },
       yAxis: {
-        name: '车辆数量(台)',
+        name: languages.findKey('vehicleQuantity')+languages.findKey('carQuantifier'),
         type: 'value',
         minInterval: 1,
         axisLine: {

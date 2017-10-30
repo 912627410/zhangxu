@@ -6,8 +6,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">权限管理</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'priviligeManagement'|translate}}</li>
   </ol>
 </section>
 
@@ -18,7 +18,7 @@
   <div class="row form-group">
 
     <div class="col-md-1">
-      <label class="control-label">权限名称 </label>
+      <label class="control-label">{{'priviligeName'|translate}} </label>
     </div>
     <div class="col-md-3">
       <input type="text" name="permission" class="form-control " ng-model="privilegeMngCtrl.privilegeInfo.remark" placeholder="{{'supportfuzzyqueries'|translate}}"/>
@@ -26,7 +26,7 @@
 
 
     <div class="col-md-1">
-      <label class="control-label">权限URL</label>
+      <label class="control-label">{{'priviligeURL'|translate}}</label>
     </div>
     <div class="col-md-3">
       <input type="text" name="permission" class="form-control " ng-model="privilegeMngCtrl.privilegeInfo.permission" placeholder="{{'supportfuzzyqueries'|translate}}"/>
@@ -49,7 +49,7 @@
         <div class="panel panel-success">
           <div class="panel-heading">
             <h4 class="panel-title text-center">
-              菜单管理
+              {{'menuManagement'|translate}}
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newMenu('md')" >
                 <i class="fa fa-plus" presentation-href="system:privilege:createMenu"></i> <span>{{'add' | translate}}</span>
               </a>
@@ -69,7 +69,7 @@
         <div class="panel panel-success">
           <div class="panel-heading">
             <h4 class="panel-title text-center">
-              权限列表
+              {{'priviligeList' | translate}}
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.newPrivilege('md')" >
                 <i class="fa fa-plus" presentation-href="system:privilege:create"></i> <span>{{'add' | translate}}</span>
               </a>
@@ -118,7 +118,7 @@
         <div class="panel panel-success">
           <div class="panel-heading">
             <h4 class="panel-title text-center">
-              隶属角色列表
+              {{'affiliatedRoleList' | translate}}
               <a class="pull-right" type="button" href="" ng-click="privilegeMngCtrl.privilegeRoleManage(privilegeMngCtrl.selectedPriv,'lg')">
                 <i class="fa fa-pencil-square-o" presentation-href="system:privilege:privilegeRole:modify"></i> <span>{{'alter' | translate}}</span>
               </a>

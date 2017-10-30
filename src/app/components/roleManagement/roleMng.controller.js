@@ -6,7 +6,7 @@
     .controller('roleMngController', roleMngController);
 
   /** @ngInject */
-  function roleMngController($rootScope, $uibModal, ROLE_MENU_LIST_URL, Notification, serviceResource,commonFactory, ROLE_URL) {
+  function roleMngController($rootScope, languages,$uibModal, ROLE_MENU_LIST_URL, Notification, serviceResource,commonFactory, ROLE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -14,7 +14,7 @@
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = angular.copy([$rootScope.orgChart[0]]);
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     //点击组织查询包含角色
@@ -29,7 +29,7 @@
       promise.then(function (data) {
         vm.roleList = data.content;
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error(languages.findKey('failedToGetRoleData'));
       });
 
     }
@@ -70,7 +70,7 @@
       promise.then(function (data) {
         vm.roleList = data.content;
       }, function (reason) {
-        Notification.error("获取角色数据失败");
+        Notification.error(languages.findKey('failedToGetRoleData'));
       });
     }
 

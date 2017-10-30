@@ -156,8 +156,8 @@
     .constant('SEND_SET_CAT_PHONE_NUMBER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetCatPhoneNumberSMS')   //发送短消息
     .constant('GET_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/getTerminalResetSMS')   //得到短消息内容
     .constant('SEND_TERMINAL_RESET_SMS_URL', SERVER_BASE_URL + 'sms/sendTerminalResetSMS')   //发送短消息
-    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTReturnTime')   // 设置车队回传时间
-    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'sms/setMQTTDefaultReturnTime')   // 设置车队默认的回传时间间隔
+    .constant('SET_MQTT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTReturnTime')   // MQTT设置回传时间
+    .constant('SET_MQTT_DEFAULT_RETURN_TIME_URL', SERVER_BASE_URL + 'mqttSend/setMQTTDefaultReturnTime')   // MQTT设置默认的回传时间间隔
     .constant('SEND_MQTT_READ_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTRead') // MQTT发送读请求命令
     .constant('SEND_MQTT_OPERATED_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTOperated') //MQTT发布操作命令
     .constant('SEND_MQTT_WRITE_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTWrite') //MQTT发布写命令
@@ -316,6 +316,7 @@
     .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
     .constant('RENTAL_TRAJECTORY_DATA',SERVER_BASE_URL+'rental/trajectory')//定位历史数据
     .constant('RENTAL_DEVCE_DATA_PAGED_QUERY',SERVER_BASE_URL+'rental/deviceHistoryData')//定位历史数据
+    .constant('RENTAL_DEVCE_MONITOR_DATA',SERVER_BASE_URL+'rental/monitor')//设备监控(数据)
 
 
     //租赁客户信息
@@ -362,6 +363,10 @@
     .constant('RENTAL_COST_PAGED_URL', SERVER_BASE_URL + 'rental/asset/getCostStatistics')  //成本统计
     .constant('RENTAL_PROFIT_URL', SERVER_BASE_URL + 'rental/asset/getProfitStatistics')  //利润统计
     .constant('RENTAL_ASSET_STATISTICS_DATA_URL', SERVER_BASE_URL + 'rental/asset/assetTopData')  //利润统计上方车辆和订单总数
+    .constant('RENTAL_TOTALPROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getTotalProfit')   //总利润
+    .constant('RENTAL_PROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getProfitsDetails')   //各时间段利润及同比
+    .constant('RENTAL_ORDERMACHINETYPE_URL', SERVER_BASE_URL + 'rental/orderMachineType/orderMachineType')   //各时间段利润及同比
+
 
 
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势

@@ -3,44 +3,44 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li class="active">升级文件</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+    <li class="active">{{'upgradeFile'|translate}}</li>
   </ol>
 </section>
 <section class="content form-horizontal">
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">版本号</label>
+      <label class="control-label">{{'versionNumber'|translate}}</label>
     </div>
     <div class="col-md-2">
       <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
-      <input type="text" name="queryVersionNum" class="form-control" ng-model="updateFileMngCtrl.queryVersionNum" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询" style="padding-left: 42px;"/>
+      <input type="text" name="queryVersionNum" class="form-control" ng-model="updateFileMngCtrl.queryVersionNum" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="{{'supportfuzzyqueries'|translate}}" style="padding-left: 42px;"/>
     </div>
     <div class="col-md-1">
-      <label class="control-label">文件名</label>
+      <label class="control-label">{{'fileName'|translate}}</label>
     </div>
     <div class="col-md-2">
-      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
     </div>
     <div class="col-md-1">
-      <label class="control-label">适用对象</label>
+      <label class="control-label">{{'applicableObject'|translate}}</label>
     </div>
     <div class="col-md-2">
       <select class="form-control" id="applicableProducts" ng-model="updateFileMngCtrl.queryApplicableProducts">
-        <option value="1">GPS自身</option>
-        <option value="2">显示器</option>
-        <option value="3">控制器</option>
+        <option value="1">{{'GPSItself'|translate}}</option>
+        <option value="2">{{'monitor'|translate}}</option>
+        <option value="3">{{'controller'|translate}}</option>
       </select>
     </div>
     <div class="col-md-3 text-center">
-      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.reset()">重置</button>
-      <button class="btn btn-primary" type="button" presentation-href="upgrade:upgradeFile:query" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">查询</button>
-      <button class="btn btn-default" type="button" presentation-href="upgrade:upgradeFile:upload" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>上传</button>
+      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="upgrade:upgradeFile:query" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">{{'rentalQuery'|translate}}</button>
+      <button class="btn btn-default" type="button" presentation-href="upgrade:upgradeFile:upload" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>{{'rentalQuery'|translate}}</button>
     </div>
   </div>
   <div class="row form-group">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">版本总数:  {{updateFileMngCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalVersion'|translate}}:  {{updateFileMngCtrl.page.totalElements}}</span>
     </div>
   </div>
   <div class="row " style="padding-top: 10px">
@@ -49,16 +49,16 @@
         <table ng-table="updateFileMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="updateFile in $data">
             <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{updateFile.id}}</td>
-            <td class="text-nowrap" data-title="'版本号'" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number: 2}}</td>
-            <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
-            <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">GPS自身</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">显示器</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
-            <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td class="text-nowrap text-center" data-title="'操作'">
-              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)" presentation-href="upgrade:upgradeFile:modify">修改</button>
+            <td class="text-nowrap" data-title="'versionNumber'|translate" sortable="'versionNum'">VER{{updateFile.versionNum/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'fileName'|translate" sortable="'fileName'">{{updateFile.fileName}}</td>
+            <td class="text-nowrap" data-title="'fileSize'|translate" sortable="'size'">{{updateFile.size}}</td>
+            <td class="text-nowrap" data-title="'applicableObject'|translate" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
+            <td class="text-nowrap" data-title="'applicableObject'|translate" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">{{'GPSItself'|translate}}</td>
+            <td class="text-nowrap" data-title="'applicableObject'|translate" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">{{'monitor'|translate}}</td>
+            <td class="text-nowrap" data-title="'applicableObject'|translate" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">{{'controller'|translate}}</td>
+            <td class="text-nowrap" data-title="'uploadTime'|translate" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="text-nowrap text-center" data-title="'operation'|translate">
+              <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)" presentation-href="upgrade:upgradeFile:modify">{{'rentalEdit'|translate}}</button>
             </td>
           </tr>
         </table>

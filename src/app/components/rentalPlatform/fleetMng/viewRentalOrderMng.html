@@ -1,117 +1,154 @@
 <div class="machine-content" xmlns="http://www.w3.org/1999/html">
-  <!--<section class="renatlcontent-header">-->
-    <!--<h1>-->
-      <!--{{'customerInfo'|translate}}-->
-      <!--<small></small>-->
-    <!--</h1>-->
-  <!--</section>-->
 
   <div class="container-fluid">
 
-
     <div class="box-header with-border">
       <h3 class="box-title">{{'rentalOrderDetail'|translate}}</h3>
+
     </div>
-    <form name="newrentalOrderForm2" class="form-horizontal">
-      <div class="modal-body">
-        <div class="box-body">
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}</label>
-              <div class="col-md-5">
-                {{viewRentalOrderController.customer.name}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'amount'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.totalAmt}}
-              </div>
-            </div>
+    <form name="updateRentalOrderForm" class="form-horizontal">
+      <div class="box-body">
+        <div class="form-group">
+          <label  class="col-md-2 control-label font-nomal">订单号:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.orderNumber}}
+          </div>
 
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'deposit'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.deposit}}
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.payType}}
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'startingTime'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.startDate | date:'yyyy-MM-dd'}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'endTime'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.endDate | date:'yyyy-MM-dd'}}
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalWorkLocation'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.location}}
-              </div>
-            </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.jc}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.zb}}
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.qb}}
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-3 control-label">{{'descritpion'|translate}}</label>
-              <div class="col-sm-5">
-                {{viewRentalOrderController.rentalOrder.description}}
-              </div>
-            </div>
-
-            <!--<div class="form-group">-->
-              <!--<label class="col-sm-3 control-label"></label>-->
-              <!--<div class="col-sm-5">-->
-                <!--<label>-->
-                  <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="viewRentalOrderController.locationAlarmReceiverChk" id="locationAlarmReceiver" disabled="disabled" >-->
-                  <!--{{'AbnormalAlarmReceivingMachine'|translate}}-->
-                <!--</label>-->
-              <!--</div>-->
-            <!--</div>-->
-
-            <div class="form-group">
-              <button class="btn btn-warning" type="button" ng-click="viewRentalOrderController.cancel()">
-                {{'cancel'|translate}}
-              </button>
-            </div>
-
+          <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
           </div>
         </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
+          <div class="col-md-3">
+            <p class="input-group text-left">
+              {{viewRentalOrderCtrl.rentalOrder.rentalCustomer.name}}
+            </p>
+          </div>
+
+          <label class="col-md-2 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.payType}}
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
+          <div class="col-md-3">
+            <p class="input-group text-left">
+              {{viewRentalOrderCtrl.rentalOrder.startDate| date:'yyyy-MM-dd'}}
+            </p>
+          </div>
+
+          <label class="col-md-2 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
+          <div class="col-md-3">
+            <p class="input-group text-left">
+              {{viewRentalOrderCtrl.rentalOrder.endDate| date:'yyyy-MM-dd'}}
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'deposit'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.deposit}}
+          </div>
+
+          <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.location}}
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'descritpion'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.description}}
+          </div>
+
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-1 control-label font-nomal">剪叉: 数量:</label>
+            <div class="col-md-1 text-left">
+              {{viewRentalOrderCtrl.jcOption.quantity}}
+            </div>
+
+            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <div class="col-md-2 text-left">
+              {{viewRentalOrderCtrl.jcOption.deviceHeightType.name}}
+            </div>
+
+            <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
+            <div class="col-md-2 text-left">
+              {{viewRentalOrderCtrl.jcOption.deviceManufacture.name}}
+            </div>
+
+            <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
+            <div class="col-md-1 text-left">
+              {{viewRentalOrderCtrl.jcOption.price}}
+            </div>
+          </div>
+        </div>
+
+      <div class="form-group">
+            <div class="row">
+              <label class="col-md-1 control-label font-nomal">直臂: 数量:</label>
+              <div class="col-md-1 text-left">
+                {{viewRentalOrderCtrl.zbOption.quantity}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">高度:</label>
+              <div class="col-md-2 text-left">
+                {{viewRentalOrderCtrl.zbOption.deviceHeightType.name}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
+              <div class="col-md-2 text-left">
+                {{viewRentalOrderCtrl.zbOption.deviceManufacture.name}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
+              <div class="col-md-1 text-left">
+                {{viewRentalOrderCtrl.zbOption.price}}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-1 control-label font-nomal">曲臂: 数量:</label>
+              <div class="col-md-1 text-left">
+                {{viewRentalOrderCtrl.qbOption.quantity}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">高度:</label>
+              <div class="col-md-2 text-left">
+                {{viewRentalOrderCtrl.qbOption.deviceHeightType.name}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}</label>
+              <div class="col-md-2 text-left">
+                {{viewRentalOrderCtrl.qbOption.deviceManufacture.name}}
+              </div>
+
+              <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
+              <div class="col-md-1 text-left">
+                {{viewRentalOrderCtrl.qbOption.price}}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-warning" type="button" ng-click="viewRentalOrderCtrl.back()">
+              {{'return'|translate}}
+            </button>
+          </div>
+
+
     </form>
-    <div class="box-footer">
-
-    </div>
-
-
   </div>
 
-
 </div>
+

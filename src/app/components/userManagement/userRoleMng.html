@@ -8,7 +8,7 @@
   <uib-tabset justified="true">
 
     <uib-tab>
-      <uib-tab-heading>自定义角色</uib-tab-heading>
+      <uib-tab-heading>{{'customRole'|translate}}</uib-tab-heading>
       <div class="row">
         <div class="col-md-5">
           <div class="panel-group" id="orgPanel">
@@ -56,7 +56,7 @@
       </div>
     </uib-tab>
     <uib-tab>
-      <uib-tab-heading>系统角色</uib-tab-heading>
+      <uib-tab-heading>{{'systemRole'|translate}}</uib-tab-heading>
 
       <div class="row " style="padding: 10px">
         <li class="list-group-item repeat"  ng-repeat="sysRole in userRoleMngController.sysRoleList">
@@ -75,8 +75,8 @@
   </uib-tabset>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="userRoleMngController.ok()">确定</button>
-    <button class="btn btn-warning" type="button" ng-click="userRoleMngController.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="userRoleMngController.ok()">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="userRoleMngController.cancel()">{{'cancel'|translate}}</button>
   </div>
 
 

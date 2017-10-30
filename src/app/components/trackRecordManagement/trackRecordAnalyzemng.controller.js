@@ -10,7 +10,7 @@
     .controller('trackRecordAnalyzeMngController', trackRecordAnalyzeMngController);
 
   /** @ngInject */
-  function trackRecordAnalyzeMngController($rootScope, $scope, $http, $filter) {
+  function trackRecordAnalyzeMngController($rootScope, languages,$scope, $http, $filter) {
     var vm = this;
 
     var startDate = new Date();
@@ -44,7 +44,7 @@
 
     var scatterOption1 = {
       title: {
-        text: '车辆单次工作时长分布',
+        text: languages.findKey('singleWorkingHoursDistribution'),
         x: 'center',
         y: 0
       },
@@ -72,16 +72,16 @@
       },
       tooltip: {
         formatter: function (params) {
-          return '车辆编号: ' + params.seriesName
+          return languages.findKey('vehicleNumber')+':' + params.seriesName
 
 
-            + '</br>开机时间: ' +  $filter('date')(params.data[0],'yyyy-MM-dd hh:mm:ss')
-            + '</br>关机时间: ' + $filter('date')(params.data[2],'yyyy-MM-dd hh:mm:ss')
-            + '</br>工作时长: ' + params.data[1] + '小时';
+            + '</br>' +languages.findKey('bootTime')+':'+$filter('date')(params.data[0],'yyyy-MM-dd hh:mm:ss')
+            + '</br>' +languages.findKey('shutdownTime')+':'+ $filter('date')(params.data[2],'yyyy-MM-dd hh:mm:ss')
+            + '</br>' +languages.findKey('workHours')+':'+ params.data[1] + languages.findKey('hour');
         }
       },
-      xAxis: {name: '日期', type: 'time', boundaryGap: true},
-      yAxis: {name: '工作时长(小时)', type: 'value', minInterval: 1}
+      xAxis: {name: languages.findKey('date'), type: 'time', boundaryGap: true},
+      yAxis: {name: languages.findKey('workHours')+languages.findKey('hour'), type: 'value', minInterval: 1}
     };
     var scatterChart1 = echarts.init(document.getElementById('scatterChart1'));
 
@@ -125,7 +125,7 @@
 
     var barChartOption = {
       title: {
-        text: '车辆每日工作时长分布',
+        text: languages.findKey('daliyWorkingHoursDistribution'),
         x: 'center',
         y: 0
       },
@@ -134,7 +134,7 @@
           type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
         },
         formatter: function (params) {
-          return '车辆数量: ' + params.data + '台天';
+          return languages.findKey('vehicleQuantity') +':'+ params.data +' '+ languages.findKey('perday');
         }
       },
       toolbox: {
@@ -161,12 +161,12 @@
         containLabel: true
       },
       xAxis: {
-        name: '工作时长',
+        name: languages.findKey('workHours'),
         type: 'category',
         data: ['0-2h', '2-4h', '4-6h', '6-8h', '8-10h', '10-12h', '12-14h', '14-16h', '16-18h', '18-20h', '20-22h', '22-24h'],
         axisTick: {alignWithLabel: true}
       },
-      yAxis: {name: '车辆数量(台天)', type: 'value', minInterval: 1},
+      yAxis: {name: languages.findKey('vehicleQuantity')+' '+languages.findKey('perday'), type: 'value', minInterval: 1},
       series: []
     };
     var barChart = echarts.init(document.getElementById('barChart'));
@@ -181,7 +181,7 @@
 
         var seriesData = [];
         seriesData.push({
-          name: '车辆数量',
+          name: languages.findKey('vehicleQuantity'),
           type: 'bar',
           barWidth: '60%',
           data: barData

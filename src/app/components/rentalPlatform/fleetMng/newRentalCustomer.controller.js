@@ -29,8 +29,10 @@
       var rspdata = serviceResource.restAddRequest(RENTAL_CUSTOMER_URL,vm.rentalCustomer);
       vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
-        Notification.success("新建客户成功!");
+
+        Notification.success(languages.findKey('newCuS'));
         $uibModalInstance.close(data.content);
+
       },function (reason) {
         Notification.error(reason.data.message);
       })

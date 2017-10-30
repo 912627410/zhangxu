@@ -57,40 +57,64 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid table-wrapper" style="margin-top: 5px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
-      <div class="col-lg-12 form-group table-form-group tab-content-search"><!--搜索框-->
-        <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label>{{'rentalMachineID'|translate}}:</label>
-          <input class="input-search" type="text" name="licenseId" id="licenseId" placeholder="{{'rentalMachineID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
+    <div class="container-fluid table-wrapper" style="margin-top: 15px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
+      <div class="form-group table-form-group tab-content-search"><!--搜索框-->
+        <form class="form-horizontal" role="form">
+        <div class="form-group">
+
+          <label class="control-label font-nomal col-md-1 ">{{'rentalMachineID'|translate}}:</label>
+          <div class="col-md-2">
+            <input class="form-control" type="text" name="licenseId" id="licenseId" placeholder="{{'rentalMachineID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
+          </div>
+
+          <label class="control-label font-nomal col-md-2">{{'rentalDeviceID'|translate}}:</label>
+            <div class="col-md-2">
+            <input class="form-control" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"  />
+         </div>
         </div>
-        <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label>{{'rentalDeviceID'|translate}}:</label>
-          <input class="input-search" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"  />
+        <div class="form-group">
+
+            <label  class="control-label font-nomal col-md-1">{{'rentalMachineType'|translate}}:</label>
+            <div class="col-md-2">
+              <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required  >
+                <ui-select-match allow-clear="true"  placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}</ui-select-match>
+                <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
+                  <div ng-bind-html="machineType.name | highlight: $select.search | translate"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+
+
+            <label class="control-label font-nomal col-md-2 ">{{'address'|translate}}:</label>
+            <div class="col-md-2">
+              <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.address" />
+            </div>
+          <div class=" col-lg-4 col-md-4" >
+            <div class=" col-lg-9 col-md-9">
+              <button class="btn btn-default pull-right" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
+
+              <button class="btn btn-primary pull-right margin_right5" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
+            </div>
+            <div class=" col-lg-3 col-md-3">
+              <button class="btn btn-primary ng-binding pull-right" type="button" ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}</button>
+            </div>
+
+
+          </div>
+
         </div>
-        <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label style="display: inline-block;line-height: 34px;padding: 0px;text-align: right;margin-bottom: 5px;" class="col-lg-2 col-md-2">{{'rentalMachineType'|translate}}:</label>
-          <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required style="display: inline-block;padding: 0px;" class="col-lg-8 col-md-8">
-            <ui-select-match allow-clear="true"  placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}</ui-select-match>
-            <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
-              <div ng-bind-html="machineType.name | highlight: $select.search | translate"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-        <div class="tab-content-search-box col-lg-2 col-md-2">
-          <label>{{'address'|translate}}:</label>
-          <input class="input-search" name="address" id="address" placeholder="{{'address'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.address" />
-        </div>
-        <div class="search-box-button col-lg-2 col-md-2" style="display: inline-block;">
-          <button class="btn btn-primary" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
-          <button class="btn btn-danger" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
-        </div>
-        <button class="btn btn-adn ng-binding pull-right" type="button" ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}</button>
+
+
+
+
+
+        </form>
       </div>
 
       <div class="col-lg-12">
         <div class="">
-          <div class="table-responsive "><!--表格框-->
-            <table ng-table="machineCurrentStatusCtr.customConfigParams" class="table">
+          <div class="table table-responsive  "><!--表格框-->
+            <table ng-table="machineCurrentStatusCtr.customConfigParams" class="table table-striped">
               <tr ng-repeat="row in $data">
                 <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'">{{row.machineLicenseId}}</td>
                 <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{row.deviceNum}}</td>
@@ -101,8 +125,9 @@
                 <td data-title="'rentalTotalWorkingHours'|translate" sortable="'totalDurationConverter'">{{row.totalDurationConverter | convertToMins}}</td>
                 <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td data-title="'operation'|translate" style="text-align: center" >
+                  <button type="button" class="btn  btn-danger btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}</button>
                 <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">{{'equipmentMonitoring'|translate}}</button>
-                  <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}</button>
+
                 </td>
               </tr>
             </table>

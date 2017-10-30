@@ -22,23 +22,23 @@
 
           <div class="form-group">
 
-            <label class="col-md-1 control-label">{{'Machine'|translate}}</label>
+            <label class="col-md-1 control-label font-nomal">{{'Machine'|translate}}:</label>
             <div class="col-md-2">
-               <input type="text" name="reason" class="form-control"  ng-model="updateRentalMaintenanceController.maintenance.machine.licenseId"
+               <input type="text" name="reason" class="form-control"  ng-model="updateRentalMaintenanceCtrl.maintenance.machine.licenseId"
                       placeholder="{{'Machine'|translate}}" readonly/>
             </button>
           </span>
               </p>
             </div>
 
-            <label  class="col-md-1 control-label">{{'MaintenanceBasis'|translate}}</label>
+            <label  class="col-md-1 control-label font-nomal">{{'MaintenanceBasis'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="reason" class="form-control"  ng-model="updateRentalMaintenanceController.maintenance.reason"
+              <input type="text" name="reason" class="form-control"  ng-model="updateRentalMaintenanceCtrl.maintenance.reason"
                      placeholder="{{'MaintenanceBasis'|translate}}"/>
             </div>
-            <label class="col-md-1 control-label">{{'descritpion'|translate}}</label>
+            <label class="col-md-1 control-label font-nomal">{{'descritpion'|translate}}:</label>
             <div class="col-md-5">
-              <input type="text" name="description" class="form-control"  ng-model="updateRentalMaintenanceController.maintenance.description"
+              <input type="text" name="description" class="form-control"  ng-model="updateRentalMaintenanceCtrl.maintenance.description"
                      placeholder="{{'descritpion'|translate}}"/>
             </div>
 
@@ -46,17 +46,17 @@
           </div>
           <div class="form-group">
 
-            <label class="col-md-1 control-label">{{'rentalTotalMaintenanceCost'|translate}}</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalTotalMaintenanceCost'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="totalMaintentanceCost"
-                     class="form-control"  ng-model="updateRentalMaintenanceController.maintenance.totalMaintentanceCost"
+                     class="form-control"  ng-model="updateRentalMaintenanceCtrl.maintenance.totalMaintentanceCost"
                      placeholder="{{'rentalTotalMaintenanceCost'|translate}}" validator="required"/>
 
             </div>
 
-            <label  class="col-md-1 control-label">{{'rentalTotalLaborCost'|translate}}</label>
+            <label  class="col-md-1 control-label font-nomal">{{'rentalTotalLaborCost'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="totalOperatorCost" class="form-control"  ng-model="updateRentalMaintenanceController.maintenance.totalOperatorCost"
+              <input type="text" name="totalOperatorCost" class="form-control"  ng-model="updateRentalMaintenanceCtrl.maintenance.totalOperatorCost"
                      placeholder="{{'rentalTotalLaborCost'|translate}}" validator="required"/>
             </div>
 
@@ -66,11 +66,11 @@
 
             <div class="col-lg-12 table-responsive "><!--表格框-->
 
-              <table ng-table="updateRentalMaintenanceController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+              <table ng-table="updateRentalMaintenanceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="maintenanceList in $data">
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCategories'|translate" sortable="'deviceinfo.deviceNum'">{{maintenanceList.machineMaintenanceType.type}}</td>
-                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content}}</td>
+                  <td class="text-nowrap" data-title="'rentalMaintenanceItems'|translate" sortable="'org.label'">{{maintenanceList.machineMaintenanceType.content|translate}}</td>
 
                   <td class="text-nowrap" data-title="'rentalMaintenanceCost'|translate" sortable="'deviceinfo.deviceNum'">
                     <input type="text" name="maintenaceCost" class="form-control"  ng-model="maintenanceList.maintenaceCost" placeholder="{{'rentalMaintenanceCost'|translate}}"/>
@@ -84,12 +84,15 @@
                       <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                              ng-model="maintenanceList.createTime"
                              is-open="maintenanceList.opened"
-                             datepicker-options="dateOptions" close-text="Close"
+                             datepicker-options="dateOptions"
+                             current-text="{{'today'|translate}}"
+                             clear-text="{{'cleanUp'|translate}}"
+                             close-text="{{'close'|translate}}"
                              validator="required" message-id="bootstrap" readonly/>
 
                       <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
-                          ng-click="updateRentalMaintenanceController.open($event,maintenanceList)">
+                          ng-click="updateRentalMaintenanceCtrl.open($event,maintenanceList)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
@@ -107,7 +110,7 @@
                                ng-disabled="disabled" validator="required">
                       <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
                       </ui-select-match>
-                      <ui-select-choices repeat="maintenanceListStatus in updateRentalMaintenanceController.listStatusList">
+                      <ui-select-choices repeat="maintenanceListStatus in updateRentalMaintenanceCtrl.listStatusList">
                         <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search|translate"></div>
                       </ui-select-choices>
                     </ui-select>
@@ -121,9 +124,9 @@
         </div>
       </div>
     </form>
-    <div class="box-footer">
-      <button class="btn btn-primary" type="button" validation-submit="form" ng-click="updateRentalMaintenanceController.ok()">{{'confirm'|translate}}</button>
-      <button class="btn btn-warning" type="button" ng-click="updateRentalMaintenanceController.cancel()">{{'cancel'|translate}}</button>
+    <div class="box-footer" style="text-align: center;">
+      <button class="btn btn-primary" type="button" validation-submit="form" ng-click="updateRentalMaintenanceCtrl.ok()">{{'confirm'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="updateRentalMaintenanceCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 
 

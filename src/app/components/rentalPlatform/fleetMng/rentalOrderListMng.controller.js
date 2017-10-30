@@ -9,7 +9,7 @@
     .controller('orderListMngController', orderListMngController);
 
   /** @ngInject */
-  function orderListMngController($scope, $window,$state, $location,$filter,$uibModalInstance, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
+  function orderListMngController($scope, $window,$state, $location,$filter,$uibModalInstance, $anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,languages,DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL) {
     var vm = this;
 
 
@@ -29,7 +29,7 @@
       vm.retanlOrderStatusList= data;
       //    console.log(vm.userinfoStatusList);
     }, function (reason) {
-      Notification.error('获取状态失败');
+      Notification.error(languages.findKey('getStatusFail'));
     })
 
 
@@ -145,7 +145,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取车辆数据失败");
+        Notification.error(languages.findKey('getDataVeFail'));
       });
     };
 

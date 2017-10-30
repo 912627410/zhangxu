@@ -9,7 +9,7 @@
     .controller('orgMngController', orgMngController);
 
   /** @ngInject */
-  function orgMngController($rootScope,$scope, $uibModal, ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
+  function orgMngController($rootScope,$scope, $uibModal, languages,ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedOrg;
@@ -25,7 +25,7 @@
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = [$rootScope.orgChart[0]];
     } else {
-      Notification.error('获取组织机构信息失败');
+      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
 
     //选中组织事件
@@ -146,7 +146,7 @@
 
           vm.orgShow();
         },function (reason) {
-          Notification.error('获取组织机构信息失败');
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
         })
       }
     }
@@ -166,7 +166,7 @@
         vm.my_data=[$scope.orgChart[0]];
       }
       else{
-        Notification.error('获取组织机构信息失败');
+        Notification.error(languages.findKey('failedToGetOrganizationInformation'));
       }
     };
     vm.orgShow();
@@ -200,11 +200,11 @@
     //update org
     vm.updateOrg = function (size) {
       if(null == vm.selectedOrg) {
-        Notification.warning("请选择更新的组织");
+        Notification.warning(languages.findKey('selectAnOrganizationToUpdate'));
         return;
       }
       if(vm.selectedOrg.parentId=="0"){
-        Notification.error("不可以更新根组织!");
+        Notification.error(languages.findKey('theRootOrganizationCannotBeUpdate'));
       }else{
         var url = ORG_ID_URL+"?id=" + vm.selectedOrg.parentId;
         var orgPromise = serviceResource.restCallService(url,"GET");
@@ -240,7 +240,7 @@
     //组织下车辆类型管理
     vm.MachineTypeMng = function (selectedOrg,size) {
       if(null == vm.selectedOrg) {
-        Notification.warning("请选择对应组织");
+        Notification.warning(languages.findKey('selectTheCorrespondingOrganization'));
         return;
       }
       var modalInstance = $uibModal.open({

@@ -42,7 +42,7 @@
   {
     "name": "timeGPSWaitTime",
     "maxValue": 3600,
-    "minValue": 0
+    "minValue": 10
   },
   {
     "name": "timeSampleMotorParas",

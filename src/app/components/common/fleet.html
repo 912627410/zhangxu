@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title">车队信息
-    <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.cancel()" >关闭
-    </button> <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.confirm()" style="margin-right: 10px;">确定</button>
+  <h3 class="modal-title">{{'fleetinformation'|translate}}
+    <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.cancel()" >{{'close'|translate}}
+    </button> <button class="btn btn-warning pull-right" type="button" ng-click="fleetTreeController.confirm()" style="margin-right: 10px;">{{'confirm'|translate}}</button>
   </h3>
 </div>
 
@@ -12,11 +12,11 @@
         <div class="input-group input-group-sm"  style="padding-top: 10px;padding-left: 25px;  width:60%">
           <input type="text" class="form-control" ng-model="fleetCtrl.searchText" placeholder="Search" >
           <span class="input-group-btn">
-                   <button class="btn btn-default" type="button" ng-click="fleetCtrl.search(fleetCtrl.searchText)">搜索</button>
+                   <button class="btn btn-default" type="button" ng-click="fleetCtrl.search(fleetCtrl.searchText)">{{'search'|translate}}</button>
                </span>
         </div>
         <div style="padding-top: 20px;padding-left: 20px; ">
-          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;">选择的车队为：{{fleetCtrl.selectedFleet.label}}</p>
+          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;">{{'theChosenTeamIs'|translate}}：{{fleetCtrl.selectedFleet.label}}</p>
         </div>
         <div style="padding-top: 10px;">
           <abn-tree tree-data="fleetCtrl.my_data" tree-control="fleetTreeController" on-select="fleetCtrl.my_tree_handler(branch); $event.stopPropagation();" expand-level="4"></abn-tree>

@@ -9,14 +9,14 @@
     .controller('dullmachineMngController', dullmachineMngController);
 
   /** @ngInject */
-  function dullmachineMngController($rootScope, $scope,$http,$filter) {
+  function dullmachineMngController($rootScope, languages,$scope,$http,$filter) {
     var vm = this;
 
       var date = new Date();
       var chart = echarts.init(document.getElementById('mapChart'));
       var option = {
         title : {
-          text : '待销车库存分析',
+          text : languages.findKey('analysisofUnsoldVehiclesInventory'),
           subtext: $filter("date")(date, "yyyy-MM-dd HH:mm:ss"),
           subtextStyle: {
             fontSize: 14,
@@ -50,7 +50,7 @@
           max: 10,
           left: 'left',
           top: 'bottom',
-          text: ['高','低'],
+          text: [languages.findKey('high'),languages.findKey('low')],
           color: ['#980000','#f6f3d2','#075e89'],
           calculable: true
         },
@@ -68,7 +68,7 @@
         },
         series: [
           {
-            name: '待销车',
+            name: languages.findKey('unsoldVehicles'),
             type: 'map',
             map: 'china',
             // roam: true,

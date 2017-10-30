@@ -9,7 +9,8 @@
     .controller('customerListController', customerListController);
 
   /** @ngInject */
-  function customerListController($scope, $uibModalInstance,$uibModal,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,permissions) {
+
+  function customerListController($scope, $uibModalInstance,$uibModal,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,languages) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
@@ -56,7 +57,7 @@
         vm.pageNumber = data.page.number + 1;
       }, function (reason) {
         vm.machineList = null;
-        Notification.error("获取客户数据失败");
+        Notification.error(languages.findKey('FaGetCu'));
       });
     }
 
@@ -89,7 +90,7 @@
       var modalInstance= $uibModal.open({
         animation: true,
         backdrop: false,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomer.html',
         controller: 'newRentalCustomerController',
         controllerAs:'newRentalCustomerCtrl',
         size: 'lg'

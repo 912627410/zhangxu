@@ -9,14 +9,14 @@
 <div class="row modal-body">
   <form name="processAlarmFrom"   class="form-horizontal">
     <div class="form-group">
-      <label class="col-sm-3 control-label " style="text-align: center">{{'descritpion'|translate}}</label>
+      <label class="col-sm-3 control-label font-nomal " style="text-align: center">{{'descritpion'|translate}}:</label>
       <div class="col-sm-9" >
         <textarea class="form-control" rows="3" placeholder="{{'description'|translate}}" style="width: 75%!important;" ng-model="vm.notificationProcess.processDesc"></textarea>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-3 control-label "  style="text-align: center">{{'MessageContent'|translate}}</label>
+      <label class="col-sm-3 control-label font-nomal "  style="text-align: center">{{'MessageContent'|translate}}:</label>
       <div class="col-sm-9">
         <input type="text"  class="form-control ng-pristine ng-valid ng-touched"
                placeholder="{{'customizeMessageContent'|translate}}"  style="width: 75%!important;" ng-model="vm.notificationProcess.customSms">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-      <label class="col-sm-3 control-label "  style="text-align: center">{{'SMSReceiver'|translate}}</label>
+      <label class="col-sm-3 control-label  font-nomal"  style="text-align: center">{{'SMSReceiver'|translate}}:</label>
       <div class="col-sm-9">
         <input type="text"  name="emailOrPhone" class="form-control ng-pristine ng-valid ng-touched" name="receiver"
                placeholder="{{'Mailorphone'|translate}}"  style="width: 75%!important;" ng-model="vm.notificationProcess.receiver"  validator="required">

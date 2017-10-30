@@ -10,22 +10,69 @@
     .controller('newRentalOrderController', newRentalOrderController);
 
   /** @ngInject */
-  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL,rentalService, Notification) {
+  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification,languages) {
     var vm = this;
     vm.rentalOrder={};
+    var path="/rental/order";
+    //订单车辆类型 List
+    vm.rentalOrderMachineTypeVos = [];
+    vm.addRentalOrderOption = {
+      orderVo:'',
+      orderMachineTypeVoList:'',
+      orderMachineVoList:''
 
-    vm.radius = 100; //设置的半径,默认100米
+    }
+
+    vm.jcOption = {
+      deviceType :{id:1}
+    }
+    vm.qbOption = {
+      deviceType :{id:2}
+    }
+    vm.zbOption = {
+      deviceType :{id:3}
+    }
+
+    vm.rightBoxBottomHeight=20;
+    vm.rightBoxTopHeightTemp=20;
+    /**
+     * 自适应高度函数
+     * @param windowHeight
+     */
+    vm.adjustWindow = function (windowHeight) {
+      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
+      //baseBox自适应高度
+      vm.baseBoxContainer = {
+        "min-height": baseBoxContainerHeight + "px"
+      }
+      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
+      //地图的自适应高度
+      vm.baseBoxMapContainer = {
+        "min-height": baseBoxMapContainerHeight + "px"
+      }
+
+      var rightBoxTopHeight=baseBoxContainerHeight/2;
+      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
+      //地图的右边自适应高度
+      vm.rightBoxTopHeight = {
+        "min-height": vm.rightBoxTopHeightTemp+ "px"
+      }
+      vm.rightBoxBottomHeight=rightBoxTopHeight;
+    }
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
+
+
 
     var path="/rental/order";
     vm.operatorInfo =$rootScope.userInfo;
-    vm.cancel = function () {
-      $location.path(path);
 
+    vm.cancel = function () {
+      $location.path(path)
     };
 
 
     vm.startDateSetting = {
-      //dt: "请选择开始日期",
       open: function($event) {
         vm.startDateSetting.status.opened = true;
       },
@@ -77,12 +124,11 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.customer=result;
+        vm.orderMachineVoList=result;
       }, function () {
       });
     };
 
-    //vm.startDateSetting.dt="";
 
     // 日期控件相关
     // date picker
@@ -114,39 +160,44 @@
 
     vm.ok = function () {
       if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
-        Notification.error("请选择订单开始时间和结束时间");
-      } else{
-        vm.rentalOrder.rentalCustomer=vm.customer;
-        vm.rentalOrder.radius=vm.radius;
-        vm.rentalOrder.org=vm.customer.org;
+        Notification.error(languages.findKey('selTime'));
+      }
 
-        if (vm.locationAlarmReceiverChk){
-          vm.rentalOrder.locationAlarmReceiver = 1;
-        }
-        else{
-          vm.rentalOrder.locationAlarmReceiver = 0;
-        }
+        vm.rentalOrder.jc = vm.zbOption.quantity;
+        vm.rentalOrder.zb= vm.zbOption.quantity;
+        vm.rentalOrder.qb = vm.qbOption.quantity;
+        vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
+        vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+        vm.rentalOrderMachineTypeVos.push(vm.jcOption)
+        vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+        vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
-        var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.rentalOrder);
-        //  vm.rentalCustomer.org=vm.org;
+       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
+       vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+       vm.addRentalOrderOption.orderMachineVoList = vm.orderMachineVoList;
+
+        var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
-          Notification.success("新建订单成功!");
+          // $uibModalInstance.close(data.content);
+          Notification.success(languages.findKey('newOrderSucc'));
           $location.path(path);
 
+          //$location.path(path);
         },function (reason) {
           Notification.error(reason.data.message);
         })
-      }
+
     }
 
 
-    //新建角色
+
+    //选择订单客户
     vm.selectCustomer = function (size) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
-        controller: 'customerListController as customerListController',
+        controller: 'customerListController as customerListCtrl',
         size: size,
         backdrop: false,
         resolve: {
@@ -157,41 +208,14 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.customer=result;
+        vm.rentalOrder.rentalCustomer=result;
       }, function () {
       });
     };
 
 
 
-    vm.rightBoxBottomHeight=20;
-    vm.rightBoxTopHeightTemp=20;
-    /**
-     * 自适应高度函数
-     * @param windowHeight
-     */
-    vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
-      //baseBox自适应高度
-      vm.baseBoxContainer = {
-        "min-height": baseBoxContainerHeight + "px"
-      }
-      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
-      //地图的自适应高度
-      vm.baseBoxMapContainer = {
-        "min-height": baseBoxMapContainerHeight + "px"
-      }
 
-      var rightBoxTopHeight=baseBoxContainerHeight/2;
-      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
-      //地图的右边自适应高度
-      vm.rightBoxTopHeight = {
-        "min-height": vm.rightBoxTopHeightTemp+ "px"
-      }
-      vm.rightBoxBottomHeight=rightBoxTopHeight;
-    }
-    //初始化高度
-    vm.adjustWindow($window.innerHeight);
 
 
 

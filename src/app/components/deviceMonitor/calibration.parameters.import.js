@@ -9,7 +9,7 @@
     .controller('calibrationParametersImportController', calibrationParametersImportController);
 
   /** @ngInject */
-  function calibrationParametersImportController($timeout, $uibModalInstance,Upload, CALIBRATION_PARAMETER_IMPORT, Notification, operatorInfo) {
+  function calibrationParametersImportController($timeout,languages, $uibModalInstance,Upload, CALIBRATION_PARAMETER_IMPORT, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
 
@@ -23,16 +23,16 @@
       file.upload.then(function (response) {
         $timeout(function (data) {
           if(response.data.code == 0){
-            Notification.success("导入成功");
+            Notification.success(languages.findKey('importSuccessful'));
             $uibModalInstance.close(response.data.content);
           }else{
             vm.errorList = response.data.content;
-            Notification.error('导入失败,存在异常数据');
+            Notification.error(languages.findKey('failedToImport')+','+languages.findKey('exceptionDataExists'));
           }
 
         });
       }, function (response) {
-        Notification.error('导入失败,存在异常数据!');
+        Notification.error(languages.findKey('failedToImport')+','+languages.findKey('exceptionDataExists'));
 
       }, function (evt) {
         // Math.min is to fix IE which reports 200% sometimes

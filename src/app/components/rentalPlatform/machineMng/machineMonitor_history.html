@@ -2,41 +2,34 @@
   <input type="hidden" ng-model="vm.deviceInfo">
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label">{{'startDate'|translate}}:</label>
+      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
     </div>
+
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.queryStartDate" is-open="openStartDate"
-               ng-required="true" max-date="vm.queryEndDate"
-               current-text="今天" clear-text="清除" close-text="关闭"/>
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateDeviceData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openStartDate=true">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
       </p>
     </div>
     <div class="col-md-1">
-      <label class="control-label">{{'endDate'|translate}}:</label>
+      <label class="control-label text-nowrap font-nomal">{{'endDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.queryEndDate" is-open="openEndDate"
-               ng-required="true" current-text="今天" clear-text="清除" close-text="关闭"/>
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateDeviceData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openEndDate=true">
-              <i class="glyphicon glyphicon-calendar"></i></button>
-          </span>
+                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
       </p>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-primary" type="button"
-              ng-click="vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
-        {{'confirm'|translate}}
-      </button>
+      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,true,
+                deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
     </div>
+
+
     <div class="col-md-3">
       <a class="btn" title="ExportHistoryData"
          ng-click="vm.excelExport(vm.deviceInfo.deviceNum,vm.deviceInfo.versionNum,vm.queryStartDate,vm.queryEndDate)">{{'exAll'|translate}}</a>
@@ -160,6 +153,7 @@
                       items-per-page="vm.pageSize"
                       previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
       </uib-pagination>
+
     </div>
   </div>
 </div>
