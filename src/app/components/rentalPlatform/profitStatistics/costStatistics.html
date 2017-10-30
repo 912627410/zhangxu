@@ -80,7 +80,7 @@
                          ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
                 </ui-select-match>
-                <ui-select-choices repeat=i"machineMF in costStatisticsCtr.machineMFList">
+                <ui-select-choices repeat="machineMF in costStatisticsCtr.machineMFList">
                   <div ng-bind-html="machineMF.name | highlight: $select.search |translate"></div>
                 </ui-select-choices>
               </ui-select>
