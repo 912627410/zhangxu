@@ -41,14 +41,8 @@
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name | translate}}
             </ui-select-match>
-<<<<<<< HEAD:src/app/components/rentalPlatform/fleetMng/rentalOrgMachineListMng.html
-            <ui-select-choices repeat="deviceType in orgMachineListMngController.deviceTypeList">
-              <div ng-bind-html="deviceType.name | highlight: $select.search|translate"></div>
-=======
             <ui-select-choices repeat="deviceType in rentalUnUsedMachineListCtrl.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
-
->>>>>>> RENTAL2.00:src/app/components/rentalPlatform/fleetMng/rentalUnUsedMachineList.html
             </ui-select-choices>
           </ui-select>
         </div>
@@ -58,15 +52,8 @@
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-<<<<<<< HEAD:src/app/components/rentalPlatform/fleetMng/rentalOrgMachineListMng.html
-            <ui-select-choices repeat="devicePowerType in orgMachineListMngController.devicePowerTypeList">
-              <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
-=======
-
             <ui-select-choices repeat="devicePowerType in rentalUnUsedMachineListCtrl.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
-
->>>>>>> RENTAL2.00:src/app/components/rentalPlatform/fleetMng/rentalUnUsedMachineList.html
             </ui-select-choices>
           </ui-select>
         </div>
