@@ -50,7 +50,7 @@
     <div class="info-box-container searchLine">
       <div >
         <div class="forminline" >
-          <label>{{'deviceType'| translate}}</label>
+          <label>{{'deviceType'| translate}}:</label>
 
           <div class="forminline" style="width: 150px;">
             <ui-select  ng-model="costStatisticsCtr.machineType" ng-disabled="disabled" required>
@@ -64,7 +64,7 @@
         </div>
 
         <div class="forminline" >
-          <label>{{'highlyType'| translate}}</label>
+          <label>{{'highlyType'| translate}}:</label>
           <ui-select name="deviceHeightType" ng-model="costStatisticsCtr.queryDeviceHeightType" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
@@ -75,7 +75,7 @@
           </ui-select>
         </div>
         <div class="forminline" style="width: 17%">
-          <label class="">{{'brandType'| translate}}</label>
+          <label class="">{{'brandType'| translate}}:</label>
           <ui-select name="deviceManufacture" ng-model="costStatisticsCtr.queryManufacture" theme="bootstrap" style="display:inline-block;width: 150px;"
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
@@ -95,7 +95,6 @@
                      datepicker-options="costStatisticsCtr.dateOptions"
                      min-date="costStatisticsCtr.minDate"
                      max-date="costStatisticsCtr.maxDate"
-
                      ng-required="true"
                      current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"

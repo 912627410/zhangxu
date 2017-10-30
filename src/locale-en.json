@@ -476,7 +476,7 @@
   "majorversionNumber": "Major Version Number",
   "minorversionNumber": "Minor Version Number",
   "functionCode": "Function code",
-  "recordGenerationTime": "Data record  time",
+  "recordGenerationTime": "Data record time",
   "serialNumber": "Serial number",
   "loadingstarttime": "LoadingPoint start time",
   "loadingCompletetime": "LoadingPoint complete time",

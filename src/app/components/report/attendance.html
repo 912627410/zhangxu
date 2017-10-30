@@ -28,9 +28,9 @@
                is-open="startDateOpenStatus"
                datepicker-options="dateOptions"
                ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -51,9 +51,9 @@
                is-open="endDateOpenStatus"
                datepicker-options="dateOptions"
                ng-required="true"
-               current-text="今天"
-               clear-text="清除"
-               close-text="关闭" />
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
           <button type="button"
                   class="btn btn-default"
@@ -79,7 +79,7 @@
       </p>
     </div>
     <div class="col-md-2">
-      <label class="control-label" style="font-size: 8px;">{{'subordinateOrganization'|translate}}</label>
+      <label class="control-label" style="font-size: 8px;">{{'subordinateOrganization'|translate}}:</label>
       <input type="checkbox" ng-model="attendanceCtrl.querySubOrg">
     </div>
     <div class="col-md-offset-4 col-md-2">
