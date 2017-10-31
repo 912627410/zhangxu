@@ -398,6 +398,9 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00' || deviceCurrentInfoCtrl.deviceinfo.powerType=='1'">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01' || deviceCurrentInfoCtrl.deviceinfo.powerType=='0'">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
+                    <!--锁车状态--><!--矿车2020协议增加 by 刘灿滨、商亚龙 -->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='2020'">{{'lockedCarStatus'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='2020'">{{deviceCurrentInfoCtrl.deviceinfo.lockStatusDesc|translate}}</td>
                   </tr>
                   <tr>
                     <!--实时工时-->
@@ -414,13 +417,6 @@
                     <!--启动次数-->
                     <td>{{'numberOfStarts'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.startTimes}}</td>
-                    <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
-                    <!--锁车状态-->
-                    <!--<td>{{'lockedCarStatus'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'Unlock'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'lockYourCar'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>-->
                     <!--acc 开关状态-->
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01' || deviceCurrentInfoCtrl.deviceinfo.accStatus=='1'" class="bg-info text-info">ON</td>

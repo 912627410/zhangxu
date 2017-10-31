@@ -1527,7 +1527,11 @@
   "A-4 30天的维护":"A-4 30 days maintenance",
   "MoCuInSuc":"Modify customer information successful!",
   "upload":"Upload",
-  "softVersion":"Software version"
+  "softVersion":"Software version",
+
+
+  "已锁车":"Locked car",
+  "未锁车":"Unlocked car"
 
 
 

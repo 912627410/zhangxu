@@ -2034,12 +2034,16 @@
         )
       };
 
-        vm.deviceDataDownload = function (deviceNum, startDate, endDate) {
+        vm.deviceDataDownload = function (deviceNum, versionNum, startDate, endDate) {
           if (deviceNum) {
             var filterTerm = "deviceNum=" + deviceNum;
           }else {
             Notification.error(languages.findKey('theDeviceNumberEnteredIsIncorrect'));
             return;
+          }
+
+          if (versionNum) {
+            filterTerm += "&versionNum=" + versionNum;
           }
 
           if (startDate) {
