@@ -1447,8 +1447,6 @@
   "neglect":"忽略",
   "profile":"个人信息",
   "setting":"设置",
-
-
   "fenceName":"围栏名称",
   "fenceAddress":"围栏地址",
   "founder":"创建人",
@@ -1456,6 +1454,7 @@
   "modifier":"修改人",
   "manage":"管理",
   "newFence":"新建围栏",
+
   "fuzzyAddress":"地址(支持模糊查询)",
   "description":"描述",
   "name":"名称",
@@ -1471,6 +1470,7 @@
   "delConfirmation":"删除确认",
   "enDrive":"发动机驱动",
   "hyDrive":"液压驱动",
+
   "elDrive":"电驱动",
   "发动机驱动":"发动机驱动",
   "液压驱动":"液压驱动",

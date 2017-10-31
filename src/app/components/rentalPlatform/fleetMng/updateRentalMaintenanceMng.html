@@ -110,10 +110,8 @@
                                ng-disabled="disabled" validator="required">
                       <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.desc|translate}}
                       </ui-select-match>
-
                       <ui-select-choices repeat="maintenanceListStatus in updateRentalMaintenanceCtrl.listStatusList">
                         <div ng-bind-html="maintenanceListStatus.desc | highlight: $select.search|translate"></div>
-
                       </ui-select-choices>
                     </ui-select>
                     <span id="statusRequiredOnly{{$index}}"></span>

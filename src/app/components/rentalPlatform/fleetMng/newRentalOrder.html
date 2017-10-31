@@ -102,7 +102,7 @@
 
         <div class="form-group">
           <div class="col-md-1">
-            <label class=" control-label font-nomal">剪叉:</label>
+            <label class=" control-label font-nomal">{{'剪叉'|translate}}:</label>
           </div>
           <div class="col-md-11">
 
@@ -125,20 +125,20 @@
           <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.jcOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
-              <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+              <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
               </ui-select-match>
               <ui-select-choices repeat="deviceManufacture in newRentalOrderCtrl.deviceManufactureList">
-                <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+                <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
 
-          <label class="col-md-1 control-label font-nomal">单价(/天):</label>
+          <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
           <div class="col-md-1">
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.jcOption,1)">调拨车辆</button>
+            <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.jcOption,1)">{{'transferVehicle'|translate}}</button>
 
           </div>
             </div>
@@ -146,7 +146,7 @@
 
         <div class="form-group">
           <div class="col-md-1">
-            <label class=" control-label font-nomal">直臂:</label>
+            <label class=" control-label font-nomal">{{'直臂'|translate}}:</label>
           </div>
           <div class="col-md-11">
 
@@ -169,27 +169,27 @@
             <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.zbOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
                 </ui-select-match>
                 <ui-select-choices repeat="deviceManufacture in newRentalOrderCtrl.deviceManufactureList">
-                  <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+                  <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">单价(/天):</label>
+            <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
             <div class="col-sm-2">
-              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.zbOption,2)">调拨车辆</button>
+              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.zbOption,2)">{{'transferVehicle'|translate}}</button>
             </div>
           </div>
         </div>
 
         <div class="form-group">
           <div class="col-md-1">
-            <label class=" control-label font-nomal">曲臂:</label>
+            <label class=" control-label font-nomal">{{'曲臂'|translate}}:</label>
           </div>
           <div class="col-md-11">
             <label class="col-md-1 control-label font-nomal">数量:</label>
@@ -200,10 +200,10 @@
             <label class="col-md-1 control-label font-nomal">高度:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.qbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
+                <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
                 </ui-select-match>
                 <ui-select-choices repeat="deviceHeightType in newRentalOrderCtrl.deviceHeightTypeList">
-                  <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
+                  <div ng-bind-html="deviceHeightType.name | highlight: $select.search|translate"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
@@ -211,20 +211,20 @@
             <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.qbOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name}}
+                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
                 </ui-select-match>
                 <ui-select-choices repeat="deviceManufacture in newRentalOrderCtrl.deviceManufactureList">
-                  <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+                  <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">单价(/天):</label>
+            <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
             <div class="col-md-2">
-              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.qbOption,3)">调拨车辆</button>
+              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.qbOption,3)">{{'transferVehicle'|translate}}</button>
             </div>
           </div>
 

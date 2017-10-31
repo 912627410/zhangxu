@@ -39,11 +39,10 @@
         <div class="col-md-3">
           <ui-select name="deviceType" ng-model="rentalUnUsedMachineListCtrl.searchConditions.type" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name}}
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name | translate}}
             </ui-select-match>
             <ui-select-choices repeat="deviceType in rentalUnUsedMachineListCtrl.deviceTypeList">
               <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
-
             </ui-select-choices>
           </ui-select>
         </div>
@@ -53,10 +52,8 @@
                      ng-disabled="disabled">
             <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
             </ui-select-match>
-
             <ui-select-choices repeat="devicePowerType in rentalUnUsedMachineListCtrl.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
-
             </ui-select-choices>
           </ui-select>
         </div>
@@ -73,7 +70,6 @@
 
             <ui-select-choices repeat="deviceManufacture in rentalUnUsedMachineListCtrl.deviceManufactureList">
               <div ng-bind-html="deviceManufacture.name | highlight: $select.search|translate"></div>
-
             </ui-select-choices>
           </ui-select>
         </div>
@@ -87,7 +83,6 @@
 
             <ui-select-choices repeat="deviceHeightType in rentalUnUsedMachineListCtrl.deviceHeightTypeList">
               <div ng-bind-html="deviceHeightType.name | highlight: $select.search|translate"></div>
-
             </ui-select-choices>
           </ui-select>
         </div>
