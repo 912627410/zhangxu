@@ -22,10 +22,9 @@
       <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
       <input type="text" name="querySoftVersion" class="form-control" ng-model="updateFileMngCtrl.querySoftVersion" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" style="padding-left: 42px;"/>
     </div>
-    <div class="col-md-2 text-center">
+    <div class="col-md-2">
       <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button" presentation-href="upgrade:upgradeFile:query" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" style="margin: 0 12px;">{{'rentalQuery'|translate}}</button>
-      <button class="btn btn-default" type="button" presentation-href="upgrade:upgradeFile:upload" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>{{'upload'|translate}}</button>
     </div>
   </div>
   <div class="row form-group">
@@ -44,6 +43,9 @@
         <option value="2">{{'monitor'|translate}}</option>
         <option value="3">{{'controller'|translate}}</option>
       </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-default" type="button" presentation-href="upgrade:upgradeFile:upload" ng-click="updateFileMngCtrl.newUpdateFile();"><i class="fa fa-plus"></i>{{'upload'|translate}}</button>
     </div>
   </div>
   <div class="row form-group">

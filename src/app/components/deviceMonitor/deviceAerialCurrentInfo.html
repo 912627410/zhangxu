@@ -933,7 +933,7 @@
             </div>
             <div class="col-md-2">
               <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query"  ng-click="deviceAerialCurrentInfoController.refreshPageDateDeviceData(0,8,'dataGenerateTime,desc',deviceAerialCurrentInfoController.deviceinfo,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'confirm'|translate}}</button>
-              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:export" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
+              <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:export" ng-click="deviceAerialCurrentInfoController.deviceDataDownload(deviceAerialCurrentInfoController.deviceinfo.deviceNum,deviceAerialCurrentInfoController.deviceinfo.versionNum,deviceAerialCurrentInfoController.startDateDeviceData,deviceAerialCurrentInfoController.endDateDeviceData)">{{'export'|translate}}</button>
             </div>
 
           </div>
@@ -1122,11 +1122,11 @@
                     <td ng-if="deviceData.fetMCE==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetMCE==0">{{'no'|translate}}</td>
                     <td ng-if="deviceData.fetMCE!==1&&deviceData.fetMCE!==0">{{'noData'|translate}}</td>
-                    <!--蜂鸣器-->
+                    <!--电驱使能-->
                     <td ng-if="deviceData.fetMCE2==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetMCE2==0">{{'no'|translate}}</td>
                     <td ng-if="deviceData.fetMCE2!==1&&deviceData.fetMCE2!==0">{{'noData'|translate}}</td>
-                    <!--???-->
+                    <!--蜂鸣器-->
                     <td ng-if="deviceData.fetAlarm==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetAlarm==0">{{'no'|translate}}</td>
                     <td ng-if="deviceData.fetAlarm!==0&&deviceData.fetAlarm!==1" class="text-nowrap">{{'noData'|translate}}</td>
