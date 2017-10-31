@@ -1400,6 +1400,9 @@
   "setAsTheDefaultTimeInterval?":"Set as the default time interval?",
   "selectTheEquipmentToBeAllocated":"Please select the equipment to be allocated",
   "failedToGetDeviceData":"Failed to get device data",
+  "kilometre":"Kilometre",
+  "traveled":"Traveled",
+
 
   "越野剪叉式":"RT Scissor",
   "自行走剪叉式":"Self-cut Fork",

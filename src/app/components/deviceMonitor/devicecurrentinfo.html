@@ -838,9 +838,9 @@
         <div class="row">
           <div class="col-md-6">
             <div ng-show="deviceCurrentInfoCtrl.lnglatShow" style="line-height: 34px;">
-              <label class="control-label text-nowrap">经纬度:&nbsp;&nbsp;<input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right;"/></label>
+              <label class="control-label text-nowrap">{{'latitudeAndLongitude'|translate}}:&nbsp;&nbsp;<input type="text" id="lnglat" class="form-control" placeholder="{{'latitudeAndLongitude'|translate}}" name="lnglat" style="width: 200px;float: right;"/></label>
               <span style="font-size: 16px;padding: 0 10px;">
-                行使了 <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> 公里
+                {{'traveled'|translate}} <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> {{'kilometre'|translate}}
               </span>
             </div>
           </div>
