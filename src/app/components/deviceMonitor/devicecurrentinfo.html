@@ -960,13 +960,13 @@
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>基站号</td>
-                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.lac}},{{deviceCurrentInfoCtrl.deviceinfo.lac1}},{{deviceCurrentInfoCtrl.deviceinfo.lac2}},{{deviceCurrentInfoCtrl.deviceinfo.lac3}},{{deviceCurrentInfoCtrl.deviceinfo.lac4}},{{deviceCurrentInfoCtrl.deviceinfo.lac5}},{{deviceCurrentInfoCtrl.deviceinfo.lac6}}</td>
+                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
                     <td>基站信号强度</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.rxl}},{{deviceCurrentInfoCtrl.deviceinfo.rxl1}},{{deviceCurrentInfoCtrl.deviceinfo.rxl2}},{{deviceCurrentInfoCtrl.deviceinfo.rxl3}},{{deviceCurrentInfoCtrl.deviceinfo.rxl4}},{{deviceCurrentInfoCtrl.deviceinfo.rxl5}},{{deviceCurrentInfoCtrl.deviceinfo.rxl6}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.gsmRxl}}</td>
                   </tr>
                   <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>基站小区号</td>
-                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.cellid}},{{deviceCurrentInfoCtrl.deviceinfo.cellid1}},{{deviceCurrentInfoCtrl.deviceinfo.cellid2}},{{deviceCurrentInfoCtrl.deviceinfo.cellid3}},{{deviceCurrentInfoCtrl.deviceinfo.cellid4}},{{deviceCurrentInfoCtrl.deviceinfo.cellid5}},{{deviceCurrentInfoCtrl.deviceinfo.cellid6}}</td>
+                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
                     <td>短信流水号</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
                   </tr>
@@ -1663,7 +1663,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="sms:activeLockSms" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                    <div class="col-md-3" presentation-href="sms:SetAlarmFunc" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">开盖锁车功能</h5>
@@ -1708,7 +1708,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-3" presentation-href="sms:activeLockSms" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                    <div class="col-md-3" presentation-href="sms:SetAlarmFunc" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">61天无信号锁车</h5>

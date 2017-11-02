@@ -131,6 +131,10 @@
     .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
+    .constant('SMS_SEND_CUSTOMIZED_URL',SERVER_BASE_URL + 'sms/sendCustomizedSMS')
+    .constant('SMS_SEND_SETALARMFUNC_URL',SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
+    .constant('SMS_SEND_SETSERIALNUM_URL',SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
+
 
     //键盘数据相关
     .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')

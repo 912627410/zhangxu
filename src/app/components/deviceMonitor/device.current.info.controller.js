@@ -30,7 +30,7 @@
     // 短信发送成功后的初始化button
     vm.initSmsSendBtn = function () {
       $window.sessionStorage["sendBtnStatus"] = true;
-      $window.sessionStorage["sendBtnTime"] = 1000;
+      $window.sessionStorage["sendBtnTime"] = 60000;
       $window.sessionStorage["sendDeviceNum"] = vm.deviceinfo.deviceNum;
       vm.sendBtnShow = true;
     }
