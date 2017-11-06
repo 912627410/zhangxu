@@ -15,7 +15,7 @@
             devicePowerTypes.push(devicePowerType);
             var rspData = serviceResource.restCallService(DEVCE_POWERTYPE, "UPDATE", devicePowerTypes);
             rspData.then(function (data) {
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('更新驱动类型出错');
                 }
                 else {

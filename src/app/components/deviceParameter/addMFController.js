@@ -14,7 +14,7 @@
             newMFs.push(newMF);
             var rspData = serviceResource.restCallService(DEVCE_MF, "ADD", newMFs);
             rspData.then(function(data){
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('新建生产厂家出错');
                 } else {
                     Notification.success('新建生产厂家成功');

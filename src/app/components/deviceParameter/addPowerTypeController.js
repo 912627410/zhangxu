@@ -14,7 +14,7 @@
             newPowerTypes.push(newPowerType);
             var rspData = serviceResource.restCallService(DEVCE_POWERTYPE, "ADD", newPowerTypes);
             rspData.then(function(data){
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('新建驱动类型出错');
                 } else {
                     Notification.success('新建驱动类型成功');

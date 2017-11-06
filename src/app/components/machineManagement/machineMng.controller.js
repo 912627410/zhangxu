@@ -345,8 +345,8 @@
         })
         vm.allot=null;
         vm.selected=[]; //把选中的设备设置为空
-        if (data.result){
-          Notification.success("调拨车辆成功!"+data.result);
+        if (data.content){
+          Notification.success("调拨车辆成功!"+data.content);
         }else {
           Notification.success("调拨车辆成功!");
         }

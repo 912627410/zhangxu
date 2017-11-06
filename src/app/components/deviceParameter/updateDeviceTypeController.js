@@ -15,7 +15,7 @@
             deviceTypes.push(deviceType);
             var rspData = serviceResource.restCallService(DEVCE_DEVICETYPE, "UPDATE", deviceTypes);
             rspData.then(function (data) {
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('更新设备类型信息出错');
                 }
                 else {

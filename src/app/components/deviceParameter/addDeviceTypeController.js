@@ -14,7 +14,7 @@
             newDeivceTypes.push(newDeivceType);
             var rspData = serviceResource.restCallService(DEVCE_DEVICETYPE, "ADD", newDeivceTypes);
             rspData.then(function(data){
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('新建设备类型出错');
                 } else {
                     Notification.success('新建设备类型成功');
