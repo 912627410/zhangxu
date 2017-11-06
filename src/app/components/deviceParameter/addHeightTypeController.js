@@ -14,7 +14,7 @@
             newHeightTypes.push(newHeightType);
             var rspData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "ADD", newHeightTypes);
             rspData.then(function(data){
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('新建高度类型出错');
                 } else {
                     Notification.success('新建高度类型成功');

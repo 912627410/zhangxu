@@ -15,7 +15,7 @@
             deviceHeightTypes.push(deviceHeightType);
             var rspData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "UPDATE", deviceHeightTypes);
             rspData.then(function (data) {
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('更新高度类型信息出错');
                 }
                 else {
