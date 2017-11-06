@@ -241,13 +241,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'currentPosition'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
-              <span ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'||deviceinfo.locateStatus=='B'">{{deviceinfo.province}}{{deviceinfo.city}}</span>
-              <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00' || deviceinfo.locateStatus==null">--</span>
-            </div>
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">{{'locatePosition'|translate}}:</div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">{{deviceinfo.province}}{{deviceinfo.city}}</div>
           </div>
         </div>
         <div class="box-footer">
@@ -279,8 +274,7 @@
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00'">{{'notLocate'|translate}}</span>
             <span ng-if="deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</span>
           </td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'||deviceinfo.locateStatus=='B'">{{deviceinfo.province}}{{deviceinfo.city}}</td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00' || deviceinfo.locateStatus==null">--</td>
+          <td  data-title="'locatePosition'|translate" style="width: 200px">{{deviceinfo.province}}{{deviceinfo.city}}</td>
           <td  data-title="'protocolType'|translate" sortable="'versionNum'">
             <span ng-if="deviceinfo.versionNum!='A001' && deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</span>
             <span ng-if="deviceinfo.versionNum=='A001' || deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</span>
