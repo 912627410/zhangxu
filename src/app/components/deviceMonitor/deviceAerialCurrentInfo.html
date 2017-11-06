@@ -124,8 +124,7 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">{{'notLocate'|translate}}</td>
                         <!--定位时间-->
                         <td>{{'positioningDate'|translate}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V'">-</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <!--GPS内置电池电压-->
                         <td>GPS{{'Built-inBatteryVoltage'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.builtInVoltage!=null">{{deviceAerialCurrentInfoController.deviceinfo.builtInVoltage}}V</td>
@@ -134,21 +133,18 @@
                       <tr>
                         <!--经度-->
                         <td>{{'longitude'|translate}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
                         <!--纬度-->
                         <td>{{'latitude'|translate}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
                         <!--预留-->
                         <td></td>
                         <td></td>
                       </tr>
                       <tr>
-                        <!--当前位置-->
-                        <td>{{'currentPosition'|translate}}</td>
-                        <td ng-cloak colspan="5" ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{deviceAerialCurrentInfoController.deviceinfo.address}}</td>
-                        <td ng-cloak colspan="5" ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V'">-</td>
+                        <!--定位位置-->
+                        <td>{{'locatePosition'|translate}}</td>
+                        <td ng-cloak colspan="5">{{deviceAerialCurrentInfoController.deviceinfo.address}}</td>
                       </tr>
 
                       <!--主机厂, 北谷可见-->
@@ -232,7 +228,7 @@
                             deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--数据采集时间-->
                         <td>{{'positioningTime'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <!--数据接收时间-->
                         <td>{{'dataReceptionTime'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -2387,6 +2383,34 @@
                                                 send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
                                                 ng-click="deviceAerialCurrentInfoController.sendReadCommand(deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, deviceAerialCurrentInfoController.register,
                                                 deviceAerialCurrentInfoController.dataLength, deviceAerialCurrentInfoController.uploadNum, deviceAerialCurrentInfoController.uploadFrequency)">{{'send'|translate}}</sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--终端复位-->
+                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:mqttControl:reset">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">{{'terminalReset'|translate}}</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="{{'terminalReset'|translate}}"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceAerialCurrentInfoController.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceAerialCurrentInfoController.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceAerialCurrentInfoController.sendMQTTOperated(36, deviceAerialCurrentInfoController.deviceUnLockFactor.deviceNum, 0)">{{'send'|translate}}</sms-send-btn>
                                 </div>
                               </div>
                             </div>
