@@ -32,7 +32,7 @@
     <ul class="sidebar-menu">
 
       <li class="treeview">
-        <a ng-click="dashboard=!dashboard" ui-sref="home" presentation-href="dashboard">
+        <a ng-click="dashboard=!dashboard"  href="" presentation-href="dashboard">
           <i class="fa fa-dashboard"></i>
           <span>{{'dashboard' | translate}}</span>
           <span class="glyphicon pull-right"
@@ -47,7 +47,7 @@
         </ul>
       </li>
 
-      <li class="treeview">
+      <li class="treeview ">
         <a ng-click="deviceMng=!deviceMng" href="" presentation-href="deviceMng">
           <i class="fa ion-clipboard"></i>
           <span>{{'equipmentManagement' | translate}}</span>
@@ -68,14 +68,14 @@
           </li>
         </ul>
       </li>
-      <li>
+
+      <li class="treeview ">
         <a ui-sref="home.machinemng" presentation-href="machineMng:machine">
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
 
-
-      <li>
+      <li class="treeview ">
         <a ng-click="reportMng1=!reportMng1" presentation-href="statAnalysis" href="">
           <i class="fa fa-bar-chart"></i>
           <span style="width:200px">{{'statisticalAnalysis' | translate}}</span>
@@ -217,7 +217,7 @@
         </ul>
       </li>
 
-      <li>
+      <li class="treeview ">
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleetMng">
           <i class="fa fa-flag-checkered"></i>
           <span style="width: 200px">{{'fleetManagement' | translate}}</span>
@@ -279,7 +279,7 @@
         </ul>
       </li>
 
-      <li>
+      <li class="treeview ">
         <a ng-click="sysMng =!sysMng" href="" presentation-href="system">
           <i class="fa fa-home"></i>
           <span style="width: 210px;">{{'systemManagement' | translate}}</span>
@@ -331,7 +331,8 @@
           </li>
         </ul>
       </li>
-      <li>
+
+      <li class="treeview ">
         <a ng-click="update=!update" href="" presentation-href="upgrade">
           <i class="fa fa-arrow-up"></i>
           <span>{{'remoteUpgrade'|translate}}</span>
@@ -357,7 +358,8 @@
           </li>
         </ul>
       </li>
-      <li>
+
+      <li  class="treeview ">
         <a ng-click="app=!app" href="" presentation-href="appMng">
           <i class="fa fa-mobile fa-lg"></i>
           <span>{{'appManagement' | translate}}</span>
