@@ -199,6 +199,8 @@
             templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
             controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
             size: size,
+            //windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+            //size: 'super-lgs',
             resolve: { //用来向controller传数据
               deviceinfo: function () {
                 return vm.deviceinfoMonitor;
