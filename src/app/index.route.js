@@ -27,7 +27,7 @@
         url: '/login',
         views: {
           '@': {
-            template: '<div ui-view="topbar"></div><div ui-view="main"></div><div ui-view="footer"></div>'
+            templateUrl: 'app/main/mainframe.html'
           },
           'topbar@login': {
             templateUrl: 'app/components/login/topBar.html',
@@ -89,28 +89,30 @@
           }
         }
       })
+
       //车辆管理当前状态
       .state('rental.machineCurrentStatus', {
-      url: '/machineCurrentStatus',
-      views: {
-        'main@rental': {
-          templateUrl: 'app/components/rentalPlatform/machineMng/machineCurrentStatus.html',
-          controller: 'machineCurrentStatusController',
-          controllerAs: 'machineCurrentStatusCtr'
+        url: '/machineCurrentStatus',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/machineMng/machineCurrentStatus.html',
+            controller: 'machineCurrentStatusController',
+            controllerAs: 'machineCurrentStatusCtr'
+          }
         }
-      }
-    })
+      })
+
       //车辆管理报警消息
       .state('rental.machineAlarmInfo', {
-      url: '/machineAlarmInfo',
-      views: {
-        'main@rental': {
-          templateUrl: 'app/components/rentalPlatform/machineMng/machineAlarmInfo.html',
-          controller: 'machineAlarmInfoController',
-          controllerAs: 'machineAlarmInfoCtr'
+        url: '/machineAlarmInfo',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/machineMng/machineAlarmInfo.html',
+            controller: 'machineAlarmInfoController',
+            controllerAs: 'machineAlarmInfoCtr'
+          }
         }
-      }
-    })
+      })
 
       //租赁车辆管理
       .state('rental.machine', {
@@ -147,7 +149,8 @@
           }
         }
       })
-      //租赁车队修改管理
+
+      //租赁车队修改
       .state('rental.updateFleet', {
         url: '/updateFleet',
         views: {
@@ -159,7 +162,7 @@
         }
       })
 
-           //租赁订单管理
+      //租赁订单管理
       .state('rental.order', {
         url: '/order',
         views: {
@@ -171,7 +174,7 @@
         }
       })
 
-      //租赁订单管理
+      //租赁新建订单
       .state('rental.newOrder', {
         url: '/newOrder',
         views: {
@@ -195,6 +198,7 @@
         }
       })
 
+      //租赁订单查看
       .state('rental.viewOrder', {
         url: '/viewOrder/:id',
         views: {
@@ -206,8 +210,7 @@
         }
       })
 
-
-      //组织围栏管理
+      //租赁车辆管理围栏列表
       .state('rental.orgFence', {
         url: '/orgFence',
         views: {
@@ -219,7 +222,7 @@
         }
       })
 
-      //组织围栏管理
+      //租赁车辆管理新建围栏
       .state('rental.newOrgFence', {
         url: '/newOrgFence',
         views: {
@@ -231,7 +234,7 @@
         }
       })
 
-      //组织围栏管理
+      //租赁车辆管理修改围栏
       .state('rental.updateOrgFence', {
         url: '/updateOrgFence/:id',
         views: {
@@ -242,10 +245,6 @@
           }
         }
       })
-
-
-
-
 
       //租赁客户管理
       .state('rental.customer', {
@@ -258,6 +257,7 @@
           }
         }
       })
+
       //添加租赁客户信息
       .state('rental.newCustomer', {
         url: '/newCustomer',
@@ -305,6 +305,7 @@
           }
         }
       })
+
       //添加租赁保养信息
       .state('rental.newMaintenance', {
         url: '/newMaintenance',
@@ -341,7 +342,7 @@
         }
       })
 
-
+      //租赁收入统计
       .state('rental.incomeStatistics', {
         url: '/incomeStatistics',
         views: {
@@ -352,6 +353,8 @@
           }
         }
       })
+
+      //租赁成本统计
       .state('rental.costStatistics', {
         url: '/costStatistics',
         views: {
@@ -362,6 +365,8 @@
           }
         }
       })
+
+      //租赁利润统计
       .state('rental.profitStatistics', {
         url: '/profitStatistics',
         views: {
@@ -374,13 +379,12 @@
       })
 
 
-
     //物联网系统
     $stateProvider
       .state('home', {
         url: '/home',
         views: {
-          '': {
+          '@': {
             templateUrl: 'app/main/mainframe.html',
             controller: 'MainController',
             controllerAs: 'mainCtrl'
@@ -416,9 +420,11 @@
             templateUrl: 'app/home/reportChart.html',
             controller: 'ReportChartController',
             controllerAs: 'reportChartCtrl'
-          },
+          }
         }
       })
+
+      //app下载页面
       .state('home.appDownloadPage', {
         url: '/appDownloadPage',
         views: {
@@ -430,6 +436,8 @@
           }
         }
       })
+
+      //注册页面
       .state('home.register', {
         url: '/register',
         views: {
@@ -443,6 +451,8 @@
           }
         }
       })
+
+      //用户信息查看
       .state('home.profile', {
         url: '/profile',
         views: {
@@ -452,6 +462,8 @@
           }
         }
       })
+
+      //用户管理
       .state('home.userinfomng', {
         url: '/userinfomng',
         views: {
@@ -461,6 +473,8 @@
           }
         }
       })
+
+      //车辆管理
       .state('home.machinemng', {
         url: '/machinemng',
         views: {
@@ -470,6 +484,8 @@
           }
         }
       })
+
+      //长时间未回传列表
       .state('home.idleDeviceReport', {
         url: '/idleDeviceReport',
         views: {
@@ -479,6 +495,8 @@
           }
         }
       })
+
+      //
       .state('home.attendance', {
         url: '/attendance',
         views: {
@@ -488,6 +506,8 @@
           }
         }
       })
+
+      //超速报警
       .state('home.machineSpeeding', {
         url: '/machineSpeeding',
         views: {
@@ -497,6 +517,8 @@
           }
         }
       })
+
+      //空挡滑行
       .state('home.machineNeutralSliding', {
         url: '/machineNeutralSliding',
         views: {
@@ -506,6 +528,8 @@
           }
         }
       })
+
+      //短信发送报表
       .state('home.smsSendReport', {
         url: '/smsSendReport',
         views: {
@@ -515,6 +539,8 @@
           }
         }
       })
+
+      //ecu未激活列表
       .state('home.ecuNotActive', {
         url: '/ecuNotActive',
         views: {
@@ -524,6 +550,8 @@
           }
         }
       })
+
+      //未绑定列表
       .state('home.normalUnbound', {
         url: '/normalUnbound',
         views: {
@@ -533,6 +561,8 @@
           }
         }
       })
+
+      //系统参数配置列表
       .state('home.sysconfigmng', {
         url: '/sysconfigmng',
         views: {
@@ -542,6 +572,8 @@
           }
         }
       })
+
+      //sim卡管理
       .state('home.simMng', {
         url: '/simMng',
         views: {
@@ -551,6 +583,8 @@
           }
         }
       })
+
+      //设备管理
       .state('home.deviceinfoMng', {
         url: '/deviceinfoMng',
         views: {
@@ -558,9 +592,10 @@
             templateUrl: 'app/components/deviceinfoManagement/deviceinfoMng.html',
             controller: 'deviceinfoMngController as deviceinfoMngCtrl'
           }
-        },
-
+        }
       })
+
+      //消息通知
       .state('home.notification', {
         url: '/notification',
         views: {
@@ -570,6 +605,8 @@
           }
         }
       })
+
+      //保养通知
       .state('home.maintainNotice', {
         url: '/maintainNotice',
         views: {
@@ -579,6 +616,8 @@
           }
         }
       })
+
+      //设备监控
       .state('home.monitor', {
         url: '/monitor',
         views: {
@@ -592,6 +631,8 @@
           }
         }
       })
+
+      //组织管理
       .state('home.orgMng', {
         url: '/orgMng',
         views: {
@@ -599,9 +640,10 @@
             templateUrl: 'app/components/orgManagement/orgMng.html',
             controller: 'orgMngController as orgMngCtrl'
           }
-
         }
       })
+
+      //角色管理
       .state('home.roleMng', {
         url: '/roleMng',
         views: {
@@ -609,9 +651,10 @@
             templateUrl: 'app/components/roleManagement/roleMng.html',
             controller: 'roleMngController as roleMngCtrl'
           }
-
         }
       })
+
+      //车辆类型管理
       .state('home.machineTypeMng', {
         url: '/machineTypeMng',
         views: {
@@ -622,6 +665,8 @@
 
         }
       })
+
+      //权限管理
       .state('home.privilegeMng', {
         url: '/privilegeMng',
         views: {
@@ -629,10 +674,10 @@
             templateUrl: 'app/components/privilegeManagement/privilegeMng.html',
             controller: 'privilegeMngController as privilegeMngCtrl'
           }
-
-
         }
       })
+
+      //调拨
       .state('home.machineMove', {
         url: '/machineMove',
         views: {
@@ -646,6 +691,8 @@
           }
         }
       })
+
+      //车队工作点
       .state('home.workPoint', {
         url: '/workPoint',
         views: {
@@ -659,6 +706,8 @@
           }
         }
       })
+
+      //车队工作记录
       .state('home.workRecord', {
         url: '/workRecord',
         views: {
@@ -672,6 +721,8 @@
           }
         }
       })
+
+      //车队地图监控
       .state('home.fleetMapMonitor', {
         url: '/fleetMapMonitor',
         views: {
@@ -685,6 +736,8 @@
           }
         }
       })
+
+      //车队列表监控
       .state('home.fleetLineMonitor', {
         url: '/fleetLineMonitor',
         views: {
@@ -698,6 +751,8 @@
           }
         }
       })
+
+      //车队管理
       .state('home.fleetMng', {
         url: '/fleetMng',
         views: {
@@ -711,6 +766,8 @@
           }
         }
       })
+
+      //车队油耗配置
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {
@@ -724,6 +781,8 @@
           }
         }
       })
+
+      //车队称重数据
       .state('home.weightData', {
         url: '/weightData',
         views: {
@@ -737,6 +796,8 @@
           }
         }
       })
+
+      //车队燃料消耗
       .state('home.fuelConsumption', {
         url: '/fuelConsumption',
         views: {
@@ -750,6 +811,8 @@
           }
         }
       })
+
+      //车队利润统计
       .state('home.profit', {
         url: '/profit',
         views: {
@@ -763,6 +826,8 @@
           }
         }
       })
+
+      //数据分析
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {
@@ -775,6 +840,7 @@
           }
         }
       })
+
       .state('home.deviceparameter', {
         url: '/deviceparameter',
         views: {
@@ -856,6 +922,8 @@
           }
         }
       })
+
+      //模板管理
       .state('home.templateMng', {
         url: '/templateMng',
         views: {
@@ -865,6 +933,8 @@
           }
         }
       })
+
+      //模板新建
       .state('home.templateMng.new', {
         url: '/templateMng/new',
         views: {
@@ -874,6 +944,8 @@
           }
         }
       })
+
+      //模板更新
       .state('home.templateMng.update', {
         url: '/templateMng/update',
         views: {
@@ -883,6 +955,8 @@
           }
         }
       })
+
+      //模板注册
       .state('home.templateRegistry', {
         url: '/templateRegistry',
         views: {
@@ -902,45 +976,50 @@
         }
       })
 
-    .state('home.deviceUpdate', {
-      url: '/deviceUpdate',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/deviceUpdate/deviceUpdate.html',
-          controller: 'deviceUpdateController as deviceUpdateCtrl'
+      //设备远程升级
+      .state('home.deviceUpdate', {
+        url: '/deviceUpdate',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/deviceUpdate.html',
+            controller: 'deviceUpdateController as deviceUpdateCtrl'
+          }
         }
-      }
-    })
-    .state('home.updateFileMng', {
-      url: '/updateFileMng',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/deviceUpdate/updateFileMng.html',
-          controller: 'updateFileMngController as updateFileMngCtrl'
-        }
-      }
-    })
-    .state('home.updateRecord', {
-      url: '/updateRecord',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/deviceUpdate/updateRecord.html',
-          controller: 'updateRecordController as updateRecordCtrl'
-        }
-      }
-    })
-    .state('home.appVersion', {
-      url: '/appVersion',
-      views: {
-        'rightside@home': {
-          templateUrl: 'app/components/appManagement/appVersion.html',
-          controller: 'appVersionController as appVersionCtrl'
-        }
-      }
-    })
+      })
 
+      //远程升级--升级文件管理
+      .state('home.updateFileMng', {
+        url: '/updateFileMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/updateFileMng.html',
+            controller: 'updateFileMngController as updateFileMngCtrl'
+          }
+        }
+      })
 
-    ;
+      //更新日志
+      .state('home.updateRecord', {
+        url: '/updateRecord',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/deviceUpdate/updateRecord.html',
+            controller: 'updateRecordController as updateRecordCtrl'
+          }
+        }
+      })
+
+      //app版本管理
+      .state('home.appVersion', {
+        url: '/appVersion',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/appManagement/appVersion.html',
+            controller: 'appVersionController as appVersionCtrl'
+          }
+        }
+      });
+
     //默认去尝试自动登录
     $urlRouterProvider.otherwise('/entry');
 

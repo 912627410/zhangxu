@@ -1,4 +1,4 @@
 <span us-spinner="{radius:30, width:8, length: 16}"></span>
 <div ui-view="topbar"></div>
 <div ui-view="main"></div>
-<div ui-view="footer" class="text-center"></div>
+<div ng-if="userInfo != null" ui-view="footer" class="text-center"></div>
