@@ -10,10 +10,40 @@
     .controller('machineComparedMngController', machineComparedMngController);
 
   /** @ngInject */
-  function machineComparedMngController($rootScope, $scope, $http, $filter,Notification,serviceResource,SALES_HEAT_QUERY,START_HEAT_QUERY,GET_OWNERSHIP_URL,
+  function machineComparedMngController($rootScope, $scope, $http, $window,Idle,languages,$filter,Notification,serviceResource,SALES_HEAT_QUERY,START_HEAT_QUERY,GET_OWNERSHIP_URL,
                                         AVG_WORK_HOUR_QUERY_MONTH,AVG_WORK_HOUR_QUERY_QUARTER,AVG_WORK_HOUR_QUERY_DATE,SALES_YEAR_QUERY,
-                                        WORK_HOUR_YEAR_QUERY_DATE,AVG_WORK_HOUR_QUERY_ALL) {
+                                        WORK_HOUR_YEAR_QUERY_DATE,AVG_WORK_HOUR_QUERY_ALL,$stateParams) {
+
+
     var vm = this;
+
+    /**
+     * 重写dms请求url  加上&orgLgCode=
+     * 重写规则
+     * url: xxxx?param=...
+     * newUrl: xxxx?orgLgCode=value&param=...
+     */
+
+    vm.resetDmsUrl = function (url, value) {
+
+      return url.replace("?","?orgLgCode=" + value + "&");
+
+    };
+
+    //有一些url加了参数，这里就要加上orgLgCode
+    if($stateParams.orgLgCode!=null){
+      vm.hiteTopLink = true;
+      var  orgLgCode =  $stateParams.orgLgCode;
+      AVG_WORK_HOUR_QUERY_MONTH =   vm.resetDmsUrl(AVG_WORK_HOUR_QUERY_MONTH,  orgLgCode);
+      AVG_WORK_HOUR_QUERY_QUARTER = vm.resetDmsUrl(AVG_WORK_HOUR_QUERY_QUARTER,  orgLgCode);
+      AVG_WORK_HOUR_QUERY_DATE =    vm.resetDmsUrl(AVG_WORK_HOUR_QUERY_DATE,  orgLgCode);
+      AVG_WORK_HOUR_QUERY_ALL =     vm.resetDmsUrl(AVG_WORK_HOUR_QUERY_ALL,  orgLgCode);
+      WORK_HOUR_YEAR_QUERY_DATE =   vm.resetDmsUrl(WORK_HOUR_YEAR_QUERY_DATE,  orgLgCode);
+      SALES_YEAR_QUERY =            vm.resetDmsUrl(SALES_YEAR_QUERY,  orgLgCode);
+      GET_OWNERSHIP_URL =           vm.resetDmsUrl(GET_OWNERSHIP_URL,  orgLgCode);
+
+    };
+
     var mapChart1;//全国地图单独和左侧地图
     var mapChart2;//全国地图右侧地图
     var cityChart;//省份下钻单独地图
@@ -24,7 +54,6 @@
     var mmuChart2;//折线图右图
     var subMap1;//最右侧小地图上
     var subMap2;//最右侧小地图下
-
     var startDate = new Date(new Date()-5*24*60*60*1000);
     vm.startDate = startDate;
     vm.endDate = new Date();
@@ -829,52 +858,43 @@
       var beforeProvinceSales;//上周期省总销售额
       var totalData;//总销售额
       var beforeTotalData;//上周期总销售额
+      var mapOption1;
       if(null==machineType1||null==heatType1) {
         Notification.warning({message: '请选择单一车型状态下查询相关参数'});
         return;
       }
-      if(heatType1==1){
-        var mapOption1 = chinaOption1;
-      } else if(heatType1==0) {
-        var mapOption1 = chinaOption2;
-      }
+
       //判断查询时间段
       if(dateType){
         var filterTerm = dateType;
       } else if(monthDate){
-        var month = monthDate.getMonth() +1;
-        if(month<10){
-          monthDateFormated = monthDate.getFullYear() +'0'+ month;
 
-        }else{
-          monthDateFormated = ''+monthDate.getFullYear() + month;
-        }
-        filterTerm = monthDateFormated;
+        filterTerm = $filter('date')(monthDate, 'yyyyMM');
       } else {
         if (startDate) {
-          var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-          var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
-          filterTerm = "startDate=" + startDateFormated;
+          filterTerm = "startDate=" + $filter('date')(startDate, 'yyyy-MM-dd');
         }
         if (endDate) {
-          var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-          var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
-          filterTerm += "&endDate=" + endDateFormated;
+          filterTerm += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd');
         }
       }
       var filterTermProvince = filterTerm;
+
       //查询开工平均工作时间
       if(heatType1==1){
-          //调用封装好的查询平均时间功能--开工热度
-          avgWorkHoursQuery(dateType1,filterTerm,startDate,endDate);
-          vm.avgHours1 = true;
-          vm.avgHours3 = false;
+        mapOption1 = chinaOption1;
+
+        //调用封装好的查询平均时间功能--开工热度
+        avgWorkHoursQuery(dateType1,filterTerm,startDate,endDate);
+        vm.avgHours1 = true;
+        vm.avgHours3 = false;
         //悬浮框的的隐藏和显示-work
         vm.avgHoursNational = true;
         vm.avgHoursProvince = false;
       }else if(heatType1==0){
-          vm.avgHours1 = false;
-          vm.avgHours3 = true;
+        mapOption1 = chinaOption2;
+        vm.avgHours1 = false;
+        vm.avgHours3 = true;
       }
 
       //开工热度查询判断按某种周期
@@ -889,6 +909,11 @@
         if(dateType1==3){
           restCallURL += "date?";
         }
+
+        if(vm.dmsOrglgCode!=null){
+          restCallURL = vm.resetDmsUrl(restCallURL,  vm.dmsOrglgCode);
+        }
+
         //判断是哪种车型
         if(machineType1=="1,2,3"){
           filterTerm += "&machineType=" + 1;
@@ -911,6 +936,10 @@
         }
         if(dateType1==3){
           restCallURL += "date?";
+        }
+
+        if(vm.dmsOrglgCode!=null){
+          restCallURL = vm.resetDmsUrl(restCallURL,  vm.dmsOrglgCode);
         }
         //查询上周期的销售总额URL
         var beforeRestCallURL = restCallURL;
@@ -1884,7 +1913,8 @@
     }
 
     //默认进入页面后显示挖掘机开工热度2017年第二季度数据
-    vm.query(null,null,1,201702,null,'A1',1);
+    //因DMS接口需要  改为最后判断是否有dms入参  有入参的话先登录再初始化
+    //vm.query(null,null,1,201702,null,'A1',1);
     //查看对比结果
     vm.viewResults = function (startDate,endDate,dateType1,dateType,monthDate,machineType1,machineType2,heatType1,heatType2) {
       if(dateType1==1){
@@ -1924,6 +1954,10 @@
           if(dateType1==3){
             restCallURL1 += "date?";
           }
+
+          if(vm.dmsOrglgCode!=null){
+            restCallURL1 = vm.resetDmsUrl(restCallURL1,  vm.dmsOrglgCode);
+          }
         }
         //销售热度查询判断按某种周期--左图
         if(heatType1==0){
@@ -1936,6 +1970,10 @@
           }
           if(dateType1==3){
             restCallURL1 += "date?";
+          }
+
+          if(vm.dmsOrglgCode!=null){
+            restCallURL1 = vm.resetDmsUrl(restCallURL1,  vm.dmsOrglgCode);
           }
         }
         //开工热度查询判断按某种周期--右图
@@ -1950,6 +1988,10 @@
           if(dateType1==3){
             restCallURL2 += "date?";
           }
+
+          if(vm.dmsOrglgCode!=null){
+            restCallURL2 = vm.resetDmsUrl(restCallURL2,  vm.dmsOrglgCode);
+          }
         }
         //销售热度查询判断按某种周期--右图
         if(heatType2==0){
@@ -1962,6 +2004,10 @@
           }
           if(dateType1==3){
             restCallURL2 += "date?";
+          }
+
+          if(vm.dmsOrglgCode!=null){
+            restCallURL2 = vm.resetDmsUrl(restCallURL2,  vm.dmsOrglgCode);
           }
         }
         //判断查询时间段--左图
@@ -2776,6 +2822,10 @@
         if(dateType1==3){
           restCallURL += "date?";
         }
+
+        if(vm.dmsOrglgCode!=null){
+          restCallURL = vm.resetDmsUrl(restCallURL,  vm.dmsOrglgCode);
+        }
       }
       //销售热度查询判断按某种周期
       if(heatType1==0){
@@ -2788,6 +2838,10 @@
         }
         if(dateType1==3){
           restCallURL += "date?";
+        }
+
+        if(vm.dmsOrglgCode!=null){
+          restCallURL = vm.resetDmsUrl(restCallURL,  vm.dmsOrglgCode);
         }
       }
 
@@ -3008,6 +3062,64 @@
         subMap2.resize();
       }
     }
+
+
+    // 2017-09-20 by fengxiaopeng
+    //如果通过DMS接口方式进入页面则先登录 再请求
+    //否则直接请求
+    if($stateParams.username!=null && $stateParams.password!=null){
+      if($stateParams.orgLgCode!=null){
+        var credentials = {
+          username: $stateParams.username,
+          password: $stateParams.password
+        };
+
+        var rspPromise = serviceResource.authenticatea(credentials);
+        rspPromise.then(function (response) {
+          var data = response.data;
+          var userInfo = {
+            authtoken: data.token,
+            userdto: data.userinfo
+          };
+
+          //获取token和用户信息,存放到缓存中去
+          $http.defaults.headers.common['token'] = data.token;
+          $rootScope.userInfo = userInfo;
+          $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
+
+          Notification.success(languages.findKey('loginSuccess'));
+
+
+          //监控用户登录超时
+          Idle.watch();
+
+          //获取权限
+          var rspData = serviceResource.getPermission();
+          rspData.then(function (data) {
+            var permissionList = $filter("array2obj")(data.content, "permission");
+            $rootScope.permissionList = permissionList;
+            $window.sessionStorage["permissionList"] = JSON.stringify(permissionList);
+
+            vm.dmsOrglgCode = $stateParams.orgLgCode;
+
+            vm.query(null,null,1,201702,null,'A1',1);
+
+          }, function (reason) {
+          });
+
+        }, function (reason) {
+          Notification.error(reason.data.message);
+
+        });
+      }else {
+        Notification.error("经销商code不能为空");
+      }
+
+    }else {
+      vm.query(null,null,1,201702,null,'A1',1);
+
+    }
+
 
   }
 })();

@@ -10,11 +10,11 @@
 
           <input type="text" id="licenseId" class="form-control" placeholder="车号"
                  ng-model="newMachineController.machine.licenseId" name="licenseId" typeahead-show-hint="true"
-                 validator="required,minlength=17,maxlength=17" />
+                 validator="required,minlength=17,maxlength=17" ng-blur="newMachineController.validateEngineType(newMachineController.machine.licenseId)" />
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">绑定终端</label>
+        <label for="deviceNum" class="col-sm-2 control-label">绑定终端</label>
         <div class="col-sm-4">
           <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="手工输入6位号码或扫条码"
                  ng-model="newMachineController.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
@@ -55,7 +55,7 @@
       </div>
 
       <div class="form-group">
-        <label for="licenseId" class="col-sm-2 control-label">购买价格</label>
+        <label for="buyPrice" class="col-sm-2 control-label">购买价格</label>
         <div class="col-sm-4">
 
           <input type="text" id="buyPrice" class="form-control" placeholder="购买价格"
@@ -63,7 +63,7 @@
 
         </div>
 
-        <label for="licenseId" class="col-sm-2 control-label">购买时间</label>
+        <label class="col-sm-2 control-label">购买时间</label>
         <div class="col-sm-4">
           <p class="input-group">
             <input type="text" name="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
