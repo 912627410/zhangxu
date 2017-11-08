@@ -1534,7 +1534,10 @@
 
   "已锁车":"已锁车",
   "未锁车":"未锁车",
-  "locatePosition":"定位位置"
+  "locatePosition":"定位位置",
+  "limitUpStatus":"限升状态",
+  "limitUp":"限制举升",
+  "notLimited":"不限制"
 
 
 

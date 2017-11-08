@@ -121,7 +121,7 @@
                         <td>{{'positioningState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{'hasBeenpositioning(GPS)'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">{{'notLocate'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null"></td>
                         <!--定位时间-->
                         <td>{{'positioningDate'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -534,9 +534,13 @@
                         <!--锁车状态为空时填充行-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
-                        <!--预留-->
-                        <td></td>
-                        <td></td>
+                        <!--限升状态-->
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1||deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==0">{{'limitUpStatus'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1">{{'limitUp'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==0">{{'notLimited'|translate}}</td>
+                        <!--限升状态为空时填充行-->
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=0&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=1"></td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=0&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=1"></td>
                       </tr>
                     </table>
                   </tr>

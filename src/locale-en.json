@@ -1532,7 +1532,10 @@
 
   "已锁车":"Locked car",
   "未锁车":"Unlocked car",
-  "locatePosition":"Locate position"
+  "locatePosition":"Locate position",
+  "limitUpStatus":"Limit up status",
+  "limitUp":"Limit lifting",
+  "notLimited":"not limited"
 
 
 
