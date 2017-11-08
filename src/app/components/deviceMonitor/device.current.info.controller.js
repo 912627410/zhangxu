@@ -1570,19 +1570,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.activeMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -1643,19 +1644,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.unActiveMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -1710,19 +1712,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.lockMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -1782,19 +1785,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.unLockMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -1963,19 +1967,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.setIpMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -2023,19 +2028,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.setStartTImesMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -2084,19 +2090,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.setWorkHoursMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
@@ -2151,19 +2158,20 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.setWorkIntMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
+            if(data.code == 0){
+              if(data.content.smsStatus == 0){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success(data.content.resultDescribe);
+                vm.initSmsSendBtn();
+              } else if(data.content.smsStatus == 18){
+                vm.activeMsg = data.content.smsContent;
+                Notification.success("短信已提交短信平台"+ data.content.resultDescribe);
+                vm.initSmsSendBtn();
               } else {
-                Notification.error(data.content.message);
+                Notification.error(data.content.resultDescribe);
               }
-
+            } else {
+              Notification.error(data.content.message);
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
