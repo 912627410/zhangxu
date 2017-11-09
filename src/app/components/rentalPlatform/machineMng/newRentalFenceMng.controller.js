@@ -13,7 +13,7 @@
     .controller('newRentalFenceController', newRentalFenceController);
 
   /** @ngInject */
-  function newRentalFenceController($rootScope, $window, $scope, $timeout, $http,languages, $confirm, $uibModal, $location, treeFactory, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_GEO_CODER_URL,AMAP_PLACESEARCH_URL,Notification) {
+  function newRentalFenceController($rootScope, $uibModalInstance,$scope,languages, serviceResource, RENTAL_ORG_FENCE_URL,AMAP_PLACESEARCH_URL,Notification) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = {};
@@ -23,7 +23,8 @@
      * 取消新建围栏
      */
     vm.cancel = function () {
-      $location.path("/rental/orgFence");
+      $uibModalInstance.dismiss('cancel');
+      // $uibModalInstance.close();
     };
 
     /**
@@ -33,24 +34,12 @@
       var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('newFenceSucc'));
-        $location.path("/rental/orgFence");
+        $uibModalInstance.close(data.content);
       }, function (reason) {
         Notification.error(reason.data.message);
       })
     }
 
-    /**
-     * 自适应高度函数
-     * @param windowHeight
-     */
-    vm.adjustWindow = function (windowHeight) {
-      var baseBoxMapContainerHeight = windowHeight - 50 - 10  - 8 - 90 ;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
-      //地图的自适应高度
-      vm.baseBoxMapContainer = {
-        "min-height": baseBoxMapContainerHeight + "px"
-      }
-    }
-    vm.adjustWindow($window.innerHeight);
 
     //全局的圆对象
     var circle = null;

@@ -10,7 +10,7 @@
     .controller('newRentalOrderController', newRentalOrderController);
 
   /** @ngInject */
-  function newRentalOrderController($rootScope,$window,$scope,$timeout,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,RENTAL_ORDERMACHINETYPE_URL,rentalService, Notification,languages) {
+  function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages) {
     var vm = this;
     vm.rentalOrder={};
     var path="/rental/order";
@@ -68,7 +68,7 @@
     vm.operatorInfo =$rootScope.userInfo;
 
     vm.cancel = function () {
-      $location.path(path)
+      $uibModalInstance.close();
     };
 
 
@@ -180,9 +180,7 @@
         rspdata.then(function (data) {
           // $uibModalInstance.close(data.content);
           Notification.success(languages.findKey('newOrderSucc'));
-          $location.path(path);
-
-          //$location.path(path);
+          $uibModalInstance.close(data.content);
         },function (reason) {
           Notification.error(reason.data.message);
         })

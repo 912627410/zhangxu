@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController( $window,$state,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
+  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
                                     DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
 
     var vm = this;
@@ -88,8 +88,6 @@
         opened: false
       }
     };
-
-
 
     //vm.startDateSetting.dt="";
 
@@ -181,8 +179,47 @@
     vm.query(null,null,null,null);
 
 
-    vm.new=function(id){
-      $state.go('rental.newOrder');
+    vm.new=function(){
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
+        controller: 'newRentalOrderController',
+        controllerAs:'newRentalOrderCtrl',
+        size: 'lg'
+      });
+      modalInstance.result.then(function (result) {
+
+        vm.totalOrders += 1;
+        vm.planOrders += 1;
+        var orderVo  = result.orderVo
+        var machineTypeList = result.orderMachineTypeVoList
+        var rentalOrderNew = {
+          id:"",
+          startDate:"",
+          endDate:"",
+          rentalCustomer:"",
+          statusDesc:"",
+          location:"",
+          jc:"",
+          zb:"",
+          qb:""
+        }
+        rentalOrderNew = orderVo;
+        for(var i = 0;i<machineTypeList.length;i++){
+          if(machineTypeList[i].deviceType.id ==1){
+            rentalOrderNew.jc = machineTypeList[i].quantity
+          }
+          if(machineTypeList[i].deviceType.id ==2){
+            rentalOrderNew.qb = machineTypeList[i].quantity
+          }
+          if(machineTypeList[i].deviceType.id ==3){
+            rentalOrderNew.zb = machineTypeList[i].quantity
+          }
+        }
+
+        vm.tableParams.data.splice(0, 0, rentalOrderNew);
+      }, function () {
+      });
     }
 
     //重置查询框
@@ -220,8 +257,8 @@
           var tabList=vm.tableParams.data;
           //更新内容
           for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.id){
-              tabList[i]=result;
+            if(tabList[i].id==result.orderVo.id){
+              tabList[i]=result.orderVo;
             }
           }
         }, function () {
@@ -232,7 +269,28 @@
     }
 
     vm.view=function(id){
-      $state.go('rental.viewOrder', {id: id});
+     // $state.go('rental.viewOrder', {id: id});
+      var orderUrl=RENTAL_ORDER_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(orderUrl,"GET");
+      rspdata.then(function (data) {
+        var retalOrderTotalVo=data.content;
+        var orderMachineTypeVoList=data.content.orderMachineTypeVoList;
+        var modalInstance= $uibModal.open({
+          animation: true,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrderMng.html',
+          controller: 'viewRentalOrderController as viewRentalOrderCtrl',
+          size: 'lg',
+          resolve: {
+            retalOrderTotalVo: function () {
+              return retalOrderTotalVo;
+            }
+          }
+        });
+      },function () {
+        //取消
+      });
+
+
     }
 
   }

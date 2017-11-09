@@ -10,7 +10,7 @@
     .controller('updateRentalOrderController', updateRentalOrderController);
 
   /** @ngInject */
-  function updateRentalOrderController($rootScope,$window,$uibModalInstance,$stateParams,$uibModal,$location,treeFactory,serviceResource,rentalService,RENTAL_ORDER_URL, Notification,retalOrder,orderMachineTypeVoList,languages) {
+  function updateRentalOrderController($rootScope,$window,$uibModalInstance,$uibModal,$location,treeFactory,serviceResource,rentalService,RENTAL_ORDER_URL, Notification,retalOrder,orderMachineTypeVoList,languages) {
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     vm.rentalOrder= retalOrder;
@@ -18,7 +18,6 @@
       orderVo:'',
       orderMachineTypeVoList:'',
       orderMachineVoList:''
-
     }
     vm.jcOption = {
       deviceType :{id:1}
@@ -29,7 +28,7 @@
     vm.zbOption = {
       deviceType :{id:3}
     }
-
+    vm.rentalOrderMachineTypeVos = [];
     vm.orderMachineTypeVoList = orderMachineTypeVoList;
     for(var i = 0;i<vm.orderMachineTypeVoList.length;i++){
       if(vm.orderMachineTypeVoList[i].deviceType.id == 1){
@@ -155,13 +154,14 @@
 
       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
       vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+      vm.addRentalOrderOption.orderMachineVoList = null;
 
       // vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
 
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('upOrderSucc'));
-        $location.path(path);
+        $uibModalInstance.close(data.content);
 
       },function (reason) {
         Notification.error(reason.data.message);

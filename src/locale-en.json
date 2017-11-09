@@ -1518,7 +1518,8 @@
   "A-2 检查前操作":"A-2 Pre-check operation",
   "A-3 功能测试":"A-3 Functional test",
   "A-4 30天的维护":"A-4 30 days maintenance",
-  "MoCuInSuc":"Modify customer information successful!"
+  "MoCuInSuc":"Modify customer information successful!",
+  "updateFence":"Modify fence information"
 
 
 
