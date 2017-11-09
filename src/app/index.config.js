@@ -41,7 +41,7 @@
               $window.sessionStorage.removeItem("statisticInfo");
               $window.sessionStorage.removeItem("permissionList");
 
-              $rootScope.$state.go( "home.login" );
+              $rootScope.$state.go( "login" );
             } else {
               $rootScope.error = method + " on " + url + " failed with status " + status;
             }

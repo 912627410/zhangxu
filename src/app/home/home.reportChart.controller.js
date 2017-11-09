@@ -1,7 +1,7 @@
 /**
  * Created by shuangshan on 16/1/1.
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -9,28 +9,21 @@
     .controller('ReportChartController', ReportChartController);
 
   /** @ngInject */
-  function ReportChartController($rootScope,$filter, serviceResource,permissions,LOAD_RECENT_UPLOAD_PAGE_URL,LOAD_TODAY_UPLOAD_PAGE_URL,Notification) {
+  function ReportChartController($filter, serviceResource, permissions, LOAD_RECENT_UPLOAD_PAGE_URL, LOAD_TODAY_UPLOAD_PAGE_URL) {
     var vm = this;
 
-
     //查询最近上传数据的设备
-    vm.loadRecentUploadDevice=function () {
+    vm.loadRecentUploadDevice = function () {
       var date = new Date();
-      date.setDate(date.getDate()-6);  //默认查询最近一个月的异常数据
-      var beginDate=$filter('date')(date,'yyyy-MM-dd');;
-      var endDate=$filter('date')(new Date(),'yyyy-MM-dd');;
+      date.setDate(date.getDate() - 6);  //默认查询最近一个月的异常数据
 
-      var result = serviceResource.restCallService(LOAD_RECENT_UPLOAD_PAGE_URL,"GET");
+      var result = serviceResource.restCallService(LOAD_RECENT_UPLOAD_PAGE_URL, "GET");
       result.then(function (data) {
-        if (data.code == 0 && data.content!= null) {
-          var dataContent  = data.content;
-     //     vm.uploadDevice.series.data=[1,3,6,9];
-
-      //    vm.uploadDevice.series[0].remove(false);
-        //  vm.uploadDevice.splice(0, 1)
+        if (data.code == 0 && data.content != null) {
+          var dataContent = data.content;
           var rnd = [];
-          var reportDates=[];
-          for(var i=0;i<dataContent.length;i++){
+          var reportDates = [];
+          for (var i = 0; i < dataContent.length; i++) {
             rnd.push(dataContent[i].num);
             reportDates.push(dataContent[i].statDesc);
           }
@@ -40,13 +33,13 @@
             data: rnd
           });
 
-          vm.uploadDevice.xAxis.categories=reportDates;
+          vm.uploadDevice.xAxis.categories = reportDates;
 
         }
       })
     }
 
-    vm.uploadDevice={
+    vm.uploadDevice = {
       options: {
         chart: {
           type: 'line',
@@ -61,10 +54,8 @@
         title: {
           text: '日期'
         },
-        categories:[],
-        labels: {
-
-        }
+        categories: [],
+        labels: {}
       },
       //y轴坐标显示
       yAxis: {
@@ -74,28 +65,20 @@
     }
 
 
-
-
-    vm.loadTodayUploadDeviceType=function () {
-      var date=$filter('date')(new Date(),'yyyy-MM-dd');;
-
+    vm.loadTodayUploadDeviceType = function () {
       //var url ="http://localhost:8080/rest/deviceMonitor/deviceDataTypeToday";
-      var result = serviceResource.restCallService(LOAD_TODAY_UPLOAD_PAGE_URL,"GET");
+      var result = serviceResource.restCallService(LOAD_TODAY_UPLOAD_PAGE_URL, "GET");
       result.then(function (data) {
-        if (data.code == 0 && data.content!= null) {
-          var dataContent  = data.content;
-          //     vm.uploadDevice.series.data=[1,3,6,9];
-
-          //    vm.uploadDevice.series[0].remove(false);
-          //  vm.uploadDevice.splice(0, 1)
+        if (data.code == 0 && data.content != null) {
+          var dataContent = data.content;
           var rnd = [];
-          var reportDates=[];
-          for(var i=0;i<dataContent.length;i++){
+          var reportDates = [];
+          for (var i = 0; i < dataContent.length; i++) {
             rnd.push(dataContent[i].num);
             reportDates.push(dataContent[i].statDesc);
           }
 
-          vm.uploadTodayDevice={
+          vm.uploadTodayDevice = {
             options: {
               chart: {
                 type: 'line',
@@ -110,10 +93,8 @@
               title: {
                 text: '时间'
               },
-              categories:reportDates,
-              labels: {
-
-              }
+              categories: reportDates,
+              labels: {}
             },
             //y轴坐标显示
             yAxis: {
@@ -121,21 +102,21 @@
             },
             series: [{
               name: '当天数据上传',
-              data:rnd
+              data: rnd
             }],
           }
         }
       })
     }
 
-    vm.uploadTodayDeviceType={
+    vm.uploadTodayDeviceType = {
       options: {
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
           plotShadow: false,
           type: 'pie',
-         // zoomType: 'xy',
+          // zoomType: 'xy',
         }
       },
       title: {
@@ -185,9 +166,8 @@
     }
 
 
-    if(permissions.getPermissions("device:reportChart")){
+    if (permissions.getPermissions("device:reportChart")) {
       vm.loadRecentUploadDevice();
-//    vm.loadTodayUploadDevice();
       vm.loadTodayUploadDeviceType();
     }
 

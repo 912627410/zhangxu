@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,25 +6,20 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($rootScope, $cookies,$scope,$window,$http,$uibModal,permissions,Notification,Idle, Keepalive,$translate,languages) {
+  function MainController($rootScope, $cookies, $scope, $window, $http, $uibModal, permissions, Notification, Idle, Keepalive, $translate, languages) {
     var vm = this;
     vm.profileFormHided = true;
-    //$rootScope.logo="assets/images/logo.png";
 
-    var userInfo=$rootScope.userInfo;
-    if(null!=userInfo&&null!=userInfo.userdto&&null!=userInfo.userdto.organizationDto&&
-      null!=userInfo.userdto.organizationDto.logo&& userInfo.userdto.organizationDto.logo!=""){
-        // $rootScope.logo=userInfo.userdto.organizationDto.logo;
-        $rootScope.logo="assets/images/"+$rootScope.userInfo.userdto.organizationDto.logo;
-
-    }
-    else{
-      $rootScope.logo="assets/images/logo.png";
+    var userInfo = $rootScope.userInfo;
+    if (null != userInfo && null != userInfo.userdto && null != userInfo.userdto.organizationDto &&
+      null != userInfo.userdto.organizationDto.logo && userInfo.userdto.organizationDto.logo != "") {
+      $rootScope.logo = "assets/images/" + $rootScope.userInfo.userdto.organizationDto.logo;
+    } else {
+      $rootScope.logo = "assets/images/logo.png";
     }
 
-    vm.logout = function(){
-
-      $rootScope.logo="assets/images/logo.png";
+    vm.logout = function () {
+      $rootScope.logo = "assets/images/logo.png";
 
       $rootScope.userInfo = null;
       $rootScope.deviceGPSInfo = null;
@@ -55,20 +50,19 @@
       //停止监控用户登录超时
       Idle.unwatch();
 
-      $rootScope.$state.go('home.login');
+      $rootScope.$state.go('login');
       Notification.success(languages.findKey('successfulExit'));
-
     }
 
     //显示profile box
-    vm.hideProfile = function(){
+    vm.hideProfile = function () {
       vm.profileFormHided = !vm.profileFormHided;
     }
 
     //用户登录超时设置
     $rootScope.events = [];
 
-    $rootScope.$on('IdleStart', function() {
+    $rootScope.$on('IdleStart', function () {
       // the user appears to have gone idle
       closeModals();
 
@@ -78,14 +72,14 @@
       });
     });
 
-    $rootScope.$on('IdleWarn', function(e, countdown) {
+    $rootScope.$on('IdleWarn', function (e, countdown) {
       // follows after the IdleStart event, but includes a countdown until the user is considered timed out
       // the countdown arg is the number of seconds remaining until then.
       // you can change the title or display a warning dialog from here.
       // you can let them resume their session by calling Idle.watch()
     });
 
-    $rootScope.$on('IdleTimeout', function() {
+    $rootScope.$on('IdleTimeout', function () {
       // the user has timed out (meaning idleDuration + timeout has passed without any activity)
       // this is where you'd log them
       closeModals();
@@ -96,12 +90,12 @@
       //});
     });
 
-    $rootScope.$on('IdleEnd', function() {
+    $rootScope.$on('IdleEnd', function () {
       // the user has come back from AFK and is doing stuff. if you are warning them, you can use this to hide the dialog
       closeModals();
     });
 
-    $rootScope.$on('Keepalive', function() {
+    $rootScope.$on('Keepalive', function () {
       // do something to keep the user's session alive
     });
 
@@ -117,9 +111,9 @@
       }
     }
 
-     $scope.changeLanguage = function (langKey) {
-       $translate.use(langKey);
-      };
+    $scope.changeLanguage = function (langKey) {
+      $translate.use(langKey);
+    };
 
   }
 
