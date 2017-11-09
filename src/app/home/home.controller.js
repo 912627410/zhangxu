@@ -18,7 +18,7 @@
     };
 
     if ($rootScope.userInfo == null) {
-      $rootScope.$state.go("home.login");
+      $rootScope.$state.go("login");
       return;
     }
 

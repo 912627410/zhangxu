@@ -30,15 +30,22 @@
           position: relative;
           > a {
             margin-right: 0;
+            > .pull-right-container {
+              position: relative !important;
+              float: right;
+              width: auto !important;
+              left: 180px !important;
+              top: -25px !important;
+              z-index: 900;
+            }
           }
+          /*>a:hover{
+            width: 250px;
+          }*/
           > a > span {
             border-top-right-radius: 4px;
-          }
-
-          &:not(.treeview) {
-            > a > span {
-              border-bottom-right-radius: 4px;
-            }
+            color: #fff !important;
+            background-color: #1e282c !important;
           }
 
           > .treeview-menu {
@@ -51,13 +58,13 @@
           //Show menu items on hover
           &:hover {
             > a {
-              //overflow: visible;
+              overflow: visible;
             }
             > a > span:not(.pull-right),
             > .treeview-menu {
               display: block !important;
               position: absolute;
-              width: @sidebar-width - 50;
+              width: @sidebar-width;
               left: 50px;
             }
 
@@ -139,3 +146,5 @@
     margin-top: -7px;
   }
 }
+
+

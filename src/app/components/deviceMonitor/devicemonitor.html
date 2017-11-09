@@ -11,224 +11,264 @@
 
 <!-- Main content -->
 <section class="content form-horizontal">
-
-
   <!-- 高德地图 -->
-  <div class = "row">
+  <div class="row">
     <div class="col-xs-12 connectedSortable">
       <div class="box box-danger">
         <div class="box-header">
           <!-- tools box -->
           <div class="pull-right box-tools">
-            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="monitorCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i class="fa fa-refresh"></i></button>
+            <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip"
+                    ng-click="monitorCtrl.refreshMainMap()" title="{{'refresh'|translate}}"><i
+              class="fa fa-refresh"></i></button>
           </div><!-- /. tools -->
           <i class="fa fa-cloud"></i>
           <h3 class="box-title">{{'distributionOfTheMachine'|translate}}</h3>
         </div><!-- /.box-header -->
-        <div class="box-body" style="min-height: 400px" id="monitorMap">
+        <div class="box-body" style="min-height: 470px" id="monitorMap">
         </div>
       </div>
     </div><!-- /.col -->
   </div>
-
-  <div class="row form-group">
-    <hr>
-    <div class="col-md-2">
-      <label class="control-label">{{'organisation'|translate}}:</label>
-    </div>
-    <div class="col-md-2">
-      <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
-               ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
-        <span class="input-group-btn">
+  <!-- /.高德地图 -->
+  <div class="box-custom" style="box-shadow: 0 1px 1px rgba(0,0,0,0.1); background: #ffffff;">
+    <div class="row form-group " style="margin-left: 10px; padding-top: 10px">
+      <div class="col-md-2">
+        <label class="control-label">{{'organisation'|translate}}:</label>
+      </div>
+      <div class="col-md-2">
+        <p class="input-group">
+          <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
+                 ng-model="monitorCtrl.queryOrg.label" name="org" readonly required/>
+          <span class="input-group-btn">
                   <!--打开组织树-->
                   <button type="button" class="btn btn-default" ng-click="monitorCtrl.openTreeInfo()">
                     <i class="fa fa-sitemap"></i>
                   </button>
                   </span>
-      </p>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <label class="control-label">包含下级组织:</label>
+        <input type="checkbox" checked="checked" ng-model="monitorCtrl.querySubOrg"/>
+      </div>
+      <div class="col-md-2">
+        <label class="control-label">{{'terminalno'|translate}}:</label>
+      </div>
+      <div class="col-md-2">
+        <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum"
+               ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null"
+               placeholder="{{'supportfuzzyqueries'|translate}}"/>
+      </div>
     </div>
-    <div class="col-md-2">
-      <label class="control-label">包含下级组织:</label>
-      <input type="checkbox" checked="checked" ng-model="monitorCtrl.querySubOrg"/>
+    <div class="row form-group " style="margin-left: 10px; padding-top: 10px">
+      <div class="col-md-2">
+        <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
+      </div>
+      <div class="col-md-2">
+        <input type="text" name="queryMachineLicenseId" class="form-control "
+               ng-model="monitorCtrl.queryMachineLicenseId"
+               ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null"
+               placeholder="{{'supportfuzzyqueries'|translate}}"/>
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
+        <label class="control-label">{{'protocolType'|translate}}:</label>
+      </div>
+      <div ng-class="(monitorCtrl.queryLinkage) ? 'col-md-1' : 'col-md-2'">
+        <select class="form-control" ng-model="monitorCtrl.queryDeviceType"
+                ng-change="monitorCtrl.selectChange(monitorCtrl.queryDeviceType)">
+          <option value="装载机">装载机</option>
+          <option value="挖掘机">挖掘机</option>
+          <option value="压路机">压路机</option>
+          <option value="平地机">平地机</option>
+          <option value="矿机">矿机</option>
+        </select>
+      </div>
+      <div class="col-md-1" ng-show="monitorCtrl.queryLinkage">
+        <select class="form-control" ng-model="monitorCtrl.queryDeviceType2">
+          <option value="A1">小挖</option>
+          <option value="40">中挖</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+
+        <button class="btn btn-primary" type="button" presentation-href="device:monitorPage"
+                ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}
+        </button>
+        <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
+      </div>
+    </div>
+    <div class="row form-group " style="margin-left: 10px; padding-top: 10px">
+      <hr>
+      <div class="btn-group col-md-2">
+        <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>{{'list'|translate}}</label>
+        <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>{{'columnBlock'|translate}}</label>
+      </div>
+      <div class="btn-group col-md-2">
+        <span>{{'totalNumberOfRecords'|translate}} {{monitorCtrl.page.totalElements}}</span>
+      </div>
+      <div class="btn-group col-md-8 " style="padding-right: 20px;">
+        <a class="btn btn-default pull-right" ng-click="monitorCtrl.excelExport(monitorCtrl.queryOrg)">{{'export'|translate}}</a>
+      </div>
     </div>
 
-    <div class="col-md-2">
-      <label class="control-label">{{'terminalno'|translate}}:</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="queryDeviceNum" class="form-control " ng-model="monitorCtrl.queryDeviceNum" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-    </div>
-  </div>
-  <div class="row form-group">
-    <div class="col-md-2">
-      <label class="control-label">{{'machineNumberAndCarNumber'|translate}}:</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="queryMachineLicenseId" class="form-control " ng-model="monitorCtrl.queryMachineLicenseId" ng-keyup="$event.keyCode == 13 ? monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device) : null" placeholder="{{'supportfuzzyqueries'|translate}}"/>
-    </div>
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-      <label class="control-label">{{'protocolType'|translate}}:</label>
-    </div>
-    <div ng-class="(monitorCtrl.queryLinkage) ? 'col-md-1' : 'col-md-2'">
-      <select class="form-control" ng-model="monitorCtrl.queryDeviceType" ng-change="monitorCtrl.selectChange(monitorCtrl.queryDeviceType)">
-        <option value="装载机">装载机</option>
-        <option value="挖掘机">挖掘机</option>
-        <option value="压路机">压路机</option>
-        <option value="平地机">平地机</option>
-        <option value="矿机">矿机</option>
-      </select>
-    </div>
-    <div class="col-md-1" ng-show="monitorCtrl.queryLinkage">
-      <select class="form-control" ng-model="monitorCtrl.queryDeviceType2">
-        <option value="A1">小挖</option>
-        <option value="40">中挖</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-
-      <button class="btn btn-primary" type="button" presentation-href="device:monitorPage" ng-click="monitorCtrl.queryDeviceInfo(0,null,null,monitorCtrl.device)">{{'query'|translate}}</button>
-      <button class="btn btn-warning" type="button" ng-click="monitorCtrl.reset()">{{'reset'|translate}}</button>
-    </div>
-  </div>
-
-  <div class="row">
-    <hr>
-    <div class="btn-group col-md-2">
-      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'list'" uncheckable>{{'list'|translate}}</label>
-      <label class="btn btn-default btn-xs" ng-model="monitorCtrl.radioListType" uib-btn-radio="'block'" uncheckable>{{'columnBlock'|translate}}</label>
-    </div>
-    <div class="btn-group col-md-2">
-      <span>{{'totalNumberOfRecords'|translate}} {{monitorCtrl.page.totalElements}}</span>
-    </div>
-    <div class="btn-group col-md-8 right">
-      <a class="btn btn-default pull-right"  ng-click="monitorCtrl.excelExport(monitorCtrl.queryOrg)">{{'export'|translate}}</a>
-    </div>
-  </div>
-
-
-
-  <div class="row" style="padding: 10px">
-    <!--列块模式-->
-    <div ng-if="monitorCtrl.radioListType == 'block'" class="col-md-3" ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
-      <div class="box box-success">
-        <div class="box-header">
-          <h5 class="box-title" ng-if="deviceinfo.machineLicenseId">{{deviceinfo.machineLicenseId}}</h5>
-          <h5 class="box-title text-gray" ng-if="deviceinfo.machineLicenseId==null">{{'undefined'|translate}}</h5>
-          <div class="box-tools pull-right">
-            <div class="text-gray" ng-if="deviceinfo.status == 0"> <i class="fa fa-exclamation-triangle"></i> </div>
-            <div class="text-green" ng-if="deviceinfo.status == 1"> <i class="fa fa-check-square"></i> </div>
-            <div class="text-yellow" ng-if="deviceinfo.status == 2"> <i class="fa fa-anchor"></i> </div>
-            <div class="text-red" ng-if="deviceinfo.status == 9"> <i class="fa fa-info"></i> </div>
-          </div>
-        </div>
-        <div class="box-body">
-
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'machineNumberAndCarNumber'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.machineLicenseId}}
+    <div class="row " style="padding: 14px">
+      <!--列块模式-->
+      <div ng-if="monitorCtrl.radioListType == 'block'" class="col-md-3"
+           ng-repeat="deviceinfo in monitorCtrl.deviceInfoList">
+        <div class="box box-success">
+          <div class="box-header">
+            <h5 class="box-title" ng-if="deviceinfo.machineLicenseId">{{deviceinfo.machineLicenseId}}</h5>
+            <h5 class="box-title text-gray" ng-if="deviceinfo.machineLicenseId==null">{{'undefined'|translate}}</h5>
+            <div class="box-tools pull-right">
+              <div class="text-gray" ng-if="deviceinfo.status == 0"><i class="fa fa-exclamation-triangle"></i></div>
+              <div class="text-green" ng-if="deviceinfo.status == 1"><i class="fa fa-check-square"></i></div>
+              <div class="text-yellow" ng-if="deviceinfo.status == 2"><i class="fa fa-anchor"></i></div>
+              <div class="text-red" ng-if="deviceinfo.status == 9"><i class="fa fa-info"></i></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
-              {{'workingHours'|translate}}:
+          <div class="box-body">
+
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'machineNumberAndCarNumber'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+                {{deviceinfo.machineLicenseId}}
+              </div>
             </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.totalDuration |number:2}}
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'workingHours'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+                {{deviceinfo.totalDuration |number:2}}
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'terminalno'|translate}}
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'terminalno'|translate}}
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+                {{deviceinfo.deviceNum}}
+              </div>
             </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.deviceNum}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'positioningState'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              <span ng-class="deviceinfo.locateStatus == 'A'? 'text-green':'text-red'" >
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'positioningState'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+              <span ng-class="deviceinfo.locateStatus == 'A'? 'text-green':'text-red'">
                 <div ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</div>
                 <div ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</div>
               </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'protocolType'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+                <div ng-if="deviceinfo.versionNum == 'A1'">挖掘机/小挖</div>
+                <div ng-if="deviceinfo.versionNum == '40'">挖掘机/中挖</div>
+                <div
+                  ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType != null">
+                  {{deviceinfo.machineType}}
+                </div>
+                <div
+                  ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType == null">
+                  {{deviceinfo.machineType2}}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'lastUpdateTime'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
+                {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5" style="padding-left: 15px;padding-right: 0px">
+                {{'currentPosition'|translate}}:
+              </div>
+              <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
+                {{deviceinfo.address}}
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'protocolType'|translate}}:
+          <div class="box-footer">
+            <div class="pull-right">
+              <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage"
+                      ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}
+              </button>
             </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              <div ng-if="deviceinfo.versionNum == 'A1'">挖掘机/小挖</div>
-              <div ng-if="deviceinfo.versionNum == '40'">挖掘机/中挖</div>
-              <div ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType != null">{{deviceinfo.machineType}}</div>
-              <div ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType == null">{{deviceinfo.machineType2}}</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'lastUpdateTime'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
-              {{deviceinfo.lastUpdateTime | date:'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'currentPosition'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
-              {{deviceinfo.address}}
-            </div>
-          </div>
-        </div>
-        <div class="box-footer">
-          <div class="pull-right">
-            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
           </div>
         </div>
       </div>
-    </div>
-    <!--列表模式-->
-    <div class="table-responsive">
-      <table ng-table="monitorCtrl.tableParams"  class="table table-condensed table-bordered table-striped text-nowrap" export-csv='csv'>
-        <tr ng-repeat="deviceinfo in $data">
+      <!--列表模式-->
+      <div class="table-responsive">
+        <table ng-table="monitorCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap"
+               export-csv='csv'>
+          <tr ng-repeat="deviceinfo in $data">
 
-          <td  data-title="'terminalno'|translate" sortable="'deviceNum'" >
-            <a href ng-if="monitorCtrl.validateOperPermission()" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
-          </td>
-          <td  data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
-          <td  data-title="'workingHours'|translate" >{{deviceinfo.totalDuration | number:2}}</td>
-          <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
-            <span ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</span>
-            <span ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</span>
-          </td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}</td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">{{'noMessage'|translate}}</td>
-          <td  data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum == 'A1'" sortable="'versionNum'">挖掘机/小挖</td>
-          <td  data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum == '40'" sortable="'versionNum'">挖掘机/中挖</td>
-          <td  data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType != null" sortable="'machineType'">{{deviceinfo.machineType}}</td>
-          <td  data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType == null" sortable="'versionNum'">{{deviceinfo.machineType2}}</td>
-          <td  data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-          <td  data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td  data-title="'operation'|translate" >
-            <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage" ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}</button>
-          </td>
-        </tr>
-      </table>
+            <td data-title="'terminalno'|translate" sortable="'deviceNum'">
+              <a href ng-if="monitorCtrl.validateOperPermission()"
+                 ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
+            </td>
+            <td data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">
+              {{deviceinfo.machineLicenseId}}
+            </td>
+            <td data-title="'workingHours'|translate">{{deviceinfo.totalDuration | number:2}}</td>
+            <td data-title="'positioningState'|translate" sortable="'locateStatus'">
+              <span ng-if="deviceinfo.locateStatus=='A'">{{'hasBeenpositioning'|translate}}</span>
+              <span ng-if="deviceinfo.locateStatus=='V'">{{'notLocate'|translate}}</span>
+            </td>
+            <td data-title="'currentPosition'|translate" style="width: 200px"
+                ng-if="deviceinfo.locateStatus=='A' && deviceinfo.address!=null">{{deviceinfo.address}}
+            </td>
+            <td data-title="'currentPosition'|translate" style="width: 200px"
+                ng-if="deviceinfo.locateStatus=='V' || deviceinfo.locateStatus==null || deviceinfo.address==null">
+              {{'noMessage'|translate}}
+            </td>
+            <td data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum == 'A1'" sortable="'versionNum'">
+              挖掘机/小挖
+            </td>
+            <td data-title="'protocolType'|translate" ng-if="deviceinfo.versionNum == '40'" sortable="'versionNum'">
+              挖掘机/中挖
+            </td>
+            <td data-title="'protocolType'|translate"
+                ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType != null"
+                sortable="'machineType'">{{deviceinfo.machineType}}
+            </td>
+            <td data-title="'protocolType'|translate"
+                ng-if="deviceinfo.versionNum != 'A1' && deviceinfo.versionNum != '40' && deviceinfo.machineType == null"
+                sortable="'versionNum'">{{deviceinfo.machineType2}}
+            </td>
+            <td data-title="'organisation'|translate" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
+            <td data-title="'recentDataUploadTime'|translate" sortable="'lastDataUploadTime'">
+              {{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+            <td data-title="'operation'|translate">
+              <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage"
+                      ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="row">
-  </div>
-  <div class="box-footer">
-    <uib-pagination total-items="monitorCtrl.page.totalElements" ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)" max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size" class="pagination-sm" boundary-links="true" rotate="false"  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+
+    <div class="box-footer" style="background-color: transparent!important;border-top:none!important;">
+      <uib-pagination total-items="monitorCtrl.page.totalElements"
+                      ng-change="monitorCtrl.queryDeviceInfo(monitorCtrl.deviceData_pagenumber-1,null,null,monitorCtrl.deviceNum)"
+                      max-size="15" ng-model="monitorCtrl.deviceData_pagenumber" items-per-page="monitorCtrl.page.size"
+                      class="pagination-sm" boundary-links="true" rotate="false" previous-text="&lsaquo;"
+                      next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+    </div>
   </div>
   <!-- Main row -->
 </section><!-- /.content -->

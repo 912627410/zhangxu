@@ -156,6 +156,7 @@
     color: @sidebar-dark-color;
     &:hover {
       text-decoration: none;
+      background: #1e282c;
     }
   }
   //All submenus
@@ -232,13 +233,9 @@
       font-weight: 600;
     }
     //Hover and active states
-    &:hover > a,
     &.active > a {
       color: @sidebar-light-hover-color;
       background: @sidebar-light-hover-bg;
-    }
-    &:hover > a {
-
     }
     &.active {
       border-left-color: @icon-active-color;
@@ -248,12 +245,11 @@
     }
     //First Level Submenu
     > .treeview-menu {
-      background: @sidebar-light-submenu-bg;
+      background:@se-background;
     }
   }
   //All links within the sidebar menu
   .sidebar a {
-    color: @sidebar-light-color;
     &:hover {
       text-decoration: none;
     }
@@ -275,7 +271,7 @@
   }
   //The sidebar search form
   .sidebar-form {
-    .border-radius(3px);
+    .border-radius(10px);
     border: 1px solid @gray; //darken(@sidebar-light-bg, 5%);
     margin: 10px 10px;
     input[type="text"],
@@ -311,3 +307,4 @@
     }
   }
 }
+
