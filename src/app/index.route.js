@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -38,7 +38,7 @@
             controller: 'HomeController',
             controllerAs: 'homeCtrl'
           },
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'reportChart@home': {
@@ -48,23 +48,10 @@
           },
         }
       })
-      .state('home.login', {
-        url: '/login',
-        views: {
-          'footer@home':{
-            templateUrl: 'app/main/widefooter.html'
-          },
-          'main@home': {
-            templateUrl: 'app/components/login/login.html',
-            controller: 'LoginController',
-            controllerAs: 'loginCtrl'
-          }
-        }
-      })
       .state('home.appDownloadPage', {
         url: '/appDownloadPage',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/widefooter.html'
           },
           'main@home': {
@@ -75,7 +62,7 @@
       .state('home.register', {
         url: '/register',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/widefooter.html'
           },
           'main@home': {
@@ -157,7 +144,6 @@
           }
         }
       })
-      //
       .state('home.intervalAndSignal', {
         url: '/intervalAndSignal',
         views: {
@@ -216,7 +202,7 @@
       .state('home.monitor', {
         url: '/monitor',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -260,7 +246,7 @@
       .state('home.machineMove', {
         url: '/machineMove',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -270,11 +256,10 @@
           }
         }
       })
-
       .state('home.workplane', {
         url: '/workplane',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -284,11 +269,10 @@
           }
         }
       })
-
       .state('home.fleetMng', {
         url: '/fleetMng',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -298,11 +282,10 @@
           }
         }
       })
-
       .state('home.revenue', {
         url: '/revenue',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -312,11 +295,10 @@
           }
         }
       })
-
       .state('home.cost', {
         url: '/cost',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -329,7 +311,7 @@
       .state('home.fuelConfig', {
         url: '/fuelConfig',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -342,7 +324,7 @@
       .state('home.weightData', {
         url: '/weightData',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -355,7 +337,7 @@
       .state('home.dataAnalysis', {
         url: '/dataAnalysis/:role/:menuType',
         views: {
-          'footer@home':{
+          'footer@home': {
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
@@ -457,7 +439,6 @@
           }
         }
       })
-      //
       .state('dms.machineComparison', {
         url: '/machineComparison?username&password&orgLgCode',
         views: {
@@ -467,6 +448,30 @@
           }
         }
       });
+
+    //登录页面
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        views: {
+          '@': {
+            template: '<div ui-view="topbar"></div><div ui-view="main"></div><div ui-view="footer"></div>'
+          },
+          'topbar@login': {
+            templateUrl: 'app/components/login/topBar.html',
+            controller: 'TopBarController',
+            controllerAs: 'TopBarCtrl'
+          },
+          'main@login': {
+            templateUrl: 'app/components/login/login.html',
+            controller: 'LoginController',
+            controllerAs: 'loginCtrl'
+          },
+          'footer@login': {
+            templateUrl: 'app/components/login/footer.html'
+          }
+        }
+      })
 
     $urlRouterProvider.otherwise('/home');
   }

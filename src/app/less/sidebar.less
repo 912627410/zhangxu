@@ -92,9 +92,11 @@
     position: relative;
     margin: 0;
     padding: 0;
+    color: #b8c7ce;
     > a {
       padding: 12px 5px 12px 15px;
       display: block;
+      color: #b8c7ce;//字体颜色
       > .fa,
       > .glyphicon,
       > .ion {
@@ -154,5 +156,28 @@
         }
       }
     }
+  }
+}
+
+.transform-right{
+  transform: rotate(-00deg)
+}
+.transform-left{
+  transform: rotate(-90deg)
+}
+.transform-margin{
+  margin-right: 5px
+}
+.pull-right-container {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -7px;
+  margin-right: 8px;
+}
+.treeview{
+  > a:hover {
+    color: @ce2!important;
+    background-color: @ce;
   }
 }

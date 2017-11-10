@@ -1,66 +1,57 @@
 <header class="main-header" style="height:50px">
-  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl">
-    <!--<img ng-src={{'assets/images/'+userInfo.userdto.organizationDto.logo}} width="33" height="30" ng-if="userInfo && userInfo.userdto.organizationDto.logo">-->
-    <!--<img src={{logo}} width="33" height="30" ng-if="!userInfo ||!userInfo.userdto.organizationDto.logo">-->
-    <!-- Add the class icon to your logo image or logo icon to add the margining -->
-    <img ng-src='{{logo}}' alt= '{{userInfo.userdto.organizationDto.label | translate}}'  height="30" >
-
+  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl" style="background-color: #367fa9!important;" >
+    <img ng-src='{{logo}}' alt='{{userInfo.userdto.organizationDto.label | translate}}' height="30">
   </a>
 
-  <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
-    <!-- Sidebar toggle button-->
-
-    <a ng-if="userInfo != null" class="sidebar-toggle" role="button" toggels="true">
-      <i  class="glyphicon glyphicon-list" style="color: rgb(255, 255, 255); font-size: 17px;"></i>
+    <a class="sidebar-toggle ng-scope" ng-if="userInfo != null" role="button" toggels href="">
+      <i class="fa fa-bars"></i>
     </a>
 
-    <a  class="sidebar-toggle center" role="button" ng-click="changeLanguage('zh')">
-      <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
+    <a class="sidebar-toggle center" role="button" ng-click="changeLanguage('zh')">
+      <img src="assets/images/pic-01.jpg" width="17" height="10" style="margin-top: -5px;">&nbsp;中文
     </a>
 
-    <a  class="sidebar-toggle center" role="button" ng-click="changeLanguage('en')">
-      <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
+    <a class="sidebar-toggle center" role="button" ng-click="changeLanguage('en')">
+      <img src="assets/images/pic-02.jpg" width="17" height="10" style="margin-top: -5px;">&nbsp;English
     </a>
 
-    <a  class="sidebar-toggle center" role="button" ui-sref="home.appDownloadPage">
+    <a class="sidebar-toggle center" role="button" ui-sref="home.appDownloadPage">
       <i class="ion-android-phone-portrait"></i> {{ 'clientDownload' | translate }}
     </a>
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <!-- Messages: style can be found in dropdown.less-->
         <li class="user user-menu" ng-if="userInfo == null">
-          <a ui-sref="home.login">
+          <a ui-sref="login" style="padding: 15px 15px;">
             <i class="glyphicon glyphicon-user"></i>
             <span>{{ 'login' | translate }}</span>
           </a>
         </li>
-
         <li class="dropdown notifications-menu" ng-if="userInfo != null">
-          <a ui-sref="home.notification" class="dropdown-toggle" data-toggle="dropdown">
+          <a ui-sref="home.notification" class="dropdown-toggle" data-toggle="dropdown" style="padding: 15px 15px;">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning">{{notificationNumber}}</span>
           </a>
         </li>
 
         <li ui-sref="home.profile" role="button" ng-if="userInfo">
-          <a>
-            <i class="glyphicon glyphicon-user" >
-              <span>{{userInfo.userdto.ssn}}
-              </span>
+          <a style="padding: 15px 15px;">
+            <i class="glyphicon glyphicon-user">
+              <span>{{userInfo.userdto.ssn}}</span>
             </i>
           </a>
         </li>
         <li role="button" ng-if="userInfo" ng-controller="profileController as profileCtrl">
-          <a ng-click="profileCtrl.updatePassword(userInfo)">
+          <a ng-click="profileCtrl.updatePassword(userInfo)" style="padding: 15px 15px;">
             <i class="glyphicon glyphicon-lock"></i>
             <span>修改密码</span>
           </a>
         </li>
-        <li ui-sref="home.login" role="button"><a ng-click="mainCtrl.logout()" ng-if="userInfo">{{'logout'|translate}}</a></li>
+        <li ui-sref="login" role="button">
+          <a ng-click="mainCtrl.logout()" ng-if="userInfo" style="padding: 15px 15px;">{{'logout'|translate}}</a>
+        </li>
       </ul>
     </div>
   </nav>
-  <!--<div  class="">-->
 </header>

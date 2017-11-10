@@ -1,0 +1,27 @@
+<header class="main-header">
+  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl" >
+    <img ng-src='{{logo}}' alt='{{userInfo.userdto.organizationDto.label | translate}}' height="30">
+  </a>
+  <nav class="navbar navbar-static-top">
+    <a class="sidebar-toggle center" role="button" ng-click="TopBarCtrl.changeLanguage('zh')">
+      <img src="assets/images/pic-01.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;中文
+    </a>
+    <a class="sidebar-toggle center" role="button" ng-click="TopBarCtrl.changeLanguage('en')">
+      <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -5px;">&nbsp;English
+    </a>
+    <a class="sidebar-toggle center" role="button" ui-sref="home.appDownloadPage">
+      <i class="ion-android-phone-portrait"></i> {{ 'clientDownload' | translate }}
+    </a>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li class="user user-menu">
+          <a ui-sref="login" style="padding: 15px 15px;">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>{{ 'login' | translate }}</span>
+          </a>
+        </li>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
