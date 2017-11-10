@@ -65,12 +65,12 @@
                     <table class="table table-striped" ng-init="rowInx=0">
                       <caption>{{'rentalBasicinfo'|translate}}</caption>
                       <tr>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
                       </tr>
                       <tr>
                         <!--车号-->
@@ -81,7 +81,7 @@
                         <td>{{'vehicleType'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode!=null && deviceAerialCurrentInfoController.deviceinfo.deviceCode>=0 && deviceAerialCurrentInfoController.deviceinfo.deviceCode<=15">{{'hydraulicDriveScissors'|translate}}({{deviceAerialCurrentInfoController.deviceinfo.deviceCode}})</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode!=null && deviceAerialCurrentInfoController.deviceinfo.deviceCode>=16 && deviceAerialCurrentInfoController.deviceinfo.deviceCode<=31">{{'DcMotorDriveForklift'|translate}}({{deviceAerialCurrentInfoController.deviceinfo.deviceCode}})</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null">{{'noData'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode==null || (deviceAerialCurrentInfoController.deviceinfo.deviceCode!=null && !(deviceAerialCurrentInfoController.deviceinfo.deviceCode>=0&&deviceAerialCurrentInfoController.deviceinfo.deviceCode<=31))">{{'noData'|translate}}</td>
                         <!--调整机器代码 by 李小鹏 2016.6.20
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode!=null && deviceAerialCurrentInfoController.deviceinfo.deviceCode>=32&& deviceAerialCurrentInfoController.deviceinfo.deviceCode<=47">电动驱动型小剪叉车（柯蒂斯方案）({{deviceAerialCurrentInfoController.deviceinfo.deviceCode}})</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.deviceCode!=null && deviceAerialCurrentInfoController.deviceinfo.deviceCode>=48&& deviceAerialCurrentInfoController.deviceinfo.deviceCode<=63">电动驱动型小剪叉车（ZAPI方案）({{deviceAerialCurrentInfoController.deviceinfo.deviceCode}})</td>
@@ -331,6 +331,38 @@
                         <td>{{'bindMachineId'|translate}}</td>
                         <td>{{deviceAerialCurrentInfoController.deviceinfo.bindMachineId}}</td>
                       </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
+                        <!--通信模块版本号-->
+                        <td>{{'moduleVersion'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.moduleVersion}}</td>
+                        <!--工况采样总包数-->
+                        <td>{{'workConditionTotalPakets'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.workConditionTotalPakets}}</td>
+                        <!--工况采样总字节数-->
+                        <td>{{'workConditionTotalBytes'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.workConditionTotalBytes}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
+                        <!--GPS设备温度-->
+                        <td>{{'gpsTemp'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.deviceTemp}}°C</td>
+                        <!--GPS设备连续运行时间-->
+                        <td>{{'deviceOnceWorkTime'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.deviceOnceWorkTime | convertToSec}}</td>
+                        <!--GPS设备复位码-->
+                        <td>{{'gpsResetCode'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.resetCode}}</td>
+                      </tr>
+                      <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
+                        <!--GPS最新指令时间戳-->
+                        <td>{{'gpsLocalDate'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsLocalDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <!--预留-->
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
                     </table>
                   </tr>
 
@@ -339,12 +371,12 @@
                     <table class="table table-striped" ng-init="rowInx=0">
                       <caption>{{'workingState'|translate}}</caption>
                       <tr>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
                       </tr>
                       <tr>
                         <!--平台控制 (下控/上控/电源关闭)-->
@@ -550,12 +582,12 @@
                     <table class="table table-striped" ng-init="rowInx=0" ng-if="deviceAerialCurrentInfoController.deviceinfo.pcuStatus" presentation-href="dashboard:deviceMonitor:currentData:query:partOfTheData">
                       <caption>{{'keyState'|translate}}</caption>
                       <tr>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
-                        <th>{{'name'|translate}}</th>
-                        <th>{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
+                        <th style="width: 16%;">{{'name'|translate}}</th>
+                        <th style="width: 17%;">{{'state'|translate}}</th>
                       </tr>
                       <tr>
                         <!--喇叭-->

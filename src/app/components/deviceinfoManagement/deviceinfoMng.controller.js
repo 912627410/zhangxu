@@ -272,7 +272,7 @@
             backdrop: false,
             templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
             controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
-            size: size,
+            size: 'super-lgs',
             resolve: { //用来向controller传数据
               deviceinfo: function () {
                 return vm.deviceinfoMonitor;

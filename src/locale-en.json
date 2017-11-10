@@ -1535,7 +1535,14 @@
   "locatePosition":"Locate position",
   "limitUpStatus":"Limit up status",
   "limitUp":"Limit lifting",
-  "notLimited":"not limited"
+  "notLimited":"not limited",
+  "moduleVersion":"Communication module version",
+  "workConditionTotalPakets":"Working conditions the total number of packages",
+  "workConditionTotalBytes":"Total number of bytes sampled by the condition",
+  "gpsTemp":"GPS temperature",
+  "deviceOnceWorkTime":"GPS continuous running time",
+  "gpsResetCode":"GPS reset code",
+  "gpsLocalDate":"GPS latest instruction timestamp"
 
 
 
