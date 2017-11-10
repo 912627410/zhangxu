@@ -219,7 +219,9 @@
   "messageSendFiled": "短信发送出错",
   "cancelTheAutomaticKeyboardLockCarDataContent": "取消自动锁车时键盘输入数据内容",
   "UnboundContent": "解除绑定时键盘输入数据内容",
+  "UnLockCarContent": "解锁时键盘输入数据内容",
   "BoundContent": "绑定时键盘输入数据内容",
+  "LockCarContent": "锁车时键盘输入数据内容",
   "bindMachineId": "实际绑定车号",
   "ecuLockStatus": "ECU锁车状态",
   "remind": "提醒",
@@ -323,6 +325,8 @@
   "ProtocolVersion":"协议版本",
   "softVersion":"软件版本",
   "fileSize":"文件大小",
-  "remarks":"备注"
+  "remarks":"备注",
+  "main_navigation":"导航栏"
+
 
 }

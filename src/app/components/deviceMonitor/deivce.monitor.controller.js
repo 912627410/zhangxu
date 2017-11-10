@@ -100,7 +100,7 @@
     }
 
     if (userInfo == null) {
-      $rootScope.$state.go('home.login');
+      $rootScope.$state.go('login');
     }
     else {
       vm.queryDeviceInfo(0, null, null, null);

@@ -322,5 +322,6 @@
   "ProtocolVersion":"Protocol Version",
   "softVersion":"Software Version",
   "fileSize":"File Size",
-  "remarks":"Remarks"
+  "remarks":"Remarks",
+  "main_navigation":"MAIN NAVIGATION"
 }

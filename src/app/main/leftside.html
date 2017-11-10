@@ -1,43 +1,44 @@
-<aside class="main-sidebar left-side static">
-  <!-- sidebar: style can be found in sidebar.less -->
+<aside class="main-sidebar" style="background-color: #222d32;">
   <section class="sidebar">
-    <!-- Sidebar user panel -->
     <div class="user-panel">
-      <div class="pull-left image">
+      <div class="pull-left image" style="padding-left: 5px">
         <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
       </div>
-      <div class="pull-left info" ng-if="userInfo">
-        <p> {{userInfo.userdto.ssn}} </p>
-        <i class="fa fa-circle text-success"></i> {{userInfo.userdto.organizationDto.orgSimpleName}}
+      <div class="pull-left info" ng-if="userInfo"
+           style="margin-left: 15px;border: none!important;box-shadow: none!important;background-color:#222d32!important;">
+        <p style="color: #fff;font-weight: 600;font-size: 17px"> {{userInfo.userdto.ssn}} </p>
+        <i class="fa fa-circle text-success"></i>
+        <strong style="color: #fff;font-size: 15px">{{userInfo.userdto.organizationDto.orgSimpleName}}</strong>
       </div>
 
       <div class="pull-left info" ng-if="userInfo == null">
-        <a ui-sref="home.login"> {{'pleaseLogin'|translate }} {{rand}}</a>
+        <a ui-sref="login"> {{'pleaseLogin'|translate }} {{rand}}</a>
       </div>
-
     </div>
 
-    <!-- search form -->
-    <!--<form action="#" method="get" class="sidebar-form">-->
-    <!--<div class="input-group">-->
-    <!--<input type="text" name="q" class="form-control" placeholder="Search..."/>-->
-    <!--<span class="input-group-btn">-->
-    <!--<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>-->
-    <!--</span>-->
-    <!--</div>-->
-    <!--</form>-->
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
-    <hr>
-    <ul class="sidebar-menu">
+    <!--   <form  method="get" class="sidebar-form">
+         <div class="input-group">
+           <input type="text" name="q" class="form-control" placeholder="Search..." style="background-color: #374850;">
+           <span class="input-group-btn">
+                   <button type="submit" name="search" id="search-btn" class="btn btn-flat" style="background-color: #374850;"><i class="fa fa-search"></i>
+                   </button>
+                 </span>
+         </div>
+       </form>-->
+
+    <ul class="sidebar-menu tree" style="margin-top: 20px;">
+
+      <li class="header" style="color: #4b646f;background: #1a2226;font-size: 16px">{{'main_navigation'| translate}}</li>
 
       <li class="treeview">
-        <a ng-click="dashboard=!dashboard" ui-sref="home" presentation-href="home:dashboard">
+        <a ng-click="dashboard=!dashboard" presentation-href="home:dashboard" style="border-left-color:  #3c8dbc;">
           <i class="fa fa-dashboard"></i>
           <span>{{'dashboard' | translate}}</span>
-          <span class="glyphicon pull-right" ng-class="dashboard?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="dashboard?'transform-left':'transform-right'"></i>
+          </span>
         </a>
-        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: dashboard}">
+        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: dashboard}" style="width:200px ;padding-left: 20px">
           <li>
             <a ui-sref="home.monitor" presentation-href="device:monitorPage">
               <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
@@ -50,11 +51,11 @@
         <a ng-click="deviceMng=!deviceMng" href="" presentation-href="device:show">
           <i class="fa ion-clipboard"></i>
           <span>{{'equipmentManagement' | translate}}</span>
-          <span class="glyphicon pull-right"
-                ng-class="deviceMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="deviceMng?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: deviceMng}">
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: deviceMng}" style="width:200px ;padding-left: 20px">
           <li>
             <a ui-sref="home.deviceinfoMng" presentation-href="device:page">
               <i class="fa ion-ios-location"></i> <span>GPS设备管理</span>
@@ -68,28 +69,31 @@
         </ul>
       </li>
 
-
-      <li>
+      <li class="treeview">
         <a ui-sref="home.machinemng" presentation-href="machine:page">
           <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
         </a>
       </li>
 
-      <li>
+      <li class="treeview">
         <a ng-click="reportMng=!reportMng" href="" presentation-href="report:topIdleDeviceReport">
           <i class="fa fa-bar-chart"></i>
-          <span style="width:200px">统计分析</span>
-          <span class="glyphicon pull-right"
-                ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+          <span>统计分析</span>
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="reportMng?'transform-left':'transform-right'"></i>
+          </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: reportMng}">
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+            ng-class="{in: reportMng}">
           <li>
             <a ng-click="erecord=!erecord" href="" presentation-href="dataAnalysis:tope-record">
               <i class="fa ion-briefcase"></i>
               <span>机器电子档案</span>
-              <span class="glyphicon pull-right" ng-class="erecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="erecord?'transform-left':'transform-right'"></i>
+              </span>
             </a>
-            <ul class="treeview-menu panel-collapse collapse "style="padding-left: 20px" ng-class="{in: erecord}">
+            <ul class="treeview-menu panel-collapse collapse "   ng-class="{in: erecord}">
               <li>
                 <a ui-sref="home.dataAnalysis({role:'dataAnalysis:e-record',menuType:'a'})"
                    presentation-href="dataAnalysis:e-record">
@@ -111,216 +115,226 @@
             </ul>
           </li>
 
-            <li>
-              <a ng-click="MachineManagement=!MachineManagement" href="" presentation-href="dataAnalysis:testmachinemanager">
-                <i class="fa ion-clipboard"></i>
-                <span>试验机管理</span>
-                <span class="glyphicon pull-right"
-                      ng-class="MachineManagement?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-              </a>
-                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: MachineManagement}">
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:positionview',menuType:'d'})"
-                       presentation-href="dataAnalysis:positionview">
-                      <i class="fa ion-ios-location-outline"></i> <span>试验机运行概览</span>
-                    </a>
-                  </li>
+          <li>
+            <a ng-click="MachineManagement=!MachineManagement" href=""
+               presentation-href="dataAnalysis:testmachinemanager">
+              <i class="fa ion-clipboard"></i>
+              <span>试验机管理</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="MachineManagement?'transform-left':'transform-right'"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse"
+                ng-class="{in: MachineManagement}">
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:positionview',menuType:'d'})"
+                   presentation-href="dataAnalysis:positionview">
+                  <i class="fa ion-ios-location-outline"></i> <span>试验机运行概览</span>
+                </a>
+              </li>
 
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineduration',menuType:'f'})"
-                       presentation-href="dataAnalysis:machineduration">
-                      <i class="fa ion-clock"></i> <span>试验机时长分布</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:selectmachine',menuType:'g'})"
-                       presentation-href="dataAnalysis:selectmachine">
-                      <i class="fa ion-model-s"></i> <span>试验车选取管理</span>
-                    </a>
-                  </li>
-                </ul>
-            </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineduration',menuType:'f'})"
+                   presentation-href="dataAnalysis:machineduration">
+                  <i class="fa ion-clock"></i> <span>试验机时长分布</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:selectmachine',menuType:'g'})"
+                   presentation-href="dataAnalysis:selectmachine">
+                  <i class="fa ion-model-s"></i> <span>试验车选取管理</span>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-            <li>
-              <a ng-click="trackRecord=!trackRecord" href="" presentation-href="dataAnalysis:toptrackrecord">
-                <i class="fa ion-document"></i>
-                <span>工作履历管理</span>
-                <span class="glyphicon pull-right"
-                      ng-class="trackRecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-              </a>
-                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: trackRecord}">
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:trackrecord',menuType:'h'})"
-                       presentation-href="dataAnalysis:trackrecord">
-                      <i class="fa ion-ios-pulse-strong"></i> <span>工作履历分析</span>
-                    </a>
-                  </li>
-                  <li>
-                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:querymachinework',menuType:'e'})"
-                     presentation-href="dataAnalysis:querymachinework">
-                    <i class="glyphicon glyphicon-zoom-out"></i> <span>机器工作时长分布</span>
-                  </a>
-                </li>
-                  <!--<li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineportrait',menuType:'i'})"
-                       presentation-href="dataAnalysis:machineportrait">
-                      <i class="fa ion-image"></i> <span>机器画像</span>
-                    </a>
-                  </li>-->
-                  <!--<li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineruntrend',menuType:'j'})"
-                       presentation-href="dataAnalysis:machineruntrend">
-                      <i class="fa ion-arrow-graph-up-right"></i> <span>机器运行趋势分析</span>
-                    </a>
-                  </li>-->
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dullmachine',menuType:'k'})"
-                       presentation-href="dataAnalysis:dullmachine">
-                      <i class="fa ion-ionic"></i> <span>待销车分布</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:trackme',menuType:'l'})"
-                       presentation-href="dataAnalysis:trackme">
-                      <i class="fa ion-ios-navigate-outline"></i> <span>在途车追踪</span>
-                    </a>
-                  </li>
-                </ul>
-            </li>
+          <li>
+            <a ng-click="trackRecord=!trackRecord" href="" presentation-href="dataAnalysis:toptrackrecord">
+              <i class="fa ion-document"></i>
+              <span>工作履历管理</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="trackRecord?'transform-left':'transform-right'"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse"   ng-class="{in: trackRecord}">
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:trackrecord',menuType:'h'})"
+                   presentation-href="dataAnalysis:trackrecord">
+                  <i class="fa ion-ios-pulse-strong"></i> <span>工作履历分析</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:querymachinework',menuType:'e'})"
+                   presentation-href="dataAnalysis:querymachinework">
+                  <i class="glyphicon glyphicon-zoom-out"></i> <span>机器工作时长分布</span>
+                </a>
+              </li>
+              <!--<li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineportrait',menuType:'i'})"
+                   presentation-href="dataAnalysis:machineportrait">
+                  <i class="fa ion-image"></i> <span>机器画像</span>
+                </a>
+              </li>-->
+              <!--<li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineruntrend',menuType:'j'})"
+                   presentation-href="dataAnalysis:machineruntrend">
+                  <i class="fa ion-arrow-graph-up-right"></i> <span>机器运行趋势分析</span>
+                </a>
+              </li>-->
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dullmachine',menuType:'k'})"
+                   presentation-href="dataAnalysis:dullmachine">
+                  <i class="fa ion-ionic"></i> <span>待销车分布</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:trackme',menuType:'l'})"
+                   presentation-href="dataAnalysis:trackme">
+                  <i class="fa ion-ios-navigate-outline"></i> <span>在途车追踪</span>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-            <li>
-              <a ng-click="workstart=!workstart" href="" presentation-href="dataAnalysis:topworkstart">
-                <i class="fa fa-line-chart"></i>
-                <span>开工热度分析</span>
-                <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-              </a>
-                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: workstart}">
-                  <!--<li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:bootlive',menuType:'m'})"
-                       presentation-href="dataAnalysis:bootlive">
-                      <i class="fa ion-power"></i> <span>机器开机实况</span>
-                    </a>
-                  </li>-->
-                  <!--<li>-->
-                    <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:workstart',menuType:'n'})"-->
-                       <!--presentation-href="dataAnalysis:workstart">-->
-                      <!--<i class="fa ion-fireball"></i> <span>开工热度分布</span>-->
-                    <!--</a>-->
-                  <!--</li>-->
-                  <!--<li>-->
-                    <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:bardistribution',menuType:'o'})"-->
-                       <!--presentation-href="dataAnalysis:bardistribution">-->
-                      <!--<i class="fa ion-stats-bars"></i> <span>开工区域分布</span>-->
-                    <!--</a>-->
-                  <!--</li>-->
-                  <!--<li>-->
-                    <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineworkreport',menuType:'p'})"-->
-                       <!--presentation-href="dataAnalysis:machineworkreport">-->
-                      <!--<i class="glyphicon glyphicon-list-alt"></i> <span>机器工作报告</span>-->
-                    <!--</a>-->
-                  <!--</li>-->
+          <li>
+            <a ng-click="workstart=!workstart" href="" presentation-href="dataAnalysis:topworkstart">
+              <i class="fa fa-line-chart"></i>
+              <span>开工热度分析</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="workstart?'transform-left':'transform-right'"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse"   ng-class="{in: workstart}">
+              <!--<li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:bootlive',menuType:'m'})"
+                   presentation-href="dataAnalysis:bootlive">
+                  <i class="fa ion-power"></i> <span>机器开机实况</span>
+                </a>
+              </li>-->
+              <!--<li>-->
+              <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:workstart',menuType:'n'})"-->
+              <!--presentation-href="dataAnalysis:workstart">-->
+              <!--<i class="fa ion-fireball"></i> <span>开工热度分布</span>-->
+              <!--</a>-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:bardistribution',menuType:'o'})"-->
+              <!--presentation-href="dataAnalysis:bardistribution">-->
+              <!--<i class="fa ion-stats-bars"></i> <span>开工区域分布</span>-->
+              <!--</a>-->
+              <!--</li>-->
+              <!--<li>-->
+              <!--<a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineworkreport',menuType:'p'})"-->
+              <!--presentation-href="dataAnalysis:machineworkreport">-->
+              <!--<i class="glyphicon glyphicon-list-alt"></i> <span>机器工作报告</span>-->
+              <!--</a>-->
+              <!--</li>-->
 
-                  <li>
-                    <a ui-sref="home.machineComparison">
-                      <i class="fa fa-arrows-h"></i> <span>开工与销售热度</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.warZone">
-                      <i class="fa fa-shopping-cart"></i> <span>战区统计</span>
-                    </a>
-                  </li>
-                  <!--<li>-->
-                    <!--<a ui-sref="home.machineMaintenance">-->
-                      <!--<i class="fa fa-shopping-cart"></i> <span>车辆保养</span>-->
-                    <!--</a>-->
-                  <!--</li>-->
-                  <li>
-                    <a ui-sref="home.modelsCompare">
-                      <i class="fa fa-unlink"></i> <span> 车型热度分布</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.machineWorkTime">
-                      <i class="fa fa-calendar"></i> <span>机器作业时间分布</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.activeRate">
-                      <i class="fa fa-tasks"></i> <span>开工活跃度分布</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineworklive',menuType:'q'})"
-                       presentation-href="dataAnalysis:machineworklive">
-                      <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
-                    </a>
-                  </li>
+              <li>
+                <a ui-sref="home.machineComparison">
+                  <i class="fa fa-arrows-h"></i> <span>开工与销售热度</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.warZone">
+                  <i class="fa fa-shopping-cart"></i> <span>战区统计</span>
+                </a>
+              </li>
+              <!--<li>-->
+              <!--<a ui-sref="home.machineMaintenance">-->
+              <!--<i class="fa fa-shopping-cart"></i> <span>车辆保养</span>-->
+              <!--</a>-->
+              <!--</li>-->
+              <li>
+                <a ui-sref="home.modelsCompare">
+                  <i class="fa fa-unlink"></i> <span> 车型热度分布</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.machineWorkTime">
+                  <i class="fa fa-calendar"></i> <span>机器作业时间分布</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.activeRate">
+                  <i class="fa fa-tasks"></i> <span>开工活跃度分布</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:machineworklive',menuType:'q'})"
+                   presentation-href="dataAnalysis:machineworklive">
+                  <i class="glyphicon glyphicon-eye-open"></i> <span>机器工作实况</span>
+                </a>
+              </li>
 
-                </ul>
-            </li>
+            </ul>
+          </li>
 
 
-            <li>
-              <a ng-click="omission=!omission" href="" presentation-href="dataAnalysis:topomissionstatistic">
-                <i class="glyphicon glyphicon-minus-sign"></i>
-                <span>虚报漏报识别</span>
-                <span class="glyphicon pull-right" ng-class="omission?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-              </a>
-                <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: omission}">
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:omissionconfig',menuType:'r'})"
-                       presentation-href="dataAnalysis:omissionconfig">
-                      <i class="glyphicon glyphicon-cog"></i> <span>虚漏报方案配置</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:anyomission',menuType:'s'})"
-                       presentation-href="dataAnalysis:anyomission">
-                      <i class="fa ion-compose"></i> <span>虚报漏报记录</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:misrepresentation',menuType:'t'})"
-                       presentation-href="dataAnalysis:misrepresentation">
-                      <i class="fa ion-stats-bars"></i> <span>虚报统计</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a ui-sref="home.dataAnalysis({role:'dataAnalysis:omissionstatistic',menuType:'u'})"
-                       presentation-href="dataAnalysis:omissionstatistic">
-                      <i class="fa ion-pie-graph"></i> <span>漏报统计</span>
-                    </a>
-                  </li>
-                </ul>
-            </li>
-            <li>
-              <a ng-click="datacenter=!datacenter" href="" presentation-href="dataAnalysis:datacenter">
-                <i class="fa fa-database"></i>
-                <span>数据中心</span>
-                <span class="glyphicon pull-right" ng-class="datacenter?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
-              </a>
-              <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: datacenter}">
-                <li>
-                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:abnormaldata',menuType:'a1'})"
-                     presentation-href="dataAnalysis:abnormaldata">
-                    <i class="glyphicon glyphicon-cog"></i> <span>数据异常概览</span>
-                  </a>
-                </li>
-                <li>
-                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:interfacedata',menuType:'b1'})"
-                     presentation-href="dataAnalysis:interfacedata">
-                    <i class="fa  fa-check-circle-o"></i> <span>接口数据监控</span>
-                  </a>
-                </li>
-                <li>
-                  <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dataquality',menuType:'c1'})"
-                     presentation-href="dataAnalysis:dataquality">
-                    <i class="fa ion-compose"></i> <span>数据质量核查</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
+          <li>
+            <a ng-click="omission=!omission" href="" presentation-href="dataAnalysis:topomissionstatistic">
+              <i class="glyphicon glyphicon-minus-sign"></i>
+              <span>虚报漏报识别</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="omission?'transform-left':'transform-right'"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse"   ng-class="{in: omission}">
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:omissionconfig',menuType:'r'})"
+                   presentation-href="dataAnalysis:omissionconfig">
+                  <i class="glyphicon glyphicon-cog"></i> <span>虚漏报方案配置</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:anyomission',menuType:'s'})"
+                   presentation-href="dataAnalysis:anyomission">
+                  <i class="fa ion-compose"></i> <span>虚报漏报记录</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:misrepresentation',menuType:'t'})"
+                   presentation-href="dataAnalysis:misrepresentation">
+                  <i class="fa ion-stats-bars"></i> <span>虚报统计</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:omissionstatistic',menuType:'u'})"
+                   presentation-href="dataAnalysis:omissionstatistic">
+                  <i class="fa ion-pie-graph"></i> <span>漏报统计</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a ng-click="datacenter=!datacenter" href="" presentation-href="dataAnalysis:datacenter">
+              <i class="fa fa-database"></i>
+              <span>数据中心</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="datacenter?'transform-left':'transform-right'"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse"   ng-class="{in: datacenter}">
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:abnormaldata',menuType:'a1'})"
+                   presentation-href="dataAnalysis:abnormaldata">
+                  <i class="glyphicon glyphicon-cog"></i> <span>数据异常概览</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:interfacedata',menuType:'b1'})"
+                   presentation-href="dataAnalysis:interfacedata">
+                  <i class="fa  fa-check-circle-o"></i> <span>接口数据监控</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.dataAnalysis({role:'dataAnalysis:dataquality',menuType:'c1'})"
+                   presentation-href="dataAnalysis:dataquality">
+                  <i class="fa ion-compose"></i> <span>数据质量核查</span>
+                </a>
+              </li>
+            </ul>
+          </li>
           <!--
             <li>
               <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clusterrunnmachine',menuType:'v'})"
@@ -330,12 +344,16 @@
             </li>-->
 
           <li>
-            <a ng-click="vehicleStatistics=!vehicleStatistics" href="" presentation-href="dataAnalysis:vehicleStatistics">
+            <a ng-click="vehicleStatistics=!vehicleStatistics" href=""
+               presentation-href="dataAnalysis:vehicleStatistics">
               <i class="fa fa-car"></i>
               <span>车辆统计</span>
-              <span class="glyphicon pull-right" ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="vehicleStatistics?'transform-left':'transform-right'"></i>
+              </span>
             </a>
-            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: vehicleStatistics}">
+            <ul class="treeview-menu panel-collapse collapse"
+                ng-class="{in: vehicleStatistics}">
               <li>
                 <a ui-sref="home.idleDeviceReport" presentation-href="report:idleDeviceReport">
                   <i class="fa fa-unlink"></i> <span>{{'idleDeviceReport' | translate}}</span>
@@ -363,9 +381,12 @@
             <a ng-click="deviceAnalysis=!deviceAnalysis" href="" presentation-href="report:deviceAnalysis">
               <i class="fa fa-feed"></i>
               <span>设备信号分析</span>
-              <span class="glyphicon pull-right" ng-class="deviceAnalysis?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left" ng-class="deviceAnalysis?'transform-left':'transform-right'"></i>
+              </span>
             </a>
-            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: deviceAnalysis}">
+            <ul class="treeview-menu panel-collapse collapse"
+                ng-class="{in: deviceAnalysis}">
               <li>
                 <a ui-sref="home.intervalAndSignal" href="">
                   <i class="fa fa-unlink"></i><span>上传频率与信号质量</span>
@@ -375,118 +396,116 @@
             </ul>
           </li>
 
-            <li>
-              <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clustering',menuType:'w'})"
-                 presentation-href="dataAnalysis:clustering">
-                <i class="fa fa-search-plus"></i> <span>机器聚类探索</span>
-              </a>
-            </li>
+          <li>
+            <a ui-sref="home.dataAnalysis({role:'dataAnalysis:clustering',menuType:'w'})"
+               presentation-href="dataAnalysis:clustering">
+              <i class="fa fa-search-plus"></i> <span>机器聚类探索</span>
+            </a>
+          </li>
 
 
-            <li>
-              <a ui-sref="home.smsSendReport" presentation-href="report:smsSendReport">
-                <i class="fa fa-envelope"></i> <span>短信发送统计</span>
-              </a>
-            </li>
-          </ul>
+          <li>
+            <a ui-sref="home.smsSendReport" presentation-href="report:smsSendReport">
+              <i class="fa fa-envelope"></i> <span>短信发送统计</span>
+            </a>
+          </li>
+        </ul>
       </li>
 
-      <li>
+      <li class="treeview">
         <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
           <i class="fa fa-flag-checkered"></i>
           <span>车队管理</span>
-          <span class="glyphicon pull-right"
-                ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
-                &nbsp;&nbsp;
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="collapsed?'transform-left':'transform-right'"></i>
           </span>
         </a>
-          <ul class="treeview-menu panel-collapse collapse"  style="padding-left: 30px" ng-class="{in: collapsed}">
-            <li>
-              <a ui-sref="home.fleetMng" presentation-href="fleet:page">
-                <i class="fa fa-flag"></i> <span>车队管理</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.workplane" presentation-href="workplane:page">
-                <i class="fa fa-map-signs"></i> <span>作业面管理</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-                <i class="fa fa-flask"></i> <span>燃油配置</span>
-              </a>
-            </li>
-            <li>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: collapsed}">
+          <li>
+            <a ui-sref="home.fleetMng" presentation-href="fleet:page">
+              <i class="fa fa-flag"></i> <span>车队管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.workplane" presentation-href="workplane:page">
+              <i class="fa fa-map-signs"></i> <span>作业面管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
+              <i class="fa fa-flask"></i> <span>燃油配置</span>
+            </a>
+          </li>
+          <li>
 
-              <a ui-sref="home.machineMove" presentation-href="fleet:page">
-                <i class="fa fa-area-chart"></i> <span>作业监控</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
-                <i class="fa fa-rmb"></i> <span>收入统计</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.cost" presentation-href="cost:page">
-                <i class="fa ion-calculator"></i> <span>成本统计</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.weightData" presentation-href="weightData:page">
-                <i class="fa ion-calculator"></i> <span>称重数据</span>
-              </a>
-            </li>
-          </ul>
+            <a ui-sref="home.machineMove" presentation-href="fleet:page">
+              <i class="fa fa-area-chart"></i> <span>作业监控</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
+              <i class="fa fa-rmb"></i> <span>收入统计</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.cost" presentation-href="cost:page">
+              <i class="fa ion-calculator"></i> <span>成本统计</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.weightData" presentation-href="weightData:page">
+              <i class="fa ion-calculator"></i> <span>称重数据</span>
+            </a>
+          </li>
+        </ul>
       </li>
 
-      <li>
+      <li class="treeview">
         <a ng-click="sysMng =!sysMng" href="" presentation-href="config:show">
           <i class="fa fa-home"></i>
           <span>系统管理</span>
-          <span class="glyphicon pull-right"
-                ng-class="sysMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
-                &nbsp;&nbsp;
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="sysMng?'transform-left':'transform-right'"></i>
           </span>
         </a>
-          <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: sysMng}">
-            <li>
-              <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
-                <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
-              </a>
-            </li>
-            <li class="treeview" presentation-href="user:page">
-              <a ui-sref="home.userinfomng">
-                <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.orgMng" presentation-href="org:orgMng">
-                <i class="fa fa-sitemap"></i> <span>组织管理</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.roleMng" presentation-href="role:rolePage">
-                <i class="fa fa-tags"></i> <span>角色管理</span>
-              </a>
-            </li>
-            <li>
-              <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
-                <i class="fa fa-tag"></i> <span>权限管理</span>
-              </a>
-            </li>
-          </ul>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: sysMng}">
+          <li>
+            <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
+              <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+            </a>
+          </li>
+          <li class="treeview" presentation-href="user:page">
+            <a ui-sref="home.userinfomng">
+              <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.orgMng" presentation-href="org:orgMng">
+              <i class="fa fa-sitemap"></i> <span>组织管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.roleMng" presentation-href="role:rolePage">
+              <i class="fa fa-tags"></i> <span>角色管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.priviligeMng" presentation-href="privilige:priviligePage">
+              <i class="fa fa-tag"></i> <span>权限管理</span>
+            </a>
+          </li>
+        </ul>
       </li>
 
-      <li>
+      <li class="treeview">
         <a ng-click="update=!update" href="" presentation-href="deviceUpdate:page">
           <i class="fa fa-arrow-up"></i>
           <span>远程设备升级</span>
-          <span class="glyphicon pull-right"
-                ng-class="deviceMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left" ng-class="update?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: update}">
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"ng-class="{in: update}">
           <li>
             <a ui-sref="home.deviceUpdate" presentation-href="deviceUpdate:page">
               <i class="fa fa-arrow-circle-up"></i> <span>设备升级</span>
@@ -504,7 +523,6 @@
           </li>
         </ul>
       </li>
-      <hr>
 
       <li class="treeview">
         <a href="http://releasenotegpscloud.mydoc.io/" target="_blank">
@@ -513,5 +531,4 @@
       </li>
     </ul>
   </section>
-  <!-- /.sidebar -->
 </aside>

@@ -28,12 +28,10 @@
         link:function (scope,element,attrs) {
           element.bind("click", function () {
             var bodyDom =angular.element(document.body);
-            if(attrs.toggels=="true"){
-              bodyDom.addClass("sidebar-collapse");
-              attrs.$set('toggels','false');
-            }else{
+            if (bodyDom.hasClass("sidebar-collapse")){
               bodyDom.removeClass("sidebar-collapse");
-              attrs.$set('toggels','true');
+            }else {
+              bodyDom.addClass("sidebar-collapse");
             }
           });
         }

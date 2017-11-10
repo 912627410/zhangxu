@@ -292,6 +292,7 @@
           var map = new AMap.Map(mapId, {
             resizeEnable: true,
             center: localCenterAddr,
+            scrollWheel:false,
             zooms: [localZoomSize, 18]
           });
           map.setZoom(1);
