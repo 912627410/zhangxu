@@ -58,7 +58,7 @@
       var content = "", count = 0;
       if(vm.updateApplicableProducts == "1") { // GPS自身升级
         for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
-          if(updateDevice[i] && (updateDevice[i].gpsSoftVersion == vm.updateSoftVersion || updateDevice[i].versionNum != vm.updateVersionNum)) {
+          if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion || updateDevice[i].versionNum != vm.updateVersionNum)) {
             content += updateDevice[i].deviceNum + ",";
             updateDevice.splice(i, 1);
             flag = false;
