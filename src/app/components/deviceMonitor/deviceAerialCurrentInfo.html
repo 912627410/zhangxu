@@ -120,26 +120,26 @@
                         <!--定位状态-->
                         <td>{{'positioningState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{'hasBeenpositioning(GPS)'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='P'">{{'hasBeenpositioning(B)'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null"></td>
-                        <!--定位时间-->
-                        <td>{{'positioningDate'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <!--GPS内置电池电压-->
                         <td>GPS{{'Built-inBatteryVoltage'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.builtInVoltage!=null">{{deviceAerialCurrentInfoController.deviceinfo.builtInVoltage}}V</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.builtInVoltage==null"></td>
+                        <!--预留-->
+                        <td></td>
+                        <td></td>
                       </tr>
                       <tr>
+                        <!--定位时间-->
+                        <td>{{'positioningDate'|translate}}</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                         <!--经度-->
                         <td>{{'longitude'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplongitudeNum | number:5}}</td>
                         <!--纬度-->
                         <td>{{'latitude'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.amaplatitudeNum | number:5}}</td>
-                        <!--预留-->
-                        <td></td>
-                        <td></td>
                       </tr>
                       <tr>
                         <!--定位位置-->
@@ -167,11 +167,13 @@
                         <!--GPS可见卫星数-->
                         <td>{{'GPSvisibleSatelliteNumber'|translate}}</td>
                         <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{deviceAerialCurrentInfoController.deviceinfo.gpssignalStrength}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'
+                          || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='P' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                         <!--GPS可用卫星数-->
                         <td>{{'GPSavailableSatelliteNumber'|translate}}</td>
                         <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==1 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='A'">{{deviceAerialCurrentInfoController.deviceinfo.gprssignalStrength}}</td>
-                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
+                        <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.locateStatus==0 || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='V' || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='B'
+                          || deviceAerialCurrentInfoController.deviceinfo.locateStatus=='P' || deviceAerialCurrentInfoController.deviceinfo.locateStatus==null">-</td>
                         <!--开盖状态-->
                         <td>{{'openCoverState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockerStatus=='00'">{{'notOpen'|translate}}</td>
@@ -1004,16 +1006,16 @@
                   <tr ng-repeat="deviceData in deviceAerialCurrentInfoController.deviceDataList">
                     <!--定位状态-->
                     <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A')">{{'hasBeenpositioning(GPS)'|translate}}</td>
-                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && deviceData.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus=='B' || deviceData.locateStatus=='P')">{{'hasBeenpositioning(B)'|translate}}</td>
                     <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">{{'notLocate'|translate}}</td>
                     <!--地址-->
-                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.address}}</td>
+                    <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B' || deviceData.locateStatus=='P')">{{deviceData.address}}</td>
                     <td nowrap ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
                     <!--经度-->
-                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplongitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B' || deviceData.locateStatus=='P')">{{deviceData.amaplongitudeNum}}</td>
                     <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
                     <!--纬度-->
-                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B')">{{deviceData.amaplatitudeNum}}</td>
+                    <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==1 || deviceData.locateStatus=='A' || deviceData.locateStatus=='B' || deviceData.locateStatus=='P')">{{deviceData.amaplatitudeNum}}</td>
                     <td ng-cloak ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11' && (deviceData.locateStatus==0 || deviceData.locateStatus=='V' || deviceData.locateStatus==null)">-</td>
                     <!--终端编号-->
                     <!--<td ng-cloak>{{deviceData.deviceNum}}</td>-->
