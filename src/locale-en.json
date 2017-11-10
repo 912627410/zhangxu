@@ -318,5 +318,9 @@
   "comingSoon": "Coming Soon",
   "noMessage": "N/A",
   "surealevel":"Surea level",
-  "OilTemperature": "Oil Temperature"
+  "OilTemperature": "Oil Temperature",
+  "ProtocolVersion":"Protocol Version",
+  "softVersion":"Software Version",
+  "fileSize":"File Size",
+  "remarks":"Remarks"
 }

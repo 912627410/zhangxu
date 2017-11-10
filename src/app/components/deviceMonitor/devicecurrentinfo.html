@@ -843,10 +843,12 @@
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</td>
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{'fuelConsumption'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
                     <!--运行总时间(小时)-->
@@ -1113,7 +1115,8 @@
                     <th class="text-nowrap">{{'oilPressAlarmValue'|translate}}</th>
                     <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</th>
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{'fuelConsumption'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
                     <td ng-if="userInfo.userdto.organizationDto.id==1"><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')" >{{deviceData.id}}</a></td>
@@ -1186,7 +1189,8 @@
                     <td>{{deviceData.oilPressAlarmValue}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceData.fuelConsumption | number:2}}L/H</td>
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{deviceData.fuelConsumption | number:2}}L/H</td>
                   </tr>
 
                 </table>

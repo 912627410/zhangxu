@@ -229,6 +229,7 @@
     .constant('CANCEL_UPDATE_URL', SERVER_BASE_URL + 'update/cancelUpdate') // 取消升级
     .constant('UPDATE_RECORD_URL', SERVER_BASE_URL + 'update/updateRecordPage') //分页查询升级记录
     .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
+    .constant('REMOVE_UPDATE_FILE_URL', SERVER_BASE_URL + 'update/removeUpdateFile') //删除升级文件
 
     //用户画像部分
     .constant('PORTRAIT_ENGINEPERFORMS_URL', SERVER_BASE_URL + 'portrait/getEnginePerforms')   //获取发动机评分
