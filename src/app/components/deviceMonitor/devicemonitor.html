@@ -220,7 +220,7 @@
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               <div ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'">{{'hasBeenpositioning(GPS)'|translate}}</div>
               <div ng-if="deviceinfo.locateStatus=='V'||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00'"></div>
-              <div ng-if="deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</div>
+              <div ng-if="deviceinfo.locateStatus=='B'||deviceinfo.locateStatus=='P'">{{'hasBeenpositioning(B)'|translate}}</div>
             </div>
           </div>
           <div class="row">
@@ -267,12 +267,12 @@
           </td>
           <td  data-title="'machineSpeed'|translate" sortable="'gpsSpeed'">
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00' || deviceinfo.gpsSpeed==null || deviceinfo.gpsSpeed==''"></span>
-            <span ng-if="(deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01' || deviceinfo.locateStatus=='B') && deviceinfo.gpsSpeed!=null && deviceinfo.gpsSpeed!=''">{{deviceinfo.gpsSpeed |number:2}}km/h</span>
+            <span ng-if="(deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01' || deviceinfo.locateStatus=='B' || deviceinfo.locateStatus=='P') && deviceinfo.gpsSpeed!=null && deviceinfo.gpsSpeed!=''">{{deviceinfo.gpsSpeed |number:2}}km/h</span>
           </td>
           <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01'">{{'hasBeenpositioning(GPS)'|translate}}</span>
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00'"></span>
-            <span ng-if="deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</span>
+            <span ng-if="deviceinfo.locateStatus=='B'||deviceinfo.locateStatus=='P'">{{'hasBeenpositioning(B)'|translate}}</span>
           </td>
           <td  data-title="'locatePosition'|translate" style="width: 200px">{{deviceinfo.province}}{{deviceinfo.city}}</td>
           <td  data-title="'protocolType'|translate" sortable="'versionNum'">

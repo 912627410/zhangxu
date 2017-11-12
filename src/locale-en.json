@@ -1542,7 +1542,11 @@
   "gpsTemp":"GPS temperature",
   "deviceOnceWorkTime":"GPS continuous running time",
   "gpsResetCode":"GPS reset code",
-  "gpsLocalDate":"GPS latest instruction timestamp"
+  "gpsLocalDate":"GPS latest instruction timestamp",
+  "runMonitor":"Run monitoring",
+  "gsmSignal":"GSM signal",
+  "gpsState":"GPS state",
+  "photoresistorVoltage":"Photoresistor voltage value"
 
 
 

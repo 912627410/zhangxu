@@ -1544,8 +1544,11 @@
   "gpsTemp":"GPS设备温度",
   "deviceOnceWorkTime":"GPS设备连续运行时间",
   "gpsResetCode":"GPS设备复位码",
-  "gpsLocalDate":"GPS最新指令时间戳"
-
+  "gpsLocalDate":"GPS最新指令时间戳",
+  "runMonitor":"运行监控",
+  "gsmSignal":"GSM信号百分比",
+  "gpsState":"GPS状态",
+  "photoresistorVoltage":"光敏电阻电压值"
 
 
 
