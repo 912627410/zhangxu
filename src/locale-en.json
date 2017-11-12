@@ -1535,7 +1535,11 @@
   "locatePosition":"Locate position",
   "limitUpStatus":"Limit up status",
   "limitUp":"Limit lifting",
-  "notLimited":"not limited"
+  "notLimited":"not limited",
+  "runMonitor":"Run monitoring",
+  "gsmSignal":"GSM signal",
+  "gpsState":"GPS state",
+  "photoresistorVoltage":"Photoresistor voltage value"
 
 
 
