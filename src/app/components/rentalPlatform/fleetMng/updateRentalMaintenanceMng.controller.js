@@ -10,17 +10,18 @@
     .controller('updateRentalMaintenanceController', updateRentalMaintenanceController);
 
   /** @ngInject */
-  function updateRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages) {
+  function updateRentalMaintenanceController($rootScope,$uibModalInstance,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,
+                                             serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages, rentalMaintence) {
     var vm = this;
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
+    vm.maintenance = rentalMaintence;
 
    // ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     vm.cancel = function () {
-      $location.path(path);
-
+      $uibModalInstance.dismiss('cancel');
     };
 
 
@@ -41,8 +42,8 @@
 
 
     //查询要修改的客户信息
-    vm.getMaintenance=function(){
-      var id=$stateParams.id;
+    vm.getMaintenance=function(id){
+      var id=id;
       var url=RENTAL_MAINTENANCE_URL+"?id="+id;
       var rspdata = serviceResource.restCallService(url,"GET");
 
@@ -68,7 +69,7 @@
 
     }
 
-    vm.getMaintenance();
+    vm.getMaintenance(vm.maintenance.id);
 
 
     vm.ok = function () {
@@ -87,7 +88,7 @@
       var rspdata = serviceResource.restUpdateRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('modMaInS'));
-        $location.path(path);
+        $uibModalInstance.close(data.content);
 
       },function (reason) {
         Notification.error(reason.data.message);

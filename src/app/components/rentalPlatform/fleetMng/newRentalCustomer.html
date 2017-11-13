@@ -1,13 +1,13 @@
 <div class="modal-header" >
-    <h3 class="box-title">{{'newCustomer'|translate}}</h3>
+  <div class="modal-title">
+    <div class="modal-title-text">{{'newCustomer'|translate}}
+    </div>
+  </div>
 </div>
 
-<div>
-  <div class="container-fluid">
-
-    <form name="newrentalCustomerForm2" class="form-horizontal">
-      <div class="modal-body">
-        <div class="box-body">
+<div class="modal-body">
+  <form name="newrentalCustomerForm2" class="form-horizontal">
+    <div class="box-body">
 
           <div class="form-group">
             <label class="col-sm-3 control-label font-nomal">{{'name'|translate}}(<span class="text-red">*</span>):</label>
@@ -97,17 +97,10 @@
             </div>
           </div>
         </div>
-      </div>
-    </form>
-    <div class="box-footer" style="text-align: center;">
-      <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalCustomerCtrl.ok()">{{'confirm'|translate}}</button>
-      <button class="btn btn-warning" type="button" ng-click="newRentalCustomerCtrl.cancel()">{{'cancel'|translate}}</button>
-    </div>
+  </form>
+</div>
 
-
-
-  </div>
-
-
-
+<div class="modal-footer"style="text-align: center;">
+  <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalCustomerCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="newRentalCustomerCtrl.cancel()">{{'cancel'|translate}}</button>
 </div>

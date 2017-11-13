@@ -10,7 +10,7 @@
     .controller('newRentalCustomerController', newRentalCustomerController);
 
   /** @ngInject */
-  function newRentalCustomerController($rootScope,$scope,$http,$confirm,$location,$uibModalInstance,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification) {
+  function newRentalCustomerController($rootScope,$uibModalInstance,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification,languages) {
     var vm = this;
     var path="/rental/customer";
     vm.operatorInfo =$rootScope.userInfo;

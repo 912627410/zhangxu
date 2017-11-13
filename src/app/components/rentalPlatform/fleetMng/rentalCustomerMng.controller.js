@@ -10,7 +10,8 @@
 
   /** @ngInject */
 
-  function rentalCustomerMngController($window,$state, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL,languages) {
+  function rentalCustomerMngController($window, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,
+                                       DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL,languages) {
     var vm = this;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
@@ -131,7 +132,28 @@
      * @param id
      */
     vm.view=function(id){
-      $state.go('rental.viewCustomer', {id: id});
+      var customerUrl=RENTAL_CUSTOMER_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(customerUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalCustomer=data.content;
+        var modalInstance = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalCustomerMng.html',
+          controller: 'viewRentalCustomerController',
+          controllerAs:'viewRentalCustomerCtrl',
+          size: 'md',
+          resolve: {
+            rentalCustomer: function () {
+              return rentalCustomer;
+            }
+
+          }
+        });
+      }, function () {
+        //取消
+      });
+
     }
 
     //新建客户信息
@@ -144,9 +166,9 @@
         controllerAs:'newRentalCustomerCtrl',
         size: 'md'
       });
-      modalInstance.result.then(function (newVal) {
+      modalInstance.result.then(function (newCus) {
         vm.machineCount += 1;
-        vm.customConfigParams.data.splice(0, 0, newVal);
+        vm.customConfigParams.data.splice(0, 0, newCus);
       }, function () {
         //取消
       });

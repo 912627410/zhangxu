@@ -10,16 +10,19 @@
     .controller('viewRentalMaintenanceController', viewRentalMaintenanceController);
 
   /** @ngInject */
-  function viewRentalMaintenanceController($rootScope,$scope,$http,$confirm,$location,$stateParams,NgTableParams,ngTableDefaults,rentalService,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages) {
+  function viewRentalMaintenanceController($rootScope,$stateParams,NgTableParams,$uibModalInstance,ngTableDefaults,rentalService,treeFactory,
+                                           rentalMaintence,serviceResource,RENTAL_MAINTENANCE_URL, Notification,languages) {
     var vm = this;
-    var path="/rental/maintenance";
+    // var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
+    vm.maintenance=rentalMaintence;
 
     // ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     vm.cancel = function () {
-      $location.path(path);
+      $uibModalInstance.dismiss('cancel');
+
 
     };
 
@@ -40,9 +43,9 @@
     }
 
 
-    //查询要修改的客户信息
-    vm.getMaintenance=function(){
-      var id=$stateParams.id;
+    //查询要修改的保养管理信息
+    vm.getMaintenance=function(id){
+      var id=id;
       var url=RENTAL_MAINTENANCE_URL+"?id="+id;
       var rspdata = serviceResource.restCallService(url,"GET");
 
@@ -53,23 +56,17 @@
         for(var i=0;i<vm.maintenance.maintenanceListVo.length;i++){
           vm.maintenance.maintenanceListVo[i].status={value:vm.maintenance.maintenanceListVo[i].status.toString(),desc:vm.maintenance.maintenanceListVo[i].statusDesc};
         }
-
-
         //构造list
         vm.tableParams = new NgTableParams({
 
         }, {
           dataset: vm.maintenance.maintenanceListVo
         });
-
       },function (reason) {
         Notification.error(reason.data.message);
       })
 
     }
-
-    vm.getMaintenance();
-
-
+   vm.getMaintenance(vm.maintenance.id);
   }
 })();
