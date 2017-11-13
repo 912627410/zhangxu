@@ -48,7 +48,7 @@
     <div class="col-md-3">
       <select class="form-control" ng-model="deviceUpdateCtrl.queryDeviceType">
         <!--<option value="A1">{{'smallExcavator'|translate}}</option>-->
-        <option value="1001,1002">{{'oreMachine'|translate}}</option>
+        <option value="1001,1002,2020">{{'oreMachine'|translate}}</option>
         <!--<option value="40">{{'mediumExcavator'|translate}}</option>-->
         <!--<option value="1">{{'loader'|translate}}</option>-->
         <option value="11">{{'arialVehicle'|translate}}</option>
@@ -85,6 +85,7 @@
             </td>
             <td class="text-nowrap" data-title="'equipmentNumber'|translate" sortable="'deviceNum'">{{deviceinfo.deviceNum}}</td>
             <td class="text-nowrap" data-title="'overallUnitNumber'|translate" sortable="'machineLicenseId'">{{deviceinfo.machineLicenseId}}</td>
+            <td class="text-nowrap" data-title="'ProtocolVersion'|translate" sortable="'versionNum'">{{deviceinfo.versionNum}}</td>
             <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum=='A001'||deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</td>-->
             <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'versionNum'" ng-if="deviceinfo.versionNum!='A001'&&deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</td>-->
             <td class="text-nowrap" data-title="'MachineType'|translate" sortable="'machineType'">{{deviceinfo.machineType}}</td>

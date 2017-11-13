@@ -15,7 +15,7 @@
             updatedMFs.push(deviceMF);
             var rspData = serviceResource.restCallService(DEVCE_MF, "UPDATE", updatedMFs);
             rspData.then(function (data) {
-                if (data.result != "Success") {
+                if (data.content != "success") {
                     Notification.error('更新生产厂家信息出错');
                 }
                 else {

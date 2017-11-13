@@ -106,7 +106,7 @@
       totalProfitUrl += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
       var totalProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
       totalProfitData.then(function (data) {
-        if(null!=data.content.totalProfit){
+        if(null!=data.content&&null!=data.content.totalProfit){
           vm.rentalTotalProfit = data.content.totalProfit
         }
       })

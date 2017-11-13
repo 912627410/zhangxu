@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+   var SERVER_BASE_URL = 'http://192.168.8.190:8089/rest/';
    var WEBSOCKET_DOMAIN_NAME = 'localhost';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
@@ -293,6 +293,7 @@
     .constant('CANCEL_UPDATE_URL', SERVER_BASE_URL + 'update/cancelUpdate') // 取消升级
     .constant('UPDATE_RECORD_URL', SERVER_BASE_URL + 'update/updateRecordPage') //分页查询升级记录
     .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
+    .constant('REMOVE_UPDATE_FILE_URL', SERVER_BASE_URL + 'update/removeUpdateFile') //删除升级文件
 
     // app管理
     .constant('APP_VERSION_URL', SERVER_BASE_URL + 'app/appVersion')    // appVersion

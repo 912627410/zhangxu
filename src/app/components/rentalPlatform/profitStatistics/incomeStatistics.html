@@ -98,6 +98,8 @@
           <div class="form-group row">
               <label class="col-md-1 control-label font-nomal padding0">{{'rentalWorkLocation'|translate}}:</label>
               <div class="col-md-3" >
+
+
                 <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
               </div>
 
@@ -123,7 +125,6 @@
               <div class="col-md-4">
                 <button  type="button" class="btn btn-default searchButton pull-right " ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
                 <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
-
               </div>
             </div>
 
@@ -149,7 +150,6 @@
                           </span>
                 </p>
               </div>
-
               <label class="control-label col-md-1 font-nomal padding0">{{'rentalEndDate'|translate}}:</label>
               <div class="col-md-3">
                 <p class="input-group" >
@@ -206,6 +206,7 @@
                   </ui-select-choices>
                 </ui-select>
               </div>
+
             </div>
           </div>
 
@@ -222,8 +223,6 @@
                          datepicker-options="incomeStatisticsCtr.dateOptions"
                          min-date="incomeStatisticsCtr.minDate"
                          max-date="incomeStatisticsCtr.maxDate"
-
-
                          ng-required="true"
                          current-text="{{'today'|translate}}"
                          clear-text="{{'cleanUp'|translate}}"
@@ -257,8 +256,6 @@
               <div class="col-md-4 pull-right">
                 <button  type="button" class="btn  btn-default  searchButton pull-right" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
                 <button  type="button" class="btn  btn-primary  searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">{{'query'|translate}}</button>
-
-
               </div>
             </div>
           </div>

@@ -124,7 +124,7 @@
                 updatedMFs.push(deviceMF);
                 var rspData = serviceResource.restCallService(DEVCE_MF, "UPDATE", updatedMFs);
                 rspData.then(function (data) {
-                    if (data.result != "Success") {
+                    if (data.content != "success") {
                         Notification.error('操作出错');
                     }
                     else {
@@ -192,7 +192,7 @@
                 deviceTypes.push(deviceType);
                 var rspData = serviceResource.restCallService(DEVCE_DEVICETYPE, "UPDATE", deviceTypes);
                 rspData.then(function (data) {
-                    if (data.result != "Success") {
+                    if (data.content != "success") {
                         Notification.error('操作出错');
                     }
                     else {
@@ -260,7 +260,7 @@
                 devicePowerTypes.push(devicePowerType);
                 var rspData = serviceResource.restCallService(DEVCE_POWERTYPE, "UPDATE", devicePowerTypes);
                 rspData.then(function (data) {
-                    if (data.result != "Success") {
+                    if (data.content != "success") {
                         Notification.error('操作出错');
                     }
                     else {
@@ -329,7 +329,7 @@
                 deviceHeightTypes.push(deviceHeightType);
                 var rspData = serviceResource.restCallService(DEVCE_HIGHTTYPE, "UPDATE", deviceHeightTypes);
                 rspData.then(function (data) {
-                    if (data.result != "Success") {
+                    if (data.content != "success") {
                         Notification.error('操作出错');
                     }
                     else {

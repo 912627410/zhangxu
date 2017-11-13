@@ -23,7 +23,6 @@
         <form class="form-horizontal" role="form">
 
           <div class="form-group">
-
             <label class="col-md-1 control-label font-nomal">{{'rentalMachineID'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="id" class="form-control"  ng-model="rentalMaintenanceCtrl.machine.licenseId"
@@ -33,7 +32,6 @@
             <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-
                 <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalMaintenanceCtrl.org.label" name="org" readonly required/>
                 <span class="input-group-btn">
             <!--打开组织树-->
@@ -80,6 +78,7 @@
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"/>
                 <span class="input-group-btn">
+
                 <button type="button" class="btn btn-default"
                         ng-click="rentalMaintenanceCtrl.endDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>

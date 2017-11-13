@@ -11,10 +11,10 @@
     <form class="form-horizontal" role="form">
 
       <div class="form-group">
-
         <label class="col-md-1 control-label font-nomal">{{'machineNumber'| translate}}:</label>
         <div class="col-md-3">
           <input type="text" name="licenseId" class="form-control"  ng-model="rentalUnUsedMachineListCtrl.searchConditions.licenseId"
+
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
@@ -73,7 +73,6 @@
             </ui-select-choices>
           </ui-select>
         </div>
-
         <label class="col-md-2 control-label font-nomal">{{'highlyType'|translate}}:</label>
         <div class="col-md-3">
           <ui-select name="deviceHeightType" ng-model="rentalUnUsedMachineListCtrl.searchConditions.heightType" theme="bootstrap"

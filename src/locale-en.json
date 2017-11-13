@@ -476,7 +476,7 @@
   "majorversionNumber": "Major Version Number",
   "minorversionNumber": "Minor Version Number",
   "functionCode": "Function code",
-  "recordGenerationTime": "Data record  time",
+  "recordGenerationTime": "Data record time",
   "serialNumber": "Serial number",
   "loadingstarttime": "LoadingPoint start time",
   "loadingCompletetime": "LoadingPoint complete time",
@@ -1399,6 +1399,9 @@
   "setAsTheDefaultTimeInterval?":"Set as the default time interval?",
   "selectTheEquipmentToBeAllocated":"Please select the equipment to be allocated",
   "failedToGetDeviceData":"Failed to get device data",
+  "kilometre":"Kilometre",
+  "traveled":"Traveled",
+
 
   "越野剪叉式":"RT Scissor",
   "自行走剪叉式":"Self-cut Fork",
@@ -1496,7 +1499,6 @@
   "getVeHeiFail":"Failed to obtain height of vehicle!",
   "getStaGroupFail":"Failed to get the status of grouping!",
   "getIncomeInf":"Failed to obtain income statistics information!",
-  "getProFail":"Failed to obtain profit data!",
   "successfulOperation":"Successful operation",
   "operationFailed":"Operation failed, status code",
   "softVersionNumError":"Version number is in the range of 0.00 to 99.99",
@@ -1518,7 +1520,28 @@
   "A-2 检查前操作":"A-2 Pre-check operation",
   "A-3 功能测试":"A-3 Functional test",
   "A-4 30天的维护":"A-4 30 days maintenance",
-  "MoCuInSuc":"Modify customer information successful!"
+  "MoCuInSuc":"Modify customer information successful!",
+  "upload":"Upload",
+  "softVersion":"Software version",
+
+
+  "已锁车":"Locked car",
+  "未锁车":"Unlocked car",
+  "locatePosition":"Locate position",
+  "limitUpStatus":"Limit up status",
+  "limitUp":"Limit lifting",
+  "notLimited":"not limited",
+  "moduleVersion":"Communication module version",
+  "workConditionTotalPakets":"Working conditions the total number of packages",
+  "workConditionTotalBytes":"Total number of bytes sampled by the condition",
+  "gpsTemp":"GPS temperature",
+  "deviceOnceWorkTime":"GPS continuous running time",
+  "gpsResetCode":"GPS reset code",
+  "gpsLocalDate":"GPS latest instruction timestamp",
+  "runMonitor":"Run monitoring",
+  "gsmSignal":"GSM signal",
+  "gpsState":"GPS state",
+  "photoresistorVoltage":"Photoresistor voltage value"
 
 
 

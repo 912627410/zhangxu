@@ -1726,7 +1726,7 @@
             lastDistabce += distances;
             marker.setLabel({
               offset: new AMap.Pixel(-10, -25),
-              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+              content: languages.findKey('traveled')+": " + lastDistabce + "&nbsp&nbsp" + languages.findKey('m')
             });
             startLat = new AMap.LngLat(marker.getPosition().lng, marker.getPosition().lat);
           });
@@ -1735,7 +1735,7 @@
             lastDistabce = 0;
             marker.setLabel({
               offset: new AMap.Pixel(-10, -25),
-              content: "行使了: " + lastDistabce + "&nbsp&nbsp" + "米"
+              content: languages.findKey('traveled')+": " + lastDistabce + "&nbsp&nbsp" + languages.findKey('m')
             });
             startLat = new AMap.LngLat(markerMovingControl._path[0].lng, markerMovingControl._path[0].lat);
             markerMovingControl._currentIndex = 0;
@@ -1749,7 +1749,7 @@
             distabcess2 += distances;
             marker.setLabel({
               offset: new AMap.Pixel(-10, -25),
-              content: "行使了: " + distabcess2 + "&nbsp&nbsp" + "米"
+              content: languages.findKey('traveled')+": " + distabcess2 + "&nbsp&nbsp" + languages.findKey('m')
             });
           }, false);
           /*继续移动事件*/
@@ -2034,12 +2034,16 @@
         )
       };
 
-        vm.deviceDataDownload = function (deviceNum, startDate, endDate) {
+        vm.deviceDataDownload = function (deviceNum, versionNum, startDate, endDate) {
           if (deviceNum) {
             var filterTerm = "deviceNum=" + deviceNum;
           }else {
             Notification.error(languages.findKey('theDeviceNumberEnteredIsIncorrect'));
             return;
+          }
+
+          if (versionNum) {
+            filterTerm += "&versionNum=" + versionNum;
           }
 
           if (startDate) {

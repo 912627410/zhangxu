@@ -147,10 +147,7 @@
     </div>
     <div class="col-md-2">
       <select class="form-control" ng-model="monitorCtrl.queryDeviceType">
-        <option value="A1">{{'smallExcavator'|translate}}</option>
-        <option value="2,3,30,1001,1002">{{'oreMachine'|translate}}</option>
-        <option value="40">{{'mediumExcavator'|translate}}</option>
-        <option value="1">{{'loader'|translate}}</option>
+        <option value="2,3,30,1001,1002,2020">{{'oreMachine'|translate}}</option>
         <option value="A001,11">{{'arialVehicle'|translate}}</option>
       </select>
     </div>
@@ -222,8 +219,8 @@
             </div>
             <div class="col-md-7" style="padding-left: 0px;padding-right: 0px">
               <div ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'">{{'hasBeenpositioning(GPS)'|translate}}</div>
-              <div ng-if="deviceinfo.locateStatus=='V'||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00'">{{'notLocate'|translate}}</div>
-              <div ng-if="deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</div>
+              <div ng-if="deviceinfo.locateStatus=='V'||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00'"></div>
+              <div ng-if="deviceinfo.locateStatus=='B'||deviceinfo.locateStatus=='P'">{{'hasBeenpositioning(B)'|translate}}</div>
             </div>
           </div>
           <div class="row">
@@ -244,13 +241,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">
-              {{'currentPosition'|translate}}:
-            </div>
-            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">
-              <span ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'||deviceinfo.locateStatus=='B'">{{deviceinfo.province}}{{deviceinfo.city}}</span>
-              <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00' || deviceinfo.locateStatus==null">--</span>
-            </div>
+            <div class="col-md-5"  style="padding-left: 15px;padding-right: 0px">{{'locatePosition'|translate}}:</div>
+            <div class="col-md-7" style="padding-left: 0px;padding-right: 0px;min-height: 80px">{{deviceinfo.province}}{{deviceinfo.city}}</div>
           </div>
         </div>
         <div class="box-footer">
@@ -275,15 +267,14 @@
           </td>
           <td  data-title="'machineSpeed'|translate" sortable="'gpsSpeed'">
             <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00' || deviceinfo.gpsSpeed==null || deviceinfo.gpsSpeed==''"></span>
-            <span ng-if="(deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01' || deviceinfo.locateStatus=='B') && deviceinfo.gpsSpeed!=null && deviceinfo.gpsSpeed!=''">{{deviceinfo.gpsSpeed |number:2}}km/h</span>
+            <span ng-if="(deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01' || deviceinfo.locateStatus=='B' || deviceinfo.locateStatus=='P') && deviceinfo.gpsSpeed!=null && deviceinfo.gpsSpeed!=''">{{deviceinfo.gpsSpeed |number:2}}km/h</span>
           </td>
           <td  data-title="'positioningState'|translate"  sortable="'locateStatus'">
             <span ng-if="deviceinfo.locateStatus=='A' ||deviceinfo.locateStatus=='1' || deviceinfo.locateStatus=='01'">{{'hasBeenpositioning(GPS)'|translate}}</span>
-            <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00'">{{'notLocate'|translate}}</span>
-            <span ng-if="deviceinfo.locateStatus=='B'">{{'hasBeenpositioning(B)'|translate}}</span>
+            <span ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0' || deviceinfo.locateStatus=='00'"></span>
+            <span ng-if="deviceinfo.locateStatus=='B'||deviceinfo.locateStatus=='P'">{{'hasBeenpositioning(B)'|translate}}</span>
           </td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='A'||deviceinfo.locateStatus=='1'||deviceinfo.locateStatus=='01'||deviceinfo.locateStatus=='B'">{{deviceinfo.province}}{{deviceinfo.city}}</td>
-          <td  data-title="'currentPosition'|translate" style="width: 200px" ng-if="deviceinfo.locateStatus=='V' ||deviceinfo.locateStatus=='0'||deviceinfo.locateStatus=='00' || deviceinfo.locateStatus==null">--</td>
+          <td  data-title="'locatePosition'|translate" style="width: 200px">{{deviceinfo.province}}{{deviceinfo.city}}</td>
           <td  data-title="'protocolType'|translate" sortable="'versionNum'">
             <span ng-if="deviceinfo.versionNum!='A001' && deviceinfo.versionNum!='11'">{{'oreMachine'|translate}}</span>
             <span ng-if="deviceinfo.versionNum=='A001' || deviceinfo.versionNum=='11'">{{'arialVehicle'|translate}}</span>

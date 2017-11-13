@@ -31,7 +31,7 @@
       if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
       } else {
-        restCallURL += "&search_LIKES_versionNum=11,1001,1002";
+        restCallURL += "&search_LIKES_versionNum=11,1001,1002,2020";
       }
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
       deviceDataPromis.then(function (data) {
@@ -92,7 +92,7 @@
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',
         controller: 'selectUpdateFileController as selectUpdateFileCtrl',
-        size: size,
+        size: 'lg',
         backdrop:false,
         scope:$scope,
         resolve: {
@@ -118,7 +118,7 @@
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',
         controller: 'selectUpdateFileController as selectUpdateFileCtrl',
-        size: size,
+        size: 'lg',
         backdrop:false,
         scope:$scope,
         resolve: {

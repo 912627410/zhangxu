@@ -1408,6 +1408,8 @@
   "setAsTheDefaultTimeInterval":"确定设置为默认的时间间隔？",
   "selectTheEquipmentToBeAllocated":"请选择要调拨的设备",
   "failedToGetDeviceData":"获取设备数据失败",
+  "kilometre":"公里",
+  "traveled":"行驶了",
 
 
   "越野剪叉式":"越野剪叉式",
@@ -1507,7 +1509,6 @@
   "getVeHeiFail":"获取车辆高度失败!",
   "getStaGroupFail":"获取状态分组失败!",
   "getIncomeInf":"获取收入统计信息失败!",
-  "getProFail":"获取利润数据失败!",
   "successfulOperation":"操作成功",
   "operationFailed":"操作失败,状态码",
   "softVersionNumError":"版本号取值范围：0.00~99.99",
@@ -1530,8 +1531,27 @@
   "A-2 检查前操作":"A-2 检查前操作",
   "A-3 功能测试":"A-3 功能测试",
   "A-4 30天的维护":"A-4 30天的维护",
-  "MoCuInSuc":"修改客户信息成功!"
+  "MoCuInSuc":"修改客户信息成功!",
+  "upload":"上传",
+  "softVersion":"软件版本",
 
+  "已锁车":"已锁车",
+  "未锁车":"未锁车",
+  "locatePosition":"定位位置",
+  "limitUpStatus":"限升状态",
+  "limitUp":"限制举升",
+  "notLimited":"不限制",
+  "moduleVersion":"通信模块版本号",
+  "workConditionTotalPakets":"工况采样总包数",
+  "workConditionTotalBytes":"工况采样总字节数",
+  "gpsTemp":"GPS设备温度",
+  "deviceOnceWorkTime":"GPS设备连续运行时间",
+  "gpsResetCode":"GPS设备复位码",
+  "gpsLocalDate":"GPS最新指令时间戳",
+  "runMonitor":"运行监控",
+  "gsmSignal":"GSM信号百分比",
+  "gpsState":"GPS状态",
+  "photoresistorVoltage":"光敏电阻电压值"
 
 
 }

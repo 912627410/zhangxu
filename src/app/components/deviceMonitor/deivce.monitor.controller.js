@@ -189,38 +189,30 @@
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
-
+          var templateUrl, controller;
         //判读是否是高空车
-        if(vm.deviceinfoMonitor.versionNum=='A001' || vm.deviceinfoMonitor.versionNum=='11'){
-
-          $rootScope.currentOpenModal = $uibModal.open({
-            animation: vm.animationsEnabled,
-            backdrop: false,
-            templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
-            controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
-            size: size,
-            resolve: { //用来向controller传数据
-              deviceinfo: function () {
-                return vm.deviceinfoMonitor;
-              }
-            }
-          });
-
-        }else{
-          $rootScope.currentOpenModal = $uibModal.open({
-            animation: vm.animationsEnabled,
-            backdrop: false,
-            templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-            controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-            size: size,
-            resolve: { //用来向controller传数据
-              deviceinfo: function () {
-                return vm.deviceinfoMonitor;
-              }
-            }
-          });
-
+        if(vm.deviceinfoMonitor.versionNum == 'A001'||vm.deviceinfoMonitor.versionNum == '11') {
+          templateUrl = 'app/components/deviceMonitor/deviceAerialCurrentInfo.html';
+          controller = 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController';
+          size = 'super-lgs';
+        } else {
+          templateUrl = 'app/components/deviceMonitor/devicecurrentinfo.html';
+          controller = 'DeviceCurrentInfoController as deviceCurrentInfoCtrl';
         }
+        $rootScope.currentOpenModal = $uibModal.open({
+          animation: vm.animationsEnabled,
+          backdrop: false,
+          templateUrl: templateUrl,
+          controller: controller,
+          size: size,
+          //windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+          //size: 'super-lgs',
+          resolve: { //用来向controller传数据
+            deviceinfo: function () {
+              return vm.deviceinfoMonitor;
+            }
+          }
+        });
 
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));

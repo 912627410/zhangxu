@@ -41,13 +41,11 @@
       <div class="row info-box-container">
         <form class="form-horizontal" role="form">
           <div class="form-group">
-
             <label class="col-md-1 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.id"
                      placeholder="{{'rentalOrderNumber'|translate}}"/>
             </div>
-
             <label  class="col-md-1 control-label font-nomal">{{'rentalCustomer'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
@@ -80,6 +78,7 @@
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"
                        message-id="bootstrap" readonly/>
+
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
                           ng-click="rentalOrderMngCtrl.startDateSetting.open($event)">
@@ -107,7 +106,6 @@
               </span>
               </p>
             </div>
-
             <label class="col-md-1 control-label font-nomal">{{'rentalStatus'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"

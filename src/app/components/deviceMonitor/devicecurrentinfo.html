@@ -184,134 +184,161 @@
               <div class="table-responsive">
                 <table class="table">
                   <tr>
+                    <!--缓速器2档指示-->
                     <td  ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
                       <div ng-switch-when="0" class="harSlowMachineNormalTwo" title="{{'harSlowMachineTwo'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningTwo" title="{{'harSlowMachineTwo'|translate}}"></div>
                     </td>
+                    <!--缓速器3档指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:17">
                       <div ng-switch-when="0" class="harSlowMachineNormalThree" title="{{'harSlowMachineThree'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningThree" title="{{'harSlowMachineThree'|translate}}"></div>
                     </td>
+                    <!--缓速器4档指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:18">
                       <div ng-switch-when="0" class="harSlowMachineNormalFour" title="{{'harSlowMachineFour'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningFour" title="{{'harSlowMachineFour'|translate}}"></div>
                     </td>
+                    <!--缓速器1档指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:19">
                       <div ng-switch-when="0" class="harSlowMachineNormalOne" title="{{'harSlowMachineOne'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningOne" title="{{'harSlowMachineOne'|translate}}"></div>
                     </td>
+                    <!--驾驶室后工作灯-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:20">
                       <div ng-switch-when="0" class="harCaTaillightNormal" title="{{'harCaTaillight'|translate}}"></div>
                       <div ng-switch-when="1" class="harCabTaillightWarning" title="{{'harCaTaillight'|translate}}"></div>
                     </td>
+                    <!--轴间差速器锁指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:21">
                       <div ng-switch-when="0" class="harAxialDifferentialLockNormal" title="{{'harAxialDifferentialLock'|translate}}"></div>
                       <div ng-switch-when="1" class="harAxialDifferentialLockWarning" title="{{'harAxialDifferentialLock'|translate}}"></div>
                     </td>
+                    <!--取力器工作指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:22">
                       <div ng-switch-when="0" class="harTakePowerNormal" title="{{'harTakePower'|translate}}"></div>
                       <div ng-switch-when="1" class="harTakePowerWarning" title="{{'harTakePower'|translate}}"></div>
                     </td>
+                    <!--机油压力报警指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:23">
                       <div ng-switch-when="0" class="harOilPressureAlarmNormal" title="{{'harOilPressureAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="harOilPressureAlarmWarning" title="{{'harOilPressureAlarm'|translate}}"></div>
                     </td>
+                    <!--发动机故障指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:24">
                       <div ng-switch-when="0" class="harEngineFailureNormal" title="{{'harEngineFailure'|translate}}"></div>
                       <div ng-switch-when="1" class="harEngineFailureWarning" title="{{'harEngineFailure'|translate}}"></div>
                     </td>
+                    <!--变速箱故障指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
                       <div ng-switch-when="0" class="harGearboxFaultNormal" title="{{'harGearboxFault'|translate}}"></div>
                       <div ng-switch-when="1" class="harGearboxFaultWarning" title="{{'harGearboxFault'|translate}}"></div>
                     </td>
+                    <!--蓄电池指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:26">
                       <div ng-switch-when="0" class="harBatteryNormal" title="{{'harBattery'|translate}}"></div>
                       <div ng-switch-when="1" class="harBatteryWarning" title="{{'harBattery'|translate}}"></div>
                     </td>
+                    <!--预热指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:27">
                       <div ng-switch-when="0" class="harPreheatingNormal" title="{{'harPreheating'|translate}}"></div>
                       <div ng-switch-when="1" class="harPreheatingWarning" title="{{'harPreheating'|translate}}"></div>
                     </td>
+                    <!--发动机水温高报警指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
                       <div ng-switch-when="0" class="harEngineTemperatureNormal" title="{{'harEngineTemperature'|translate}}"></div>
                       <div ng-switch-when="1" class="harEngineTemperatureWarning" title="{{'harEngineTemperature'|translate}}"></div>
                     </td>
+                    <!--尿素处理指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:29">
                       <div ng-switch-when="0" class="harUreaNormal" title="{{'harUrea'|translate}}"></div>
                       <div ng-switch-when="1" class="harUeaWarning" title="{{'harUrea'|translate}}"></div>
                     </td>
+                    <!--WIF-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:30">
                       <div ng-switch-when="0" class="harWIFNormal" title="{{'harWIF'|translate}}"></div>
                       <div ng-switch-when="1" class="harWFIWarning" title="{{'harWIF'|translate}}"></div>
                     </td>
                   </tr>
                   <tr>
+                    <!--发动机冷却液位低-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:31">
                       <div ng-switch-when="0" class="harEngineCoolingLiquidLevelNormal" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
                       <div ng-switch-when="1" class="harEngineCoolingLiquidLevelWarning" title="{{'harEngineCoolingLiquidLevel'|translate}}"></div>
                     </td>
-
+                    <!--远光灯-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
                       <div ng-switch-when="0" class="harHighBeamNormal" title="{{'harHighBeam'|translate}}"></div>
                       <div ng-switch-when="1" class="harHighBeamWarning" title="{{'harHighBeam'|translate}}"></div>
                     </td>
+                    <!--示廓灯-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:1">
                       <div ng-switch-when="0" class="harClearanceLampNormal" title="{{'harClearanceLamp'|translate}}"></div>
                       <div ng-switch-when="1" class="harClearanceLampWarning" title="{{'harClearanceLamp'|translate}}"></div>
                     </td>
-
+                    <!--气压低报警-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:2">
                       <div ng-switch-when="0" class="harLowAirPressureNormal" title="{{'harLowAirPressure'|translate}}"></div>
                       <div ng-switch-when="1" class="harLowAirPressureWarning" title="{{'harLowAirPressure'|translate}}"></div>
                     </td>
-
+                    <!--轮间差速指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:3">
                       <div ng-switch-when="0" class="harDifferentialBetweenWheelNormal" title="{{'harDifferentialBetweenWheel'|translate}}"></div>
                       <div ng-switch-when="1" class="harDifferentialBetweenWheelWarning" title="{{'harDifferentialBetweenWheel'|translate}}"></div>
                     </td>
+                    <!--低速指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:4">
                       <div ng-switch-when="0" class="harLowSpeedNormal" title="{{'harLowSpeed'|translate}}"></div>
                       <div ng-switch-when="1" class="harLowSpeedWarning" title="{{'harLowSpeed'|translate}}"></div>
                     </td>
+                    <!--驻车制动指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:5">
                       <div ng-switch-when="0" class="harParkingBrakeNormal" title="{{'harParkingBrake'|translate}}"></div>
                       <div ng-switch-when="1" class="harParkingBrakeWarning" title="{{'harParkingBrake'|translate}}"></div>
                     </td>
+                    <!--空气阻塞报警指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:6">
                       <div ng-switch-when="0" class="harAirBlockNormal" title="{{'harAirBlock'|translate}}"></div>
                       <div ng-switch-when="1" class="harAirBlockWarning" title="{{'harAirBlock'|translate}}"></div>
                     </td>
+                    <!--驾驶室翻转报警指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:7">
                       <div ng-switch-when="0" class="harCabFlipAlarmNormal" title="{{'harCabFlipAlarm'|translate}}"></div>
                       <div ng-switch-when="1" class="harCabFlipAlarmWarning" title="{{'harCabFlipAlarm'|translate}}"></div>
                     </td>
+                    <!--燃油油位低指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:8">
                       <div ng-switch-when="0" class="harFuelOilLevelNormal" title="{{'harFuelOilLevel'|translate}}"></div>
                       <div ng-switch-when="1" class="harFuelOilLevelWarning" title="{{'harFuelOilLevel'|translate}}"></div>
                     </td>
+                    <!--高速指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:9">
                       <div ng-switch-when="0" class="harHeightSpeedNormal" title="{{'harHeightSpeed'|translate}}"></div>
                       <div ng-switch-when="1" class="harHeightSpeedWarning" title="{{'harHeightSpeed'|translate}}"></div>
                     </td>
+                    <!--排气制动指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:10">
                       <div ng-switch-when="0" class="harExhaustNormal" title="{{'harExhaust'|translate}}"></div>
                       <div ng-switch-when="1" class="harExhaustWarning" title="{{'harExhaust'|translate}}"></div>
                     </td>
+                    <!--车厢举升指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:11">
                       <div ng-switch-when="0" class="harCarLiftingNormal" title="{{'harCarLifting'|translate}}"></div>
                       <div ng-switch-when="1" class="harCarLiftingWarning" title="{{'harCarLifting'|translate}}"></div>
                     </td>
-
+                    <!--前刹车片指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:12">
                       <div ng-switch-when="0" class="harFBrakePadsNormal" title="{{'harFBrakePads'|translate}}"></div>
                       <div ng-switch-when="1" class="harFBrakePadsWarning" title="{{'harFBrakePads'|translate}}"></div>
                     </td>
+                    <!--后刹车片指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
                       <div ng-switch-when="0" class="harRBrakePadsNormal" title="{{'harRBrakePads'|translate}}"></div>
                       <div ng-switch-when="1" class="harRBrakePadsWarning" title="{{'harRBrakePads'|translate}}"></div>
                     </td>
                   </tr>
                   <tr>
+                    <!--变速箱油温高指示-->
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:14">
                       <div ng-switch-when="0" class="harTransmissionOilTemperatureNormal" title="{{'harTransmissionOilTemperature'|translate}}"></div>
                       <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
@@ -398,13 +425,19 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00' || deviceCurrentInfoCtrl.deviceinfo.powerType=='1'">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01' || deviceCurrentInfoCtrl.deviceinfo.powerType=='0'">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
+                    <!--锁车状态--><!--旧协议没有锁车功能,矿车2020协议增加 by 刘灿滨、商亚龙 -->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='2020'">{{'lockedCarStatus'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='2020'">{{deviceCurrentInfoCtrl.deviceinfo.lockStatusDesc|translate}}</td>
+                    <!--锁车状态为空时填充行-->
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='2020'"></td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='2020'"></td>
                   </tr>
                   <tr>
                     <!--实时工时-->
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realTimeDuration | convertToMins}}</td>
-                    <!--gprs信号百分比-->
-                    <td>{{'GPRSSignalQuality'|translate}}</td>
+                    <!--GSM信号百分比-->
+                    <td>{{'gsmSignal'|translate}}</td>
                     <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                     <!--车载蓄电池电压-->
                     <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
@@ -414,13 +447,6 @@
                     <!--启动次数-->
                     <td>{{'numberOfStarts'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.startTimes}}</td>
-                    <!--TODO 目前矿车没有锁车功能,先注释掉，后续添加  by yalong.shang -->
-                    <!--锁车状态-->
-                    <!--<td>{{'lockedCarStatus'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='00'" class="bg-info text-info">{{'Unlock'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='01'" class="bg-warning text-warning">{{'one-level'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus=='10'" class="bg-danger text-danger">{{'lockYourCar'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockStatus==null">{{'noData'|translate}}</td>-->
                     <!--acc 开关状态-->
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01' || deviceCurrentInfoCtrl.deviceinfo.accStatus=='1'" class="bg-info text-info">ON</td>
@@ -441,6 +467,9 @@
                     <!--内部电源电压-->
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
+                    <!--预留-->
+                    <td></td>
+                    <td></td>
                   </tr>
                   <tr ng-if="!((deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01') && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
                     <!--可见卫星-->
@@ -488,13 +517,30 @@
                     <!--GPS协议版本号，实际绑定车号，运行监控，ID,LED状态这几个状态信息对用户不显示，仅仅北谷生产组织下的用户可以查看-->
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{'GPSProtocolVersion'|translate}}</td>
                     <td ng-cloak ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.versionNum}}</td>
+                    <!--变矩器油温-->
+                    <td>{{'torqueConverterOilTemperature'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature}}°C</td>
+                  </tr>
+                  <tr>
+                    <!--平均油耗-->
+                    <td>{{'averageFuelConsumption'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption}}L/H</td>
+                    <!--运行监控-->
+                    <td>{{'runMonitor'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.workMonitor}}</td>
+                    <!--GPS状态-->
+                    <td>{{'gpsState'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}</td>
+                  </tr>
+                  <tr>
+                    <!--光敏电阻电压值-->
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.photoresistorVoltage">{{'photoresistorVoltage'|translate}}</td>
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.photoresistorVoltage">{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVoltage/1000 | number:1}}V</td>
+                    <!--sim卡序列号-->
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">{{'simCardSerialNum'|translate}}</td>
+                    <td colspan="3" ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
+                  </tr>
 
-                  </tr>
-                  <!--sim卡序列号-->
-                  <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">
-                    <td>{{'simCardSerialNum'|translate}}</td>
-                    <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
-                  </tr>
                 </table>
                 <!--当前位置-->
                 <table class="table table-striped" ng-init="rowInx=0">
@@ -579,8 +625,8 @@
                     <th class="text-nowrap">{{'torqueConverterOilTemperature'|translate}}</th>
                     <!--制动气压-->
                     <th class="text-nowrap">{{'brakePressure'|translate}}</th>
-                    <!--gsm信号质量-->
-                    <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
+                    <!--GSM信号百分比-->
+                    <th class="text-nowrap">{{'gsmSignal'|translate}}</th>
                     <!--运行监控-->
                     <th class="text-nowrap" ng-if="userInfo.userdto.organizationDto.id==1&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001'&&deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">{{'operationMonitoring'|translate}}</th>
                     <!--led状态-->
@@ -655,8 +701,7 @@
                     <!--制动气压-->
                     <td ng-if="deviceData.pressureMeter!=null" ng-cloak>{{deviceData.pressureMeter | number:2}}MPa</td>
                     <td ng-if="deviceData.pressureMeter==null" ng-cloak></td>
-                    <!--gsm信号质量-->
-
+                    <!--GSM信号百分比-->
                     <td ng-if="deviceData.gsmSignal!=null" ng-cloak>{{(deviceData.gsmSignal/31)*100 | number:0}}%</td>
                     <td ng-if="deviceData.gsmSignal==null" ng-cloak></td>
                     <!--作业监控-->
@@ -838,9 +883,9 @@
         <div class="row">
           <div class="col-md-6">
             <div ng-show="deviceCurrentInfoCtrl.lnglatShow" style="line-height: 34px;">
-              <label class="control-label text-nowrap">经纬度:&nbsp;&nbsp;<input type="text" id="lnglat" class="form-control" placeholder="经纬度" name="lnglat" style="width: 200px;float: right;"/></label>
+              <label class="control-label text-nowrap">{{'latitudeAndLongitude'|translate}}:&nbsp;&nbsp;<input type="text" id="lnglat" class="form-control" placeholder="{{'latitudeAndLongitude'|translate}}" name="lnglat" style="width: 200px;float: right;"/></label>
               <span style="font-size: 16px;padding: 0 10px;">
-                行使了 <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> 公里
+                {{'traveled'|translate}} <span style="color: red;font-weight: bold;">{{deviceCurrentInfoCtrl.trackMileage}}</span> {{'kilometre'|translate}}
               </span>
             </div>
           </div>

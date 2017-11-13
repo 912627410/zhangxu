@@ -6,13 +6,11 @@
 </div>
 
 <section class="content">
-
   <div class="row info-box-container">
     <form class="form-horizontal" role="form">
-
       <div class="form-group">
-
         <label class="col-md-2 control-label font-nomal">{{'machineNumber'| translate}}:</label>
+
         <div class="col-md-2">
           <input type="text" name="licenseId" class="form-control"  ng-model="maintenanceMachineListMngCtrl.searchConditions.licenseId"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
@@ -35,7 +33,6 @@
       </div>
 
       <div class="form-group">
-
         <label  class="col-md-2 control-label font-nomal">{{'vehicleType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="deviceType" ng-model="maintenanceMachineListMngCtrl.searchConditions.typeId" theme="bootstrap"
@@ -63,7 +60,6 @@
       </div>
 
       <div class="form-group">
-
         <label class="col-md-2 control-label font-nomal">{{'highlyType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="deviceHeightType" ng-model="maintenanceMachineListMngCtrl.searchConditions.heightTypeId" theme="bootstrap"
