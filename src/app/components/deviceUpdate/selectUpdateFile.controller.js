@@ -14,6 +14,7 @@
     vm.updateDevice = updateDevice;
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
+    vm.updateSoftVersion = null;
     vm.updateApplicableProducts = null;
 
     ngTableDefaults.params.count = 8;
@@ -24,7 +25,7 @@
       var pageUrl = page || 0;
       var sizeUrl = size || 8;
       var sortUrl = sort || UPDATE_FILE_DATA_BY;
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl + "&search_EQ_status=1";
 
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
       updateFilePromis.then(function(data){
@@ -41,9 +42,10 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id, versionNum, applicableProducts) {
+    vm.fileSelection = function (id, versionNum, softVersion, applicableProducts) {
       vm.checked = id;
       vm.updateVersionNum = versionNum;
+      vm.updateSoftVersion = softVersion;
       vm.updateApplicableProducts = applicableProducts;
     };
 
@@ -54,25 +56,28 @@
       }
       var updateDevice = angular.copy(vm.updateDevice);
       var content = "", count = 0;
-      for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
-        if(updateDevice[i] && updateDevice[i].terminalVersion == vm.updateVersionNum) {
-          content += updateDevice[i].deviceNum + ",";
-          updateDevice.splice(i, 1);
-          flag = false;
-        } else {
-          count++;
-          flag = true;
+      if(vm.updateApplicableProducts == "1") { // GPS自身升级
+        for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
+          if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion || updateDevice[i].versionNum != vm.updateVersionNum)) {
+            content += updateDevice[i].deviceNum + ",";
+            updateDevice.splice(i, 1);
+            flag = false;
+          } else {
+            count++;
+            flag = true;
+          }
         }
-      }
-      if(updateDevice.length <=0) {
-        content += "所选设备的终端软件版本与选择的升级版本相同，不作升级。";
-        vm.confirmUpdate = false;
-      } else if(content && count > 0) {
-        content += "当前的终端软件版本与选择的升级版本相同，不作升级。" + "您确定将选择的其余的设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
-        vm.confirmUpdate = true;
-      } else {
-        content += "您确定将所选设备升级成VER" + (vm.updateVersionNum/100).toFixed(2) + "版本?";
-        vm.confirmUpdate = true;
+        if(updateDevice.length <=0) {
+          content = "选择的设备的软件版本与选择的升级文件的软件版本相同，或选择的设备的协议版本与选择的升级文件的协议版本不同，不做升级。";
+          vm.confirmUpdate = false;
+        } else if(content && count > 0) {
+          content = content.slice(0, -1);
+          content += "的软件版本与选择的升级文件的软件版本相同，或协议版本与选择的升级文件的协议版本不同，不作升级。" + "您确定将选择的其余设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+          vm.confirmUpdate = true;
+        } else {
+          content += "您确定将选择的设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+          vm.confirmUpdate = true;
+        }
       }
       var updateDataVo = {
         devices : updateDevice,

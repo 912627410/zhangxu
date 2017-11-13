@@ -13,7 +13,7 @@
                                        DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS,
                                        AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL, GET_UN_ACTIVE_LOCK_SMS_URL, SEND_UN_ACTIVE_LOCK_SMS_URL,
                                        GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL,
-                                       GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
+                                       GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL,SMS_SEND_CUSTOMIZED_URL,SMS_SEND_SETALARMFUNC_URL,SMS_SEND_SETSERIALNUM_URL, GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL,
                                        GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL,DEVCE_LOCK_DATA_PAGED_QUERY,GET_SET_INTER_SMS_URL,SEND_SET_INTER_SMS_URL,ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,DEVCEDATA_EXCELEXPORT,
                                        PORTRAIT_ENGINEPERFORMS_URL,PORTRAIT_RECENTLYSPEED_URL,PORTRAIT_RECENTLYOIL_URL,PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL,PORTRAIT_CUSTOMERINFO_URL,MACHINE_STORAGE_URL,deviceinfo, ngTableDefaults, NgTableParams) {
     var vm = this;
@@ -1981,6 +1981,117 @@
               }
             } else {
               Notification.error(data.content.message);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+    }
+
+    //发送自定义短信
+    vm.sendCustomizedSMS = function (devicenum, funcNum, customizedData) {
+      if (devicenum == null) {
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SMS_SEND_CUSTOMIZED_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&funcNum=" + funcNum + "&customizedData=" + customizedData;
+
+      $confirm({
+        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        title: languages.findKey('SMSConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.sendCustomizedMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
+            }
+            else {
+
+              if (data.code == 0) {
+                Notification.error(data.content.resultDescribe);
+              } else {
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+    }
+
+    //发送关闭或打开部分报警功能
+    vm.sendSetAlarmFuncSMS = function (devicenum,setCode) {
+      if (devicenum == null) {
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SMS_SEND_SETALARMFUNC_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&setCode=" + setCode;
+
+      $confirm({
+        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        title: languages.findKey('SMSConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.sendSetAlarmFuncMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
+            }
+            else {
+
+              if (data.code == 0) {
+                Notification.error(data.content.resultDescribe);
+              } else {
+                Notification.error(data.content.message);
+              }
+
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
+          })
+        });
+    }
+
+    //发送初始化流水号
+    vm.sendSetSericalNumSMS = function (devicenum) {
+      if (devicenum == null) {
+        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      var restURL = SMS_SEND_SETSERIALNUM_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      $confirm({
+        text: languages.findKey('youSureYouWantToSendThisMessage') + '',
+        title: languages.findKey('SMSConfirmation') + '',
+        ok: languages.findKey('confirm') + '',
+        cancel: languages.findKey('cancel') + ''
+      })
+        .then(function () {
+          var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
+          rspData.then(function (data) {
+            if (data.code == 0 && data.content.smsStatus == 0) {
+              vm.sendSetAlarmFuncMsg = data.content.smsContent;
+              Notification.success(data.content.resultDescribe);
+              vm.initSmsSendBtn();
+            }
+            else {
+
+              if (data.code == 0) {
+                Notification.error(data.content.resultDescribe);
+              } else {
+                Notification.error(data.content.message);
+              }
+
             }
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);

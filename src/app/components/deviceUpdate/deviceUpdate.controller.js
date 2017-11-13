@@ -108,7 +108,7 @@
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',
         controller: 'selectUpdateFileController as selectUpdateFileCtrl',
-        size: size,
+        size: 'lg',
         backdrop:false,
         scope:$scope,
         resolve: {
@@ -135,7 +135,7 @@
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',
         controller: 'selectUpdateFileController as selectUpdateFileCtrl',
-        size: size,
+        size: 'lg',
         backdrop:false,
         scope:$scope,
         resolve: {

@@ -322,7 +322,10 @@
   "noMessage": "--",
   "surealevel":"尿素液位",
   "OilTemperature": "油温",
+  "ProtocolVersion":"协议版本",
+  "softVersion":"软件版本",
+  "fileSize":"文件大小",
+  "remarks":"备注",
   "main_navigation":"导航栏"
-
 
 }

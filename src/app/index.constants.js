@@ -131,6 +131,10 @@
     .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
+    .constant('SMS_SEND_CUSTOMIZED_URL',SERVER_BASE_URL + 'sms/sendCustomizedSMS')
+    .constant('SMS_SEND_SETALARMFUNC_URL',SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
+    .constant('SMS_SEND_SETSERIALNUM_URL',SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
+
 
     //键盘数据相关
     .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')
@@ -225,6 +229,7 @@
     .constant('CANCEL_UPDATE_URL', SERVER_BASE_URL + 'update/cancelUpdate') // 取消升级
     .constant('UPDATE_RECORD_URL', SERVER_BASE_URL + 'update/updateRecordPage') //分页查询升级记录
     .constant('MODIFY_FILE_URL', SERVER_BASE_URL + 'update/modifyFile') //修改升级文件
+    .constant('REMOVE_UPDATE_FILE_URL', SERVER_BASE_URL + 'update/removeUpdateFile') //删除升级文件
 
     //用户画像部分
     .constant('PORTRAIT_ENGINEPERFORMS_URL', SERVER_BASE_URL + 'portrait/getEnginePerforms')   //获取发动机评分

@@ -23,6 +23,18 @@
         return hourMins;
       }
     };
+  })
+  .filter('numberToBoolean', function () {
+    return function (value) {
+      if(value == 0){
+        return '否'
+      }else if(value == 1){
+        return '是'
+      }else {
+        return value;
+      }
+    };
   });
+  ;
 
 })();

@@ -22,7 +22,15 @@
       }
 
       if(null == file.versionNum){
-        Notification.error("请输入版本号!");
+        Notification.error("请输入协议版本!");
+        return;
+      }
+      if(file.versionNum%1 != 0 || file.versionNum < 1 || file.versionNum > 9999) {
+        Notification.error("请重新录入协议版本!");
+        return;
+      }
+      if(null == file.softVersion){
+        Notification.error("请输入软件版本!");
         return;
       }
 
@@ -31,16 +39,18 @@
         return;
       }
 
-      var verArr = file.versionNum.split(".");
-      if(file.versionNum * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
-        Notification.error("请重新输入版本号!");
+      var verArr = file.softVersion.split(".");
+      if(file.softVersion * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
+        Notification.error("请重新录入软件版本!");
         return;
       }
 
       file.upload = Upload.upload({
         url: UPDATE_FILE_UPLOAD_URL,
         data: {
-          versionNum: Math.round(file.versionNum*100),
+          versionNum: Math.round(file.versionNum),
+          softVersion: Math.round(file.softVersion*100),
+          remarks: file.remarks,
           applicableProducts:file.applicableProducts
         },
         file: file

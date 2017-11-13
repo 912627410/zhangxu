@@ -319,5 +319,10 @@
   "noMessage": "N/A",
   "surealevel":"Surea level",
   "OilTemperature": "Oil Temperature",
+  "ProtocolVersion":"Protocol Version",
+  "softVersion":"Software Version",
+  "fileSize":"File Size",
+  "remarks":"Remarks",
   "main_navigation":"MAIN NAVIGATION"
+
 }

@@ -843,10 +843,12 @@
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</td>
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{'fuelConsumption'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H</td>
                     <td>{{'realTimeWorkH'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.realtimeDuration | convertToMins}}</td>
                     <!--运行总时间(小时)-->
@@ -927,6 +929,52 @@
                     <td></td>
                     <td></td>
                   </tr>
+                  <!--装载机通信协议2010 Start-->
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>开盖锁车使能</td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.autoLockSwitch | limitTo:1:0">
+                      <div ng-switch-when="0">关</div>
+                      <div ng-switch-when="1">开</div>
+                    </td>
+                    <td>61天无信号锁车使能</td>
+                    <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.autoLockSwitch | limitTo:1:1">
+                      <div ng-switch-when="0">关</div>
+                      <div ng-switch-when="1">开</div>
+                    </td>
+                    <td>光敏电阻电压</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVolt}}mV</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>天线电压高</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltH}}mV</td>
+                    <td>天线电压低</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltL}}mV</td>
+                    <td>硬件版本电压</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.hardwareVerVolt}}mV</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>仪表或控制器软件版本</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.extDeviceVersion}}</td>
+                    <td>发动机工作时间</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.engOpeDuration/10}}小时</td>
+                    <td>GPS工作时间</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.gpsOpeDuration/10}}小时</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>基站号</td>
+                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
+                    <td>基站信号强度</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.gsmRxl}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>基站小区号</td>
+                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
+                    <td>短信流水号</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
+                  </tr>
+                  <!--装载机通信协议2010 end-->
+
+
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">
                     <td>{{'simCardSerialNum'|translate}}</td>
                     <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
@@ -1067,7 +1115,8 @@
                     <th class="text-nowrap">{{'oilPressAlarmValue'|translate}}</th>
                     <th class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{'fuelConsumption'|translate}}</th>
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{'fuelConsumption'|translate}}</th>
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
                     <td ng-if="userInfo.userdto.organizationDto.id==1"><a href ng-click="deviceCurrentInfoCtrl.currentInfo(deviceData,'lg')" >{{deviceData.id}}</a></td>
@@ -1140,7 +1189,8 @@
                     <td>{{deviceData.oilPressAlarmValue}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                           || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'">{{deviceData.fuelConsumption | number:2}}L/H</td>
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                          || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{deviceData.fuelConsumption | number:2}}L/H</td>
                   </tr>
 
                 </table>
@@ -1616,6 +1666,181 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="col-md-3" presentation-href="sms:SetAlarmFunc" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">开盖锁车功能</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="开盖锁车功能"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="打开"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,1)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="关闭"
+                                                class="btn btn-warning" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,2)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" presentation-href="sms:SetAlarmFunc" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">61天无信号锁车</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="61天无信号锁车功能"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="打开"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,3)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" btn-label="关闭"
+                                                class="btn btn-warning" presentation-href="sms:SetAlarmFunc"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetAlarmFuncSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,4)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6" presentation-href="sms:customizedSMS" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                      <div class="box box-success">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">自定义短信（内部调试）</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="自定义短信（内部调试）"> <i class="fa fa-info" ></i></a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <div class="row">
+                                <label for="funcNum" class="col-md-2 control-label text-nowrap">功能码</label>
+                              </div>
+                              <div class="row" presentation-href="sms:customizedSMS">
+                                <div class="col-md-12">
+                                  <input type="text" id="funcNum" class="form-control" placeholder="功能码" name="funcNum" ng-model="deviceCurrentInfoCtrl.funcNum"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="row">
+                                <label for="customizedData" class="col-md-2 control-label text-nowrap">数据</label>
+                              </div>
+                              <div class="row" presentation-href="sms:customizedSMS">
+                                <div class="col-md-12">
+                                  <input type="text" id="customizedData" class="form-control" placeholder="数据" name="customizedData" ng-model="deviceCurrentInfoCtrl.customizedData"/>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-3">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum" class="btn btn-primary"
+                                                ng-click="deviceCurrentInfoCtrl.sendCustomizedSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.funcNum,deviceCurrentInfoCtrl.customizedData)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" presentation-href="sms:sendSetSericalNumSMS" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                      <div class="box box-danger">
+                        <div class="box-header">
+                          <h5 class="box-title text-gray">初始化流水号</h5>
+                          <div class="box-tools pull-right">
+                            <a type="button" class="btn" data-toggle="tooltip"
+                               data-placement="right" title="初始化流水号"> <i class="fa fa-info" ></i> </a>
+                          </div>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="row" >
+                                <label class="col-md-2 control-label text-nowrap">&nbsp;</label>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="发送"
+                                                send-device-num="deviceCurrentInfoCtrl.deviceinfo.deviceNum"
+                                                class="btn btn-danger" presentation-href="sms:sendSetSericalNumSMS"
+                                                ng-click="deviceCurrentInfoCtrl.sendSetSericalNumSMS(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">
+                                  </sms-send-btn>
+                                </div>
+                              </div>
+                            </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
