@@ -10,9 +10,8 @@
     .controller('viewRentalOrderController', viewRentalOrderController);
 
   /** @ngInject */
-  function viewRentalOrderController($rootScope,$window,$scope,$timeout,$stateParams,$http,$confirm,$uibModal,$location,treeFactory,serviceResource,RENTAL_ORDER_URL,AMAP_GEO_CODER_URL, Notification) {
+  function viewRentalOrderController($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL, retalOrderTotalVo,Notification) {
     var vm = this;
-    vm.rentalOrder={};
     vm.jcOption = {
       deviceType :{id:1}
     }
@@ -22,12 +21,30 @@
     vm.zbOption = {
       deviceType :{id:3}
     }
+    vm.retalOrderTotalVo=retalOrderTotalVo;
+    vm.rentalOrder = vm.retalOrderTotalVo.orderVo;
+    vm.orderMachineTypeVoList=vm.retalOrderTotalVo.orderMachineTypeVoList;
+    for(var i = 0;i<vm.orderMachineTypeVoList.length;i++){
+      if(vm.orderMachineTypeVoList[i].deviceType.id ==1){
+        vm.jcOption = vm.orderMachineTypeVoList[i]
+      }
+      if(vm.orderMachineTypeVoList[i].deviceType.id ==2){
+        vm.qbOption = vm.orderMachineTypeVoList[i]
+      }
+      if(vm.orderMachineTypeVoList[i].deviceType.id ==3){
+        vm.zbOption = vm.orderMachineTypeVoList[i]
+      }
+    }
+
+
+    // vm.rentalOrder={};
+
 
 
     var path="/rental/order";
     vm.operatorInfo =$rootScope.userInfo;
     vm.back = function () {
-      $location.path(path);
+      $uibModalInstance.dismiss('cancel');
 
     };
 
@@ -92,7 +109,7 @@
 
     }
 
-    vm.getOrder();
+    //vm.getOrder();
 
 
   }

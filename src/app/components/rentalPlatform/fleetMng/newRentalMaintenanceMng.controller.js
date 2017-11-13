@@ -10,7 +10,8 @@
     .controller('newRentalMaintenanceController', newRentalMaintenanceController);
 
   /** @ngInject */
-  function newRentalMaintenanceController($rootScope,$scope,$http,$confirm, $filter,$uibModal,rentalService,$location,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,RENTANL_MAINTENANCE_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification,languages) {
+  function newRentalMaintenanceController($rootScope,$uibModal,$uibModalInstance,rentalService,NgTableParams,treeFactory,serviceResource,RENTAL_MAINTENANCE_URL,
+                                          RENTANL_MAINTENANCE_MACHINE_PAGE_URL,RENTAL_MAINTENANCE_TYPE_URL, Notification,languages) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -19,7 +20,7 @@
     var path="/rental/maintenance";
     vm.operatorInfo =$rootScope.userInfo;
     vm.cancel = function () {
-      $location.path(path);
+      $uibModalInstance.dismiss('cancel');
 
     };
 
@@ -59,7 +60,7 @@
 
       rspdata.then(function (data) {
         Notification.success(languages.findKey('newMaInS'));
-        $location.path(path);
+        $uibModalInstance.close(data.content);
 
       },function (reason) {
         Notification.error(reason.data.message);
@@ -93,7 +94,7 @@
         vm.rightRentalOrder=result;
 
 
-        console.log(result);
+        // console.log(result);
         vm.machine=result;
 
         vm.queryTypes(vm.machine.id);

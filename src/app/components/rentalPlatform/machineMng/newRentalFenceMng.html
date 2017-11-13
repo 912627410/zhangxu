@@ -1,33 +1,20 @@
-<div class="machine-content">
-  <div class="row">
-    <section class="renatlcontent-header">
-      <div class="col-md-4">
-        <h4>{{'newFence'|translate}}</h4>
-      </div>
-      <div class="col-md-8">
-        <a ui-sref="rental.orgFence" class="pull-right"><i class="fa fa-fw fa-mail-reply"></i></a>
-      </div>
-    </section>
+<div class="modal-header modal-header-padding">
+  <div class="modal-title">
+    <div class="modal-title-text">
+      {{'newFence'|translate}}
+    </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
+</div>
 
-    </div>
-    <div class="form-group col-md-8">
-      <label class="col-sm-2 control-label font-nomal">{{'fenceAddress'|translate}}:</label>
-      <input type="text" class="form-control col-sm-4" id="tipinput"
-             placeholder="{{'search'|translate}}"
-             ng-model="newRentalFenceController.rentalOrgFence.fenceAddress"/>
-    </div>
-  </div>
+<div class="row modal-body" style=" margin-left:10px ;padding-top: 0px!important;">
   <div class="container-fluid row">
-    <form name="newRentalFence" class="form-horizontal row">
-      <div class="box-body col-sm-4">
+    <div class="box-body col-sm-4 col-md-4">
+      <form name="newRentalFence" class="form-horizontal row">
         <div class="form-group">
           <label class="col-sm-3 control-label font-nomal">{{'name'|translate}}:</label>
           <div class="col-md-7">
-            <input type="text" id="org" class="form-control" placeholder="{{'fenceName'|translate}}"
-                   ng-model="newRentalFenceController.rentalOrgFence.fenceName" validator="required"/>
+            <input type="text" id="fenceName" class="form-control" placeholder="{{'fenceName'|translate}}"
+                   name="fenceName" ng-model="newRentalFenceCtrl.rentalOrgFence.fenceName"  />
           </div>
         </div>
         <div class="form-group">
@@ -35,7 +22,7 @@
           <div class="col-sm-7">
             <input type="text" class="form-control" placeholder="{{'automaticMatching'|translate}}"
                    readonly name="longitude"
-                   ng-model="newRentalFenceController.rentalOrgFence.longitude"
+                   ng-model="newRentalFenceCtrl.rentalOrgFence.longitude"
                    validator="required"/>
           </div>
         </div>
@@ -43,7 +30,7 @@
           <label class="col-sm-3 control-label font-nomal">{{'latitude'|translate}}:</label>
           <div class="col-sm-7">
             <input type="text" class="form-control" placeholder="{{'automaticMatching'|translate}}" readonly
-                   ng-model="newRentalFenceController.rentalOrgFence.latitude" name="latitude"
+                   ng-model="newRentalFenceCtrl.rentalOrgFence.latitude" name="latitude"
                    typeahead-show-hint="true" validator="required"/>
           </div>
         </div>
@@ -51,8 +38,8 @@
           <label class="col-sm-3 control-label font-nomal">{{'radius'|translate}}:</label>
           <div class="col-sm-7">
             <input type="text" class="form-control"
-                   ng-model="newRentalFenceController.rentalOrgFence.radius"
-                   ng-change="newRentalFenceController.changeradius(newRentalFenceController.rentalOrgFence.radius)" name="radius"
+                   ng-model="newRentalFenceCtrl.rentalOrgFence.radius"
+                   ng-change="newRentalFenceCtrl.changeradius(newRentalFenceCtrl.rentalOrgFence.radius)" name="radius"
                    validator="number" typeahead-show-hint="true" validator="required"/>
           </div>
         </div>
@@ -60,7 +47,7 @@
           <label class="col-sm-3 control-label font-nomal">{{'description'|translate}}:</label>
           <div class="col-sm-7">
               <textarea class="form-control" placeholder="{{'description'|translate}}"
-                        ng-model="newRentalFenceController.rentalOrgFence.description" name="description"
+                        ng-model="newRentalFenceCtrl.rentalOrgFence.description" name="description"
                         typeahead-show-hint="true">
 
               </textarea>
@@ -68,20 +55,28 @@
         </div>
         <div class="form-group row">
           <div class="col-md-12 col-md-offset-1">
-            <button class="btn btn-primary" ng-click="newRentalFenceController.ok()">{{'confirm'|translate}}
-            </button>
-            <button class="btn btn-warning" type="button" ng-click="newRentalFenceController.cancel()">
-              {{'cancel'|translate}}
-            </button>
+            <button class="btn btn-primary" type="button" validation-submit="newRentalFence" ng-click="newRentalFenceCtrl.ok()">{{'confirm'|translate}}</button>
+            <button class="btn btn-warning" type="button" ng-click="newRentalFenceCtrl.cancel()">{{'cancel'|translate}}</button>
           </div>
         </div>
+      </form>
+    </div>
+
+    <div class="box-body col-sm-8 col-md-8">
+      <div class="form-group row">
+        <label class="col-sm-2 control-label font-nomal">{{'fenceAddress'|translate}}:</label>
+        <input type="text" class="form-control col-sm-4" id="tipinput"
+               placeholder="{{'search'|translate}}"
+               ng-model="newRentalFenceCtrl.rentalOrgFence.fenceAddress"/>
       </div>
-      <div class="map-body col-sm-8">
+      <div class="map-body row ">
 
         <div class="form-group" style="margin-right: 10px">
-          <div class="box-body" id="newOrderMap" ng-style="newRentalFenceController.baseBoxMapContainer"></div>
+          <div class="box-body" id="newOrderMap" style="height: 300px;"></div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
+
+

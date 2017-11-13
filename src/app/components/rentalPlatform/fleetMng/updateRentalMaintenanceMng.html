@@ -1,21 +1,12 @@
-<div class="machine-content" xmlns="http://www.w3.org/1999/html">
-
-  <section class="renatlcontent-header">
-    <h1>
-      <small>{{'rentalCurrentLocate'|translate}}:</small>
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-      <li class="active"><i class="fa  fa-user"></i>{{'VehicleMaintenance'|translate}}</li>
-    </ol>
-  </section>
+<div class=" modal-header">
+  <div class="modal-title">
+    <div class="modal-title-text">
+      {{'ModifyMaintenanceInfo'|translate}}
+    </div>
+  </div>
+</div>
 
   <div class="container-fluid">
-
-
-    <div class="box-header with-border">
-      <h3 class="box-title">{{'ModifyMaintenanceInfo'|translate}}</h3>
-    </div>
     <form name="form" class="form-horizontal">
       <div class="modal-body">
         <div class="box-body">
@@ -119,15 +110,10 @@
         </div>
       </div>
     </form>
-    <div class="box-footer" style="text-align: center;">
+    <div class="modal-footer" style="text-align: center;">
       <button class="btn btn-primary" type="button" validation-submit="form" ng-click="updateRentalMaintenanceCtrl.ok()">{{'confirm'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="updateRentalMaintenanceCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 
 
 
-  </div>
-
-
-
-</div>

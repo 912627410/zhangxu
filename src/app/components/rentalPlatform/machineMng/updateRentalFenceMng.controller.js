@@ -12,10 +12,10 @@
     .controller('updateRentalFenceController', updateRentalFenceController);
 
   /** @ngInject */
-  function updateRentalFenceController($rootScope, $window, $stateParams, $scope, $timeout, $http, $confirm, $uibModal, $location, languages,treeFactory, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_GEO_CODER_URL, AMAP_PLACESEARCH_URL, Notification) {
+  function updateRentalFenceController($rootScope,$uibModalInstance, $window, $stateParams, $scope, languages, serviceResource, RENTAL_ORG_FENCE_URL,  AMAP_PLACESEARCH_URL, Notification,rentalFence) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.rentalOrgFence = {};
+    vm.rentalOrgFence = rentalFence;
     vm.rentalOrgFence.radius = 100; //设置的半径,默认100米
 
     if ($stateParams.id != null) {
@@ -30,14 +30,14 @@
      * 取消更新
      */
     vm.cancel = function () {
-      $location.path("/rental/orgFence");
+      $uibModalInstance.dismiss('cancel');
     };
 
     vm.ok = function () {
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('modifyFenceInformation'));
-        $location.path("/rental/orgFence");
+        $uibModalInstance.close(data.content);
       }, function (reason) {
         Notification.error(reason.data.message);
       })

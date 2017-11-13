@@ -1521,6 +1521,7 @@
   "A-3 功能测试":"A-3 Functional test",
   "A-4 30天的维护":"A-4 30 days maintenance",
   "MoCuInSuc":"Modify customer information successful!",
+
   "upload":"Upload",
   "softVersion":"Software version",
 
@@ -1541,7 +1542,9 @@
   "runMonitor":"Run monitoring",
   "gsmSignal":"GSM signal",
   "gpsState":"GPS state",
-  "photoresistorVoltage":"Photoresistor voltage value"
+  "photoresistorVoltage":"Photoresistor voltage value",
+  "updateFence":"Modify fence information"
+
 
 
 

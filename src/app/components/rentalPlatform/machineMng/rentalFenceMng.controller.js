@@ -13,8 +13,8 @@
     .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalFenceMngController($scope, $window, $state, $confirm, languages,$location, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, permissions, rentalService,
-                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT) {
+  function rentalFenceMngController($uibModal, $window, $confirm, languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
+                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT,RENTAL_ORG_FENCE_URL) {
     var vm = this;
     vm.pageSize = 12;
     vm.fenceStatus = {
@@ -33,7 +33,7 @@
      */
     vm.adjustWindow = function (windowHeight) {
       var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 35;//50 topBar的高,15间距,90msgBox高,15间距,35 预留
-      vm.baseBoxContainer = {
+      vm.baseBoxMapContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
     }
@@ -103,7 +103,23 @@
      * 新建围栏
      */
     vm.new = function () {
-      $state.go('rental.newOrgFence');
+      //$state.go('rental.newOrgFence');
+      var modalInstance = $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/machineMng/newRentalFenceMng.html',
+        controller: 'newRentalFenceController',
+        controllerAs:'newRentalFenceCtrl',
+        size: 'lg'
+      });
+      modalInstance.result.then(function (result) {
+        vm.fenceStatus.fenceCount += 1;
+        vm.fenceStatus.normalCount += 1;
+        vm.tableParams.data.splice(0, 0, result);
+      }, function () {
+        //取消
+      });
+
     }
 
     /**
@@ -111,7 +127,36 @@
      * @param id
      */
     vm.view = function (id) {
-      $state.go('rental.updateOrgFence', {id: id})
+      var fenceUrl = RENTAL_ORG_FENCE_URL+"?id=" + id;
+      var rspdata = serviceResource.restCallService(fenceUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalFence = data.content;
+        var modalInstance = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
+          controller: 'updateRentalFenceController',
+          controllerAs:'updateRentalFenceCtrl',
+          size: 'lg',
+          resolve: {
+            rentalFence: function () {
+              return rentalFence;
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+        }, function () {
+          //取消
+        });
+      })
+
     }
 
     /**

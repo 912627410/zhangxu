@@ -10,12 +10,13 @@
     .controller('viewRentalCustomerController', viewRentalCustomerController);
 
   /** @ngInject */
-  function viewRentalCustomerController($rootScope,$scope,$http,$confirm,$location,$stateParams,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification) {
+  function viewRentalCustomerController($rootScope,$stateParams,$uibModalInstance,treeFactory,serviceResource,RENTAL_CUSTOMER_URL, Notification,rentalCustomer) {
     var vm = this;
     var path="/rental/customer";
     vm.operatorInfo =$rootScope.userInfo;
+    vm.rentalCustomer=rentalCustomer;
     vm.back = function () {
-      $location.path(path);
+      $uibModalInstance.dismiss('cancel');
 
     };
 
@@ -42,7 +43,7 @@
 
     }
 
-    vm.getCustomer();
+    //vm.getCustomer();
 
 
   }

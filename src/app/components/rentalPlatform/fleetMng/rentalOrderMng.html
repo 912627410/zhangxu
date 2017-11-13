@@ -138,7 +138,7 @@
         <div class="col-lg-12 table-responsive "><!--表格框-->
           <table ng-table="rentalOrderMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">{{rentalOrder.id}}</td>
+              <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.id}}</td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
