@@ -96,13 +96,13 @@
         serviceResource.refreshMapWithDeviceInfo("fenceMap", null, 4);
       }
       //console.log(vm.map)
-      /*vm.refreshMap = function () {
+      vm.refreshMap = function () {
         if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
           vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
         }else{
           serviceResource.refreshMapWithDeviceInfo("fenceMap", null,4);
         }
-      }*/
+      }
     };
 
     /**
@@ -127,6 +127,7 @@
     }
 
     vm.fenceStatusCount()
+
     /**
      * 新建围栏
      */
