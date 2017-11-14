@@ -168,7 +168,8 @@
 
     if (permissions.getPermissions("device:reportChart")) {
       vm.loadRecentUploadDevice();
-      vm.loadTodayUploadDeviceType();
+      //性能问题,暂时隐掉
+      //vm.loadTodayUploadDeviceType();
     }
 
   }
