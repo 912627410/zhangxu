@@ -167,8 +167,8 @@
         size: 'md'
       });
       modalInstance.result.then(function (newCus) {
-        vm.machineCount += 1;
-        vm.customConfigParams.data.splice(0, 0, newCus);
+        vm.page.totalElements += 1;
+        vm.tableParams.data.splice(0, 0, newCus);
       }, function () {
         //取消
       });
