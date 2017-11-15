@@ -1530,7 +1530,7 @@
                           <div class="row">
                             <div class="col-md-6">
                               <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
-                                     validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
+                                     validator="number,maxValue=65535" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
