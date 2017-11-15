@@ -14,14 +14,12 @@
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
     vm.classNoProcessedMsg = "active";
-    var userInfo = $rootScope.userInfo;
     vm.noProcessNumber = 0;
     vm.allNotificationNumber = 0;   //所有的notification数量
     vm.noConnectionNotificationNumber = 0;   //所有的未连接notification数量
     vm.maintainNotificationNumber = 0;   //所有的保养notification数量
     vm.locationNotificationNumber = 0;   //所有的车辆位置信息notification数量
 
-    var userInfo = $rootScope.userInfo;
 
     //查询notification的数量统计
     vm.queryNotificationStatistics = function(){
@@ -34,19 +32,22 @@
       notificationStatisticsPromis.then(function (data) {
           var notificationStatisticsList = data;
           notificationStatisticsList.forEach(function(notification){
-            if (notification.processStatus == 0){
-              vm.noProcessNumber += notification.totalCount;
-              if(notification.type == '01'){
-                vm.maintainNotificationNumber += notification.totalCount;
-              }
-              if(notification.type == '02'){
-                vm.noConnectionNotificationNumber += notification.totalCount;
-              }
-              if(notification.type == '03'){
-                vm.locationNotificationNumber += notification.totalCount;
-              }
+            var msgCount=notification.totalCount;
+            if (notification.type == '01') {
+              vm.maintainNotificationNumber = msgCount;
             }
-            vm.allNotificationNumber += notification.totalCount;
+            if (notification.type == '02') {
+              vm.noConnectionNotificationNumber = msgCount;
+            }
+            if (notification.type == '03') {
+              vm.locationNotificationNumber = msgCount;
+            }
+            if (notification.type == 'untreated') {
+              vm.noProcessNumber = msgCount;
+            }
+            if (notification.type = 'allMsg') {
+              vm.allNotificationNumber=msgCount;
+            }
           })
           $rootScope.notificationNumber = vm.noProcessNumber;
           $window.sessionStorage["notificationNumber"] = $rootScope.notificationNumber;

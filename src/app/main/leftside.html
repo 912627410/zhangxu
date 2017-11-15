@@ -5,7 +5,7 @@
         <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
       </div>
       <div class="pull-left info" ng-if="userInfo"
-           style="margin-left: 15px;border: none!important;box-shadow: none!important;background-color:#222d32!important;">
+           style="margin-left: 15px;border: none!important;box-shadow: none!important;background-color:#222d32!important;cursor:pointer;">
         <p style="color: #fff;font-weight: 600;font-size: 17px"> {{userInfo.userdto.ssn}} </p>
         <i class="fa fa-circle text-success"></i>
         <strong style="color: #fff;font-size: 15px">{{userInfo.userdto.organizationDto.orgSimpleName}}</strong>
@@ -28,10 +28,10 @@
 
     <ul class="sidebar-menu tree" style="margin-top: 20px;">
 
-      <li class="header" style="color: #4b646f;background: #1a2226;font-size: 16px">{{'main_navigation'| translate}}</li>
+      <li class="header" style="color: #4b646f;background: #1a2226;font-size: 16px;cursor:pointer">{{'main_navigation'| translate}}</li>
 
       <li class="treeview">
-        <a ng-click="dashboard=!dashboard" presentation-href="home:dashboard" style="border-left-color:  #3c8dbc;">
+        <a ng-click="dashboard=!dashboard" href="" presentation-href="home:dashboard" style="border-left-color:  #3c8dbc;">
           <i class="fa fa-dashboard"></i>
           <span>{{'dashboard' | translate}}</span>
           <span class="pull-right-container">
