@@ -422,7 +422,8 @@
                 map.clearMap();
                 Notification.error(languages.findKey('failedToGetDeviceInformation'));
               })
-            }else{
+            }
+            else{
               var markers =[];
               deviceList.forEach(function(deviceInfo){
                 if ((deviceInfo.locateStatus =='A' || deviceInfo.locateStatus == '1' || deviceInfo.locateStatus == 'B' ) && deviceInfo.amaplongitudeNum != null && deviceInfo.amaplatitudeNum != null) {
@@ -443,6 +444,133 @@
           }
         })
       },
+
+
+      //查询围栏数据并更新地图 mapid 是DOM中地图放置位置的id
+      refreshMapWithFenceInfo: function (mapId,fenceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
+        $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
+          //初始化地图对象
+          if (!AMap) {
+            location.reload(false);
+          }
+          var amapRuler, amapScale, toolBar,overView,circleEditor;
+          var localZoomSize = 4;  //默认缩放级别
+          if (zoomsize){
+            localZoomSize = zoomsize;
+          }
+          //var localCenterAddr = [106.13,38.44];//设置中心点大概在银川附近
+          var localCenterAddr = [104.06,30.83];//设置中心点大概在重庆附近
+          if (centeraddr){
+            localCenterAddr = centeraddr;
+          }
+          if (!scrollWheel){
+            scrollWheel=false;
+          }
+          var map = new AMap.Map(mapId, {
+            resizeEnable: true,
+            scrollWheel:scrollWheel, // 是否可通过鼠标滚轮缩放浏览
+            center: localCenterAddr,
+            zooms: [3, 18]
+          });
+          map.setLang(langkey);
+          map.setZoom(localZoomSize);
+          map.plugin(['AMap.ToolBar'], function () {
+            map.addControl(new AMap.ToolBar());
+          });
+          //加载比例尺插件
+          map.plugin(["AMap.Scale"], function () {
+            amapScale = new AMap.Scale();
+            map.addControl(amapScale);
+          });
+          //添加地图类型切换插件
+          map.plugin(["AMap.MapType"], function () {
+            //地图类型切换
+            var mapType = new AMap.MapType({
+              defaultType: 0,//默认显示卫星图
+              showRoad: false //叠加路网图层
+            });
+            map.addControl(mapType);
+          });
+          //在地图中添加ToolBar插件
+          map.plugin(["AMap.ToolBar"], function () {
+            toolBar = new AMap.ToolBar();
+            map.addControl(toolBar);
+          });
+          //在地图中添加鹰眼插件
+          map.plugin(["AMap.OverView"], function () {
+            //加载鹰眼
+            overView = new AMap.OverView({
+              visible: true //初始化隐藏鹰眼
+            });
+            map.addControl(overView);
+          });
+          //在地图中画圆的插件
+          map.plugin(["AMap.CircleEditor"], function () {
+            circleEditor = new AMap.CircleEditor({
+              visible: true //初始化隐藏鹰眼
+            });
+            map.addControl(circleEditor);
+          });
+          //读取所有设备的gps信息，home map使用
+          if ($rootScope.userInfo ) {
+            if(fenceList == null){
+              var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
+              rspdata.then(function (data) {
+                var deviceGPSInfo = data.content;  //返回的数组列表
+                var markers =[];
+                for (var i = 0; i < deviceGPSInfo.length; i++) {
+                  if (deviceGPSInfo[i].amaplatitudeNum != null) {
+                    var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
+                  }
+                  if (deviceGPSInfo[i].amaplongitudeNum != null) {
+                    var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
+                  }
+                  if (latitude != null && longitude != null) {
+                    // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
+                    var marker="assets/images/orangeMarker.png";
+                    if(deviceGPSInfo[i].accStatus=='01'){
+                      marker="assets/images/greenMarker.png";
+                    }
+                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
+                  }
+                }
+                //是否以点聚合的方式显示
+                if(aggregation){
+                  aggregationShow(map, markers);
+                }
+              }, function (reason) {
+                map.clearMap();
+                Notification.error(languages.findKey('failedToGetDeviceInformation'));
+              })
+            }
+            else{
+              var markers =[];
+              fenceList.forEach(function(fenceInfo){
+                if ( fenceInfo.longitude != null && fenceInfo.latitude != null) {
+                  var markerpic="assets/images/orangeMarker.png";
+                  var marker = new AMap.Marker({
+                    map: map,
+                    position: new AMap.LngLat(fenceInfo.longitude, fenceInfo.latitude), //基点位置
+                    icon:new AMap.Icon({
+                      image: markerpic,
+                      imageOffset: new AMap.Pixel(-15, -10)
+                    })
+                  });
+               /*   var markerPoint = addMarkerModel(map,fenceInfo,marker,callback,rental);*/
+                  markers.push(marker);
+                }
+              })
+              //是否以点聚合的方式显示
+              if(aggregation){
+                aggregationShow(map, markers);
+              }
+
+            }
+          }
+        })
+      },
+
+
       //查询设备数据更新到google地图
       refreshGoogleMapWithDeviceInfo:function () {
         //中心点和默认缩放比例

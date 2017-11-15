@@ -93,14 +93,14 @@
       if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
         vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
       } else {
-        serviceResource.refreshMapWithDeviceInfo("fenceMap", null, 4);
+        serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
       }
       //console.log(vm.map)
       vm.refreshMap = function () {
         if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
           vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
         }else{
-          serviceResource.refreshMapWithDeviceInfo("fenceMap", null,4);
+          serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
         }
       }
     };
