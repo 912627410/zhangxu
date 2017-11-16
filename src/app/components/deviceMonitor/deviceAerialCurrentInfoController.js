@@ -1970,7 +1970,7 @@
                 rspData.then(function(data){
                   if(data.content.length>0){
                     vm.deviceDataList = data.content;
-                    vm.page = data.page;
+                    vm.deviceDataPage = data.page;
                     vm.deviceData_pagenumber = data.page.number + 1;
                     vm.basePath = "device/devicedata";
                   }else {
@@ -2006,7 +2006,7 @@
         if (endDate){
           endDate = new Date(endDate.getTime()-1000*3600*24);
           var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
-          var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+          var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
           if (filterTerm){
             filterTerm += "&endDate=" + endDateFormated;
           }
@@ -2021,8 +2021,8 @@
         deviceDataPromis.then(function (data) {
             if(data.content.length>0){
               vm.deviceLocationList = data.content;
-              vm.page = data.page;
-              vm.deviceData_pagenumber = data.page.number + 1;
+              vm.locateDataPage = data.page;
+              vm.locateData_pagenumber = data.page.number + 1;
               vm.basePath = "device/devicesimplegpsdata";
             }else {
               vm.deviceLocationList = null;
@@ -2203,7 +2203,8 @@
             chart: {
               type: 'scatter',
               zoomType: 'xy',
-              width: 840
+              width: 900,
+              height: 480
             },
             legend: {
               layout: 'vertical',
@@ -2252,9 +2253,9 @@
                     var padDate = serviceResource.padLeft('000000000', datedata, true);
                     var fmtData = padDate.substr(0, 2) + ':' + padDate.substr(2, 2) + ':' + padDate.substr(4, 2);
                     if (this.color == '#90ed7d') {
-                      return '<b>{{"workingState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>'+languages.findKey('workingState')+'</b><br>' + datefmt + ' ' + fmtData;
                     } else if (this.color == '#f7a35c') {
-                      return '<b>{{"idleState"|translate}}</b><br>' + datefmt + ' ' + fmtData;
+                      return '<b>'+languages.findKey('idleState')+'</b><br>' + datefmt + ' ' + fmtData;
                     }
                   }
                 }
@@ -2326,8 +2327,8 @@
             chart: {
               type: 'scatter',
               zoomType: 'xy',
-              width: 840
-              //height: 250
+              width: 900,
+              height: 480
             },
             legend: {
               layout: 'vertical',
@@ -2446,7 +2447,8 @@
             chart: {
               type: 'spline',
               zoomType: 'xy',
-              width: 840,
+              width: 900,
+              height: 480
             },
             legend: {
               layout: 'vertical',
@@ -3399,7 +3401,7 @@
             tooltip: {
               shared: true,
               formatter:function(){
-                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss'); + '</b>';
+                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss') + '</b>';
                 angular.forEach(this.points, function(data,index,array){
                   s += '<br/>' + data.series.name + ': ' + data.y + 'V';
                 });
@@ -3459,7 +3461,7 @@
             tooltip: {
               shared: true,
               formatter:function(){
-                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss'); + '</b>';
+                var s = '<b>' + $filter('date')(new Date(this.x), 'yyyy-MM-dd HH:mm:ss') + '</b>';
                 angular.forEach(this.points, function(data,index,array){
                   s += '<br/>' + data.series.name + ': ' + data.y + 'V';
                 });
