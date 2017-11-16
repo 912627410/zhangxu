@@ -562,12 +562,12 @@
                         <td>{{'cylinderPressure'|translate}}</td>
                         <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.oilPressure|number: 2}}MPa</td>
                         <!--锁车状态-->
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1||deviceAerialCurrentInfoController.deviceinfo.lockState==0">{{'lockedCarStatus'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1">{{'lockedCar'|translate}}</td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==0">{{'unlockedCar'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1||deviceAerialCurrentInfoController.deviceinfo.lockState==0||deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1||deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==0">{{'lockedCarStatus'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==1||deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1">{{'lockedCar'|translate}}</td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState==0&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==0">{{'unlockedCar'|translate}}</td>
                         <!--锁车状态为空时填充行-->
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
-                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1"></td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=0&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=1"></td>
+                        <td ng-if="deviceAerialCurrentInfoController.deviceinfo.lockState!=0&&deviceAerialCurrentInfoController.deviceinfo.lockState!=1&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=0&&deviceAerialCurrentInfoController.deviceinfo.limitUpStatus!=1"></td>
                         <!--限升状态-->
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1||deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==0">{{'limitUpStatus'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.limitUpStatus==1">{{'limitUp'|translate}}</td>
