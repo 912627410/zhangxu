@@ -102,10 +102,10 @@
         <div class="col-sm-10">
           <p class="input-group">
             <input type="text" name="produceDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                   ng-model="updateDeviceinfoController.deviceinfo.produceDate"
+                   ng-model="updateDeviceinfoController.deviceinfo.produceDate" validator="required"
                    is-open="updateDeviceinfoController.produceDateOpenStatus.opened"
                    datepicker-options="updateDeviceinfoController.dateOptions" close-text="Close" ng-required="true"/>
-              <span class="input-group-btn">
+              <span class="input-group-btn" style="vertical-align: top;">
                 <button type="button" class="btn btn-default"
                         ng-click="updateDeviceinfoController.produceDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>
