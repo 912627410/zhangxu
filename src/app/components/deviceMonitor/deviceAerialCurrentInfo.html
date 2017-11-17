@@ -1198,9 +1198,9 @@
                     <td ng-if="deviceData.liquidLevelSw==0">{{'exception'|translate}}</td>
                     <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">{{'noData'|translate}}</td>
                     <!--数据采集时间-->
-                    <td ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss':deviceAerialCurrentInfoController.timezone}}</td>
                     <!--数据接收时间-->
-                    <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss':deviceAerialCurrentInfoController.timezone}}</td>
                   </tr>
                 </table>
               </div>

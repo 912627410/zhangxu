@@ -14,7 +14,7 @@
                                                SEND_SET_START_TIMES_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,SEND_ACTIVE_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,SEND_LOCK_SMS_URL,
                                                SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL) {
         var vm = this;
-
+        vm.timezone='new Date().toString().match(/\\+[0-9]+/)';
         var userInfo = $rootScope.userInfo;
         vm.operatorInfo = $rootScope.userInfo;
         vm.deviceinfo = deviceinfo;
@@ -1910,6 +1910,18 @@
             }
         };
 
+        //将浏览器时间转换成中国时间
+        vm.getChangeChinaTime=function(date){
+          var localDate=new Date(date);
+          var offSet=localDate.getTimezoneOffset()*60*1000;
+          var nowDate=localDate.getTime();
+          var GMTDate=nowDate+offSet;
+          var timeZone=8;
+          var ChinaDate=timeZone*60*60*1000+GMTDate;
+          return new Date(ChinaDate);
+        };
+
+
         // device data
         vm.getDeviceData = function(page,size,sort,deviceinfo,startDate,endDate){
           //  $location.search({'page':page||0,'size':size||20,'sort':sort||''});
@@ -1928,6 +1940,7 @@
                   }
                 }
               if (startDate) {
+                startDate = vm.getChangeChinaTime(startDate);
                 var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
                 var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
                 if (queryCondition) {
@@ -1942,6 +1955,7 @@
               }
               if (endDate) {
                 endDate = new Date(endDate.getTime()-1000*3600*24);
+                endDate = vm.getChangeChinaTime(endDate);
                 var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
                 var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
                 if (queryCondition) {
