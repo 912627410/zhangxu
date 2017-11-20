@@ -10,7 +10,8 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,USER_MACHINE_TYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,MACHINE_DEVICETYPE_URL) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
@@ -34,7 +35,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -5 - 25 - 52  - 60-50 ;//50 topBar的高,5间距,25面包屑导航,52msgBox高,60 search;line
+      var baseBoxContainerHeight = windowHeight - 50 -5 - 25 - 52  - 60-50-70 ;//50 topBar的高,5间距,25面包屑导航,52msgBox高,60 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -67,6 +68,42 @@
       $anchorScroll();
     }
 
+    vm.totalCost = 0;
+    vm.rentalSaleCost =0;
+    vm.rentalManagementCost = 0;
+    vm.rentalFinanceCost = 0;
+    vm.rentalMachineCost = 0;
+
+    vm.queryCostTotal = function () {
+
+      var costTotalURL = RENTAL_TOTALCOST_URL ;
+      var queryDate = new Date();
+      costTotalURL += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
+      var costTotalData = serviceResource.restCallService(costTotalURL, "GET");
+      costTotalData.then(function (data) {
+        var costTotalData = data.content;
+        if(null!=costTotalData.machineCost&&costTotalData.machineCost!=''){
+          vm.rentalMachineCost = costTotalData.machineCost;
+        }
+        if(null!=costTotalData.salesExpenses&&costTotalData.salesExpenses!=''){
+          vm.rentalSaleCost =costTotalData.salesExpenses;
+        }
+        if(null!=costTotalData.managementCost&&costTotalData.managementCost!=''){
+          vm.rentalManagementCost = costTotalData.managementCost;
+        }
+        if(null!=costTotalData.financialExpenses&&costTotalData.financialExpenses!=''){
+          vm.rentalFinanceCost = costTotalData.financialExpenses;
+        }
+
+        vm.totalIncome = vm.rentalSaleCost + vm.rentalManagementCost + vm.rentalFinanceCost +  vm.rentalMachineCost ;
+
+      }, function (reason) {
+        Notification.error('获取失败');
+      })
+
+    }
+    vm.queryCostTotal();
+
     //开始时间,结束时间
     var startDate = new Date();
     startDate.setDate(startDate.getDate() - 30);
@@ -96,6 +133,16 @@
       formatYear: 'yyyy',
       startingDay: 1
     };
+    /**
+     * 得到机器类型集合
+     */
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+    machineTypeData.then(function (data) {
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
+
     /**
      * 得到机器类型集合
      */
@@ -159,99 +206,8 @@
         }
 
 
-        // var rspData = serviceResource.restCallService(restCallURL, "GET");
-        // rspData.then(function (data) {
-        //   vm.tableParams = new NgTableParams({
-        //     // initial sort order
-        //     // sorting: { name: "desc" }
-        //   }, {
-        //     dataset: data.content
-        //   });
-        //   vm.page = data.page;
-        //   vm.pageNumber = data.page.number + 1;
-        // },function (reason) {
-        //   Notification.error("获取成本数据失败")
-        // })
-
-
-        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
-        var data = {content:[{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 530.7,
-          machineLicenseId: "H05024197",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 460,
-          machineLicenseId: "H05000536",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 530.7,
-          machineLicenseId: "H05010407",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 350,
-          machineLicenseId: "H05000601",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 350,
-          machineLicenseId: "H05000601",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 642,
-          machineLicenseId: "H05000608",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null},{artificialCost: 20,
-          depreciationCost: 410.7,
-          financialExpenses: null,
-          heightTypeName: "0-8米",
-          machineCost: 150,
-          machineLicenseId: "H05000644",
-          machineManufacture: "临工重机",
-          machineTypeName: "剪叉",
-          maintenanceCost: 100,
-          managementCost: null,
-          salesExpenses: null}],
-          page:{number: 0,
-          size: 10,
-          totalElements: 1,
-          totalPages: 1}
-
-        }
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
           vm.tableParams = new NgTableParams({
             // initial sort order
             // sorting: { name: "desc" }
@@ -260,8 +216,10 @@
           });
           vm.page = data.page;
           vm.pageNumber = data.page.number + 1;
+        },function (reason) {
+          Notification.error("获取成本数据失败")
+        })
 
-        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
       }
 
     }
@@ -286,6 +244,7 @@
         x: 'left',
         data:[languages.findKey('rentalMachineCost'),languages.findKey('rentalSaleCost'),languages.findKey('rentalManagementCost'),languages.findKey('rentalFinanceCost')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(255,130,133)','rgb(143,159,255)'],
       series: [
         {
           name:'成本',

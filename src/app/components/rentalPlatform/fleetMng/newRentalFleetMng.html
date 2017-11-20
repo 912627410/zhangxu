@@ -7,8 +7,6 @@
   </section>
 
   <div class="container-fluid">
-
-
     <div class="box-header with-border">
       <h3 class="box-title">{{'newFleet'|translate}}</h3>
     </div>
@@ -17,7 +15,7 @@
         <div class="box-body">
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'fleetName'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'fleetName'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'fleetName'|translate}}"
                      ng-model="newRentalFleetController.fleet.label" name="label" typeahead-show-hint="true"
@@ -54,11 +52,5 @@
       <button class="btn btn-primary" type="button" validation-submit="newFleetForm2" ng-click="newRentalFleetController.ok()">{{'confirm'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="newRentalFleetController.cancel()">{{'cancel'|translate}}</button>
     </div>
-
-
-
   </div>
-
-
-
 </div>

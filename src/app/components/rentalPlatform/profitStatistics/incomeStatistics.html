@@ -11,78 +11,126 @@
     </section>
 
     <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text"  style="cursor:pointer;">
-            <span class="info-box-left-text-top">{{'rentalTotalIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.totalIncome}}</span>
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/shouru.png"/>
+            </div>
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalTotalIncome'|translate}}</span>
+            </div>
+            <div class="col-md-4 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.totalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text"  style=" cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalScissorLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below">¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
+
+      <div class="col-md-3 col-sm-6 col-xs-3">
+        <div class="info-box   info-card">
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_shear.png"/>
+            </div>
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalScissorLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-4 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text"   style=" cursor:pointer;">
-            <span class=" info-box-left-text-top">{{'rentalBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_straight.png"/>
+            </div>
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalBoomLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-4 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  box-light">
-          <div class="info-box-left-text"   style=" cursor:pointer;">
-            <span class="info-box-left-text-top">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
-            <span class="info-box-number info-box-left-text-below" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div class="info-box   info-card">
+          <div class="row"  style="cursor:pointer;">
+            <div class="col-md-3 profit-info-height">
+              <img class="profit-info-height"  style="width:80px;padding-left: 25px;"
+                   src="assets/images/orderlist_crank.png"/>
+            </div>
+            <div class="col-md-5 profit-info-height" style="text-align: center;">
+              <span class="profit-info-height">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
+            </div>
+            <div class="col-md-4 profit-info-height ">
+              <span class="info-box-number" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
+            </div>
           </div>
-          <div class="miniChart"></div>
         </div>
       </div>
     </div>
-    <div class="container-fluid table-wrapper" style="margin-top: 15px;">
-      <div  class=" col-md-2">
-        <div class="row">
-          <label class="control-label">{{'rentalQueryType'|translate}}</label>
-        </div >
-        <div class="row">
-          <select class="form-control" style="width: 125px;display: inline-block;" ng-change="incomeStatisticsCtr.change(incomeStatisticsCtr.queryType)" ng-model="incomeStatisticsCtr.queryType">
-            <option value="1" ng-selected="true">{{'rentalByOrder'|translate}}</option>
-            <option value="2">{{'rentalByMachine'|translate}}</option>
-          </select>
-        </div>
 
+    <div class="container-fluid table-wrapper paddingBotom0" >
+      <div  class=" col-md-3">
+
+        <form class="form-horizontal" role="form">
+          <label class="control-label col-md-5 font-nomal">{{'rentalQueryType'|translate}}:</label>
+
+          <div class="col-md-5">
+            <select class="form-control" style="width: 125px;display: inline-block;" ng-change="incomeStatisticsCtr.change(incomeStatisticsCtr.queryType)" ng-model="incomeStatisticsCtr.queryType">
+              <option value="1" ng-selected="true">{{'rentalByOrder'|translate}}</option>
+              <option value="2">{{'rentalByMachine'|translate}}</option>
+            </select>
+          </div>
+
+        </form>
       </div>
-      <div  class=" col-md-10" ng-show="incomeStatisticsCtr.orderQuery">
-          <div class="form-group">
-            <div class="row info-box-container">
-              <label class="col-md-1 control-label">{{'rentalWorkLocation'|translate}}:</label>
-              <div class="col-md-2" >
+      <div  class=" col-md-9" ng-show="incomeStatisticsCtr.orderQuery">
+        <form class="form-horizontal" role="form">
+          <div class="form-group row">
+              <label class="col-md-1 control-label font-nomal padding0">{{'rentalWorkLocation'|translate}}:</label>
+              <div class="col-md-3" >
+
+
                 <input type="text" id="tipinput" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalWorkLocation'|translate}}" ng-model="incomeStatisticsCtr.rentalOrder.workplace" style="">
               </div>
 
 
-              <label class="col-md-1 control-label">{{'rentalCustomerName'|translate}}:</label>
-              <div class="col-md-2" >
-                <input type="text" name="customerName" class="form-control"  ng-model="incomeStatisticsCtr.rentalOrder.customerName"
-                       placeholder="{{'rentalCustomerName'|translate}}"/>
+              <label class="col-md-1 control-label font-nomal padding0">{{'rentalCustomerName'|translate}}:</label>
+              <div class="col-md-3">
+                <p class="input-group">
+
+                  <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
+                         ng-model="incomeStatisticsCtr.rentalOrder.rentalCustomer.name" name="customerName"
+                         placeholder="{{'rentalCustomerName'|translate}}"
+                         validator="required" readonly/>
+                  <span class="input-group-btn">
+            <!--打开组织树-->
+              <button type="button" class="btn btn-default"  ng-click="incomeStatisticsCtr.selectCustomer('lg')">
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </span>
+                </p>
               </div>
+
+
+              <div class="col-md-4">
+                <button  type="button" class="btn btn-default searchButton pull-right " ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
+                <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
               </div>
-          </div>
-          <div class="form-group">
-            <div class="row info-box-container">
-              <div class="col-md-1">
-                <label class="control-label">{{'rentalStartingDate'|translate}}:</label>
-              </div>
-              <div class="col-md-2">
+            </div>
+
+          <div class="form-group row">
+              <label class="control-label col-md-1 font-nomal padding0">{{'rentalStartingDate'|translate}}:</label>
+              <div class="col-md-3">
                 <p class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                          ng-model="incomeStatisticsCtr.startDate"
@@ -95,16 +143,15 @@
                          current-text="{{'today'|translate}}"
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}" required readonly="readonly" />
-                  <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 
-                        </span>
+
+                          </span>
                 </p>
               </div>
-              <div class="col-md-1">
-                <label class="control-label">{{'rentalEndDate'|translate}}:</label>
-              </div>
-              <div class="col-md-2">
+              <label class="control-label col-md-1 font-nomal padding0">{{'rentalEndDate'|translate}}:</label>
+              <div class="col-md-3">
                 <p class="input-group" >
                   <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
                          ng-model="incomeStatisticsCtr.endDate"
@@ -114,118 +161,109 @@
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}" required readonly="readonly" />
                   <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
                 </p>
               </div>
-              <div class="col-md-4">
-                <button  type="button" class="btn btn-sm btn-primary searchButton" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
-                <button  type="button" class="btn btn-sm btn-default searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
+
+            </div>
+        </form>
+      </div>
+      <div  class="col-md-9" ng-show="incomeStatisticsCtr.machineQuery">
+        <form class="form-horizontal" role="form">
+          <div class="form-group row">
+            <div class="from-group row">
+              <label class="col-md-1 control-label padding0 font-nomal">{{'vehicleType'|translate}}:</label>
+              <div class="col-md-3">
+                <ui-select  ng-model="incomeStatisticsCtr.rentalMachine.machineType" ng-disabled="disabled" required>
+                  <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
+                  <ui-select-choices repeat="machineType.id as machineType in incomeStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+              <label class="col-md-1 control-label padding0 font-nomal">{{'highlyType'|translate}}:</label>
+              <div class="col-md-3">
+                <ui-select name="deviceHeightType" ng-model="incomeStatisticsCtr.rentalMachine.heightType" theme="bootstrap"
+                           ng-disabled="disabled">
+                  <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
+                    <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+              <label class="col-md-2 control-label padding0 font-nomal">{{'brandType'|translate}}:</label>
+              <div class="col-md-2">
+                <ui-select name="deviceManufacture" ng-model="incomeStatisticsCtr.rentalMachine.machineManufacture" theme="bootstrap"
+                           ng-disabled="disabled">
+                  <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="machineMF in incomeStatisticsCtr.machineMFList">
+                    <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row info-box-container">
+              <div class="col-md-1 control-label padding0 font-nomal">
+                <label class="control-label font-nomal padding0">{{'rentalStartingDate'|translate}}:</label>
+              </div>
+              <div class="col-md-3">
+                <p class="input-group" >
+                  <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                         ng-model="incomeStatisticsCtr.startDate"
+                         is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
+                         datepicker-options="incomeStatisticsCtr.dateOptions"
+                         min-date="incomeStatisticsCtr.minDate"
+                         max-date="incomeStatisticsCtr.maxDate"
+                         ng-required="true"
+                         current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" required readonly="readonly" />
+                  <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+
+
+                          </span>
+                </p>
+              </div>
+
+              <div class="col-md-1 control-label padding0">
+                <label class="control-label font-nomal padding0">{{'rentalEndDate'|translate}}:</label>
+              </div>
+              <div class="col-md-3">
+                <p class="input-group" >
+                  <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
+                         ng-model="incomeStatisticsCtr.endDate"
+                         is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
+                         datepicker-options="incomeStatisticsCtr.dateOptions"
+                         ng-required="true" current-text="{{'today'|translate}}"
+                         clear-text="{{'cleanUp'|translate}}"
+                         close-text="{{'close'|translate}}" required readonly="readonly" />
+                  <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                </p>
+              </div>
+
+              <div class="col-md-4 pull-right">
+                <button  type="button" class="btn  btn-default  searchButton pull-right" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
+                <button  type="button" class="btn  btn-primary  searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">{{'query'|translate}}</button>
               </div>
             </div>
           </div>
-      </div>
-      <div  class="col-md-10" ng-show="incomeStatisticsCtr.machineQuery">
-        <div class="form-group">
-          <div class="row info-box-container">
-            <!--<label class="col-md-1 control-label">{{'rentalMachineType'|translate}}</label>-->
-            <!--<div class="forminline" style="width: 150px;">-->
-              <!--<select class="form-control" ng-model="incomeStatisticsCtr.rentalMachine.machineType">-->
-                <!--<option value="1">{{'rentalScissorLift'|translate}}</option>-->
-                <!--<option value="2">{{'rentalBoomLift'|translate}}</option>-->
-                <!--<option value="3">{{'rentalArticulatingBoomLift'|translate}}</option>-->
-              <!--</select>-->
-            <!--</div>-->
-
-            <label class="col-md-1 control-label padding5">{{'vehicleType'|translate}}:</label>
-            <div class="col-md-2">
-              <ui-select  ng-model="incomeStatisticsCtr.rentalMachine.machineType" ng-disabled="disabled" required>
-                <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
-                <ui-select-choices repeat="machineType.id as machineType in incomeStatisticsCtr.machineTypeList | propsFilter: {name: $select.search}">
-                  <div ng-bind-html="machineType.name | highlight: $select.search |translate"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-
-            <label class="col-md-1 control-label padding5">{{'highlyType'|translate}}:</label>
-            <div class="col-md-2">
-              <ui-select name="deviceHeightType" ng-model="incomeStatisticsCtr.rentalMachine.heightType" theme="bootstrap"
-                         ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalHeight'|translate}}">{{$select.selected.name|translate}}
-                </ui-select-match>
-                <ui-select-choices repeat="deviceHeightType in incomeStatisticsCtr.deviceHeightTypeList">
-                  <div ng-bind-html="deviceHeightType.name | highlight: $select.search | translate"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-
-            <label class="col-md-1 control-label padding5">{{'brandType'|translate}}:</label>
-            <div class="col-md-2">
-              <ui-select name="deviceManufacture" ng-model="incomeStatisticsCtr.rentalMachine.machineManufacture" theme="bootstrap"
-                         ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
-                </ui-select-match>
-                <ui-select-choices repeat="machineMF in incomeStatisticsCtr.machineMFList">
-                  <div ng-bind-html="machineMF.name | highlight: $select.search | translate"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="row info-box-container">
-            <div class="col-md-1 control-label padding5">
-              <label class="control-label">{{'rentalStartingDate'|translate}}:</label>
-            </div>
-            <div class="col-md-2">
-              <p class="input-group" >
-                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                       ng-model="incomeStatisticsCtr.startDate"
-                       is-open="incomeStatisticsCtr.startDateOpenStatusDeviceData.opened"
-                       datepicker-options="incomeStatisticsCtr.dateOptions"
-                       min-date="incomeStatisticsCtr.minDate"
-                       max-date="incomeStatisticsCtr.maxDate"
-
-                       ng-required="true"
-                       current-text="{{'today'|translate}}"
-                       clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" required readonly="readonly" />
-                <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-
-                        </span>
-              </p>
-            </div>
-
-            <div class="col-md-1 control-label padding5">
-              <label class="control-label ">{{'rentalEndDate'|translate}}:</label>
-            </div>
-            <div class="col-md-2">
-              <p class="input-group" >
-                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd"
-                       ng-model="incomeStatisticsCtr.endDate"
-                       is-open="incomeStatisticsCtr.endDateOpenStatusDeviceData.opened"
-                       datepicker-options="incomeStatisticsCtr.dateOptions"
-                       ng-required="true" current-text="{{'today'|translate}}"
-                       clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" required readonly="readonly" />
-                <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-              </p>
-            </div>
-
-            <div class="col-md-4">
-              <button  type="button" class="btn btn-sm btn-primary  searchButton" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">Search</button>
-              <button  type="button" class="btn btn-sm btn-default  searchButton" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
-    <div class="row incomePic table-wrapper"  style="margin-top: 15px;">
+    <div class="row incomePic table-wrapper paddingBotom0"  style="margin-top: 15px;">
       <div class="col-md-6 leftSelect">
         <div class="liBox" >
           <div class="row" ng-show="incomeStatisticsCtr.orderQuery">
@@ -247,7 +285,7 @@
                               ng-change="incomeStatisticsCtr.queryByOrder(incomeStatisticsCtr.pageNumber-1,incomeStatisticsCtr.pageSize,incomeStatisticsCtr.totalElements,null)"
                               max-size="5" ng-model="incomeStatisticsCtr.pageNumber" items-per-page="incomeStatisticsCtr.page.size"
                               class="pagination-sm" boundary-links="true" rotate="false"
-                              first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
               </uib-pagination>
             </div>
           </div>
@@ -273,7 +311,7 @@
                               max-size="5" ng-model="incomeStatisticsCtr.pageNumber"
                               items-per-page="incomeStatisticsCtr.pageSize"
                               class="pagination-sm" boundary-links="true" rotate="false"
-                              first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
               </uib-pagination>
             </div>
           </div>

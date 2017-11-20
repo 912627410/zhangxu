@@ -1449,8 +1449,6 @@
   "neglect":"忽略",
   "profile":"个人信息",
   "setting":"设置",
-
-
   "fenceName":"围栏名称",
   "fenceAddress":"围栏地址",
   "founder":"创建人",
@@ -1458,6 +1456,7 @@
   "modifier":"修改人",
   "manage":"管理",
   "newFence":"新建围栏",
+
   "fuzzyAddress":"地址(支持模糊查询)",
   "description":"描述",
   "name":"名称",
@@ -1473,11 +1472,15 @@
   "delConfirmation":"删除确认",
   "enDrive":"发动机驱动",
   "hyDrive":"液压驱动",
+
   "elDrive":"电驱动",
   "发动机驱动":"发动机驱动",
   "液压驱动":"液压驱动",
   "电驱动":"电驱动",
   "newOrderSucc":"新建订单成功!",
+  "newFenceSucc":"新建围栏成功!",
+  "modifyOrderInformation":"修改订单信息",
+  "modifyFenceInformation":"修改围栏信息成功!",
   "transVehicle":"调入车辆成功!",
   "transVehiclFail":"调入车辆失败!",
   "selTime":"请选择订单开始时间和结束时间!",
@@ -1531,6 +1534,7 @@
   "MoCuInSuc":"修改客户信息成功!",
   "upload":"上传",
   "softVersion":"软件版本",
+  "updateFence":"修改围栏信息",
 
   "已锁车":"已锁车",
   "未锁车":"未锁车",
@@ -1549,11 +1553,6 @@
   "gsmSignal":"GSM信号百分比",
   "gpsState":"GPS状态",
   "photoresistorVoltage":"光敏电阻电压值"
-
-
-
-
-
 
 
 }

@@ -1,11 +1,13 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielongwang
+ * @date 2017/8/17.
+ * @description 车辆历史位置信息controller
  */
 (function () {
   'use strict';
-  angular
-    .module('GPSCloud')
-    .controller('machineMonitorPositionController', machineMonitorPositionController);
+  var GPSCloudModule = angular.module('GPSCloud');
+
+  GPSCloudModule.controller('machineMonitorPositionController', machineMonitorPositionController);
 
   /** @ngInject */
   function machineMonitorPositionController($rootScope, $window, $scope, $http, $location, $timeout, $filter, serviceResource, Notification, NgTableParams,
@@ -63,8 +65,8 @@
       }
       var LocateDataPromis = serviceResource.restCallService(restCallURL, 'GET');
       LocateDataPromis.then(function (data) {
-        if (data.content.length<=0){
-          Notification.warning(languages.findKey('noData'));
+        if (data.content.length <= 0) {
+          Notification.warning("暂无数据！");
           return;
         }
         vm.deviceLocateData = new NgTableParams({}, {dataset: data.content});
@@ -76,7 +78,7 @@
     }
 
     /*加载前8条*/
-    vm.getLocateDateByDate(0, vm.pageSize, vm.pageSize, 'locate_date,desc', vm.deviceInfo.deviceNum, new Date(1970,0,1,0,0,0), new Date());
+    vm.getLocateDateByDate(0, vm.pageSize, vm.pageSize, 'locate_date,desc', vm.deviceInfo.deviceNum, new Date(1970, 0, 1, 0, 0, 0), new Date());
 
   }
 })();

@@ -10,7 +10,9 @@
     .controller('incomeStatisticsController', incomeStatisticsController);
 
   /** @ngInject */
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams, $location, $uibModal,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,Notification,RENTAL_INCOME_URL,$filter,DEVCE_MF,RENTAL_ASSET_STATISTICS_DATA_URL,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages,MACHINE_DEVICETYPE_URL) {
+
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams,$uibModal, $location,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,Notification,$filter,DEVCE_MF,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryIncome = {};
@@ -22,13 +24,14 @@
     vm.queryIncome={machineType:"",
       heightType:"",
       machineManufacture:""};
+   vm.rentalOrder = {}
 
     /**
      * 自适应高度函数
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight -50 -25 -5 - 105-10- 40 - 20-50; //50 topBar的高,5间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      var baseBoxContainerHeight = windowHeight -50 -25 -5 - 105-10- 40 - 20-80; //50 topBar的高,5间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -76,15 +79,15 @@
     vm.qbTotalIncome = 0;
 
     vm.queryIncomeByType = function () {
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16 ---start---
-      vm.jcTotalIncome =91200;
-      vm.zbTotalIncome = 63000;
-      vm.qbTotalIncome = 61200;
+      vm.jcTotalIncome =0;
+      vm.zbTotalIncome = 0;
+      vm.qbTotalIncome = 0;
       vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
+
 
       //查询总收入和各种类型的车辆的总收入
-      /**var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
+      var incomeTotalURL = RENTAL_TOTALINCOME_URL ;
+
       var incomeTotalData = serviceResource.restCallService(incomeTotalURL, "GET");
       incomeTotalData.then(function (data) {
         vm.incomeTotalData = data.content;
@@ -98,13 +101,12 @@
           if( vm.incomeTotalData[i].devicetypeid==3){
             vm.qbTotalIncome = vm.incomeTotalData[i].totalRevenue;
           }
-
         }
         vm.totalIncome = vm.jcTotalIncome + vm.zbTotalIncome + vm.qbTotalIncome;
 
       }, function (reason) {
         Notification.error(languages.findKey('getFail'));
-      })*/
+      })
 
     }
     vm.queryIncomeByType();
@@ -117,10 +119,6 @@
     vm.startDate = startDate;
     vm.endDate = new Date();
 
-    // vm.rentalOrder = {
-    //   startDate:startDate,
-    //   endDate:new Date()
-    // }
     //date picker
     vm.startDateOpenStatusDeviceData = {
       opened: false
@@ -152,12 +150,13 @@
     /**
      * 得到机器类型集合
      */
-      var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+
+    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
     machineTypeData.then(function (data) {
-        vm.machineTypeList = data.content;
-      }, function (reason) {
-        Notification.error(languages.findKey('rentalGetDataError'));
-      })
+      vm.machineTypeList = data.content;
+    }, function (reason) {
+      Notification.error(languages.findKey('rentalGetDataError'));
+    })
 
 
     //查询高度类型
@@ -178,6 +177,30 @@
     }, function (reason) {
       Notification.error(languages.findKey('getVendorFail'));
     })
+
+
+    //选择订单客户
+    vm.selectCustomer = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
+        controller: 'customerListController as customerListCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        vm.rentalOrder.rentalCustomer=vm.rentalCustomer;
+
+      }, function () {
+      });
+    };
 
 
     //切换查询类型
@@ -243,13 +266,53 @@
         {
           name:languages.findKey('rentalIncomeReceived'),
           type:'line',
-          areaStyle: {normal: {}},
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgb(0,0,0)',
+              borderColor: '#fff',
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgb(200,200,200)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgb(200,200,200)'
+            }
+          },
           data:realComeDate
         },
         {
           name:languages.findKey('rentalIncomeReceivable'),
           type:'line',
-          areaStyle: {normal: {}},
+          itemStyle: {
+            normal: {
+              opacity: 0
+            },
+            emphasis: {
+              color: 'rgb(0,160,152)',
+              borderColor: '#fff',
+              opacity: 1
+            }
+          },
+          lineStyle: {
+            normal: {
+              width:1,
+              color: 'rgb(0,160,152)'
+            }
+          },
+          areaStyle: {
+            normal: {
+              color: 'rgb(0,160,152)'
+            }
+          },
           data:incomeDate
         }
       ]
@@ -277,17 +340,13 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
       if (null != rentalOrder) {
-
-        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
+        if (null != rentalOrder.rentalCustomer&&null != rentalOrder.rentalCustomer.name&&rentalOrder.rentalCustomer.name!="") {
+          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.rentalCustomer.name;
         }
 
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
           restCallURL += "&search_LIKE_location=" + rentalOrder.workplace;
         }
-
-        //订单状态为结束的订单
-        restCallURL += "&search_EQ_status=" + '3';
       }
       if (null != vm.startDate&&vm.startDate!="") {
         restCallURL += "&search_DGT_endDate=" + $filter('date')(vm.startDate, 'yyyy-MM-dd');
@@ -296,7 +355,8 @@
       if (null != vm.endDate&&vm.endDate!="") {
         restCallURL += "&search_DLT_endDate=" + $filter('date')(vm.endDate, 'yyyy-MM-dd');
       }
-
+      //订单状态为结束的订单
+      restCallURL += "&search_EQ_status=" + '3';
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         vm.orderIncometableParams = new NgTableParams({
@@ -321,8 +381,8 @@
       restCallURL += "&endDate=" + $filter('date')(vm.endDate,'yyyy-MM-dd');
       if (null != rentalOrder) {
 
-        if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-          restCallURL += "&customerName="+ vm.customerName; + rentalOrder.customerName;
+        if (null != rentalOrder.rentalCustomer&&null != rentalOrder.rentalCustomer.id&&rentalOrder.rentalCustomer.id!="") {
+          restCallURL += "&customerId="+ rentalOrder.rentalCustomer.id;
         }
 
         if (null != rentalOrder.workplace&&rentalOrder.workplace!="") {
@@ -385,82 +445,22 @@
         }
       }
 
-        // var rspData = serviceResource.restCallService(restCallURL, "GET");
-        // rspData.then(function (data) {
-        //
-        //   vm.machineIncometableParams = new NgTableParams({
-        //     // initial sort order
-        //     // sorting: { name: "desc" }
-        //   }, {
-        //     dataset: data.content
-        //   });
-        //   vm.machineTotalElements = data.totalElements;
-        //   vm.pageNumber =  data.number + 1;
-        // }, function (reason) {
-        //   vm.machineList = null;
-        //   Notification.error(languages.findKey('getDataVeFail'));
-        // });
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
 
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
-      var rspData = {content:[{heightType: "0-8米",
-        licenseId: "H05000536",
-        machineType: "剪叉",
-        manufacture: "临工重机",
-        orderEndData: 1505059200000 ,
-        orderId: 3438466400,
-        orderMachines: null,
-        realIncome: 200,
-        totalAmt: 27500,
-        totalDays: 4,
-        workDays: 2},{heightType: "0-8米",
-        licenseId: "H05010407",
-        machineType: "剪叉",
-        manufacture: "临工重机",
-        orderEndData: 1505836800000,
-        orderId: 3438466400,
-        orderMachines: null,
-        realIncome: 400,
-        totalAmt: 27500,
-        totalDays: 4,
-        workDays: 1},{heightType: "8-12米",
-        licenseId: "H05000601",
-        machineType: "剪叉",
-        manufacture: "临工重机",
-        orderEndData: 1505836800000,
-        orderId: 3438466400,
-        orderMachines: null,
-        realIncome: null,
-        totalAmt: 27500,
-        totalDays: 6,
-        workDays: 1},{heightType: "0-8米",
-        licenseId: "H05000536",
-        machineType: "剪叉",
-        manufacture: "临工重机",
-        orderEndData: 1505836800000,
-        orderId: 3438466400,
-        orderMachines: null,
-        realIncome: 200,
-        totalAmt: 27500,
-        totalDays: 6,
-        workDays: 1}],
-        first: true,
-        last: false,
-        number: 0,
-        numberOfElements: 10,
-        size: 10,
-        sort: null,
-        totalElements: 44,
-        totalPages: 1
-      }
-      vm.machineIncometableParams = new NgTableParams({
-        // initial sort order
-        // sorting: { name: "desc" }
-      }, {
-        dataset: rspData.content
-      });
-      vm.machineTotalElements = rspData.totalElements;
-      vm.pageNumber =  rspData.number + 1;
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
+          vm.machineIncometableParams = new NgTableParams({
+            // initial sort order
+            // sorting: { name: "desc" }
+          }, {
+            dataset: data.content
+          });
+          vm.machineTotalElements = data.totalElements;
+          vm.pageNumber =  data.number + 1;
+        }, function (reason) {
+          vm.machineList = null;
+          Notification.error(languages.findKey('getDataVeFail'));
+        });
+
 
     }
     //右侧根据车辆统计的收入数据
@@ -487,7 +487,7 @@
         }
       }
 
-      /*var rspData = serviceResource.restCallService(restCallURL, "GET");
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
         vm.incomeData = data.content;
         for(var i = 0;i<vm.incomeData.length;i++){
@@ -501,131 +501,10 @@
         lineChart.setOption(option);
       },function (reason) {
         Notification.error(languages.findKey('getDateFbyvehicle'));
-      })**/
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16  ----start-----
-      var rspData = {
-        content:[{
-          accountsReceivable: 13750.00,
-          realIncome: 200,
-          statisticalCycle: 1505059200000
-        },{
-          accountsReceivable: 16041.66,
-          realIncome: 600,
-          statisticalCycle: 1505836800000
-        }
-        ]
-      }
-      vm.incomeData = rspData.content;
-      for(var i = 0;i<vm.incomeData.length;i++){
-        xAxisDate.push($filter('date')(vm.incomeData[i].statisticalCycle, 'yyyy-MM-dd'));
-        realComeDate.push(vm.incomeData[i].realIncome.toFixed(2));
-        incomeDate.push(vm.incomeData[i].accountsReceivable.toFixed(2));
-      }
-      option.xAxis[0].data = xAxisDate;
-      option.series[0].data = realComeDate;
-      option.series[1].data = incomeDate;
-      lineChart.setOption(option);
-      //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16  ----end-----
+      })
     }
 
-    //上方四个曲线图
-    var miniChart = document.getElementsByClassName('miniChart'),
-      miniChart1 = echarts.init(miniChart[0]),
-      miniChart2 = echarts.init(miniChart[1]),
-      miniChart3 = echarts.init(miniChart[2]),
-      miniChart4 = echarts.init(miniChart[3]),
-      miniOption = {
-        tooltip: {
-          showContent: false,
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line',
-            lineStyle:{
-              color:'rgba(124, 181, 236, 0.5)'
-            }
-          }
-        },
-        grid: {
-          top:'35%',
-          left: '0%',
-          right: '5%',
-          bottom: '0%',
-          containLabel: true
-        },
-        xAxis: {
-          boundaryGap: false,
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(124, 181, 236, 0.5)'
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          data: ['', '', '']
-        },
-        yAxis: {
-          type: 'value',
-          axisLine: {
-            show: false
-          },
-          splitLine: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          }
-        },
-        series: {
-          name: languages.findKey('rentalIncomeReceived'),
-          type: 'line',
-          label: {
-            emphasis: {
-              show: true,
-              textStyle:{
-                color: 'rgba(124, 181, 236, 1)'
-              },
-              formatter: function(param) {
-                return param.data[3];
-              },
-              position: 'top'
-            }
-          },
-          itemStyle: {
-            normal: {
-              opacity: 0
-            },
-            emphasis: {
-              color: 'rgba(124, 181, 236, 1)',
-              borderColor: '#fff',
-              borderWidth: 2,
-              opacity: 1
-            }
-          },
-          lineStyle: {
-            normal: {
-              width:1,
-              color: 'rgba(124, 181, 236, 1)'
-            }
-          },
-          areaStyle: {
-            normal: {
-              color: 'rgba(124, 181, 236, 0.25)'
-            }
-          },
-          data: [60, 70, 100],
-          smooth: true,
-          smoothMonotone: 'x'
-        }
-      };
 
-    miniChart1.setOption(miniOption);
-    miniChart2.setOption(miniOption);
-    miniChart3.setOption(miniOption);
-    miniChart4.setOption(miniOption);
 
 
   }

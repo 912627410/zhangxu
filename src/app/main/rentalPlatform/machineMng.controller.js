@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielongwang
+ * @date 2017/7/21.
+ * @description 租赁系统首页
  */
 (function () {
   'use strict';
@@ -87,7 +89,7 @@
     vm.drawPointAggregation = function (mapId, pointArray, zone, langkey) {
       //点聚合方式和自定义回调函数弹出框
       serviceResource.refreshMapWithDeviceInfo(mapId, pointArray, zone, langkey, [104.06, 30.83], true, function (item) {
-        var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + item.deviceNum;
+        var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + item.machineLicenseId;
         var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
         deviceDataPromis.then(function (data) {
           //打开模态框
@@ -272,7 +274,7 @@
           grid: {
             top:'5%',
             left: '3%',
-            right: '4%',
+            right: '6%',
             bottom: '3%',
             containLabel: true
           },
@@ -288,6 +290,7 @@
               show: false
             },
             axisLabel: {
+              interval:0,
               textStyle: {
                 color: '#000'
               }
@@ -411,34 +414,7 @@
             clockWise: false,
             radius: ['60%', '65%'],
             hoverAnimation: false,
-            data: [{
-              value: data.content.rentalMachineCount,
-              name: '01',
-              itemStyle: {
-                normal: {
-                  color: 'rgb(0,160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  }
-                  // shadowBlur: 20,
-                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
-                },
-                emphasis: {
-                  color: 'rgb(0,160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  },
-                  shadowBlur: 10,
-                  shadowColor: 'rgb(40, 40, 40, 0.2)'
-                }
-              }
-            }, {
+            data: [ {
               value: data.content.unRentalMachineCount,
               name: 'invisible',
               itemStyle: {
@@ -463,6 +439,33 @@
                   },
                   shadowBlur: 10,
                   shadowColor: 'rgba(40, 40, 40, 0.2)'
+                }
+              }
+            },{
+              value: data.content.rentalMachineCount,
+              name: '01',
+              itemStyle: {
+                normal: {
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(0,160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(40, 40, 40, 0.2)'
                 }
               }
             }
@@ -512,33 +515,7 @@
             clockWise: false,
             radius: ['50%', '60%'],
             hoverAnimation: false,
-            data: [{
-              value: data.content.rentalMachineCount,
-              itemStyle: {
-                normal: {
-                  color: 'rgba(0,160,152,1)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  }
-                  // shadowBlur: 20,
-                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
-                },
-                emphasis: {
-                  color: 'rgb(0, 160,152)',
-                  label: {
-                    show: false
-                  },
-                  labelLine: {
-                    show: false
-                  },
-                  shadowBlur: 10,
-                  shadowColor: 'rgb(0, 160,152)'
-                }
-              }
-            }, {
+            data: [ {
               value: data.content.unRentalMachineCount,
               itemStyle: {
                 normal: {
@@ -564,13 +541,39 @@
                   shadowColor: 'rgb(200,200,200)'
                 }
               }
+            },{
+              value: data.content.rentalMachineCount,
+              itemStyle: {
+                normal: {
+                  color: 'rgba(0,160,152,1)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  }
+                  // shadowBlur: 20,
+                  // shadowColor: 'rgba(40, 40, 40, 0.2)'
+                },
+                emphasis: {
+                  color: 'rgb(0, 160,152)',
+                  label: {
+                    show: false
+                  },
+                  labelLine: {
+                    show: false
+                  },
+                  shadowBlur: 10,
+                  shadowColor: 'rgb(0, 160,152)'
+                }
+              }
             }]
           }]
         };
 
         //解决两个都是0出现一半,一半的情况
         if( data.content.rentalMachineCount==0 && data.content.unRentalMachineCount==0){
-          miniPieOption.series[0].data[1].value=1;
+          miniPieOption.series[0].data[0].value=1;
         }
 
         chart.setOption(miniPieOption);
@@ -581,7 +584,7 @@
     }
 
     creatMiniPie(miniPie1,1);
-    creatMiniPie(miniPie2,3);
+    creatMiniPie(miniPie2,2);
     creatMiniPie(miniPie3,3);
 
     /*

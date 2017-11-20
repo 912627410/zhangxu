@@ -9,8 +9,8 @@
     .controller('rentalMaintenanceController', rentalMaintenanceController);
 
   /** @ngInject */
-  function rentalMaintenanceController($scope, $window, $location,$state,$filter, $anchorScroll,rentalService, serviceResource,NgTableParams,ngTableDefaults,
-                                       Notification,permissions,treeFactory,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL,RENTAL_MAINTENANCE_GROUP_BY_STATUS,languages) {
+  function rentalMaintenanceController( $window,$filter,$uibModal,rentalService, serviceResource,NgTableParams,ngTableDefaults, Notification,treeFactory,
+                                        RENTAL_MAINTENANCE_URL,DEFAULT_SIZE_PER_PAGE,RENTAL_MAINTENANCE_PAGE_URL,RENTAL_MAINTENANCE_GROUP_BY_STATUS,languages) {
     var vm = this;
     vm.totalOrders=0;
     vm.planOrders=0;
@@ -176,19 +176,85 @@
      * @param id
      */
     vm.update=function(id){
-      $state.go('rental.updateMaintenance', {id: id});
+      //$state.go('rental.updateMaintenance', {id: id});
+      var maintenceUrl=RENTAL_MAINTENANCE_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(maintenceUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalMaintence=data.content;
+
+        var modalInstance= $uibModal.open({
+          animation: true,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalMaintenanceMng.html',
+          controller: 'updateRentalMaintenanceController',
+          controllerAs:'updateRentalMaintenanceCtrl',
+          size: 'lg',
+          resolve: {
+            rentalMaintence: function () {
+              return rentalMaintence;
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+        }, function () {
+          //取消
+        });
+      })
     }
+
  /**
      * 跳转到查看页面
      * @param id
      */
     vm.view=function(id){
-      $state.go('rental.viewMaintenance', {id: id});
+      //$state.go('rental.viewMaintenance', {id: id});
+      var maintenceUrl=RENTAL_MAINTENANCE_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(maintenceUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalMaintence=data.content;
+        var modalInstance = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalMaintenanceMng.html',
+          controller: 'viewRentalMaintenanceController',
+          controllerAs:'viewRentalMaintenanceCtrl',
+          size: 'lg',
+          resolve: {
+            rentalMaintence: function () {
+              return rentalMaintence;
+            }
+
+          }
+        });
+      }, function () {
+        //取消
+      });
+
     }
 
 
     vm.new=function(){
-      $state.go('rental.newMaintenance');
+      //$state.go('rental.newMaintenance');
+      var modalInstance = $uibModal.open({
+        animation: true,
+        backdrop: false,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalMaintenanceMng.html',
+        controller: 'newRentalMaintenanceController',
+        controllerAs:'newRentalMaintenanceCtrl',
+        size: 'lg'
+      });
+       modalInstance.result.then(function (newMaintence) {
+        vm.totalOrders += 1;
+        vm.tableParams.data.splice(0, 0, newMaintence);
+      }, function () {
+        //取消
+      });
     }
 
 
@@ -208,10 +274,10 @@
         }
 
 
-        console.log(vm.totalOrders);
+        // console.log(vm.totalOrders);
         vm.totalOrders+=retanlOrderStatus.rentalOrderNumber;
 
-        console.log(vm.totalOrders);
+        // console.log(vm.totalOrders);
 
       }
     }, function (reason) {

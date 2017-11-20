@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielongwang
+ * @date 2017/7/21.
+ * @description 报警信息controller
  */
 (function () {
   'use strict';
@@ -193,8 +195,8 @@
      *
      * @param deviceNum
      */
-    vm.machineMonitor = function (deviceNum) {
-      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?deviceNum=" + deviceNum;
+    vm.machineMonitor = function (licenseId) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + licenseId;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
         //打开模态框

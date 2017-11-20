@@ -12,14 +12,14 @@
       <div class="box-body col-sm-9">
         <div class="row"><h5>{{'rentalBasicinfo'|translate}}:</h5></div>
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5 ng-binding">{{'machineNumberAndCarNumber'|translate}}:</label>
+          <label class="col-sm-4 control-label padding5 ng-binding font-nomal">{{'machineNumberAndCarNumber'|translate}}:</label>
           <div class="col-sm-8">
             <input type="text" class="form-control ng-pristine ng-pending ng-touched"  name="licenseId" placeholder="{{'machineNumberAndCarNumber'|translate}}" ng-model="vm.machine.licenseId" validator="required" typeahead-show-hint="true">
           </div>
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'rentalBindingTterminal'|translate}}:</label>
+          <label class="col-sm-4 control-label padding5 font-nomal">{{'rentalBindingTterminal'|translate}}:</label>
           <div class="col-sm-8">
             <input type="text"  id="deviceNum" name="deviceNum" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalEntersixdigitsorsweepthebarcode'|translate}}" ng-model="vm.machine.deviceNum" validator="required" ng-minlength='6' ng-maxlength='26'
                    typeahead-show-hint="false">
@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'rentalMachineType'|translate}}:</label>
+          <label class="col-sm-4 control-label padding5 font-nomal">{{'vehicleType'|translate}}:</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.machineTypeId" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |translate}}</ui-select-match>
@@ -40,9 +40,8 @@
           </div>
         </div>
 
-
         <div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'rentalVehicleState'|translate}}:</label>
+          <label class="col-sm-4 control-label padding5 font-nomal">{{'rentalVehicleState'|translate}}:</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.status" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="{{'rentalVehicleState'|translate}}">{{$select.selected.machineState |translate}}</ui-select-match>
@@ -53,19 +52,19 @@
           </div>
         </div>
 
-        <!--<div class="form-group">
-          <label class="col-sm-4 control-label padding5">{{'brandType'|translate}}</label>
+        <div class="form-group">
+          <label class="col-sm-4 control-label padding5 font-nomal">{{'brandType'|translate}}:</label>
           <div class="col-sm-8">
             <ui-select  ng-model="vm.machine.manufacture " ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match allow-clear="true" placeholder="{{'brandType'|translate}}">{{$select.selected.name|translate}}</ui-select-match>
               <ui-select-choices repeat="manufacture.id as manufacture in vm.machineManufacture | propsFilter: {name: $select.search}">
                 <div ng-bind-html="manufacture.name | highlight: $select.search|translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
-        </div>-->
+        </div>
         <div class="form-group">
-        <label class="col-sm-4 control-label padding5">{{'highlyType'|translate}}:</label>
+        <label class="col-sm-4 control-label padding5 font-nomal">{{'highlyType'|translate}}:</label>
         <div class="col-sm-8">
           <ui-select  ng-model="vm.machine.manufacture " ng-disabled="disabled" required>
             <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate }}</ui-select-match>
@@ -75,6 +74,54 @@
           </ui-select>
         </div>
       </div>
+        <div class="form-group">
+          <label for="devicePowerType" class="col-sm-4 control-label padding5 font-nomal">{{'driveType'|translate}}:</label>
+          <div class="col-sm-8">
+            <ui-select name="devicePowerType" id="devicePowerType" ng-model="vm.machine.devicePowerType" theme="bootstrap"
+                       ng-disabled="disabled">
+              <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
+              </ui-select-match>
+              <ui-select-choices repeat="devicePowerType in vm.devicePowerTypeList">
+                <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="buyPrice" class="col-sm-4 control-label padding5 font-nomal">{{'buyPrice'|translate}}:</label>
+          <div class="col-sm-8">
+
+            <input type="text" id="buyPrice" class="form-control" placeholder="{{'buyPrice'|translate}}"
+                   ng-model="vm.machine.buyPrice" name="buyPrice" typeahead-show-hint="true"/>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="buyTime" class="col-sm-4 control-label padding5 font-nomal">{{'buyTime'|translate}}:</label>
+          <div class="col-sm-8">
+            <p class="input-group">
+              <input type="text" name="buyTime" id="buyTime" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                     ng-model="vm.machine.buyTime"
+                     is-open="vm.buyTimeOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="vm.buyTimeOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="depreciableLife" class="col-sm-4 control-label padding5 font-nomal">{{'depreciationPeriod'|translate}}:</label>
+          <div class="col-sm-8">
+            <input type="text" id="depreciableLife" class="form-control" placeholder="{{'depreciationPeriod'|translate}}"
+                   ng-model="vm.machine.depreciableLife" name="depreciableLife" typeahead-show-hint="true"/>
+          </div>
+        </div>
 
       </div>
       <!--<div class="map-body col-sm-9">
@@ -113,7 +160,7 @@
     </div>
   </form>
 </div>
-<div class="modal-footer ng-scope">
+<div class="modal-footer ng-scope" style="text-align: center;">
   <button class="btn btn-primary" type="button" validation-submit="newDeviceForm" ng-click="vm.addMachine()">{{'confirm'|translate}}</button>
   <button class="btn btn-warning" type="button" ng-click="vm.cancel()">{{'cancel'|translate}}</button>
 </div>

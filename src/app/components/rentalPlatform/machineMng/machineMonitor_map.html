@@ -1,48 +1,61 @@
 <!--地图-->
-<div class="modal-body"  ng-controller="machineMonitorMapController as vm">
+<div class="modal-body" ng-controller="machineMonitorMapController as vm">
   <div class="row">
     <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
+      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="machineMonitorCtrl.startDateMapData" is-open="machineMonitorCtrl.startDateOpenStatusMapData.opened" datepicker-options="machineMonitorCtrl.dateOptions" min-date="machineMonitorCtrl.minDate" max-date="machineMonitorCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryStartDate" is-open="openStartDate"
+               ng-required="true" max-date="vm.queryEndDate"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="machineMonitorCtrl.startDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+            <button type="button" class="btn btn-default" ng-click="openStartDate=true">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+        </span>
       </p>
     </div>
     <div class="col-md-1">
-      <label class="control-label text-nowrap">{{'endDate'|translate}}:</label>
+      <label class="control-label font-nomal">{{'endDate'|translate}}:</label>
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="machineMonitorCtrl.endDateMapData" is-open="machineMonitorCtrl.endDateOpenStatusMapData.opened" datepicker-options="machineMonitorCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryEndDate" is-open="openEndDate"
+               ng-required="true"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="machineMonitorCtrl.endDateOpenMapData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+            <button type="button" class="btn btn-default" ng-click="openEndDate=true">
+              <i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
       </p>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:map:query" ng-click="machineMonitorCtrl.getDeviceMapData(0,10000,null,machineMonitorCtrl.deviceInfo.deviceNum,machineMonitorCtrl.deviceInfo.versionNum,machineMonitorCtrl.startDateMapData,machineMonitorCtrl.endDateMapData)">{{'confirm'|translate}}</button>
+      <button class="btn btn-primary" type="button"
+              ng-click="vm.drawMaps('locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+        {{'confirm'|translate}}
+      </button>
     </div>
-    <div class="col-md-3 btn-group " role="group" >
-      <button id="start" class="btn btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'startAnimation'|translate}}</button>
-      <button id="stop" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'endAnimation'|translate}}</button>
-      <button id="move" class="btn  btn-sm" type="button" presentation-href="dashboard:deviceMonitor:map:query">{{'moveAnimation'|translate}}</button>
+    <div class=" btn-group" style="margin: 0px !important;padding: 0px!important;" role="group" >
+      <div class="btn-group pull-right">
+        <button id="start" class="btn btn-sm" type="button" >{{'startAnimation'|translate}}</button>
+        <button id="stop" class="btn  btn-sm" type="button" >{{'endAnimation'|translate}}</button>
+        <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
+        <button id="faster" class="btn  btn-sm" type="button" >{{'faster'|translate}}</button>
+        <button id="slower" class="btn  btn-sm" type="button"  >{{'slower'|translate}}</button>
+      </div>
     </div>
-  </div>
-
-  <div ng-show="machineMonitorCtrl.lnglatShow" class="text-right" style="line-height: 34px;">
-          <span style="font-size: 16px;padding: 0 10px;">
-            {{'traveled'|translate}} <span style="color: red;font-weight: bold;">{{machineMonitorCtrl.trackMileage}}</span> {{'m'|translate}}
-          </span>
-    <input type="text" id="lnglat" class="form-control" placeholder="{{'latitudeAndLongitude'|translate}}" name="lnglat" style="width: 200px;float: right"/>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      <div class="box-body" style="height: 600px" id="deviceDetailMap"></div>
+      <div class="box-body" style="height: 600px" id="trackDetailMap"></div>
     </div>
   </div>
 </div>

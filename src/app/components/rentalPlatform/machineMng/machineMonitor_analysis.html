@@ -1,4 +1,48 @@
 <!--数据分析-->
-<div class="modal-body" ng-controller="machineMonitorAnalysisController as vm">
-  {{vm.test}}
+<div class="modal-body" ng-controller="machineMonitorHistoryController as vm">
+  <input type="hidden" ng-model="vm.deviceInfo">
+  <div class="row">
+    <div class="col-md-2">
+      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryStartDate" is-open="openStartDate"
+               ng-required="true" max-date="vm.queryEndDate"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openStartDate=true">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label font-nomal">{{'endDate'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.queryEndDate" is-open="openEndDate"
+               ng-required="true"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"/>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openEndDate=true">
+              <i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button"
+              ng-click="vm.getAnalysisRunData(0,vm.pageSize,null,'locate_date,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">
+        {{'confirm'|translate}}
+      </button>
+    </div>
+  </div>
+  <div class="row"></div>
 </div>

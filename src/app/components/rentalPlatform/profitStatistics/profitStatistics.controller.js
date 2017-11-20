@@ -9,13 +9,15 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE, MACHINE_DEVICETYPE_URL,Notification,RENTAL_ASSET_STATISTICS_DATA_URL,USER_MACHINE_TYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE,RENTAL_PROFIT_DATA_URL, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,MACHINE_DEVICETYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL,RENTAL_TOTALPROFIT_DATA_URL) {
+
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     var xAxisDate = [];
     var jcProfitDate = [];
     var zbProfitDate = [];
     var qbProfitDate = [];
+    vm.rentalTotalProfit = 0;
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -32,7 +34,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
+      var baseBoxContainerHeight = windowHeight - 50 -150- 10 - 25 - 5  - 15 - 20-60;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,20 search;line
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -78,6 +80,7 @@
     }, function (reason) {
       Notification.error(languages.findKey('rentalGetDataError'));
     })
+
     //查询高度类型
     var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
     var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
@@ -95,6 +98,62 @@
     }, function (reason) {
       Notification.error(languages.findKey('getVendorFail'));
     })
+
+    //总利润查询
+    vm.totalProfit = function () {
+      var queryDate = new Date();
+      var totalProfitUrl = RENTAL_TOTALPROFIT_DATA_URL;
+      totalProfitUrl += "?queryDate=" + $filter('date')(queryDate,'yyyy-MM-dd');
+      var totalProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
+      totalProfitData.then(function (data) {
+        if(null!=data.content&&null!=data.content.totalProfit){
+          vm.rentalTotalProfit = data.content.totalProfit
+        }
+      })
+    }
+    vm.totalProfit();
+
+    //获得季度
+    function getQuarterFromMonth(date){
+      var quarter = 0;
+      if(date.getMonth()>=0&&date.getMonth()<3){
+        quarter = 1;
+      }
+      if(date.getMonth()>2&&date.getMonth()<6){
+        quarter = 2;
+      }
+
+      if(date.getMonth()>5&&date.getMonth()<9){
+        quarter = 3;
+      }
+
+      if(date.getMonth()>8&&date.getMonth()<11){
+        quarter = 4;
+      }
+      return quarter;
+    }
+
+    //各时间段利润
+    vm.profitsDetails = function () {
+      var date = new Date();
+      var queryQuarter = getQuarterFromMonth(date)
+      var queryMonth = date.getMonth().valueOf()+1;
+      var totalProfitUrl = RENTAL_PROFIT_DATA_URL;
+      totalProfitUrl += "?queryYear=" + date.getFullYear();
+      //totalProfitUrl += "&queryMonth=" + queryMonth;
+      totalProfitUrl += "&queryQuarter=" + queryQuarter;
+      var detailsProfitData = serviceResource.restCallService(totalProfitUrl, "GET");
+      detailsProfitData.then(function (data) {
+        var profitData  = data.content;
+        vm.yearProfit = profitData.yearProfit;
+        vm.yearRate = profitData.yearRate;
+        vm.quarterProfit = profitData.quarterProfit;
+        vm.quarterRate = profitData.quarterRate;
+
+      })
+    }
+    vm.profitsDetails();
+
 
 
     var startDate = new Date();
@@ -136,6 +195,7 @@
     }
 
 
+
     //profit
     var profitBar = echarts.init(document.getElementById('profitBar'));
     var profitBarOption = {
@@ -148,6 +208,7 @@
       legend: {
         data: [languages.findKey('rentalScissorLift'), languages.findKey('rentalArticulatingBoomLift'), languages.findKey('rentalBoomLift')]
       },
+      color:['rgb(130,255,249)', 'rgb(255,213,130)','rgb(143,159,255)'],
       grid: {
         left: '3%',
         right: '4%',
@@ -203,19 +264,15 @@
     profitBar.setOption(profitBarOption);
 
 
+
     var incomeStatisticInfo = {
-      totalMachines: 0,
       totalOrders: 0,
     };
 
     var rspdata = serviceResource.restCallService(RENTAL_ASSET_STATISTICS_DATA_URL, "GET");
     rspdata.then(function (data) {
 
-      var MachineStatisticsList = data.machineStatistics;
-      MachineStatisticsList.forEach(function (machineStatistics) {
-        incomeStatisticInfo.totalMachines += machineStatistics.machineNumber
-      })
-     //console.log(incomeStatisticInfo.totalMachines);
+
       var RentalOrderStatisticsList = data.rentalOrderStatistics;
       RentalOrderStatisticsList.forEach(function (rentalOrderStatistics) {
         incomeStatisticInfo.totalOrders += rentalOrderStatistics.rentalOrderNumber
@@ -251,35 +308,9 @@
           restCallURL += "&machineType=" + vm.machineType;
         }
 
-        // var rspData = serviceResource.restCallService(restCallURL, "GET");
-        // rspData.then(function (data) {
-        //   vm.profitData = data.content;
-        //   for(var i = 0;i<vm.profitData.length;i++){
-        //     xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
-        //     jcProfitDate.push(vm.profitData[i].jcProfit.toFixed(2));
-        //     zbProfitDate.push(vm.profitData[i].zbProfit.toFixed(2));
-        //     qbProfitDate.push(vm.profitData[i].qbProfit.toFixed(2));
-        //   }
-        //   console.log(profitBarOption.xAxis[0])
-        //   profitBarOption.xAxis.data = xAxisDate;
-        //   profitBarOption.series[0].data = jcProfitDate;
-        //   profitBarOption.series[1].data = zbProfitDate;
-        //   profitBarOption.series[2].data = qbProfitDate;
-        //   profitBar.setOption(profitBarOption);
-        // },function (reason) {
-        //   Notification.error(languages.findKey('getProFail'));
-        // })
-        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---start---
-        var data = {content:[{jcProfit: 423.91,
-          qbProfit: 0.00,
-          statisticalCycle: 1505059200000,
-          zbProfit: 0.00},{
-          jcProfit: 312.30,
-          qbProfit: 0.00,
-          statisticalCycle: 1505836800000,
-          zbProfit: 0.00}]
-        }
-        vm.profitData = data.content;
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+          vm.profitData = data.content;
           for(var i = 0;i<vm.profitData.length;i++){
             xAxisDate.push($filter('date')(vm.profitData[i].statisticalCycle, 'yyyy-MM-dd'));
             jcProfitDate.push(vm.profitData[i].jcProfit.toFixed(2));
@@ -292,15 +323,9 @@
           profitBarOption.series[1].data = zbProfitDate;
           profitBarOption.series[2].data = qbProfitDate;
           profitBar.setOption(profitBarOption);
-
-        // },function (reason) {
-        //   Notification.error(languages.findKey('getProfFail'));
-        // })
-
-
-        //TVH Demo需要，先在js里面造假数据，后面需要去掉  by mengwei on 2017-10-16---end---
-
-
+        },function (reason) {
+          Notification.error(languages.findKey('getProFail'));
+        })
       }
 
     }

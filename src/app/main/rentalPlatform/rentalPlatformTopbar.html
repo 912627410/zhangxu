@@ -49,9 +49,9 @@
       <span ng-click="settingItemShow=false" ng-init="" ng-show="settingItemShow"><i class="fa fa-times"></i></span>
 
       <ul ng-show="settingItemShow">
-        <li>Profile</li>
-        <li>Setting</li>
-        <li>logout</li>
+        <li>{{'profile'|translate}}</li>
+        <li>{{'setting'|translate}}</li>
+        <li>{{'logout'|translate}}</li>
       </ul>
     </a>
 
@@ -69,10 +69,10 @@
           </div>
         </li>
         <li class=" ">
-          <a ng-click="" href="">Profile</a>
+          <a ng-click="" href="">{{'profile'|translate}}</a>
         </li>
         <li class=" ">
-          <a ng-click="" href="">Setting</a>
+          <a ng-click="" href="">{{'setting'|translate}}</a>
         </li>
         <li>
           <a class="center" role="button" ng-click="rentalPlatformTopbarCtr.changeLanguage('zh')" ng-init="langZH=false" ng-show="langZH">

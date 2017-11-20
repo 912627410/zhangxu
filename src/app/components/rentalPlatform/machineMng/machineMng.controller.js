@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/8/17.
+ * @author xielongwang
+ * @date 2017/8/17.
+ * @description 车辆管理controller
  */
 (function() {
   'use strict';
@@ -82,9 +84,7 @@
       })
     };
 
-   /* /!**
-     * 车辆品牌
-     *!/
+    // 车辆品牌
     vm.getDeviceManufacture=function () {
       var deviceManufacturePromise=rentalService.getDeviceManufactureList();
       deviceManufacturePromise.then(function (data) {
@@ -92,7 +92,7 @@
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })
-    }*/
+    }
 
     /**
      * 车辆高度类型
@@ -105,12 +105,31 @@
        Notification.error(languages.findKey('getVeHeiFail'));
      })
    }
+    //加载车辆驱动信息
+    var devicePowerTypeListPromise = rentalService.getDevicePowerTypeList();
+    devicePowerTypeListPromise.then(function (data) {
+      vm.devicePowerTypeList= data.content;
+    }, function (reason) {
+      Notification.error('获取驱动类型失败');
+    })
+
+    // 日期控件相关
+    // date picker
+    vm.buyTimeOpenStatus = {
+      opened: false
+    };
+
+    vm.buyTimeOpen = function ($event) {
+      vm.buyTimeOpenStatus.opened = true;
+    };
+
+
 
     vm.getDeviceType();
     vm.getMachineStatus();
     vm.getMachinePowerType();
     vm.getHeightType();
-    /*vm.getDeviceManufacture();*/
+    vm.getDeviceManufacture();
 
     /**
      * 在地图上画圆

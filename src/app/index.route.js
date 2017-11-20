@@ -114,17 +114,6 @@
         }
       })
 
-      //租赁车辆管理
-      .state('rental.machine', {
-        url: '/rentalMachine',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMachineMng.html',
-            controller: 'rentalFleetMachineMngController',
-            controllerAs: 'rentalFleetMachineMngController'
-          }
-        }
-      })
 
       //租赁车队管理
       .state('rental.fleet', {
@@ -133,31 +122,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalFleetMng.html',
             controller: 'rentalFleetMngController',
-            controllerAs: 'rentalFleetMngController'
-          }
-        }
-      })
-
-      //租赁车队新增管理
-      .state('rental.newFleet', {
-        url: '/newFleet',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalFleetMng.html',
-            controller: 'newRentalFleetController',
-            controllerAs: 'newRentalFleetController'
-          }
-        }
-      })
-
-      //租赁车队修改
-      .state('rental.updateFleet', {
-        url: '/updateFleet',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalFleetMng.html',
-            controller: 'updateRentalFleetController',
-            controllerAs: 'updateRentalFleetController'
+            controllerAs: 'rentalFleetMngCtr'
           }
         }
       })
@@ -169,46 +134,22 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalOrderMng.html',
             controller: 'rentalOrderMngController',
-            controllerAs: 'rentalOrderMngController'
+            controllerAs: 'rentalOrderMngCtrl'
           }
         }
       })
 
-      //租赁新建订单
-      .state('rental.newOrder', {
-        url: '/newOrder',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrderMng.html',
-            controller: 'newRentalOrderController',
-            controllerAs: 'newRentalOrderController'
-          }
-        }
-      })
-
-      //租赁订单管理
-      .state('rental.updateOrder', {
-        url: '/updateOrder/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
-            controller: 'updateRentalOrderController',
-            controllerAs: 'updateRentalOrderController'
-          }
-        }
-      })
-
-      //租赁订单查看
-      .state('rental.viewOrder', {
-        url: '/viewOrder/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrderMng.html',
-            controller: 'viewRentalOrderController',
-            controllerAs: 'viewRentalOrderController'
-          }
-        }
-      })
+      //租赁订单管理--新建订单
+      // .state('rental.newOrder', {
+      //   url: '/newOrder',
+      //   views: {
+      //     'main@rental': {
+      //       templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
+      //       controller: 'newRentalOrderController',
+      //       controllerAs: 'newRentalOrderCtrl'
+      //     }
+      //   }
+      // })
 
       //租赁车辆管理围栏列表
       .state('rental.orgFence', {
@@ -222,29 +163,6 @@
         }
       })
 
-      //租赁车辆管理新建围栏
-      .state('rental.newOrgFence', {
-        url: '/newOrgFence',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/machineMng/newRentalFenceMng.html',
-            controller: 'newRentalFenceController',
-            controllerAs: 'newRentalFenceController'
-          }
-        }
-      })
-
-      //租赁车辆管理修改围栏
-      .state('rental.updateOrgFence', {
-        url: '/updateOrgFence/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
-            controller: 'updateRentalFenceController',
-            controllerAs: 'updateRentalFenceController'
-          }
-        }
-      })
 
       //租赁客户管理
       .state('rental.customer', {
@@ -258,42 +176,6 @@
         }
       })
 
-      //添加租赁客户信息
-      .state('rental.newCustomer', {
-        url: '/newCustomer',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalCustomerMng.html',
-            controller: 'newRentalCustomerController',
-            controllerAs: 'newRentalCustomerController'
-          }
-        }
-      })
-
-      //修改租赁客户信息
-      .state('rental.updateCustomer', {
-        url: '/updateCustomer/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalCustomerMng.html',
-            controller: 'updateRentalCustomerController',
-            controllerAs: 'updateRentalCustomerController'
-          }
-        }
-      })
-
-      //查看租赁客户信息
-      .state('rental.viewCustomer', {
-        url: '/viewCustomer/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalCustomerMng.html',
-            controller: 'viewRentalCustomerController',
-            controllerAs: 'viewRentalCustomerController'
-          }
-        }
-      })
-
       //租赁保养管理
       .state('rental.maintenance', {
         url: '/maintenance',
@@ -301,43 +183,7 @@
           'main@rental': {
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalMaintenanceMng.html',
             controller: 'rentalMaintenanceController',
-            controllerAs: 'rentalMaintenanceController'
-          }
-        }
-      })
-
-      //添加租赁保养信息
-      .state('rental.newMaintenance', {
-        url: '/newMaintenance',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalMaintenanceMng.html',
-            controller: 'newRentalMaintenanceController',
-            controllerAs: 'newRentalMaintenanceController'
-          }
-        }
-      })
-
-      //修改租赁保养信息
-      .state('rental.updateMaintenance', {
-        url: '/updateMaintenance/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalMaintenanceMng.html',
-            controller: 'updateRentalMaintenanceController',
-            controllerAs: 'updateRentalMaintenanceController'
-          }
-        }
-      })
-
-      //查看租赁保养信息
-      .state('rental.viewMaintenance', {
-        url: '/viewMaintenance/:id',
-        views: {
-          'main@rental': {
-            templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalMaintenanceMng.html',
-            controller: 'viewRentalMaintenanceController',
-            controllerAs: 'viewRentalMaintenanceController'
+            controllerAs: 'rentalMaintenanceCtrl'
           }
         }
       })

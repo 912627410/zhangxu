@@ -9,8 +9,9 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($scope, $window,$state, $location, $filter,$anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,permissions,rentalService,
-                                    DEFAULT_SIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS) {
+  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
+                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
+
     var vm = this;
     vm.totalOrders=0;
     vm.planOrders=0;
@@ -18,7 +19,7 @@
     vm.fininshOrders=0;
 
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     //定义偏移量
@@ -27,15 +28,14 @@
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
 
 
-    //加载品牌信息
+    //订单状态List
     var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
     retanlOrderStatusListPromise.then(function (data) {
       vm.retanlOrderStatusList= data;
-
-
     }, function (reason) {
       Notification.error(languages.findKey('getStatusFail'));
     })
+
 
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
     groupByStatusListPromise.then(function (data) {
@@ -89,8 +89,6 @@
       }
     };
 
-
-
     //vm.startDateSetting.dt="";
 
     // 日期控件相关
@@ -125,7 +123,7 @@
 
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
@@ -178,16 +176,52 @@
         Notification.error(languages.findKey('getDataVeFail'));
       });
     };
-
-
     vm.query(null,null,null,null);
 
-    vm.validateOperPermission=function(){
-      return permissions.getPermissions("machine:oper");
-    }
 
-    vm.new=function(id){
-      $state.go('rental.newOrder');
+    vm.new=function(){
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
+        controller: 'newRentalOrderController',
+        controllerAs:'newRentalOrderCtrl',
+        size: 'lg'
+      });
+      modalInstance.result.then(function (result) {
+        if(null!=result){
+          vm.totalOrders += 1;
+          vm.planOrders += 1;
+          var orderVo  = result.orderVo
+          var machineTypeList = result.orderMachineTypeVoList
+          var rentalOrderNew = {
+            id:"",
+            startDate:"",
+            endDate:"",
+            rentalCustomer:"",
+            statusDesc:"",
+            location:"",
+            jc:"",
+            zb:"",
+            qb:""
+          }
+          rentalOrderNew = orderVo;
+          for(var i = 0;i<machineTypeList.length;i++){
+            if(machineTypeList[i].deviceType.id ==1){
+              rentalOrderNew.jc = machineTypeList[i].quantity
+            }
+            if(machineTypeList[i].deviceType.id ==2){
+              rentalOrderNew.qb = machineTypeList[i].quantity
+            }
+            if(machineTypeList[i].deviceType.id ==3){
+              rentalOrderNew.zb = machineTypeList[i].quantity
+            }
+          }
+
+          vm.tableParams.data.splice(0, 0, rentalOrderNew);
+        }
+
+      }, function () {
+      });
     }
 
     //重置查询框
@@ -197,16 +231,68 @@
       vm.id=null;
     }
 
-    /**
-     * 跳转到更新页面
-     * @param id
-     */
+
+    //租赁订单管理--更新订单
     vm.update=function(id){
-      $state.go('rental.updateOrder', {id: id});
+      //$state.go('rental.updateOrder', {id: id});
+      var orderUrl=RENTAL_ORDER_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(orderUrl,"GET");
+      rspdata.then(function (data) {
+        var retalOrder=data.content.orderVo;
+        var orderMachineTypeVoList=data.content.orderMachineTypeVoList;
+
+        var modalInstance= $uibModal.open({
+          animation: true,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
+          controller: 'updateRentalOrderController as updateRentalOrderCtrl',
+          size: 'lg',
+          resolve: {
+            retalOrder: function () {
+              return retalOrder;
+            },
+            orderMachineTypeVoList: function () {
+              return orderMachineTypeVoList;
+            }
+          }
+        });
+        modalInstance.result.then(function (result) {
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.orderVo.id){
+              tabList[i]=result.orderVo;
+            }
+          }
+        }, function () {
+          //取消
+        });
+      })
+
     }
 
     vm.view=function(id){
-      $state.go('rental.viewOrder', {id: id});
+     // $state.go('rental.viewOrder', {id: id});
+      var orderUrl=RENTAL_ORDER_URL+"?id="+ id;
+      var rspdata = serviceResource.restCallService(orderUrl,"GET");
+      rspdata.then(function (data) {
+        var retalOrderTotalVo=data.content;
+        var orderMachineTypeVoList=data.content.orderMachineTypeVoList;
+        var modalInstance= $uibModal.open({
+          animation: true,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/viewRentalOrderMng.html',
+          controller: 'viewRentalOrderController as viewRentalOrderCtrl',
+          size: 'lg',
+          resolve: {
+            retalOrderTotalVo: function () {
+              return retalOrderTotalVo;
+            }
+          }
+        });
+      },function () {
+        //取消
+      });
+
+
     }
 
   }

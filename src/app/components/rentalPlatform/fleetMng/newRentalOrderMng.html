@@ -1,14 +1,4 @@
 <div class="machine-content" xmlns="http://www.w3.org/1999/html">
-  <!--<section class="renatlcontent-header">-->
-    <!--<h1>-->
-      <!--<small>{{'currentPosition'|translate}}:</small>-->
-    <!--</h1>-->
-    <!--<ol class="breadcrumb">-->
-      <!--<li><a href="#"><i class="fa fa-car"></i>{{'rentalMng'| translate}}</a></li>-->
-      <!--<li class="active"><i class="fa fa-file-text-o"></i>{{'orderMng'| translate}}</li>-->
-    <!--</ol>-->
-  <!--</section>-->
-
   <div class="container-fluid">
 
     <div class="box-header with-border">
@@ -17,7 +7,7 @@
     <form name="newrentalOrderForm2" class="form-horizontal">
       <div class="box-body">
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalCustomerName'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
             <div class="col-md-5">
               <p class="input-group">
 
@@ -33,7 +23,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'amount'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'amount'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'amount'|translate}}"
                      ng-model="newRentalOrderController.rentalOrder.totalAmt" name="totalAmt"
@@ -42,7 +32,7 @@
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'deposit'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'deposit'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'deposit'|translate}}"
                      ng-model="newRentalOrderController.rentalOrder.deposit" name="deposit"
@@ -52,7 +42,7 @@
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'paymentMethod'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'paymentMethod'|translate}}"
                      ng-model="newRentalOrderController.rentalOrder.payType" name="payType"
@@ -61,13 +51,16 @@
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalStartingDate'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-sm-5">
               <p class="input-group">
                 <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="newRentalOrderController.rentalOrder.startDate"
                        is-open="newRentalOrderController.startDateSetting.status.opened"
-                       datepicker-options="newRentalOrderController.startDateSetting.dateOptions" close-text="Close"
+                       datepicker-options="newRentalOrderController.startDateSetting.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"
                         message-id="bootstrap" readonly/>
 
                 <span class="input-group-btn">
@@ -82,13 +75,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalEndDate'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="col-sm-5">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="newRentalOrderController.rentalOrder.endDate"
                        is-open="newRentalOrderController.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" close-text="Close" readonly/>
+                       datepicker-options="dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"readonly/>
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newRentalOrderController.endDateOpen($event)">
@@ -98,7 +94,7 @@
             </div>
           </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">{{'rentalWorkLocation'|translate}}:</label>
+          <label class="col-sm-3 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
           <div class="col-sm-5">
             <input type="text" class="form-control"
                    ng-model="newRentalOrderController.rentalOrder.location"
@@ -106,10 +102,8 @@
                    validator="required" typeahead-show-hint="true"/>
           </div>
         </div>
-
-
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalScissorLiftNumbers'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalScissorLiftNumbers'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control"
                      ng-model="newRentalOrderController.rentalOrder.jc"
@@ -118,7 +112,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalBoomLiftNubmers'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalBoomLiftNubmers'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control"
                      ng-model="newRentalOrderController.rentalOrder.zb"
@@ -127,17 +121,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'rentalArticulatingBoomLiftNumbers'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'rentalArticulatingBoomLiftNumbers'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="0" name="qb"
                      ng-model="newRentalOrderController.rentalOrder.qb"
                      validator="number" typeahead-show-hint="true"/>
             </div>
           </div>
-
-
           <div class="form-group">
-            <label class="col-sm-3 control-label">{{'descritpion'|translate}}:</label>
+            <label class="col-sm-3 control-label font-nomal">{{'descritpion'|translate}}:</label>
             <div class="col-sm-5">
               <textarea class="form-control" placeholder="{{'description'|translate}}"
                         ng-model="newRentalOrderController.rentalOrder.description" name="description"
@@ -145,17 +137,6 @@
               </textarea>
             </div>
           </div>
-
-
-          <!--<div class="form-group">-->
-            <!--<label class="col-sm-3 control-label"></label>-->
-            <!--<div class="col-sm-5">-->
-              <!--<label>-->
-                <!--<input type="checkbox" name="locationAlarmReceiver" ng-model="newRentalOrderController.locationAlarmReceiverChk" id="locationAlarmReceiver">-->
-                <!--接收机器位置异常报警(勾选时会收到机器超出电子围栏报警信息)-->
-              <!--</label>-->
-            <!--</div>-->
-          <!--</div>-->
 
           <div class="form-group">
             <button class="btn btn-primary" type="button" validation-submit="newrentalOrderForm2"

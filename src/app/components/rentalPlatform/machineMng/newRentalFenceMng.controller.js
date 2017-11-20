@@ -1,7 +1,10 @@
 /**
- * Created by riqian.ma on 1/8/17.
+ * @author riqian.ma
+ * @date 1/8/17.
+ * @description 新建围栏controller
+ * @updated1 xielong.wang
+ * @update_date 2017-09-29
  */
-
 (function () {
   'use strict';
 
@@ -10,7 +13,7 @@
     .controller('newRentalFenceController', newRentalFenceController);
 
   /** @ngInject */
-  function newRentalFenceController($rootScope, $window, $scope, $timeout, $http,languages, $confirm, $uibModal, $location, treeFactory, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_GEO_CODER_URL,AMAP_PLACESEARCH_URL,Notification) {
+  function newRentalFenceController($rootScope, $uibModalInstance,$scope,languages, serviceResource, RENTAL_ORG_FENCE_URL,AMAP_PLACESEARCH_URL,Notification) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = {};
@@ -20,7 +23,8 @@
      * 取消新建围栏
      */
     vm.cancel = function () {
-      $location.path("/rental/orgFence");
+      $uibModalInstance.dismiss('cancel');
+      // $uibModalInstance.close();
     };
 
     /**
@@ -29,25 +33,13 @@
     vm.ok = function () {
       var rspdata = serviceResource.restAddRequest(RENTAL_ORG_FENCE_URL, vm.rentalOrgFence);
       rspdata.then(function (data) {
-        Notification.success(languages.findKey('newOrderSucc'));
-        $location.path("/rental/orgFence");
+        Notification.success(languages.findKey('newFenceSucc'));
+        $uibModalInstance.close(data.content);
       }, function (reason) {
         Notification.error(reason.data.message);
       })
     }
 
-    /**
-     * 自适应高度函数
-     * @param windowHeight
-     */
-    vm.adjustWindow = function (windowHeight) {
-      var baseBoxMapContainerHeight = windowHeight - 50 - 10  - 8 - 90 ;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
-      //地图的自适应高度
-      vm.baseBoxMapContainer = {
-        "min-height": baseBoxMapContainerHeight + "px"
-      }
-    }
-    vm.adjustWindow($window.innerHeight);
 
     //全局的圆对象
     var circle = null;
@@ -71,80 +63,94 @@
 
     /**
      * 初始化地图
+     * @param zoomsize 缩放级别
+     * @param mapId mapId
+     * @returns {{geocoder: *, zoomsize: *, map}}
+     */
+    function initAmapMap(zoomsize, mapId) {
+      //初始化地图对象
+      if (!AMap) {
+        location.reload(false);
+      }
+      //插件定义
+      var amapScale, toolBar, overView, geocoder, circleEditor;
+
+      var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近
+
+      if (zoomsize == null || zoomsize == undefined) {
+        zoomsize = 4;
+      }
+      //初始化地图对象
+      var map = new AMap.Map(mapId, {
+        resizeEnable: true,
+        scrollWheel: true,
+        center: localCenterAddr,
+        zooms: [3, 18],
+        zoom: zoomsize
+      });
+
+      map.setLang($rootScope.langkey);
+
+      //加载比例尺插件
+      map.plugin(["AMap.Scale"], function () {
+        amapScale = new AMap.Scale();
+        map.addControl(amapScale);
+      });
+
+      //添加地图类型切换插件
+      map.plugin(["AMap.MapType"], function () {
+        var mapType = new AMap.MapType({
+          defaultType: 0,//默认显示卫星图
+          showRoad: false //叠加路网图层
+        });
+        map.addControl(mapType);
+      });
+
+      //在地图中添加ToolBar插件
+      map.plugin(["AMap.ToolBar"], function () {
+        toolBar = new AMap.ToolBar();
+        map.addControl(toolBar);
+      });
+
+      //在地图中添加鹰眼插件
+      map.plugin(["AMap.OverView"], function () {
+        overView = new AMap.OverView({
+          visible: true //初始化隐藏鹰眼
+        });
+        map.addControl(overView);
+      });
+
+      //在地图中添加坐标-地址插件
+      map.plugin(["AMap.Geocoder"], function () {
+        geocoder = new AMap.Geocoder({
+          radius: 1000,
+          visible: true //初始化隐藏鹰眼
+        });
+        map.addControl(geocoder);
+      });
+
+      //在地图中画圆的插件
+      map.plugin(["AMap.CircleEditor"], function () {
+        circleEditor = new AMap.CircleEditor({
+          visible: true //初始化隐藏鹰眼
+        });
+        map.addControl(circleEditor);
+      });
+      return {geocoder: geocoder, zoomsize: zoomsize, map: map};
+    }
+
+    /**
+     * 初始化地图
      *
      * @param zoomsize
      */
     vm.initMap = function (mapId,zoomsize) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
-        //初始化地图对象
-        if (!AMap) {
-          location.reload(false);
-        }
-        //插件定义
-        var amapScale, toolBar, overView, geocoder, circleEditor;
-
-        var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近
-
-        if (zoomsize == null || zoomsize == undefined) {
-          zoomsize = 4;
-        }
-        //初始化地图对象
-        var map = new AMap.Map(mapId, {
-          resizeEnable: true,
-          scrollWheel: true,
-          center: localCenterAddr,
-          zooms: [3, 18],
-          zoom: zoomsize
-        });
-
-        map.setLang($rootScope.langkey);
-
-        //加载比例尺插件
-        map.plugin(["AMap.Scale"], function () {
-          amapScale = new AMap.Scale();
-          map.addControl(amapScale);
-        });
-
-        //添加地图类型切换插件
-        map.plugin(["AMap.MapType"], function () {
-          var mapType = new AMap.MapType({
-            defaultType: 0,//默认显示卫星图
-            showRoad: false //叠加路网图层
-          });
-          map.addControl(mapType);
-        });
-
-        //在地图中添加ToolBar插件
-        map.plugin(["AMap.ToolBar"], function () {
-          toolBar = new AMap.ToolBar();
-          map.addControl(toolBar);
-        });
-
-        //在地图中添加鹰眼插件
-        map.plugin(["AMap.OverView"], function () {
-          overView = new AMap.OverView({
-            visible: true //初始化隐藏鹰眼
-          });
-          map.addControl(overView);
-        });
-
-        //在地图中添加坐标-地址插件
-        map.plugin(["AMap.Geocoder"], function () {
-          geocoder = new AMap.Geocoder({
-            radius: 1000,
-            visible: true //初始化隐藏鹰眼
-          });
-          map.addControl(geocoder);
-        });
-
-        //在地图中画圆的插件
-        map.plugin(["AMap.CircleEditor"], function () {
-          circleEditor = new AMap.CircleEditor({
-            visible: true //初始化隐藏鹰眼
-          });
-          map.addControl(circleEditor);
-        });
+        var __ret = initAmapMap(zoomsize, mapId);
+        var geocoder = __ret.geocoder;
+        zoomsize = __ret.zoomsize;
+        var map = __ret.map;
 
 
         //构造地点查询类

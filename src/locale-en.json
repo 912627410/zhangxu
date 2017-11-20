@@ -877,9 +877,8 @@
   "automaticMatching":"Automatic Matching",
   "workAddress":"Work Address",
   "customerList":"Customer List",
-  "unUsedMachineList":"unUsed Vehicle List",
-
   "rantalOrderList":"Order List",
+  "unUsedMachineList":"unUsed Machine List",
   "rentalSetFence":"Set Geo-Fence",
 
 
@@ -1437,12 +1436,9 @@
   "主机厂-运输":"OEM-transport",
   "租赁商-运输":"Rental-transport",
   "checkAlarm":"Please check the alarm information to be processed!",
-
-
   "neglect":"Ignore",
   "profile":"Profile",
   "setting":"Setting",
-
   "fenceName":"Fence Name",
   "fenceAddress":"Fence Address",
   "founder":"Founder",
@@ -1451,12 +1447,10 @@
   "manage":"Manage",
   "newFence":"New Fence",
   "fuzzyAddress":"Address(Fuzzy Search)",
-
   "description":"Description",
   "organizationalInformation":"Organizational Information",
   "selectedOrg":"The Selected Organization ",
   "运输":"Transport",
-
   "dayPrice":"Price(/day)",
   "transferVehicle":"Transfer Vehicle",
   "exCurrentPage":"Export Current Page",
@@ -1473,6 +1467,9 @@
   "电驱动":"Electric Drive",
 
   "newOrderSucc":"New Order Successful!",
+  "newFenceSucc":"New Fence Successful!",
+  "modifyOrderInformation":"Modify Order Information",
+  "modifyFenceInformation":"Modify Fence Successful!",
   "transVehicleSucc":" Vehicle Transfer Successful!",
   "transVehiclFail":"Failed to transfer the vehicle",
   "selTime":"Please select the order start time and end time!",
@@ -1506,7 +1503,6 @@
   "operationFailed":"Operation failed, status code",
   "softVersionNumError":"Version number is in the range of 0.00 to 99.99",
   "getProfFail":"Failed to obtain profits data!",
-
   "忽略":"Ignore",
   "已执行":"Executed",
   "未执行":"UnExecuted",
@@ -1520,12 +1516,12 @@
   "rVehAllSu":"Vehicle allocation successful!",
   "rVehAllFa":"Vehicle allocation error!",
   "FaGetCu":"Failed to get customer data!",
-
   "A-1 检查手册和标贴":"A-1 Check manuals and labels",
   "A-2 检查前操作":"A-2 Pre-check operation",
   "A-3 功能测试":"A-3 Functional test",
   "A-4 30天的维护":"A-4 30 days maintenance",
   "MoCuInSuc":"Modify customer information successful!",
+
   "upload":"Upload",
   "softVersion":"Software version",
 
@@ -1546,13 +1542,8 @@
   "runMonitor":"Run monitoring",
   "gsmSignal":"GSM signal",
   "gpsState":"GPS state",
-  "photoresistorVoltage":"Photoresistor voltage value"
-
-
-
-
-
-
+  "photoresistorVoltage":"Photoresistor voltage value",
+  "updateFence":"Modify fence information"
 
 
 

@@ -1,0 +1,106 @@
+<div class="modal-header" >
+  <div class="modal-title">
+    <div class="modal-title-text">{{'newCustomer'|translate}}
+    </div>
+  </div>
+</div>
+
+<div class="modal-body">
+  <form name="newrentalCustomerForm2" class="form-horizontal">
+    <div class="box-body">
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'name'|translate}}(<span class="text-red">*</span>):</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'name'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.name" name="name" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalLinkman'|translate}}(<span class="text-red">*</span>):</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalLinkman'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalCustomerPosition'|translate}}(<span class="text-red">*</span>):</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalCustomerPosition'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.title" name="title" typeahead-show-hint="true"
+                     validator="required"  />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalTel'|translate}}:</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalTel'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.tel" name="tel" typeahead-show-hint="true"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalPhoneNumber'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
+                     validator="telephoneNo" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalMail'|translate}}:</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalMail'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.email" name="email" typeahead-show-hint="true"
+                     validator="email" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalAddress'|translate}}(<span class="text-red">*</span>):</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalAddress'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.address" name="address" typeahead-show-hint="true"
+                     validator="required" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalPostcode'|translate}}:</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="{{'rentalPostcode'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true"
+                     validator="postcode"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'rentalOrganization'|translate}}(<span class="text-red">*</span>):</label>
+            <div class="col-md-5">
+              <p class="input-group">
+
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="newRentalCustomerCtrl.org.label" name="org" readonly validator="required"/>
+                <span class="input-group-btn">
+          <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="newRentalCustomerCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label font-nomal">{{'description'|translate}}:</label>
+            <div class="col-sm-5">
+              <textarea class="form-control" placeholder="{{'description'|translate}}"
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.description" name="description" typeahead-show-hint="true">
+
+              </textarea>
+            </div>
+          </div>
+        </div>
+  </form>
+</div>
+
+<div class="modal-footer"style="text-align: center;">
+  <button class="btn btn-primary" type="button" validation-submit="newrentalCustomerForm2" ng-click="newRentalCustomerCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="newRentalCustomerCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>

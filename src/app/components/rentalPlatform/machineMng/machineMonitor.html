@@ -7,13 +7,13 @@
     </div>
   </div>
 </div>
-
+<!--ng-include延迟加载-->
 <uib-tabset justified="true">
   <!--数据-->
-  <uib-tab select="vm.datas='app/components/rentalPlatform/machineMng/machineMonitor_monitor.html'">
+  <uib-tab select="vm.data='app/components/rentalPlatform/machineMng/machineMonitor_monitor.html'">
     <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
-      <div ng-include="vm.datas"></div>
+      <div ng-include="vm.data"></div>
     </div>
   </uib-tab>
 
@@ -49,19 +49,19 @@
     </div>
   </uib-tab>
 
-  <!--生命周期-->
-  <uib-tab select="vm.liftCycle='app/components/rentalPlatform/machineMng/machineMonitor_lifeCycle.html'">
-    <uib-tab-heading>{{'rentalLifecycle'|translate}}</uib-tab-heading>
-    <div class="modal-body" ng-style="vm.monitorheight" >
-      <div ng-include="vm.liftCycle"></div>
-    </div>
-  </uib-tab>
-
   <!--数据分析-->
   <uib-tab select="vm.dataAnalysis='app/components/rentalPlatform/machineMng/machineMonitor_analysis.html'">
     <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.dataAnalysis"></div>
+    </div>
+  </uib-tab>
+
+  <!--生命周期-->
+  <uib-tab select="vm.liftCycle='app/components/rentalPlatform/machineMng/machineMonitor_lifeCycle.html'">
+    <uib-tab-heading>{{'rentalLifecycle'|translate}}</uib-tab-heading>
+    <div class="modal-body" ng-style="vm.monitorheight" >
+      <div ng-include="vm.liftCycle"></div>
     </div>
   </uib-tab>
 

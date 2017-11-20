@@ -1,5 +1,7 @@
 /**
- * Created by xielongwang on 2017/7/21.
+ * @author xielong.wang
+ * @date 2017/7/21.
+ * @description 车辆当前状态controller
  */
 (function () {
   'use strict';
@@ -30,7 +32,7 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 - 7;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
@@ -216,7 +218,7 @@
            templateUrl: 'app/components/rentalPlatform/machineMng/machineMng.html',
            controller: 'machineMngControllerRental',
            controllerAs:'vm',
-           openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+           // openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
            windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
            windowTopClass:'test2',//加载到window-class指令
            size: 'md',
@@ -253,7 +255,7 @@
          templateUrl: 'app/components/rentalPlatform/machineMng/machineAdd.html',
          controller: 'machineAddController',
          controllerAs:'vm',
-         openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+         // openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
          windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
          windowTopClass:'test2',//加载到window-class指令
          size: 'md'
