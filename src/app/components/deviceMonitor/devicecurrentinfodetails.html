@@ -24,9 +24,9 @@
               	<td>ID</td>
               	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.id}}</td>
               	<td>{{'dataReturnTime'|translate}}</td>
-              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              	<td ng-cloak>{{deviceCurrentInfoDetailsCtrl.deviceinfo.recordTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoDetailsCtrl.timezone}}</td>
               	<td>{{'positioningTime'|translate}}</td>
-              	<td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A'" class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              	<td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='A'" class="text-nowrap">{{deviceCurrentInfoDetailsCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoDetailsCtrl.timezone}}</td>
                 <td ng-cloak ng-if="deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus=='V' || deviceCurrentInfoDetailsCtrl.deviceinfo.locateStatus==null" class="text-nowrap">--</td>
               </tr>
               <tr>

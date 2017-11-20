@@ -230,10 +230,10 @@
                             deviceAerialCurrentInfoController.deviceinfo.machineStatus!=1">{{'noInfo'|translate}}</td>
                         <!--数据采集时间-->
                         <td>{{'positioningTime'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss':deviceAerialCurrentInfoController.timezone}}</td>
                         <!--数据接收时间-->
                         <td>{{'dataReceptionTime'|translate}}</td>
-                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-cloak>{{deviceAerialCurrentInfoController.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss':deviceAerialCurrentInfoController.timezone}}</td>
                       </tr>
                       <tr presentation-href="dashboard:deviceMonitor:currentData:query:allData">
                         <!--CAN通信状态-->
@@ -1277,8 +1277,8 @@
                     <td ng-cloak style="white-space:nowrap">{{deviceLocation.address}}</td>
                     <td ng-cloak style="white-space:nowrap">{{deviceLocation.amaplongitudeNum}}</td>
                     <td ng-cloak style="white-space:nowrap">{{deviceLocation.amaplatitudeNum}}</td>
-                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss' :deviceAerialCurrentInfoController.timezone}}</td>
+                    <td ng-cloak style="white-space:nowrap">{{deviceLocation.recordTime | date:'yyyy-MM-dd HH:mm:ss' :deviceAerialCurrentInfoController.timezone}}</td>
                   </tr>
                 </table>
               </div>

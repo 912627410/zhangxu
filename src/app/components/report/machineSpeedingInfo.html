@@ -93,7 +93,7 @@
                         <td class="text-nowrap" data-title="'longitude'|translate" sortable="'longitude'">{{overSpeed.amaplongitudeNum}}</td>
                         <td class="text-nowrap" data-title="'latitude'|translate" sortable="'latitude'">{{overSpeed.amaplatitudeNum}}</td>
                         <td class="text-nowrap" data-title="'currentPosition'|translate" sortable="'address'">{{overSpeed.address}}</td>
-                        <td class="text-nowrap" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{overSpeed.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="text-nowrap" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{overSpeed.locateDateTime | date:'yyyy-MM-dd HH:mm:ss' :machineSpeedingCtrl.timezone}}</td>
                       </tr>
                     </table>
                   </div>

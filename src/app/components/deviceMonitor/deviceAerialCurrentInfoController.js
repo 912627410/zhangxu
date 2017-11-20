@@ -14,7 +14,7 @@
                                                SEND_SET_START_TIMES_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,SEND_ACTIVE_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,SEND_LOCK_SMS_URL,
                                                SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL) {
         var vm = this;
-        vm.timezone='new Date().toString().match(/\\+[0-9]+/)';
+        vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
         var userInfo = $rootScope.userInfo;
         vm.operatorInfo = $rootScope.userInfo;
         vm.deviceinfo = deviceinfo;
@@ -1766,6 +1766,7 @@
                 var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
             }
             if (startDate){
+                startDate = serviceResource.getChangeChinaTime(startDate);
                 var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
                 var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
                 if (filterTerm){
@@ -1776,6 +1777,7 @@
                 }
             }
             if (endDate){
+                endDate = serviceResource.getChangeChinaTime(endDate);
                 endDate = new Date(endDate.getTime()-1000*3600*24);
                 var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
                 var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
@@ -1880,9 +1882,11 @@
 
                 //要求包含所选择的结束时间
                 if (startDate) {
+                  startDate = serviceResource.getChangeChinaTime(startDate);
                   queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
                 if (endDate) {
+                  endDate = serviceResource.getChangeChinaTime(endDate);
                   queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
                 var restCallURL = DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY;
@@ -1910,16 +1914,6 @@
             }
         };
 
-        //将浏览器时间转换成中国时间
-        vm.getChangeChinaTime=function(date){
-          var localDate=new Date(date);
-          var offSet=localDate.getTimezoneOffset()*60*1000;
-          var nowDate=localDate.getTime();
-          var GMTDate=nowDate+offSet;
-          var timeZone=8;
-          var ChinaDate=timeZone*60*60*1000+GMTDate;
-          return new Date(ChinaDate);
-        };
 
 
         // device data
@@ -1940,7 +1934,7 @@
                   }
                 }
               if (startDate) {
-                startDate = vm.getChangeChinaTime(startDate);
+                  startDate = serviceResource.getChangeChinaTime(startDate)
                 var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
                 var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
                 if (queryCondition) {
@@ -1955,7 +1949,7 @@
               }
               if (endDate) {
                 endDate = new Date(endDate.getTime()-1000*3600*24);
-                endDate = vm.getChangeChinaTime(endDate);
+                endDate = serviceResource.getChangeChinaTime(endDate)
                 var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
                 var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
                 if (queryCondition) {
@@ -2005,6 +1999,7 @@
           var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
         }
         if (startDate){
+          startDate = serviceResource.getChangeChinaTime(startDate);
           var startMonth = startDate.getMonth() +1;  //getMonth返回的是0-11
           var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
           if (filterTerm){
@@ -2019,6 +2014,7 @@
         }
         if (endDate){
           endDate = new Date(endDate.getTime()-1000*3600*24);
+          endDate = serviceResource.getChangeChinaTime(endDate);
           var endMonth = endDate.getMonth() +1;  //getMonth返回的是0-11
           var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
           if (filterTerm){
@@ -2061,6 +2057,7 @@
           }
 
           if (startDate) {
+            startDate = serviceResource.getChangeChinaTime(startDate);
             filterTerm += "&startDate=" + $filter('date')(startDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
@@ -2069,6 +2066,7 @@
           }
 
           if (endDate) {
+            endDate = serviceResource.getChangeChinaTime(endDate);
             filterTerm += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd HH:mm:ss');
 
           }else {
@@ -2127,9 +2125,12 @@
                 //要求包含所选择的结束时间
 
                 if (startDate) {
+                  startDate = serviceResource.getChangeChinaTime(startDate);
+                  startDate = serviceResource.getChangeChinaTime(startDate);
                   queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
                 if (endDate) {
+                  endDate = serviceResource.getChangeChinaTime(endDate);
                   queryCondition = queryCondition + "&endDate=" + endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                 }
 
@@ -2178,9 +2179,11 @@
               //要求包含所选择的结束时间
               var endDateAddOne = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + 1);
               if (startDate) {
+                startDate = serviceResource.getChangeChinaTime(startDate);
                 queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
               }
               if (endDateAddOne) {
+                endDateAddOne = serviceResource.getChangeChinaTime(endDateAddOne);
                 queryCondition = queryCondition + "&endDate=" + endDateAddOne.getFullYear() + '-' + (endDateAddOne.getMonth() + 1) + '-' + endDateAddOne.getDate();
               }
               var restCallURL = DEVCE_CHARGER_DATA;
