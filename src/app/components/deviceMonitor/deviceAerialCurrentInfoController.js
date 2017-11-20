@@ -2126,7 +2126,6 @@
 
                 if (startDate) {
                   startDate = serviceResource.getChangeChinaTime(startDate);
-                  startDate = serviceResource.getChangeChinaTime(startDate);
                   queryCondition = queryCondition + "&startDate=" + startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate()+' '+startDate.getHours()+':'+startDate.getMinutes()+':'+startDate.getSeconds();
                 }
                 if (endDate) {
