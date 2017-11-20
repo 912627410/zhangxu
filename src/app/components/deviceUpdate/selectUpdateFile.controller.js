@@ -21,6 +21,9 @@
       var sizeUrl = size || 8;
       var sortUrl = sort || UPDATE_FILE_DATA_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl + "&search_EQ_status=1";
+      if(vm.updateDevice.length > 0) {
+        restCallURL += "&search_EQ_versionNum=" + vm.updateDevice[0].versionNum;
+      }
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
       updateFilePromis.then(function(data){
         vm.updateFileList = data.content;
@@ -49,7 +52,7 @@
       var content = "", count = 0;
       if(vm.updateApplicableProducts == "1") { // GPS自身升级
         for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
-          if(updateDevice[i] && (updateDevice[i].gpsSoftVersion == vm.updateSoftVersion || updateDevice[i].versionNum != vm.updateVersionNum)) {
+          if(updateDevice[i] && updateDevice[i].gpsSoftVersion == vm.updateSoftVersion) {
             content += updateDevice[i].deviceNum + ",";
             updateDevice.splice(i, 1);
             flag = false;
@@ -59,11 +62,11 @@
           }
         }
         if(updateDevice.length <=0) {
-          content = "选择的设备的软件版本与选择的升级文件的软件版本相同，或选择的设备的协议版本与选择的升级文件的协议版本不同，不做升级。";
+          content = "选择的设备的软件版本与选择的升级文件的软件版本相同，不做升级。";
           vm.confirmUpdate = false;
         } else if(content && count > 0) {
           content = content.slice(0, -1);
-          content += "的软件版本与选择的升级文件的软件版本相同，或协议版本与选择的升级文件的协议版本不同，不作升级。" + "您确定将选择的其余设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+          content += "的软件版本与选择的升级文件的软件版本相同，不作升级。" + "您确定将选择的其余设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
           vm.confirmUpdate = true;
         } else {
           content += "您确定将选择的设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
