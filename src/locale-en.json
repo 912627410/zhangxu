@@ -1543,7 +1543,8 @@
   "gsmSignal":"GSM signal",
   "gpsState":"GPS state",
   "photoresistorVoltage":"Photoresistor voltage value",
-  "updateFence":"Modify fence information"
+  "updateFence":"Modify fence information",
+  "enterDate":"Please enter the production date"
 
 
 

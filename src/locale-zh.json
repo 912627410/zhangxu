@@ -1552,7 +1552,8 @@
   "runMonitor":"运行监控",
   "gsmSignal":"GSM信号百分比",
   "gpsState":"GPS状态",
-  "photoresistorVoltage":"光敏电阻电压值"
+  "photoresistorVoltage":"光敏电阻电压值",
+  "enterDate":"请录入生产日期"
 
 
 }
