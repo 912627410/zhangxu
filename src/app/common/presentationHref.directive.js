@@ -29,14 +29,25 @@
         element.bind("click", function () {
           var bodyDom = angular.element(document.body);
           var slimScroll = angular.element(document.getElementById("slimScroll"));
+          var slimScroll2 = angular.element(document.getElementById("slimScroll2"));
           console.log(attrs.toggels);
           if (attrs.toggels == "true") {
+            //不隐藏左侧菜单
             bodyDom.removeClass("sidebar-collapse");
+            //添加左侧菜单变成可以下拉的class
             slimScroll.removeClass("slimScroll");
+            slimScroll2.removeClass("slimScroll");
+            slimScroll2.parent().removeClass("slimScroll");
+            //改变隐藏左侧菜单的默认值
             attrs.$set('toggels', 'false');
           } else {
+            //隐藏左侧菜单
             bodyDom.addClass("sidebar-collapse");
+            //左侧菜单hover属性启用,需要设置三个值
             slimScroll.addClass("slimScroll");
+            slimScroll2.addClass("slimScroll");
+            slimScroll2.parent().addClass("slimScroll");
+            //改变隐藏左侧菜单的默认值
             attrs.$set('toggels', 'true');
           }
         });
