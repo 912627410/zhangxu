@@ -142,7 +142,7 @@
 
       }, function (reason) {
 
-        Notification.error(languages.findKey('loginFailure'));
+        //Notification.error(languages.findKey('loginFailure'));
 
         vm.credentials.password = "";
 
