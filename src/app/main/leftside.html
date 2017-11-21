@@ -1,5 +1,5 @@
-<aside class="main-sidebar" style="background-color: #222d32;">
-  <section class="sidebar">
+<aside id="slimScroll" class="main-sidebar" style="background-color: #222d32;" slim-scroll  width="200px">
+  <section id="slimScroll2" class="sidebar"  slim-scroll  >
     <div class="user-panel">
       <div class="pull-left image" style="padding-left: 5px">
         <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
@@ -15,16 +15,6 @@
         <a ui-sref="login"> {{'pleaseLogin'|translate }} {{rand}}</a>
       </div>
     </div>
-
-    <!--   <form  method="get" class="sidebar-form">
-         <div class="input-group">
-           <input type="text" name="q" class="form-control" placeholder="Search..." style="background-color: #374850;">
-           <span class="input-group-btn">
-                   <button type="submit" name="search" id="search-btn" class="btn btn-flat" style="background-color: #374850;"><i class="fa fa-search"></i>
-                   </button>
-                 </span>
-         </div>
-       </form>-->
 
     <ul class="sidebar-menu tree" style="margin-top: 20px;">
 
@@ -412,53 +402,53 @@
         </ul>
       </li>
 
-      <li class="treeview">
-        <a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">
-          <i class="fa fa-flag-checkered"></i>
-          <span>车队管理</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left" ng-class="collapsed?'transform-left':'transform-right'"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: collapsed}">
-          <li>
-            <a ui-sref="home.fleetMng" presentation-href="fleet:page">
-              <i class="fa fa-flag"></i> <span>车队管理</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.workplane" presentation-href="workplane:page">
-              <i class="fa fa-map-signs"></i> <span>作业面管理</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">
-              <i class="fa fa-flask"></i> <span>燃油配置</span>
-            </a>
-          </li>
-          <li>
+      <!--<li class="treeview">-->
+        <!--<a ng-click="collapsed = !collapsed" href="" presentation-href="fleet:show">-->
+          <!--<i class="fa fa-flag-checkered"></i>-->
+          <!--<span>车队管理</span>-->
+          <!--<span class="pull-right-container">-->
+              <!--<i class="fa fa-angle-left" ng-class="collapsed?'transform-left':'transform-right'"></i>-->
+          <!--</span>-->
+        <!--</a>-->
+        <!--<ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: collapsed}">-->
+          <!--<li>-->
+            <!--<a ui-sref="home.fleetMng" presentation-href="fleet:page">-->
+              <!--<i class="fa fa-flag"></i> <span>车队管理</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="home.workplane" presentation-href="workplane:page">-->
+              <!--<i class="fa fa-map-signs"></i> <span>作业面管理</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="home.fuelConfig" presentation-href="fuelConfig:page">-->
+              <!--<i class="fa fa-flask"></i> <span>燃油配置</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
 
-            <a ui-sref="home.machineMove" presentation-href="fleet:page">
-              <i class="fa fa-area-chart"></i> <span>作业监控</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">
-              <i class="fa fa-rmb"></i> <span>收入统计</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.cost" presentation-href="cost:page">
-              <i class="fa ion-calculator"></i> <span>成本统计</span>
-            </a>
-          </li>
-          <li>
-            <a ui-sref="home.weightData" presentation-href="weightData:page">
-              <i class="fa ion-calculator"></i> <span>称重数据</span>
-            </a>
-          </li>
-        </ul>
-      </li>
+            <!--<a ui-sref="home.machineMove" presentation-href="fleet:page">-->
+              <!--<i class="fa fa-area-chart"></i> <span>作业监控</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="home.revenue" presentation-href="fleetRecord:revenue">-->
+              <!--<i class="fa fa-rmb"></i> <span>收入统计</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="home.cost" presentation-href="cost:page">-->
+              <!--<i class="fa ion-calculator"></i> <span>成本统计</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="home.weightData" presentation-href="weightData:page">-->
+              <!--<i class="fa ion-calculator"></i> <span>称重数据</span>-->
+            <!--</a>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</li>-->
 
       <li class="treeview">
         <a ng-click="sysMng =!sysMng" href="" presentation-href="config:show">

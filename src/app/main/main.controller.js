@@ -42,14 +42,10 @@
       //如果http header里面有auth信息的话好像是每次都验证的
       $http.defaults.headers.common['token'] = null;
 
-      //发送消息清除地图上的点
-      //$scope.$emit('mapObject', {
-      //    AMap: AMap,
-      //    map: map
-      //});
       //停止监控用户登录超时
       Idle.unwatch();
-
+      var bodyDom = angular.element(document.body);
+      bodyDom.removeClass("sidebar-collapse");
       $rootScope.$state.go('login');
       Notification.success(languages.findKey('successfulExit'));
     }

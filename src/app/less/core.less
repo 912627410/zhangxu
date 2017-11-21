@@ -17,6 +17,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-right: 0!important;//超时的时候会在body上加一个right数值,强制取消掉
 }
 
 /* Layout */
@@ -171,3 +172,9 @@ a:focus {
     margin-top: 5px;
   }
 }
+
+.slimScroll{
+  overflow: initial!important;
+}
+
+
