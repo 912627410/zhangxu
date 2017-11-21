@@ -1,9 +1,7 @@
 {
   "name": "GPSCloudWeb",
   "version": "0.0.0",
-  "dependencies": {
-    "ng-table": "^3.0.1"
-  },
+  "dependencies": {},
   "scripts": {
     "test": "gulp test"
   },
