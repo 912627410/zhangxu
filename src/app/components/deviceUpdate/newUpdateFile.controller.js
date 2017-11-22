@@ -9,9 +9,25 @@
     .module('GPSCloud')
     .controller('newUpdateFileController', newUpdateFileController);
 
-  function newUpdateFileController($rootScope, $scope, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
+  function newUpdateFileController($rootScope, $http, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
+
+    $http.get("updateFileType.json").success(function(data){
+      vm.fileTypeList1 = JSON.parse(JSON.stringify(data));
+    });
+
+    vm.getFileTypeList2 = function(value) {
+      vm.file.fileType2 = null;
+      vm.fileTypeList2 = null;
+      var len = vm.fileTypeList1.length;
+      for(var i = 0;i<len;i++) {
+        if(vm.fileTypeList1[i].value == value) {
+          vm.fileTypeList2 = vm.fileTypeList1[i].content;
+          return;
+        }
+      }
+    };
 
     vm.ok = function(file){
       vm.errorMsg = null;
@@ -34,7 +50,7 @@
         return;
       }
 
-      if(null == file.applicableProducts){
+      if(null == file.fileType1 || null == file.fileType2){
         Notification.error("请选择适用对象!");
         return;
       }
@@ -51,7 +67,8 @@
           versionNum: Math.round(file.versionNum),
           softVersion: Math.round(file.softVersion*100),
           remarks: file.remarks,
-          applicableProducts:file.applicableProducts
+          fileType1:file.fileType1,
+          fileType2:file.fileType2
         },
         file: file
       });

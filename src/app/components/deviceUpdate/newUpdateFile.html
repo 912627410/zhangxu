@@ -24,12 +24,20 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="applicableProducts" class="col-sm-2 control-label">适用对象</label>
+        <label class="col-sm-2 control-label">适用对象</label>
         <div class="col-sm-10">
-          <select class="form-control" id="applicableProducts" ng-model="newUpdateFileCtrl.file.applicableProducts">
-            <option value="1">GPS自身</option>
-            <option value="2">显示器</option>
-            <option value="3">控制器</option>
+          <select name="fileType1" class="form-control" ng-model="newUpdateFileCtrl.file.fileType1"
+                  ng-change="newUpdateFileCtrl.getFileTypeList2(newUpdateFileCtrl.file.fileType1)"
+                  ng-options="fileType1.value as fileType1.desc for fileType1 in newUpdateFileCtrl.fileTypeList1">
+            <option value="">请选择...</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+          <select name="fileType2" class="form-control" ng-model="newUpdateFileCtrl.file.fileType2" ng-options="fileType2.value as fileType2.desc for fileType2 in newUpdateFileCtrl.fileTypeList2">
+            <option value="">请选择...</option>
           </select>
         </div>
       </div>
@@ -43,7 +51,7 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="newUpdateFileCtrl.ok(newUpdateFileCtrl.file)" presentation-href="updateFile:upload">保存</button>
+    <button class="btn btn-primary" type="button" validation-submit="newFileForm" ng-click="newUpdateFileCtrl.ok(newUpdateFileCtrl.file)" presentation-href="updateFile:upload">保存</button>
     <button class="btn btn-warning" type="button" ng-click="newUpdateFileCtrl.cancel()">取消</button>
   </div>
 </form>

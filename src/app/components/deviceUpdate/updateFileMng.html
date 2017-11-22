@@ -26,7 +26,12 @@
       <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
       <input type="text" name="querySoftVersion" class="form-control" ng-model="updateFileMngCtrl.querySoftVersion" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询" style="padding-left: 42px;"/>
     </div>
-
+    <div class="col-md-1">
+      <label class="control-label">文件名</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
+    </div>
     <div class="col-md-3 text-center">
       <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" presentation-href="updateFile:page">查询</button>
       <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()" style="margin: 0 12px;">重置</button>
@@ -35,20 +40,18 @@
   </div>
   <div class="row form-group">
     <div class="col-md-1">
-      <label class="control-label">文件名</label>
-    </div>
-    <div class="col-md-2">
-      <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
-    </div>
-    <div class="col-md-1">
       <label class="control-label">适用对象</label>
     </div>
     <div class="col-md-2">
-      <!--<input type="text" name="queryApplicableProducts" class="form-control" ng-model="updateFileMngCtrl.queryApplicableProducts" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>-->
-      <select class="form-control" id="applicableProducts" ng-model="updateFileMngCtrl.queryApplicableProducts">
-        <option value="1">GPS自身</option>
-        <option value="2">显示器</option>
-        <option value="3">控制器</option>
+      <select name="updateFileType1" class="form-control" ng-model="updateFileMngCtrl.queryUpdateFileType1"
+              ng-change="updateFileMngCtrl.getUpdateFileTypeList2(updateFileMngCtrl.queryUpdateFileType1)"
+              ng-options="updateFileType1.value as updateFileType1.desc for updateFileType1 in updateFileMngCtrl.updateFileTypeList1">
+        <option value="">请选择...</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select name="updateFileType2" class="form-control" ng-model="updateFileMngCtrl.queryUpdateFileType2" ng-options="updateFileType2.value as updateFileType2.desc for updateFileType2 in updateFileMngCtrl.updateFileTypeList2">
+        <option value="">请选择...</option>
       </select>
     </div>
 
@@ -70,10 +73,7 @@
             <td class="text-nowrap" data-title="'软件版本'" sortable="'softVersion'">VER{{updateFile.softVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
             <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">GPS自身</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">显示器</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
+            <td class="text-nowrap" data-title="'适用对象'" sortable="'fileType1'">{{updateFile.fileTypeDesc}}</td>
             <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td data-title="'remarks'|translate" sortable="'备注'" style="max-width: 500px;white-space: normal;">{{updateFile.remarks}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">

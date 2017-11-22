@@ -9,12 +9,28 @@
     .module('GPSCloud')
     .controller('updateFileMngController', updateFileMngController);
 
-  function updateFileMngController($rootScope, ngTableDefaults, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource, $confirm, REMOVE_UPDATE_FILE_URL) {
+  function updateFileMngController($rootScope, ngTableDefaults, $http, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource, $confirm, REMOVE_UPDATE_FILE_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
+
+    $http.get("updateFileType.json").success(function(data){
+      vm.updateFileTypeList1 = JSON.parse(JSON.stringify(data));
+    });
+
+    vm.getUpdateFileTypeList2 = function(value) {
+      vm.queryUpdateFileType2 = null;
+      vm.updateFileTypeList2 = null;
+      var len = vm.updateFileTypeList1.length;
+      for(var i = 0;i<len;i++) {
+        if(vm.updateFileTypeList1[i].value == value) {
+          vm.updateFileTypeList2 = vm.updateFileTypeList1[i].content;
+          return;
+        }
+      }
+    };
 
     vm.query=function(page, size, sort, updateFile){
       var restCallURL = UPDATE_FILE_UPLOAD_QUERY;
@@ -27,14 +43,19 @@
         restCallURL += "&search_LIKE_versionNum=" + (vm.queryVersionNum);
       }
       if(null != vm.querySoftVersion && vm.querySoftVersion != ""){
-        restCallURL += "&search_EQ_softVersion=" + (Math.round(vm.querySoftVersion*100))      }
+        restCallURL += "&search_EQ_softVersion=" + (Math.round(vm.querySoftVersion*100))
+      }
 
-      if(null != vm.queryFileName&&null != ""){
+      if(null != vm.queryFileName && vm.queryFileName != ""){
         restCallURL += "&search_LIKE_fileName=" + (vm.queryFileName);
       }
 
-      if(null != vm.queryApplicableProducts&&null != ""){
-        restCallURL += "&search_LIKE_applicableProducts=" + (vm.queryApplicableProducts);
+      if(null != vm.queryUpdateFileType1 && vm.queryUpdateFileType1 != ""){
+        restCallURL += "&search_EQ_fileType1=" + vm.queryUpdateFileType1;
+      }
+
+      if(null != vm.queryUpdateFileType2 && vm.queryUpdateFileType2 != ""){
+        restCallURL += "&search_EQ_fileType2=" + vm.queryUpdateFileType2;
       }
       restCallURL += "&search_EQ_status=1";
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
@@ -103,7 +124,8 @@
       vm.queryVersionNum = null;
       vm.querySoftVersion = null;
       vm.queryFileName = null;
-      vm.queryApplicableProducts = null;
+      vm.queryUpdateFileType1 = null;
+      vm.queryUpdateFileType2 = null;
     }
 
     //删除
