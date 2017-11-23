@@ -822,10 +822,10 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:2500,
-        interval: 500,
+        max:2000,
+        interval: 150,
         // max:'dataMax',
-        minInterval: 1,
+        minInterval: 5,
         axisLine: {
           show: false
         },
