@@ -1544,7 +1544,10 @@
   "gpsState":"GPS state",
   "photoresistorVoltage":"Photoresistor voltage value",
   "updateFence":"Modify fence information",
-  "enterDate":"Please enter the production date"
+  "enterDate":"Please enter the production date",
+  "connectServerTime":"Time to connect the platform",
+  "wireStatus":"Wire status",
+  "gpsPowerStatus":"GPS power detection"
 
 
 
