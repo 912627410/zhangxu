@@ -10,7 +10,7 @@
             <input type="radio"
                    name="selectFile"
                    ng-checked
-                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum,updateFile.softVersion, updateFile.applicableProducts)"
+                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum,updateFile.softVersion, updateFile.fileType1, updateFile.fileType2)"
                    ng-model="updateFile.checked">
           </td>
           <td class="text-nowrap" data-title="'softVersion'|translate" sortable="'softVersion'">VER{{updateFile.softVersion/100 | number:2}}</td>

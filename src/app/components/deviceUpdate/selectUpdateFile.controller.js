@@ -15,7 +15,8 @@
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
     vm.updateSoftVersion = null;
-    vm.updateApplicableProducts = null;
+    vm.fileType1 = null;
+    vm.fileType2 = null;
 
     ngTableDefaults.params.count = 8;
     ngTableDefaults.settings.counts = [];
@@ -44,11 +45,12 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id, versionNum, softVersion, applicableProducts) {
+    vm.fileSelection = function (id, versionNum, softVersion, fileType1, fileType2) {
       vm.checked = id;
       vm.updateVersionNum = versionNum;
       vm.updateSoftVersion = softVersion;
-      vm.updateApplicableProducts = applicableProducts;
+      vm.fileType1 = fileType1;
+      vm.fileType2 = fileType2;
     };
 
     vm.ok = function () {
@@ -58,7 +60,7 @@
       }
       var updateDevice = angular.copy(vm.updateDevice);
       var content = "", count = 0;
-      if(vm.updateApplicableProducts == "1") { // GPS自身升级
+      if(vm.fileType1 == "0" || vm.fileType1 == "1") { // GPS类升级
         for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
           if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion)) {
             content += updateDevice[i].deviceNum + ",";
@@ -80,16 +82,14 @@
           content += "您确定将选择的设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
           vm.confirmUpdate = true;
         }
+      } else {
+        content += "您确定升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+        vm.confirmUpdate = true;
       }
       var updateDataVo = {
         devices : updateDevice,
         fileId : vm.checked
       };
-
-      if(vm.updateApplicableProducts != "1") {
-        content = "您选择的升级文件不适合当前设备，请重新选择！";
-        vm.confirmUpdate = false;
-      }
 
       $confirm({
         title:"操作提示",
