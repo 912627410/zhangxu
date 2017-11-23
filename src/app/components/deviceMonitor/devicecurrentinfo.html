@@ -471,6 +471,23 @@
                     <td></td>
                     <td></td>
                   </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='1001' && deviceCurrentInfoCtrl.deviceinfo.versionNum!='1002'">
+                    <!--天线状态-->
+                    <td>{{'wireStatus'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.wireStatus=='00'">{{'normal'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.wireStatus=='01'">{{'openCircuit'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.wireStatus=='02'">{{'shortCircuit'|translate}}</td>
+                    <td ng-if="(deviceCurrentInfoCtrl.deviceinfo.wireStatus!=='00'&&deviceCurrentInfoCtrl.deviceinfo.wireStatus!=='01'&&deviceCurrentInfoCtrl.deviceinfo.wireStatus!=='02')||deviceCurrentInfoCtrl.deviceinfo.wireStatus==null">{{'noData'|translate}}</td>
+                    <!--GPS电源检测-->
+                    <td>{{'gpsPowerStatus'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'">{{'normal'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'">{{'non-transFormer'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'">{{'noSignal'|translate}}</td>
+                    <td ng-if="(deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus!=='00'&&deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus!=='01'&&deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus!=='10')||deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>
+                    <!--连接平台用时-->
+                    <td>{{'connectServerTime'|translate}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.connectServerTime | convertToSec}}</td>
+                  </tr>
                   <tr ng-if="!((deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01') && (deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==0 || deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null))">
                     <!--可见卫星-->
                     <td>{{'visibleSatelliteNumber'|translate}}</td>
@@ -487,14 +504,18 @@
                   </tr>
                   <tr>
                       <!--车载电压-->
-                      <td>{{'batteryVol'|translate}}</td>
-                      <td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol | number:2}}V</td>
+                      <!--与车载蓄电池电压相同-->
+                      <!--<td>{{'batteryVol'|translate}}</td>-->
+                      <!--<td>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol | number:2}}V</td>-->
                       <!--时速-->
                       <td>{{'mph'|translate}}</td>
                       <td>{{deviceCurrentInfoCtrl.deviceinfo.mph | number:2}}km/H</td>
                       <!--气压表2-->
                       <td>{{'pressureMeter'|translate}}</td>
                       <td>{{deviceCurrentInfoCtrl.deviceinfo.pressureMeter2 | number:2}}MPa</td>
+                      <!--预留-->
+                      <td></td>
+                      <td></td>
                   </tr>
                   <tr>
                     <!--累计里程-->
