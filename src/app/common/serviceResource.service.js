@@ -528,9 +528,7 @@
                   if (latitude != null && longitude != null) {
                     // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
                     var marker="assets/images/orangeMarker.png";
-                    if(deviceGPSInfo[i].accStatus=='01'){
-                      marker="assets/images/greenMarker.png";
-                    }
+
                     markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
                   }
                 }
@@ -545,15 +543,27 @@
             }
             else{
               var markers =[];
+              var drawcircle=function(long,lat,radius){
+                var circle = new AMap.Circle({
+                  center: [long,lat],// 圆心位置
+                  radius: radius, //半径
+                  strokeColor: "#F33", //线颜色
+                  strokeOpacity: 1, //线透明度
+                  strokeWeight: 1, //线粗细度
+                  fillColor: "#ee2200", //填充颜色
+                  fillOpacity: 0.1//填充透明度
+                });
+                circle.setMap(map);
+                return circle;
+              };
               fenceList.forEach(function(fenceInfo){
                 if ( fenceInfo.longitude != null && fenceInfo.latitude != null) {
-                  var markerpic="assets/images/orangeMarker.png";
+                  var markerpic=drawcircle(fenceInfo.longitude,fenceInfo.latitude,fenceInfo.radius);
                   var marker = new AMap.Marker({
                     map: map,
                     position: new AMap.LngLat(fenceInfo.longitude, fenceInfo.latitude), //基点位置
                     icon:new AMap.Icon({
                       image: markerpic,
-                      imageOffset: new AMap.Pixel(-15, -10)
                     })
                   });
                /*   var markerPoint = addMarkerModel(map,fenceInfo,marker,callback,rental);*/
@@ -569,6 +579,7 @@
           }
         })
       },
+
 
 
       //查询设备数据更新到google地图

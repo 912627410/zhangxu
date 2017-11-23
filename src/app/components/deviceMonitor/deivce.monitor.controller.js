@@ -27,7 +27,6 @@
         }else{
           serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,3);
         }
-
       })
     }
 
