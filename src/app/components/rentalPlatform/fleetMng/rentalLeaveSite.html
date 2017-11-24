@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <div class="modal-title">
+    <div class="col-md-2 control-label">
+      <div class="modal-title-text">
+      {{'leaveSite'|translate}}
+      </div>
+    </div>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalLeaveSiteCtrl.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch()">{{'leaveSite'|translate}}</button>
+  </div>
+</div>
+<div class="modal-body">
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+
+      <label class="col-md-1 control-label font-nomal ">{{'leaveSiteDate'|translate}}:</label>
+      <div class="col-md-3">
+        <p class="input-group">
+         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalLeaveSiteCtrl.leaveSiteDate" is-open="rentalLeaveSiteCtrl.leaveSiteDateOpenStatusData.opened"
+             datepicker-options="rentalLeaveSiteCtrl.dateOptions" min-date="rentalLeaveSiteCtrl.minDate" max-date="rentalLeaveSiteCtrl.maxDate" ng-required="true"
+             current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+         <span class="input-group-btn">
+           <button type="button" class="btn btn-default" ng-click="rentalLeaveSiteCtrl.leaveSiteDateOpenData($event)">
+           <i class="glyphicon glyphicon-calendar"></i>
+           </button>
+         </span>
+        </p>
+      </div>
+    </div>
+    <hr>
+    <div style="height: 400px;overflow: scroll">
+      <script id="selectAllHeader" type="text/ng-template">
+        <input type="checkbox"  ng-click="rentalLeaveSiteCtrl.updateAllSelection($event)"
+               ng-model="rentalFleetMngCtr.checked">
+      </script>
+      <div class="col-lg-12 table-responsive "><!--表格框-->
+        <table ng-table="rentalLeaveSiteCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="orderMachine in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+              <input type="checkbox" ng-checked="rentalLeaveSiteCtrl.isSelected(orderMachine.id)"
+                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="row.checked">
+            </td>
+            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+              {{orderMachine.machine.licenseId}}
+            </td>
+
+            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{orderMachine.rentalOrder.org.label}}</td>
+            <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
+              {{orderMachine.machine.deviceType.name|translate}}</td>
+            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{orderMachine.machine.deviceHeightType.name|translate}}</td>
+            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{orderMachine.machine.devicePowerType.name|translate}}</td>
+            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{orderMachine.machine.deviceManufacture.name|translate}}</td>
+
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+  </form>
+</div>
+

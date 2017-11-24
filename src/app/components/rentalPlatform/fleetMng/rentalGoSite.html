@@ -1,0 +1,175 @@
+<div class=" modal-header">
+  <div class="modal-title">
+    <div class="col-md-2 control-label">
+      <div class="modal-title-text">
+        {{'goSite'|translate}}
+      </div>
+    </div>
+
+      <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalGoSiteCtrl.cancel()">{{'close'|translate}}</button>
+      <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalGoSiteCtrl.batchMoveMachine()">{{'confirm'|translate}}</button>
+  </div>
+</div>
+
+<div class="modal-body">
+
+  <form class="form-horizontal" role="form">
+    <div class="form-group" >
+      <label  class="col-md-1 control-label font-nomal">订单号:</label>
+      <div class="col-md-3 text-left">
+        {{rentalGoSiteCtrl.rentalOrder.orderNumber}}
+      </div>
+      <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
+      <div class="col-md-3">
+        <p class="input-group text-left">
+          {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.name}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label  class="col-md-1 control-label font-nomal">{{'rentalLinkman'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.contacts}}
+      </div>
+      <label class="col-md-2 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
+      <div class="col-md-3">
+        <p class="input-group text-left">
+          {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.mobile}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+
+      <label class="col-md-1 control-label font-nomal ">{{'goSiteDate'|translate}}:</label>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
+                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.goSiteDateOpenData($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <hr>
+    <div class="form-group">
+      <label class="col-md-1 control-label font-nomal">{{'machineNumber'| translate}}:</label>
+      <div class="col-md-3">
+        <input type="text" name="licenseId" class="form-control"  ng-model="rentalGoSiteCtrl.searchConditions.licenseId"
+
+               placeholder="{{'supportfuzzyqueries'|translate}}"/>
+      </div>
+
+      <label class="col-md-2 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalGoSiteCtrl.org.label" name="org" readonly required/>
+          <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label  class="col-md-1 control-label font-nomal">{{'rentalMachineType'|translate}}:</label>
+      <div class="col-md-3">
+        <ui-select name="deviceType" ng-model="rentalGoSiteCtrl.searchConditions.type" theme="bootstrap"
+                   ng-disabled="disabled">
+          <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name | translate}}
+          </ui-select-match>
+          <ui-select-choices repeat="deviceType in rentalGoSiteCtrl.deviceTypeList">
+            <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <label class="col-md-2 control-label font-nomal">{{'driveType'|translate}}:</label>
+      <div class="col-md-3">
+        <ui-select name="devicePowerType" ng-model="rentalGoSiteCtrl.searchConditions.powerType" theme="bootstrap"
+                   ng-disabled="disabled">
+          <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
+          </ui-select-match>
+          <ui-select-choices repeat="devicePowerType in rentalGoSiteCtrl.devicePowerTypeList">
+            <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label  class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
+      <div class="col-md-3">
+        <ui-select name="deviceManufacture" ng-model="rentalGoSiteCtrl.searchConditions.factory" theme="bootstrap"
+                   ng-disabled="disabled">
+          <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name | translate}}
+          </ui-select-match>
+          <ui-select-choices repeat="deviceManufacture in rentalGoSiteCtrl.deviceManufactureList">
+            <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <label class="col-md-2 control-label font-nomal">{{'highlyType'|translate}}:</label>
+      <div class="col-md-3">
+        <ui-select name="deviceHeightType" ng-model="rentalGoSiteCtrl.searchConditions.heightType" theme="bootstrap"
+                   ng-disabled="disabled">
+          <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
+          </ui-select-match>
+          <ui-select-choices repeat="deviceHeightTypeList in rentalGoSiteCtrl.deviceHeightTypeList">
+            <div ng-bind-html="deviceHeightTypeList.name | highlight: $select.search|translate"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" type="button"
+                ng-click="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,null,null,null)">{{'query'|translate}}
+        </button>
+        <button class="btn btn-default" type="button" ng-click="rentalGoSiteCtrl.reset()">{{'reset'|translate}}</button>
+      </div>
+    </div>
+  </form>
+  <div class="row" ng-style="rentalGoSiteCtrl.baseBoxContainer">
+      <script id="selectAllHeader" type="text/ng-template">
+      <input type="checkbox"  ng-click="rentalGoSiteCtrl.updateAllSelection($event)"
+             ng-model="machineMngCtrl.checked">
+      </script>
+      <div class="col-lg-12 table-responsive "><!--表格框-->
+        <table ng-table="rentalGoSiteCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="machine in $data">
+            <td class="text-nowrap" data-header="'selectAllHeader'">
+            <input type="checkbox" ng-checked="rentalGoSiteCtrl.isSelected(machine.id)"
+                   ng-click="rentalGoSiteCtrl.updateSelection($event,machine)" ng-model="machine.checked">
+          </td>
+            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+            {{machine.licenseId}}
+          </td>
+            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
+            <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
+            {{machine.typeName|translate}}</td>
+            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName|translate}}</td>
+            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{machine.powerTypeName|translate}}</td>
+            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName|translate}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!--分页框-->
+  <uib-pagination total-items="rentalGoSiteCtrl.totalElements"
+                    ng-change="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,rentalGoSiteCtrl.number-1,rentalGoSiteCtrl.size,rentalGoSiteCtrl.totalElements)"
+                    max-size="5" ng-model="rentalGoSiteCtrl.number" items-per-page="rentalGoSiteCtrl.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+  </uib-pagination>
+
+</div>
+
+<div class="modal-footer">
+
+</div>
+
