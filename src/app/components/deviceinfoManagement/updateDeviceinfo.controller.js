@@ -145,6 +145,11 @@
         var deviceHeightTypeId = deviceinfo.deviceHeightTypeDto.id;
       }
 
+      if(deviceinfo.produceDate == null || deviceinfo.produceDate == "") {
+        Notification.error(languages.findKey("enterDate"));
+        return;
+      }
+
       //重新构造需要传输的数据
       var operDeviceinfo={
         "id":deviceinfo.id,
