@@ -114,6 +114,12 @@
         Notification.warning({message: languages.findKey('pleaseSelectTheDeviceToUpgrade'), positionY: 'top', positionX: 'center'});
         return;
       }
+      for(var i = 1; i < vm.selected.length; i++) {
+        if(vm.selected[i].versionNum != vm.selected[i-1].versionNum) {
+          Notification.error({message: '请选择相同协议版本的设备', positionY: 'top', positionX: 'center'});
+          return;
+        }
+      }
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/deviceUpdate/selectUpdateFile.html',

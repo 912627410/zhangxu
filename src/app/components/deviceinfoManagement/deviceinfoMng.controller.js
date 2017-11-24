@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions,languages, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -41,7 +41,7 @@
         restCallURL += "&search_EQ_organization.id=" + vm.org.id;
       }
 
-      if(null != vm.org&&vm.querySubOrg){
+      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.org.id;
       }
 
