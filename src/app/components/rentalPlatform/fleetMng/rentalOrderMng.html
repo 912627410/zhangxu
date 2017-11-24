@@ -161,6 +161,12 @@
                 <button type="button" class="btn btn-default btn-xs"
                         ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
                 </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="rentalOrderMngCtrl.goSite(rentalOrder)">{{'goSite'| translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder.id)">{{'leaveSite'| translate}}
+                </button>
               </td>
             </tr>
           </table>
