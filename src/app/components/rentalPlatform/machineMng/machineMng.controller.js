@@ -35,6 +35,7 @@
       machinePromis.then(function (data) {
         console.log(data)
         $uibModalInstance.close(data.content);
+
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })

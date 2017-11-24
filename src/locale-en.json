@@ -1401,6 +1401,7 @@
   "failedToGetDeviceData":"Failed to get device data",
   "kilometre":"Kilometre",
   "traveled":"Traveled",
+  "numbers":"Numbers",
 
 
   "越野剪叉式":"RT Scissor",
@@ -1543,9 +1544,11 @@
   "gsmSignal":"GSM signal",
   "gpsState":"GPS state",
   "photoresistorVoltage":"Photoresistor voltage value",
-  "updateFence":"Modify fence information"
+  "updateFence":"Modify fence information",
 
-
-
+  "admissionTime":"Admission time",
+  "exitTime":"Exit time",
+  "workingHoursWhenEntry":"Working hours when entry",
+  "workingHoursWhenExit":"Working count when exit"
 
 }

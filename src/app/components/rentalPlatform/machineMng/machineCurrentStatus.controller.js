@@ -236,6 +236,12 @@
                tabList[i]=result;
              }
            }
+           vm.getMachineCountByStatus();//车辆总数
+           vm.getMachineCountByStatus(6);//在库维修
+           vm.getMachineCountByStatus(7);//在库待租
+           vm.getMachineCountByStatus(8);//途中
+           vm.getMachineCountByStatus(9);//出租中
+           vm.getMachineCountByStatus(10);//现场报停
          }, function () {
            //取消
          });
