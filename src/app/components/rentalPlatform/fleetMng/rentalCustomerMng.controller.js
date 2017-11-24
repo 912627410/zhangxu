@@ -11,10 +11,10 @@
   /** @ngInject */
 
   function rentalCustomerMngController($window, $uibModal,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,
-                                       DEFAULT_SIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL,languages) {
+                                       DEFAULT_MINSIZE_PER_PAGE,RENTAL_CUSTOMER_PAGE_URL,RENTAL_CUSTOMER_URL,languages) {
     var vm = this;
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
 
@@ -43,7 +43,7 @@
     vm.query = function (page, size, sort, customer) {
       var restCallURL = RENTAL_CUSTOMER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
