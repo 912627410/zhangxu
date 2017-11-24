@@ -14,6 +14,7 @@
   function machineCurrentStatusController($rootScope, $scope, $window, $location, $anchorScroll,$uibModal, NgTableParams, ngTableDefaults, languages, serviceResource, commonFactory, Notification, RENTAL_MACHINE_COUNT_URL,
                                           RENTAL_MACHINE_DATA_URL,RENTAL_MACHINE_MONITOR_URL,RENTAL_MACHINE_URL,MACHINE_DEVICETYPE_URL) {
     var vm = this;
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
     ngTableDefaults.params.count = 40;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
     //定义车辆状态数量 6:"在库维修"7:"在库待租"8:"途中"9:"出租中"10:"现场报停" (6~10租赁平台使用)

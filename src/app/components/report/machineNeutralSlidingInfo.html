@@ -93,7 +93,7 @@
                         <td class="text-nowrap" data-title="'longitude'|translate" sortable="'longitude'">{{neutralSlide.amaplongitudeNum}}</td>
                         <td class="text-nowrap" data-title="'latitude'|translate" sortable="'latitude'">{{neutralSlide.amaplatitudeNum}}</td>
                         <td class="text-nowrap" data-title="'currentPosition'|translate" sortable="'address'">{{neutralSlide.address}}</td>
-                        <td class="text-nowrap" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{neutralSlide.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="text-nowrap" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{neutralSlide.locateDateTime | date:'yyyy-MM-dd HH:mm:ss':machineNeutralSlidingCtrl.timezone}}</td>
                       </tr>
                     </table>
                   </div>

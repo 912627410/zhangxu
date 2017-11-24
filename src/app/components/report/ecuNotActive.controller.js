@@ -12,6 +12,7 @@
   function ecuNotActiveController($rootScope, $http, languages,NgTableParams,ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, DEVCE_ECU_NOTACTIVE_QUERY, DEVCE_ECU_NOTACTIVE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];

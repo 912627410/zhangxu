@@ -1053,7 +1053,17 @@
       convertGSMSing: function (value) {
         var singValue = value / 31 * 100;
         return singValue.toFixed(2);
+      },
+      getChangeChinaTime:function(date){
+        var localDate=new Date(date);
+        var offSet=localDate.getTimezoneOffset()*60*1000;
+        var nowDate=localDate.getTime();
+        var GMTDate=nowDate+offSet;
+        var timeZone=8;
+        var ChinaDate=timeZone*60*60*1000+GMTDate;
+        return new Date(ChinaDate);
       }
+
     }
   }
 
