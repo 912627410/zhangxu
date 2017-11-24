@@ -34,6 +34,7 @@
     vm.shearFork = 0;//剪叉
     vm.straightArm = 0;//直臂
     vm.crankArm = 0;//曲臂
+    vm.other=0;//other
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -180,6 +181,9 @@
         if (machineType == 3) {
           vm.crankArm = msgNum;//曲臂
         }
+        if (machineType == 4){
+          vm.other = msgNum;//other
+        }
       }, function (reason) {
         Notification.error("获取信息失败");
       })
@@ -188,6 +192,7 @@
     vm.getMachineCountByType(1);//剪叉车
     vm.getMachineCountByType(2);//直臂
     vm.getMachineCountByType(3);//曲臂
+    vm.getMachineCountByType(4);//other
     vm.getMachineCountByType();//总数
     /**
      * 名称转到某个视图
@@ -232,14 +237,16 @@
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
     var lineHeight = vm.rightBoxTopHeightTemp - 30;
-    machineNumlis[0].style.height = (lineHeight / 4) + 'px';
-    machineNumlis[1].style.height = (lineHeight / 4) + 'px';
-    machineNumlis[2].style.height = (lineHeight / 4) + 'px';
-    machineNumlis[3].style.height = (lineHeight / 4) + 'px';
-    machineNumlis[0].style.lineHeight = (lineHeight / 4) + 'px';
-    machineNumlis[1].style.lineHeight = (lineHeight / 4) + 'px';
-    machineNumlis[2].style.lineHeight = (lineHeight / 4) + 'px';
-    machineNumlis[3].style.lineHeight = (lineHeight / 4) + 'px';
+    machineNumlis[0].style.height = (lineHeight / 5) + 'px';
+    machineNumlis[1].style.height = (lineHeight / 5) + 'px';
+    machineNumlis[2].style.height = (lineHeight / 5) + 'px';
+    machineNumlis[3].style.height = (lineHeight / 5) + 'px';
+    machineNumlis[4].style.height = (lineHeight / 5) + 'px';
+    machineNumlis[0].style.lineHeight = (lineHeight / 5) + 'px';
+    machineNumlis[1].style.lineHeight = (lineHeight / 5) + 'px';
+    machineNumlis[2].style.lineHeight = (lineHeight / 5) + 'px';
+    machineNumlis[3].style.lineHeight = (lineHeight / 5) + 'px';
+    machineNumlis[4].style.lineHeight = (lineHeight / 5) + 'px';
 
 
     /**
@@ -490,6 +497,7 @@
     var miniPie1 = echarts.init(miniPie[0]);
     var miniPie2 = echarts.init(miniPie[1]);
     var miniPie3 = echarts.init(miniPie[2]);
+    var miniPie4 = echarts.init(miniPie[3]);
 
     function creatMiniPie(chart,type){
       var restCallURL = RENTAL_MACHINE_RATE_URL;
@@ -586,6 +594,7 @@
     creatMiniPie(miniPie1,1);
     creatMiniPie(miniPie2,2);
     creatMiniPie(miniPie3,3);
+    creatMiniPie(miniPie4,4);
 
     /*
 

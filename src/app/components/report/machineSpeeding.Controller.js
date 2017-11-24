@@ -14,6 +14,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.speedAlertMonitor = false; // 超速报警实时监控开关
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
 
     var wsSpeedAlert;//websocket实例
     var lockReconnect = false;//避免重复连接
@@ -174,9 +175,11 @@
 
       if (null != vm.startDate) {
         var startDate = new Date(vm.startDate.getTime() + 1000*3600*24);
+        startDate = serviceResource.getChangeChinaTime(startDate);
         restCallURL += "&search_DGTE_locateDateTime=" + $filter('date')(startDate, 'yyyy-MM-dd');
       }
       if (null != vm.endDate ) {
+        vm.endDate = serviceResource.getChangeChinaTime(vm.endDate);
         restCallURL += "&search_DLTE_locateDateTime=" + $filter('date')(vm.endDate, 'yyyy-MM-dd');
       }
       if(null != vm.queryLicenseId){

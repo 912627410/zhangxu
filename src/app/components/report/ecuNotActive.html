@@ -57,9 +57,9 @@
         <td class="text-nowrap" data-title="'bindMachineId'|translate" sortable="'bindMachineId'">{{device.bindMachineId}}</td>
         <td class="text-nowrap" data-title="'currentPosition'|translate" sortable="'address'">{{device.address}}</td>
 
-        <td class="text-nowrap" ng-if="device.locateStatus=='A'" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{device.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" ng-if="device.locateStatus=='A'" data-title="'positioningTime'|translate" sortable="'locateDateTime'">{{device.locateDateTime | date:'yyyy-MM-dd HH:mm:ss':ecuNotActiveCtrl.timezone}}</td>
         <td class="text-nowrap" ng-if="device.locateStatus=='V'||device.locateStatus == null" data-title="'positioningTime'|translate" sortable="'locateDateTime'">-</td>
-        <td class="text-nowrap" data-title="'returnTime'|translate" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td class="text-nowrap" data-title="'returnTime'|translate" sortable="'lastDataUploadTime'">{{device.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss':ecuNotActiveCtrl.timezone}}</td>
       </tr>
     </table>
   </div>

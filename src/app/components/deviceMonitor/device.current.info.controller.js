@@ -22,6 +22,7 @@
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.sensorItem = {};
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
     $scope.myInterval = 5000;//轮播间隔
     $scope.noWrapSlides = false;// 是否轮播 默认false
     $scope.noTransition = false;// 是否有过场动画 默认false
@@ -491,6 +492,7 @@
       }
 
       if (startDate) {
+        startDate = serviceResource.getChangeChinaTime(startDate);
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
         var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
@@ -504,6 +506,7 @@
         return;
       }
       if (endDate) {
+        endDate = serviceResource.getChangeChinaTime(endDate);
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
         var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
@@ -551,6 +554,7 @@
       }
 
       if (startDate) {
+        startDate = serviceResource.getChangeChinaTime(startDate);
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
         var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
@@ -565,6 +569,7 @@
       }
 
       if (endDate) {
+        endDate = serviceResource.getChangeChinaTime(endDate);
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
         var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
@@ -662,6 +667,7 @@
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       }
       if (startDate) {
+        startDate = serviceResource.getChangeChinaTime(startDate);
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
         var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
         if (filterTerm) {
@@ -672,6 +678,7 @@
         }
       }
       if (endDate) {
+        endDate = serviceResource.getChangeChinaTime(endDate);
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
         var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
         if (filterTerm) {

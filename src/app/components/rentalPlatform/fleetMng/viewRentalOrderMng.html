@@ -9,7 +9,7 @@
 <form name="updateRentalOrderForm" class="form-horizontal">
       <div class="modal-body">
         <div class="form-group">
-          <label  class="col-md-2 control-label font-nomal">订单号:</label>
+          <label  class="col-md-2 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
           <div class="col-md-3 text-left">
             {{viewRentalOrderCtrl.rentalOrder.orderNumber}}
           </div>
@@ -60,7 +60,6 @@
           </div>
 
         </div>
-
         <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'descritpion'|translate}}:</label>
           <div class="col-md-3 text-left">
@@ -70,12 +69,12 @@
         </div>
         <div class="form-group">
           <div class="row"style="margin-left: 10px">
-            <label class="col-md-1 control-label font-nomal">剪叉: 数量:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalScissorLift'|translate}}: {{'numbers'|translate}}:</label>
             <div class="col-md-1 text-left">
               {{viewRentalOrderCtrl.jcOption.quantity}}
             </div>
 
-            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
             <div class="col-md-2 text-left">
               {{viewRentalOrderCtrl.jcOption.deviceHeightType.name}}
             </div>
@@ -92,15 +91,14 @@
             </div>
           </div>
         </div>
-
-      <div class="form-group">
+        <div class="form-group">
             <div class="row"style="margin-left: 10px">
-              <label class="col-md-1 control-label font-nomal">直臂: 数量:</label>
+              <label class="col-md-1 control-label font-nomal">{{'rentalArticulatingBoomLift'|translate}}: {{'numbers'|translate}}:</label>
               <div class="col-md-1 text-left">
                 {{viewRentalOrderCtrl.zbOption.quantity}}
               </div>
 
-              <label class="col-md-1 control-label font-nomal">高度:</label>
+              <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
               <div class="col-md-2 text-left">
                 {{viewRentalOrderCtrl.zbOption.deviceHeightType.name}}
               </div>
@@ -115,16 +113,15 @@
               </div>
             </div>
           </div>
-
-          <div class="form-group">
+        <div class="form-group">
             <div class="row "style="margin-left: 10px">
 
-              <label class="col-md-1 control-label font-nomal">曲臂: 数量:</label>
+              <label class="col-md-1 control-label font-nomal">{{'rentalBoomLift'|translate}}: {{'numbers'|translate}}:</label>
               <div class="col-md-1 text-left">
                 {{viewRentalOrderCtrl.qbOption.quantity}}
               </div>
 
-              <label class="col-md-1 control-label font-nomal">高度:</label>
+              <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
               <div class="col-md-2 text-left">
                 {{viewRentalOrderCtrl.qbOption.deviceHeightType.name}}
               </div>
@@ -140,6 +137,24 @@
               </div>
             </div>
           </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table ng-table="viewRentalOrderCtrl.tableParams" class="table history-tab-tr-nowrap">
+              <tr  ng-repeat="orderData in $data">
+                <td ng-cloak data-title="'deviceNum'|translate" >{{orderData.machine.deviceinfo.deviceNum}}</td>
+                <td ng-cloak data-title="'rentalMachineID'|translate" >{{orderData.machine.licenseId}}</td>
+                <td ng-cloak data-title="'rentalMachineType'|translate" >{{orderData.machine.deviceType.name}}</td>
+                <td ng-cloak data-title="'rentalBrand'|translate" >{{orderData.machine.deviceManufacture.name}}</td>
+                <td ng-cloak data-title="'admissionTime'|translate" >{{orderData.admissionTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td ng-cloak data-title="'workingHoursWhenEntry'|translate" >{{orderData.workingHoursWhenEntry}}</td>
+                <td ng-cloak data-title="'exitTime'|translate">{{orderData.exitTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td ng-cloak data-title="'workingHoursWhenExit'|translate" >{{orderData.workingHoursWhenExit}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </form>
 <div class="modal-footer">
