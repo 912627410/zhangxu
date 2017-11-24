@@ -123,7 +123,7 @@
                 <td data-title="'highlyType'|translate" sortable="'heightType'">{{row.heightType | translate}}</td>
                 <td data-title="'rentalCurrentLocate'|translate" sortable="'currentAddress'">{{row.currentAddress}}</td>
                 <td data-title="'rentalTotalWorkingHours'|translate" sortable="'totalDurationConverter'">{{row.totalDurationConverter | convertToMins}}</td>
-                <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss':machineCurrentStatusCtr.timezone}}</td>
                 <td data-title="'operation'|translate" style="text-align: center" >
                   <button type="button" class="btn  btn-danger btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}</button>
                 <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">{{'equipmentMonitoring'|translate}}</button>

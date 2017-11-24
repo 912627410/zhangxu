@@ -385,11 +385,11 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus==null">{{'noData'|translate}}</td>
                     <!--定位时间-->
                     <td>{{'positioningTime'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='1'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='01'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='1'" ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss' :deviceCurrentInfoCtrl.timezone}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='V'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='00'||deviceCurrentInfoCtrl.deviceinfo.locateStatus=='0'||deviceCurrentInfoCtrl.deviceinfo.locateStatus == null">未定位</td>
                     <!--回传时间-->
                     <td>{{'returnTime'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoCtrl.timezone}}</td>
                   </tr>
                   <tr>
                     <!--车辆类型-->
@@ -690,9 +690,9 @@
                   </tr>
                   <tr ng-repeat="deviceData in deviceCurrentInfoCtrl.deviceDataList" >
                     <!--数据回传时间-->
-                    <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoCtrl.timezone}}</td>
                     <!--定位时间-->
-                    <td ng-cloak ng-if="deviceData.locateStatus=='A' || deviceData.locateStatus=='01'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak ng-if="deviceData.locateStatus=='A' || deviceData.locateStatus=='01'" class="text-nowrap">{{deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoCtrl.timezone}}</td>
                     <td ng-cloak ng-if="deviceData.locateStatus=='V' || deviceData.locateStatus=='00' || deviceData.locateStatus==null" class="text-nowrap">--</td>
                     <!--位置-->
                     <td ng-cloak ng-if="(deviceData.locateStatus=='A'|| deviceData.locateStatus=='01') && deviceData.address!=null" class="text-nowrap" style="min-width: 300px">{{deviceData.address}}</td>
@@ -851,7 +851,7 @@
                   <tr ng-repeat="deviceWarningData in deviceCurrentInfoCtrl.deviceWarningDataList">
                     <td ng-cloak class="text-nowrap">{{deviceWarningData.deviceNum}}</td>
                     <td ng-cloak class="text-nowrap">{{deviceWarningData.warningTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak class="text-nowrap">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap">{{deviceWarningData.recordTime | date:'yyyy-MM-dd HH:mm:ss':deviceCurrentInfoCtrl.timezone}}</td>
                     <td ng-cloak class="text-nowrap">{{deviceWarningData.warningMsg}}</td>
                   </tr>
 
@@ -1718,7 +1718,7 @@
                   <div class="timeline-panel" ng-style="{'border-color':item.style}">
                     <div class="timeline-heading">
                       <h4 class="timeline-title">{{item.eventTitle}}</h4>
-                      <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{item.recordTime | date:'yyyy-MM-dd' }}</small></p>
+                      <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{item.recordTime | date:'yyyy-MM-dd' :deviceCurrentInfoCtrl.timezone}}</small></p>
                     </div>
                     <div class="timeline-body">
                       <p ng-repeat="content in item.eventContent">{{content}}</p>

@@ -887,6 +887,7 @@
   "rentalsubordinateOrganization": "包含下级组织",
   "rentalTotalProfit":"总利润",
   "rentalProfitOrderTotal":"订单总数",
+  "numbers":"数量",
 
 
 
@@ -1553,10 +1554,20 @@
   "gsmSignal":"GSM信号百分比",
   "gpsState":"GPS状态",
   "photoresistorVoltage":"光敏电阻电压值",
+  "goSite":"进场",
+  "leaveSite":"退场",
+
+  "admissionTime":"进场时间",
+  "exitTime":"退场时间",
+  "workingHoursWhenEntry":"进场工作小时数",
+  "workingHoursWhenExit":"退场工作小时数",
+
   "enterDate":"请录入生产日期",
   "connectServerTime":"连接平台用时",
   "wireStatus":"天线状态",
   "gpsPowerStatus":"GPS电源检测"
+
+
 
 
 }

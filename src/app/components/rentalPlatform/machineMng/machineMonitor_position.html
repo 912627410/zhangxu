@@ -47,7 +47,7 @@
       <div class="table-responsive">
         <table ng-table="vm.deviceLocateData" class="table table-responsive  history-tab-tr-nowrap">
           <tr ng-repeat="deviceLocation in $data">
-            <td ng-cloak data-title="'dataAcquisitionTime'|translate" sortable="'locateDateTime'">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td ng-cloak data-title="'dataAcquisitionTime'|translate" sortable="'locateDateTime'">{{deviceLocation.locateDateTime | date:'yyyy-MM-dd HH:mm:ss' :machineMonitorPositionController.timezone}}</td>
             <td ng-cloak data-title="'address'|translate" sortable="'address'">{{deviceLocation.address}}</td>
             <td ng-cloak data-title="'gps速度'" sortable="'gpsSpeed'">{{deviceLocation.gpsSpeed | unitConversionFilter:0.01:" km/H"}}</td>
             <td ng-cloak data-title="'gps高度(装置所处位置高度)'" sortable="'gpsHeight'">{{deviceLocation.gpsHeight |unitConversionFilter:1:" m"}}</td>

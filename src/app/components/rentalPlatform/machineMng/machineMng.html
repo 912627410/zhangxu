@@ -15,7 +15,7 @@
           <label class="col-sm-4 control-label padding5 ng-binding font-nomal">{{'machineNumberAndCarNumber'|translate}}:</label>
           <div class="col-sm-8">
             <input type="text" class="form-control ng-pristine ng-pending ng-touched" placeholder="{{'machineNumberAndCarNumber'|translate}}" validator="required" ng-model="vm.machine.licenseId"
-                   typeahead-show-hint="true">
+                   typeahead-show-hint="true" readonly="readonly">
           </div>
         </div>
 
@@ -23,7 +23,7 @@
           <label class="col-sm-4 control-label padding5 font-nomal">{{'rentalBindingTterminal'|translate}}:</label>
           <div class="col-sm-8">
             <input type="text" class="form-control ng-pristine ng-valid ng-touched" placeholder="{{'rentalEntersixdigitsorsweepthebarcode'|translate}}" ng-model="vm.machine.deviceNum"  validator="required" ng-minlength='6' ng-maxlength='26'
-                   typeahead-show-hint="false">
+                   typeahead-show-hint="false"readonly="readonly">
             <span class="error text-danger" ng-show="updateMachine.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
             <span class="error text-danger" ng-show="updateMachine.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
           </div>

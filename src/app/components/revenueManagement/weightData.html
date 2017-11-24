@@ -92,11 +92,11 @@
           <td class="text-nowrap" data-title="'versionNumber'|translate" sortable="'weightData.versionNum'">{{weightData.versionNum}}</td>
           <td class="text-nowrap" data-title="'functionCode'|translate" sortable="'weightData.functionCode'">{{weightData.functionCode}}</td>
           <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'weightData.deviceType'">000{{weightData.deviceType}}</td>
-          <td class="text-nowrap" data-title="'recordGenerationTime'|translate" sortable="'weightData.recordTime'">{{weightData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'recordGenerationTime'|translate" sortable="'weightData.recordTime'">{{weightData.recordTime | date:'yyyy-MM-dd HH:mm:ss':weightDataCtrl.timezone}}</td>
           <td class="text-nowrap" data-title="'serialNumber'|translate" sortable="'weightData.serialNum'">{{weightData.serialNum}}</td>
           <td class="text-nowrap" data-title="'TubDeviceNum'|translate" sortable="'weightData.rfNum'">{{weightData.rfNum}}</td>
-          <td class="text-nowrap" data-title="'loadingstarttime'|translate" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'loadingCompletetime'|translate" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'loadingstarttime'|translate" sortable="'weightData.beginDate'">{{weightData.beginDate | date:'yyyy-MM-dd HH:mm:ss':weightDataCtrl.timezone}}</td>
+          <td class="text-nowrap" data-title="'loadingCompletetime'|translate" sortable="'weightData.endDate'">{{weightData.endDate | date:'yyyy-MM-dd HH:mm:ss':weightDataCtrl.timezone}}</td>
           <td class="text-nowrap" data-title="'bucketNumber'|translate" sortable="'weightData.hopperNum'">{{weightData.hopperNum}}</td>
           <td class="text-nowrap" data-title="'totalWeight(t)'|translate" sortable="'weightData.totalWeight'">{{weightData.totalWeight/100}}</td>
         </tr>

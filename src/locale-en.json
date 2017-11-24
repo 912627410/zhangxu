@@ -1401,6 +1401,7 @@
   "failedToGetDeviceData":"Failed to get device data",
   "kilometre":"Kilometre",
   "traveled":"Traveled",
+  "numbers":"Numbers",
 
 
   "越野剪叉式":"RT Scissor",
@@ -1547,9 +1548,10 @@
   "enterDate":"Please enter the production date",
   "connectServerTime":"Time to connect the platform",
   "wireStatus":"Wire status",
-  "gpsPowerStatus":"GPS power detection"
-
-
-
+  "gpsPowerStatus":"GPS power detection",
+  "admissionTime":"Admission time",
+  "exitTime":"Exit time",
+  "workingHoursWhenEntry":"Working hours when entry",
+  "workingHoursWhenExit":"Working count when exit"
 
 }

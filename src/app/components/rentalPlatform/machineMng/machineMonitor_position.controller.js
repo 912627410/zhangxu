@@ -1,5 +1,5 @@
 /**
- * @author xielongwang
+ * @author xielongwanggetLocateDateByDate
  * @date 2017/8/17.
  * @description 车辆历史位置信息controller
  */
@@ -24,6 +24,9 @@
     //结束时间
     vm.queryEndDate = new Date();
 
+    //获取浏览器时区值 例“+0800”
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
+
     /**
      * 获取设备定位数据 http://127.0.0.1:8080/rental/device-locus-data?page=xx&size=xx&total_elements=xx&device_num=xx&sort=locate_date_time,desc
      *
@@ -37,11 +40,14 @@
       var restCallURL = RENTAL_LOCUS_DATA;
       //时间参数
       if (queryStartDate && queryEndDate) {
+
         //开始时间
+        queryStartDate = serviceResource.getChangeChinaTime(queryStartDate);
         var formatDate = $filter('date')(queryStartDate, 'yyyy-MM-dd HH:mm:ss');
         restCallURL += "?query_start_date=" + formatDate;
 
         //结束时间
+        queryEndDate = serviceResource.getChangeChinaTime(queryEndDate);
         var formatEndDate = $filter('date')(queryEndDate, 'yyyy-MM-dd HH:mm:ss');
         restCallURL += "&query_end_date=" + formatEndDate;
       } else {

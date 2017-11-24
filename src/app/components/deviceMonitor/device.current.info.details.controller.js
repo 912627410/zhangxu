@@ -11,6 +11,7 @@
   /** @ngInject */
   function DeviceCurrentInfoDetailsController($uibModalInstance,permissions,deviceinfo) {
     var vm = this;
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
     vm.deviceinfo = deviceinfo;
 
 
