@@ -1549,7 +1549,7 @@
   "connectServerTime":"Time to connect the platform",
   "wireStatus":"Wire status",
   "gpsPowerStatus":"GPS power detection",
-  "admissionTime":"Admission time",
+  "admissionTime":"Admission Time",
   "exitTime":"Exit time",
   "workingHoursWhenEntry":"Working hours when entry",
   "workingHoursWhenExit":"Working count when exit"

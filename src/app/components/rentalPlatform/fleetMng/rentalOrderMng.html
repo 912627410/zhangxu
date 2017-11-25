@@ -70,14 +70,14 @@
             <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-                <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngCtrl.rentalOrder.startDate"
                        is-open="rentalOrderMngCtrl.startDateSetting.status.opened"
                        datepicker-options="rentalOrderMngCtrl.startDateSetting.dateOptions"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"
-                       message-id="bootstrap" readonly/>
+                       message-id="bootstrap" readonly />
 
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -98,7 +98,7 @@
                        datepicker-options="dateOptions"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}" readonly/>
+                       close-text="{{'close'|translate}}" readonly />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalOrderMngCtrl.endDateOpen($event)">
