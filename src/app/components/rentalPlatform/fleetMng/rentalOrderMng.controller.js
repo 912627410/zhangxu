@@ -9,7 +9,7 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,RENTAL_ORDER_MACHINE_PAGE_URL,
+  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,RENTAL_ORDER_ENTRY_MACHINE_URL,
                                     DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,languages) {
 
     var vm = this;
@@ -314,7 +314,7 @@
     vm.leaveSite=function (id) {
 
       var orderId = id;
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+      var restCallURL = RENTAL_ORDER_ENTRY_MACHINE_URL;
       var sortUrl =  "id,desc";
       restCallURL += "?sort=" + sortUrl;
       restCallURL += "&id="+orderId;

@@ -347,7 +347,8 @@
       .constant('RENTAL_ORG_FENCE_DELETE_STATUS',SERVER_BASE_URL + 'rental/orgFence/delete')//
 
     //租赁车辆信息
-    .constant('RENTAL_ORDER_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/orderMachine/page')//租赁订单信息
+    .constant('RENTAL_ORDER_ENTRY_MACHINE_URL',SERVER_BASE_URL + 'rental/orderMachine/entryMachinelist')//订单进场的车辆(未出场)
+    .constant('RENTAL_ORDER_MACHINE_HISTORY_URL',SERVER_BASE_URL + 'rental/orderMachine/historyMachinelist')//租赁订单车辆历史List
     .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
     .constant('RENTANL_UNUSED_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//未出租车辆查询信息

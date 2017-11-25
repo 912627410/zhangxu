@@ -10,7 +10,7 @@
     .controller('viewRentalOrderController', viewRentalOrderController);
 
   /** @ngInject */
-  function viewRentalOrderController($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL, retalOrderTotalVo,Notification,RENTAL_ORDER_MACHINE_PAGE_URL,NgTableParams) {
+  function viewRentalOrderController($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL, retalOrderTotalVo,Notification,RENTAL_ORDER_MACHINE_HISTORY_URL,NgTableParams) {
     var vm = this;
     vm.jcOption = {
       deviceType :{id:1}
@@ -37,7 +37,7 @@
     }
     //订单下车辆List查询
     vm.carlist = function (sort, id) {
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+      var restCallURL = RENTAL_ORDER_MACHINE_HISTORY_URL;
       var sortUrl = sort || "id,desc";
       restCallURL += "?sort=" + sortUrl;
       restCallURL += "&id="+id;
