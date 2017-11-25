@@ -10,7 +10,7 @@
 
   /** @ngInject */
 
-  function rentalFleetMngController($scope, $window, $location, $uibModal,$anchorScroll,languages,commonFactory, serviceResource,NgTableParams,ngTableDefaults,Notification,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_MACHINE_PAGE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL) {
+  function rentalFleetMngController($scope, $window, $uibModal,$anchorScroll,languages,commonFactory, serviceResource,NgTableParams,ngTableDefaults,Notification,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_ENTRY_MACHINE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL) {
 
     var vm = this;
     vm.rightRentalOrderId;
@@ -95,7 +95,7 @@
     vm.rightQuery = function (page, size, sort, id) {
 
       vm.rightRentalOrderId=id;
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
+      var restCallURL = RENTAL_ORDER_ENTRY_MACHINE_URL;
       var sortUrl = sort || "id,desc";
       restCallURL += "?sort=" + sortUrl;
       restCallURL += "&id="+vm.rightRentalOrderId;
