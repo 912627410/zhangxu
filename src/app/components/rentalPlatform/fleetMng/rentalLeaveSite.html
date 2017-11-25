@@ -28,7 +28,7 @@
       </div>
     </div>
     <hr>
-    <div style="height: 400px;overflow: scroll">
+    <div style="height: 400px;overflow-y: scroll">
       <script id="selectAllHeader" type="text/ng-template">
         <input type="checkbox"  ng-click="rentalLeaveSiteCtrl.updateAllSelection($event)"
                ng-model="rentalLeaveSiteCtrl.checked">
@@ -38,7 +38,7 @@
           <tr ng-repeat="orderMachine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'">
               <input type="checkbox" ng-checked="rentalLeaveSiteCtrl.isSelected(orderMachine.id)"
-                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="row.checked">
+                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="orderMachine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
               {{orderMachine.machine.licenseId}}
@@ -54,9 +54,7 @@
           </tr>
         </table>
       </div>
-
     </div>
-
   </form>
 </div>
 

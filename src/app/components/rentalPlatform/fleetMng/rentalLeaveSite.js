@@ -4,11 +4,11 @@
   angular
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
-  function rentalLeaveSiteController($uibModalInstance,Notification,languages,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,serviceResource,NgTableParams,orderMachineList,orderId) {
+  function rentalLeaveSiteController($uibModalInstance,Notification,languages,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,serviceResource,NgTableParams,orderId,RENTAL_ORDER_ENTRY_MACHINE_URL) {
 
     var vm=this;
     vm.orderId=orderId;
-    vm.orderMachineList = orderMachineList;
+   /* vm.orderMachineList = orderMachineList;*/
     vm.selected = []; //选中的订单车辆id List
     //退场时间
     var date=new Date();
@@ -63,6 +63,30 @@
       return vm.selected.indexOf(id) >= 0;
     }
 
+    vm.query=function (id) {
+      var restCallURL = RENTAL_ORDER_ENTRY_MACHINE_URL;
+      var sortUrl =  "id,desc";
+      restCallURL += "?sort=" + sortUrl;
+      restCallURL += "&id="+id;{
+        var rspData = serviceResource.restCallService(restCallURL, "GET");
+        rspData.then(function (data) {
+
+          vm.tableParams = new NgTableParams({
+            // initial sort order
+            // sorting: { name: "desc" }
+          }, {
+            filterDelay: 0,
+            dataset: angular.copy(data.content)
+            // dataset: data.content
+          });
+        }, function (reason) {
+
+          Notification.error("获取车辆数据失败");
+        });
+      }
+    }
+    vm.query(orderId);
+
 
     vm.bringUpBatch = function () {
 
@@ -80,10 +104,12 @@
           //页面上同步移除调出的车辆
           for(var i = 0;i<vm.selected.length;i++){
             vm.tableParams.data.splice(0,1);
-          }
 
+          }
+          vm.query(vm.orderId);
           Notification.success(languages.findKey('批量调出车辆成功'));
         }
+
       }, function (reason) {
         Notification.error(" 批量调出车辆失败!");
       });
