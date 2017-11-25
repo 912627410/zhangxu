@@ -25,15 +25,15 @@
     //组织树的显示
     vm.openTreeInfo=function() {
       treeFactory.treeShow(function (selectedItem) {
-        vm.org =selectedItem;
         vm.rentalCustomer.org = selectedItem;
       });
     }
 
     //确认修改
     vm.ok = function () {
+
       var rspdata = serviceResource.restUpdateRequest(RENTAL_CUSTOMER_URL,vm.rentalCustomer);
-      vm.rentalCustomer.org=vm.org;
+
       rspdata.then(function (data) {
         Notification.success(languages.findKey('MoCuInSuc'));
         $uibModalInstance.close(data.content);
