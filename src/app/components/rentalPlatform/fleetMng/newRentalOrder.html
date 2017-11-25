@@ -53,11 +53,11 @@
           <label class="col-md-2 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group">
-              <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.startDate" is-open="newRentalOrderCtrl.startDateSetting.status.opened"
+              <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.startDate" is-open="newRentalOrderCtrl.startDateSetting.status.opened"
                      datepicker-options="newRentalOrderCtrl.startDateSetting.dateOptions"
                      current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}" message-id="bootstrap" readonly/>
+                     close-text="{{'close'|translate}}"  readonly required/>
 
               <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -66,23 +66,23 @@
                   </button>
                 </span>
             </p>
-            <span id="bootstrap"></span>
-
           </div>
 
           <label class="col-md-2 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group">
-              <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.endDate" is-open="newRentalOrderCtrl.endDateOpenStatus.opened"
-                     datepicker-options="dateOptions"
+              <input type="text" name="endDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.endDate" is-open="newRentalOrderCtrl.endDateSetting.status.opened"
+                     datepicker-options="newRentalOrderCtrl.endDateSetting.dateOptions"
                      current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
-                     close-text="{{'close'|translate}}"readonly/>
+                     close-text="{{'close'|translate}}"  readonly required/>
+
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="newRentalOrderCtrl.endDateOpen($event)">
-                  <i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
+                  <button type="button" class="btn btn-default"
+                          ng-click="newRentalOrderCtrl.endDateSetting.open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
             </p>
           </div>
         </div>
@@ -137,10 +137,10 @@
             <div class="col-md-1">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" style="width: 50px"/>
             </div>
-            <div class="col-sm-2">
-              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.jcOption,1)">{{'transferVehicle'|translate}}</button>
+            <!--<div class="col-sm-2">-->
+              <!--<button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.jcOption,1)">{{'transferVehicle'|translate}}</button>-->
 
-            </div>
+            <!--</div>-->
           </div>
         </div>
 
@@ -152,7 +152,7 @@
 
             <label class="col-md-1 control-label font-nomal">数量:</label>
             <div class="col-md-1">
-              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
             </div>
 
             <label class="col-md-1 control-label font-nomal">高度:</label>
@@ -179,11 +179,11 @@
 
             <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
             <div class="col-md-1">
-              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" style="width: 50px"/>
+              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.price" placeholder="0"   typeahead-show-hint="true" style="width: 50px"/>
             </div>
-            <div class="col-sm-2">
-              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.zbOption,2)">{{'transferVehicle'|translate}}</button>
-            </div>
+            <!--<div class="col-sm-2">-->
+              <!--<button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.zbOption,2)">{{'transferVehicle'|translate}}</button>-->
+            <!--</div>-->
           </div>
         </div>
 
@@ -194,7 +194,7 @@
           <div class="col-md-11">
             <label class="col-md-1 control-label font-nomal">数量:</label>
             <div class="col-md-1">
-              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
             </div>
 
             <label class="col-md-1 control-label font-nomal">高度:</label>
@@ -221,11 +221,11 @@
 
             <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
             <div class="col-md-1">
-              <input type="text" style="width: 50px" class="form-control" ng-model="newRentalOrderCtrl.qbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" style="width: 50px" class="form-control" ng-model="newRentalOrderCtrl.qbOption.price" placeholder="0"   typeahead-show-hint="true" />
             </div>
-            <div class="col-md-2">
-              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.qbOption,3)">{{'transferVehicle'|translate}}</button>
-            </div>
+            <!--<div class="col-md-2">-->
+              <!--<button class="btn btn-sm btn-primary pull-right" type="button" ng-click="newRentalOrderCtrl.addMachine('lg',newRentalOrderCtrl.qbOption,3)">{{'transferVehicle'|translate}}</button>-->
+            <!--</div>-->
           </div>
         </div>
       </div>
@@ -233,7 +233,7 @@
   </div>
   <div class="modal-footer">
     <div class="form-group" style="text-align: center;">
-      <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newrentalOrderForm" ng-click="newRentalOrderCtrl.ok()">{{'confirm'|translate}}
+      <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newrentalOrderForm" ng-click="newRentalOrderCtrl.ok(newRentalOrderCtrl.rentalOrder,newRentalOrderCtrl.jcOption,newRentalOrderCtrl.zbOption,newRentalOrderCtrl.qbOption)">{{'confirm'|translate}}
       </button>
       <button class="btn  btn-warning  " type="button" ng-click="newRentalOrderCtrl.cancel()">
         {{'cancel'|translate}}

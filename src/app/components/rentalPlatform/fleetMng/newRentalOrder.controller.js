@@ -84,6 +84,18 @@
         opened: false
       }
     };
+    vm.endDateSetting = {
+      open: function($event) {
+        vm.endDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
     //加载品牌信息
     var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
     deviceManufactureListPromise.then(function (data) {
@@ -157,19 +169,44 @@
     }
 
 
-
-    vm.ok = function () {
-      if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
+console.log( vm.jcOption)
+    console.log( vm.zbOption)
+    console.log( vm.qbOption)
+    vm.ok = function (rentalOrder,jcOption,zbOption,qbOption) {
+      if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
 
-        vm.rentalOrder.jc = vm.zbOption.quantity;
-        vm.rentalOrder.zb= vm.zbOption.quantity;
-        vm.rentalOrder.qb = vm.qbOption.quantity;
+      if(zbOption.quantity){
+        vm.rentalOrder.jc = zbOption.quantity;
+        vm.rentalOrderMachineTypeVos.push(jcOption)
+      }else{
+        vm.rentalOrder.jc = 0;
+      }
+       if( vm.qbOption.quantity){
+         vm.rentalOrder.qb = qbOption.quantity;
+         vm.rentalOrderMachineTypeVos.push(qbOption)
+       }else{
+         vm.rentalOrder.qb = 0;
+       }
+       if(vm.zbOption.quantity){
+         vm.rentalOrder.zb= vm.zbOption.quantity;
+         vm.rentalOrderMachineTypeVos.push(zbOption)
+       }else{
+        vm.rentalOrder.zb = 0;
+      }
+
+        // if(vm.zbOption!= null){
+        //   vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+        // }
+        // if(vm.jcOption!= null){
+        //   vm.rentalOrderMachineTypeVos.push(vm.jcOption)
+        // }
+        // if(vm.qbOption!= null){
+        //   vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+        // }
+
         vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
-        vm.rentalOrderMachineTypeVos.push(vm.zbOption)
-        vm.rentalOrderMachineTypeVos.push(vm.jcOption)
-        vm.rentalOrderMachineTypeVos.push(vm.qbOption)
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;
