@@ -9,13 +9,9 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-<<<<<<< HEAD
   function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
                                     DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
-=======
-  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,RENTAL_ORDER_ENTRY_MACHINE_URL,
-                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,languages) {
->>>>>>> RENTAL2.00
+
 
     var vm = this;
     vm.totalOrders=0;
@@ -319,23 +315,7 @@
     vm.leaveSite=function (id) {
 
       var orderId = id;
-<<<<<<< HEAD
-      // var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
-      // var sortUrl =  "id,desc";
-      // restCallURL += "?sort=" + sortUrl;
-      // restCallURL += "&id="+orderId;
-      //   var rspData = serviceResource.restCallService(restCallURL, "GET");
-      //   rspData.then(function (data) {
-      //     var orderMachineList = data.content;
-=======
-      var restCallURL = RENTAL_ORDER_ENTRY_MACHINE_URL;
-      var sortUrl =  "id,desc";
-      restCallURL += "?sort=" + sortUrl;
-      restCallURL += "&id="+orderId;
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
-          var orderMachineList = data.content;
->>>>>>> RENTAL2.00
+
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalLeaveSite.html',
@@ -350,7 +330,6 @@
               }
             }
           });
-    //     })
     }
 
   }
