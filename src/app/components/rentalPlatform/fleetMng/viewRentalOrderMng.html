@@ -148,9 +148,9 @@
                 <td ng-cloak data-title="'rentalMachineType'|translate" >{{orderData.machine.deviceType.name}}</td>
                 <td ng-cloak data-title="'rentalBrand'|translate" >{{orderData.machine.deviceManufacture.name}}</td>
                 <td ng-cloak data-title="'admissionTime'|translate" >{{orderData.enterTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                <td ng-cloak data-title="'workingHoursWhenEntry'|translate" >{{orderData.enterfactoryworkhours}}</td>
+                <td ng-cloak data-title="'workingHoursWhenEntry'|translate" >{{orderData.enterfactoryworkhours* 5 / 60}}</td>
                 <td ng-cloak data-title="'exitTime'|translate">{{orderData.leaveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                <td ng-cloak data-title="'workingHoursWhenExit'|translate" >{{orderData.leavefactoryworkhours}}</td>
+                <td ng-cloak data-title="'workingHoursWhenExit'|translate" >{{orderData.leavefactoryworkhours* 5 / 60}}</td>
               </tr>
             </table>
           </div>
