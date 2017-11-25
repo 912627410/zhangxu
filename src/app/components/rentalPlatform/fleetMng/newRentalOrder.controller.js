@@ -169,9 +169,6 @@
     }
 
 
-console.log( vm.jcOption)
-    console.log( vm.zbOption)
-    console.log( vm.qbOption)
     vm.ok = function (rentalOrder,jcOption,zbOption,qbOption) {
       if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
