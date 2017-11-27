@@ -19,9 +19,32 @@
     var date = new Date();
     //查询开始时间默认为昨天
     date.setDate(date.getDate() - 1);
-    vm.queryStartDate = date;
+    vm.startDateDeviceData = date;
     //结束时间
-    vm.queryEndDate = new Date();
+    vm.endDateDeviceData = new Date();
+
+    vm.startDateOpenStatusDeviceData = {
+      opened: false
+    };
+    vm.endDateOpenStatusDeviceData = {
+      opened: false
+    };
+
+    vm.startDateOpenDeviceData = function ($event) {
+      vm.startDateOpenStatusDeviceData.opened = true;
+    };
+    vm.endDateOpenDeviceData = function ($event) {
+      vm.endDateOpenStatusDeviceData.opened = true;
+    };
+
+    vm.maxDate = new Date();
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
+
+
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
 
 
     /**
@@ -39,11 +62,11 @@
       if (queryStartDate && queryEndDate) {
         //开始时间
         var formatStartDate = $filter('date')(queryStartDate, 'yyyy-MM-dd HH:mm:ss');
-        restCallURL += "?startDate=" + formatStartDate;
+        restCallURL += "?startDateDeviceData=" + formatStartDate;
 
         //结束时间
         var formatEndDate = $filter('date')(queryEndDate, 'yyyy-MM-dd HH:mm:ss');
-        restCallURL += "&endDate=" + formatEndDate;
+        restCallURL += "&endDateDeviceData=" + formatEndDate;
       } else {
         Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
@@ -75,6 +98,6 @@
       });
     }
 
-    vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate);
+   // vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate);
   }
 })();

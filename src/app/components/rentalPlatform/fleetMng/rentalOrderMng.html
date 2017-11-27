@@ -1,5 +1,4 @@
 <div class="machine-content" resize>
-  <!--currentState begin-->
   <div id="currentState" class="container-fluid">
     <section class="renatlcontent-header">
       <h1>
@@ -12,26 +11,25 @@
     </section>
     <div class="row info-box-container">
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus()">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
-
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(1)">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(3)">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.fininshOrders}}</div>
         </div>
@@ -43,34 +41,34 @@
           <div class="form-group">
             <label class="col-md-1 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="id" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.id"
+              <input type="text" name="id" class="form-control" ng-model="rentalOrderMngCtrl.rentalOrder.orderNumber"
                      placeholder="{{'rentalOrderNumber'|translate}}"/>
             </div>
-            <label  class="col-md-1 control-label font-nomal">{{'rentalCustomer'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalCustomer'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="customerName" class="form-control"  ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
+              <input type="text" name="customerName" class="form-control"
+                     ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
                      placeholder="{{'rentalCustomer'|translate}}"/>
             </div>
             <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-
-                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalOrderMngCtrl.org.label" name="org"/>
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}"
+                       ng-model="rentalOrderMngCtrl.org.label" name="org"/>
                 <span class="input-group-btn">
             <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="rentalOrderMngCtrl.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
+                  <button type="button" class="btn btn-default" ng-click="rentalOrderMngCtrl.openTreeInfo()">
+                    <i class="fa fa-sitemap"></i>
+                  </button>
+                </span>
               </p>
             </div>
-
           </div>
           <div class="form-group">
             <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-                <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
                        ng-model="rentalOrderMngCtrl.rentalOrder.startDate"
                        is-open="rentalOrderMngCtrl.startDateSetting.status.opened"
                        datepicker-options="rentalOrderMngCtrl.startDateSetting.dateOptions"
@@ -89,7 +87,7 @@
               <span id="bootstrap"></span>
             </div>
 
-            <label  class="col-md-1 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
@@ -110,50 +108,81 @@
             <div class="col-md-2">
               <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"
                          ng-disabled="disabled">
-                <ui-select-match allow-clear="true" placeholder="{{'rentalStatus'|translate}}">{{$select.selected.desc|translate}}
+                <ui-select-match allow-clear="true" placeholder="{{'rentalStatus'|translate}}">
+                  {{$select.selected.desc|translate}}
                 </ui-select-match>
                 <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngCtrl.retanlOrderStatusList">
                   <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search |translate"></div>
-
                 </ui-select-choices>
               </ui-select>
             </div>
-
             <div class="col-md-3">
               <div class="col-md-8">
                 <button class="btn btn-primary" type="button"
-                        ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">{{'rentalQuery'|translate}}
+                        ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">
+                  {{'rentalQuery'|translate}}
                 </button>
-                <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">{{'rentalReset'|translate}}</button>
+                <button class="btn btn-default" type="button" ng-click="rentalOrderMngCtrl.reset()">
+                  {{'rentalReset'|translate}}
+                </button>
               </div>
               <div class="col-md-2">
-                <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">{{'rentalAdd'|translate}}</button>
+                <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">
+                  {{'rentalAdd'|translate}}
+                </button>
               </div>
             </div>
           </div>
         </form>
       </div>
       <div class="row" ng-style="rentalOrderMngCtrl.baseBoxContainer">
-
         <div class="col-lg-12 table-responsive "><!--表格框-->
-          <table ng-table="rentalOrderMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <table ng-table="rentalOrderMngCtrl.tableParams"
+                 class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.id}}</td>
-              <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">{{rentalOrder.startDate | date:'yyyy-MM-dd'}}</td>
-              <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate | date:'yyyy-MM-dd'}}</td>
-              <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">{{rentalOrder.rentalCustomer.name }}</td>
-              <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">{{rentalOrder.statusDesc |translate }}</td>
-              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">{{rentalOrder.location }}</td>
-              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate" >
+              <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.orderNumber}}</td>
+              <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
+                {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
+                | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
+                {{rentalOrder.rentalCustomer.name }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">
+                {{rentalOrder.statusDesc |translate }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
+                {{rentalOrder.location }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
+              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
+                {{rentalOrder.orderNumber}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
+                {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
+                | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
+                {{rentalOrder.rentalCustomer.name }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">
+                {{rentalOrder.statusDesc |translate }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
+                {{rentalOrder.location }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
                 <span ng-if="rentalOrder.jc==null">0</span>
                 <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
                 <span ng-if="rentalOrder.zb==null">0</span>
                 <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
                 <span ng-if="rentalOrder.qb==null">0</span>
                 <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
-
               </td>
-
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
                         ng-click="rentalOrderMngCtrl.update(rentalOrder.id)">{{'rentalEdit'| translate}}
@@ -173,14 +202,17 @@
         </div>
         <div class="col-lg-12"><!--分页框-->
           <uib-pagination total-items="rentalOrderMngCtrl.page.totalElements"
-                          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
-                          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
-                          class="pagination-sm" boundary-links="true" rotate="false"
-                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
+          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber"
+          items-per-page="rentalOrderMngCtrl.page.size"
+          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,rentalOrderMngCtrl.rentalOrder)"
+          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
+          class="pagination-sm" boundary-links="true" rotate="false"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+          last-text="&raquo;"></uib-pagination>
           </uib-pagination>
         </div>
       </div>
     </div>
   </div>
-  <!--currentState end-->
 </div>

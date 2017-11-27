@@ -16,8 +16,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = rentalFence;
-    vm.rentalOrgFence.radius = 100; //设置的半径,默认100米
-
+    vm.rentalOrgFence.radius; //设置的半径,
     if ($stateParams.id != null) {
       var restCall = RENTAL_ORG_FENCE_URL + "?id=" + $stateParams.id;
       var fencePromis = serviceResource.restCallService(restCall, "GET");
@@ -83,7 +82,7 @@
      *
      * @param zoomsize
      */
-    vm.initMap = function (mapId, zoomsize) {
+    vm.initMap = function (mapId, zoomsize,longitude,latitude) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
         //初始化地图对象
@@ -93,11 +92,20 @@
         //插件定义
         var amapScale, toolBar, overView, geocoder, circleEditor;
 
-        var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近
-
+        /*var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近*/
+        var localCenterAddr=[,];
         if (zoomsize == null || zoomsize == undefined) {
-          zoomsize = 4;
+          zoomsize = 5;
         }
+        if(longitude==null||longitude==undefined){
+          longitude=103.39;
+          //设置中心点大概在兰州附近
+        }
+        if(latitude==null||latitude==undefined){
+          latitude=36.9;
+          //设置中心点大概在兰州附近
+        }
+        localCenterAddr=[longitude,latitude]
         //初始化地图对象
         var map = new AMap.Map(mapId, {
           resizeEnable: true,
@@ -180,7 +188,7 @@
         map.on('click', function (e) {
           //如果地图上有圆,重新绘制
           if (circle != null) {
-            vm.initMap("newOrderMap", 4)
+            vm.initMap("newOrderMap", 14)
           }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();
@@ -203,7 +211,7 @@
     };
 
     //加载地图
-    vm.initMap("newOrderMap", 4);
+    vm.initMap("newOrderMap", 14,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
 
 
     /**

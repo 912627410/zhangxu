@@ -53,7 +53,7 @@
               </textarea>
           </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group ">
           <div class="col-md-12 col-md-offset-1">
             <button class="btn btn-primary" type="button" validation-submit="newRentalFence" ng-click="newRentalFenceCtrl.ok()">{{'confirm'|translate}}</button>
             <button class="btn btn-warning" type="button" ng-click="newRentalFenceCtrl.cancel()">{{'cancel'|translate}}</button>
@@ -63,12 +63,14 @@
     </div>
 
     <div class="box-body col-sm-8 col-md-8">
-      <div class="form-group row">
-        <label class="col-sm-2 control-label font-nomal">{{'fenceAddress'|translate}}:</label>
+      <form name="newRentalFence" class="form-horizontal row">
+       <div class="form-group row">
+        <label class="col-sm-3 control-label font-nomal">{{'fenceAddress'|translate}}:</label>
         <input type="text" class="form-control col-sm-4" id="tipinput"
                placeholder="{{'search'|translate}}"
                ng-model="newRentalFenceCtrl.rentalOrgFence.fenceAddress"/>
       </div>
+      </form>
       <div class="map-body row ">
 
         <div class="form-group" style="margin-right: 10px">

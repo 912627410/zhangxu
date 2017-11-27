@@ -84,6 +84,18 @@
         opened: false
       }
     };
+    vm.endDateSetting = {
+      open: function($event) {
+        vm.endDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
     //加载品牌信息
     var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
     deviceManufactureListPromise.then(function (data) {
@@ -157,19 +169,45 @@
     }
 
 
-
-    vm.ok = function () {
-      if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
+    vm.ok = function (rentalOrder) {
+      if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
+      // if(vm.jcOption.quantity!= null||vm.zbOption.quantity!= null||vm.qbOption.quantity!= null){
+      //   if(vm.jcOption.quantity!= null){
+      //     if(vm.jcOption.deviceHeightType == null||vm.jcOption.deviceManufacture == null||vm.jcOption.price ==null){
+      //       alert(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //   }
+      //   if(vm.zbOption.quantity!= null){
+      //     if(vm.zbOption.deviceHeightType == null||vm.zbOption.deviceManufacture == null||vm.zbOption.price==null){
+      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //   }
+      //   if(vm.qbOption.quantity!= null){
+      //     if(vm.qbOption.deviceHeightType == null||vm.qbOption.deviceManufacture == null||vm.qbOption.price==null){
+      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //
+      //   }
+      // }
 
-        vm.rentalOrder.jc = vm.zbOption.quantity;
-        vm.rentalOrder.zb= vm.zbOption.quantity;
-        vm.rentalOrder.qb = vm.qbOption.quantity;
-        vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
-        vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+
+      vm.rentalOrder.jc = vm.jcOption.quantity;
+      vm.rentalOrder.zb= vm.zbOption.quantity;
+      vm.rentalOrder.qb = vm.qbOption.quantity;
+      if(vm.jcOption.quantity){
         vm.rentalOrderMachineTypeVos.push(vm.jcOption)
-        vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+      }
+       if( vm.qbOption.quantity){
+         vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+       }
+
+       if(vm.zbOption.quantity){
+         vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+       }
+
+        vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;

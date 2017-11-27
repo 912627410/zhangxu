@@ -9,8 +9,9 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,RENTAL_ORDER_MACHINE_PAGE_URL,
-                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,languages) {
+  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
+                                    DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
+
 
     var vm = this;
     vm.totalOrders=0;
@@ -36,7 +37,7 @@
       Notification.error(languages.findKey('getStatusFail'));
     })
 
-
+    //每种状态订单数量
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
     groupByStatusListPromise.then(function (data) {
       var groupByStatusList= data.content;
@@ -57,6 +58,15 @@
       Notification.error(languages.findKey('getStaGroupFail'));
     })
 
+    vm.queryOrderByStatus = function (status) {
+     vm.rentalOrder = {status:{value:''}}
+      if(status){
+        vm.rentalOrder.status.value = status;
+        vm.query(0,DEFAULT_MINSIZE_PER_PAGE,null,vm.rentalOrder)
+      }else{
+        vm.query(0,DEFAULT_MINSIZE_PER_PAGE,null,vm.rentalOrder)
+      }
+    }
 
 
 
@@ -129,8 +139,8 @@
 
       if (null != rentalOrder) {
 
-        if (null != rentalOrder.id&&rentalOrder.id!="") {
-          restCallURL += "&search_EQ_id=" + rentalOrder.id;
+        if (null != rentalOrder.orderNumber&&rentalOrder.orderNumber!="") {
+          restCallURL += "&search_EQ_orderNumber=" + rentalOrder.orderNumber;
         }
         if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
           restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
@@ -314,28 +324,21 @@
     vm.leaveSite=function (id) {
 
       var orderId = id;
-      var restCallURL = RENTAL_ORDER_MACHINE_PAGE_URL;
-      var sortUrl =  "id,desc";
-      restCallURL += "?sort=" + sortUrl;
-      restCallURL += "&id="+orderId;
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
-        rspData.then(function (data) {
-          var orderMachineList = data.content;
+
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
             templateUrl: 'app/components/rentalPlatform/fleetMng/rentalLeaveSite.html',
             controller: 'rentalLeaveSiteController as rentalLeaveSiteCtrl',
             size: 'lg',
             resolve: {
-              orderMachineList: function () {
-                return orderMachineList;
-              },
+              // orderMachineList: function () {
+              //   return orderMachineList;
+              // },
               orderId: function () {
                 return orderId;
               }
             }
           });
-        })
     }
 
   }

@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="col-lg-2 col-md-2">
-        <div class="info-card"ng-click="machineCurrentStatusCtr.machineStatusLoadData(8)">
+        <div class="info-card" ng-click="machineCurrentStatusCtr.machineStatusLoadData(8)">
           <div class="info-title">{{'rentalTransportation'|translate}}</div>
           <div class="info-data" ng-bind="machineCurrentStatusCtr.transportCount"></div>
         </div>
@@ -57,91 +57,97 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid table-wrapper" style="margin-top: 15px" ng-style="machineCurrentStatusCtr.baseBoxContainer">
-      <div class="form-group table-form-group tab-content-search"><!--搜索框-->
+    <div class="container-fluid table-wrapper" style="margin-top: 15px">
+      <div class="row info-box-container"><!--搜索框-->
         <form class="form-horizontal" role="form">
-        <div class="form-group">
-
-          <label class="control-label font-nomal col-md-1 ">{{'rentalMachineID'|translate}}:</label>
-          <div class="col-md-2">
-            <input class="form-control" type="text" name="licenseId" id="licenseId" placeholder="{{'rentalMachineID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.licenseId" />
-          </div>
-
-          <label class="control-label font-nomal col-md-2">{{'rentalDeviceID'|translate}}:</label>
+          <div class="form-group">
+            <label class="control-label font-nomal col-md-1 ">{{'rentalMachineID'|translate}}:</label>
             <div class="col-md-2">
-            <input class="form-control" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"  />
-         </div>
-        </div>
-        <div class="form-group">
-
-            <label  class="control-label font-nomal col-md-1">{{'rentalMachineType'|translate}}:</label>
+              <input class="form-control" type="text" name="licenseId" id="licenseId"
+                     placeholder="{{'rentalMachineID'|translate}}"
+                     ng-model="machineCurrentStatusCtr.searchConditions.licenseId"/>
+            </div>
+            <label class="control-label font-nomal col-md-1">{{'rentalDeviceID'|translate}}:</label>
             <div class="col-md-2">
-              <ui-select  ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required  >
-                <ui-select-match allow-clear="true"  placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}</ui-select-match>
-                <ui-select-choices repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
+              <input class="form-control" name="deviceNum" id="deviceNum" placeholder="{{'rentalDeviceID'|translate}}"
+                     ng-model="machineCurrentStatusCtr.searchConditions.deviceNum"/>
+            </div>
+            <label class="control-label font-nomal col-md-1">{{'rentalMachineType'|translate}}:</label>
+            <div class="col-md-2">
+              <ui-select ng-model="machineCurrentStatusCtr.searchConditions.type" ng-disabled="disabled" required>
+                <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">
+                  {{$select.selected.name | translate}}
+                </ui-select-match>
+                <ui-select-choices
+                  repeat="machineType.id as machineType in machineCurrentStatusCtr.deviceTypeList | propsFilter: {name: $select.search}">
                   <div ng-bind-html="machineType.name | highlight: $select.search | translate"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
-
-
-            <label class="control-label font-nomal col-md-2 ">{{'address'|translate}}:</label>
+            <label class="control-label font-nomal col-md-1 ">{{'address'|translate}}:</label>
             <div class="col-md-2">
-              <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}" ng-model="machineCurrentStatusCtr.searchConditions.address" />
+              <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}"
+                     ng-model="machineCurrentStatusCtr.searchConditions.address"/>
             </div>
-          <div class=" col-lg-4 col-md-4" >
-            <div class=" col-lg-9 col-md-9">
-              <button class="btn btn-default pull-right" type="button" ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}</button>
-
-              <button class="btn btn-primary pull-right margin_right5" type="button" ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">{{'query'|translate}}</button>
-            </div>
-            <div class=" col-lg-3 col-md-3">
-              <button class="btn btn-primary ng-binding pull-right" type="button" ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}</button>
-            </div>
-
-
           </div>
-
-        </div>
-
-
-
-
-
+          <div class="form-group">
+            <div class="col-md-offset-9 col-md-3">
+              <div class="col-md-8">
+                <button class="btn btn-default" type="button"
+                        ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}
+                </button>
+                <button class="btn btn-primary" type="button"
+                        ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">
+                  {{'query'|translate}}
+                </button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-primary ng-binding pull-right" type="button"
+                        ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
-
-      <div class="col-lg-12">
-        <div class="">
-          <div class="table table-responsive  "><!--表格框-->
-            <table ng-table="machineCurrentStatusCtr.customConfigParams" class="table table-striped">
-              <tr ng-repeat="row in $data">
-                <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'">{{row.machineLicenseId}}</td>
-                <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{row.deviceNum}}</td>
-                <td data-title="'type'|translate" sortable="'deviceType'">{{row.deviceType | translate}}</td>
-                <!--<td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.manufacture|translate}}</td>-->
-                <td data-title="'highlyType'|translate" sortable="'heightType'">{{row.heightType | translate}}</td>
-                <td data-title="'rentalCurrentLocate'|translate" sortable="'currentAddress'">{{row.currentAddress}}</td>
-                <td data-title="'rentalTotalWorkingHours'|translate" sortable="'totalDurationConverter'">{{row.totalDurationConverter | convertToMins}}</td>
-                <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">{{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss':machineCurrentStatusCtr.timezone}}</td>
-                <td data-title="'operation'|translate" style="text-align: center" >
-                  <button type="button" class="btn  btn-danger btn-xs" ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}</button>
-                <button type="button" class="btn btn-default btn-xs" ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">{{'equipmentMonitoring'|translate}}</button>
-
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class=""><!--分页框-->
-            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
-                            total-items="machineCurrentStatusCtr.totalElements"
-                            ng-change="machineCurrentStatusCtr.loadMachineData(rentalMachineMngCtr.currentPage-1,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.totalElements,machineCurrentStatusCtr.searchConditions)"
-                            max-size="10"
-                            ng-model="rentalMachineMngCtr.currentPage"
-                            items-per-page="machineCurrentStatusCtr.pageSize"
-                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-            </uib-pagination>
-          </div>
+      <div class="row" ng-style="machineCurrentStatusCtr.baseBoxContainer">
+        <div class="col-lg-12 table table-responsive  "><!--表格框-->
+          <table ng-table="machineCurrentStatusCtr.customConfigParams"
+                 class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="row in $data">
+              <td data-title="'rentalMachineID'|translate" sortable="'machineLicenseId'">{{row.machineLicenseId}}</td>
+              <td data-title="'rentalDeviceID'|translate" sortable="'deviceNum'">{{row.deviceNum}}</td>
+              <td data-title="'type'|translate" sortable="'deviceType'">{{row.deviceType | translate}}</td>
+              <!--<td data-title="'rentalBrand'|translate" sortable="'rentalBrand'|translate">{{row.manufacture|translate}}</td>-->
+              <td data-title="'highlyType'|translate" sortable="'heightType'">{{row.heightType | translate}}</td>
+              <td data-title="'rentalCurrentLocate'|translate" sortable="'currentAddress'">{{row.currentAddress}}</td>
+              <td data-title="'rentalTotalWorkingHours'|translate" sortable="'totalDurationConverter'">
+                {{row.totalDurationConverter | convertToMins}}
+              </td>
+              <td data-title="'rentalTimeofLastDataTransmitted'|translate" sortable="'lastDataUploadTime'">
+                {{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss':machineCurrentStatusCtr.timezone}}
+              </td>
+              <td data-title="'operation'|translate" style="text-align: center">
+                <button type="button" class="btn  btn-danger btn-xs"
+                        ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">
+                  {{'equipmentMonitoring'|translate}}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-12"><!--分页框-->
+          <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                          total-items="machineCurrentStatusCtr.totalElements"
+                          ng-change="machineCurrentStatusCtr.loadMachineData(rentalMachineMngCtr.currentPage-1,machineCurrentStatusCtr.pageSize,machineCurrentStatusCtr.totalElements,machineCurrentStatusCtr.searchConditions)"
+                          max-size="10"
+                          ng-model="rentalMachineMngCtr.currentPage"
+                          items-per-page="machineCurrentStatusCtr.pageSize"
+                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+          </uib-pagination>
         </div>
       </div>
     </div>

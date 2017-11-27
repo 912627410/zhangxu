@@ -1556,10 +1556,8 @@
   "pleaseChooseTheModeOfOperation":"Please choose the mode of operation",
   "deviceNumNull":"Device number is empty",
 
-
-
-
   "admissionTime":"Admission time",
+
   "exitTime":"Exit time",
   "workingHoursWhenEntry":"Working hours when entry",
   "workingHoursWhenExit":"Working count when exit"
