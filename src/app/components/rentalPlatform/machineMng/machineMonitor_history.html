@@ -7,10 +7,17 @@
 
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.startDateDeviceData" is-open="deviceCurrentInfoCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" min-date="deviceCurrentInfoCtrl.minDate" max-date="deviceCurrentInfoCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.startDateDeviceData" is-open="vm.startDateOpenStatusDeviceData.opened"
+               datepicker-options="vm.dateOptions" min-date="vm.minDate"
+               max-date="vm.maxDate" ng-required="true"
+               current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
+          <button type="button" class="btn btn-default"
+                  ng-click="vm.startDateOpenDeviceData($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
       </p>
     </div>
     <div class="col-md-1">
@@ -18,15 +25,18 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="deviceCurrentInfoCtrl.endDateDeviceData" is-open="deviceCurrentInfoCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="deviceCurrentInfoCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+               ng-model="vm.endDateDeviceData" is-open="vm.endDateOpenStatusDeviceData.opened"
+               datepicker-options="vm.dateOptions" ng-required="true"
+               current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="deviceCurrentInfoCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="vm.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
       </p>
     </div>
     <div class="col-md-1">
-      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="deviceCurrentInfoCtrl.getDeviceData(0,8,null,deviceCurrentInfoCtrl.totalElements,true,
-                deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.deviceinfo.versionNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="vm.getDeviceData(0,8,null,vm.totalElements,true,
+                vm.deviceinfo.deviceNum,vm.deviceinfo.versionNum,vm.startDateDeviceData,vm.endDateDeviceData)">{{'confirm'|translate}}</button>
     </div>
 
 
