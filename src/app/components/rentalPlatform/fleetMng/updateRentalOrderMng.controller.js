@@ -146,7 +146,7 @@
       vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
       vm.rentalOrder.qb = vm.qbOption.quantity;
-      if(vm.zbOption.quantity){
+      if(vm.jcOption.quantity){
         vm.rentalOrderMachineTypeVos.push(vm.jcOption)
       }
       if( vm.qbOption.quantity){
