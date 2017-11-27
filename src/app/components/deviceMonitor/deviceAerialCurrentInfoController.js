@@ -5,14 +5,14 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,permissions,$window,
-                                               Notification, serviceResource, SEND_SMS_EMCLOUD_URL, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
-                                               VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL,
+    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,ngTableDefaults,$window,
+                                               Notification, serviceResource, DEVCE_LOCK_DATA_PAGED_QUERY, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
+                                               VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL, NgTableParams,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
                                                languages,SET_MQTT_RETURN_TIME_URL,SEND_MQTT_READ_URL,SEND_MQTT_WRITE_URL,GET_MQTT_RETURN_TIME,SEND_MQTT_OPERATED_URL,
                                                DEVCEINFO_CALIBRATION_PARAMETER_URL,CALIBRATION_PARAMETER_EXPORT,WEBSOCKET_URL,$uibModal,SEND_SET_IP_SMS_URL,SEND_SET_INTER_SMS_URL,
                                                SEND_SET_START_TIMES_SMS_URL,SEND_SET_WORK_HOURS_SMS_URL,SEND_ACTIVE_SMS_URL,SEND_UN_ACTIVE_LOCK_SMS_URL,SEND_LOCK_SMS_URL,
-                                               SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL) {
+                                               SEND_UN_LOCK_SMS_URL,SEND_SET_SAMPLING_TIME_SMS_URL,SEND_SET_CAT_PHONE_NUMBER_SMS_URL,SEND_TERMINAL_RESET_SMS_URL,MQTT_SEND_RECORD_PAGED_QUERY) {
         var vm = this;
         vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
         var userInfo = $rootScope.userInfo;
@@ -2857,10 +2857,10 @@
             var rspData = serviceResource.restCallService(restURL, "GET");
             rspData.then(function (data) {
               if(data.code == -1 && deviceinfo.versionNum == "11") {
-                Notification.error('车辆参数为空,请稍后刷新');
+                Notification.warning(languages.findKey("NoVehicleParameter"));
                 // 写ECU参数类型
-                var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
-                var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+                // var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=0";
+                // var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
               } else if(data.code == 0) {
                 vm.parameterValue = data.content;
                 vm.parameterValue.bBrakeDelay = data.content.bBrakeDelay*100;
@@ -3096,10 +3096,10 @@
           var rspData = serviceResource.restCallService(restURL, "GET");
           rspData.then(function (data) {
             if(data.code == -1 && deviceinfo.versionNum == "11") {
-              Notification.error('车辆标定参数为空,请稍后刷新');
+              Notification.warning(languages.findKey("NoCalibrationParameter"));
               // 写ECU参数类型
-              var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
-              var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
+              // var writeURL = SEND_MQTT_WRITE_URL + "?type=26&deviceNum=" + deviceinfo.deviceNum + "&content=" + calibrationParameterType;
+              // var restPromise = serviceResource.restCallService(writeURL, "ADD", null);
             } else if(data.code == 0) {
               vm.calibrationParameterValue = data.content;
               vm.processCalibrationParameterData();
@@ -3516,6 +3516,85 @@
         };
       }
 
+      /**
+       * 操作日志
+       * @param versionNum
+       * @param phoneNumber
+         */
+      vm.getLockData = function (versionNum, phoneNumber) {
+        if(versionNum == 'A001') {
+          vm.getOperationLog(1, phoneNumber);
+        }
+      };
+
+      /**
+       * 根据操作方式获取操作日志
+       * @param type    1:短信   2:MQTT
+       * @param phoneNumber
+       * @param deviceNum
+         */
+      vm.getOperationLog = function (type, phoneNumber, deviceNum) {
+        if(type == null || type == "") {
+          Notification.warning(languages.findKey("pleaseChooseTheModeOfOperation"));
+          return;
+        }
+        ngTableDefaults.settings.counts = [];
+        vm.lockDataTable = new NgTableParams({
+          count: 8,
+          sorting: {sendTime: 'desc'}
+        }, {
+          dataset: null
+        });
+        if(type == 1) { //短信
+          var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
+
+          if (phoneNumber&&!angular.isUndefined(phoneNumber)) {
+            restCallURL += "?phoneNumber=" + $filter('uppercase')(phoneNumber);
+          }else {
+            Notification.warning(languages.findKey('theDeviceDoesNotBindTheSimCard'));
+            return;
+          }
+          var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+          deviceLockDataPromis.then(function (data) {
+            if (data.length == 0) {
+              Notification.warning(languages.findKey('noSendTextMessages'));
+            } else {
+              vm.lockDataTable = new NgTableParams({
+                count: 8,
+                sorting: {sendTime: 'desc'}
+              }, {
+                dataset: data
+              });
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getFail'));
+          })
+        } else if(type == 2) { // MQTT
+          var restURL = MQTT_SEND_RECORD_PAGED_QUERY;
+          if (deviceNum&&!angular.isUndefined(deviceNum)) {
+            restURL += "?deviceNum=" + $filter('uppercase')(deviceNum);
+          } else {
+            Notification.warning(languages.findKey("deviceNumNull"));
+            return;
+          }
+          var operationLogPromis = serviceResource.restCallService(restURL, "QUERY");
+          operationLogPromis.then(function (data) {
+            if (data.length == 0) {
+              Notification.warning(languages.findKey('noData'));
+            } else {
+              vm.lockDataTable = new NgTableParams({
+                count: 8,
+                sorting: {sendTime: 'desc'}
+              }, {
+                dataset: data
+              });
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('getFail'));
+          })
+        }
+
+      }
     }
 })();
 

@@ -162,6 +162,7 @@
     .constant('SEND_MQTT_OPERATED_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTOperated') //MQTT发布操作命令
     .constant('SEND_MQTT_WRITE_URL', SERVER_BASE_URL + 'mqttSend/sendMQTTWrite') //MQTT发布写命令
     .constant('GET_MQTT_RETURN_TIME', SERVER_BASE_URL + 'deviceMonitor/getMQTTRetrunTime') // 得到MQTT相关回传采样时间
+    .constant('MQTT_SEND_RECORD_PAGED_QUERY', SERVER_BASE_URL + 'mqttSend/getMQTTSendRecord') // 查询MQTT发送记录
 
     //键盘数据相关
     .constant('VIEW_BIND_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getBindInputMsg')
