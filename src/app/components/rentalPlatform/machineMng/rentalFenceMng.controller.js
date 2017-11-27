@@ -87,21 +87,21 @@
         options: {scrollwheel: false, scaleControl: true},
         markers:[]
       };
-      uiGmapGoogleMapApi.then(function(maps) {
+      /*uiGmapGoogleMapApi.then(function(maps) {
         console.log("init google map success");
       });
       if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
         vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
-      } else {
+      } else {*/
         serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
-      }
+      /*}*/
       //console.log(vm.map)
       vm.refreshMap = function () {
-        if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
+        /*if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
           vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
-        }else{
+        }else{*/
           serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
-        }
+        /*}*/
       }
     };
 

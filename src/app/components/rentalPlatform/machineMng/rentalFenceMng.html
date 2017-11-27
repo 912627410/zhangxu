@@ -89,11 +89,11 @@
         </div>
           <div class="col-lg-12" style="position: relative;" ng-if="rentalFenceMngController.radioListType == 'map'">
             <div class="box-body" style="min-height: 600px" id="fenceMap"></div>
-            <div class="box-body" ng-if="userInfo!=null && userInfo.userdto.countryCode!='ZH'">
+            <!--<div class="box-body" ng-if="userInfo!=null && userInfo.userdto.countryCode!='ZH'">
               <ui-gmap-google-map center="rentalFenceMngController.fenceMap.center" zoom="rentalFenceMngController.fenceMap.zoom" draggable="false"
                                   options="rentalFenceMngController.fenceMap.options">
               </ui-gmap-google-map>
-            </div>
+            </div>-->
           </div>
           <div class="col-lg-12"  ng-if="rentalFenceMngController.radioListType == 'list'"><!--分页框-->
             <uib-pagination total-items="rentalFenceMngController.page.totalElements"
