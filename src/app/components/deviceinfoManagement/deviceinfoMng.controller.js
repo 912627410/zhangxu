@@ -11,7 +11,7 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
-    // vm.org = {label: ""};    //所属组织
+    vm.org =$rootScope.orgChart[0];    //所属组织
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -212,7 +212,6 @@
 
     //批量设置为已处理
     vm.batchMoveOrg = function () {
-      vm.org = {label: ""};    //所属组织
       if (vm.selected.length == 0) {
         Notification.warning({message: '请选择要调拨的设备', positionY: 'top', positionX: 'center'});
         return;
@@ -221,12 +220,6 @@
 
       if (vm.allot== null||vm.allot.label=="") {
         Notification.warning({message: '请选择要调拨的组织', positionY: 'top', positionX: 'center'});
-
-        return;
-      }
-
-      if (vm.allot.label== vm.org.label) {
-        Notification.warning({message: '相同组织不可以进行调拨', positionY: 'top', positionX: 'center'});
 
         return;
       }
