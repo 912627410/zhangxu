@@ -53,15 +53,23 @@
     /**
      * 获取车辆状态集合
      */
-    vm.getMachineStatus = function () {
-      var machineStatePromise = machineService.getMachineStateList();
-      machineStatePromise.then(function (data) {
-        vm.machineStateList = data;
-        console.log(vm.machineStateList)
-      }, function (reason) {
-        Notification.error(languages.findKey('rentalGetDataError'));
-      })
-    };
+    // vm.getMachineStatus = function () {
+    //   var machineStatePromise = machineService.getMachineStateList();
+    //   machineStatePromise.then(function (data) {
+    //     vm.machineStateList = data;
+    //     console.log(vm.machineStateList)
+    //   }, function (reason) {
+    //     Notification.error(languages.findKey('rentalGetDataError'));
+    //   })
+    // };
+
+    vm.machineStateList = [
+      {id: 6, code: 6, machineState: "维修"},
+      {id: 7, code: 7, machineState: "待租"},
+      {id: 8, code: 8, machineState: "运输"},
+      {id: 9, code: 9, machineState: "出租"},
+      {id: 10, code: 10, machineState: "报停"}
+    ]
 
      //车辆品牌
     vm.getDeviceManufacture=function () {
@@ -103,7 +111,7 @@
 
 
     vm.getDeviceType();
-    vm.getMachineStatus();
+    // vm.getMachineStatus();
     vm.getMachinePowerType();
     vm.getHeightType()
     vm.getDeviceManufacture();
