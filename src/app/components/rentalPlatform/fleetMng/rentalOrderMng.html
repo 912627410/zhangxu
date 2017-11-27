@@ -113,7 +113,6 @@
                 </ui-select-match>
                 <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngCtrl.retanlOrderStatusList">
                   <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search |translate"></div>
-
                 </ui-select-choices>
               </ui-select>
             </div>
@@ -141,7 +140,6 @@
           <table ng-table="rentalOrderMngCtrl.tableParams"
                  class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <<<<<<< HEAD
               <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.orderNumber}}</td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
                 {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
@@ -159,7 +157,6 @@
                 {{rentalOrder.location }}
               </td>
               <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
-                =======
               <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
                 {{rentalOrder.orderNumber}}
               </td>
@@ -179,16 +176,13 @@
                 {{rentalOrder.location }}
               </td>
               <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
-                >>>>>>> d7b2c95444ee751820a2a05d804ec13ce472da54
                 <span ng-if="rentalOrder.jc==null">0</span>
                 <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
                 <span ng-if="rentalOrder.zb==null">0</span>
                 <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
                 <span ng-if="rentalOrder.qb==null">0</span>
                 <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
-
               </td>
-
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
                         ng-click="rentalOrderMngCtrl.update(rentalOrder.id)">{{'rentalEdit'| translate}}
