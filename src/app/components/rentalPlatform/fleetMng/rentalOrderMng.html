@@ -1,5 +1,4 @@
 <div class="machine-content" resize>
-  <!--currentState begin-->
   <div id="currentState" class="container-fluid">
     <section class="renatlcontent-header">
       <h1>
@@ -12,26 +11,25 @@
     </section>
     <div class="row info-box-container">
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus()">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
-
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(1)">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(3)">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.fininshOrders}}</div>
         </div>
@@ -143,6 +141,7 @@
           <table ng-table="rentalOrderMngCtrl.tableParams"
                  class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
+              <<<<<<< HEAD
               <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.orderNumber}}</td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
                 {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
@@ -160,6 +159,27 @@
                 {{rentalOrder.location }}
               </td>
               <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
+                =======
+              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
+                {{rentalOrder.orderNumber}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
+                {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
+                | date:'yyyy-MM-dd'}}
+              </td>
+              <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
+                {{rentalOrder.rentalCustomer.name }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">
+                {{rentalOrder.statusDesc |translate }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
+                {{rentalOrder.location }}
+              </td>
+              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
+                >>>>>>> d7b2c95444ee751820a2a05d804ec13ce472da54
                 <span ng-if="rentalOrder.jc==null">0</span>
                 <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
                 <span ng-if="rentalOrder.zb==null">0</span>
@@ -188,16 +208,20 @@
         </div>
         <div class="col-lg-12"><!--分页框-->
           <uib-pagination total-items="rentalOrderMngCtrl.page.totalElements"
-                          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
-                          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber"
-                          items-per-page="rentalOrderMngCtrl.page.size"
-                          class="pagination-sm" boundary-links="true" rotate="false"
-                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
-                          last-text="&raquo;"></uib-pagination>
+          <<<<<<< HEAD
+          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
+          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber"
+          items-per-page="rentalOrderMngCtrl.page.size"
+          =======
+          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,rentalOrderMngCtrl.rentalOrder)"
+          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
+          >>>>>>> d7b2c95444ee751820a2a05d804ec13ce472da54
+          class="pagination-sm" boundary-links="true" rotate="false"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+          last-text="&raquo;"></uib-pagination>
           </uib-pagination>
         </div>
       </div>
     </div>
   </div>
-  <!--currentState end-->
 </div>
