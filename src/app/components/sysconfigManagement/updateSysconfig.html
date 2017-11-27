@@ -31,6 +31,14 @@
       </div>
 
       <div class="form-group">
+        <label for="cacheStatus" class="col-sm-3 control-label">是否缓存</label>
+        <div class="col-sm-9">
+          <input type="text" id="cacheStatus" class="form-control" placeholder="是否缓存"
+                 ng-model="updateSysconfigController.sysconfig.cacheStatus" name="cacheStatus" typeahead-show-hint="true"/>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="description" class="col-sm-3 control-label">参数描述</label>
         <div class="col-sm-9">
           <textarea rows="3" id="description" class="form-control" placeholder="参数描述"
