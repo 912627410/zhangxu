@@ -2425,6 +2425,54 @@
       </div>
     </uib-tab>
 
+    <!--操作日志-->
+    <uib-tab select="deviceAerialCurrentInfoController.getLockData(deviceAerialCurrentInfoController.deviceinfo.versionNum, deviceAerialCurrentInfoController.deviceinfo.sim.phoneNumber)" presentation-href="dashboard:deviceMonitor:operationLog">
+      <uib-tab-heading>{{'operationLog'|translate}}</uib-tab-heading>
+      <div class="modal-body">
+        <div class="box-body form-horizontal">
+          <div class="row form-group" ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum!='A001'">
+            <div class="col-md-2 col-md-offset-7 text-right">
+              <label for="operationMethod" class="control-label">{{'operationMethod'|translate}}</label>
+            </div>
+            <div class="col-md-2">
+              <select name="operationMethod" class="form-control" id="operationMethod" ng-model="deviceAerialCurrentInfoController.operationMethod">
+                <option value="1">{{'sms'|translate}}</option>
+                <option value="2">MQTT</option>
+              </select>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-primary" ng-click="deviceAerialCurrentInfoController.getOperationLog(deviceAerialCurrentInfoController.operationMethod,
+                  deviceAerialCurrentInfoController.deviceinfo.sim.phoneNumber, deviceAerialCurrentInfoController.deviceinfo.deviceNum)">{{'query'|translate}}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table ng-table="deviceAerialCurrentInfoController.lockDataTable" class="table table-striped">
+                  <tr>
+                    <th class="text-nowrap">{{'releaseTime'|translate}}</th>
+                    <th class="text-nowrap">{{'operator'|translate}}</th>
+                    <th class="text-nowrap">{{'operatorName'|translate}}</th>
+                    <th class="text-nowrap">{{'operationType'|translate}}</th>
+                    <th class="text-nowrap">{{'operationResult'|translate}}</th>
+                    <th class="text-nowrap">{{'terminalIP'|translate}}</th>
+                  </tr>
+                  <tr ng-repeat="deviceLockDataList in $data">
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.operator}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.lastname}}{{deviceLockDataList.firstname}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsType}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsStatus}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.clientIp}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+
     <!--电子围栏-->
     <uib-tab select="deviceAerialCurrentInfoController.initScopeMapTab(deviceAerialCurrentInfoController.deviceinfo)" presentation-href="dashboard:deviceMonitor:electronicFence">
       <uib-tab-heading  >
