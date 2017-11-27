@@ -13,7 +13,7 @@
     .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalFenceMngController($uibModal, $window, $confirm, languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
+  function rentalFenceMngController($uibModal, $window, $confirm, $rootScope,uiGmapGoogleMapApi,languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
                                     RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT,RENTAL_ORG_FENCE_URL) {
     var vm = this;
     vm.pageSize = 12;
@@ -76,6 +76,34 @@
     };
     vm.query(null, null, null, null);
 
+    /*默认展示列表*/
+    vm.radioListType = "list";
+
+    /*初始化地图*/
+    vm.initFenceMap=function(){
+      vm.fenceMap = {
+        center:  {latitude: 32.115170, longitude:102.355140},
+        zoom: 8,
+        options: {scrollwheel: false, scaleControl: true},
+        markers:[]
+      };
+      uiGmapGoogleMapApi.then(function(maps) {
+        console.log("init google map success");
+      });
+      if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
+        vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
+      } else {
+        serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
+      }
+      //console.log(vm.map)
+      vm.refreshMap = function () {
+        if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
+          vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
+        }else{
+          serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
+        }
+      }
+    };
 
     /**
      * 分状态统计
@@ -99,6 +127,7 @@
     }
 
     vm.fenceStatusCount()
+
     /**
      * 新建围栏
      */

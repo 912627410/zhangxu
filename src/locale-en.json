@@ -1401,6 +1401,7 @@
   "failedToGetDeviceData":"Failed to get device data",
   "kilometre":"Kilometre",
   "traveled":"Traveled",
+  "numbers":"Numbers",
 
 
   "越野剪叉式":"RT Scissor",
@@ -1553,10 +1554,14 @@
   "NoVehicleParameter":"No vehicle parameter data, please get the latest data",
   "NoCalibrationParameter":"No vehicle calibration parameter data, please get the latest data",
   "pleaseChooseTheModeOfOperation":"Please choose the mode of operation",
-  "deviceNumNull":"Device number is empty"
+  "deviceNumNull":"Device number is empty",
 
 
 
 
+  "admissionTime":"Admission time",
+  "exitTime":"Exit time",
+  "workingHoursWhenEntry":"Working hours when entry",
+  "workingHoursWhenExit":"Working count when exit"
 
 }

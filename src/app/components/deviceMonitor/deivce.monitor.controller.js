@@ -14,6 +14,7 @@
                                    DEVCE_HIGHTTYPE,DEVCE_MF,DEVCE_POWERTYPE,
                                    DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification,DEVCEMONITOR_EXCELEXPORT,uiGmapGoogleMapApi) {
     var vm = this;
+    vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
 
     //modal打开是否有动画效果
     vm.animationsEnabled = true;
@@ -27,7 +28,6 @@
         }else{
           serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList,3);
         }
-
       })
     }
 
