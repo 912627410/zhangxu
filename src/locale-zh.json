@@ -1556,7 +1556,13 @@
   "enterDate":"请录入生产日期",
   "connectServerTime":"连接平台用时",
   "wireStatus":"天线状态",
-  "gpsPowerStatus":"GPS电源检测"
+  "gpsPowerStatus":"GPS电源检测",
+  "operationMethod":"操作方式",
+  "sms":"短信",
+  "NoVehicleParameter":"没有车辆参数数据,请获取最新数据",
+  "NoCalibrationParameter":"没有车辆标定参数数据,请获取最新数据",
+  "pleaseChooseTheModeOfOperation":"请选择操作方式",
+  "deviceNumNull":"设备号为空"
 
 
 }

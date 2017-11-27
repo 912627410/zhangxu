@@ -1547,7 +1547,14 @@
   "enterDate":"Please enter the production date",
   "connectServerTime":"Time to connect the platform",
   "wireStatus":"Wire status",
-  "gpsPowerStatus":"GPS power detection"
+  "gpsPowerStatus":"GPS power detection",
+  "operationMethod":"Operation method",
+  "sms":"SMS",
+  "NoVehicleParameter":"No vehicle parameter data, please get the latest data",
+  "NoCalibrationParameter":"No vehicle calibration parameter data, please get the latest data",
+  "pleaseChooseTheModeOfOperation":"Please choose the mode of operation",
+  "deviceNumNull":"Device number is empty"
+
 
 
 
