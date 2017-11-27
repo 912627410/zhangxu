@@ -84,7 +84,7 @@
     }
 
     /*加载前8条*/
-    vm.getLocateDateByDate(0, vm.pageSize, vm.pageSize, 'locate_date,desc', vm.deviceInfo.deviceNum, new Date(1970, 0, 1, 0, 0, 0), new Date());
+    //vm.getLocateDateByDate(0, vm.pageSize, vm.pageSize, 'locate_date,desc', vm.deviceInfo.deviceNum, new Date(1970, 0, 1, 0, 0, 0), new Date());
 
   }
 })();
