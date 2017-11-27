@@ -74,6 +74,7 @@
           <div title="{{sysconfig.value}}">{{sysconfig.value| limitTo: 30}}{{sysconfig.value.length > 30? '...' : ''}}</div></td>
         <td class="text-nowrap"  data-title="'参数描述'" sortable="'description'" >
           <div title="{{sysconfig.description}}">{{sysconfig.description| limitTo: 15}}{{sysconfig.description.length > 15? '...' : ''}}</div></td>
+        <td class="text-nowrap"  data-title="'是否缓存'" sortable="'cacheStatus'" >{{sysconfig.cacheStatus | numberToBoolean}}</td>
         <td class="text-nowrap" data-title="'操作'" align="center">
           <button type="button" class="btn btn-default btn-xs"
                   presentation-href="config:sysconfigOper"
