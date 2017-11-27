@@ -146,10 +146,17 @@
       vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
       vm.rentalOrder.qb = vm.qbOption.quantity;
+      if(vm.zbOption.quantity){
+        vm.rentalOrderMachineTypeVos.push(vm.jcOption)
+      }
+      if( vm.qbOption.quantity){
+        vm.rentalOrderMachineTypeVos.push(vm.qbOption)
+      }
+
+      if(vm.zbOption.quantity){
+        vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+      }
       vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
-      vm.rentalOrderMachineTypeVos.push(vm.zbOption)
-      vm.rentalOrderMachineTypeVos.push(vm.jcOption)
-      vm.rentalOrderMachineTypeVos.push(vm.qbOption)
       vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
