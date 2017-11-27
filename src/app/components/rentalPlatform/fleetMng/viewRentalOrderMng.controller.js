@@ -44,7 +44,7 @@
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-
+        console.log(data);
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -52,11 +52,9 @@
           dataset: data.content
         });
       }, function (reason) {
-        Notification.error(languages.findKey('faGetWorkData'));
       });
     };
     vm.carlist(null,vm.rentalOrder.id);
-
 
     // vm.rentalOrder={};
 
