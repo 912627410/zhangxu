@@ -12,26 +12,25 @@
     </section>
     <div class="row info-box-container">
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus()">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.totalOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
-
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
           <div class="info-title">{{'rentalInProgress'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(1)">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(3)">
           <div class="info-title">{{'rentalComplete'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.fininshOrders}}</div>
         </div>
@@ -173,7 +172,7 @@
         </div>
         <div class="col-lg-12"><!--分页框-->
           <uib-pagination total-items="rentalOrderMngCtrl.page.totalElements"
-                          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
+                          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,rentalOrderMngCtrl.rentalOrder)"
                           max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
                           class="pagination-sm" boundary-links="true" rotate="false"
                           previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>

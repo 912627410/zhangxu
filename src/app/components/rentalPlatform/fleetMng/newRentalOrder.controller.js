@@ -169,39 +169,24 @@
     }
 
 
-    vm.ok = function (rentalOrder,jcOption,zbOption,qbOption) {
+    vm.ok = function (rentalOrder) {
       if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
 
-      if(zbOption.quantity){
-        vm.rentalOrder.jc = zbOption.quantity;
-        vm.rentalOrderMachineTypeVos.push(jcOption)
-      }else{
-        vm.rentalOrder.jc = 0;
+      vm.rentalOrder.jc = vm.jcOption.quantity;
+      vm.rentalOrder.zb= vm.zbOption.quantity;
+      vm.rentalOrder.qb = vm.qbOption.quantity;
+      if(vm.zbOption.quantity){
+        vm.rentalOrderMachineTypeVos.push(vm.jcOption)
       }
        if( vm.qbOption.quantity){
-         vm.rentalOrder.qb = qbOption.quantity;
-         vm.rentalOrderMachineTypeVos.push(qbOption)
-       }else{
-         vm.rentalOrder.qb = 0;
+         vm.rentalOrderMachineTypeVos.push(vm.qbOption)
        }
-       if(vm.zbOption.quantity){
-         vm.rentalOrder.zb= vm.zbOption.quantity;
-         vm.rentalOrderMachineTypeVos.push(zbOption)
-       }else{
-        vm.rentalOrder.zb = 0;
-      }
 
-        // if(vm.zbOption!= null){
-        //   vm.rentalOrderMachineTypeVos.push(vm.zbOption)
-        // }
-        // if(vm.jcOption!= null){
-        //   vm.rentalOrderMachineTypeVos.push(vm.jcOption)
-        // }
-        // if(vm.qbOption!= null){
-        //   vm.rentalOrderMachineTypeVos.push(vm.qbOption)
-        // }
+       if(vm.zbOption.quantity){
+         vm.rentalOrderMachineTypeVos.push(vm.zbOption)
+       }
 
         vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;

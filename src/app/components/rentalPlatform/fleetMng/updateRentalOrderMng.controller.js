@@ -35,10 +35,10 @@
         vm.jcOption = vm.orderMachineTypeVoList[i]
       }
       if(vm.orderMachineTypeVoList[i].deviceType.id == 2){
-        vm.zbOption = vm.orderMachineTypeVoList[i]
+        vm.qbOption = vm.orderMachineTypeVoList[i]
       }
       if(vm.orderMachineTypeVoList[i].deviceType.id == 3){
-        vm.qbOption = vm.orderMachineTypeVoList[i]
+        vm.zbOption = vm.orderMachineTypeVoList[i]
       }
     }
 

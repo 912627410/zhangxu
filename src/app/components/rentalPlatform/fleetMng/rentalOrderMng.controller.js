@@ -37,7 +37,7 @@
       Notification.error(languages.findKey('getStatusFail'));
     })
 
-
+    //每种状态订单数量
     var groupByStatusListPromise = serviceResource.restCallService(RENTAL_ORDER_GROUP_BY_STATUS,"GET");
     groupByStatusListPromise.then(function (data) {
       var groupByStatusList= data.content;
@@ -58,6 +58,15 @@
       Notification.error(languages.findKey('getStaGroupFail'));
     })
 
+    vm.queryOrderByStatus = function (status) {
+     vm.rentalOrder = {status:{value:''}}
+      if(status){
+        vm.rentalOrder.status.value = status;
+        vm.query(0,DEFAULT_MINSIZE_PER_PAGE,null,vm.rentalOrder)
+      }else{
+        vm.query(0,DEFAULT_MINSIZE_PER_PAGE,null,vm.rentalOrder)
+      }
+    }
 
 
 
