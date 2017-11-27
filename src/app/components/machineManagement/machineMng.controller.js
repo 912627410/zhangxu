@@ -12,7 +12,7 @@
   function machineMngController($rootScope, $scope,$http, $uibModal, $confirm,$filter,permissions, NgTableParams,treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE, MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL, MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT,MACHINE_BIND_DEVICE_RECORD) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    // vm.org = {label: ""};    //所属组织
+    vm.org =$rootScope.orgChart[0];    //所属组织
     vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
@@ -287,7 +287,6 @@
 
     //批量设置为已处理
     vm.batchMoveOrg = function () {
-      vm.org = {label: ""};    //所属组织
       if (vm.selected.length == 0) {
         Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
 
@@ -301,11 +300,7 @@
         return;
       }
 
-      if(vm.allot.label==vm.org.label){
-        Notification.warning({message: '相同组织不可以进行调拨', positionY: 'top', positionX: 'center'});
 
-        return;
-      }
 
       var moveOrg = {ids: vm.selected, "orgId": vm.allot.id};
 
