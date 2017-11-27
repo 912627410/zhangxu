@@ -16,7 +16,6 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = rentalFence;
-    vm.rentalOrgFence.radius = 100; //设置的半径,默认100米
 
     if ($stateParams.id != null) {
       var restCall = RENTAL_ORG_FENCE_URL + "?id=" + $stateParams.id;
