@@ -106,12 +106,12 @@
           </div>
           <div class="col-md-11">
 
-            <label class="col-md-1 control-label font-nomal">数量:</label>
+            <label class="col-md-1 control-label font-nomal">数量(<span class="text-red">*</span>):</label>
             <div class="col-md-2">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <label class="col-md-1 control-label font-nomal">高度(<span class="text-red">*</span>):</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.jcOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -122,7 +122,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}(<span class="text-red">*</span>):</label>
             <div class="col-md-2">
               <ui-select name="deviceManufacture" ng-model="newRentalOrderCtrl.jcOption.deviceManufacture" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name|translate}}
@@ -133,7 +133,7 @@
               </ui-select>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}:</label>
+            <label class="col-md-1 control-label font-nomal">{{'dayPrice'|translate}}(<span class="text-red">*</span>):</label>
             <div class="col-md-2">
               <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" style="width: 50px"/>
             </div>

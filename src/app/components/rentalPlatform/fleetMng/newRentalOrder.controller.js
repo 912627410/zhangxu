@@ -173,6 +173,25 @@
       if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
+      // if(vm.jcOption.quantity!= null||vm.zbOption.quantity!= null||vm.qbOption.quantity!= null){
+      //   if(vm.jcOption.quantity!= null){
+      //     if(vm.jcOption.deviceHeightType == null||vm.jcOption.deviceManufacture == null||vm.jcOption.price ==null){
+      //       alert(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //   }
+      //   if(vm.zbOption.quantity!= null){
+      //     if(vm.zbOption.deviceHeightType == null||vm.zbOption.deviceManufacture == null||vm.zbOption.price==null){
+      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //   }
+      //   if(vm.qbOption.quantity!= null){
+      //     if(vm.qbOption.deviceHeightType == null||vm.qbOption.deviceManufacture == null||vm.qbOption.price==null){
+      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
+      //     }
+      //
+      //   }
+      // }
+
 
       vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
