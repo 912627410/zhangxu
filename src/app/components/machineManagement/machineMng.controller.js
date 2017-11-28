@@ -46,7 +46,7 @@
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
       }
 
-      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
+      if(null != vm.org&&null != vm.org.id&&undefined != vm.org&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.org.id;
       }
 
