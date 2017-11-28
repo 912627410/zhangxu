@@ -10,17 +10,17 @@
 
   /** @ngInject */
 
-  function customerListController($scope, $uibModalInstance,$uibModal,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,languages) {
+  function customerListController($scope, $uibModalInstance,$uibModal,NgTableParams,ngTableDefaults,DEFAULT_MINSIZE_PER_PAGE,treeFactory, serviceResource,RENTAL_CUSTOMER_PAGE_URL, Notification,languages) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     vm.query = function (page, size, sort, customer) {
       var restCallURL = RENTAL_CUSTOMER_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 

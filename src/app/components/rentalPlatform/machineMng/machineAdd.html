@@ -81,7 +81,7 @@
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
               </ui-select-match>
-              <ui-select-choices repeat="devicePowerType in vm.devicePowerTypeList">
+              <ui-select-choices repeat="devicePowerType.id as devicePowerType  in vm.devicePowerTypeList">
                 <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
               </ui-select-choices>
             </ui-select>

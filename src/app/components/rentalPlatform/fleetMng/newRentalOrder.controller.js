@@ -12,6 +12,7 @@
   /** @ngInject */
   function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages) {
     var vm = this;
+    vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrder={};
     var path="/rental/order";
     //订单车辆类型 List
@@ -207,7 +208,8 @@
          vm.rentalOrderMachineTypeVos.push(vm.zbOption)
        }
 
-        vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
+        //订单所属组织为客户的所属组织
+        vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;
