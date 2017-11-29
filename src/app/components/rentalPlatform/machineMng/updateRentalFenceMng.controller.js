@@ -95,7 +95,7 @@
         /*var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近*/
         var localCenterAddr=[,];
         if (zoomsize == null || zoomsize == undefined) {
-          zoomsize = 5;
+          zoomsize = 4;
         }
         if(longitude==null||longitude==undefined){
           longitude=103.39;
@@ -188,7 +188,7 @@
         map.on('click', function (e) {
           //如果地图上有圆,重新绘制
           if (circle != null) {
-            vm.initMap("newOrderMap", 14)
+            vm.initMap("newOrderMap", vm.scopeMap.getZoom(),e.lnglat.getLng(), e.lnglat.getLat())
           }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();

@@ -81,28 +81,29 @@
 
     /*初始化地图*/
     vm.initFenceMap=function(){
-      vm.fenceMap = {
-        center:  {latitude: 32.115170, longitude:102.355140},
-        zoom: 8,
-        options: {scrollwheel: false, scaleControl: true},
-        markers:[]
-      };
+      // vm.fenceMap = {
+      //   center:  {latitude: 32.115170, longitude:102.355140},
+      //   zoom: 8,
+      //   options: {scrollwheel: false, scaleControl: true},
+      //   markers:[]
+      // };
       /*uiGmapGoogleMapApi.then(function(maps) {
         console.log("init google map success");
       });
       if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
         vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
       } else {*/
-        serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
+      serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
       /*}*/
       //console.log(vm.map)
-      vm.refreshMap = function () {
+      // vm.refreshMap = function () {
         /*if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
           vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
         }else{*/
-          serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
+          // serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
         /*}*/
-      }
+      // }
+      /*vm.refreshMap();*/
     };
 
     /**

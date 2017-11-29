@@ -450,10 +450,10 @@
       refreshMapWithFenceInfo: function (mapId,fenceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
-          if (!AMap) {
-            location.reload(false);
-          }
-          var amapRuler, amapScale, toolBar,overView,circleEditor;
+          // if (!AMap) {
+          //   location.reload(false);
+          // }
+          var amapRuler, amapScale, toolBar,overView;
           var localZoomSize = 4;  //默认缩放级别
           if (zoomsize){
             localZoomSize = zoomsize;
@@ -505,43 +505,43 @@
             map.addControl(overView);
           });
           //在地图中画圆的插件
-          map.plugin(["AMap.CircleEditor"], function () {
-            circleEditor = new AMap.CircleEditor({
-              visible: true //初始化隐藏鹰眼
-            });
-            map.addControl(circleEditor);
-          });
+          // map.plugin(["AMap.CircleEditor"], function () {
+          //   circleEditor = new AMap.CircleEditor({
+          //     visible: true //初始化隐藏鹰眼
+          //   });
+          //   map.addControl(circleEditor);
+          // });
           //读取所有设备的gps信息，home map使用
           if ($rootScope.userInfo ) {
-            if(fenceList == null){
-              var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
-              rspdata.then(function (data) {
-                var deviceGPSInfo = data.content;  //返回的数组列表
-                var markers =[];
-                for (var i = 0; i < deviceGPSInfo.length; i++) {
-                  if (deviceGPSInfo[i].amaplatitudeNum != null) {
-                    var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
-                  }
-                  if (deviceGPSInfo[i].amaplongitudeNum != null) {
-                    var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
-                  }
-                  if (latitude != null && longitude != null) {
-                    // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
-                    var marker="assets/images/orangeMarker.png";
-
-                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
-                  }
-                }
-                //是否以点聚合的方式显示
-                if(aggregation){
-                  aggregationShow(map, markers);
-                }
-              }, function (reason) {
-                map.clearMap();
-                Notification.error(languages.findKey('failedToGetDeviceInformation'));
-              })
-            }
-            else{
+            // if(fenceList == null){
+            //   var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
+            //   rspdata.then(function (data) {
+            //     var deviceGPSInfo = data.content;  //返回的数组列表
+            //     var markers =[];
+            //     for (var i = 0; i < deviceGPSInfo.length; i++) {
+            //       if (deviceGPSInfo[i].amaplatitudeNum != null) {
+            //         var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
+            //       }
+            //       if (deviceGPSInfo[i].amaplongitudeNum != null) {
+            //         var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
+            //       }
+            //       if (latitude != null && longitude != null) {
+            //         // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
+            //         var marker="assets/images/orangeMarker.png";
+            //
+            //         markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
+            //       }
+            //     }
+            //     //是否以点聚合的方式显示
+            //     if(aggregation){
+            //       aggregationShow(map, markers);
+            //     }
+            //   }, function (reason) {
+            //     map.clearMap();
+            //     Notification.error(languages.findKey('failedToGetDeviceInformation'));
+            //   })
+            // }
+            // else{
               var markers =[];
               var drawcircle=function(long,lat,radius){
                 var circle = new AMap.Circle({
@@ -575,7 +575,7 @@
                 aggregationShow(map, markers);
               }
 
-            }
+            //}
           }
         })
       },

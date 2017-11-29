@@ -67,7 +67,7 @@
      * @param mapId mapId
      * @returns {{geocoder: *, zoomsize: *, map}}
      */
-    function initAmapMap(zoomsize, mapId) {
+    function initAmapMap(zoomsize, mapId,longitude,latitude) {
       //初始化地图对象
       if (!AMap) {
         location.reload(false);
@@ -78,8 +78,17 @@
       var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近
 
       if (zoomsize == null || zoomsize == undefined) {
-        zoomsize = 4;
+        zoomsize = 14;
       }
+      if(longitude==null||longitude==undefined){
+        longitude=103.39;
+        //设置中心点大概在兰州附近
+      }
+      if(latitude==null||latitude==undefined){
+        latitude=36.9;
+        //设置中心点大概在兰州附近
+      }
+      localCenterAddr=[longitude,latitude]
       //初始化地图对象
       var map = new AMap.Map(mapId, {
         resizeEnable: true,
@@ -136,6 +145,27 @@
         });
         map.addControl(circleEditor);
       });
+
+      //构造地点查询类
+      map.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
+        var autoOptions = {
+          city: "北京",
+          input: "tipinput"
+        };
+        var auto = new AMap.Autocomplete(autoOptions);
+        var placeSearch = new AMap.PlaceSearch({
+          city: '北京',
+          map: map
+        });
+        AMap.event.addListener(auto, "select", function (e) {
+          placeSearch.search(e.poi.name, function (status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              vm.placeSearchCallBack(result);
+            }
+          });
+        });
+      });
+
       return {geocoder: geocoder, zoomsize: zoomsize, map: map};
     }
 
@@ -144,41 +174,20 @@
      *
      * @param zoomsize
      */
-    vm.initMap = function (mapId,zoomsize) {
+    vm.initMap = function (mapId,zoomsize,longitude,latitude) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
-        var __ret = initAmapMap(zoomsize, mapId);
+        var __ret = initAmapMap(zoomsize, mapId,longitude,latitude);
         var geocoder = __ret.geocoder;
         zoomsize = __ret.zoomsize;
         var map = __ret.map;
 
-
-        //构造地点查询类
-        map.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
-          var autoOptions = {
-            city: "北京",
-            input: "tipinput"
-          };
-          var auto = new AMap.Autocomplete(autoOptions);
-          var placeSearch = new AMap.PlaceSearch({
-            city: '北京',
-            map: map
-          });
-          AMap.event.addListener(auto, "select", function (e) {
-            placeSearch.search(e.poi.name, function (status, result) {
-              if (status === 'complete' && result.info === 'OK') {
-                vm.placeSearchCallBack(result);
-              }
-            });
-          });
-        });
-
         //当点击地图的时候
         map.on('click', function (e) {
-          //如果地图上有圆,重新绘制
-          if (circle != null) {
-            vm.initMap("newOrderMap",4)
-          }
+          /*//如果地图上有圆,重新绘制
+          if (circle != null) {*/
+            vm.initMap("newOrderMap",vm.scopeMap.getZoom(),e.lnglat.getLng(), e.lnglat.getLat())
+          // }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();
           vm.rentalOrgFence.latitude = e.lnglat.getLat();
