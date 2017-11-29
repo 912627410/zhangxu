@@ -175,14 +175,14 @@
       if(vm.zbOption.quantity){
         vm.rentalOrderMachineTypeVos.push(vm.zbOption)
       }
-      vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
+      //订单所属组织为客户的所属组织
+      vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
       vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
       vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
       vm.addRentalOrderOption.orderMachineVoList = null;
 
-      // vm.rentalOrder.org=vm.customer.org; //TODO ,客户所属组织发生了变化,是否需要更新原始订单呢? by riqian.ma 20170829
 
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
       rspdata.then(function (data) {

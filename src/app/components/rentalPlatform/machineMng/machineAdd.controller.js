@@ -348,6 +348,7 @@
       machinePromis.then(function (data) {
         console.log(data);
         $uibModalInstance.close(data.content);
+        Notification.success('新建车辆信息成功');
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })

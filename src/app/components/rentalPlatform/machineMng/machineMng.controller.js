@@ -11,7 +11,7 @@
     .controller('machineMngControllerRental', machineMngControllerRental);
 
   /** @ngInject */
-  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,languages,machineService,rentalService, AMAP_PLACESEARCH_URL,USER_MACHINE_TYPE_URL,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_HIGHTTYPE) {
+  function machineMngControllerRental($scope,$rootScope,$uibModalInstance,machine,serviceResource,languages,machineService,rentalService, AMAP_PLACESEARCH_URL,Notification,ENGINE_TYPE_LIST_URL,RENTAL_MACHINE_NEW,MACHINE_DEVICETYPE_URL,DEVCE_HIGHTTYPE) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
@@ -33,9 +33,9 @@
     vm.updateMachine=function () {
       var machinePromis = serviceResource.restCallService(RENTAL_MACHINE_NEW, "UPDATE", vm.machine);
       machinePromis.then(function (data) {
-        console.log(data)
-        $uibModalInstance.close(data.content);
 
+        $uibModalInstance.close(data.content);
+        Notification.success('修改车辆信息成功');
       }, function (reason) {
         Notification.error(languages.findKey('rentalGetDataError'));
       })
