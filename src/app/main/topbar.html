@@ -1,6 +1,6 @@
-<header class="main-header" style="height:50px">
-  <a ui-sref="home" class="logo navbar-static-top" ng-controller="MainController as mainCtrl" style="background-color: #367fa9!important;" >
-    <img ng-src='{{logo}}' alt='{{userInfo.userdto.organizationDto.label | translate}}' height="30">
+<header class="main-header main-header-height">
+  <a ui-sref="home" class="logo navbar-static-top logo-navbar-static-top" ng-controller="MainController as mainCtrl">
+    <img ng-src='{{logo}}' alt='{{userInfo.userdto.organizationDto.label | translate}}'>
   </a>
 
   <nav class="navbar navbar-static-top" role="navigation">
@@ -9,11 +9,11 @@
     </a>
 
     <a class="sidebar-toggle center" role="button" ng-click="changeLanguage('zh')">
-      <img src="assets/images/pic-01.jpg" width="17" height="10" style="margin-top: -5px;">&nbsp;中文
+      <img src="assets/images/pic-01.jpg" class="translate-top">&nbsp;中文
     </a>
 
     <a class="sidebar-toggle center" role="button" ng-click="changeLanguage('en')">
-      <img src="assets/images/pic-02.jpg" width="17" height="10" style="margin-top: -5px;">&nbsp;English
+      <img src="assets/images/pic-02.jpg" class="translate-top">&nbsp;English
     </a>
 
     <a class="sidebar-toggle center" role="button" ui-sref="home.appDownloadPage">
@@ -23,33 +23,33 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <li class="user user-menu" ng-if="userInfo == null">
-          <a ui-sref="login" style="padding: 15px 15px;">
+          <a ui-sref="login"  class="login-sref">
             <i class="glyphicon glyphicon-user"></i>
             <span>{{ 'login' | translate }}</span>
           </a>
         </li>
         <li class="dropdown notifications-menu" ng-if="userInfo != null">
-          <a ui-sref="home.notification" class="dropdown-toggle" data-toggle="dropdown" style="padding: 15px 15px;">
+          <a ui-sref="home.notification" class="dropdown-toggle login-sref" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning">{{notificationNumber}}</span>
           </a>
         </li>
 
         <li ui-sref="home.profile" role="button" ng-if="userInfo">
-          <a style="padding: 15px 15px;">
+          <a class="login-sref">
             <i class="glyphicon glyphicon-user">
               <span>{{userInfo.userdto.ssn}}</span>
             </i>
           </a>
         </li>
         <li role="button" ng-if="userInfo" ng-controller="profileController as profileCtrl">
-          <a ng-click="profileCtrl.updatePassword(userInfo)" style="padding: 15px 15px;">
+          <a ng-click="profileCtrl.updatePassword(userInfo)" class="login-sref">
             <i class="glyphicon glyphicon-lock"></i>
             <span>修改密码</span>
           </a>
         </li>
         <li ui-sref="login" role="button">
-          <a ng-click="mainCtrl.logout()" ng-if="userInfo" style="padding: 15px 15px;">{{'logout'|translate}}</a>
+          <a ng-click="mainCtrl.logout()" ng-if="userInfo" class="login-sref">{{'logout'|translate}}</a>
         </li>
       </ul>
     </div>
