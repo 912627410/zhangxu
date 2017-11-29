@@ -7,7 +7,6 @@
 
   /** @ngInject */
   function runBlock($rootScope, $state, $stateParams,SYSTEM_VERSION, $uibModalStack, serviceResource,ORG_TREE_JSON_DATA_URL,$window,$log,Notification,Idle) {
-
     $rootScope.SYSTEM_VERSION = SYSTEM_VERSION;
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
@@ -27,7 +26,6 @@
     if ($window.sessionStorage["notificationNumber"]) {
       $rootScope.notificationNumber = $window.sessionStorage["notificationNumber"];
     }
-
 
     //小挖车辆编号规则
     if ($window.sessionStorage["SMALL_EXCAVATOR_MODEL"]) {
@@ -66,7 +64,6 @@
     $rootScope.formatCustom = "yyyy-M!-d!";
     $rootScope.formatCustomTime = "yyyy-M!-d! HH:mm:ss";
     $rootScope.formatCustomMonth = "yyyy-M!";
-
 
   }
 

@@ -1,5 +1,5 @@
 /* global malarkey:false, moment:false */
-(function() {
+(function () {
   'use strict';
   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
 
@@ -16,7 +16,7 @@
     .constant('DEFAULT_DEVICE_DATA_SORT_BY', 'recordTime,desc')    //读取设备数据时的默认排序规则
     .constant('DEFAULT_DEVICE_DATA_SORT_BY_ASC', 'recordTime,asc')    //读取设备数据时的默认排序规则,升序
     .constant('DEFAULT_DEVICE_WARNING_DATA_SORT_BY', 'warningTime,desc')    //读取设备报警数据时的默认排序规则
-    .constant('DEFAULT_DEVICE_LOCK_DATA_SORT_BY','sendTime,desc')     //读取锁车短信的默认排序规则
+    .constant('DEFAULT_DEVICE_LOCK_DATA_SORT_BY', 'sendTime,desc')     //读取锁车短信的默认排序规则
     .constant('DEFAULT_NOTIFICATION_SORT_BY', 'recordTime,desc')    //读取提醒数据时的默认排序规则
     .constant('UPDATE_FILE_DATA_BY', 'createTime,desc')   //读取升级文件时的默认排序规则
     .constant('UPDATE_RECORD_SORT_BY', 'recordTime,desc') //读取设备升级记录时的默认排序规则
@@ -49,7 +49,7 @@
     .constant('DEVICEREPORT_EXPORT_URL', SERVER_BASE_URL + 'deviceReport/excelExport')   //deviceReport导出
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
-    .constant('DEVCE_LOCK_DATA_PAGED_QUERY',SERVER_BASE_URL+'device/locksms')//分页查询设备锁车数据url
+    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/locksms')//分页查询设备锁车数据url
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码
     .constant('SUPER_RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/superpassword')   //管理员修改用户密码
     .constant('USERINFO_URL', SERVER_BASE_URL + 'user/userinfo')   //用户基本信息
@@ -70,8 +70,8 @@
 
 
     //车辆管理相关
-    .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
-    .constant('MACHINE_LOANPAGE_URL',SERVER_BASE_URL + 'machine/loanMachinePage') //车辆信息分页
+    .constant('MACHINE_PAGE_URL', SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
+    .constant('MACHINE_LOANPAGE_URL', SERVER_BASE_URL + 'machine/loanMachinePage') //车辆信息分页
     .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //车辆基本信息
     .constant('MACHINE_MOVE_ORG_URL', SERVER_BASE_URL + 'machine/moveOrg')   //车辆调拨
     .constant('MACHINE_MOVE_FLEET_URL', SERVER_BASE_URL + 'machine/moveFleet')   //车辆借调
@@ -80,7 +80,7 @@
     .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
     .constant('MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL', SERVER_BASE_URL + 'machine/uploadTemplateDownload')   //车辆导入模板下载
     .constant('MACHINE_UPLOAD_URL', SERVER_BASE_URL + 'machine/upload')   //车辆批量导入
-    .constant('MACHINE_STORAGE_URL',SERVER_BASE_URL+"machine/getStorage")
+    .constant('MACHINE_STORAGE_URL', SERVER_BASE_URL + "machine/getStorage")
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //车辆管理数据批量导出
     .constant('MACHINEANDDEVCE_ORG_JUDGE', SERVER_BASE_URL + 'machine/machineAndDeviceOrgJudge')   //判断设备所属组织与车辆所属组织是否一致
     .constant('MACHINE_ENGINE_TYPE', SERVER_BASE_URL + 'machine/machineEngineType') //判断发动机类型
@@ -88,10 +88,10 @@
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
     .constant('SYS_CONFIG_LIST_URL', SERVER_BASE_URL + 'config/sysconfigList')//系统参数List
-    .constant('SYS_CONFIG_PAGE_URL',SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
+    .constant('SYS_CONFIG_PAGE_URL', SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
 
     //sim卡管理相关
-    .constant('SIM_PAGE_URL',SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页
+    .constant('SIM_PAGE_URL', SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页
     .constant('SIM_URL', SERVER_BASE_URL + 'sim/sim')   //sim基本信息
     .constant('SIM_UPLOAD_URL', SERVER_BASE_URL + 'sim/upload')   //sim批量导入
     .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //sim基本信息
@@ -131,9 +131,9 @@
     .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
-    .constant('SMS_SEND_CUSTOMIZED_URL',SERVER_BASE_URL + 'sms/sendCustomizedSMS')
-    .constant('SMS_SEND_SETALARMFUNC_URL',SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
-    .constant('SMS_SEND_SETSERIALNUM_URL',SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
+    .constant('SMS_SEND_CUSTOMIZED_URL', SERVER_BASE_URL + 'sms/sendCustomizedSMS')
+    .constant('SMS_SEND_SETALARMFUNC_URL', SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
+    .constant('SMS_SEND_SETSERIALNUM_URL', SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
 
 
     //键盘数据相关
@@ -145,7 +145,6 @@
 
 
     .constant('VIEW_KEYBOARD_MSG_URL', SERVER_BASE_URL + 'device/keyboard')   //得到键盘输入数据
-
 
 
     .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
@@ -180,7 +179,6 @@
     // 燃油配置相关
     .constant('FUEL_CONFIG_PAGE_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigpage')   //燃油配置查询
     .constant('FUEL_CONFIG_OPER_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfig')   //燃油配置CRUD
-
 
 
     .constant('ORG_TYPE_URL', SERVER_BASE_URL + 'config/orgTypeList')   //组织类型查询
@@ -246,19 +244,19 @@
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
 
-    .constant("START_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
-    .constant("SALES_HEAT_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
-    .constant("AVG_WORK_HOUR_QUERY_MONTH",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_QUARTER",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_ALL",'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/all?produceType=')  //按车型查询总平均工作小时数
+    .constant("START_HEAT_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
+    .constant("SALES_HEAT_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
+    .constant("AVG_WORK_HOUR_QUERY_MONTH", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_QUARTER", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_DATE", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_ALL", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/all?produceType=')  //按车型查询总平均工作小时数
 
-    .constant("WORK_DISTRIBUTE_TIME_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workTime')  //机器作业时间分布按照累计作业时间
-    .constant("WORK_DISTRIBUTE_DAYS_QUERY",'https://iotserver2.nvr-china.com/slice/rest/distribute/workDays')  //机器作业时间分布按照天数
+    .constant("WORK_DISTRIBUTE_TIME_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/distribute/workTime')  //机器作业时间分布按照累计作业时间
+    .constant("WORK_DISTRIBUTE_DAYS_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/distribute/workDays')  //机器作业时间分布按照天数
 
-    .constant("WORK_HOUR_YEAR_QUERY_DATE",'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
-    .constant("SALES_YEAR_QUERY",'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
-    .constant("GET_OWNERSHIP_URL",'https://iotserver2.nvr-china.com/slice/rest/ownerShip/year?ownerShipYear=')  //获取某年每个月的指定类型的保有量
+    .constant("WORK_HOUR_YEAR_QUERY_DATE", 'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
+    .constant("SALES_YEAR_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
+    .constant("GET_OWNERSHIP_URL", 'https://iotserver2.nvr-china.com/slice/rest/ownerShip/year?ownerShipYear=')  //获取某年每个月的指定类型的保有量
     .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
     .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
     .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
@@ -272,8 +270,8 @@
     .constant('INTERVAL_SIGNAL_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/intervalAndSignal') //上传频率与信号质量
     .constant('DEVICE_ANALYSIS_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/deviceAnalysisDetail') //设备分析明细
 
-
-  ;
-
+    //v2 版本接口定义
+    .constant('MACHINE_DISTRIBUTION', SERVER_BASE_URL + 'deviceMonitor/v2/machine-distribution?pageSize=200')
+    .constant('NO_PROCESS_NOTICE', SERVER_BASE_URL + 'user/v2/no-process-notice')
 
 })();
