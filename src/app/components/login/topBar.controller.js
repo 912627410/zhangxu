@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function TopBarController($scope,$rootScope,$translate) {
+  function TopBarController($translate) {
     var vm=this;
 
     /**
