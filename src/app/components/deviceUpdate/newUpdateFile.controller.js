@@ -12,6 +12,7 @@
   function newUpdateFileController($rootScope, $http, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
+    vm.file = null;
 
     $http.get("updateFileType.json").success(function(data){
       vm.fileTypeList1 = JSON.parse(JSON.stringify(data));
@@ -50,11 +51,6 @@
         return;
       }
 
-      if(null == file.fileType1 || null == file.fileType2){
-        Notification.error("请选择适用对象!");
-        return;
-      }
-
       var verArr = file.softVersion.split(".");
       if(file.softVersion * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
         Notification.error("请重新录入软件版本!");
@@ -67,8 +63,11 @@
           versionNum: Math.round(file.versionNum),
           softVersion: Math.round(file.softVersion*100),
           remarks: file.remarks,
-          fileType1:file.fileType1,
-          fileType2:file.fileType2
+          projectTeam:file.projectTeam,
+          projectCode:file.projectCode,
+          customerCode:file.customerCode,
+          hardwareVersion:file.hardwareVersion,
+          upgradeMethod:file.upgradeMethod
         },
         file: file
       });

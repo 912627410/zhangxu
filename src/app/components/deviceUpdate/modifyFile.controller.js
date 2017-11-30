@@ -48,17 +48,16 @@
         Notification.error("请重新录入软件版本");
         return;
       }
-      if(updateFile.fileType1 == null || updateFile.fileType2 == null) {
-        Notification.error("请选择适用对象!");
-        return;
-      }
       var modifyFile = {
           versionNum: updateFile.versionNum,
           softVersion: Math.round(softVersion*100),
           remarks: updateFile.remarks,
         id: updateFile.id,
-        fileType1: updateFile.fileType1,
-        fileType2: updateFile.fileType2
+        projectTeam: updateFile.projectTeam,
+        projectCode: updateFile.projectCode,
+        customerCode: updateFile.customerCode,
+        hardwareVersion: updateFile.hardwareVersion,
+        upgradeMethod: updateFile.upgradeMethod
       };
 
       $confirm({

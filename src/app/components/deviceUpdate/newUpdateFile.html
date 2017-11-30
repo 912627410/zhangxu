@@ -7,7 +7,7 @@
       <div class="form-group">
         <label for="updateFile" class="col-sm-2 control-label">选择文件</label>
         <div class="col-sm-10">
-          <input type="file" ngf-select id="updateFile" ng-model="newUpdateFileCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="updateFile" />
+          <input type="file" ngf-select id="updateFile" ng-model="newUpdateFileCtrl.file" ngf-max-size="2MB" validator="required" ngf-model-invalid="errorFiles" name="updateFile" />
         </div>
       </div>
       <div class="form-group">
@@ -24,23 +24,75 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">适用对象</label>
+        <label class="col-sm-2 control-label">项目组</label>
         <div class="col-sm-10">
-          <select name="fileType1" class="form-control" ng-model="newUpdateFileCtrl.file.fileType1"
-                  ng-change="newUpdateFileCtrl.getFileTypeList2(newUpdateFileCtrl.file.fileType1)"
-                  ng-options="fileType1.value as fileType1.desc for fileType1 in newUpdateFileCtrl.fileTypeList1">
-            <option value="">请选择...</option>
+          <!--<select name="fileType1" class="form-control" ng-model="newUpdateFileCtrl.file.fileType1"-->
+                  <!--ng-change="newUpdateFileCtrl.getFileTypeList2(newUpdateFileCtrl.file.fileType1)"-->
+                  <!--ng-options="fileType1.value as fileType1.desc for fileType1 in newUpdateFileCtrl.fileTypeList1">-->
+            <!--<option value="">请选择...</option>-->
+          <!--</select>-->
+          <select name="projectTeam" class="form-control" ng-model="newUpdateFileCtrl.file.projectTeam" validator="required">
+            <option value="0">老产品</option>
+            <option value="1">GPS</option>
+            <option value="2">仪表盘</option>
+            <option value="3">显示器</option>
           </select>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"></label>
+        <label class="col-sm-2 control-label">项目代号</label>
         <div class="col-sm-10">
-          <select name="fileType2" class="form-control" ng-model="newUpdateFileCtrl.file.fileType2" ng-options="fileType2.value as fileType2.desc for fileType2 in newUpdateFileCtrl.fileTypeList2">
-            <option value="">请选择...</option>
+          <select name="projectCode" class="form-control" ng-model="newUpdateFileCtrl.file.projectCode" validator="required">
+            <option value="0">波士顿</option>
+            <option value="1">波士顿</option>
+            <option value="2">芝加哥</option>
+            <option value="1">马德里</option>
+            <option value="1">维也纳</option>
           </select>
         </div>
+      </div><div class="form-group">
+      <label class="col-sm-2 control-label">客户编码</label>
+      <div class="col-sm-10">
+        <select name="customerCode" class="form-control" ng-model="newUpdateFileCtrl.file.customerCode" validator="required">
+          <option value="0">全部为0</option>
+          <option value="1">2790</option>
+          <option value="2">2490</option>
+          <option value="1">2116</option>
+          <option value="1">1949</option>
+        </select>
       </div>
+    </div><div class="form-group">
+      <label class="col-sm-2 control-label">硬件版本</label>
+      <div class="col-sm-10">
+        <select name="hardwareVersion" class="form-control" ng-model="newUpdateFileCtrl.file.hardwareVersion" validator="required">
+          <option value="0">全部为0</option>
+          <option value="1">VER1</option>
+          <option value="2">VER2</option>
+          <option value="3">VER3</option>
+          <option value="4">VER4</option>
+          <option value="5">VER5</option>
+          <option value="6">VER6</option>
+          <option value="7">VER7</option>
+          <option value="8">VER8</option>
+          <option value="9">VER9</option>
+          <option value="10">VER10</option>
+          <option value="11">VER11</option>
+          <option value="12">VER12</option>
+          <option value="13">VER13</option>
+          <option value="14">VER14</option>
+          <option value="15">VER15</option>
+        </select>
+      </div>
+    </div><div class="form-group">
+      <label class="col-sm-2 control-label">升级方式</label>
+      <div class="col-sm-10">
+        <select name="upgradeMethod" class="form-control" ng-model="newUpdateFileCtrl.file.upgradeMethod" validator="required">
+          <option value="1">GPS自身</option>
+          <option value="2">HY64</option>
+          <option value="3">BIN文件</option>
+        </select>
+      </div>
+    </div>
       <div class="form-group">
         <label for="remarks" class="col-sm-2 control-label">{{'remarks'|translate}}</label>
         <div class="col-sm-10">

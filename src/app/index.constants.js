@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var SERVER_BASE_URL = 'http://192.168.8.190:7895/rest/';
 
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
@@ -272,7 +272,9 @@
     .constant('INTERVAL_SIGNAL_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/intervalAndSignal') //上传频率与信号质量
     .constant('DEVICE_ANALYSIS_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/deviceAnalysisDetail') //设备分析明细
 
-
+    .constant('UPDATE_OBJECT_TREE_JSON_URL', SERVER_BASE_URL + 'config/getUpdateObjectTree')   //升级对象信息,返回树状json代码
+    .constant('UPDATE_OBJECT_URL', SERVER_BASE_URL + 'config/updateObject') // 升级对象管理
+    .constant('UPDATE_OBJECT_BROTHERS', SERVER_BASE_URL + 'config/getUpdateObjectBrothers') // 查询升级对象的兄弟元素
   ;
 
 

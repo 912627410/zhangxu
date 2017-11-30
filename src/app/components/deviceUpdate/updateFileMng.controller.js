@@ -50,12 +50,24 @@
         restCallURL += "&search_LIKE_fileName=" + (vm.queryFileName);
       }
 
-      if(null != vm.queryUpdateFileType1 && vm.queryUpdateFileType1 != ""){
-        restCallURL += "&search_EQ_fileType1=" + vm.queryUpdateFileType1;
+      if(null != vm.queryProjectTeam && vm.queryProjectTeam != ""){
+        restCallURL += "&search_EQ_projectTeam=" + vm.queryProjectTeam;
       }
 
-      if(null != vm.queryUpdateFileType2 && vm.queryUpdateFileType2 != ""){
-        restCallURL += "&search_EQ_fileType2=" + vm.queryUpdateFileType2;
+      if(null != vm.queryProjectCode && vm.queryProjectCode != ""){
+        restCallURL += "&search_EQ_projectCode=" + vm.queryProjectCode;
+      }
+
+      if(null != vm.queryCustomerCode && vm.queryCustomerCode != ""){
+        restCallURL += "&search_EQ_customerCode=" + vm.queryCustomerCode;
+      }
+
+      if(null != vm.queryHardwareVersion && vm.queryHardwareVersion != ""){
+        restCallURL += "&search_EQ_hardwareVersion=" + vm.queryHardwareVersion;
+      }
+
+      if(null != vm.queryUpgradeMethod && vm.queryUpgradeMethod != ""){
+        restCallURL += "&search_EQ_upgradeMethod=" + vm.queryUpgradeMethod;
       }
       restCallURL += "&search_EQ_status=1";
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
@@ -124,8 +136,11 @@
       vm.queryVersionNum = null;
       vm.querySoftVersion = null;
       vm.queryFileName = null;
-      vm.queryUpdateFileType1 = null;
-      vm.queryUpdateFileType2 = null;
+      vm.queryProjectTeam = null;
+      vm.queryProjectCode = null;
+      vm.queryCustomerCode = null;
+      vm.queryHardwareVersion = null;
+      vm.queryUpgradeMethod = null;
     }
 
     //删除

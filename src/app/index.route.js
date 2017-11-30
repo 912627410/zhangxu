@@ -243,6 +243,16 @@
 
         }
       })
+      //设备升级类型管理页面
+      .state('home.updateObjectMng', {
+        url: '/updateObjectMng',
+        views: {
+          'rightside@home': {
+            templateUrl: 'app/components/updateObjectManagement/updateObjectMng.html',
+            controller: 'updateObjectMngController as updateObjectMngCtrl'
+          }
+        }
+      })
       .state('home.machineMove', {
         url: '/machineMove',
         views: {
