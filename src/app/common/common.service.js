@@ -197,9 +197,12 @@
       //上个月份 201705
       getMonth: function(){
         var time = new Date();
-        time.setMonth(time.getMonth() + 1);
         var y = time.getFullYear();
-        var m = time.getMonth() - 1;
+        var m = time.getMonth() ;
+        if (m == 0) {
+          m = 12;
+          y=y-1;
+        }
         var temp;
         m = m < 10 ? '0' + m : m;
         temp = y + '' + m;
