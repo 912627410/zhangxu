@@ -141,23 +141,6 @@
           <table ng-table="rentalOrderMngCtrl.tableParams"
                  class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <td class="text-nowrap" data-title="'id'|translate" sortable="'id'">{{rentalOrder.orderNumber}}</td>
-              <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
-                {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
-              </td>
-              <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
-                | date:'yyyy-MM-dd'}}
-              </td>
-              <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
-                {{rentalOrder.rentalCustomer.name }}
-              </td>
-              <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">
-                {{rentalOrder.statusDesc |translate }}
-              </td>
-              <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
-                {{rentalOrder.location }}
-              </td>
-              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
               <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
                 {{rentalOrder.orderNumber}}
               </td>

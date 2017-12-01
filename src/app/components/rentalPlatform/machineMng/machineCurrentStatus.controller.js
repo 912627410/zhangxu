@@ -33,15 +33,17 @@
      * @param windowHeight
      */
     vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
+      var baseBoxContainerHeight = windowHeight - 50 - 15 - 90 - 15 ;//50 topBar的高,15间距,90msgBox高,15间距,8 预留
       //baseBox自适应高度
       vm.baseBoxContainer = {
         "min-height": baseBoxContainerHeight + "px"
       }
     };
+    //初始化高度
+    vm.adjustWindow($window.innerHeight);
 
-    var machineContent = document.getElementsByClassName('machine-content');
-    machineContent[0].style.height = $window.innerHeight + 'px';
+    // var machineContent = document.getElementsByClassName('machine-content');
+    // machineContent[0].style.height = $window.innerHeight + 'px';
 
     //定义页面导航
     $scope.navs = [{
