@@ -1,22 +1,16 @@
 <div class="machine-content" resize>
- <!-- <nav-btn>
-    <nav-title></nav-title>
-    <nav-list>
-      <nav-item ng-click="machineAlarmInfoCtr.gotoView(item.title)"></nav-item>
-    </nav-list>
-    <nav-overlay></nav-overlay>
-  </nav-btn>-->
+  <section class="content-header">
+    <h1>
+      <small>{{'alarmInformation'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+      <li class="active"><i class="fa fa-bell-o"></i>{{'alarmInformation'| translate}}</li>
+    </ol>
+  </section>
   <!--alarmInfo begin-->
   <div id="alarmInfo" class="container-fluid">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
-        <li class="active"><i class="fa fa-bell-o "></i>{{'alarmInformation'| translate}}</li>
-      </ol>
-    </section>
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
        <div class="info-box  box-light">

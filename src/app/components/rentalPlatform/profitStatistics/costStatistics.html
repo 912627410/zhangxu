@@ -1,15 +1,16 @@
-<div class="profit-content" ng-controller="costStatisticsController as costStatisticsCtr" resize>
-
+<div class="machine-content" resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'costStatistics'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
+      <li class="active"><i class="glyphicon glyphicon-list-alt "></i>{{'costStatistics'| translate}}</li>
+    </ol>
+  </section>
   <div id="Cost" class="container-fluid profitItem">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
-        <li class="active"><i class="glyphicon glyphicon-list-alt "></i>{{'costStatistics'| translate}}</li>
-      </ol>
-    </section>
+
     <div class="row info-box-container">
 
       <div class="col-lg-3 col-md-3 col-xs-3">
@@ -46,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="info-box-container costPic">
+    <div class="info-box-container table-wrapper costPic">
       <form class="form-horizontal" role="form">
         <div class="form-group row">
             <label class="col-md-1 control-label font-nomal">{{'deviceType'| translate}}:</label>
@@ -131,7 +132,7 @@
 
     </form>
     </div>
-    <div class="info-box-container costPic">
+    <div class="info-box-container table-wrapper costPic">
       <div class="row">
         <div class="leftTable col-md-6">
           <div class="table-responsive">

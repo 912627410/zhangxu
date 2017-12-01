@@ -1,14 +1,15 @@
 <div class="machine-content" resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'rentalOrderMng'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
+      <li class="active"><i class="fa fa-file-text-o"></i>{{'rentalOrderMng'| translate}}</li>
+    </ol>
+  </section>
   <div id="currentState" class="container-fluid">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-        <li class="active"><i class="fa fa-file-text-o"></i>{{'rentalOrderMng'| translate}}</li>
-      </ol>
-    </section>
     <div class="row info-box-container">
       <div class="col-lg-3 col-md-3">
         <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus()">

@@ -1,15 +1,15 @@
-<div class="profit-content" ng-controller="incomeStatisticsController as incomeStatisticsCtr" resize>
+<div class="machine-content"  resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'incomeStatistics'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
+      <li class="active"><i class="fa fa-credit-card "></i>{{'incomeStatistics'| translate}}</li>
+    </ol>
+  </section>
   <div id="income" class="container-fluid  profitItem ">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
-        <li class="active"><i class="fa fa-credit-card "></i>{{'incomeStatistics'| translate}}</li>
-      </ol>
-    </section>
-
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
@@ -263,7 +263,7 @@
       </div>
     </div>
 
-    <div class="row incomePic table-wrapper paddingBotom0"  style="margin-top: 15px;">
+    <div class="container-fluid incomePic table-wrapper paddingBotom0"  style="margin-top: 15px;">
       <div class="col-md-6 leftSelect">
         <div class="liBox" >
           <div class="row" ng-show="incomeStatisticsCtr.orderQuery">

@@ -1,15 +1,15 @@
 <div class="machine-content" resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'fenceMng'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
+      <li class="active"><i class="fa fa-circle-o"></i>{{'fenceMng'| translate}}</li>
+    </ol>
+  </section>
   <div id="currentState" class="container-fluid">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-car"></i>{{'vehicleManagement'| translate}}</a></li>
-        <li class="active"><i class="fa fa-file-text-o"></i>{{'fenceMng'|translate}}</li>
-      </ol>
-    </section>
-
     <div class="info-box-container">
       <div class="row">
         <div class="col-lg-3 col-md-3">
@@ -18,7 +18,7 @@
             <div class="info-data">{{rentalFenceMngController.fenceStatus.fenceCount}}</div>
           </div>
         </div>
-<!--        <div class="col-lg-3 col-md-3">
+        <div class="col-lg-3 col-md-3">
           <div class="info-card cost-info-height">
             <div class="info-title">{{'rentalValid'| translate}}</div>
             <div class="info-data">{{rentalFenceMngController.fenceStatus.normalCount}}</div>
@@ -29,7 +29,7 @@
             <div class="info-title">{{'rentalInvalid'| translate}}</div>
             <div class="info-data">{{rentalFenceMngController.fenceStatus.lapseCount}}</div>
           </div>
-        </div>-->
+        </div>
       </div>
     </div>
     <div class=" info-box-container table-wrapper ">
