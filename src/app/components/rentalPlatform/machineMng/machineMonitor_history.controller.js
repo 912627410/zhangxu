@@ -10,7 +10,7 @@
     .controller('machineMonitorHistoryController', machineMonitorHistoryController);
 
   /** @ngInject */
-  function machineMonitorHistoryController($rootScope, $window, $scope, $http, $location, $timeout, $filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY) {
+  function machineMonitorHistoryController($filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY,languages) {
     var vm = this;
     //获取共享数据deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
@@ -99,5 +99,68 @@
     }
 
    // vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate);
+
+
+    vm.getDeviceData = function (page, size, sort,totalElements,newReq, deviceNum,versionNum, startDate, endDate) {
+      var filterTerm;
+      if (deviceNum) {
+        filterTerm = "deviceNum=" + deviceNum;
+      }
+
+      if (versionNum){
+        filterTerm+="&versionNum=" + versionNum;
+      }
+
+      if (startDate) {
+        startDate = serviceResource.getChangeChinaTime(startDate);
+        var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
+        if (filterTerm) {
+          filterTerm += "&startDate=" + startDateFormated
+        }
+        else {
+          filterTerm += "startDate=" + startDateFormated;
+        }
+      } else {
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
+      }
+      if (endDate) {
+        endDate = serviceResource.getChangeChinaTime(endDate);
+        var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
+        if (filterTerm) {
+          filterTerm += "&endDate=" + endDateFormated;
+        }
+        else {
+          filterTerm += "endDate=" + endDateFormated;
+        }
+      } else {
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
+      }
+      if (!newReq){
+        filterTerm += "&totalElements=" + totalElements;
+      }
+      var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
+      deviceDataPromis.then(function (data) {
+          vm.deviceDataList = data.content;
+          vm.deviceDataPage = data.page;
+          vm.deviceDataPageNumber = data.page.number+1 ;
+          vm.totalElements=data.page.totalElements;
+          // vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
+          if (vm.deviceDataList.length == 0) {
+            Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
+          }
+        }, function (reason) {
+          Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
+        }
+      )
+      //vm.refreshDOM();
+    }
+
+
+
+
   }
 })();
