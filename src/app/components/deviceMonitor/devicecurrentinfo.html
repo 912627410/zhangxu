@@ -561,13 +561,21 @@
                     <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">{{'simCardSerialNum'|translate}}</td>
                     <td colspan="3" ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
                   </tr>
-
-                </table>
-                <!--当前位置-->
-                <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
-                    <td>{{'currentPosition'|translate}}</td>
-                    <td class="text-nowrap">{{deviceCurrentInfoCtrl.deviceinfo.address}}  {{'longitude'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}  {{'latitude'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+                    <!--经度-->
+                    <td>{{'longitude'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}}</td>
+                    <!--纬度-->
+                    <td>{{'latitude'|translate}}</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
+                    <!--预留-->
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <!--定位位置-->
+                    <td>{{'locatePosition'|translate}}</td>
+                    <td class="text-nowrap" colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.address}}</td>
                   </tr>
                 </table>
               </div>
@@ -998,6 +1006,7 @@
 
                   <div class="row">
 
+                    <!--设置回传地址-->
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setIp">
                       <div class="box box-success">
                         <div class="box-header">
@@ -1054,6 +1063,7 @@
                       </div>
                     </div>
 
+                    <!--设置回传间隔-->
                     <div class="col-md-6" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setInterval">
                       <div class="box box-success">
                         <div class="box-header">
@@ -1116,8 +1126,7 @@
                       </div>
                     </div>
 
-
-
+                    <!--设置启动次数-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setStartTimes">
                       <div class="box box-success">
                         <div class="box-header">
@@ -1135,7 +1144,7 @@
                           <div class="row">
                             <div class="col-md-6">
                               <input type="text" id="startTimes" class="form-control" placeholder="{{'numberOfStarts'|translate}}"
-                                     validator="number" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes"/>
+                                     validator="number,maxValue=65535" ng-model="deviceCurrentInfoCtrl.startTimes" name="startTimes" max="65535"/>
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
@@ -1149,6 +1158,7 @@
                       </div>
                     </div>
 
+                    <!--设置工作小时数-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
                       <div class="box box-success">
                         <div class="box-header">
@@ -1166,7 +1176,7 @@
                           <div class="row" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
                             <div class="col-md-6">
                               <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
-                                     ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+                                     validator="maxValue=65535" ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
@@ -1181,6 +1191,7 @@
                       </div>
                     </div>
 
+                    <!--绑定-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
                       <div class="box box-danger">
                         <div class="box-header">
@@ -1226,6 +1237,7 @@
                       </div>
                     </div>
 
+                    <!--锁车-->
                     <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
                       <div class="box box-danger">
                         <div class="box-header">
