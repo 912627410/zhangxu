@@ -13,7 +13,7 @@
     .controller('newRentalFenceController', newRentalFenceController);
 
   /** @ngInject */
-  function newRentalFenceController($rootScope, $uibModalInstance,$scope,languages, serviceResource, RENTAL_ORG_FENCE_URL,AMAP_PLACESEARCH_URL,Notification) {
+  function newRentalFenceController($rootScope, $uibModalInstance, $scope, languages, serviceResource, RENTAL_ORG_FENCE_URL, AMAP_PLACESEARCH_URL, Notification) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrgFence = {};
@@ -67,7 +67,7 @@
      * @param mapId mapId
      * @returns {{geocoder: *, zoomsize: *, map}}
      */
-    function initAmapMap(zoomsize, mapId,longitude,latitude) {
+    function initAmapMap(zoomsize, mapId, longitude, latitude) {
       //初始化地图对象
       if (!AMap) {
         location.reload(false);
@@ -80,15 +80,15 @@
       if (zoomsize == null || zoomsize == undefined) {
         zoomsize = 14;
       }
-      if(longitude==null||longitude==undefined){
-        longitude=103.39;
+      if (longitude == null || longitude == undefined) {
+        longitude = 103.39;
         //设置中心点大概在兰州附近
       }
-      if(latitude==null||latitude==undefined){
-        latitude=36.9;
+      if (latitude == null || latitude == undefined) {
+        latitude = 36.9;
         //设置中心点大概在兰州附近
       }
-      localCenterAddr=[longitude,latitude]
+      localCenterAddr = [longitude, latitude]
       //初始化地图对象
       var map = new AMap.Map(mapId, {
         resizeEnable: true,
@@ -97,6 +97,8 @@
         zooms: [3, 18],
         zoom: zoomsize
       });
+
+      vm.map = map;
 
       map.setLang($rootScope.langkey);
 
@@ -174,10 +176,10 @@
      *
      * @param zoomsize
      */
-    vm.initMap = function (mapId,zoomsize,longitude,latitude) {
+    vm.initMap = function (mapId, zoomsize, radius, longitude, latitude) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
-        var __ret = initAmapMap(zoomsize, mapId,longitude,latitude);
+        var __ret = initAmapMap(zoomsize, mapId, longitude, latitude);
         var geocoder = __ret.geocoder;
         zoomsize = __ret.zoomsize;
         var map = __ret.map;
@@ -186,7 +188,7 @@
         map.on('click', function (e) {
           /*//如果地图上有圆,重新绘制
           if (circle != null) {*/
-            vm.initMap("newOrderMap",vm.scopeMap.getZoom(),e.lnglat.getLng(), e.lnglat.getLat())
+          vm.initMap("newOrderMap", vm.scopeMap.getZoom(), vm.rentalOrgFence.radius, e.lnglat.getLng(), e.lnglat.getLat())
           // }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();
@@ -209,7 +211,7 @@
     };
 
     //加载地图
-    vm.initMap("newOrderMap",4);
+    vm.initMap("newOrderMap", 4);
 
 
     /**
@@ -234,7 +236,7 @@
     vm.updateLocationInfo = function (address, location) {
       vm.rentalOrgFence.fenceAddress = address;
       vm.rentalOrgFence.longitude = location[0];//选中的经度
-      vm.rentalOrgFence.latitude= location[1];//选中的维度
+      vm.rentalOrgFence.latitude = location[1];//选中的维度
       $scope.$apply();
     };
 
@@ -276,16 +278,7 @@
      * @param radius
      */
     vm.changeRadius = function (radius) {
-      vm.adjustCircleRadius(radius);
-    };
-
-    /**
-     * 调整半径
-     *
-     * @param radius
-     */
-    vm.adjustCircleRadius = function (radius) {
-      vm.initMap("initMap",vm.scopeMap.getZoom());
+      vm.initMap("newOrderMap", vm.scopeMap.getZoom(), radius, vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
     };
 
   }

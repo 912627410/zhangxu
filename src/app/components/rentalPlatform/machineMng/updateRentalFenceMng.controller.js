@@ -82,7 +82,7 @@
      *
      * @param zoomsize
      */
-    vm.initMap = function (mapId, zoomsize,longitude,latitude) {
+    vm.initMap = function (mapId, zoomsize,radius,longitude,latitude) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
         //初始化地图对象
@@ -188,7 +188,7 @@
         map.on('click', function (e) {
           //如果地图上有圆,重新绘制
           if (circle != null) {
-            vm.initMap("newOrderMap", vm.scopeMap.getZoom(),e.lnglat.getLng(), e.lnglat.getLat())
+            vm.initMap("newOrderMap", vm.scopeMap.getZoom(),vm.rentalOrgFence.radius,e.lnglat.getLng(), e.lnglat.getLat())
           }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();
@@ -211,7 +211,7 @@
     };
 
     //加载地图
-    vm.initMap("newOrderMap", 14,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
+    vm.initMap("newOrderMap", 14,vm.rentalOrgFence.radius,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
 
 
     /**
@@ -287,7 +287,7 @@
      * @param radius
      */
     vm.adjustCircleRadius = function (radius) {
-      vm.initMap("initMap", vm.scopeMap.getZoom());
+      vm.initMap("newOrderMap",vm.scopeMap.getZoom(),radius,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
     };
 
   }
