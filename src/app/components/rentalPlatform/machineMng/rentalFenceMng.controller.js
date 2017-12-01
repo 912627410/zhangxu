@@ -13,8 +13,8 @@
     .controller('rentalFenceMngController', rentalFenceMngController);
 
   /** @ngInject */
-  function rentalFenceMngController($uibModal, $window, $confirm, $rootScope,uiGmapGoogleMapApi,languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
-                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT,RENTAL_ORG_FENCE_URL) {
+  function rentalFenceMngController($uibModal, $window, $confirm, $rootScope, uiGmapGoogleMapApi, languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
+                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT, RENTAL_ORG_FENCE_URL) {
     var vm = this;
     vm.pageSize = 12;
     vm.fenceStatus = {
@@ -51,20 +51,20 @@
       var pageUrl = page || 0;
       var sizeUrl = size || vm.pageSize;
       var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
+      var listrestCallURL =restCallURL+ "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      var maprestCallURL = restCallURL+ "?page=" + pageUrl + '&sort=' + sortUrl;
       if (rentalOrgFence != null) {
         if (rentalOrgFence.fenceName != null && rentalOrgFence.fenceName != undefined) {
-          restCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
+          listrestCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
+          maprestCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
         }
-
         if (rentalOrgFence.fenceAddress != null && rentalOrgFence.fenceAddress != undefined) {
-          restCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
+          listrestCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
+          maprestCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
         }
       }
-
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
+      var listrspData = serviceResource.restCallService(listrestCallURL, "GET");
+      listrspData.then(function (data) {
         vm.tableParams = new NgTableParams({}, {
           dataset: data.content
         });
@@ -73,36 +73,23 @@
       }, function (reason) {
         Notification.error("获取围栏数据失败");
       });
+      var maprspData = serviceResource.restCallService(maprestCallURL, "GET");
+      maprspData.then(function (data) {
+        vm.dataWithoutPage = data.content;
+        serviceResource.refreshMapWithFenceInfo("fenceMap", vm.dataWithoutPage, 4, null, null, true,function () {},true);
+      }, function (reason) {
+        Notification.error("获取围栏数据失败");
+      });
     };
-    vm.query(null, null, null, null);
 
     /*默认展示列表*/
     vm.radioListType = "list";
 
+    vm.query(null, null, null, null);
+
     /*初始化地图*/
-    vm.initFenceMap=function(){
-      vm.fenceMap = {
-        center:  {latitude: 32.115170, longitude:102.355140},
-        zoom: 8,
-        options: {scrollwheel: false, scaleControl: true},
-        markers:[]
-      };
-      /*uiGmapGoogleMapApi.then(function(maps) {
-        console.log("init google map success");
-      });
-      if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
-        vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
-      } else {*/
-        serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data, 4,null,null,true);
-      /*}*/
-      //console.log(vm.map)
-      vm.refreshMap = function () {
-        /*if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
-          vm.fenceMap = serviceResource.refreshGoogleMapWithDeviceInfo();
-        }else{*/
-          serviceResource.refreshMapWithFenceInfo("fenceMap", vm.tableParams.data,4,null,null,true);
-        /*}*/
-      }
+    vm.initFenceMap = function () {
+      serviceResource.refreshMapWithFenceInfo("fenceMap", vm.dataWithoutPage, 4, null, null, true,function () {},true);
     };
 
     /**
@@ -138,7 +125,7 @@
         backdrop: false,
         templateUrl: 'app/components/rentalPlatform/machineMng/newRentalFenceMng.html',
         controller: 'newRentalFenceController',
-        controllerAs:'newRentalFenceCtrl',
+        controllerAs: 'newRentalFenceCtrl',
         size: 'lg'
       });
       modalInstance.result.then(function (result) {
@@ -156,8 +143,8 @@
      * @param id
      */
     vm.view = function (id) {
-      var fenceUrl = RENTAL_ORG_FENCE_URL+"?id=" + id;
-      var rspdata = serviceResource.restCallService(fenceUrl,"GET");
+      var fenceUrl = RENTAL_ORG_FENCE_URL + "?id=" + id;
+      var rspdata = serviceResource.restCallService(fenceUrl, "GET");
       rspdata.then(function (data) {
         var rentalFence = data.content;
         var modalInstance = $uibModal.open({
@@ -165,7 +152,7 @@
           backdrop: false,
           templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
           controller: 'updateRentalFenceController',
-          controllerAs:'updateRentalFenceCtrl',
+          controllerAs: 'updateRentalFenceCtrl',
           size: 'lg',
           resolve: {
             rentalFence: function () {
@@ -174,11 +161,11 @@
           }
         });
         modalInstance.result.then(function (result) {
-          var tabList=vm.tableParams.data;
+          var tabList = vm.tableParams.data;
           //更新内容
-          for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.id){
-              tabList[i]=result;
+          for (var i = 0; i < tabList.length; i++) {
+            if (tabList[i].id == result.id) {
+              tabList[i] = result;
             }
           }
         }, function () {
@@ -193,13 +180,18 @@
      * @param id
      */
     vm.delete = function (id) {
-      $confirm({text: languages.findKey('areYouWanttoDeleteIt'), title: languages.findKey('deleteConfirmation'), ok: languages.findKey('confirm'), cancel:languages.findKey('cancel')})
+      $confirm({
+        text: languages.findKey('areYouWanttoDeleteIt'),
+        title: languages.findKey('deleteConfirmation'),
+        ok: languages.findKey('confirm'),
+        cancel: languages.findKey('cancel')
+      })
         .then(function () {
           var restCall = RENTAL_ORG_FENCE_DELETE_STATUS + "?id=" + id;
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");
           restPromise.then(function (data) {
             Notification.error(languages.findKey('delSuccess'));
-            vm.query(null, null, null, null);
+            vm.query(null, vm.pageSize, null, null);
           }, function (reason) {
             Notification.error(languages.findKey('delFail'));
           });
