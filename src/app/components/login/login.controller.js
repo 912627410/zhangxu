@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $scope, $http, $cookies, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, NO_PROCESS_NOTICE, Notification, serviceResource, permissions, Idle, languages) {
+  function LoginController($rootScope, $scope,$state, $http, $cookies, $filter, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, NO_PROCESS_NOTICE, Notification, serviceResource, permissions, Idle, languages) {
     var vm = this;
     var userInfo;
     var count = 0;
@@ -271,7 +271,7 @@
           Notification.error({message: '密码过于简单,请修改', positionX: 'center'});
         }
 
-        $rootScope.$state.go('home');
+        $state.go('home');
       }, function (reason) {
       });
     }
