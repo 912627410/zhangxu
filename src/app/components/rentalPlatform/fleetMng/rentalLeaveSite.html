@@ -13,9 +13,23 @@
 
   <form class="form-horizontal" role="form">
     <div class="form-group">
+      <label class="col-md-1 control-label font-nomal">操作人:</label>
+      <div class="col-md-3 text-left">
+        {{rentalLeaveSiteCtrl.userInfo.userdto.ssn}}
+      </div>
+
+      <label class="col-md-2 control-label font-nomal">退场原因:</label>
+      <div class="col-md-3">
+        <input type="text"  class="form-control"  ng-model=""
+
+               placeholder="退场原因"/>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="col-md-1 control-label font-nomal ">{{'exitTime'|translate}}:</label>
       <div class="col-md-3">
-        <p class="input-group">
+        <div class="input-group">
          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalLeaveSiteCtrl.leaveSiteDate" is-open="rentalLeaveSiteCtrl.leaveSiteDateOpenStatusData.opened"
              datepicker-options="rentalLeaveSiteCtrl.dateOptions" min-date="rentalLeaveSiteCtrl.minDate" max-date="rentalLeaveSiteCtrl.maxDate" ng-required="true"
              current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
@@ -24,7 +38,7 @@
            <i class="glyphicon glyphicon-calendar"></i>
            </button>
          </span>
-        </p>
+        </div>
       </div>
     </div>
     <hr>

@@ -123,7 +123,7 @@
                   </a>
                 </li>
                 <li ng-class="{true: 'active', false: 'inactive'}[machineAlarmInfoCtr.searchConditions.status==true]">
-                  <a class="alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(true)"><i class="fa fa-envelope-o"></i>{{'rentalAllDone'|translate}}
+                  <a class="alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByStatus(true)"><i class="fa fa-envelope-open-o" aria-hidden="true"></i>{{'rentalAllDone'|translate}}
                     <span class="label label-default pull-right linght_center">{{machineAlarmInfoCtr.processedNumber}}</span>
                   </a>
                 </li>
@@ -162,16 +162,16 @@
                   <div class="box-tools">
                     <div class="form-group table-form-group "><!--搜索框-->
                       <div class="row">
-
-                          <label class="col-md-1  font-nomal">{{'rentalMachineID'|translate}}:</label>
+                        <form class="form-horizontal" role="form">
+                          <label class="col-md-1 control-label font-nomal">{{'rentalMachineID'|translate}}:</label>
                           <input class="col-md-2 form-control" placeholder="{{'rentalMachineID'|translate}}"
                                  ng-model="machineAlarmInfoCtr.searchConditions.licenseId"/>
 
-                          <label class="col-md-1 font-nomal">{{'rentalDeviceID'|translate}}:</label>
+                          <label class="col-md-1 control-label font-nomal">{{'rentalDeviceID'|translate}}:</label>
                           <input class="col-md-2 form-control" placeholder="{{'rentalDeviceID'|translate}}"
                                  ng-model="machineAlarmInfoCtr.searchConditions.deviceNum"/>
 
-                          <label class="col-md-1 font-nomal">{{'rentalMsgContent'|translate}}:</label>
+                          <label class="col-md-1 control-label font-nomal">{{'content'|translate}}:</label>
                           <input class="col-md-2 form-control" placeholder="{{'rentalMsgContent'|translate}}"
                                  ng-model="machineAlarmInfoCtr.searchConditions.content"/>
 
@@ -183,7 +183,7 @@
                                   ng-click="machineAlarmInfoCtr.searchConditions=null">{{'reset'|translate}}
                           </button>
                         </div>
-
+                       </form>
                         </div>
                       </div>
                     </div>

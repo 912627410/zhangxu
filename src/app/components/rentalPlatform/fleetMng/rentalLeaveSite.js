@@ -4,9 +4,10 @@
   angular
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
-  function rentalLeaveSiteController($uibModalInstance,Notification,languages,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,serviceResource,NgTableParams,orderId,RENTAL_ORDER_ENTRY_MACHINE_URL) {
+  function rentalLeaveSiteController($rootScope,$uibModalInstance,Notification,languages,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,serviceResource,NgTableParams,orderId,RENTAL_ORDER_ENTRY_MACHINE_URL) {
 
     var vm=this;
+    vm.userInfo = $rootScope.userInfo;
     vm.orderId=orderId;
    /* vm.orderMachineList = orderMachineList;*/
     vm.selected = []; //选中的订单车辆id List

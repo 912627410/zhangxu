@@ -13,46 +13,25 @@
           <div class="col-md-3">
             <input type="text" class="form-control" id="orderNumber" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
           </div>
-        </div>
-        <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
           <div class="col-md-3">
-            <p class="input-group">
+            <div class="input-group">
 
               <input type="text" id="org" class="form-control" placeholder="{{'pleaseSelect'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.rentalCustomer.name" name="customer" validator="required" readonly/>
               <span class="input-group-btn vertical-align_top">
           <!--打开组织树-->
-            <button type="button" class="btn btn-default"  ng-click="newRentalOrderCtrl.selectCustomer('lg')">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-            </p>
+                <button type="button" class="btn btn-default"  ng-click="newRentalOrderCtrl.selectCustomer('lg')">
+                  <i class="fa fa-sitemap"></i>
+                </button>
+              </span>
+            </div>
           </div>
-
-          <label class="col-md-2 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'paymentMethod'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.payType" name="payType" typeahead-show-hint="true" validator="required" />
-          </div>
-
-        </div>
-
-        <div class="form-group">
-          <label class="col-md-2 control-label font-nomal">{{'deposit'|translate}}:</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
-          </div>
-
-          <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
-          </div>
-
         </div>
 
         <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'rentalStartingDate'|translate}}(<span class="text-red">*</span>):</label>
           <div class="col-md-3">
-            <p class="input-group">
+            <div class="input-group">
               <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.startDate" is-open="newRentalOrderCtrl.startDateSetting.status.opened"
                      datepicker-options="newRentalOrderCtrl.startDateSetting.dateOptions"
                      current-text="{{'today'|translate}}"
@@ -65,12 +44,12 @@
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-            </p>
+            </div>
           </div>
 
           <label class="col-md-2 control-label font-nomal">{{'rentalEndDate'|translate}}(<span class="text-red">*</span>):</label>
           <div class="col-md-3">
-            <p class="input-group">
+            <div class="input-group">
               <input type="text" name="endDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.rentalOrder.endDate" is-open="newRentalOrderCtrl.endDateSetting.status.opened"
                      datepicker-options="newRentalOrderCtrl.endDateSetting.dateOptions"
                      current-text="{{'today'|translate}}"
@@ -83,21 +62,39 @@
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
                 </span>
-            </p>
+            </div>
           </div>
         </div>
-
         <div class="form-group">
+
+          <label class="col-md-2 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="{{'paymentMethod'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.payType" name="payType" typeahead-show-hint="true" validator="required" />
+          </div>
           <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
           <div class="col-md-3">
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.rentalOrder.location" name="location" validator="required" typeahead-show-hint="true" />
           </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'deposit'|translate}}:</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
+          </div>
+
+          <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
+          </div>
+        </div>
+
+        <div class="form-group">
 
           <label class="col-md-2 control-label font-nomal">{{'descritpion'|translate}}:</label>
           <div class="col-md-3">
-						<textarea class="form-control" placeholder="{{'descritpion'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.description" name="description" typeahead-show-hint="true">
+						<input type="text" class="form-control" placeholder="{{'descritpion'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.description" name="description" typeahead-show-hint="true" />
 
-              </textarea>
           </div>
         </div>
         <div class="form-group">
