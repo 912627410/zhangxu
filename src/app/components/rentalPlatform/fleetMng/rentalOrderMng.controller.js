@@ -140,7 +140,7 @@
       if (null != rentalOrder) {
 
         if (null != rentalOrder.orderNumber&&rentalOrder.orderNumber!="") {
-          restCallURL += "&search_EQ_orderNumber=" + rentalOrder.orderNumber;
+          restCallURL += "&search_LIKES_orderNumber=" + rentalOrder.orderNumber;
         }
         if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
           restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
