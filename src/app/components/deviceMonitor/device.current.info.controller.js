@@ -1075,11 +1075,16 @@
 
     /*******************远程控制tab***********************/
     vm.serverHost = "iot.nvr-china.com";
+    //矿车TCP协议默认端口号
     if(vm.deviceinfo.versionNum == "2020") {
       vm.serverPort = "7885";
-    } else if(vm.deviceinfo.versionNum == "1001" || vm.deviceinfo.versionNum == "1002") {
+    }
+    //矿车MQTT协议默认端口号
+    else if(vm.deviceinfo.versionNum == "1001" || vm.deviceinfo.versionNum == "1002") {
       vm.serverPort = "7884";
-    } else {
+    }
+    //临工平台矿车(TCP)转物联网平台(MQTT)默认端口号
+    else {
       vm.serverPort = "7883";
     }
     vm.startTimes = vm.deviceinfo.startTimes;
