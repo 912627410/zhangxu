@@ -6,21 +6,21 @@
       </div>
     </div>
     <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalLeaveSiteCtrl.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch(rentalLeaveSiteCtrl.tableParams)">{{'leaveSite'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch()">{{'leaveSite'|translate}}</button>
   </div>
 </div>
 <div class="modal-body">
 
   <form class="form-horizontal" role="form">
     <div class="form-group">
-      <label class="col-md-1 control-label font-nomal">操作人:</label>
+      <label class="col-md-1 control-label font-nomal">{{'operator'|translate}}:</label>
       <div class="col-md-3 text-left">
         {{rentalLeaveSiteCtrl.userInfo.userdto.ssn}}
       </div>
 
       <label class="col-md-2 control-label font-nomal">退场原因:</label>
       <div class="col-md-3">
-        <input type="text"  class="form-control"  ng-model=""
+        <input type="text"  class="form-control"  ng-model="rentalLeaveSiteCtrl.leaveReason"
 
                placeholder="退场原因"/>
       </div>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <hr>
-    <div style="height: 400px;overflow-y: scroll">
+    <div class="row">
       <script id="selectAllHeader" type="text/ng-template">
         <input type="checkbox"  ng-click="rentalLeaveSiteCtrl.updateAllSelection($event)"
                ng-model="rentalLeaveSiteCtrl.checked">

@@ -159,13 +159,10 @@
               <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
                 {{rentalOrder.location }}
               </td>
-              <td class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
-                <span ng-if="rentalOrder.jc==null">0</span>
-                <span ng-if="rentalOrder.jc!=null">{{rentalOrder.jc}}</span> /
-                <span ng-if="rentalOrder.zb==null">0</span>
-                <span ng-if="rentalOrder.zb!=null">{{rentalOrder.zb}}</span> /
-                <span ng-if="rentalOrder.qb==null">0</span>
-                <span ng-if="rentalOrder.qb!=null">{{rentalOrder.qb}}</span>
+              <td style="text-align: center;" class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
+                <span >0</span>/
+                <span >{{rentalOrder.jc + rentalOrder.zb + rentalOrder.qb}}</span>
+
               </td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
@@ -186,14 +183,11 @@
         </div>
         <div class="col-lg-12"><!--分页框-->
           <uib-pagination total-items="rentalOrderMngCtrl.page.totalElements"
-          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,null)"
           max-size="5" ng-model="rentalOrderMngCtrl.pageNumber"
           items-per-page="rentalOrderMngCtrl.page.size"
           ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,rentalOrderMngCtrl.rentalOrder)"
-          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber" items-per-page="rentalOrderMngCtrl.page.size"
           class="pagination-sm" boundary-links="true" rotate="false"
-          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
-          last-text="&raquo;"></uib-pagination>
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
           </uib-pagination>
         </div>
       </div>

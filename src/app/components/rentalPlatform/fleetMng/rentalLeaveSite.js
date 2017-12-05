@@ -97,7 +97,7 @@
         return;
       }
       // var orderMachineIdList =  vm.selectedObj;
-      var rentalOrderMachineOperVo = {"orderMachineIdList": vm.selected, "orderId":vm.orderId,"operationType":1,"recordTime":vm.leaveSiteDate};
+      var rentalOrderMachineOperVo = {"orderMachineIdList": vm.selected, "orderId":vm.orderId,"operationType":1,"recordTime":vm.leaveSiteDate,"reason":vm.leaveReason};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
 
