@@ -43,15 +43,15 @@
       var baseBoxContainerHeight = windowHeight - 50  - 25 - 5 - 90 - 30+20;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距
       //baseBox自适应高度
       vm.baseBoxContainer = {
-        "min-height": baseBoxContainerHeight + "px"
+        "min-height": windowHeight + "px"
       }
-      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45 - 15;//地图上方的header高度
+      var baseBoxMapContainerHeight = windowHeight - 45 - 15;//地图上方的header高度
       //地图的自适应高度
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
-      var rightBoxTopHeight = (baseBoxContainerHeight  - 50) / 2;
+      var rightBoxTopHeight = (windowHeight  - 50) / 2;
       vm.rightBoxTopHeightTemp = rightBoxTopHeight;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
@@ -229,11 +229,11 @@
 
     //main height
     var machineContent = document.getElementsByClassName('machine-content');
-    machineContent[0].style.height = $window.innerHeight + 'px';
+    //machineContent[0].style.height = $window.innerHeight + 'px';
     machineContent[0].style.background = '#fff';
 
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
-    middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
+   // middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
 
     var machineNumlis = document.getElementsByClassName('machineNumlis');
     var lineHeight = vm.rightBoxTopHeightTemp - 30;
@@ -396,8 +396,8 @@
      */
 
     var homePie = echarts.init(document.getElementById('homePie'), '', {
-      width: 'auto',
-      height: vm.rightBoxTopHeightTemp + 'px'
+      width: '65%',
+      height:'65%'
     });
 
     function crateHomePieOption() {
@@ -411,7 +411,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0,160,152)",
-              fontSize: 40
+              fontSize: '150%'
             }
           },
           backgroundColor: '#fff',
