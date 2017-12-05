@@ -13,13 +13,6 @@
           <div class="col-md-3 text-left">
             {{viewRentalOrderCtrl.rentalOrder.orderNumber}}
           </div>
-
-          <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
-          <div class="col-md-3 text-left">
-            {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
-          </div>
-        </div>
-        <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
           <div class="col-md-3">
             <p class="input-group text-left">
@@ -27,12 +20,9 @@
             </p>
           </div>
 
-          <label class="col-md-2 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
-          <div class="col-md-3 text-left">
-            {{viewRentalOrderCtrl.rentalOrder.payType}}
-          </div>
 
         </div>
+
         <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
           <div class="col-md-3">
@@ -48,15 +38,29 @@
             </p>
           </div>
         </div>
+
+        <div class="form-group">
+          <label class="col-md-2 control-label font-nomal">{{'paymentMethod'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.payType}}
+          </div>
+
+          <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
+          <div class="col-md-3 text-left">
+            {{viewRentalOrderCtrl.rentalOrder.location}}
+          </div>
+
+        </div>
+
         <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'deposit'|translate}}:</label>
           <div class="col-md-3 text-left">
             {{viewRentalOrderCtrl.rentalOrder.deposit}}
           </div>
 
-          <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
+          <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
           <div class="col-md-3 text-left">
-            {{viewRentalOrderCtrl.rentalOrder.location}}
+            {{viewRentalOrderCtrl.rentalOrder.totalAmt}}
           </div>
 
         </div>

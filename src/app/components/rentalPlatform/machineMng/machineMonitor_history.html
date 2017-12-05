@@ -1,39 +1,40 @@
 <div class="modal-body" ng-controller="machineMonitorHistoryController as vm">
   <input type="hidden" ng-model="vm.deviceInfo">
   <div class="row">
-    <div class="col-md-1">
-      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
-    </div>
+    <form   class="form-horizontal">
+      <div class="col-md-1">
+        <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
+      </div>
 
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.startDateDeviceData" is-open="vm.startDateOpenStatusDeviceData.opened"
-               datepicker-options="vm.dateOptions" min-date="vm.minDate"
-               max-date="vm.maxDate" ng-required="true"
-               current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default"
-                  ng-click="vm.startDateOpenDeviceData($event)">
-            <i class="glyphicon glyphicon-calendar"></i>
-          </button>
-        </span>
-      </p>
-    </div>
-    <div class="col-md-1">
-      <label class="control-label text-nowrap font-nomal">{{'endDate'|translate}}:</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.endDateDeviceData" is-open="vm.endDateOpenStatusDeviceData.opened"
-               datepicker-options="vm.dateOptions" ng-required="true"
-               current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
-        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="vm.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-      </p>
-    </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="vm.startDateDeviceData" is-open="vm.startDateOpenStatusDeviceData.opened"
+                 datepicker-options="vm.dateOptions" min-date="vm.minDate"
+                 max-date="vm.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default"
+                    ng-click="vm.startDateOpenDeviceData($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-1">
+        <label class="control-label text-nowrap font-nomal">{{'endDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="vm.endDateDeviceData" is-open="vm.endDateOpenStatusDeviceData.opened"
+                 datepicker-options="vm.dateOptions" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="vm.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+        </p>
+      </div>
     <div class="col-md-1">
       <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="vm.getDeviceData(0,8,null,vm.totalElements,true,
                 vm.deviceInfo.deviceNum,vm.deviceInfo.versionNum,vm.startDateDeviceData,vm.endDateDeviceData)">{{'confirm'|translate}}</button>
@@ -48,6 +49,7 @@
          ng-href="{{csv.link()}}"
          download="{{vm.deviceInfo.deviceNum}}{{'historicalData'|translate}}.csv">{{'exCurrentPage'|translate}}</a>
     </div>
+    </form>
   </div>
   <div class="row">
     <div class="col-md-12" style="overflow-x: auto;">

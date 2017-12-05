@@ -9,30 +9,11 @@
   <div class="row info-box-container">
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-md-2 control-label font-nomal">{{'machineNumber'| translate}}:</label>
-
+        <label class="col-md-1 control-label font-nomal">{{'machineNumber'| translate}}:</label>
         <div class="col-md-2">
           <input type="text" name="licenseId" class="form-control"  ng-model="maintenanceMachineListMngCtrl.searchConditions.licenseId"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
-
-        <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
-        <div class="col-md-2">
-          <p class="input-group">
-
-            <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="maintenanceMachineListMngCtrl.org.label" name="org" readonly required/>
-            <span class="input-group-btn">
-            <!--打开组织树-->
-            <button type="button" class="btn btn-default" ng-click="maintenanceMachineListMngCtrl.openTreeInfo()">
-              <i class="fa fa-sitemap"></i>
-            </button>
-          </span>
-          </p>
-        </div>
-
-      </div>
-
-      <div class="form-group">
         <label  class="col-md-2 control-label font-nomal">{{'vehicleType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="deviceType" ng-model="maintenanceMachineListMngCtrl.searchConditions.typeId" theme="bootstrap"
@@ -44,7 +25,7 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label class="col-md-1 control-label font-nomal">{{'driveType'|translate}}:</label>
+        <label class="col-md-2 control-label font-nomal">{{'driveType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="devicePowerType" ng-model="maintenanceMachineListMngCtrl.searchConditions.powerTypeId" theme="bootstrap"
                      ng-disabled="disabled">
@@ -52,7 +33,6 @@
             </ui-select-match>
             <ui-select-choices repeat="devicePowerType in maintenanceMachineListMngCtrl.devicePowerTypeList">
               <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
-
             </ui-select-choices>
           </ui-select>
         </div>
@@ -60,6 +40,19 @@
       </div>
 
       <div class="form-group">
+
+        <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="maintenanceMachineListMngCtrl.org.label" name="org" readonly required/>
+            <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="maintenanceMachineListMngCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+          </div>
+        </div>
         <label class="col-md-2 control-label font-nomal">{{'highlyType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="deviceHeightType" ng-model="maintenanceMachineListMngCtrl.searchConditions.heightTypeId" theme="bootstrap"
@@ -72,7 +65,7 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <label  class="col-md-1 control-label font-nomal">{{'brandType'|translate}}:</label>
+        <label  class="col-md-2 control-label font-nomal">{{'brandType'|translate}}:</label>
         <div class="col-md-2">
           <ui-select name="deviceManufacture" ng-model="maintenanceMachineListMngCtrl.searchConditions.factoryId" theme="bootstrap"
                      ng-disabled="disabled">
@@ -83,12 +76,16 @@
             </ui-select-choices>
           </ui-select>
         </div>
-        <div class="col-md-3">
 
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
           <button class="btn btn-primary" type="button"
                   ng-click="maintenanceMachineListMngCtrl.query(null,null,null,maintenanceMachineListMngCtrl.searchConditions)">{{'query'|translate}}
           </button>
-          <button class="btn btn-default" type="button" ng-click="maintenanceMachineListMngCtrl.reset()">{{'reset'|translate}}</button>
+          <button class="btn btn-default " type="button" ng-click="maintenanceMachineListMngCtrl.reset()">{{'reset'|translate}}</button>
         </div>
       </div>
     </form>

@@ -5,7 +5,6 @@
         {{'goSite'|translate}}
       </div>
     </div>
-
       <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalGoSiteCtrl.cancel()">{{'close'|translate}}</button>
       <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalGoSiteCtrl.batchMoveMachine()">{{'confirm'|translate}}</button>
   </div>
@@ -31,9 +30,20 @@
       <div class="col-md-3 text-left">
         {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.contacts}}
       </div>
+
+      <label class="col-md-2 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.mobile}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1 control-label font-nomal">操作人:</label>
+      <div class="col-md-3 text-left">
+        {{rentalGoSiteCtrl.userInfo.userdto.ssn}}
+      </div>
       <label class="col-md-2 control-label font-nomal ">{{'admissionTime'|translate}}:</label>
       <div class="col-md-3">
-        <p class="input-group">
+        <div class="input-group">
           <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
                  datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
                  current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
@@ -42,18 +52,8 @@
               <i class="glyphicon glyphicon-calendar"></i>
             </button>
           </span>
-        </p>
+        </div>
       </div>
-
-    </div>
-    <div class="form-group">
-      <label class="col-md-1 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
-      <div class="col-md-3">
-        <p class="input-group text-left">
-          {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.mobile}}
-        </p>
-      </div>
-
     </div>
 
     <hr>
@@ -65,9 +65,9 @@
                placeholder="{{'supportfuzzyqueries'|translate}}"/>
       </div>
 
-      <label class="col-md-2 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
+      <label class="col-md-2 control-label font-nomal">{{'organisation'|translate}}:</label>
       <div class="col-md-3">
-        <p class="input-group">
+        <div class="input-group">
           <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalGoSiteCtrl.org.label" name="org" readonly required/>
           <span class="input-group-btn">
             <!--打开组织树-->
@@ -75,7 +75,7 @@
               <i class="fa fa-sitemap"></i>
             </button>
           </span>
-        </p>
+        </div>
       </div>
     </div>
 
