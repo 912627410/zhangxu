@@ -251,6 +251,7 @@
         var lnglatXY = [vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude];
         circle = createCircle(lnglatXY, vm.rentalOrgFence.radius);
         circle.setMap(map);
+        map.setFitView();
         var circleEditor = new AMap.CircleEditor(map, circle);
         //监听圆移动
         AMap.event.addListener(circleEditor, "move", function (e) {
