@@ -270,8 +270,8 @@
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus=='01'">{{'openCircuit'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus=='10'">{{'shortCircuit'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.wireStatus!='00' && deviceAerialCurrentInfoController.deviceinfo.wireStatus!='01' && deviceAerialCurrentInfoController.deviceinfo.wireStatus!='10'">-</td>
-                        <!--GPRS信号强度-->
-                        <td>{{'gprsSignalStrength'|translate}}</td>
+                        <!--GPS状态-->
+                        <td>{{'gpsState'|translate}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gprsSignal!=null">{{deviceAerialCurrentInfoController.deviceinfo.gprsSignal}}</td>
                         <td ng-if="deviceAerialCurrentInfoController.deviceinfo.gprsSignal==null">-</td>
                       </tr>
