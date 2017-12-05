@@ -396,8 +396,8 @@
      */
 
     var homePie = echarts.init(document.getElementById('homePie'), '', {
-      width: '65%',
-      height:'65%'
+      width: 'auto',
+      height: vm.rightBoxBottomHeight - 35 + 'px'
     });
 
     function crateHomePieOption() {
@@ -411,7 +411,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0,160,152)",
-              fontSize: '150%'
+              fontSize: '120%'
             }
           },
           backgroundColor: '#fff',
@@ -513,7 +513,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0, 160,152)",
-              fontSize: 12
+              fontSize: '40%'
             }
           },
           backgroundColor: '#fff',
@@ -521,7 +521,7 @@
             name: 'Line 1',
             type: 'pie',
             clockWise: false,
-            radius: ['50%', '60%'],
+            radius: ['50%', '55%'],
             hoverAnimation: false,
             data: [ {
               value: data.content.unRentalMachineCount,
