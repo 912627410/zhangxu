@@ -163,7 +163,6 @@
           map.addControl(circleEditor);
         });
 
-
         //构造地点查询类
         map.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
           var autoOptions = {
@@ -182,6 +181,11 @@
               }
             });
           });
+        });
+
+        //在地图中添加聚类插件
+        map.plugin(["AMap.MarkerClusterer"], function() {
+          var cluster = new AMap.MarkerClusterer(map, []);
         });
 
         //当点击地图的时候

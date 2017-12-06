@@ -633,7 +633,6 @@
                 aggregationShow(map, markers);
               }
           };
-          map.setFitView();
         })
       },
 

@@ -116,6 +116,9 @@
         });
         map.addControl(mapType);
       });
+      map.plugin(["AMap.MarkerClusterer"], function() {
+        var cluster = new AMap.MarkerClusterer(map, []);
+      });
 
       //在地图中添加ToolBar插件
       map.plugin(["AMap.ToolBar"], function () {
@@ -171,6 +174,7 @@
       return {geocoder: geocoder, zoomsize: zoomsize, map: map};
     }
 
+    initAmapMap(null,"newOrderMap",null,null);
     /**
      * 初始化地图
      *

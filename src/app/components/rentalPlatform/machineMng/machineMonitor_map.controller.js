@@ -35,6 +35,7 @@
     vm.trackDrawing = function (mapId, zoomSize, dataContent) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_GEO_CODER_URL, type: "text/javascript"}).wait(function () {
+        var centeradd = [dataContent[0].amaplongitudeNum, dataContent[0].amaplatitudeNum]
         var lineAttr = [];
         dataContent.forEach(function (deviceData) {
           lineAttr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
@@ -64,6 +65,7 @@
         var map = new AMap.Map(mapId, {
             resizeEnable: true,
             scrollWheel: true,
+            center: centeradd,
             zooms: [4, 18]
           });
 
@@ -109,7 +111,7 @@
           strokeStyle: "solid"  //线样式
         });
 
-        //map.setFitView();
+        map.setFitView();
 
         //初始化
         var markerMovingControl = new MarkerMovingControl(map, marker, lineAttr);
@@ -217,9 +219,6 @@
           Notification.warning(languages.findKey('noData'));
           return;
         }
-
-
-
         vm.trackDrawing("trackDetailMap", 4, data.content);
 
       }, function (reason) {
