@@ -151,7 +151,7 @@
                 | date:'yyyy-MM-dd'}}
               </td>
               <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
-                {{rentalOrder.rentalCustomer.name }}
+                {{rentalOrder.customerName }}
               </td>
               <td class="text-nowrap" data-title="'rentalStatus'|translate" sortable="'statusDesc'">
                 {{rentalOrder.statusDesc |translate }}
@@ -160,7 +160,7 @@
                 {{rentalOrder.location }}
               </td>
               <td style="text-align: center;" class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
-                <span >0</span>/
+                <span >{{rentalOrder.realNumber}}</span>/
                 <span >{{rentalOrder.jc + rentalOrder.zb + rentalOrder.qb}}</span>
 
               </td>
@@ -181,15 +181,15 @@
             </tr>
           </table>
         </div>
-        <div class="col-lg-12"><!--分页框-->
-          <uib-pagination total-items="rentalOrderMngCtrl.page.totalElements"
-          max-size="5" ng-model="rentalOrderMngCtrl.pageNumber"
-          items-per-page="rentalOrderMngCtrl.page.size"
-          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.pageNumber-1,null,null,rentalOrderMngCtrl.rentalOrder)"
-          class="pagination-sm" boundary-links="true" rotate="false"
-          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
-          </uib-pagination>
-        </div>
+        <!--<div class="col-lg-12">&lt;!&ndash;分页框&ndash;&gt;-->
+          <!--<uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"-->
+                          <!--total-items="rentalOrderMngCtrl.totalElements"-->
+          <!--max-size="10" ng-model="rentalOrderMngCtrl.currentPage"-->
+          <!--items-per-page="rentalOrderMngCtrl.pageSize"-->
+          <!--ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.currentPage-1,null,rentalOrderMngCtrl.totalElements,rentalOrderMngCtrl.rentalOrder)"-->
+          <!--previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>-->
+          <!--</uib-pagination>-->
+        <!--</div>-->
       </div>
     </div>
   </div>

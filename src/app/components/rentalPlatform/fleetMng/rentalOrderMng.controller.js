@@ -9,19 +9,22 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController( $window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
+  function rentalOrderMngController( $rootScope,$window,$uibModal, $filter,$anchorScroll, serviceResource,NgTableParams,ngTableDefaults,treeFactory,Notification,rentalService,
                                     DEFAULT_MINSIZE_PER_PAGE,RENTAL_ORDER_PAGE_URL,RENTAL_ORDER_GROUP_BY_STATUS,RENTAL_ORDER_URL,languages) {
 
 
     var vm = this;
+    vm.userInfo = $rootScope.userInfo;
+    //定义每页显示多少条数据
+    vm.pageSize = 12;
     vm.totalOrders=0;
     vm.planOrders=0;
     vm.processOrders=0;
     vm.fininshOrders=0;
 
+    ngTableDefaults.params.count = 12;//表格中每页展示多少条数据
+    ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
 
-    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
 
     //定义偏移量
     $anchorScroll.yOffset = 50;
@@ -129,60 +132,47 @@
 
 
 
-    vm.query = function (page, size, sort, rentalOrder) {
+    vm.query = function (currentPage, pageSize, totalElements, rentalOrder) {
 
       var restCallURL = RENTAL_ORDER_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
+      var pageUrl = currentPage || 0;
+      var sizeUrl = pageSize || DEFAULT_MINSIZE_PER_PAGE;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl ;
+      if (totalElements != null && totalElements != undefined) {
+        restCallURL += "&totalElements=" + totalElements;
+      }
       if (null != rentalOrder) {
-
         if (null != rentalOrder.orderNumber&&rentalOrder.orderNumber!="") {
-          restCallURL += "&search_LIKES_orderNumber=" + rentalOrder.orderNumber;
+          restCallURL += "&orderNumber=" + rentalOrder.orderNumber;
         }
         if (null != rentalOrder.customerName&&rentalOrder.customerName!="") {
-          restCallURL += "&search_LIKE_rentalCustomer.name=" + rentalOrder.customerName;
+          restCallURL += "&customerName=" + rentalOrder.customerName;
         }
 
         if (null != rentalOrder.status&&rentalOrder.status!="") {
-          restCallURL += "&search_EQ_status=" + rentalOrder.status.value;
+          restCallURL += "&status=" + rentalOrder.status.value;
         }
 
         if (null != rentalOrder.startDate&&rentalOrder.startDate!="") {
-          restCallURL += "&search_DGT_startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
+          restCallURL += "&startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         }
 
         if (null != rentalOrder.endDate&&rentalOrder.endDate!="") {
-          restCallURL += "&search_DLT_endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
+          restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
 
-
-
       }
 
-      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
-        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
-      }
+      restCallURL += "&parentOrgId=" + vm.userInfo.userdto.organizationDto.id;
 
-      if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
-        restCallURL += "&parentOrgId=" +vm.org.id;
-      }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
-        vm.tableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
-        }, {
-          dataset: data.content
-        });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
+        vm.tableParams = new NgTableParams({}, {dataset: data.content});
+        vm.totalElements = data.totalElements;
+        vm.currentPage = data.number + 1;
       }, function (reason) {
-        vm.machineList = null;
         Notification.error(languages.findKey('getDataVeFail'));
       });
     };
