@@ -36,12 +36,12 @@
                   <td>{{'vehicleType'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=0 && vm.deviceInfoMonitor.deviceCode<=15">{{'hydraulicDriveScissors'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
                   <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=16 && vm.deviceInfoMonitor.deviceCode<=31">{{'DcMotorDriveForklift'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
-                  <td ng-if="vm.deviceInfoMonitor.deviceCode==null">{{'noData'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.deviceCode==null">{{'noInfo'|translate}}</td>
                   <!--蓄电池液位-->
                   <td>{{'batteryLevelSwitch'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==1">{{'normal'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==0">{{'exception'|translate}}</td>
-                  <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==null">{{'noData'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==null">{{'noInfo'|translate}}</td>
                 </tr>
                 <tr>
                   <!--车辆运行状态-->
@@ -69,7 +69,7 @@
                   <!--GPS内置电池电压-->
                   <td>GPS{{'Built-inBatteryVoltage'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.builtInVoltage!=null">{{vm.deviceInfoMonitor.builtInVoltage}}V</td>
-                  <td ng-if="vm.deviceInfoMonitor.builtInVoltage==null"></td>
+                  <td ng-if="vm.deviceInfoMonitor.builtInVoltage==null">{{'noInfo'|translate}}</td>
                 </tr>
                 <tr>
                   <!--定位状态-->
@@ -91,10 +91,12 @@
                   <td>{{'positioningDate'|translate}}</td>
                   <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A' || vm.deviceInfoMonitor.locateStatus=='B'">{{vm.deviceInfoMonitor.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V'">-</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==null">{{'noInfo'|translate}}</td>
                   <!--当前位置-->
                   <td>{{'currentPosition'|translate}}</td>
                   <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A'">{{vm.deviceInfoMonitor.address}}</td>
                   <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V'">-</td>
+                  <td ng-cloak ng-if="vm.vm.deviceInfoMonitor.locateStatus==null">{{'noInfo'|translate}}</td>
                 </tr>
                </table>
             </tr>
@@ -197,7 +199,7 @@
                   <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus=='00'">{{'outElectric'|translate}}</td>
                   <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus=='01'">{{'inElectric'|translate}}</td>
                   <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus!=null && vm.deviceInfoMonitor.gpsPowerStatus!='00'&& vm.deviceInfoMonitor.gpsPowerStatus!='01'">{{'other'|translate}}</td>
-                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus==null" >{{'noData'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.gpsPowerStatus==null" >{{'noInfo'|translate}}</td>
                   <!--倾斜状态-->
                   <td>{{'tiltState'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.tilt==0&&vm.deviceInfoMonitor.machineStatus==1">{{'tilt'|translate}}</td>

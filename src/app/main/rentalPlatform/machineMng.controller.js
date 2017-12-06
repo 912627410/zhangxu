@@ -411,7 +411,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0,160,152)",
-              fontSize: '120%'
+              fontSize: '150%'
             }
           },
           backgroundColor: '#fff',
@@ -513,7 +513,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0, 160,152)",
-              fontSize: '40%'
+              fontSize: '70%'
             }
           },
           backgroundColor: '#fff',
