@@ -96,7 +96,7 @@
                   <td>{{'currentPosition'|translate}}</td>
                   <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==1 || vm.deviceInfoMonitor.locateStatus=='A'">{{vm.deviceInfoMonitor.address}}</td>
                   <td ng-cloak colspan="5" ng-if="vm.deviceInfoMonitor.locateStatus==0 || vm.deviceInfoMonitor.locateStatus=='V'">-</td>
-                  <td ng-cloak ng-if="vm.vm.deviceInfoMonitor.locateStatus==null">{{'noInfo'|translate}}</td>
+                  <td ng-cloak ng-if="vm.deviceInfoMonitor.locateStatus==null">{{'noInfo'|translate}}</td>
                 </tr>
                </table>
             </tr>
