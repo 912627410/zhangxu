@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-md-1 control-label font-nomal">操作人:</label>
+      <label class="col-md-1 control-label font-nomal">{{'operator'|translate}}:</label>
       <div class="col-md-3 text-left">
         {{rentalGoSiteCtrl.userInfo.userdto.ssn}}
       </div>
@@ -65,7 +65,7 @@
                placeholder="{{'supportfuzzyqueries'|translate}}"/>
       </div>
 
-      <label class="col-md-2 control-label font-nomal">{{'organisation'|translate}}:</label>
+      <label class="col-md-2 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
           <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalGoSiteCtrl.org.label" name="org" readonly required/>
@@ -91,16 +91,10 @@
           </ui-select-choices>
         </ui-select>
       </div>
-      <label class="col-md-2 control-label font-nomal">{{'driveType'|translate}}:</label>
+      <label class="col-md-2 control-label font-nomal">{{'address'|translate}}:</label>
       <div class="col-md-3">
-        <ui-select name="devicePowerType" ng-model="rentalGoSiteCtrl.searchConditions.powerType" theme="bootstrap"
-                   ng-disabled="disabled">
-          <ui-select-match allow-clear="true" placeholder="{{'driveType'|translate}}">{{$select.selected.name|translate}}
-          </ui-select-match>
-          <ui-select-choices repeat="devicePowerType in rentalGoSiteCtrl.devicePowerTypeList">
-            <div ng-bind-html="devicePowerType.name | highlight: $select.search|translate"></div>
-          </ui-select-choices>
-        </ui-select>
+          <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}"
+                 ng-model="rentalGoSiteCtrl.searchConditions.address"/>
       </div>
     </div>
 
@@ -154,7 +148,7 @@
             <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
             {{machine.typeName|translate}}</td>
             <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName|translate}}</td>
-            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{machine.powerTypeName|translate}}</td>
+            <td class="text-nowrap" data-title="'address'|translate" sortable="'address'">{{machine.address|translate}}</td>
             <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName|translate}}</td>
           </tr>
         </table>

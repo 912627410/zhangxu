@@ -121,6 +121,10 @@
         if(searchConditions.factory!=null){
           restCallURL += "&factoryId=" + searchConditions.factory.id;
         }
+        if(searchConditions.address!=null){
+          restCallURL += "&address=" + searchConditions.address;
+        }
+
 
       }
         if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {

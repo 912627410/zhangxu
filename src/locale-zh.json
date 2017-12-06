@@ -793,7 +793,7 @@
   "rentalInProgress":"进行中",
   "rentalPlan":"计划",
   "rentalComplete":"已结束",
-  "rentalTotalNumberOfMachine": "车辆总数 剪叉/直臂/曲臂",
+  "rentalTotalNumberOfMachine": "车辆总数(实际/计划)",
   "rentalCustomer":"客户",
   "rentalOrganization":"组织",
   "rentalStartingDate":"开始时间",
