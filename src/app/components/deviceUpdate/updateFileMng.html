@@ -37,6 +37,7 @@
     </div>
     <div class="col-md-2">
       <select name="upgradeMethod" class="form-control" ng-model="updateFileMngCtrl.queryUpgradeMethod">
+        <option value="" selected>请选择...</option>
         <option value="1">GPS自身</option>
         <option value="2">HY64</option>
         <option value="3">BIN文件</option>
@@ -49,40 +50,29 @@
       <label class="control-label">项目组</label>
     </div>
     <div class="col-md-2">
-      <!--<select name="updateFileType1" class="form-control" ng-model="updateFileMngCtrl.queryUpdateFileType1"-->
-              <!--ng-change="updateFileMngCtrl.getUpdateFileTypeList2(updateFileMngCtrl.queryUpdateFileType1)"-->
-              <!--ng-options="updateFileType1.value as updateFileType1.desc for updateFileType1 in updateFileMngCtrl.updateFileTypeList1">-->
-        <!--<option value="">请选择...</option>-->
-      <!--</select>-->
-      <select name="projectTeam" class="form-control" ng-model="updateFileMngCtrl.queryProjectTeam">
-        <option value="0">老产品</option>
-        <option value="1">GPS</option>
-        <option value="2">仪表盘</option>
-        <option value="3">显示器</option>
+      <select name="projectTeam" class="form-control" ng-model="updateFileMngCtrl.queryProjectTeam"
+              ng-change="updateFileMngCtrl.getProjectCodes(updateFileMngCtrl.queryProjectTeam)"
+              ng-options="projectTeam.code as projectTeam.label for projectTeam in updateFileMngCtrl.projectTeams">
+        <option value="">请选择...</option>
       </select>
     </div>
     <div class="col-md-1">
       <label class="control-label">项目代号</label>
     </div>
     <div class="col-md-2">
-      <select name="projectCode" class="form-control" ng-model="updateFileMngCtrl.queryProjectCode">
-        <option value="0">波士顿</option>
-        <option value="1">波士顿</option>
-        <option value="2">芝加哥</option>
-        <option value="1">马德里</option>
-        <option value="1">维也纳</option>
+      <select name="projectCode" class="form-control" ng-model="updateFileMngCtrl.queryProjectCode"
+              ng-change="updateFileMngCtrl.getCustomerCodes(updateFileMngCtrl.queryProjectCode)"
+              ng-options="projectCode.code as projectCode.label for projectCode in updateFileMngCtrl.projectCodes">
+        <option value="">请选择...</option>
       </select>
     </div>
     <div class="col-md-1">
       <label class="control-label">客户编码</label>
     </div>
     <div class="col-md-2">
-      <select name="customerCode" class="form-control" ng-model="updateFileMngCtrl.queryCustomerCode">
-        <option value="0">全部为0</option>
-        <option value="1">2790</option>
-        <option value="2">2490</option>
-        <option value="1">2116</option>
-        <option value="1">1949</option>
+      <select name="customerCode" class="form-control" ng-model="updateFileMngCtrl.queryCustomerCode"
+              ng-options="customerCode.code as customerCode.label for customerCode in updateFileMngCtrl.customerCodes">
+        <option value="">请选择...</option>
       </select>
     </div>
     <div class="col-md-1">
@@ -90,6 +80,7 @@
     </div>
     <div class="col-md-2">
       <select name="hardwareVersion" class="form-control" ng-model="updateFileMngCtrl.queryHardwareVersion">
+        <option value="" selected>请选择...</option>
         <option value="0">全部为0</option>
         <option value="1">VER1</option>
         <option value="2">VER2</option>
@@ -134,13 +125,17 @@
             <td class="text-nowrap" data-title="'软件版本'" sortable="'softVersion'">VER{{updateFile.softVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
             <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size/1024 | number: 1}}KB</td>
-            <td class="text-nowrap" data-title="'项目组'" sortable="'projectTeam'">{{updateFile.projectTeam}}</td>
-            <td class="text-nowrap" data-title="'项目代号'" sortable="'projectCode'">{{updateFile.projectCode}}</td>
-            <td class="text-nowrap" data-title="'客户编码'" sortable="'customerCode'">{{updateFile.customerCode}}</td>
-            <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'">{{updateFile.hardwareVersion}}</td>
-            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'">{{updateFile.upgradeMethod}}</td>
+            <td class="text-nowrap" data-title="'项目组'" sortable="'projectTeam'">{{updateFile.projectTeamSec}}</td>
+            <td class="text-nowrap" data-title="'项目代号'" sortable="'projectCode'">{{updateFile.projectCodeSec}}</td>
+            <td class="text-nowrap" data-title="'客户编码'" sortable="'customerCode'">{{updateFile.customerCodeSec}}</td>
+            <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion=='0'">全部为0</td>
+            <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion!='0'">VER{{updateFile.hardwareVersion}}</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='1'">GPS自身</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='2'">HY64</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='3'">BIN文件</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod!='1'&&updateFile.upgradeMethod!='2'&&updateFile.upgradeMethod!='3'">{{updateFile.upgradeMethod}}</td>
             <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td data-title="'remarks'|translate" sortable="'备注'" style="max-width: 500px;white-space: normal;">{{updateFile.remarks}}</td>
+            <td data-title="'remarks'|translate" sortable="'备注'" style="max-width: 500px;min-width: 200px;white-space: normal;">{{updateFile.remarks}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
               <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)" presentation-href="updateFile:modify">修改</button>
               <button type="button" class="btn btn-default btn-xs btn-danger" ng-click="updateFileMngCtrl.removeFile(updateFile.id)" presentation-href="upgrade:upgradeFile:remove">删除</button>

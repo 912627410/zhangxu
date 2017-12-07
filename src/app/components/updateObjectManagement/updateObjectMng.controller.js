@@ -17,6 +17,7 @@
     vm.searchText = '';     //搜索的数据
     vm.my_data = [];
     vm.selectedArray = [];
+    vm.newBtnShow = true;
 
 
     vm.init = function () {
@@ -31,12 +32,6 @@
       }, function (reason) {
         Notification.error("获取失败");
       })
-    };
-
-    vm.getUpdateMethod = function () {
-      $http.get("upgradeMethod.json").success(function(data){
-        vm.upgradeMethodList = JSON.parse(JSON.stringify(data));
-      });
     };
 
     //通过后台返回的结构生成json tree
@@ -66,6 +61,11 @@
     //选中组织事件
     vm.my_tree_handler = function (branch) {
       vm.selectedObject = branch;
+      if(branch.level == 3) {
+        vm.newBtnShow = false;
+      } else {
+        vm.newBtnShow = true;
+      }
       var restCallURL = UPDATE_OBJECT_URL;
       restCallURL += "?id=" + vm.selectedObject.parentId;
       var dataPromis = serviceResource.restCallService(restCallURL, "GET");
@@ -136,17 +136,10 @@
           }
         }
       });
-
-      modalInstance.result.then(function (newOrg) {
-        vm.selectedOrg.children.push({
-          label: newOrg.label,
-          id: newOrg.id
-        });
-        vm.selectedOrg.expanded = true;
-
-        vm.getOrg();
-
+      modalInstance.result.then(function () {
+        vm.reset();
       }, function () {
+
       });
     };
 
@@ -159,7 +152,7 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/updateObjectManagement/modifyUpdateObject.html',
-        controller: 'modifyUpdateObjectController as modifyUpdateObjectOrgCtrl',
+        controller: 'modifyUpdateObjectController as modifyUpdateObjectCtrl',
         size: 'sx',
         backdrop: false,
         resolve: {
@@ -169,12 +162,10 @@
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
-
-        vm.getOrg();
-
+      modalInstance.result.then(function () {
+        vm.reset();
       }, function () {
-        //$log.info('Modal dismissed at: ' + new Date());
+
       });
 
     };
@@ -182,6 +173,8 @@
 
     vm.reset = function () {
       vm.searchText = "";
+      vm.selectedObject = '';
+      vm.selectedParentObject = '';
       vm.init();
     };
 

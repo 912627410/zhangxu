@@ -9,23 +9,57 @@
     .module('GPSCloud')
     .controller('newUpdateFileController', newUpdateFileController);
 
-  function newUpdateFileController($rootScope, $http, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
+  function newUpdateFileController($rootScope, $http, $timeout, Upload, projectTeams, $uibModalInstance, Notification, serviceResource, UPDATE_FILE_UPLOAD_URL, UPDATE_OBJECT_LIST) {
     var vm = this;
-    vm.operatorInfo = operatorInfo;
     vm.file = null;
+    vm.projectTeamList = projectTeams;
 
-    $http.get("updateFileType.json").success(function(data){
-      vm.fileTypeList1 = JSON.parse(JSON.stringify(data));
-    });
+    /**
+     * 获取项目代号集合
+     * @param code
+       */
+    vm.getProjectCodeList = function (code) {
+      vm.file.projectCode = null;
+      vm.file.customerCode = null;
+      vm.projectCodeList = null;
+      vm.customerCodeList = null;
+      var id = vm.getIdByCode(vm.projectTeamList, code);
+      var restCallURL = UPDATE_OBJECT_LIST;
+      restCallURL += "?parentId=" + id;
+      var dataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+      dataPromis.then(function (data) {
+        vm.projectCodeList = data;
+      });
+    };
 
-    vm.getFileTypeList2 = function(value) {
-      vm.file.fileType2 = null;
-      vm.fileTypeList2 = null;
-      var len = vm.fileTypeList1.length;
-      for(var i = 0;i<len;i++) {
-        if(vm.fileTypeList1[i].value == value) {
-          vm.fileTypeList2 = vm.fileTypeList1[i].content;
-          return;
+    /**
+     * 获取客户编码集合
+     * @param code
+       */
+    vm.getCustomerCodeList = function (code) {
+      vm.file.customerCode = null;
+      vm.customerCodeList = null;
+      var id = vm.getIdByCode(vm.projectCodeList, code);
+      var restCallURL = UPDATE_OBJECT_LIST;
+      restCallURL += "?parentId=" + id;
+      var dataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+      dataPromis.then(function (data) {
+        vm.customerCodeList = data;
+      });
+    };
+
+    /**
+     * 根据code获得相应的id
+     * @param list
+     * @param code
+     * @returns {*}
+       */
+    vm.getIdByCode = function(list, code) {
+      var len = list.length;
+      if(len <= 0) return;
+      for(var i = 0;i < len;i++) {
+        if(list[i].code == code) {
+          return list[i].id;
         }
       }
     };
@@ -34,26 +68,47 @@
       vm.errorMsg = null;
 
       if(null == file || null == file.name){
-        Notification.error("请选择上传的文件!");
+        Notification.error({message: '请选择上传的文件!', positionX: 'center'});
         return;
       }
 
       if(null == file.versionNum){
-        Notification.error("请输入协议版本!");
+        Notification.error({message: '请输入协议版本!', positionX: 'center'});
         return;
       }
       if(file.versionNum%1 != 0 || file.versionNum < 1 || file.versionNum > 9999) {
-        Notification.error("请重新录入协议版本!");
+        Notification.error({message: '请重新录入协议版本!', positionX: 'center'});
         return;
       }
       if(null == file.softVersion){
-        Notification.error("请输入软件版本!");
+        Notification.error({message: '请输入软件版本!', positionX: 'center'});
         return;
       }
 
       var verArr = file.softVersion.split(".");
       if(file.softVersion * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
-        Notification.error("请重新录入软件版本!");
+        Notification.error({message: '请重新录入软件版本!', positionX: 'center'});
+        return;
+      }
+
+      if(file.projectTeam == null || file.projectTeam == "") {
+        Notification.error({message: '请选择项目组!', positionX: 'center'});
+        return;
+      }
+      if(file.projectCode == null || file.projectCode == "") {
+        Notification.error({message: '请选择项目代号!', positionX: 'center'});
+        return;
+      }
+      if(file.customerCode == null || file.customerCode == "") {
+        Notification.error({message: '请选择客户编码!', positionX: 'center'});
+        return;
+      }
+      if(file.hardwareVersion == null || file.hardwareVersion == "") {
+        Notification.error({message: '请选择硬件版本!', positionX: 'center'});
+        return;
+      }
+      if(file.upgradeMethod == null || file.upgradeMethod == "") {
+        Notification.error({message: '请选择升级方式!', positionX: 'center'});
         return;
       }
 
@@ -83,7 +138,6 @@
         })
       },function(reason){
         vm.errorMsg=reason.data.message;
-        Notification.error("新增升级文件失败!");
         Notification.error(vm.errorMsg);
       },function(evt){
 
@@ -92,7 +146,8 @@
 
     vm.cancel = function(){
       $uibModalInstance.dismiss('cancel');
-    }
+    };
+
 
   }
 })();

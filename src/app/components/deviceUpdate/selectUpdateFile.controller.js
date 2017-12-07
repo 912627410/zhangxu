@@ -45,12 +45,15 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id, versionNum, softVersion, fileType1, fileType2) {
-      vm.checked = id;
-      vm.updateVersionNum = versionNum;
-      vm.updateSoftVersion = softVersion;
-      vm.fileType1 = fileType1;
-      vm.fileType2 = fileType2;
+    vm.fileSelection = function (updateFile) {
+      vm.checked = updateFile.id;
+      vm.updateVersionNum = updateFile.versionNum;
+      vm.updateSoftVersion = updateFile.softVersion;
+      vm.projectTeam = updateFile.projectTeam;
+      vm.projectCode = updateFile.projectCode;
+      vm.customerCode = updateFile.customerCode;
+      vm.hardwareVersion = updateFile.hardwareVersion;
+      vm.upgradeMethod = updateFile.upgradeMethod;
     };
 
     vm.ok = function () {
@@ -60,7 +63,7 @@
       }
       var updateDevice = angular.copy(vm.updateDevice);
       var content = "", count = 0;
-      if(vm.fileType1 == "0" || vm.fileType1 == "1") { // GPS类升级
+      if(vm.upgradeMethod == "1") { // GPS自身升级
         for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
           if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion)) {
             content += updateDevice[i].deviceNum + ",";
@@ -99,10 +102,10 @@
           var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
           restPromise.then(function (data) {
             if(data.code == 0){
-              Notification.success("升级指令已下发!");
+              Notification.success(data.content);
               $uibModalInstance.close();
             } else if(data.code == -1){
-
+              Notification.warning(data.content);
             } else {
               Notification.error(data.content);
             }

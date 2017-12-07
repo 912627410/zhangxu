@@ -9,30 +9,15 @@
     .module('GPSCloud')
     .controller('updateFileMngController', updateFileMngController);
 
-  function updateFileMngController($rootScope, ngTableDefaults, $http, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE, UPDATE_FILE_DATA_BY, serviceResource, $confirm, REMOVE_UPDATE_FILE_URL) {
+  function updateFileMngController($rootScope, ngTableDefaults, $http, $scope, $uibModal, Notification, NgTableParams, UPDATE_FILE_UPLOAD_QUERY, DEFAULT_SIZE_PER_PAGE,
+                                   UPDATE_FILE_DATA_BY, serviceResource, $confirm, REMOVE_UPDATE_FILE_URL, UPDATE_OBJECT_LIST) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    $http.get("updateFileType.json").success(function(data){
-      vm.updateFileTypeList1 = JSON.parse(JSON.stringify(data));
-    });
-
-    vm.getUpdateFileTypeList2 = function(value) {
-      vm.queryUpdateFileType2 = null;
-      vm.updateFileTypeList2 = null;
-      var len = vm.updateFileTypeList1.length;
-      for(var i = 0;i<len;i++) {
-        if(vm.updateFileTypeList1[i].value == value) {
-          vm.updateFileTypeList2 = vm.updateFileTypeList1[i].content;
-          return;
-        }
-      }
-    };
-
-    vm.query=function(page, size, sort, updateFile){
+    vm.query = function(page, size, sort, updateFile){
       var restCallURL = UPDATE_FILE_UPLOAD_QUERY;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
@@ -85,6 +70,70 @@
 
     vm.query(null, null, null, null);
 
+    /**
+     * 获取项目组集合
+     */
+    vm.getProjectTeams = function () {
+      var restCallURL = UPDATE_OBJECT_LIST;
+      restCallURL += "?parentId=0";
+      var dataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+      dataPromis.then(function (data) {
+        vm.projectTeams = data;
+      });
+    };
+
+    vm.getProjectTeams();
+
+    /**
+     * 获取项目代号集合
+     * @param code
+     */
+    vm.getProjectCodes = function (code) {
+      vm.queryProjectCode = null;
+      vm.queryCustomerCode = null;
+      vm.projectCodes = null;
+      vm.customerCodes = null;
+      var id = vm.getIdByCode(vm.projectTeams, code);
+      var restCallURL = UPDATE_OBJECT_LIST;
+      restCallURL += "?parentId=" + id;
+      var dataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+      dataPromis.then(function (data) {
+        vm.projectCodes = data;
+      });
+    };
+
+    /**
+     * 获取客户编码集合
+     * @param code
+       */
+    vm.getCustomerCodes = function (code) {
+      vm.queryCustomerCode = null;
+      vm.customerCodes = null;
+      var id = vm.getIdByCode(vm.projectCodes, code);
+      var restCallURL = UPDATE_OBJECT_LIST;
+      restCallURL += "?parentId=" + id;
+      var dataPromis = serviceResource.restCallService(restCallURL, "QUERY");
+      dataPromis.then(function (data) {
+        vm.customerCodes = data;
+      });
+    };
+
+    /**
+     * 根据code获得相应的id
+     * @param list
+     * @param code
+     * @returns {*}
+       */
+    vm.getIdByCode = function(list, code) {
+      var len = list.length;
+      if(len <= 0) return;
+      for(var i = 0;i < len;i++) {
+        if(list[i].code == code) {
+          return list[i].id;
+        }
+      }
+    };
+
     //新增升级文件
     vm.newUpdateFile = function(size){
       var modalInstance = $uibModal.open({
@@ -95,8 +144,8 @@
         backdrop:false,
         scope:$scope,
         resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
+          projectTeams: function () {
+            return vm.projectTeams;
           }
         }
       });
@@ -120,6 +169,9 @@
         resolve: {
           updateFile: function () {
             return updateFile;
+          },
+          projectTeams: function () {
+            return vm.projectTeams;
           }
         }
       });
@@ -141,6 +193,8 @@
       vm.queryCustomerCode = null;
       vm.queryHardwareVersion = null;
       vm.queryUpgradeMethod = null;
+      vm.projectCodes = null;
+      vm.customerCodes = null;
     }
 
     //删除

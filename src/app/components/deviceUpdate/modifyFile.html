@@ -15,49 +15,38 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="softVersion" class="col-sm-2 control-label">项目组</label>
+        <label for="softVersion" class="col-sm-2 control-label">软件版本</label>
         <div class="col-sm-10">
           <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
           <input type="text" id="softVersion" class="form-control" placeholder="软件版本" ng-model="modifyFileCtrl.softVersion" name="softVersion" validator="required,softVersionNum" style="padding-left: 42px;"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">适用对象</label>
+        <label class="col-sm-2 control-label">项目组</label>
         <div class="col-sm-10">
-          <!--<select name="fileType1" class="form-control" ng-model="modifyFileCtrl.updateFile.fileType1"-->
-                  <!--ng-change="modifyFileCtrl.getFileTypeList2(modifyFileCtrl.updateFile.fileType1)"-->
-                  <!--ng-options="fileType1.value as fileType1.desc for fileType1 in modifyFileCtrl.fileTypeList1">-->
-            <!--<option value="">请选择...</option>-->
-          <!--</select>-->
-          <select name="projectTeam" class="form-control" ng-model="modifyFileCtrl.updateFile.projectTeam" validator="required">
-            <option value="0">老产品</option>
-            <option value="1">GPS</option>
-            <option value="2">仪表盘</option>
-            <option value="3">显示器</option>
+          <select name="projectTeam" class="form-control" ng-model="modifyFileCtrl.updateFile.projectTeam"
+                  ng-change="modifyFileCtrl.getProjectCodeList(modifyFileCtrl.updateFile.projectTeam)"
+                  ng-options="projectTeam.code as projectTeam.label for projectTeam in modifyFileCtrl.projectTeamList">
+            <option value="">请选择...</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">项目代号</label>
         <div class="col-sm-10">
-          <select name="projectCode" class="form-control" ng-model="modifyFileCtrl.updateFile.projectCode" validator="required">
-            <option value="0">波士顿</option>
-            <option value="1">波士顿</option>
-            <option value="2">芝加哥</option>
-            <option value="1">马德里</option>
-            <option value="1">维也纳</option>
+          <select name="projectCode" class="form-control" ng-model="modifyFileCtrl.updateFile.projectCode"
+                  ng-change="modifyFileCtrl.getCustomerCodeList(modifyFileCtrl.updateFile.projectCode)"
+                  ng-options="projectCode.code as projectCode.label for projectCode in modifyFileCtrl.projectCodeList">
+            <option value="">请选择...</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label">客户编码</label>
         <div class="col-sm-10">
-          <select name="customerCode" class="form-control" ng-model="modifyFileCtrl.updateFile.customerCode" validator="required">
-            <option value="0">全部为0</option>
-            <option value="1">2790</option>
-            <option value="2">2490</option>
-            <option value="1">2116</option>
-            <option value="1">1949</option>
+          <select name="customerCode" class="form-control" ng-model="modifyFileCtrl.updateFile.customerCode"
+                  ng-options="customerCode.code as customerCode.label for customerCode in modifyFileCtrl.customerCodeList">
+            <option value="">请选择...</option>
           </select>
         </div>
       </div>

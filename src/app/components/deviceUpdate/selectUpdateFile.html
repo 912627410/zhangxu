@@ -10,16 +10,24 @@
             <input type="radio"
                    name="selectFile"
                    ng-checked
-                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile.id, updateFile.versionNum,updateFile.softVersion, updateFile.fileType1, updateFile.fileType2)"
+                   ng-click="selectUpdateFileCtrl.fileSelection(updateFile)"
                    ng-model="updateFile.checked">
           </td>
           <td class="text-nowrap" data-title="'softVersion'|translate" sortable="'softVersion'">VER{{updateFile.softVersion/100 | number:2}}</td>
           <td class="text-nowrap" data-title="'fileSize'|translate" sortable="'size'">{{updateFile.size/1024 | number:1}}KB</td>
-          <td class="text-nowrap" data-title="'项目组'" sortable="'projectTeam'">{{updateFile.projectTeam}}</td>
-          <td class="text-nowrap" data-title="'项目代号'" sortable="'projectCode'">{{updateFile.projectCode}}</td>
-          <td class="text-nowrap" data-title="'客户编码'" sortable="'customerCode'">{{updateFile.customerCode}}</td>
-          <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'">{{updateFile.hardwareVersion}}</td>
-          <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'">{{updateFile.upgradeMethod}}</td>
+          <td class="text-nowrap" data-title="'项目组'" sortable="'projectTeam'">{{updateFile.projectTeamSec}}</td>
+          <td class="text-nowrap" data-title="'项目代号'" sortable="'projectCode'">{{updateFile.projectCodeSec}}</td>
+          <td class="text-nowrap" data-title="'客户编码'" sortable="'customerCode'">{{updateFile.customerCodeSec}}</td>
+
+          <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion=='0'">全部为0</td>
+          <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion!='0'">VER{{updateFile.hardwareVersion}}</td>
+
+          <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='1'">GPS自身</td>
+          <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='2'">HY64</td>
+          <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='3'">BIN文件</td>
+          <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod!='1'&&updateFile.upgradeMethod!='2'&&updateFile.upgradeMethod!='3'">{{updateFile.upgradeMethod}}</td>
+          <!--<td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'">BIN文件</td>-->
+
           <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
           <td class="text-nowrap" data-title="'remarks'|translate" sortable="'remarks'" style="max-width: 300px;white-space: normal;">{{updateFile.remarks}}</td>
         </tr>
