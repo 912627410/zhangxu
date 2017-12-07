@@ -84,7 +84,7 @@
       <div class="col-md-3">
         <ui-select name="deviceType" ng-model="rentalGoSiteCtrl.searchConditions.type" theme="bootstrap"
                    ng-disabled="disabled">
-          <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name | translate}}
+          <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}
           </ui-select-match>
           <ui-select-choices repeat="deviceType in rentalGoSiteCtrl.deviceTypeList">
             <div ng-bind-html="deviceType.name | highlight: $select.search"></div>

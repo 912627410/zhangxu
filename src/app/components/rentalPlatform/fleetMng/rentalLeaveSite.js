@@ -9,8 +9,8 @@
     var vm=this;
     vm.userInfo = $rootScope.userInfo;
     vm.orderId=orderId;
-   /* vm.orderMachineList = orderMachineList;*/
     vm.selected = []; //选中的订单车辆id List
+    vm.leaveMachineNumber = 0;
     //退场时间
     var date=new Date();
     vm.leaveSiteDate=date;
@@ -28,7 +28,8 @@
 
 
     vm.cancel = function () {
-      $uibModalInstance.dismiss('cancel');
+      $uibModalInstance.close(vm.leaveMachineNumber);
+      vm.leaveMachineNumber = 0;
     };
     //订单下车辆List 数据
     vm.tableParams = new NgTableParams({}, {dataset: vm.orderMachineList});
@@ -96,19 +97,19 @@
 
         return;
       }
-      // var orderMachineIdList =  vm.selectedObj;
+      vm.leaveMachineNumber = vm.leaveMachineNumber + vm.selected.length;
       var rentalOrderMachineOperVo = {"orderMachineIdList": vm.selected, "orderId":vm.orderId,"operationType":1,"recordTime":vm.leaveSiteDate,"reason":vm.leaveReason};
       var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
 
         if(data.code==0){
           //页面上同步移除调出的车辆
-          for(var i = 0;i<vm.selected.length;i++){
-            vm.tableParams.data.splice(0,1);
-
-          }
+          // for(var i = 0;i<vm.selected.length;i++){
+          //   vm.tableParams.data.splice(0,1);
+          // }
           vm.query(vm.orderId);
           Notification.success(languages.findKey('批量调出车辆成功'));
+          vm.selected = [];
         }
 
       }, function (reason) {

@@ -166,7 +166,7 @@
               </td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
-                        ng-click="rentalOrderMngCtrl.update(rentalOrder.id)">{{'rentalEdit'| translate}}
+                        ng-click="rentalOrderMngCtrl.update(rentalOrder.id,rentalOrder.realNumber)">{{'rentalEdit'| translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
                         ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
@@ -175,7 +175,7 @@
                         ng-click="rentalOrderMngCtrl.goSite(rentalOrder)">{{'goSite'| translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder.id)">{{'leaveSite'| translate}}
+                        ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder)">{{'leaveSite'| translate}}
                 </button>
               </td>
             </tr>

@@ -77,25 +77,26 @@
         var rentalOrderMachineOperVo = {"addMachineIdList": vm.selected, "orderId": vm.rentalOrder.id,"operationType":2,"recordTime":vm.goSiteDate};
         var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
         restPromise.then(function (data) {
-
           if(data.code==0){
             Notification.success(languages.findKey('transVehicle'));
 
-          }
-        }, function (reason) {
-          Notification.error(languages.findKey('transVehiclFail'));
-        });
-      $uibModalInstance.close(vm.selected);
+            }
+          }, function (reason) {
+            Notification.error(languages.findKey('transVehiclFail'));
+          });
+        $uibModalInstance.close(vm.selected.length);
 
     };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
     vm.reset = function () {
       vm.searchConditions = null;
       vm.org = null;
     }
+
     vm.queryMachine = function (searchConditions,page,size,sort) {
       var restCallURL = RENTANL_UNUSED_MACHINE_PAGE_URL;
       var pageUrl = page || 0;
@@ -154,6 +155,7 @@
 
     }
     vm.queryMachine(null,null,null,null,null);
+
     var updateSelected = function (action, machine) {
       if (action == 'add' && vm.selected.indexOf(machine.id) == -1) {
         vm.selected.push(machine.id);

@@ -142,26 +142,6 @@
       if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
-      // if(vm.jcOption.quantity!= null||vm.zbOption.quantity!= null||vm.qbOption.quantity!= null){
-      //   if(vm.jcOption.quantity!= null){
-      //     if(vm.jcOption.deviceHeightType == null||vm.jcOption.deviceManufacture == null||vm.jcOption.price ==null){
-      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //   }
-      //   if(vm.zbOption.quantity!= null){
-      //     if(vm.zbOption.deviceHeightType == null||vm.zbOption.deviceManufacture == null||vm.zbOption.price==null){
-      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //   }
-      //   if(vm.qbOption.quantity!= null){
-      //     if(vm.qbOption.deviceHeightType == null||vm.qbOption.deviceManufacture == null||vm.qbOption.price==null){
-      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //
-      //   }
-      //   return;
-      // }
-
       vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
       vm.rentalOrder.qb = vm.qbOption.quantity;
