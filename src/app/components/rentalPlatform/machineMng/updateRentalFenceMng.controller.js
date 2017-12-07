@@ -163,7 +163,6 @@
           map.addControl(circleEditor);
         });
 
-
         //构造地点查询类
         map.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
           var autoOptions = {
@@ -182,6 +181,11 @@
               }
             });
           });
+        });
+
+        //在地图中添加聚类插件
+        map.plugin(["AMap.MarkerClusterer"], function() {
+          var cluster = new AMap.MarkerClusterer(map, []);
         });
 
         //当点击地图的时候
@@ -251,6 +255,7 @@
         var lnglatXY = [vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude];
         circle = createCircle(lnglatXY, vm.rentalOrgFence.radius);
         circle.setMap(map);
+        map.setFitView();
         var circleEditor = new AMap.CircleEditor(map, circle);
         //监听圆移动
         AMap.event.addListener(circleEditor, "move", function (e) {

@@ -132,6 +132,8 @@
         vm.fenceStatus.fenceCount += 1;
         vm.fenceStatus.normalCount += 1;
         vm.tableParams.data.splice(0, 0, result);
+        vm.query(null, null, null, vm.searchCondition);
+        vm.fenceStatusCount()
       }, function () {
         //取消
       });
@@ -168,6 +170,7 @@
               tabList[i] = result;
             }
           }
+          vm.query(null, null, null, vm.searchCondition);
         }, function () {
           //取消
         });
@@ -191,7 +194,8 @@
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");
           restPromise.then(function (data) {
             Notification.error(languages.findKey('delSuccess'));
-            vm.query(null, vm.pageSize, null, null);
+            vm.query(null, vm.pageSize, null, vm.searchCondition);
+            vm.fenceStatusCount()
           }, function (reason) {
             Notification.error(languages.findKey('delFail'));
           });
