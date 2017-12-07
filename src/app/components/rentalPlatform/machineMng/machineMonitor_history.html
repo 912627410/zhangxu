@@ -9,7 +9,7 @@
       <div class="col-md-3">
         <p class="input-group">
           <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-                 ng-model="vm.startDateDeviceData" is-open="vm.startDateOpenStatusDeviceData.opened"
+                 ng-model="vm.queryStartDate" is-open="vm.startDateOpenStatusDeviceData.opened"
                  datepicker-options="vm.dateOptions" min-date="vm.minDate"
                  max-date="vm.maxDate" ng-required="true"
                  current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
@@ -27,7 +27,7 @@
       <div class="col-md-3">
         <p class="input-group">
           <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-                 ng-model="vm.endDateDeviceData" is-open="vm.endDateOpenStatusDeviceData.opened"
+                 ng-model="vm.queryEndDate" is-open="vm.endDateOpenStatusDeviceData.opened"
                  datepicker-options="vm.dateOptions" ng-required="true"
                  current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
           <span class="input-group-btn">
@@ -36,8 +36,8 @@
         </p>
       </div>
     <div class="col-md-1">
-      <button class="btn btn-primary" type="button" presentation-href="dashboard:deviceMonitor:historyData:query" ng-click="vm.getDeviceData(0,8,null,vm.totalElements,true,
-                vm.deviceInfo.deviceNum,vm.deviceInfo.versionNum,vm.startDateDeviceData,vm.endDateDeviceData)">{{'confirm'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',
+                vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate)">{{'confirm'|translate}}</button>
     </div>
 
 
@@ -56,7 +56,7 @@
       <table ng-table="vm.deviceHistoryRunData" class="table table-responsive history-tab-tr-nowrap" export-csv='csv'>
         <tr ng-repeat="deviceData in $data">
           <!--数据采集时间-->
-          <td data-title="'数据采集时间'">{{deviceData.dataGenerateTime  | date:'yyyy-MM-dd HH:mm:ss'}} </td>
+          <td data-title="'数据采集时间'">{{deviceData.dataGenerateTime  | date:'yyyy-MM-dd HH:mm:ss':vm.timezone}} </td>
           <!--机器代码-->
           <td data-title="'机器代码'">{{deviceData.deviceCode}} </td>
           <!--ECU ID 号-->
