@@ -178,7 +178,7 @@
     };
     vm.query(null,null,null,null);
 
-
+    // 新建订单
     vm.new=function(){
       var modalInstance = $uibModal.open({
         animation: true,
@@ -191,33 +191,8 @@
         if(null!=result){
           vm.totalOrders += 1;
           vm.planOrders += 1;
-          var orderVo  = result.orderVo
-          var machineTypeList = result.orderMachineTypeVoList
-          var rentalOrderNew = {
-            id:"",
-            startDate:"",
-            endDate:"",
-            rentalCustomer:"",
-            statusDesc:"",
-            location:"",
-            jc:"",
-            zb:"",
-            qb:""
-          }
-          rentalOrderNew = orderVo;
-          for(var i = 0;i<machineTypeList.length;i++){
-            if(machineTypeList[i].deviceType.id ==1){
-              rentalOrderNew.jc = machineTypeList[i].quantity
-            }
-            if(machineTypeList[i].deviceType.id ==2){
-              rentalOrderNew.qb = machineTypeList[i].quantity
-            }
-            if(machineTypeList[i].deviceType.id ==3){
-              rentalOrderNew.zb = machineTypeList[i].quantity
-            }
-          }
-
-          vm.tableParams.data.splice(0, 0, rentalOrderNew);
+          var orderVo  = result
+          vm.tableParams.data.splice(0, 0, orderVo);
         }
 
       }, function () {
@@ -257,11 +232,11 @@
         });
         modalInstance.result.then(function (result) {
           var tabList=vm.tableParams.data;
-          result.orderVo.realNumber = realNumber;
+          result.realNumber = realNumber;
           //更新内容
           for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.orderVo.id){
-              tabList[i]=result.orderVo;
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
             }
           }
         }, function () {

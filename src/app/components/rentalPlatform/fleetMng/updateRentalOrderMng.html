@@ -8,7 +8,7 @@
         <div class="form-group">
           <label for="orderNumber" class="col-md-2 control-label font-nomal ">订单号:</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="orderNumber" placeholder="订单号" ng-model="updateRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
+            <input type="text" class="form-control" id="orderNumber" placeholder="订单号" ng-model="updateRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" readonly />
           </div>
 
           <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
@@ -76,11 +76,11 @@
         <div class="form-group">
           <label class="col-md-2 control-label font-nomal">{{'deposit'|translate}}:</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="number" />
+            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="money" />
           </div>
           <label class="col-md-2 control-label font-nomal">{{'amount'|translate}}:</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="number" />
+            <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.totalAmt" name="totalAmt" typeahead-show-hint="true" validator="money" />
           </div>
 
         </div>
@@ -132,7 +132,7 @@
           <div class="row">
             <label class="col-md-1 control-label font-nomal">直臂: 数量:</label>
             <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
             </div>
 
             <label class="col-md-1 control-label font-nomal">高度:</label>
@@ -159,7 +159,7 @@
 
             <label class="col-md-1 control-label font-nomal">单价(/天):</label>
             <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.price" placeholder="0"  typeahead-show-hint="true" />
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@
           <div class="row">
             <label class="col-md-1 control-label font-nomal">曲臂: 数量:</label>
             <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.quantity" placeholder="0"  typeahead-show-hint="true" />
             </div>
 
             <label class="col-md-1 control-label font-nomal">高度:</label>
@@ -194,14 +194,14 @@
 
             <label class="col-md-1 control-label font-nomal">单价(/天):</label>
             <div class="col-md-2">
-              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.price" placeholder="0"  validator="number" typeahead-show-hint="true" />
+              <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.price" placeholder="0"  typeahead-show-hint="true" />
             </div>
           </div>
 
         </div>
 
         <div class="form-group" style="text-align: center;">
-          <button class="btn btn-primary" type="button" ng-click="updateRentalOrderCtrl.ok();">{{'confirm'|translate}}</button>
+          <button class="btn btn-primary" type="button" validation-submit="updateRentalOrderForm" ng-click="updateRentalOrderCtrl.ok();">{{'confirm'|translate}}</button>
           <button class="btn btn-warning" type="button" ng-click="updateRentalOrderCtrl.cancel()">
             {{'cancel'|translate}}
           </button>

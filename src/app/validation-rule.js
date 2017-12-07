@@ -31,7 +31,9 @@
       postcode:/^[1-9]\d{5}(?!\d)$/,
       port: /^[1-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1000~65535
       // port: /^[1][0-9][2-9][4-9]$|^[2-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1024~65535
-
+      //租赁金额格式(实例:100,100.0,100.00)
+      // money:/^\d+$|^\d+\.\d{1,2}?$/g,
+      money:/^[0-9]+([.]{1}[0-9]{1,2})?$/,
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
       },
@@ -108,6 +110,10 @@
       },
       nullOrNumber: {
         error: "{{'nullOrNumber' |translate}}",
+        success: ''
+      },
+      money:{
+        error: "{{'rightAmount' |translate}}",
         success: ''
       }
     };

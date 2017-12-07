@@ -12,6 +12,8 @@
   /** @ngInject */
   function viewRentalOrderController($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL, retalOrderTotalVo,Notification,RENTAL_ORDER_MACHINE_HISTORY_URL,NgTableParams) {
     var vm = this;
+    vm.operatorInfo =$rootScope.userInfo;
+
     vm.jcOption = {
       deviceType :{id:1}
     }
@@ -44,7 +46,6 @@
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-        console.log(data);
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -56,12 +57,9 @@
     };
     vm.carlist(null,vm.rentalOrder.id);
 
-    // vm.rentalOrder={};
 
 
 
-    var path="/rental/order";
-    vm.operatorInfo =$rootScope.userInfo;
     vm.back = function () {
       $uibModalInstance.dismiss('cancel');
 

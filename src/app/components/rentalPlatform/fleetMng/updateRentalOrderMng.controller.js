@@ -167,7 +167,10 @@
       var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('upOrderSucc'));
-        $uibModalInstance.close(data.content);
+        var result = data.content.orderVo;
+        result.customerName = result.rentalCustomer.name;
+        result.realNumber = 0;
+        $uibModalInstance.close(result);
 
       },function (reason) {
         Notification.error(reason.data.message);

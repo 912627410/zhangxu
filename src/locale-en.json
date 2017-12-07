@@ -1560,6 +1560,7 @@
 
   "exitTime":"Exit time",
   "workingHoursWhenEntry":"Working hours when entry",
-  "workingHoursWhenExit":"Working count when exit"
+  "workingHoursWhenExit":"Working count when exit",
+  "rightAmount":"Please fill in the correct amount format (instance format: 100,100.0,100.00)"
 
 }
