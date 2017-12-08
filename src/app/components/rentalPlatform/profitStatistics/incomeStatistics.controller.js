@@ -221,6 +221,8 @@
    vm.reset = function () {
      vm.rentalOrder= null;
      vm.rentalMachine = null;
+     vm.startDate = null;
+     vm.endDate = null;
    }
 
 
