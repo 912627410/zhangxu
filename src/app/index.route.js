@@ -225,6 +225,71 @@
       })
 
 
+    //矿车管理系统
+    $stateProvider
+      .state('mine', {
+        url: '/mine',
+        views: {
+          '@': {
+            templateUrl: 'app/main/minePlatform/minePlatform.html',
+            controller: 'minePlatformController'
+          },
+          'topbar@mine': {
+            templateUrl: 'app/main/minePlatform/minePlatformTopbar.html',
+            controller: 'minePlatformTopbarController',
+            controllerAs: 'minePlatformTopbarCtrl'
+          },
+          'main@mine': {
+            templateUrl: 'app/main/minePlatform/minePlatformHome.html',
+            controller: 'minePlatformHomeController',
+            controllerAs: 'minePlatformHomeCtrl'
+          },
+          'leftside@mine': {
+            templateUrl: 'app/main/minePlatform/minePlatformLeft.html'
+          },
+          'rightside@mine': {
+            templateUrl: 'app/components/minePlatform/mineHome/mineHome.html',
+            controller: 'mineHomeController',
+            controllerAs: 'mineHomeCtrl'
+          }
+        }
+      })
+      //趟数
+      .state('mine.trip', {
+        url: '/trip',
+        views: {
+          'rightside@mine': {
+            templateUrl: 'app/components/minePlatform/mineHome/trip.html',
+            controller: 'tripController',
+            controllerAs: 'tripCtrl'
+          }
+        }
+      })
+      //油耗
+      .state('mine.fuel', {
+        url: '/fuel',
+        views: {
+          'rightside@mine': {
+            templateUrl: 'app/components/minePlatform/mineHome/fuel.html',
+            controller: 'fuelController',
+            controllerAs: 'fuelCtrl'
+          }
+        }
+      })
+      //用户管理
+      .state('mine.personnelInfoMng', {
+        url: '/personnelInfoMng',
+        views: {
+          'rightside@mine': {
+            templateUrl: 'app/components/minePlatform/basicInfoManagement/personnelInfoMng.html',
+            controller: 'personnelInfoMngController',
+            controllerAs: 'personnelInfoMngCtrl'
+          }
+        }
+      });
+
+
+
     //物联网系统
     $stateProvider
       .state('home', {

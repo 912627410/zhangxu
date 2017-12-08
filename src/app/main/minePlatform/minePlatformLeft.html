@@ -1,0 +1,81 @@
+<aside class="main-sidebar left-side static">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
+      </div>
+      <div class="pull-left info" ng-if="userInfo">
+        <p> {{userInfo.userdto.ssn}} </p>
+        <i class="fa fa-circle text-success"></i> {{userInfo.userdto.organizationDto.orgSimpleName}}
+      </div>
+
+      <div class="pull-left info" ng-if="userInfo == null">
+        <a ui-sref="login"> {{'pleaseLogin'|translate }} {{rand}}</a>
+      </div>
+
+    </div>
+
+    <hr>
+    <ul class="sidebar-menu">
+
+      <li class="treeview">
+        <a ng-click="mineHome=!mineHome"  href="">
+          <i class="fa fa-dashboard"></i>
+          <span>首页</span>
+          <span class="glyphicon pull-right"
+                ng-class="mineHome?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>
+        </a>
+        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: mineHome}">
+          <li>
+            <a ui-sref="mine.trip">
+              <i class="fa fa-th-list"></i> <span>趟数</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="mine.fuel">
+              <i class="fa fa-th-list"></i> <span>油耗</span>
+            </a>
+          </li>
+          <!--<li>-->
+            <!--<a ui-sref="">-->
+              <!--<i class="fa fa-th-list"></i> <span>车辆状态</span>-->
+            <!--</a>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<a ui-sref="">-->
+              <!--<i class="fa fa-th-list"></i> <span>报警提醒</span>-->
+            <!--</a>-->
+          <!--</li>-->
+        </ul>
+      </li>
+
+      <li class="treeview ">
+        <a ng-click="basicInfoMng=!basicInfoMng" href="" >
+          <i class="fa ion-clipboard"></i>
+          <span>基本信息管理</span>
+          <span class="glyphicon pull-right"
+                ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: basicInfoMng}">
+          <li>
+            <a ui-sref="mine.personnelInfoMng">
+              <i class="fa ion-ios-location"></i> <span>人员基本信息</span>
+            </a>
+          </li>
+          <!--<li>-->
+            <!--<a ui-sref="home.simMng" presentation-href="deviceMng:sim">-->
+              <!--<i class="fa ion-social-rss"></i> <span>{{'SIMManagement' | translate}}</span>-->
+            <!--</a>-->
+          <!--</li>-->
+        </ul>
+      </li>
+
+
+
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
