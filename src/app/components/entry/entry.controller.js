@@ -104,6 +104,11 @@
             $rootScope.$state.go('rental');
             return;
           }
+          if (userInfo.tenantType == '3') {
+            //直接转入到矿车管理页面
+            $rootScope.$state.go('mine');
+            return;
+          }
         }
 
         $rootScope.$state.go('home');
