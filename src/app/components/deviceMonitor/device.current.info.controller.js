@@ -1085,7 +1085,8 @@
     }
     //临工平台矿车(TCP)转物联网平台(MQTT)默认端口号
     else {
-      vm.serverPort = "7883";
+      vm.serverHost = "iotserver1.nvr-china.com";
+      vm.serverPort = "09999";
     }
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.cancelLockTimes = "";
