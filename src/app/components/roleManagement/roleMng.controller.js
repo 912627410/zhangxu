@@ -61,6 +61,7 @@
     vm.query = function (roleInfo) {
       //构造查询条件
       var restCallURL = ROLE_URL;
+      restCallURL += "?search_EQ_organization.id=" + vm.operatorInfo.userdto.organizationDto.id;
       if (null != roleInfo) {
         if (null != roleInfo.name && roleInfo.name != "") {
           restCallURL += "?search_LIKE_name=" + roleInfo.name;
