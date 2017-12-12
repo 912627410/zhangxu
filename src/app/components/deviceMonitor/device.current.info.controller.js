@@ -59,7 +59,7 @@
             vm.highchartsRpm.series[0].data = [vm.deviceinfo.engineRotate];
           }
           if (vm.highchartsOil != null) {
-
+            vm.deviceinfo.oilLevel = vm.deviceinfo.oilLevel > 100 ? 100 : vm.deviceinfo.oilLevel;
             vm.highchartsOil.series[0].data = [vm.deviceinfo.oilLevel];
           }
 
@@ -1490,8 +1490,8 @@
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
-      if(workHours > 65535) {
-        Notification.error(languages.findKey("maxValue") + "65535");
+      if(workHours > 999999) {
+        Notification.error(languages.findKey("maxValue") + "999999");
         return;
       }
       var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
@@ -1535,6 +1535,18 @@
       }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      if(secOutsidePower > 65000) {
+        Notification.error(languages.findKey("maxValue") + "65000");
+        return;
+      }
+      if(secLocateInt > 65000) {
+        Notification.error(languages.findKey("maxValue") + "65000");
+        return;
+      }
+      if(secInnerPower > 1417) {
+        Notification.error(languages.findKey("maxValue") + "1417");
         return;
       }
       var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
