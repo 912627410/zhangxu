@@ -30,7 +30,6 @@
           var bodyDom = angular.element(document.body);
           var slimScroll = angular.element(document.getElementById("slimScroll"));
           var slimScroll2 = angular.element(document.getElementById("slimScroll2"));
-          console.log(attrs.toggels);
           if (attrs.toggels == "true") {
             //不隐藏左侧菜单
             bodyDom.removeClass("sidebar-collapse");

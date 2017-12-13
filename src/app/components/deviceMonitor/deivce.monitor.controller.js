@@ -12,32 +12,30 @@
 
   function DeviceMonitorController($rootScope, $scope, $http, $uibModal, $timeout, $filter, permissions, $translate, languages, treeFactory, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification, DEVCEMONITOR_EXCELEXPORT) {
     var vm = this;
-
-    //modal打开是否有动画效果
-    vm.animationsEnabled = true;
     var userInfo = $rootScope.userInfo;
+    vm.animationsEnabled = true;
     vm.querySubOrg = true;
     vm.queryLinkage = false;
+    vm.radioListType = "list";
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
+    if (userInfo == null) {
+      $rootScope.$state.go('login');
+    }
 
+    /**
+     * 刷新地图
+     * @param deviceList
+     */
     vm.refreshMainMap = function (deviceList) {
       $timeout(function () {
         serviceResource.refreshMapWithDeviceInfo("monitorMap", deviceList, 4);
       })
     }
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
-    ngTableDefaults.settings.counts = [];
-
-    vm.radioListType = "list";
-    //这里的延时是因为从高德查询当前位置是异步返回的,如果不延时页面就无法加载正常的数据,延时时间根据网速调整
-    //已废弃
-    vm.refreshDOM = function () {
-      setTimeout(function () {
-        vm.setDefaultAddress();
-        $scope.$apply();
-      }, AMAP_QUERY_TIMEOUT_MS);
-    };
-
+    /**
+     * 默认地址
+     */
     vm.setDefaultAddress = function () {
       if (vm.deviceInfoList != null) {
         vm.deviceInfoList.forEach(function (deviceInfo) {
@@ -48,6 +46,13 @@
       }
     }
 
+    /**
+     * 查询
+     * @param page 页
+     * @param size 大小
+     * @param sort 排序
+     * @param deviceinfo deviceinfo
+     */
     vm.queryDeviceInfo = function (page, size, sort, deviceinfo) {
       var restCallURL = DEVCE_MONITOR_PAGED_QUERY;
       var pageUrl = page || 0;
@@ -91,13 +96,16 @@
       )
     }
 
-    if (userInfo == null) {
-      $rootScope.$state.go('login');
-    } else {
-      vm.queryDeviceInfo(0, null, null, null);
-    }
+    /**
+     * 初始化列表
+     */
+    vm.queryDeviceInfo(0, null, null, null);
 
-    //监控
+    /**
+     * 设备监控页面
+     * @param id deviceInfo的id
+     * @param size 页面大小
+     */
     vm.currentInfo = function (id, size) {
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
@@ -108,7 +116,7 @@
             backdrop: false,
             templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
             controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-            size: size,
+            size: 'super-lgs',
             resolve: { //用来向controller传数据
               deviceinfo: function () {
                 return vm.deviceinfoMonitor;
@@ -122,7 +130,9 @@
       )
     };
 
-
+    /**
+     * 重置查询框
+     */
     vm.reset = function () {
       vm.queryDeviceNum = null;
       vm.queryMachineLicenseId = null;
@@ -133,19 +143,27 @@
       vm.queryLinkage = false;
     }
 
-    //组织树的显示
+    /**
+     * 组织树的显示
+     */
     vm.openTreeInfo = function () {
       treeFactory.treeShow(function (selectedItem) {
         vm.queryOrg = selectedItem;
       });
     }
 
-
+    /**
+     * 是否有设备监控的权限
+     * @returns {*|boolean}
+     */
     vm.validateOperPermission = function () {
       return permissions.getPermissions("device:monitorPage");
     }
 
-    //导出至Excel
+    /**
+     * 导出数据
+     * @param queryOrg
+     */
     vm.excelExport = function (queryOrg) {
 
       if (queryOrg) {
@@ -201,6 +219,10 @@
 
     };
 
+    /**
+     * 选择机型
+     * @param selectCon
+     */
     vm.selectChange = function (selectCon) {
       if (selectCon == "挖掘机") {
         vm.queryLinkage = true;
