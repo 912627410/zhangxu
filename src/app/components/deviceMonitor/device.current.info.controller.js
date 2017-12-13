@@ -151,7 +151,9 @@
         vm.deviceinfo.voltageLowAlarmValue = vm.deviceinfo.voltageLowAlarmValue * 0.1 + 10;
       }
       //改为过滤器
-      vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature);
+      if (vm.deviceinfo.engineTemperature !=null){
+        vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature);
+      }
       //页面上的led灯判断
       if (deviceinfo.versionNum != null) {
         vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum, deviceinfo.deviceType);
