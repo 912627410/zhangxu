@@ -6,7 +6,7 @@
   angular
     .module('GPSCloud')
     .controller('newUpdateFileController', newUpdateFileController);
-  function newUpdateFileController($rootScope, $scope, $timeout, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
+  function newUpdateFileController($rootScope, $scope, $timeout, languages, Upload, $uibModalInstance, Notification, operatorInfo, UPDATE_FILE_UPLOAD_URL) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.ok = function(file){
@@ -25,6 +25,10 @@
       }
       if(null == file.softVersion){
         Notification.error("请输入软件版本!");
+        return;
+      }
+      if(file.softVersion <= 0) {
+        Notification.error(languages.findKey('softVersionNumError'));
         return;
       }
       if(null == file.applicableProducts){

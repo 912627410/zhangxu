@@ -19,6 +19,10 @@
         Notification.error("请重新录入协议版本!");
         return;
       }
+      if(softVersion <= 0) {
+        Notification.error(languages.findKey('softVersionNumError'));
+        return;
+      }
       var verArr = softVersion.split(".");
       if(softVersion * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
         Notification.error("请重新录入软件版本");
