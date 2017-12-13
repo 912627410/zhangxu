@@ -357,8 +357,15 @@
 
 
         //******************远程控制tab**********************]
-        vm.serverHost = vm.deviceinfo.mainGatewayIp == null ? "iot.nvr-china.com" : vm.deviceinfo.mainGatewayIp;
-        vm.serverPort = vm.deviceinfo.mainGatewayPort == null ? "08090" : vm.deviceinfo.mainGatewayPort;
+        vm.serverHost = "iot.nvr-china.com";
+        //高空车TCP协议默认端口号
+        if(vm.deviceinfo.versionNum == "A001") {
+          vm.serverPort = "08090";
+        }
+        //高空车MQTT协议默认端口号
+        else if(vm.deviceinfo.versionNum == "11") {
+          vm.serverPort = "7884";
+        }
         vm.startTimes = vm.deviceinfo.startTimes;
         vm.catPhoneNumber='13853108000';
         vm.workHours = $filter('number')(vm.deviceinfo.workDuration, 1);

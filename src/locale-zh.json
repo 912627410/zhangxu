@@ -1572,7 +1572,11 @@
   "NoCalibrationParameter":"没有车辆标定参数数据,请获取最新数据",
   "pleaseChooseTheModeOfOperation":"请选择操作方式",
   "deviceNumNull":"设备号为空",
-  "rightAmount":"请填写正确的金额格式(实例格式：100,100.0,100.00)"
+  "rightAmount":"请填写正确的金额格式(实例格式：100,100.0,100.00)",
+
+  "maxValue":"不能大于",
+  "minValue":"不能小于"
+
 
 
 

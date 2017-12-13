@@ -173,7 +173,7 @@
             y: 16
           },
           min: 0,
-          max: 98,  //气压表最大98
+          max: 1.4  //气压表最大1.4
         },
         credits: {
           enabled: false
@@ -1074,8 +1074,20 @@
     }
 
     /*******************远程控制tab***********************/
-    vm.serverHost = "iotserver1.nvr-china.com";
-    vm.serverPort = "09999";
+    vm.serverHost = "iot.nvr-china.com";
+    //矿车TCP协议默认端口号
+    if(vm.deviceinfo.versionNum == "2020") {
+      vm.serverPort = "7885";
+    }
+    //矿车MQTT协议默认端口号
+    else if(vm.deviceinfo.versionNum == "1001" || vm.deviceinfo.versionNum == "1002") {
+      vm.serverPort = "7884";
+    }
+    //临工平台矿车(TCP)转物联网平台(MQTT)默认端口号
+    else {
+      vm.serverHost = "iotserver1.nvr-china.com";
+      vm.serverPort = "09999";
+    }
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.cancelLockTimes = "";
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
@@ -1325,6 +1337,10 @@
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
+      if(startTimes > 65535) {
+        Notification.error(languages.findKey("maxValue") + "65535");
+        return;
+      }
       var restURL = SEND_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
 
       $confirm({
@@ -1468,10 +1484,14 @@
         })
     }
 
-    //发送回传地址信息
+    //发送工作小时数
     vm.sendSetWorkHoursSMS = function (devicenum, workHours) {
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      if(workHours > 65535) {
+        Notification.error(languages.findKey("maxValue") + "65535");
         return;
       }
       var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;

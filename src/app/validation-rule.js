@@ -42,6 +42,12 @@
       },
       nullOrNumber : function (value) {
         return value ==null || value =='' || /^\d+$/.test(value);
+      },
+      maxValue: function (value, scope, element, attrs, param) {
+        return parseInt(value) <= parseInt(param);
+      },
+      minValue: function (value, scope, element, attrs, param) {
+        return parseInt(value) >= parseInt(param);
       }
     };
 
@@ -115,6 +121,14 @@
       money:{
         error: "{{'rightAmount' |translate}}",
         success: ''
+      },
+      minValue: {
+        error: "{{'minValue' | translate}}",
+        success: ''
+      },
+      maxValue: {
+        error: "{{'maxValue' | translate}}",
+        success: ''
       }
     };
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);
@@ -148,6 +162,26 @@
       }
     );
 
+    //自定义最大值最小值消息
+    $validationProvider.setExpression({
+        maxValue: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxValue: {
+              error: "{{'maxValue' | translate}}" + param
+            }
+          });
+          return parseInt(value) <= parseInt(param);
+        },
+        minValue: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minValue: {
+              error: "{{'minValue' | translate}}" + param
+            }
+          });
+          return parseInt(value) >= parseInt(param);
+        }
+      }
+    );
 
     $validationProvider.setErrorHTML(function (msg) {
       return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
