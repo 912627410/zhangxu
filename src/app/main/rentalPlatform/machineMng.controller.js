@@ -45,13 +45,13 @@
       vm.baseBoxContainer = {
         "min-height": windowHeight + "px"
       }
-      var baseBoxMapContainerHeight = windowHeight - 45 - 15;//地图上方的header高度
+      var baseBoxMapContainerHeight = windowHeight - 10;//地图上方的header高度
       //地图的自适应高度
       vm.baseBoxMapContainer = {
         "min-height": baseBoxMapContainerHeight + "px"
       }
 
-      var rightBoxTopHeight = (windowHeight  - 50) / 2;
+      var rightBoxTopHeight = windowHeight / 2;
       vm.rightBoxTopHeightTemp = rightBoxTopHeight;
       //地图的右边自适应高度
       vm.rightBoxTopHeight = {
@@ -122,6 +122,12 @@
     $scope.$watch('height', function (oldHeight, newHeight) {
       vm.adjustWindow(newHeight);
       barChart.resize({height: vm.rightBoxBottomHeight});
+      homePie.resize({height: vm.rightBoxBottomHeight- 35 + 'px'});
+      vm.afreshHeight();
+      miniPie1.resize();
+      miniPie2.resize();
+      miniPie3.resize();
+      miniPie4.resize();
     })
     /**
      * 根据类型获取报警信息的数量
@@ -235,19 +241,21 @@
     var middlePicBox = document.getElementsByClassName('middlePicBox')[0];
    // middlePicBox.style.height = vm.rightBoxTopHeightTemp - 10 + 'px';
 
-    var machineNumlis = document.getElementsByClassName('machineNumlis');
-    var lineHeight = vm.rightBoxTopHeightTemp - 30;
-    machineNumlis[0].style.height = (lineHeight / 5) + 'px';
-    machineNumlis[1].style.height = (lineHeight / 5) + 'px';
-    machineNumlis[2].style.height = (lineHeight / 5) + 'px';
-    machineNumlis[3].style.height = (lineHeight / 5) + 'px';
-    machineNumlis[4].style.height = (lineHeight / 5) + 'px';
-    machineNumlis[0].style.lineHeight = (lineHeight / 5) + 'px';
-    machineNumlis[1].style.lineHeight = (lineHeight / 5) + 'px';
-    machineNumlis[2].style.lineHeight = (lineHeight / 5) + 'px';
-    machineNumlis[3].style.lineHeight = (lineHeight / 5) + 'px';
-    machineNumlis[4].style.lineHeight = (lineHeight / 5) + 'px';
+    vm.afreshHeight= function () {
+      var machineNumlis = document.getElementsByClassName('machineNumlis');
+      var lineHeight = vm.rightBoxTopHeightTemp - 30;
+      machineNumlis[0].style.height = (lineHeight / 5) + 'px';
+      machineNumlis[1].style.height = (lineHeight / 5) + 'px';
+      machineNumlis[2].style.height = (lineHeight / 5) + 'px';
+      machineNumlis[3].style.height = (lineHeight / 5) + 'px';
+      machineNumlis[4].style.height = (lineHeight / 5) + 'px';
+      machineNumlis[0].style.lineHeight = (lineHeight / 5) + 'px';
+      machineNumlis[1].style.lineHeight = (lineHeight / 5) + 'px';
+      machineNumlis[2].style.lineHeight = (lineHeight / 5) + 'px';
+      machineNumlis[3].style.lineHeight = (lineHeight / 5) + 'px';
+      machineNumlis[4].style.lineHeight = (lineHeight / 5) + 'px';}
 
+    vm.afreshHeight();
 
     /**
      * 出租率
@@ -411,7 +419,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0,160,152)",
-              fontSize: '150%'
+              fontSize: 17
             }
           },
           backgroundColor: '#fff',
@@ -513,7 +521,7 @@
             textStyle: {
               fontWeight: 'normal',
               color: "rgb(0, 160,152)",
-              fontSize: '70%'
+              fontSize: '63%'
             }
           },
           backgroundColor: '#fff',
@@ -521,7 +529,7 @@
             name: 'Line 1',
             type: 'pie',
             clockWise: false,
-            radius: ['50%', '55%'],
+            radius: ['65%', '70%'],
             hoverAnimation: false,
             data: [ {
               value: data.content.unRentalMachineCount,

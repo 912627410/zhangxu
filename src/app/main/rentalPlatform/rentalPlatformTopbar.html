@@ -44,6 +44,17 @@
         </ul>
       </div>
     </div>
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(3)" ng-mouseover="submenuShow3=true" ng-mouseleave="submenuShow3=false">
+      <span ng-mouseover="submenuShow3=true" ng-init="submenuShow3=false">
+         {{'systemManagement'|translate}}
+      </span>
+      <div ng-show="submenuShow3" ng-mouseleave="submenuShow3=false">
+        <ul>
+          <li ng-click=""><a ui-sref="rental.orgMng">{{'orgManagement' | translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.userMng">{{'userManagement' | translate}}</a></li>
+        </ul>
+      </div>
+    </div>
     <a class="settingBox">
       <span ng-click="settingItemShow=true" ng-init="settingItemShow=false" ng-hide="settingItemShow"><i
         class="fa fa-bars"></i></span>

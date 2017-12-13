@@ -1,0 +1,159 @@
+<div class="machine-content" resize>
+  <!--导航栏-->
+  <section class="content-header">
+    <h1>
+      <small>{{'userManagement'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-home"></i>{{'systemManagement'| translate}}</a></li>
+      <li class="active"><i class="fa  fa-user"></i>{{'userManagement'| translate}}</li>
+    </ol>
+  </section>
+
+
+<!-- Main content -->
+<div class="content form-horizontal" style="overflow: hidden">
+
+  <div class="row form-group">
+
+    <div class="col-md-1">
+      <label class="control-label">{{'userAccount'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="ssn" class="form-control " ng-model="rentalUserMngCtrl.userinfo.ssn"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+    <div class="col-md-1">
+      <label class="control-label">{{'userNames'|translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="ssn" class="form-control " ng-model="rentalUserMngCtrl.userinfo.firstname"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+    <div class="col-md-4">
+      <button class="btn btn-primary" type="button" ng-click="rentalUserMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="system:user:query"
+              ng-click="rentalUserMngCtrl.query(null,null,null,rentalUserMngCtrl.userinfo)">{{'query'|translate}}
+      </button>
+
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="panel-group" id="orgPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'organizationInformation'|translate}}
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+            <abn-tree tree-data="rentalUserMngCtrl.my_data"
+                      on-select="rentalUserMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                      expand-level="2"></abn-tree>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel-group" id="userPanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'userList' | translate}}
+              <a class="pull-right" type="button" href="" presentation-href="system:user:create" ng-click="rentalUserMngCtrl.addUser('md')">
+                <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
+              </a>
+            </h4>
+
+
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="userinfo in rentalUserMngCtrl.userinfoList">
+              <div class="row">
+                <div class="col-sm-3">
+                    <span>
+                      <a href="javascript:;" ng-class="{true: 'text-red'}[rentalUserMngCtrl.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="rentalUserMngCtrl.selectUser(userinfo)" class="fa fa-user">
+                        &nbsp;{{userinfo.lastname}}{{userinfo.firstname}} </a>
+                    </span>
+                </div>
+                <div class="col-sm-3">
+                  {{userinfo.ssn}}</a>
+                </div>
+                <div class="col-sm-6 text-right">
+
+                  <button type="button" class="btn btn-success btn-xs"
+                          ng-if="userinfo.status===0" presentation-href="system:user:enable"
+                          ng-click="rentalUserMngCtrl.statusEnable(userinfo,'lg')">{{'enabled'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs"
+                          ng-if="userinfo.status===1" presentation-href="system:user:enable"
+                          ng-click="rentalUserMngCtrl.statusDisable(userinfo)">{{'forbidden'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="system:user:modify"
+                          ng-click="rentalUserMngCtrl.updateUserInfo(userinfo)">{{'alter'|translate}}
+                  </button>
+
+                  <button type="button" class="btn btn-default btn-xs"
+                          presentation-href="system:user:resetPsd"
+                          ng-click="rentalUserMngCtrl.updatePassword(userinfo)">{{'resetPassword'|translate}}
+                  </button>
+
+                  <button type="button" class="btn btn-default btn-xs" presentation-href="system:user:operationLog"
+                          ng-click="rentalUserMngCtrl.logQuery(userinfo,'lg')">{{'operationLog'|translate}}
+                  </button>
+
+                </div>
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel-group" id="rolePanel">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4 class="panel-title text-center">
+              {{'roleList' | translate}}
+              <a class="pull-right" type="button" href="" presentation-href="system:user:userRole:modify" ng-click="rentalUserMngCtrl.userRoleManage('lg')">
+                <i class="fa fa-pencil-square-o"></i> <span>{{'alter' | translate}}</span>
+              </a>
+            </h4>
+          </div>
+          <div class="panel-body" style="height: 800px;overflow:auto;">
+
+            <li class="list-group-item repeat"  ng-repeat="role in rentalUserMngCtrl.roleList">
+              <div class="row">
+                <div class="col-sm-8">
+                  <span>
+                    <a href="javascript:;" style="text-decoration : none" ng-class="{true: 'fa fa-folder',false: 'fa fa-folder-open'}[role.tree == '']"
+                       ng-click="rentalUserMngCtrl.selectRole(role)">&nbsp;{{role.name}} </a>
+                  </span>
+                  <treecontrol class="tree-classic" tree-model="role.tree">
+                    {{node.name}}
+                  </treecontrol>
+                </div>
+
+              </div>
+
+            </li>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+

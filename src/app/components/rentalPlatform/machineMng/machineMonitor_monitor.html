@@ -36,7 +36,7 @@
                   <td>{{'vehicleType'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=0 && vm.deviceInfoMonitor.deviceCode<=15">{{'hydraulicDriveScissors'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
                   <td ng-if="vm.deviceInfoMonitor.deviceCode!=null && vm.deviceInfoMonitor.deviceCode>=16 && vm.deviceInfoMonitor.deviceCode<=31">{{'DcMotorDriveForklift'|translate}}({{vm.deviceInfoMonitor.deviceCode}})</td>
-                  <td ng-if="vm.deviceInfoMonitor.deviceCode==null">{{'noInfo'|translate}}</td>
+                  <td ng-if="vm.deviceInfoMonitor.deviceCode==null||(vm.deviceInfoMonitor.deviceCode!=null && !(vm.deviceInfoMonitor.deviceCode>=0&&vm.deviceInfoMonitor.deviceCode<=31))">{{'noInfo'|translate}}</td>
                   <!--蓄电池液位-->
                   <td>{{'batteryLevelSwitch'|translate}}</td>
                   <td ng-if="vm.deviceInfoMonitor.liquidLevelSw==1">{{'normal'|translate}}</td>

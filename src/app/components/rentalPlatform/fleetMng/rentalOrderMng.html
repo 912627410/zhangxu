@@ -181,15 +181,15 @@
             </tr>
           </table>
         </div>
-        <!--<div class="col-lg-12">&lt;!&ndash;分页框&ndash;&gt;-->
-          <!--<uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"-->
-                          <!--total-items="rentalOrderMngCtrl.totalElements"-->
-          <!--max-size="10" ng-model="rentalOrderMngCtrl.currentPage"-->
-          <!--items-per-page="rentalOrderMngCtrl.pageSize"-->
-          <!--ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.currentPage-1,null,rentalOrderMngCtrl.totalElements,rentalOrderMngCtrl.rentalOrder)"-->
-          <!--previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>-->
-          <!--</uib-pagination>-->
-        <!--</div>-->
+        <div class="col-lg-12"><!--分页框-->
+          <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                          total-items="rentalOrderMngCtrl.totalElements"
+          max-size="10" ng-model="rentalOrderMngCtrl.currentPage"
+          items-per-page="rentalOrderMngCtrl.pageSize"
+          ng-change="rentalOrderMngCtrl.query(rentalOrderMngCtrl.currentPage-1,rentalOrderMngCtrl.pageSize,rentalOrderMngCtrl.totalElements,rentalOrderMngCtrl.rentalOrder)"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+          </uib-pagination>
+        </div>
       </div>
     </div>
   </div>

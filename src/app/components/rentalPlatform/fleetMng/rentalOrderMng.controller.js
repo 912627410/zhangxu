@@ -16,13 +16,13 @@
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     //定义每页显示多少条数据
-    vm.pageSize = 12;
-    vm.totalOrders = 0;
-    vm.planOrders = 0;
-    vm.processOrders = 0;
-    vm.fininshOrders = 0;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
+    vm.totalOrders=0;
+    vm.planOrders=0;
+    vm.processOrders=0;
+    vm.fininshOrders=0;
 
-    ngTableDefaults.params.count = 12;//表格中每页展示多少条数据
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
 
 
