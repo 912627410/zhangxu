@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function LoginController($rootScope, $scope, $http, $cookies, $filter, $stateParams, commonFactory, $window, ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, PERMISSIONS_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, FLEET_TREE_URL, $confirm, Notification, serviceResource, permissions, Idle, Title, languages) {
+  function LoginController($rootScope, $scope, $http, $cookies, $filter, $stateParams, commonFactory, $window, ORG_TREE_JSON_DATA_URL,RENTAL_ORG_TREE_JSON_DATA_URL, SYS_CONFIG_URL, SYS_CONFIG_LIST_URL, PERMISSIONS_URL, GET_VERIFYCODE_URL, JUDGE_VERIFYCODE_URL, FLEET_TREE_URL, $confirm, Notification, serviceResource, permissions, Idle, Title, languages) {
     var vm = this;
     var userInfo;
     var rootParent = {id: 0}; //默认根节点为0
@@ -314,32 +314,59 @@
      * 读取组织结构信息
      */
     vm.getOrg = function () {
-      var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
-      rspData.then(function (data) {
-        //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
-        var orgParent = rootParent;
-        if (null != userInfo.userdto.organizationDto) {
-          orgParent.id = userInfo.userdto.organizationDto.id;
-          rootParent.id = orgParent.id;
-        }
-
-        //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
-        var list = data;
-        for (var i = 0; i < list.length; i++) {
-          if (list[i].id == rootParent.id) {
-            //  alert("1=="+list[i].parentId);
-            list[i].parentId = 0;
-            // alert("2=="+list[i].parentId);
-            break;
+      if($rootScope.userInfo.userdto.organizationDto.tenantType =='1'){
+        var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
+        rspData.then(function (data) {
+          //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
+          var orgParent = rootParent;
+          if (null != userInfo.userdto.organizationDto) {
+            orgParent.id = userInfo.userdto.organizationDto.id;
+            rootParent.id = orgParent.id;
           }
-        }
 
-        $rootScope.orgChart = vm.unflatten(list);
+          //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
+          var list = data;
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id == rootParent.id) {
+              list[i].parentId = 0;
+              break;
+            }
+          }
+          $rootScope.orgChart = vm.unflatten(list);
 
-        $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
-      }, function (reason) {
-        Notification.error(languages.findKey('failedToGetOrganizationInformation'));
-      });
+          $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+
+
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+        });
+      }else if($rootScope.userInfo.userdto.organizationDto.tenantType == '2'){
+        var rspData = serviceResource.restCallService(RENTAL_ORG_TREE_JSON_DATA_URL, "QUERY");
+        rspData.then(function (data) {
+          //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
+          var orgParent = rootParent;
+          if (null != userInfo.userdto.organizationDto) {
+            orgParent.id = userInfo.userdto.organizationDto.id;
+            rootParent.id = orgParent.id;
+          }
+
+          //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
+          var list = data;
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id == rootParent.id) {
+              list[i].parentId = 0;
+              break;
+            }
+          }
+          $rootScope.orgChart = vm.unflatten(list);
+
+          $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+
+
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+        });
+      }
     }
 
     /**

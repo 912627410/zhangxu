@@ -9,16 +9,18 @@
     .controller('rentalOrgMngController', rentalOrgMngController);
 
   /** @ngInject */
-  function rentalOrgMngController($rootScope,$scope, $uibModal, languages,ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,QUERY_PARENTORG_URL,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
+  function rentalOrgMngController($rootScope,$scope, $uibModal, languages,RENTAL_ORG_TREE_JSON_DATA_URL, Notification, serviceResource,$window ,QUERY_PARENTORG_URL,RENTAL_ORG_ID_URL) {
     var vm = this;
+    vm.operatorInfo = $rootScope.userInfo;
     vm.animationsEnabled = true;
     vm.selectedOrg;
     vm.selectedParentOrg;
     vm.isShow = false;
+    vm.showOrgTree = false;
 
     vm.searchText = '';     //搜索的数据
     var rootParent = {id: 0}; //默认根节点为0
-    vm.operatorInfo = $rootScope.userInfo;
+
 
 
     //初始化组织树
@@ -30,7 +32,6 @@
 
     //选中组织事件
     vm.my_tree_handler = function (branch) {
-
       //查询组织信息
       $scope.$emit("OrgSelectedEvent", branch);
       vm.selectedOrg = branch;
@@ -109,17 +110,14 @@
         }
         _.each( children, function( child ){ vm.unflatten( array, child,null ) } );
       }
-
-
       //alert("tree="+tree);
       return tree;
     };
 
     //生成局部组织树
     vm.loadLocalOrgTree = function () {
-
       if(vm.operatorInfo){
-        var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL,"QUERY");
+        var rspData = serviceResource.restCallService(RENTAL_ORG_TREE_JSON_DATA_URL,"QUERY");
         rspData.then(function (data) {
           var orgParent = rootParent;
           if(vm.operatorInfo.userdto.organizationDto!=null){
@@ -142,7 +140,7 @@
         })
       }
     }
-    vm.showOrgTree = false;
+
 
     vm.openOrgTree = function(){
       vm.showOrgTree = !vm.showOrgTree;
@@ -163,13 +161,17 @@
     };
     vm.orgShow();
 
+
     vm.animationsEnabled = true;
     vm.toggleAnimation = function () {
       vm.animationsEnabled = !vm.animationsEnabled;
     };
 
 
-    //new org
+    /**
+     *
+     * @param size
+       */
     vm.addOrg = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -191,6 +193,7 @@
         //取消
       });
     };
+
     //update org
     vm.updateOrg = function (size) {
       if(null == vm.selectedOrg) {
@@ -200,7 +203,7 @@
       if(vm.selectedOrg.parentId=="0"){
         Notification.error(languages.findKey('theRootOrganizationCannotBeUpdate'));
       }else{
-        var url = ORG_ID_URL+"?id=" + vm.selectedOrg.parentId;
+        var url = RENTAL_ORG_ID_URL+"?id=" + vm.selectedOrg.parentId;
         var orgPromise = serviceResource.restCallService(url,"GET");
         orgPromise.then(function (data) {
           var parentOrg = data.content;
@@ -213,9 +216,6 @@
             resolve: {
               selectedOrg: function () {
                 return vm.selectedOrg;
-              },
-              parentOrg:function () {
-                return parentOrg;
               }
             }
           });

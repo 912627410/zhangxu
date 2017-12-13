@@ -235,6 +235,18 @@
         }
       })
 
+      //租赁利润统计
+      .state('rental.account', {
+        url: '/account',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalAccount.html',
+            controller: 'rentalAccountController',
+            controllerAs: 'rentalAccountCtrl'
+          }
+        }
+      })
+
 
     //物联网系统
     $stateProvider

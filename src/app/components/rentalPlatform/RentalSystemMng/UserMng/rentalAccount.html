@@ -1,0 +1,60 @@
+<div class="machine-content" resize>
+  <!--导航栏-->
+  <section class="content-header">
+    <h1>
+      <small>{{'profile'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-home"></i></a></li>
+      <li class="active"><i class="fa  fa-user"></i>{{'profile'| translate}}</li>
+    </ol>
+  </section>
+  <form name="updatedUserForm" class="form-horizontal">
+    <div class="modal-body">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="ssn" class="col-sm-2 control-label">{{'userName'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="text" id="ssn" class="form-control" placeholder="{{'userName'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.ssn" name="ssn" readonly validator="required"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lastName" class="col-sm-2 control-label">{{'laseName'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="text" id="lastName" class="form-control" placeholder="{{'laseName'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.lastname" name="lastName" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firstName" class="col-sm-2 control-label">{{'firstName'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="text" id="firstName" class="form-control" placeholder="{{'firstName'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.firstname" name="firstName" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mobile" class="col-sm-2 control-label">{{'phoneNumber'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="text" id="mobile" class="form-control" placeholder="{{'phoneNumber'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.mobile" name="mobile" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">{{'email'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="email" id="email" class="form-control" placeholder="{{'email'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.email" name="email"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address" class="col-sm-2 control-label">{{'address'|translate}}</label>
+          <div class="col-sm-10">
+            <input type="text" id="address" class="form-control" placeholder="{{'address'|translate}}" ng-model="rentalAccountCtrl.currentUserInfo.userdto.address" name="address" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <button class="btn btn-primary" type="button" validation-submit="updatedUserForm"  ng-click="rentalAccountCtrl.updateUserInfo()">{{'save'|translate}}</button>
+      <button class="btn btn-warning" ng-click="rentalAccountCtrl.updatePassword(rentalAccountCtrl.currentUserInfo)">{{'changePassword'|translate}}</button>
+    </div>
+  </form>
+</div>

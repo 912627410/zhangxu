@@ -96,6 +96,14 @@
             <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;English
           </a>
         </li>
+
+        <li ui-sref="rental.account" role="button" ng-if="userInfo">
+          <a style="padding-top: 15px;padding-bottom: 15px;">
+            <i class="glyphicon glyphicon-user" >
+            </i>
+          </a>
+        </li>
+
         <li class="user user-menu">
           <a ng-click="rentalPlatformTopbarCtr.logout()" href="">{{'logout'|translate}}</a>
         </li>

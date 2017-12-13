@@ -6,7 +6,7 @@
 
   angular.module('GPSCloud').controller('entryController', entryController);
 
-  function entryController($rootScope,$scope, $http,$cookies,$filter, $window,Notification, serviceResource, languages,ORG_TREE_JSON_DATA_URL) {
+  function entryController($rootScope,$scope, $http,$cookies,$filter, $window,Notification, serviceResource, languages,ORG_TREE_JSON_DATA_URL,RENTAL_ORG_TREE_JSON_DATA_URL) {
 
 
     var vm = this;
@@ -113,31 +113,59 @@
 
     //读取组织结构信息
     vm.getOrg = function () {
-      var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
-      rspData.then(function (data) {
-        //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
-        var orgParent = rootParent;
-        if (null != userInfo.userdto.organizationDto) {
-          orgParent.id = userInfo.userdto.organizationDto.id;
-          rootParent.id = orgParent.id;
-        }
-
-        //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
-        var list = data;
-        for (var i = 0; i < list.length; i++) {
-          if (list[i].id == rootParent.id) {
-            list[i].parentId = 0;
-            break;
+      if($rootScope.userInfo.userdto.organizationDto.tenantType =='1'){
+        var rspData = serviceResource.restCallService(ORG_TREE_JSON_DATA_URL, "QUERY");
+        rspData.then(function (data) {
+          //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
+          var orgParent = rootParent;
+          if (null != userInfo.userdto.organizationDto) {
+            orgParent.id = userInfo.userdto.organizationDto.id;
+            rootParent.id = orgParent.id;
           }
-        }
-        $rootScope.orgChart = vm.unflatten(list);
 
-        $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+          //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
+          var list = data;
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id == rootParent.id) {
+              list[i].parentId = 0;
+              break;
+            }
+          }
+          $rootScope.orgChart = vm.unflatten(list);
+
+          $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
 
 
-      }, function (reason) {
-        Notification.error(languages.findKey('failedToGetOrganizationInformation'));
-      });
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+        });
+      }else if($rootScope.userInfo.userdto.organizationDto.tenantType == '2'){
+        var rspData = serviceResource.restCallService(RENTAL_ORG_TREE_JSON_DATA_URL, "QUERY");
+        rspData.then(function (data) {
+          //判断树形菜单的根节点,默认为0,然后根据用户的组织来进行更新
+          var orgParent = rootParent;
+          if (null != userInfo.userdto.organizationDto) {
+            orgParent.id = userInfo.userdto.organizationDto.id;
+            rootParent.id = orgParent.id;
+          }
+
+          //TODO生成树的方法,要求根的父节点必须为0才可以,临时这么写,后续需要优化
+          var list = data;
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id == rootParent.id) {
+              list[i].parentId = 0;
+              break;
+            }
+          }
+          $rootScope.orgChart = vm.unflatten(list);
+
+          $window.sessionStorage["orgChart"] = JSON.stringify($rootScope.orgChart);
+
+
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+        });
+      }
     }
 
 
