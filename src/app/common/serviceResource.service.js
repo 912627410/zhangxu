@@ -289,6 +289,9 @@
         var info = createInfoWindow(title, contentInfo,mapObj);
         //设置窗体内容
         infoWindow.setContent(info);
+
+        mapObj.panTo([item.longitude, item.latitude]);
+
       });
       //构建自定义信息窗体
       function createInfoWindow(title, content) {
