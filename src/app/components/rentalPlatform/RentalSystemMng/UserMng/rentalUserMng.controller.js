@@ -9,14 +9,13 @@
     .controller('rentalUserMngController', rentalUserMngController);
 
   /** @ngInject */
-  function rentalUserMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,USER_ROLE_URL,languages,
+  function rentalUserMngController($rootScope,$confirm,$uibModal,Notification,commonFactory,serviceResource, $http,languages,RENTAL_USER_ROLE_URL,
                              USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL,ROLE_MENU_LIST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
     // select org
     vm.my_tree_handler = function (branch) {
-
       var restCallURL = USER_PAGE_URL;
       var pageUrl = 0;
       var sizeUrl = 10000;
@@ -25,10 +24,8 @@
       if (null != branch && null != branch.id) {
         restCallURL += "&search_EQ_organization.id=" + branch.id;
       }
-
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
         vm.userinfoList = data.content;
 
       }, function (reason) {
@@ -50,16 +47,18 @@
       nodeChildren: "privileges"
     }
 
-    vm.selectUser = function (user) {
+    /**
+     * 查询用户所属角色
+     * @param user
+       */
+    vm.selectRoleBlongsToUser = function (user) {
 
       vm.selectedUser = user;
-
-      var roleUserUrl = USER_ROLE_URL;
+      var roleUserUrl = RENTAL_USER_ROLE_URL;
       roleUserUrl += "?userinfoId=" + user.id;
       //得到角色用户信息
       var roleUserPromise = serviceResource.restCallService(roleUserUrl, "GET");
       roleUserPromise.then(function (data) {
-
         vm.roleList = [];
         angular.forEach(data.content, function (role) {
           var newRoleView = {
@@ -67,7 +66,6 @@
             name: role.name,
             tree: ''
           }
-
           vm.roleList.push(newRoleView);
         })
 
@@ -276,7 +274,7 @@
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/userManagement/userRoleMng.html',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/userRoleMng.html',
         controller: 'userRoleMngController as userRoleMngController',
         size: size,
         backdrop: false,
@@ -320,61 +318,6 @@
       });
     };
     //
-
-
-    vm.privExport = function () {
-
-      if (vm.selected.length > 0) {
-        var restCallURL = USER_PRIV_EXPORT_URL + "?userList=" + vm.selected;
-
-        $http({
-          url: restCallURL,
-          method: "GET",
-          responseType: 'arraybuffer'
-        }).success(function (data, status, headers, config) {
-          if(status == '204'){
-
-            Notification.warning(languages.findKey('theSelectedUserRolesPriviligeListIsEmpty'));
-            return;
-          }
-          var blob = new Blob([data], { type: "application/vnd.ms-excel" });
-          var objectUrl = window.URL.createObjectURL(blob);
-
-          var anchor = angular.element('<a/>');
-
-          //兼容多种浏览器
-          if (window.navigator.msSaveBlob) { // IE
-            window.navigator.msSaveOrOpenBlob(blob, '用户权限.xls')
-          } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
-            anchor.css({display: 'none'});
-            angular.element(document.body).append(anchor);
-            anchor.attr({
-              href: URL.createObjectURL(blob),
-              target: '_blank',
-              download:   '用户权限.xls'
-            })[0].click();
-            anchor.remove();
-          } else { // Chrome
-            anchor.attr({
-              href: URL.createObjectURL(blob),
-              target: '_blank',
-              download: '用户权限.xls'
-            })[0].click();
-          }
-          anchor.attr({
-            href: objectUrl,
-            target: '_blank',
-            download: '用户权限.xls'
-          })[0].click();
-
-        }).error(function (data, status, headers, config) {
-          Notification.error(languages.findKey('exportFailure'));
-        });
-      }else {
-        Notification.warning({message: languages.findKey('pleaseSelectTheUserToExport'), positionY: 'top', positionX: 'center'});
-      }
-
-    }
 
   }
 })();

@@ -34,10 +34,10 @@
     </div>
 
     <div class="col-md-4">
-      <button class="btn btn-primary" type="button" ng-click="rentalUserMngCtrl.reset()">{{'reset'|translate}}</button>
       <button class="btn btn-primary" type="button" presentation-href="system:user:query"
               ng-click="rentalUserMngCtrl.query(null,null,null,rentalUserMngCtrl.userinfo)">{{'query'|translate}}
       </button>
+      <button class="btn btn-default " type="button" ng-click="rentalUserMngCtrl.reset()">{{'reset'|translate}}</button>
 
     </div>
   </div>
@@ -53,7 +53,7 @@
               {{'organizationInformation'|translate}}
             </h4>
           </div>
-          <div class="panel-body" style="height: 800px;overflow:auto;">
+          <div class="panel-body" style="height: 600px;overflow:auto;">
             <abn-tree tree-data="rentalUserMngCtrl.my_data"
                       on-select="rentalUserMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
                       expand-level="2"></abn-tree>
@@ -67,20 +67,18 @@
           <div class="panel-heading">
             <h4 class="panel-title text-center">
               {{'userList' | translate}}
-              <a class="pull-right" type="button" href="" presentation-href="system:user:create" ng-click="rentalUserMngCtrl.addUser('md')">
+              <a class="pull-right" type="button"  presentation-href="system:user:create" ng-click="rentalUserMngCtrl.addUser('md')">
                 <i class="fa fa-plus"></i> <span>{{'add' | translate}}</span>
               </a>
             </h4>
-
-
           </div>
-          <div class="panel-body" style="height: 800px;overflow:auto;">
+          <div class="panel-body" style="height: 600px;overflow:auto;">
 
             <li class="list-group-item repeat"  ng-repeat="userinfo in rentalUserMngCtrl.userinfoList">
               <div class="row">
                 <div class="col-sm-3">
                     <span>
-                      <a href="javascript:;" ng-class="{true: 'text-red'}[rentalUserMngCtrl.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="rentalUserMngCtrl.selectUser(userinfo)" class="fa fa-user">
+                      <a href="javascript:;" ng-class="{true: 'text-red'}[rentalUserMngCtrl.selectedUser == userinfo]" presentation-href="system:user:userRole:query" ng-click="rentalUserMngCtrl.selectRoleBlongsToUser(userinfo)" class="fa fa-user">
                         &nbsp;{{userinfo.lastname}}{{userinfo.firstname}} </a>
                     </span>
                 </div>
@@ -130,7 +128,7 @@
               </a>
             </h4>
           </div>
-          <div class="panel-body" style="height: 800px;overflow:auto;">
+          <div class="panel-body" style="height: 600px;overflow:auto;">
 
             <li class="list-group-item repeat"  ng-repeat="role in rentalUserMngCtrl.roleList">
               <div class="row">

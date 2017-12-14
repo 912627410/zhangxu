@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+   var SERVER_BASE_URL = 'http://192.168.8.190:8089/rest/';
    var WEBSOCKET_DOMAIN_NAME = 'localhost';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
@@ -354,6 +354,8 @@
     .constant('RENTAL_ASSET_STATISTICS_DATA_URL', SERVER_BASE_URL + 'rental/asset/assetTopData')  //利润统计上方车辆和订单总数
     .constant('RENTAL_TOTALPROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getTotalProfit')   //总利润
     .constant('RENTAL_PROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getProfitsDetails')   //各时间段利润及同比
+    //租赁用户管理
+    .constant('RENTAL_USER_ROLE_URL', SERVER_BASE_URL + 'rental/user/userRole')                 //用户角色UR
     //租赁组织管理
     .constant('RENTAL_ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'rental/org/organazition')   //组织机构信息,返回树状json代码
     .constant('RENTAL_ORG_URL', SERVER_BASE_URL + 'rental/org/organization')   //组织基本信息
