@@ -200,7 +200,7 @@
               backdrop: false,
               templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
               controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-              size: 'lg',
+              size: 'super-lgs',
               resolve: { //用来向controller传数据
                 deviceinfo: function () {
                   return $rootScope.deviceinfoMonitor;
@@ -419,30 +419,32 @@
         return restCallService(URL, "ADD", params);
       },
 
-      //根据车架号判断车型
-      //00 - 无特定类型
-      //01 - 小挖
+      /**
+       *根据车架号判断车型
+       *  00 - 无特定类型
+       *  01 - 小挖
+       */
       getDeviceType: function (machineId) {
         if (machineId == null) {
           return "00";
         }
-
         var modelName = machineId.substr(3, 5);
         var smallExModel = $rootScope.SMALL_EXCAVATOR_MODEL;
-
         if (smallExModel.indexOf(modelName) != -1) {
           return "01";
         }
         return null;
       },
 
-      //TODO 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
-      //00 - 无特定类型
-      //01 - 小挖
-      //02 - 矿车
-      //03 - 中挖
-      //04 - 平地机T3   设备类型为 7
-      //05 - 巴黎(T3)   设备类型为 5
+      /**
+      * 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
+      * 00 - 无特定类型
+      * 01 - 小挖
+      * 02 - 矿车
+      * 03 - 中挖
+      * 04 - 平地机T3   设备类型为 7
+      * 05 - 巴黎(T3)   设备类型为 5
+      */
       getDeviceTypeForVersionNum: function (version_num, deviceType) {
         if (version_num == '3' && deviceType == '7') {
           return '04';
@@ -466,14 +468,15 @@
           return '04';
         }
       },
-      //将hh.hh翻译成hh时mm分
+
+      /**
+       * 将hh.hh翻译成hh时mm分
+       */
       convertToMins: function (hours) {
         var hoursArray;
         var hourMins;
         if (hours != null) {
           hoursArray = hours.toString().split(".");
-
-
           if (hoursArray[0] != null) {
             hourMins = hoursArray[0] + languages.findKey('hour');
           }
