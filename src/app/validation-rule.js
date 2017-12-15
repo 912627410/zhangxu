@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,7 +8,7 @@
   /** @ngInject */
   function validationuleConfig($validationProvider) {
     var expression = {
-      required: function(value) {
+      required: function (value) {
         return !!value;
       },
       url: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/,
@@ -17,15 +17,13 @@
       numberAndChar: /^[a-zA-Z0-9]+$/,
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
       numberAndDot: /^[0-9.]+$/,
-      //numberAndCharForPass:/[a-zA-Z0-9_]{8,10}/,
       numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
-     // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       softVersionNum: /^\d{1,2}(\.\d{1,2})?$/,
 
-      minlength: function(value, scope, element, attrs, param) {
+      minlength: function (value, scope, element, attrs, param) {
         return value.length >= param;
       },
-      maxlength: function(value, scope, element, attrs, param) {
+      maxlength: function (value, scope, element, attrs, param) {
         return value.length <= param;
       },
       maxValue: function (value, scope, element, attrs, param) {
@@ -35,10 +33,6 @@
         return parseInt(value) >= parseInt(param);
       }
     };
-
-    //var $http = $validationProvider.$http;
-
-    //alert($validationProvider.$q);
 
     var defaultMsg = {
       required: {
@@ -91,13 +85,13 @@
         success: ''
       },
       softVersionNum: {
-        error: '版本号取值范围：0.00~99.99',
+        error: '版本号取值范围：0.01~99.99',
         success: ''
       }
     };
+
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);
 
-    //
     $validationProvider.setExpression({
       foo: function (value, scope, element, attrs) {
         $validationProvider.setDefaultMsg({
@@ -105,82 +99,62 @@
             error: 'Foo must equal ' + attrs.validfoo
           }
         });
-
         return value === attrs.validfoo;
       }
     });
 
     $validationProvider.setExpression({
-        abc: function(value, scope, element, attrs) {
-
+        abc: function (value, scope, element, attrs) {
           var params = {deviceNum: "c"};
           return $http.get(
             "rest/device/fetchUnused",
             {params: params}
-          ).then(function(response) {
+          ).then(function (response) {
             alert(response.data);
           });
-
-
-          $validationProvider.setDefaultMsg({
-            abc: {
-              error: 'Foo must equal ' + attrs.validfoo
-            }
-          });
-
-          //alert(attrs.validfoo);
           return value === attrs.validfoo;
         }
       }
     );
 
     $validationProvider.setExpression({
-        mock: function(value, scope, element, attrs) {
-          //var $http = $injector.get('$http');
+        mock: function (value, scope, element, attrs) {
           $validationProvider.setDefaultMsg({
             mock: {
               error: 'Foo must equal ' + attrs.validfoo
             }
           });
-
           return value === attrs.validfoo;
         },
-        url:"abc"
+        url: "abc"
       }
     );
 
     //自定义最大值最小值消息
-
     $validationProvider.setExpression({
-        maxValue: function(value, scope, element, attrs, param) {
+        maxValue: function (value, scope, element, attrs, param) {
           $validationProvider.setDefaultMsg({
             maxValue: {
               error: '不能大于 ' + param
             }
           });
-
-           return parseInt(value) <= parseInt(param);
+          return parseInt(value) <= parseInt(param);
         },
-        minValue: function(value, scope, element, attrs, param) {
+        minValue: function (value, scope, element, attrs, param) {
           $validationProvider.setDefaultMsg({
             minValue: {
               error: '不能小于 ' + param
             }
           });
-
           return parseInt(value) >= parseInt(param);
         },
       }
     );
 
-
     $validationProvider.setErrorHTML(function (msg) {
-      return  "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
+      return "<label class=\"control-label has-error\" style='color: red;'>" + msg + "</label>";
     });
 
-
-
   }
-
 
 })();

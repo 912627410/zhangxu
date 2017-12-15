@@ -663,7 +663,7 @@
           //   boundaryGap:true,
           type: 'value',
           min:0,
-          max:200,
+          max:300,
           interval: 40,
           // max:'dataMax',
           // minInterval: 1,
@@ -822,10 +822,10 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:2500,
-        interval: 500,
+        max:2000,
+        interval: 150,
         // max:'dataMax',
-        minInterval: 1,
+        minInterval: 5,
         axisLine: {
           show: false
         },
@@ -1674,7 +1674,7 @@
           if(machineType1=="1,2,3"){
             var yearData1 = [,,];
           } else if(machineType1=="A1"){
-            var yearData1 = [,,,,,,];
+            var yearData1 = [,,];
           } else {
             var yearData1 = [];
           }
@@ -1722,7 +1722,7 @@
                 if(machineType1=="1,2,3"){
                   var ownershipData1 = [,,];
                 } else if(machineType1=="A1"){
-                  var ownershipData1 = [,,,,,,];
+                  var ownershipData1 = [,,];
                 } else {
                   var ownershipData1 = [];
                 }
@@ -1835,7 +1835,9 @@
           var date = new Date();
           var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            if(data[i].tMonth==month){}else{
+            if(data[i].tMonth==month){
+
+            }else{
               var value = data[i].tData;
               yearData4.push(value);
             }

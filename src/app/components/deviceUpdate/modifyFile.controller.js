@@ -98,6 +98,10 @@
         Notification.error({message: '请重新录入软件版本!', positionX: 'center'});
         return;
       }
+      if(softVersion <= 0) {
+        Notification.error({message: '版本号取值范围：0.01~99.99', positionX: 'center'});
+        return;
+      }
 
       if(updateFile.projectTeam == null || updateFile.projectTeam == "") {
         Notification.error({message: '请选择项目组!', positionX: 'center'});

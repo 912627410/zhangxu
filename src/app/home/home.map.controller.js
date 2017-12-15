@@ -1,7 +1,7 @@
 /**
  * Created by shuangshan on 16/1/3.
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -9,14 +9,27 @@
     .controller('HomeMapController', HomeMapController);
 
   /** @ngInject */
-  function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource,permissions) {
+  function HomeMapController(serviceResource, permissions, MACHINE_DISTRIBUTION) {
     var vm = this;
-    if(permissions.getPermissions("device:homegpsdata")) {
-      serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
+
+    /**
+     * 刷新首页机器分布
+     */
+    vm.refreshMap = function () {
+      var machineDistRefreshPromise = serviceResource.restCallService(MACHINE_DISTRIBUTION, "GET");
+      machineDistRefreshPromise.then(function (data) {
+        serviceResource.refreshMapWithDeviceInfo("homeMap", data.content, 4);
+      }, function (reason) {
+
+      })
     }
 
-    vm.refreshMap = function () {
-      serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);
+    /**
+     * 初始化首页机器分布
+     */
+    if (permissions.getPermissions("device:homegpsdata")) {
+      vm.refreshMap();
     }
+
   }
 })();

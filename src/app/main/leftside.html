@@ -1,14 +1,13 @@
 <aside id="slimScroll" class="main-sidebar" style="background-color: #222d32;" slim-scroll  width="200px">
   <section id="slimScroll2" class="sidebar"  slim-scroll  >
     <div class="user-panel">
-      <div class="pull-left image" style="padding-left: 5px">
+      <div class="pull-left image pull-left-image">
         <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
       </div>
-      <div class="pull-left info" ng-if="userInfo"
-           style="margin-left: 15px;border: none!important;box-shadow: none!important;background-color:#222d32!important;cursor:pointer;">
-        <p style="color: #fff;font-weight: 600;font-size: 17px"> {{userInfo.userdto.ssn}} </p>
+      <div class="pull-left info pull-left-user-info" ng-if="userInfo" >
+        <p class="user-dto"> {{userInfo.userdto.ssn}} </p>
         <i class="fa fa-circle text-success"></i>
-        <strong style="color: #fff;font-size: 15px">{{userInfo.userdto.organizationDto.orgSimpleName}}</strong>
+        <strong class="user-font">{{userInfo.userdto.organizationDto.orgSimpleName}}</strong>
       </div>
 
       <div class="pull-left info" ng-if="userInfo == null">
@@ -16,19 +15,19 @@
       </div>
     </div>
 
-    <ul class="sidebar-menu tree" style="margin-top: 20px;">
+    <ul class="sidebar-menu tree sidebar-menu-top">
 
-      <li class="header" style="color: #4b646f;background: #1a2226;font-size: 16px;cursor:pointer">{{'main_navigation'| translate}}</li>
+      <li class="header main-navigation" >{{'main_navigation'| translate}}</li>
 
       <li class="treeview">
-        <a ng-click="dashboard=!dashboard" href="" presentation-href="home:dashboard" style="border-left-color:  #3c8dbc;">
+        <a ng-click="dashboard=!dashboard" href="" presentation-href="home:dashboard" class="dashboard">
           <i class="fa fa-dashboard"></i>
           <span>{{'dashboard' | translate}}</span>
           <span class="pull-right-container">
               <i class="fa fa-angle-left" ng-class="dashboard?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: dashboard}" style="width:200px ;padding-left: 20px">
+        <ul class="panel-collapse collapse treeview-menu treeview-menu-ul" ng-class="{in: dashboard}" >
           <li>
             <a ui-sref="home.monitor" presentation-href="device:monitorPage">
               <i class="fa fa-th-list"></i> <span>{{'equipmentMonitoring' | translate}}</span>
@@ -45,7 +44,7 @@
               <i class="fa fa-angle-left" ng-class="deviceMng?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: deviceMng}" style="width:200px ;padding-left: 20px">
+        <ul class="treeview-menu panel-collapse collapse treeview-menu-ul" ng-class="{in: deviceMng}">
           <li>
             <a ui-sref="home.deviceinfoMng" presentation-href="device:page">
               <i class="fa ion-ios-location"></i> <span>GPS设备管理</span>
@@ -73,7 +72,7 @@
               <i class="fa fa-angle-left" ng-class="reportMng?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+        <ul class="treeview-menu panel-collapse collapse treeview-menu-ul"
             ng-class="{in: reportMng}">
           <li>
             <a ng-click="erecord=!erecord" href="" presentation-href="dataAnalysis:tope-record">
@@ -410,7 +409,7 @@
               <!--<i class="fa fa-angle-left" ng-class="collapsed?'transform-left':'transform-right'"></i>-->
           <!--</span>-->
         <!--</a>-->
-        <!--<ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: collapsed}">-->
+        <!--<ul class="treeview-menu panel-collapse collapse treeview-menu-ul" ng-class="{in: collapsed}">-->
           <!--<li>-->
             <!--<a ui-sref="home.fleetMng" presentation-href="fleet:page">-->
               <!--<i class="fa fa-flag"></i> <span>车队管理</span>-->
@@ -458,7 +457,7 @@
               <i class="fa fa-angle-left" ng-class="sysMng?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px" ng-class="{in: sysMng}">
+        <ul class="treeview-menu panel-collapse collapse treeview-menu-ul" ng-class="{in: sysMng}">
           <li>
             <a ui-sref="home.sysconfigmng" presentation-href="config:sysconfigPage">
               <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
@@ -500,7 +499,7 @@
               <i class="fa fa-angle-left" ng-class="update?'transform-left':'transform-right'"></i>
           </span>
         </a>
-        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"ng-class="{in: update}">
+        <ul class="treeview-menu panel-collapse collapse treeview-menu-ul" ng-class="{in: update}">
           <li>
             <a ui-sref="home.deviceUpdate" presentation-href="deviceUpdate:page">
               <i class="fa fa-arrow-circle-up"></i> <span>设备升级</span>

@@ -7,6 +7,7 @@
 
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
+
     $stateProvider
       .state('home', {
         url: '/home',
@@ -437,7 +438,6 @@
           }
         }
       })
-    ;
 
     //DMS系统页面集成
     $stateProvider
@@ -484,6 +484,6 @@
       })
 
     $urlRouterProvider.otherwise('/home');
-  }
 
+  }
 })();

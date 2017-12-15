@@ -1,9 +1,8 @@
 <div>
-  <div class="col-lg-3 col-xs-6" >
-    <!-- small box -->
+  <div class="col-lg-3 col-xs-6">
     <div class="small-box bg-aqua" presentation-href="device:homegpsdata">
       <div class="inner">
-        <h3 >{{homeCtrl.statisticInfo.totalDevices}}</h3>
+        <h3>{{homeCtrl.statisticInfo.totalDevices}}</h3>
         <p>{{'equipmentMonitoring'|translate}}</p>
       </div>
       <div class="icon">
@@ -13,9 +12,8 @@
         {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
     </div>
-  </div><!-- ./col -->
-  <div  class="col-lg-3 col-xs-6" >
-    <!-- small box -->
+  </div>
+  <div class="col-lg-3 col-xs-6">
     <div class="small-box bg-green" presentation-href="device:homegpsdata">
       <div class="inner">
         <h3>{{homeCtrl.statisticInfo.totalDevices}}</h3>
@@ -24,16 +22,15 @@
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
-      <a ui-sref="home.deviceinfoMng" class="small-box-footer" presentation-href="device:page" ng-if="homeCtrl.validateDeviceOperPermission()">
-         {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
+      <a ui-sref="home.deviceinfoMng" class="small-box-footer" presentation-href="device:page"
+         ng-if="homeCtrl.validateDeviceOperPermission()">
+        {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
-
-
-      <span class="small-box-footer" ng-if="!homeCtrl.validateDeviceOperPermission()">{{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i></span>
+      <span class="small-box-footer" ng-if="!homeCtrl.validateDeviceOperPermission()">{{'moreInformation' | translate}} <i
+        class="fa fa-arrow-circle-right"></i></span>
     </div>
-  </div><!-- ./col -->
+  </div>
   <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
     <div class="small-box bg-yellow">
       <div class="inner">
         <h3>{{homeCtrl.statisticInfo.notificationNumber}}</h3>
@@ -43,12 +40,11 @@
         <i class="ion ion-person-add"></i>
       </div>
       <a ui-sref="home.notification" class="small-box-footer">
-         {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
+        {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
     </div>
-  </div><!-- ./col -->
-  <div class="col-lg-3 col-xs-6" >
-    <!-- small box -->
+  </div>
+  <div class="col-lg-3 col-xs-6">
     <div class="small-box bg-red">
       <div class="inner">
         <h3>-</h3>
@@ -58,8 +54,8 @@
         <i class="ion ion-pie-graph"></i>
       </div>
       <a ui-sref="home.machineComparison" class="small-box-footer">
-         {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
+        {{'moreInformation' | translate}} <i class="fa fa-arrow-circle-right"></i>
       </a>
     </div>
-  </div><!-- ./col -->
+  </div>
 </div>

@@ -84,6 +84,10 @@
         Notification.error({message: '请输入软件版本!', positionX: 'center'});
         return;
       }
+      if(file.softVersion <= 0) {
+        Notification.error({message: '版本号取值范围：0.01~99.99', positionX: 'center'});
+        return;
+      }
 
       var verArr = file.softVersion.split(".");
       if(file.softVersion * 100 > 9999 || verArr.length > 1 && verArr[1].length > 2) {
