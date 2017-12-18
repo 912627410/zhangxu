@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('minePlatformHomeController', minePlatformHomeController);
+    .controller('minemngContentController', minemngContentController);
 
   /** @ngInject */
-  function minePlatformHomeController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification,Title,roles) {
+  function minemngContentController($rootScope,$filter, serviceResource,permissions,HOME_STATISTICS_DATA_URL,Notification,Title,roles) {
     var vm = this;
     vm.fleetUserShow = false;
     vm.userShow = true;

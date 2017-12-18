@@ -21,37 +21,27 @@
     <ul class="sidebar-menu">
 
       <li class="treeview">
-        <a ng-click="mineHome=!mineHome"  href="">
+        <a ng-click="minemngHome=!minemngHome"  href="">
           <i class="fa fa-dashboard"></i>
           <span>首页</span>
           <span class="glyphicon pull-right"
-                ng-class="mineHome?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>
+                ng-class="minemngHome?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>
         </a>
-        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: mineHome}">
+        <ul class="panel-collapse collapse treeview-menu" ng-class="{in: minemngHome}">
           <li>
-            <a ui-sref="mine.trip">
+            <a ui-sref="minemng.minemngTrip">
               <i class="fa fa-th-list"></i> <span>趟数</span>
             </a>
           </li>
           <li>
-            <a ui-sref="mine.fuel">
+            <a ui-sref="minemng.minemngFuel">
               <i class="fa fa-th-list"></i> <span>油耗</span>
             </a>
           </li>
-          <!--<li>-->
-            <!--<a ui-sref="">-->
-              <!--<i class="fa fa-th-list"></i> <span>车辆状态</span>-->
-            <!--</a>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<a ui-sref="">-->
-              <!--<i class="fa fa-th-list"></i> <span>报警提醒</span>-->
-            <!--</a>-->
-          <!--</li>-->
         </ul>
       </li>
 
-      <li class="treeview ">
+      <li class="treeview">
         <a ng-click="basicInfoMng=!basicInfoMng" href="" >
           <i class="fa ion-clipboard"></i>
           <span>基本信息管理</span>
@@ -61,15 +51,10 @@
         </a>
         <ul class="treeview-menu panel-collapse collapse" ng-class="{in: basicInfoMng}">
           <li>
-            <a ui-sref="mine.personnelInfoMng">
+            <a ui-sref="minemng.minemngUserMng">
               <i class="fa ion-ios-location"></i> <span>人员基本信息</span>
             </a>
           </li>
-          <!--<li>-->
-            <!--<a ui-sref="home.simMng" presentation-href="deviceMng:sim">-->
-              <!--<i class="fa ion-social-rss"></i> <span>{{'SIMManagement' | translate}}</span>-->
-            <!--</a>-->
-          <!--</li>-->
         </ul>
       </li>
 

@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('personnelInfoMngController', personnelInfoMngController);
+    .controller('minemngUserMngController', minemngUserMngController);
 
   /** @ngInject */
-  function personnelInfoMngController($rootScope) {
+  function minemngUserMngController($rootScope) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 

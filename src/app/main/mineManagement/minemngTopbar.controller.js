@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('minePlatformTopbarController', minePlatformTopbarController);
+    .controller('minemngTopbarController', minemngTopbarController);
 
   /** @ngInject */
-  function minePlatformTopbarController($rootScope, $cookies, $scope, $window, $http, $uibModal, permissions, Notification, Idle, $stateParams, Keepalive, $translate, languages) {
+  function minemngTopbarController($rootScope, $cookies, $scope, $window, $http, Notification, Idle, $translate, languages) {
     var vm = this;
 
     vm.logout = function () {

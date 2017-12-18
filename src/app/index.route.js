@@ -227,63 +227,63 @@
 
     //矿车管理系统
     $stateProvider
-      .state('mine', {
-        url: '/mine',
+      .state('minemng', {
+        url: '/minemng',
         views: {
           '@': {
-            templateUrl: 'app/main/minePlatform/minePlatform.html',
-            controller: 'minePlatformController'
+            templateUrl: 'app/main/mineManagement/minemng.html',
+            controller: 'minemngController'
           },
-          'topbar@mine': {
-            templateUrl: 'app/main/minePlatform/minePlatformTopbar.html',
-            controller: 'minePlatformTopbarController',
-            controllerAs: 'minePlatformTopbarCtrl'
+          'topbar@minemng': {
+            templateUrl: 'app/main/mineManagement/minemngTopbar.html',
+            controller: 'minemngTopbarController',
+            controllerAs: 'minemngTopbarCtrl'
           },
-          'main@mine': {
-            templateUrl: 'app/main/minePlatform/minePlatformHome.html',
-            controller: 'minePlatformHomeController',
-            controllerAs: 'minePlatformHomeCtrl'
+          'main@minemng': {
+            templateUrl: 'app/main/mineManagement/minemngContent.html',
+            controller: 'minemngContentController',
+            controllerAs: 'minemngContentCtrl'
           },
-          'leftside@mine': {
-            templateUrl: 'app/main/minePlatform/minePlatformLeft.html'
+          'leftside@minemng': {
+            templateUrl: 'app/main/mineManagement/minemngLeft.html'
           },
-          'rightside@mine': {
-            templateUrl: 'app/components/minePlatform/mineHome/mineHome.html',
-            controller: 'mineHomeController',
-            controllerAs: 'mineHomeCtrl'
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/minemngHome/minemngHome.html',
+            controller: 'minemngHomeController',
+            controllerAs: 'minemngHomeCtrl'
           }
         }
       })
       //趟数
-      .state('mine.trip', {
-        url: '/trip',
+      .state('minemng.minemngTrip', {
+        url: '/minemngTrip',
         views: {
-          'rightside@mine': {
-            templateUrl: 'app/components/minePlatform/mineHome/trip.html',
-            controller: 'tripController',
-            controllerAs: 'tripCtrl'
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/minemngHome/minemngTrip.html',
+            controller: 'minemngTripController',
+            controllerAs: 'minemngTripCtrl'
           }
         }
       })
       //油耗
-      .state('mine.fuel', {
-        url: '/fuel',
+      .state('minemng.minemngFuel', {
+        url: '/minemngFuel',
         views: {
-          'rightside@mine': {
-            templateUrl: 'app/components/minePlatform/mineHome/fuel.html',
-            controller: 'fuelController',
-            controllerAs: 'fuelCtrl'
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/minemngHome/minemngFuel.html',
+            controller: 'minemngFuelController',
+            controllerAs: 'minemngFuelCtrl'
           }
         }
       })
       //用户管理
-      .state('mine.personnelInfoMng', {
-        url: '/personnelInfoMng',
+      .state('minemng.minemngUserMng', {
+        url: '/minemngUserMng',
         views: {
-          'rightside@mine': {
-            templateUrl: 'app/components/minePlatform/basicInfoManagement/personnelInfoMng.html',
-            controller: 'personnelInfoMngController',
-            controllerAs: 'personnelInfoMngCtrl'
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/userManagement/minemngUserMng.html',
+            controller: 'minemngUserMngController',
+            controllerAs: 'minemngUserMngCtrl'
           }
         }
       });
