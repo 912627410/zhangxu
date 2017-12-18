@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{userRoleMngController.userinfo.lastname}}{{userRoleMngController.userinfo.firstname}}{{'roleManagement'|translate}}
+  <h3 class="modal-title">{{rentalUserRoleMngCtrl.userinfo.lastname}}{{rentalUserRoleMngCtrl.userinfo.firstname}}{{'roleManagement'|translate}}
   </h3>
 </div>
 
@@ -19,8 +19,8 @@
                 </h4>
               </div>
               <div class="panel-body" style="height: 400px">
-                <abn-tree tree-data="userRoleMngController.my_data"
-                          on-select="userRoleMngController.my_tree_handler(branch); $event.stopPropagation();"
+                <abn-tree tree-data="rentalUserRoleMngCtrl.my_data"
+                          on-select="rentalUserRoleMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
                           expand-level="2"></abn-tree>
               </div>
             </div>
@@ -38,11 +38,11 @@
               </div>
               <div class="panel-body" style="height: 400px;overflow:auto;">
 
-                <li class="list-group-item repeat"  ng-repeat="role in userRoleMngController.roleList">
+                <li class="list-group-item repeat"  ng-repeat="role in rentalUserRoleMngCtrl.roleList">
                   <div class="row">
                     <div class="col-sm-2">
-                      <input type="checkbox" ng-checked="userRoleMngController.isSelected(role.id)"
-                             ng-click="userRoleMngController.updateSelection($event, role.id)" ng-model="role.checked">
+                      <input type="checkbox" ng-checked="rentalUserRoleMngCtrl.isSelected(role.id)"
+                             ng-click="rentalUserRoleMngCtrl.updateSelection($event, role.id)" ng-model="role.checked">
                     </div>
                     <div class="col-sm-5">{{role.name}}</div>
                   </div>
@@ -59,11 +59,11 @@
       <uib-tab-heading>{{'systemRole'|translate}}</uib-tab-heading>
 
       <div class="row " style="padding: 10px">
-        <li class="list-group-item repeat"  ng-repeat="sysRole in userRoleMngController.sysRoleList">
+        <li class="list-group-item repeat"  ng-repeat="sysRole in rentalUserRoleMngCtrl.sysRoleList">
           <div class="row">
             <div class="col-sm-2">
-              <input type="checkbox" ng-checked="userRoleMngController.isSelected(sysRole.id)"
-                     ng-click="userRoleMngController.updateSelection($event, sysRole.id)" ng-model="role.checked">
+              <input type="checkbox" ng-checked="rentalUserRoleMngCtrl.isSelected(sysRole.id)"
+                     ng-click="rentalUserRoleMngCtrl.updateSelection($event, sysRole.id)" ng-model="role.checked">
             </div>
             <div class="col-sm-5">
               {{sysRole.name}}
@@ -75,8 +75,8 @@
   </uib-tabset>
 
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="userRoleMngController.ok()">{{'confirm'|translate}}</button>
-    <button class="btn btn-warning" type="button" ng-click="userRoleMngController.cancel()">{{'cancel'|translate}}</button>
+    <button class="btn btn-primary" type="button" ng-click="rentalUserRoleMngCtrl.ok()">{{'confirm'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="rentalUserRoleMngCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 
 

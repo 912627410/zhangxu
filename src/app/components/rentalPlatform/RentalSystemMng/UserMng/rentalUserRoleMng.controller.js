@@ -3,10 +3,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('userRoleMngController', userRoleMngController);
+    .controller('rentalUserRoleMngController', rentalUserRoleMngController);
 
   /** @ngInject */
-  function userRoleMngController($rootScope,  $uibModalInstance,languages,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
+  function rentalUserRoleMngController($rootScope,  $uibModalInstance,languages,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
     var vm = this;
     vm.selected = [];
     vm.userinfo = userinfo;

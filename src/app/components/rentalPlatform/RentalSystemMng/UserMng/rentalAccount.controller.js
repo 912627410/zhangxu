@@ -31,8 +31,8 @@
     vm.updatePassword = function (usermnginfo,size) {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/updateSelfPassword.html',
-        controller: 'updateSelfPasswordController as updatePasswordCtrl',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalUpdateSelfPassword.html',
+        controller: 'rentalUpdateSelfPasswordController as rentalUpdatePasswordCtrl',
         size: size,
         resolve: {
           usermnginfo: function () {
