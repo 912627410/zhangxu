@@ -9,7 +9,6 @@
   "oilLevel": "油位",
   "pressureMeter":"气压表",
   "pressureMeter2":"气压表2",
-  "fuelConsumption" : "平均油耗",
   "batteryVol": "车载电压",
   "realtimeDuration":"实时工时",
   "startTimes":"启动次数",
@@ -20,7 +19,5 @@
   "oilPress":"机油压力",
   "totalMileage":"累计里程",
   "momentWorkTime":"阶段工作时间",
-  "momentMileage":"阶段里程",
-  "flyWheelTeeth":"飞轮齿数",
-  "proportionalValve":"比例阀电流"
+  "momentMileage":"阶段里程"
 }

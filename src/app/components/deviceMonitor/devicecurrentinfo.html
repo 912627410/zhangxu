@@ -1,4 +1,3 @@
-
 <style type="text/css">
   /* 鼠标移入轮播组件时，显示导航 */
   /* 继续隐藏导航下面的阴影*/
@@ -159,17 +158,16 @@
     </span>
   </h3>
 </div>
-<form name="deviceDetailForm" class="form-horizontal" ng-submit="ok()">
+<form name="deviceDetailForm" class="form-horizontal">
   <!--设备监控-->
   <uib-tabset justified="true">
     <!--数据-->
     <uib-tab>
-      <uib-tab-heading>
-        {{'data'|translate}}
-      </uib-tab-heading>
-      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+      <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
+      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:650px;">
         <div class="box-body" >
-          <div class="row" ng-if="!(deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.deviceinfo.machineType=='装载机')">
+          <!--图表begin-->
+          <div class="row" ng-if="deviceCurrentInfoCtrl.deviceinfo.machineType!='装载机'">
             <div class="col-md-3" >
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType != '01'" id="container-air" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsAir"></highchart>
               <highchart ng-if="deviceCurrentInfoCtrl.DeviceType == '01'" id="container-water" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsWater"></highchart>
@@ -180,14 +178,8 @@
             <div class="col-md-3" >
               <highchart id="container-oil" style="width: 200px; height: 150px; float: left;margin: 0 auto;"  config="deviceCurrentInfoCtrl.highchartsOil"></highchart>
             </div>
-            <!--<div class="col-md-4">-->
-              <!--<highchart id="container-rpm" config="deviceCurrentInfoCtrl.highchartsAir"></highchart>-->
-            <!--</div>-->
-            <!--<div class="col-md-2">-->
-              <!--<highchart id="container-oil" config="deviceCurrentInfoCtrl.highchartsAir"></highchart>-->
-            <!--</div>-->
           </div>
-          <div ng-if="deviceCurrentInfoCtrl.DeviceType== '00' && deviceCurrentInfoCtrl.deviceinfo.machineType=='装载机'">
+          <div ng-if=" deviceCurrentInfoCtrl.deviceinfo.machineType=='装载机'">
             <div  style="width: 20%;float: left;">
               <highchart id="container-urealevel" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsurealevel"></highchart>
             </div>
@@ -204,14 +196,14 @@
               <highchart id="container-ATF" style="width: 120px; height: 150px; float: left"  config="deviceCurrentInfoCtrl.highchartsATF"></highchart>
             </div>
           </div>
+          <!--/.图表end-->
+
+          <!--led灯begin-->
           <div class="row">
-            <div class="col-md-12">
-              <div class="table-responsive">
-                <!-- Default panel contents -->
-                <!-- Table -->
+            <div class="table-responsive col-md-12">
                 <table class="table">
                   <!--装载机begin-->
-                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '00' || deviceCurrentInfoCtrl.DeviceType == null">
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
                       <div ng-switch-when="0" class="chargeNormal" title="{{'charging'|translate}}"></div>
                       <div ng-switch-when="1" class="chargeWarning" title="{{'charging'|translate}}"></div>
@@ -264,8 +256,6 @@
                       <div ng-switch-when="0" class="oilWaterNormal" title="{{'oil-waterSeparation'|translate}}"></div>
                       <div ng-switch-when="1" class="oilWaterWarning" title="{{'oil-waterSeparation'|translate}}"></div>
                     </td>
-
-                    <!--需要修改,等老李回复-->
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:13">
                       <div ng-switch-when="0" class="oilFilter2Normal" title="{{'fuelFilter'|translate}}"></div>
                       <div ng-switch-when="1" class="oilFilter2Warning" title="{{'fuelFilter'|translate}}"></div>
@@ -275,8 +265,7 @@
                       <div ng-switch-when="1" class="oilTempratureWarning" title="{{'hydraulicOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
-
-                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '00' || deviceCurrentInfoCtrl.DeviceType == null">
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:15">
                       <div ng-switch-when="0" class="safeLockNormal" title="{{'securityLock'|translate}}"></div>
                       <div ng-switch-when="1" class="safeLockWarning" title="{{'securityLock'|translate}}"></div>
@@ -321,7 +310,6 @@
                       <div ng-switch-when="1" class="speedSwitchWarning" title="{{'lowTransmissionPressure'|translate}}"></div>
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:25">
-
                       <div ng-switch-when="0" class="engineError1Normal" title="{{'engineFailureOne'|translate}}"></div>
                       <div ng-switch-when="1" class="engineError1Warning" title="{{'engineFailureOne'|translate}}"></div>
                     </td>
@@ -338,7 +326,8 @@
                       <div ng-switch-when="1" class="engineOilPressureWarning" title="{{'lowOilPressure'|translate}}"></div>
                     </td>
                   </tr>
-                  <!--装载机end-->
+                  <!--/.装载机end-->
+
                   <!--小挖begin-->
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '01'">
                     <td colspan="3" ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:1">
@@ -390,9 +379,10 @@
                     <td colspan="3">
                     </td>
                   </tr>
-                  <!--小挖end-->
+                  <!--./小挖end-->
+
                   <!--矿机begin-->
-                  <tr  ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
+                  <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '02'">
                     <td  ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
                       <div ng-switch-when="0" class="harSlowMachineNormalTwo" title="{{'harSlowMachineTwo'|translate}}"></div>
                       <div ng-switch-when="1" class="harSlowMachineWarningTwo" title="{{'harSlowMachineTwo'|translate}}"></div>
@@ -526,7 +516,8 @@
                       <div ng-switch-when="1" class="harTransmissionOilTemperatureWarning" title="{{'harTransmissionOilTemperature'|translate}}"></div>
                     </td>
                   </tr>
-                  <!--矿机end -->
+                  <!--./矿机end -->
+
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '04'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:16">
                       <div ng-switch-when="0" class="harBatteryNormal" title="{{'harBattery'|translate}}"></div>
@@ -577,7 +568,6 @@
                       <div ng-switch-when="1" class="centerCodeWarning" title="{{'centralAlarm'|translate}}"></div>
                     </td>
                   </tr>
-
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '04'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:28">
                       <div ng-switch-when="0" class="harHighBeamNormal" title="{{'harHighBeam'|translate}}"></div>
@@ -630,6 +620,7 @@
                     </td>
 
                   </tr>
+
                   <!--巴黎(T3)begin-->
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '05'">
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.ledStatus | limitTo:1:0">
@@ -720,11 +711,13 @@
                       <div ng-switch-when="1" class="engineOilPressureWarning" title="{{'lowOilPressure'|translate}}"></div>
                     </td>
                   </tr>
-                  <!--巴黎(T3)end-->
+                  <!--./巴黎(T3)end-->
                 </table>
               </div>
-            </div>
           </div>
+          <!--/.led灯end-->
+
+          <!--车辆实时状态信息begin-->
           <div class="row">
             <div class="col-md-12">
               <div class="row detailMargin">
@@ -776,22 +769,17 @@
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">{{deviceCurrentInfoCtrl.deviceinfo.machine.licenseId}}</td>
                     <td>{{'ecuLockStatus'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
-                    <!--GPRS信号百分比去掉-->
-                    <!--作用与“锁车状态”重复，删除GPRS信号百分比-->
-                    <!--<td>{{'GPSSignalPercentage'|translate}}</td><td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.gprsSignal}}%</td>--> </tr>
                   <tr>
-
                     <td>{{'fuelLevel'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel==null?'N/A ':deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%</td>
                     <td>{{'coolantTemperature'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C</td>
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature==null?'N/A ':deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C</td>
                     <td>{{'GPRSSignalQuality'|translate}}</td>
                     <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
                   </tr>
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{'torqueConverterOilTemperature'|translate}}</td>
                     <td ng-cloak ng-if="deviceCurrentInfoCtrl.DeviceType == '00'">{{deviceCurrentInfoCtrl.deviceinfo.oilTemperature| number:0}}°C</td>
-
                     <td>{{'CANCommunicationStatus'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='10'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.commStatus=='01'" class="bg-info text-info">{{'work'|translate}}</td>
@@ -800,8 +788,6 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='00'" class="bg-info text-info">{{'vehicleMountedPowerSupply'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType=='01'" class="bg-warning text-warning">{{'internalBattery'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.powerType==null">{{'noData'|translate}}</td>
-
-
                   </tr>
                   <tr>
                     <td>{{'numberOfStarts'|translate}}</td>
@@ -816,7 +802,7 @@
                     <!--中挖的锁车状态要根据GPRS信号百分比确定，90为锁车，其它为未锁车  by 薛庆鹏 2017-1-3-->
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='40' && deviceCurrentInfoCtrl.deviceinfo.gprsSignal=='90'">{{'lockYourCar'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='40' && deviceCurrentInfoCtrl.deviceinfo.gprsSignal!='90'">{{'Unlock'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.gprsSignal==null">{{'noData'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='40' && deviceCurrentInfoCtrl.deviceinfo.gprsSignal==null && deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">{{'noData'|translate}}</td>
                     <td>{{'ACCState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='01'" class="bg-info text-info">ON</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.accStatus=='10'" class="bg-danger text-danger">OFF</td>
@@ -828,12 +814,6 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.elecStatus!='01'" class="bg-danger text-danger">{{'notWork'|translate}}</td>
                     <td>{{'GPSPowerDetection'|translate}}</td>
                     <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1/1000| number:1}} V</td>
-
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='00'" class="bg-info text-info">{{'normal'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='01'" class="bg-warning text-warning">{{'non-transFormer'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus=='10'" class="bg-danger text-danger">{{'noSignal'|translate}}</td>-->
-                    <!--<td ng-if="deviceCurrentInfoCtrl.deviceinfo.gpsPowerStatus==null">{{'noData'|translate}}</td>-->
-
                     <td>{{'openCoverState'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='00'">{{'openCover'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.lockerStatus=='11'">{{'open'|translate}}</td>
@@ -891,18 +871,7 @@
                     <!--实际绑定车号-->
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{'bindMachineId'|translate}}</td>
                     <td ng-if="userInfo.userdto.organizationDto.id==1">{{deviceCurrentInfoCtrl.deviceinfo.bindMachineId}}</td>
-
-
                   </tr>
-                  <!--<tr>-->
-                    <!--<td>{{'analogOne'|translate}}</td>-->
-                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate1}}</td>-->
-                    <!--<td>{{'analogTwo'|translate}}</td>-->
-                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.imitate2}}</td>-->
-                    <!--<td>{{'SIMCardNumber'|translate}}</td>-->
-                    <!--<td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber}}</td>-->
-                  <!--</tr>-->
-                  <!--中挖测试-->
                   <tr ng-if="deviceCurrentInfoCtrl.DeviceType == '03'">
                     <td>{{'alertStatus'|translate}}</td>
                     <td>0x{{deviceCurrentInfoCtrl.deviceinfo.alertStatus}}</td>
@@ -973,30 +942,21 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
                   </tr>
                   <!--装载机通信协议2010 end-->
-
-
                   <tr ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">
                     <td>{{'simCardSerialNum'|translate}}</td>
                     <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
                   </tr>
                   <tr>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">{{'visibleSatelliteNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">
-                      {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">
-                      {{'noData' |translate}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">{{'usableSatelliteNumber'|translate}}</td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=0">
-                      {{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">
-                      {{'noData' |translate}}
-                    </td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">{{'visibleSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">{{'noData' |translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">{{'usableSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">{{'noData' |translate}}</td>
                     <!--增加车载蓄电池电压显示-->
                     <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol/1000 | number:2}} V</td>
                   </tr>
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
@@ -1006,20 +966,19 @@
                     <td class="text-nowrap" ng-if="deviceCurrentInfoCtrl.deviceinfo.address == null">{{'noMessage'|translate}} {{'amaplongitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplongitudeNum| number:5}} {{'amaplatitudeNumber'|translate}}:{{deviceCurrentInfoCtrl.deviceinfo.amaplatitudeNum| number:5}}</td>
                   </tr>
                 </table>
-
               </div>
             </div>
           </div>
+          <!--/.车辆实时状态信息end-->
         </div>
       </div>
     </uib-tab>
 
     <!--历史数据-->
-    <uib-tab select="">
+    <uib-tab >
       <uib-tab-heading>
         {{'historicalData'|translate}}
       </uib-tab-heading>
-
       <div class="modal-body" >
         <div class="box-body"  >
           <div class="row">
@@ -1053,9 +1012,6 @@
               <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click='csv.generate()' ng-href="{{csv.link()}}" download="{{deviceCurrentInfoCtrl.deviceinfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
               <a class="btn" presentation-href="device:monitorPage" title="Export Table" ng-click="deviceCurrentInfoCtrl.excelExport(deviceCurrentInfoCtrl.deviceinfo.deviceNum,deviceCurrentInfoCtrl.startDateDeviceData,deviceCurrentInfoCtrl.endDateDeviceData)">全部导出</a>
             </div>
-
-
-
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -1208,7 +1164,7 @@
     </uib-tab>
 
     <!--报警数据-->
-    <uib-tab select="">
+    <uib-tab  ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'" >
       <uib-tab-heading>
         {{'warningData'|translate}}
       </uib-tab-heading>
@@ -1279,7 +1235,7 @@
       <uib-tab-heading>
         {{'map'|translate}}
       </uib-tab-heading>
-      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+      <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden;height: 650px">
         <div class="row">
           <div class="col-md-1">
             <label class="control-label text-nowrap">{{'startDate'|translate}}:</label>
@@ -1314,22 +1270,20 @@
           </div>
         </div>
 
-
         <div class="row">
           <div class="col-md-12">
-            <div class="box-body" style="height: 600px" id="deviceDetailMap"></div>
+            <div class="box-body" style="height: 650px" id="deviceDetailMap"></div>
           </div>
         </div>
       </div>
     </uib-tab>
 
     <!--远程控制-->
-
-    <uib-tab select="" presentation-href="device:remoteControl" >
+    <uib-tab presentation-href="device:remoteControl" ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'" >
       <uib-tab-heading>
         {{'telecontrol'|translate}}
       </uib-tab-heading>
-      <div class="modal-body" style=" overflow-y:scroll; overflow-x:hidden; height:500px;">
+      <div class="modal-body" style=" overflow-y:scroll; overflow-x:hidden; height:650px;">
         <div class="box-body">
           <div class="row">
             <div class="form-group">
@@ -1381,11 +1335,21 @@
             <div class="panel panel-success">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a ng-click="smsCtrl = !smsCtrl" href="">
-                    <div class="row">
-                      <div class="col-md-12 text-center">{{'telecontrol'|translate}}</div>
+                  <div class="row">
+                    <a ng-click="smsCtrl = !smsCtrl" href="">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4 text-center">
+                        {{'telecontrol'|translate}}
+                      </div>
+                    </a>
+                    <div class="col-md-4 text-right" ng-show="smsCtrl && deviceCurrentInfoCtrl.directiveSendType!=null">
+                      <form>
+                        发送方式:&nbsp;
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="0">短信
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="1">TCP
+                      </form>
                     </div>
-                  </a>
+                  </div>
                 </h4>
               </div>
               <div id="smsCtrlContent" class="panel-collapse collapse"  ng-class="{in: smsCtrl}">
@@ -1847,7 +1811,6 @@
             </div>
           </div>
 
-
           <div class="panel-group" id="keyboardCtrl">
             <div class="panel panel-success">
               <div class="panel-heading">
@@ -1995,42 +1958,12 @@
             </div>
           </div>
 
-          <!--矿车MQTT协议 设置上传丶采样时间-->
-          <div presentation-href="fleet:setReturnTime" ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='1001'">
-            <hr />
-            <div class="row">
-              <div class="form-group">
-                <label class="col-md-2 control-label text-nowrap">时间间隔类型</label>
-                <div class="col-md-3">
-                  <select class="form-control" ng-model="deviceCurrentInfoCtrl.returnTimeParam.name">
-                    <option value="timeBasicInf">产品信息上传时间间隔</option>
-                    <option value="timeWorkingCondition">工况信息上传时间间隔</option>
-                    <option value="timeSampleNormal">工况信息采样时间间隔</option>
-                    <option value="timeSampleRPM">转速采样时间间隔</option>
-                    <option value="timeSampleSpeed">车速采样时间间隔</option>
-                    <option value="timeSampleCurON">瞬时油耗采样时间间隔</option>
-                    <option value="timeSampleLED">状态灯采样时间间隔</option>
-                  </select>
-                </div>
-                <label for="returnTime" class="col-md-1 control-label text-nowrap">时间(秒)</label>
-                <div class="col-md-2">
-                  <input type="text" id="returnTime" class="form-control" placeholder="时间(秒)"
-                         validator="number" ng-model="deviceCurrentInfoCtrl.returnTimeParam.time" name="returnTime"/>
-                </div>
-                <div class="col-md-3">
-                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum,deviceCurrentInfoCtrl.returnTimeParam)">{{'send'|translate}}</button>
-                  <button class="btn btn-default" type="button" ng-click="deviceCurrentInfoCtrl.setDefaultReturnTime(deviceCurrentInfoCtrl.deviceUnLockFactor.deviceNum)">恢复默认设置</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </uib-tab>
 
-    <!--锁车详情-->
-    <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber)">
+    <!--操作日志-->
+    <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber)"  ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
       <uib-tab-heading>操作日志</uib-tab-heading>
       <div class="modal-body">
         <div class="box-body">
@@ -2063,7 +1996,7 @@
     </uib-tab>
 
     <!--数据分析-->
-    <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
+    <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)" ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
       <uib-tab-heading>数据分析</uib-tab-heading>
       <div class="modal-body"  style=" overflow-y:scroll; overflow-x:hidden; height:600px;">
         <div class="box-body">
@@ -2114,23 +2047,23 @@
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.workHoursChart)">切换</button>
                         </label>
                         <highchart id="workHoursChart" title="平均工作时长"
-                                   style="height:250px;"
+                                   style="min-width:400px;height:270px"
                                    config="deviceCurrentInfoCtrl.workHoursChart">
                         </highchart>
                       </div>
                       <div class="col-md-12">
-                        <label style="position: absolute;right: 50px;top: 5px;z-index: 99;">
+                        <label style="position: absolute;right: 50px;top: 5px;z-index: 99">
                           <button type="button" class="btn btn-primary btn-sm" ng-click="deviceCurrentInfoCtrl.changeChartType(deviceCurrentInfoCtrl.startTimesChart)">切换</button>
                         </label>
                         <highchart id="startTimesChart" title="平均启动次数"
-                                     style="height: 250px"
+                                     style="min-width:400px;height:270px"
                                      config="deviceCurrentInfoCtrl.startTimesChart">
                         </highchart>
                       </div>
                     </div>
                 </div>
                 <div ng-switch-when="状态量">
-                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:500px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
+                    <highchart id="simpleChart" title="运行数据分析" style="min-width:850px;height:550px;"  config="deviceCurrentInfoCtrl.chartConfig"></highchart>
                 </div>
               </div>
           </div>
@@ -2139,14 +2072,11 @@
     </uib-tab>
 
     <!--用户画像-->
-    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait">
+    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait"  ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
       <uib-tab-heading>用户画像</uib-tab-heading>
-      <div class="modal-body"  style="overflow-y: auto; overflow-x:hidden; height:600px;">
-
+      <div class="modal-body"  style="overflow-y: auto; overflow-x:hidden;  height:600px;">
         <div class="row">
           <div class="col-xs-3">
-            <!--<img src="assets/images/boy.png" width="100%" height="100%" style="margin-top: 30%">-->
-
             <div style="background-image: url('../../../assets/images/boyboy.png');
                   background-size: contain;
                   background-repeat: no-repeat;
@@ -2167,7 +2097,6 @@
           </div>
           <div class="col-xs-3">
             <ul class="item-containe" style="margin-left: -35%;">
-
               <li ng-repeat="item in deviceCurrentInfoCtrl.itemList track by $index"
                   style="min-width: 70%;cursor:pointer;
                   margin-top: 12%;
@@ -2183,7 +2112,6 @@
                   ng-click="deviceCurrentInfoCtrl.chargeChart(item.chart)">{{item.title}}</li>
 
             </ul>
-
           </div>
           <div class="col-xs-6">
             <div class="container" style="border: 1px solid #cccccc;
@@ -2269,7 +2197,6 @@
         <div class="row">
           <div class="col-md-12">
             <div class="page-header">
-              <!--<h1>Horizontal timeline</h1>-->
             </div>
             <div style="display:inline-block;width:100%;overflow-y:hidden; overflow-x:scroll; height:400px;">
               <ul class="timeline timeline-horizontal">
@@ -2290,14 +2217,9 @@
           </div>
         </div>
       </div>
-
-
     </uib-tab>
 
   </uib-tabset>
-
-  <div class="modal-footer">
-    <!--<button class="btn btn-primary" type="submit">OK</button>-->
-  </div>
+  <div class="modal-footer"></div>
 </form>
 
