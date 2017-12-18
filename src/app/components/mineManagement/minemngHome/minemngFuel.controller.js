@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('fuelController', fuelController);
+    .controller('minemngFuelController', minemngFuelController);
 
   /** @ngInject */
-  function fuelController($rootScope) {
+  function minemngFuelController($rootScope) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
