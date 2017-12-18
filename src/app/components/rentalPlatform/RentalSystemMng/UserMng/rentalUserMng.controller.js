@@ -286,7 +286,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.selectUser(vm.selectedUser);
+        vm.selectRoleBlongsToUser(vm.selectedUser);
 
       }, function () {
         //取消
@@ -300,7 +300,7 @@
     vm.logQuery = function (userinfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/userManagement/rentalOperationLog.html',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng//rentalOperationLog.html',
         controller: 'rentalOperationLogController as rentalOperationLogCtrl',
         size: size,
         backdrop: false,

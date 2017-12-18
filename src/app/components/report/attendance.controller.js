@@ -47,7 +47,7 @@
       });
     }
 
-    //水温图
+
     vm.attendanceChart = {
       options: {
         chart: {
