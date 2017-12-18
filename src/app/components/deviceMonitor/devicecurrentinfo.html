@@ -1335,11 +1335,21 @@
             <div class="panel panel-success">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a ng-click="smsCtrl = !smsCtrl" href="">
-                    <div class="row">
-                      <div class="col-md-12 text-center">{{'telecontrol'|translate}}</div>
+                  <div class="row">
+                    <a ng-click="smsCtrl = !smsCtrl" href="">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4 text-center">
+                        {{'telecontrol'|translate}}
+                      </div>
+                    </a>
+                    <div class="col-md-4 text-right" ng-show="smsCtrl && deviceCurrentInfoCtrl.directiveSendType!=null">
+                      <form>
+                        发送方式:&nbsp;
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="0">短信
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="1">TCP
+                      </form>
                     </div>
-                  </a>
+                  </div>
                 </h4>
               </div>
               <div id="smsCtrlContent" class="panel-collapse collapse"  ng-class="{in: smsCtrl}">
