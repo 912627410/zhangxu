@@ -6,10 +6,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('operationLogController', operationLogController);
+    .controller('rentalOperationLogController', rentalOperationLogController);
 
   /** @ngInject */
-  function operationLogController($rootScope, $uibModalInstance, NgTableParams, Notification, ngTableDefaults, serviceResource, userinfo, DEFAULT_SIZE_PER_PAGE, OPERATION_LOG_QUERY) {
+  function rentalOperationLogController($rootScope, $uibModalInstance, NgTableParams, Notification, ngTableDefaults, serviceResource, userinfo, DEFAULT_SIZE_PER_PAGE, OPERATION_LOG_QUERY) {
     var vm = this;
     vm.userinfo = userinfo;
     vm.operatorInfo = $rootScope.userInfo;

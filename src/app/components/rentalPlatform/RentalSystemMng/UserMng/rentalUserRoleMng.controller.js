@@ -3,16 +3,17 @@
 
   angular
     .module('GPSCloud')
-    .controller('userRoleMngController', userRoleMngController);
+    .controller('rentalUserRoleMngController', rentalUserRoleMngController);
 
   /** @ngInject */
-  function userRoleMngController($rootScope,  $uibModalInstance,languages,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo) {
+  function rentalUserRoleMngController($rootScope,  $uibModalInstance,languages,  Notification, serviceResource, USER_ROLE_URL, ROLE_URL, userinfo,RENTAL_ROLE_URL) {
     var vm = this;
     vm.selected = [];
     vm.userinfo = userinfo;
+    var tenantType = userinfo.organizationDto.tenantType;
 
     vm.querySysRole = function () {
-      var roleUrl = ROLE_URL + "?search_EQ_type=0";
+      var roleUrl = ROLE_URL + "?search_EQ_type=0&search_EQ_tenantType="+tenantType;
       var rolePromise = serviceResource.restCallService(roleUrl, "GET");
       rolePromise.then(function (data) {
         vm.sysRoleList = data.content;
@@ -47,9 +48,9 @@
     // select org
     vm.my_tree_handler = function (branch) {
 
-      var restCallURL = ROLE_URL;
+      var restCallURL = RENTAL_ROLE_URL;
       if (null != branch && null != branch.id) {
-        restCallURL += "?search_EQ_organization.id=" + branch.id;
+        restCallURL += "?search_EQ_organization.id=" + branch.id +"&search_EQ_tenantType=" + tenantType+"&search_EQ_type=1" ;
       }
 
       var promise = serviceResource.restCallService(restCallURL, "GET");

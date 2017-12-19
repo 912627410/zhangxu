@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h3 class="modal-title">{{'operationLog'|translate}}
-    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="operationLogCtrl.cancel()">{{'close'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalOperationLogCtrl.cancel()">{{'close'|translate}}</button>
   </h3>
 </div>
 
@@ -13,9 +13,9 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="operationLogCtrl.startDateDeviceData" is-open="operationLogCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="operationLogCtrl.dateOptions" min-date="operationLogCtrl.minDate" max-date="operationLogCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="rentalOperationLogCtrl.startDateDeviceData" is-open="rentalOperationLogCtrl.startDateOpenStatusDeviceData.opened" datepicker-options="rentalOperationLogCtrl.dateOptions" min-date="rentalOperationLogCtrl.minDate" max-date="rentalOperationLogCtrl.maxDate" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="operationLogCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            <button type="button" class="btn btn-default" ng-click="rentalOperationLogCtrl.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
     </div>
@@ -24,20 +24,20 @@
     </div>
     <div class="col-md-3">
       <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="operationLogCtrl.endDateDeviceData" is-open="operationLogCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="operationLogCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
+        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustom}}" ng-model="rentalOperationLogCtrl.endDateDeviceData" is-open="rentalOperationLogCtrl.endDateOpenStatusDeviceData.opened" datepicker-options="rentalOperationLogCtrl.dateOptions" ng-required="true" current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
         <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="operationLogCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            <button type="button" class="btn btn-default" ng-click="rentalOperationLogCtrl.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>
       </p>
     </div>
     <div class="col-md-2 text-right">
-      <button class="btn btn-primary" type="button" ng-click="operationLogCtrl.query(null,8,null,operationLogCtrl.startDateDeviceData,operationLogCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="rentalOperationLogCtrl.query(null,8,null,rentalOperationLogCtrl.startDateDeviceData,rentalOperationLogCtrl.endDateDeviceData)">{{'confirm'|translate}}</button>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="btn-group col-md-2">
-      <span class="label label-info pull-left">{{'totalNumberOfRecords'|translate}}:{{operationLogCtrl.page.totalElements}}</span>
+      <span class="label label-info pull-left">{{'totalNumberOfRecords'|translate}}:{{rentalOperationLogCtrl.page.totalElements}}</span>
     </div>
     <div class="col-md-10">
       <span style="color: red;">{{'specialReminder'|translate}}：</span>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="table-responsive">
-    <table ng-table="operationLogCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+    <table ng-table="rentalOperationLogCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
       <tr ng-repeat="operationLogData in $data">
         <td class="text-nowrap" data-title="'description'|translate" sortable="'updateDesc'">{{operationLogData.updateDesc}}</td>
         <td class="text-nowrap" data-title="'originalValue'|translate" sortable="'originValue'">{{operationLogData.originValue}}</td>
@@ -60,9 +60,9 @@
   </div>
 
   <div class="box-footer">
-    <uib-pagination total-items="operationLogCtrl.page.totalElements"
-                    ng-change="operationLogCtrl.query(operationLogCtrl.pageNumber-1,8,null,operationLogCtrl.startDateDeviceData,operationLogCtrl.endDateDeviceData)"
-                    max-size="10" ng-model="operationLogCtrl.pageNumber" items-per-page="operationLogCtrl.page.size" class="pagination-sm"
+    <uib-pagination total-items="rentalOperationLogCtrl.page.totalElements"
+                    ng-change="rentalOperationLogCtrl.query(rentalOperationLogCtrl.pageNumber-1,8,null,rentalOperationLogCtrl.startDateDeviceData,rentalOperationLogCtrl.endDateDeviceData)"
+                    max-size="10" ng-model="rentalOperationLogCtrl.pageNumber" items-per-page="rentalOperationLogCtrl.page.size" class="pagination-sm"
                     boundary-links="true" rotate="true" first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}">
     </uib-pagination>
   </div>

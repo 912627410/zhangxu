@@ -187,11 +187,11 @@
     .constant('USER_PRIV_EXPORT_URL', SERVER_BASE_URL + 'privilege/userPrivExport')   //用户权限导出
 
     //角色相关
-    .constant('ROLE_URL', SERVER_BASE_URL + 'role/role')                      //角色的基本CRUD
+
     .constant('ROLE_TYPE_URL', SERVER_BASE_URL + 'role/roleType')             //角色类型查询
     .constant('ROLE_USER_URL', SERVER_BASE_URL + 'role/roleUser')             //角色用户UR
     .constant('ROLE_PRIVILEGE_URL', SERVER_BASE_URL + 'role/rolePrivilege')   //角色权限UR
-
+    .constant('ROLE_URL', SERVER_BASE_URL + 'role/role')                      //角色的基本CRUD
     //用户相关
     .constant('USER_PAGE_URL', SERVER_BASE_URL + 'user/userinfoPage')               //用户信息分页
     .constant('USER_ROLE_URL', SERVER_BASE_URL + 'role/userRole')                   //用户角色UR
@@ -355,7 +355,8 @@
     .constant('RENTAL_TOTALPROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getTotalProfit')   //总利润
     .constant('RENTAL_PROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getProfitsDetails')   //各时间段利润及同比
     //租赁用户管理
-    .constant('RENTAL_USER_ROLE_URL', SERVER_BASE_URL + 'rental/user/userRole')                 //用户角色UR
+    .constant('RENTAL_USER_ROLE_URL', SERVER_BASE_URL + 'rental/user/userRole')            //查询用户所拥有的角色
+    .constant('RENTAL_ROLE_URL', SERVER_BASE_URL + 'rental/user/role')                      //查询组织下包含的角色
     //租赁组织管理
     .constant('RENTAL_ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'rental/org/organazition')   //组织机构信息,返回树状json代码
     .constant('RENTAL_ORG_URL', SERVER_BASE_URL + 'rental/org/organization')   //组织基本信息

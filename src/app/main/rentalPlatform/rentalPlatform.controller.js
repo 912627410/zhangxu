@@ -11,12 +11,12 @@
   function rentalPlatformController($rootScope, $cookies, $scope, $translate, $stateParams, $stateParams, $state, languages) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
-    var orgTenantType = $rootScope.userInfo.userdto.organizationDto.tenantType;
     //如果用户为空进入登录页面
     if (userInfo == null) {
       $rootScope.$state.go("entry");
       return;
     }
+    var orgTenantType = $rootScope.userInfo.userdto.organizationDto.tenantType;
 
     $scope.$on('$stateChangeSuccess', function (evt, toState, toParams, fromState, fromParams) {
       if (fromState.name == 'selectApp' && toState.name == 'rental') {

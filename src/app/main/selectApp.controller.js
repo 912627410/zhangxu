@@ -8,14 +8,12 @@
   /** @ngInject */
   function selectAppController($rootScope, $cookies, $scope, $state, $stateParams) {
     var vm = this;
-
     var userInfo = $rootScope.userInfo;
-    var orgTenantType = $rootScope.userInfo.userdto.organizationDto.tenantType;
     //如果用户为空进入登录页面
     if (userInfo == null || tenantType==null) {
       $rootScope.$state.go("entry");
     }
-
+    var orgTenantType = $rootScope.userInfo.userdto.organizationDto.tenantType;
     //验证用户类别
     if (orgTenantType != null && orgTenantType != '' && orgTenantType!=undefined) {
       var orgTypes = orgTenantType.split(",");

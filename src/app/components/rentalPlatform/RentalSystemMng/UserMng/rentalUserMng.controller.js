@@ -127,8 +127,8 @@
     vm.updatePassword = function (usermnginfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/updatePassword.html',
-        controller: 'updatePasswordController as updatePasswordCtrl',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalUpdatePassword.html',
+        controller: 'rentalUpdatePasswordController as rentalUpdatePasswordCtrl',
         size: size,
         backdrop: false,
         resolve: {
@@ -274,8 +274,8 @@
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/userRoleMng.html',
-        controller: 'userRoleMngController as userRoleMngController',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalUserRoleMng.html',
+        controller: 'rentalUserRoleMngController as rentalUserRoleMngCtrl',
         size: size,
         backdrop: false,
         resolve: {
@@ -286,7 +286,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        vm.selectUser(vm.selectedUser);
+        vm.selectRoleBlongsToUser(vm.selectedUser);
 
       }, function () {
         //取消
@@ -300,8 +300,8 @@
     vm.logQuery = function (userinfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/userManagement/operationLog.html',
-        controller: 'operationLogController as operationLogCtrl',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng//rentalOperationLog.html',
+        controller: 'rentalOperationLogController as rentalOperationLogCtrl',
         size: size,
         backdrop: false,
         resolve: {
