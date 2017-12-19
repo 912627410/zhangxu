@@ -1176,7 +1176,7 @@
     /********************  报警数据end  ***********************/
 
     /********************  操作日志begin  ***********************/
-    vm.getLockData = function (phoneNumber) {
+    vm.getLockData = function (phoneNumber,deviceNum) {
       var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
 
       if (phoneNumber && !angular.isUndefined(phoneNumber)) {
@@ -1187,6 +1187,9 @@
       }
       if (filterTerm) {
         restCallURL += "?" + filterTerm;
+      }
+      if(restCallURL && deviceNum!=null){
+        restCallURL += "&deviceNum=" + deviceNum;
       }
       var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {

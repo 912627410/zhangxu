@@ -49,7 +49,6 @@
     .constant('DEVICEREPORT_EXPORT_URL', SERVER_BASE_URL + 'deviceReport/excelExport')   //deviceReport导出
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
-    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/locksms')//分页查询设备锁车数据url
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码
     .constant('SUPER_RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/superpassword')   //管理员修改用户密码
     .constant('USERINFO_URL', SERVER_BASE_URL + 'user/userinfo')   //用户基本信息
@@ -114,6 +113,11 @@
     .constant('DEIVCIE_UNLOCK_FACTOR_URL', SERVER_BASE_URL + 'device/deviceunlock')   //查询解锁url
 
     //短信相关URL
+    //查询URL
+    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'sms/locksms')//分页查询设备锁车数据url
+    .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
+
+    //发送URL
     .constant('SEND_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/sendActiveSms')   //发送短消息
     .constant('SEND_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnActiveLockSMS')   //发送短消息
     .constant('SEND_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendLockSMS')   //发送短消息
@@ -122,7 +126,6 @@
     .constant('SEND_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/sendSetStartTimesSMS')   //发送短消息
     .constant('SEND_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/sendSetWorkHoursSMS')   //发送短消息
     .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
-    .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
     .constant('SMS_SEND_CUSTOMIZED_URL', SERVER_BASE_URL + 'sms/sendCustomizedSMS')
     .constant('SMS_SEND_SETALARMFUNC_URL', SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
     .constant('SMS_SEND_SETSERIALNUM_URL', SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
