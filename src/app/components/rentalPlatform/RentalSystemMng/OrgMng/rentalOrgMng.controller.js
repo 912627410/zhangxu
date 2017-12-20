@@ -210,7 +210,7 @@
           var modalInstance = $uibModal.open({
             animation:vm.animationsEnabled,
             templateUrl:'app/components/rentalPlatform/RentalSystemMng/OrgMng/rentalUpdateOrg.html',
-            controller: 'updateOrgController as updateOrgCtrl',
+            controller: 'rentalUpdateOrgController as rentalUpdateOrgCtrl',
             size: size,
             backdrop: false,
             resolve: {
