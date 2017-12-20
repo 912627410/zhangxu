@@ -1564,7 +1564,10 @@
   "rightAmount":"Please fill in the correct amount format (instance format: 100,100.0,100.00)",
 
   "maxValue":"Can not be greater than ",
-  "minValue":"Can not be less than "
-
+  "minValue":"Can not be less than ",
+  "nonspecificChar":"Cannot contain ~% &; =? $[]{} these special characters",
+  "telephoneNoNotLegal":"Please enter the correct mobile number",
+  "postcodesNotLegal":"Please enter the correct postcode",
+  "rentalTitle": "NORTH VALLEY RESEARCH RENTAL"
 
 }

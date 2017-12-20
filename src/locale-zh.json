@@ -825,7 +825,7 @@
   "rentalMaintenanceDescripition":"保养描述",
   "rentalLinkman":"联系人",
   "rentalCustomerPosition":"职位",
-  "rentalCustomerName":"客户名字",
+  "rentalCustomerName":"客户名称",
   "rentalMail":"邮箱",
   "rentalPostcode":"邮编",
   "rentalTel":"电话",
@@ -1575,7 +1575,11 @@
   "rightAmount":"请填写正确的金额格式(实例格式：100,100.0,100.00)",
 
   "maxValue":"不能大于",
-  "minValue":"不能小于"
+  "minValue":"不能小于",
+  "nonspecificChar":"不能包含~%&',;=?$[]{}这些特殊字符",
+  "telephoneNoNotLegal":"请输入正确的手机号码",
+  "postcodesNotLegal":"请输入正确的邮编",
+  "rentalTitle": "北谷电子租赁平台"
 
 
 

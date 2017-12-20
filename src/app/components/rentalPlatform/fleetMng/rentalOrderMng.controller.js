@@ -21,6 +21,7 @@
     vm.planOrders=0;
     vm.processOrders=0;
     vm.fininshOrders=0;
+    vm.rentalOrder = {};
 
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
@@ -128,6 +129,26 @@
         vm.org = selectedItem;
       });
     }
+
+    //选择订单客户
+    vm.selectCustomer = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
+        controller: 'customerListController as customerListCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.rentalOrder.customerName=result.name;
+      }, function () {
+      });
+    };
 
 
     vm.query = function (currentPage, pageSize, totalElements, rentalOrder) {

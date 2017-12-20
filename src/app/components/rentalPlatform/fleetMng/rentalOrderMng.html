@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
       {{'rentalCurrentLocate'|translate}}:
-      <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
+      <li><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</li>
       <li class="active"><i class="fa fa-file-text-o"></i>{{'rentalOrderMng'| translate}}</li>
     </ol>
   </section>
@@ -47,9 +47,15 @@
             </div>
             <label class="col-md-1 control-label font-nomal">{{'rentalCustomer'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="customerName" class="form-control"
-                     ng-model="rentalOrderMngCtrl.rentalOrder.customerName"
-                     placeholder="{{'rentalCustomer'|translate}}"/>
+              <div class="input-group">
+                <input type="text" id="customer" class="form-control" placeholder="{{'pleaseSelect'|translate}}"
+                       ng-model="rentalOrderMngCtrl.rentalOrder.customerName" name="customer" validator="required" readonly/>
+                <span class="input-group-btn vertical-align_top">
+                <button type="button" class="btn btn-default"  ng-click="rentalOrderMngCtrl.selectCustomer('lg')">
+                  <i class="fa fa-sitemap"></i>
+                </button>
+              </span>
+              </div>
             </div>
             <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
@@ -141,8 +147,8 @@
           <table ng-table="rentalOrderMngCtrl.tableParams"
                  class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
-              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'">
-                {{rentalOrder.orderNumber}}
+              <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'" >
+                <a  ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{rentalOrder.orderNumber}}</a>
               </td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
                 {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
