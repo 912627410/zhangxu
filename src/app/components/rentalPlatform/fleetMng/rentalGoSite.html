@@ -6,7 +6,7 @@
       </div>
     </div>
       <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalGoSiteCtrl.cancel()">{{'close'|translate}}</button>
-      <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalGoSiteCtrl.batchMoveMachine()">{{'confirm'|translate}}</button>
+      <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalGoSiteCtrl.batchMoveMachine(rentalGoSiteCtrl.file)">{{'confirm'|translate}}</button>
   </div>
 </div>
 
@@ -55,7 +55,12 @@
         </div>
       </div>
     </div>
-
+    <div class="form-group">
+      <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        <input type="file" ngf-select id="uploadFile" ng-model="rentalGoSiteCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="uploadFile" />
+      </div>
+    </div>
     <hr>
     <div class="form-group">
       <label class="col-md-1 control-label font-nomal">{{'machineNumber'| translate}}:</label>
