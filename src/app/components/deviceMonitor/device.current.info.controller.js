@@ -1176,20 +1176,17 @@
     /********************  报警数据end  ***********************/
 
     /********************  操作日志begin  ***********************/
-    vm.getLockData = function (phoneNumber,deviceNum) {
+    vm.getLockData = function (deviceNum) {
       var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
 
-      if (phoneNumber && !angular.isUndefined(phoneNumber)) {
-        var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
+      if (deviceNum && !angular.isUndefined(deviceNum)) {
+        var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       } else {
-        Notification.warning('设备未绑定sim卡！');
+        Notification.warning('设备不存在！');
         return;
       }
       if (filterTerm) {
         restCallURL += "?" + filterTerm;
-      }
-      if(restCallURL && deviceNum!=null){
-        restCallURL += "&deviceNum=" + deviceNum;
       }
       var deviceLockDataPromis = serviceResource.restCallService(restCallURL, "QUERY");
       deviceLockDataPromis.then(function (data) {
