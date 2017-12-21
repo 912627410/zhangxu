@@ -1541,7 +1541,7 @@
                           <div class="row" presentation-href="sms:setWorkHoursSMS">
                             <div class="col-md-6">
                               <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
-                                     ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+                                     validator="numberAndDot,maxValue=100000" ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
@@ -1981,6 +1981,14 @@
     <!--操作日志-->
     <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.deviceNum)"  ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
       <uib-tab-heading>操作日志</uib-tab-heading>
+      <div class="box-header">
+        <div class="pull-right box-tools" style="margin-right: 20px">
+          <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="homeMapCtrl.refreshMap()"
+                  title="刷新"><i class="fa fa-refresh"></i></button>
+        </div>
+        <i class="fa fa-envelope fa-2x" style="margin-left: 20px"></i>
+        <h3 class="box-title">短信发送记录</h3>
+      </div>
       <div class="modal-body">
         <div class="box-body">
           <div class="row">

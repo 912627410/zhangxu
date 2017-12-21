@@ -1434,7 +1434,7 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-    //2010 、2030协议初始化TCP下发短信
+    //2010 、2030协议初始化TCP下发短信,默认通过短信
     if(vm.deviceinfo.versionNum != null && (vm.deviceinfo.versionNum == '2010' || vm.deviceinfo.versionNum == '2030')){
       vm.directiveSendType = 0;
     }
@@ -1451,19 +1451,22 @@
       if (data.code == 0) {
         var sms = data.content;
         vm.activeMsg = sms.smsContent;
-        if (sms.smsStatus == 0) {
+
+        if(sms.sendType!=null && sms.sendType=="TCP"){
+          Notification.success("TCP指令已提交");
           vm.initSmsSendBtn();
-          Notification.success(sms.resultDescribe);
-        } else if (sms.smsStatus == 18) {
-          if(sms.sendType!=null && sms.sendType=="TCP"){
-            Notification.success("指令已通过TCP下发");
-          }else {
+        }else {
+          if (sms.smsStatus == 0) {
+            Notification.success(sms.resultDescribe);
+            vm.initSmsSendBtn();
+          } else if (sms.smsStatus == 18) {
             Notification.success("短信已提交短信平台" + sms.resultDescribe);
+            vm.initSmsSendBtn();
+          } else {
+            Notification.error(sms.resultDescribe);
           }
-          vm.initSmsSendBtn();
-        } else {
-          Notification.error(sms.resultDescribe);
         }
+
       } else {
         Notification.error(data.content.message);
       }
@@ -1761,6 +1764,10 @@
       }
       var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
 
+      if(vm.directiveSendType!=null && vm.directiveSendType!=undefined && vm.directiveSendType== 1 ){
+        Notification.warning("设置回传地址不能通过TCP发送");
+        return;
+      }
       //设置短信发送方式
       restURL = vm.updateUrlBySendType(restURL);
 
