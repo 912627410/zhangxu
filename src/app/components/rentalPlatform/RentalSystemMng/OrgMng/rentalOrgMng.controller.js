@@ -216,6 +216,9 @@
             resolve: {
               selectedOrg: function () {
                 return vm.selectedOrg;
+              },
+              parentOrg:function () {
+                return parentOrg;
               }
             }
           });

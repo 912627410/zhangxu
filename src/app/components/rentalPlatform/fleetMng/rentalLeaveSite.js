@@ -11,6 +11,13 @@
     vm.orderId=orderId;
     vm.selected = []; //选中的订单车辆id List
     vm.leaveMachineNumber = 0;
+
+    //时间格式检验
+    vm.timeValidate = function (date) {
+      if (date == undefined){
+        Notification.error(languages.findKey('exitTimeFormatIsNotCorrect'));
+      }
+    }
     //退场时间
     var date=new Date();
     vm.leaveSiteDate=date;

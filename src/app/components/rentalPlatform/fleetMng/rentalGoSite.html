@@ -46,7 +46,7 @@
         <div class="input-group">
           <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
                  datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
-                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" readonly/>
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" ng-blur="rentalGoSiteCtrl.timeValidate(rentalGoSiteCtrl.goSiteDate)" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.goSiteDateOpenData($event)">
               <i class="glyphicon glyphicon-calendar"></i>

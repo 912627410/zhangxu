@@ -1579,7 +1579,7 @@
   "nonspecificChar":"不能包含~%&',;=?$[]{}这些特殊字符",
   "telephoneNoNotLegal":"请输入正确的手机号码",
   "postcodesNotLegal":"请输入正确的邮编",
-  "rentalTitle": "北谷电子租赁平台"
+  "exitTimeFormatIsNotCorrect": "输入的时间格式不对，格式应为:yyyy-MM-dd HH:mm:ss"
 
 
 

@@ -6,7 +6,7 @@
     .module('GPSCloud')
     .controller('rentalGoSiteController', rentalGoSiteController);
 
-  function rentalGoSiteController($rootScope,$uibModalInstance,$stateParams,ngTableDefaults,NgTableParams,serviceResource,treeFactory,rentalOrder,commonFactory,
+  function rentalGoSiteController($rootScope,$uibModalInstance,$filter,ngTableDefaults,NgTableParams,serviceResource,treeFactory,rentalOrder,commonFactory,
                                   rentalService,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,Notification,languages) {
     var vm=this;
     vm.userInfo = $rootScope.userInfo;
@@ -16,6 +16,12 @@
     vm.pageSize = 8;
     var date=new Date();
     vm.goSiteDate=date;
+    //时间格式检验
+    vm.timeValidate = function (date) {
+      if (date == undefined){
+        Notification.error(languages.findKey('exitTimeFormatIsNotCorrect'));
+      }
+    }
     vm.goSiteDateOpenStatusData = {
       opened: false
     };
