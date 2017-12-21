@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function rentalOrderMngController($rootScope, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages) {
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
 
 
     var vm = this;
@@ -326,6 +326,16 @@
       });
       modalInstance.result.then(function (result) {
         rentalOrder.realNumber = rentalOrder.realNumber - result;
+      }, function () {
+        //取消
+      });
+    }
+
+    vm.enAnOutTest = function (id) {
+      var orderUrl = RENTAL_ORDER_ENTRY_EXIT_LIST_URL + "?orderId=" + id +"&type=" + 1 ;
+      var rspdata = serviceResource.restCallService(orderUrl, "GET");
+      rspdata.then(function (data) {
+      console.log(data)
       }, function () {
         //取消
       });
