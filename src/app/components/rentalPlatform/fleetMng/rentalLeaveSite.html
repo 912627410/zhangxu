@@ -55,7 +55,8 @@
                      ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="orderMachine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-              {{orderMachine.machine.licenseId}}
+              <a  ng-click="rentalLeaveSiteCtrl.machineMonitor(machine.licenseId)"> {{orderMachine.machine.licenseId}}</a>
+
             </td>
 
             <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{orderMachine.rentalOrder.org.label}}</td>

@@ -119,7 +119,7 @@
       recordTime = recordTime.getFullYear() + '-' + startMonth + '-' + recordTime.getDate() + ' ' + recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
 
       var uploadurl = RENTANL_ORDER_MACHINE_BATCH_MOVE_URL;
-      uploadurl += "?orderId=" + vm.rentalOrder.id + "&operationType=" + 2 + "&machineIdList=" + vm.selected + "&recordTime=" + recordTime
+      uploadurl += "?orderId=" + vm.rentalOrder.id + "&operationType=" + 1 + "&machineIdList=" + vm.selected + "&recordTime=" + recordTime
       file.upload = Upload.upload({
         url: uploadurl,
         file: file

@@ -179,10 +179,13 @@
         if (null != rentalOrder.endDate && rentalOrder.endDate != "") {
           restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
-
+      }
+      if(null!=vm.org&&null != vm.org.label && vm.org.label != ""){
+        restCallURL += "&parentOrgId=" + vm.org.id;
+      }else {
+        restCallURL += "&parentOrgId=" + vm.userInfo.userdto.organizationDto.id;
       }
 
-      restCallURL += "&parentOrgId=" + vm.userInfo.userdto.organizationDto.id;
 
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
