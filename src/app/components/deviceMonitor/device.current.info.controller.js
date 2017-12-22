@@ -2377,7 +2377,7 @@
         }
         vm.chartConfig.xAxis = [];
         vm.chartConfig.series = [];
-        vm.chartConfig.series = [];
+        vm.chartConfig.series = []; 
         for (var i = sensorData.length - 1; i >= 0; i--) {
           if (sensorData[i].name == 'locateDate') {
             vm.chartConfig.xAxis.categories = (sensorData[i].data)
