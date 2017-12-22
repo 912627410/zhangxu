@@ -32,7 +32,7 @@
         <div class="input-group">
          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalLeaveSiteCtrl.leaveSiteDate" is-open="rentalLeaveSiteCtrl.leaveSiteDateOpenStatusData.opened"
              datepicker-options="rentalLeaveSiteCtrl.dateOptions" min-date="rentalLeaveSiteCtrl.minDate" max-date="rentalLeaveSiteCtrl.maxDate" ng-required="true"
-             current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" readonly/>
+             current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}"  ng-blur="rentalLeaveSiteCtrl.timeValidate(rentalLeaveSiteCtrl.leaveSiteDate)"/>
          <span class="input-group-btn">
            <button type="button" class="btn btn-default" ng-click="rentalLeaveSiteCtrl.leaveSiteDateOpenData($event)">
            <i class="glyphicon glyphicon-calendar"></i>
@@ -61,7 +61,8 @@
                      ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="orderMachine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-              {{orderMachine.machine.licenseId}}
+              <a  ng-click="rentalLeaveSiteCtrl.machineMonitor(machine.licenseId)"> {{orderMachine.machine.licenseId}}</a>
+
             </td>
 
             <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{orderMachine.rentalOrder.org.label}}</td>

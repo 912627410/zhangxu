@@ -4,7 +4,6 @@
   angular
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
-
   function rentalLeaveSiteController($rootScope, $uibModalInstance, Notification, languages, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL) {
 
     var vm = this;
@@ -13,6 +12,15 @@
     vm.selected = []; //选中的订单车辆id List
     vm.leaveMachineNumber = 0;
     vm.leaveReason = null;
+
+
+    //时间格式检验
+    vm.timeValidate = function (date) {
+      if (date == undefined){
+        Notification.error(languages.findKey('exitTimeFormatIsNotCorrect'));
+      }
+    }
+
     //退场时间
     var date = new Date();
     vm.leaveSiteDate = date;
@@ -28,6 +36,30 @@
       startingDay: 1
     };
 
+    vm.machineMonitor = function(licenseId){
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + licenseId;
+      var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+      deviceDataPromis.then(function (data) {
+        //打开模态框
+        var currentOpenModal = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
+          controller: 'machineMonitorController',
+          controllerAs:'vm',
+          openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+          windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+          size: 'super-lgs',
+          resolve: { //用来向controller传数据
+            deviceInfo: function () {
+              return data.content;
+            }
+          }
+        });
+      },function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+    }
 
     vm.cancel = function () {
       $uibModalInstance.close(vm.leaveMachineNumber);
@@ -152,6 +184,7 @@
           Notification.error(" 批量调出车辆失败!");
         });
       }
+
     }
 
   }

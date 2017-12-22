@@ -172,9 +172,6 @@
 
     };
 
-    vm.machineMonitors=function () {
-
-    };
 
     /**
      * 车辆监控

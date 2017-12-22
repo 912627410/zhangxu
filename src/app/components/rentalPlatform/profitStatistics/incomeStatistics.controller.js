@@ -134,13 +134,6 @@
       vm.endDateOpenStatusDeviceData.opened = true;
     };
 
-    vm.startDateOpenDeviceData1 = function ($event) {
-      vm.startDateOpenStatusDeviceData.opened = true;
-    };
-    vm.endDateOpenDeviceData1 = function ($event) {
-      vm.endDateOpenStatusDeviceData.opened = true;
-    };
-
     vm.maxDate = new Date();
     vm.dateOptions = {
       formatYear: 'yyyy',

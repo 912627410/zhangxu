@@ -48,12 +48,10 @@
       <label class="col-md-2 control-label font-nomal ">{{'admissionTime'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-                 ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
-                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate"
-                 max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
-                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
-                 close-text="{{'close'|translate}}" readonly/>
+
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
+                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" ng-blur="rentalGoSiteCtrl.timeValidate(rentalGoSiteCtrl.goSiteDate)" />
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.goSiteDateOpenData($event)">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -160,8 +158,10 @@
             <input type="checkbox" ng-checked="rentalGoSiteCtrl.isSelected(machine.id)"
                    ng-click="rentalGoSiteCtrl.updateSelection($event,machine)" ng-model="machine.checked">
           </td>
-          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-            {{machine.licenseId}}
+            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+
+              <a  ng-click="rentalGoSiteCtrl.machineMonitor(machine.licenseId)">{{machine.licenseId}}</a>
+
           </td>
           <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
           <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
