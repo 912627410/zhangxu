@@ -3,11 +3,12 @@
  */
 (function(){
   'use strict'
-  angular.module('GPSCloud').controller('updateOrgController',updateOrgCtrl);
+  angular.module('GPSCloud').controller('rentalUpdateOrgController',rentalUpdateOrgController);
 
-  function updateOrgCtrl($uibModalInstance,RENTAL_ORG_URL,serviceResource,Notification,selectedOrg) {
+  function rentalUpdateOrgController($uibModalInstance,RENTAL_ORG_URL,serviceResource,Notification,selectedOrg,parentOrg) {
     var vm =this;
-    vm.selectedOrg = angular.copy(selectedOrg);
+    vm.selectedOrg = selectedOrg;
+    vm.parentOrg = parentOrg;
 
     vm.ok= function(newOrg){
       var restPromise =serviceResource.restUpdateRequest(RENTAL_ORG_URL,newOrg);

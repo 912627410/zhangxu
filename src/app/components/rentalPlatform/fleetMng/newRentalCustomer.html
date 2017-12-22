@@ -14,14 +14,14 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'name'|translate}}"
                      ng-model="newRentalCustomerCtrl.rentalCustomer.name" name="name" typeahead-show-hint="true"
-                     validator="required" />
+                     validator="nonspecificChar" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label font-nomal">{{'rentalLinkman'|translate}}(<span class="text-red">*</span>):</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalLinkman'|translate}}"
-                     ng-model="newRentalCustomerCtrl.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required" />
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.contacts" name="contacts" typeahead-show-hint="true" validator="required,nonspecificChar" />
             </div>
           </div>
           <div class="form-group">
@@ -29,7 +29,7 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalCustomerPosition'|translate}}"
                      ng-model="newRentalCustomerCtrl.rentalCustomer.title" name="title" typeahead-show-hint="true"
-                     validator="required"  />
+                     validator="required,nonspecificChar"  />
             </div>
           </div>
           <div class="form-group">
@@ -44,7 +44,7 @@
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalPhoneNumber'|translate}}"
                      ng-model="newRentalCustomerCtrl.rentalCustomer.mobile" name="mobile" typeahead-show-hint="true"
-                     validator="required" />
+                     validator="required,telephoneNo" />
             </div>
           </div>
 
@@ -68,7 +68,7 @@
             <label class="col-sm-3 control-label font-nomal">{{'rentalPostcode'|translate}}:</label>
             <div class="col-sm-5">
               <input type="text" class="form-control" placeholder="{{'rentalPostcode'|translate}}"
-                     ng-model="newRentalCustomerCtrl.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true">
+                     ng-model="newRentalCustomerCtrl.rentalCustomer.postcode" name="postcode" typeahead-show-hint="true" validator="postcode">
             </div>
           </div>
           <div class="form-group">

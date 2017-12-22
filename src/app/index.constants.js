@@ -339,6 +339,7 @@
     //租赁管理
     .constant('RENTAL_ORDER_ENTRY_MACHINE_URL',SERVER_BASE_URL + 'rental/orderMachine/entryMachinelist')//订单进场的车辆(未出场)
     .constant('RENTAL_ORDER_MACHINE_HISTORY_URL',SERVER_BASE_URL + 'rental/orderMachine/historyMachinelist')//租赁订单车辆历史List
+    .constant('RENTAL_ORDER_ENTRY_EXIT_LIST_URL',SERVER_BASE_URL + 'rental/orderMachine/entryExitlist')//租赁订单进退场单List
     .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
     .constant('RENTANL_UNUSED_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//未出租车辆查询信息

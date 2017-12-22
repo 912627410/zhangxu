@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function rentalOrderMngController($rootScope, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages) {
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
 
 
     var vm = this;
@@ -21,6 +21,7 @@
     vm.planOrders=0;
     vm.processOrders=0;
     vm.fininshOrders=0;
+    vm.rentalOrder = {};
 
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
@@ -129,6 +130,26 @@
       });
     }
 
+    //选择订单客户
+    vm.selectCustomer = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
+        controller: 'customerListController as customerListCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.rentalOrder.customerName=result.name;
+      }, function () {
+      });
+    };
+
 
     vm.query = function (currentPage, pageSize, totalElements, rentalOrder) {
 
@@ -158,10 +179,13 @@
         if (null != rentalOrder.endDate && rentalOrder.endDate != "") {
           restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
-
+      }
+      if(null!=vm.org&&null != vm.org.label && vm.org.label != ""){
+        restCallURL += "&parentOrgId=" + vm.org.id;
+      }else {
+        restCallURL += "&parentOrgId=" + vm.userInfo.userdto.organizationDto.id;
       }
 
-      restCallURL += "&parentOrgId=" + vm.userInfo.userdto.organizationDto.id;
 
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -305,6 +329,16 @@
       });
       modalInstance.result.then(function (result) {
         rentalOrder.realNumber = rentalOrder.realNumber - result;
+      }, function () {
+        //取消
+      });
+    }
+
+    vm.enAnOutTest = function (id) {
+      var orderUrl = RENTAL_ORDER_ENTRY_EXIT_LIST_URL + "?orderId=" + id +"&type=" + 1 ;
+      var rspdata = serviceResource.restCallService(orderUrl, "GET");
+      rspdata.then(function (data) {
+      console.log(data)
       }, function () {
         //取消
       });

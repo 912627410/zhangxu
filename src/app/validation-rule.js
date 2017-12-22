@@ -34,6 +34,7 @@
       //租赁金额格式(实例:100,100.0,100.00)
       // money:/^\d+$|^\d+\.\d{1,2}?$/g,
       money:/^[0-9]+([.]{1}[0-9]{1,2})?$/,
+      nonspecificChar:/^[\u4E00-\u9FA5A-Za-z0-9]+$/,
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
       },
@@ -102,11 +103,11 @@
         success: ''
       },
       telephoneNo: {
-        error: "{{'telephoneNo' |translate}}",
+        error: "{{'telephoneNoNotLegal' |translate}}",
         success: ''
       },
       postcode: {
-        error: "{{'postcodes' |translate}}",
+        error: "{{'postcodesNotLegal' |translate}}",
         success: ''
       },
       port: {
@@ -128,6 +129,10 @@
       },
       maxValue: {
         error: "{{'maxValue' | translate}}",
+        success: ''
+      },
+      nonspecificChar: {
+        error: "{{'nonspecificChar' | translate}}",
         success: ''
       }
     };
