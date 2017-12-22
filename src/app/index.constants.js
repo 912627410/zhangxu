@@ -372,7 +372,18 @@
 
 
 
-    .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势
+    .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate') //报警七天趋势
+
+
+
+
+
+    //矿车管理相关
+    .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'mine/machine')   //新增车辆
+    .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'mine/refresh')   //刷新车辆
+
+
+  ;
 
 
 

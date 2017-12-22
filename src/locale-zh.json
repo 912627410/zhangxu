@@ -1573,9 +1573,18 @@
   "pleaseChooseTheModeOfOperation":"请选择操作方式",
   "deviceNumNull":"设备号为空",
   "maxValue":"不能大于",
-  "minValue":"不能小于"
+  "minValue":"不能小于",
 
-
-
+  "licenseId": "整机编号",
+  "orderNumber":"订货号",
+  "productName":"产品名称",
+  "productModel":"产品型号",
+  "acceptDate":"接车日期",
+  "purchaseDate": "购机日期",
+  "archivesDate": "建档日期",
+  "manufacotryName": "厂家名称",
+  "status": "车辆状态",
+  "carNumber":"车号",
+  "tramcar":"矿车"
 
 }

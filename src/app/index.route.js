@@ -286,8 +286,18 @@
             controllerAs: 'minemngUserMngCtrl'
           }
         }
+      })
+      //车辆管理
+      .state('minemng.mineMachine', {
+        url: '/machinemng',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/machineManagement/minemngMachineMng.html',
+            controller: 'minemngMachineController',
+            controllerAs: 'minemngMachineCtrl'
+          }
+        }
       });
-
 
 
     //物联网系统
