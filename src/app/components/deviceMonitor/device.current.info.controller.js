@@ -1764,10 +1764,6 @@
       }
       var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
 
-      if(vm.directiveSendType!=null && vm.directiveSendType!=undefined && vm.directiveSendType== 1 ){
-        Notification.warning("设置回传地址不能通过TCP发送");
-        return;
-      }
       //设置短信发送方式
       restURL = vm.updateUrlBySendType(restURL);
 
