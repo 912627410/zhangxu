@@ -5,16 +5,20 @@
         {{'goSite'|translate}}
       </div>
     </div>
-      <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalGoSiteCtrl.cancel()">{{'close'|translate}}</button>
-      <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalGoSiteCtrl.batchMoveMachine(rentalGoSiteCtrl.file)">{{'confirm'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button"
+            ng-click="rentalGoSiteCtrl.cancel()">{{'close'|translate}}
+    </button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button"
+            ng-click="rentalGoSiteCtrl.batchMoveMachine(rentalGoSiteCtrl.file)">{{'confirm'|translate}}
+    </button>
   </div>
 </div>
 
 <div class="modal-body">
 
   <form class="form-horizontal" role="form">
-    <div class="form-group" >
-      <label  class="col-md-1 control-label font-nomal">订单号:</label>
+    <div class="form-group">
+      <label class="col-md-1 control-label font-nomal">订单号:</label>
       <div class="col-md-3 text-left">
         {{rentalGoSiteCtrl.rentalOrder.orderNumber}}
       </div>
@@ -26,7 +30,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label  class="col-md-1 control-label font-nomal">{{'rentalLinkman'|translate}}:</label>
+      <label class="col-md-1 control-label font-nomal">{{'rentalLinkman'|translate}}:</label>
       <div class="col-md-3 text-left">
         {{rentalGoSiteCtrl.rentalOrder.rentalCustomer.contacts}}
       </div>
@@ -44,9 +48,12 @@
       <label class="col-md-2 control-label font-nomal ">{{'admissionTime'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
-                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
-                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" readonly/>
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
+                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate"
+                 max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}" readonly/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.goSiteDateOpenData($event)">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -58,14 +65,15 @@
     <div class="form-group">
       <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
       <div class="col-md-3 text-left">
-        <input type="file" ngf-select id="uploadFile" ng-model="rentalGoSiteCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="uploadFile" />
+        <input type="file" ngf-select id="uploadFile" ng-model="rentalGoSiteCtrl.file" ngf-max-size="2MB" required
+               ngf-model-invalid="errorFiles" name="uploadFile"/>
       </div>
     </div>
     <hr>
     <div class="form-group">
       <label class="col-md-1 control-label font-nomal">{{'machineNumber'| translate}}:</label>
       <div class="col-md-3">
-        <input type="text" name="licenseId" class="form-control"  ng-model="rentalGoSiteCtrl.searchConditions.licenseId"
+        <input type="text" name="licenseId" class="form-control" ng-model="rentalGoSiteCtrl.searchConditions.licenseId"
 
                placeholder="{{'supportfuzzyqueries'|translate}}"/>
       </div>
@@ -73,7 +81,8 @@
       <label class="col-md-2 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
-          <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalGoSiteCtrl.org.label" name="org" readonly required/>
+          <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}"
+                 ng-model="rentalGoSiteCtrl.org.label" name="org" readonly required/>
           <span class="input-group-btn">
             <!--打开组织树-->
             <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.openTreeInfo()">
@@ -85,11 +94,12 @@
     </div>
 
     <div class="form-group">
-      <label  class="col-md-1 control-label font-nomal">{{'rentalMachineType'|translate}}:</label>
+      <label class="col-md-1 control-label font-nomal">{{'rentalMachineType'|translate}}:</label>
       <div class="col-md-3">
         <ui-select name="deviceType" ng-model="rentalGoSiteCtrl.searchConditions.type" theme="bootstrap"
                    ng-disabled="disabled">
-          <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name | translate}}
+          <ui-select-match allow-clear="true" placeholder="{{'rentalMachineType'|translate}}">{{$select.selected.name |
+            translate}}
           </ui-select-match>
           <ui-select-choices repeat="deviceType in rentalGoSiteCtrl.deviceTypeList">
             <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
@@ -98,17 +108,18 @@
       </div>
       <label class="col-md-2 control-label font-nomal">{{'address'|translate}}:</label>
       <div class="col-md-3">
-          <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}"
-                 ng-model="rentalGoSiteCtrl.searchConditions.address"/>
+        <input class="form-control" name="address" id="address" placeholder="{{'address'|translate}}"
+               ng-model="rentalGoSiteCtrl.searchConditions.address"/>
       </div>
     </div>
 
     <div class="form-group">
-      <label  class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
+      <label class="col-md-1 control-label font-nomal">{{'rentalBrand'|translate}}:</label>
       <div class="col-md-3">
         <ui-select name="deviceManufacture" ng-model="rentalGoSiteCtrl.searchConditions.factory" theme="bootstrap"
                    ng-disabled="disabled">
-          <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name | translate}}
+          <ui-select-match allow-clear="true" placeholder="{{'rentalBrand'|translate}}">{{$select.selected.name |
+            translate}}
           </ui-select-match>
           <ui-select-choices repeat="deviceManufacture in rentalGoSiteCtrl.deviceManufactureList">
             <div ng-bind-html="deviceManufacture.name | highlight: $select.search"></div>
@@ -119,7 +130,8 @@
       <div class="col-md-3">
         <ui-select name="deviceHeightType" ng-model="rentalGoSiteCtrl.searchConditions.heightType" theme="bootstrap"
                    ng-disabled="disabled">
-          <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
+          <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">
+            {{$select.selected.name|translate}}
           </ui-select-match>
           <ui-select-choices repeat="deviceHeightTypeList in rentalGoSiteCtrl.deviceHeightTypeList">
             <div ng-bind-html="deviceHeightTypeList.name | highlight: $select.search|translate"></div>
@@ -128,43 +140,52 @@
       </div>
       <div class="col-md-3">
         <button class="btn btn-primary" type="button"
-                ng-click="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,null,null,null)">{{'query'|translate}}
+                ng-click="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,null,null,null)">
+          {{'query'|translate}}
         </button>
         <button class="btn btn-default" type="button" ng-click="rentalGoSiteCtrl.reset()">{{'reset'|translate}}</button>
       </div>
     </div>
   </form>
   <div class="row" ng-style="rentalGoSiteCtrl.baseBoxContainer">
-      <script id="selectAllHeader" type="text/ng-template">
-      <input type="checkbox"  ng-click="rentalGoSiteCtrl.updateAllSelection($event)"
+    <script id="selectAllHeader" type="text/ng-template">
+      <input type="checkbox" ng-click="rentalGoSiteCtrl.updateAllSelection($event)"
              ng-model="machineMngCtrl.checked">
-      </script>
-      <div class="col-lg-12 table-responsive "><!--表格框-->
-        <table ng-table="rentalGoSiteCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
-          <tr ng-repeat="machine in $data">
-            <td class="text-nowrap" data-header="'selectAllHeader'"align="center">
+    </script>
+    <div class="col-lg-12 table-responsive "><!--表格框-->
+      <table ng-table="rentalGoSiteCtrl.tableParams"
+             class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="machine in $data">
+          <td class="text-nowrap" data-header="'selectAllHeader'" align="center">
             <input type="checkbox" ng-checked="rentalGoSiteCtrl.isSelected(machine.id)"
                    ng-click="rentalGoSiteCtrl.updateSelection($event,machine)" ng-model="machine.checked">
           </td>
-            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
             {{machine.licenseId}}
           </td>
-            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
-            <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
-            {{machine.typeName|translate}}</td>
-            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{machine.heightTypeName|translate}}</td>
-            <td class="text-nowrap" data-title="'address'|translate" sortable="'address'">{{machine.address|translate}}</td>
-            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{machine.factoryName|translate}}</td>
-          </tr>
-        </table>
-      </div>
+          <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
+          <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
+            {{machine.typeName|translate}}
+          </td>
+          <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">
+            {{machine.heightTypeName|translate}}
+          </td>
+          <td class="text-nowrap" data-title="'address'|translate" sortable="'address'">{{machine.address|translate}}
+          </td>
+          <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">
+            {{machine.factoryName|translate}}
+          </td>
+        </tr>
+      </table>
     </div>
-    <!--分页框-->
+  </div>
+  <!--分页框-->
   <uib-pagination total-items="rentalGoSiteCtrl.totalElements"
-                    ng-change="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,rentalGoSiteCtrl.number-1,rentalGoSiteCtrl.size,rentalGoSiteCtrl.totalElements)"
-                    max-size="5" ng-model="rentalGoSiteCtrl.number" items-per-page="rentalGoSiteCtrl.size"
-                    class="pagination-sm" boundary-links="true" rotate="false"
-                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                  ng-change="rentalGoSiteCtrl.queryMachine(rentalGoSiteCtrl.searchConditions,rentalGoSiteCtrl.number-1,rentalGoSiteCtrl.size,rentalGoSiteCtrl.totalElements)"
+                  max-size="5" ng-model="rentalGoSiteCtrl.number" items-per-page="rentalGoSiteCtrl.size"
+                  class="pagination-sm" boundary-links="true" rotate="false"
+                  previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+                  last-text="&raquo;"></uib-pagination>
   </uib-pagination>
 
 </div>

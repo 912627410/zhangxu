@@ -6,7 +6,7 @@
       </div>
     </div>
     <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalLeaveSiteCtrl.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch()">{{'leaveSite'|translate}}</button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch(rentalLeaveSiteCtrl.file)">{{'leaveSite'|translate}}</button>
   </div>
 </div>
 <div class="modal-body">
@@ -39,6 +39,12 @@
            </button>
          </span>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        <input type="file" ngf-select id="uploadFile" ng-model="rentalLeaveSiteCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="uploadFile" />
       </div>
     </div>
     <hr>
