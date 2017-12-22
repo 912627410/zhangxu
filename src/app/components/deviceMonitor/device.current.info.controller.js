@@ -151,7 +151,7 @@
         vm.deviceinfo.voltageLowAlarmValue = vm.deviceinfo.voltageLowAlarmValue * 0.1 + 10;
       }
       //改为过滤器
-      if (vm.deviceinfo.engineTemperature !=null){
+      if (vm.deviceinfo.engineTemperature != null) {
         vm.deviceinfo.engineTemperature = parseInt(vm.deviceinfo.engineTemperature);
       }
       //页面上的led灯判断
@@ -2254,7 +2254,8 @@
         yAxis: {
           max: 50,
           tickAmount: 10,
-          title: {text: '单位/次'}},
+          title: {text: '单位/次'}
+        },
         series: [{
           name: '启动次数',
           color: 'rgb(144, 238, 126)',
@@ -2319,7 +2320,7 @@
         //y轴坐标显示
         yAxis: {
           title: {text: '数值'}
-         },
+        },
         series: []
       }
     }
@@ -2374,23 +2375,19 @@
           Notification.error("暂无数据！");
           return;
         }
-        var categoriesdata = {};
+        vm.chartConfig.xAxis = [];
+        vm.chartConfig.series = [];
+        vm.chartConfig.series = [];
         for (var i = sensorData.length - 1; i >= 0; i--) {
           if (sensorData[i].name == 'locateDate') {
-            categoriesdata = (sensorData[i].data)
-            break;
-          }
-        }
-        vm.chartConfig.xAxis.categories=categoriesdata;
-        for (var i = 0; i < sensorData.length; i++) {
-          if (sensorData[i].name != 'locateDate') {
+            vm.chartConfig.xAxis.categories = (sensorData[i].data)
+          } else {
             vm.chartConfig.series.push({
               name: vm.sensorItem[sensorData[i].name],
               data: sensorData[i].data
             })
           }
         }
-
       })
     }
     /*加载个工作时间的图表*/
@@ -2403,8 +2400,11 @@
           Notification.error("暂无数据！");
           return;
         }
+        vm.startTimesChart.xAxis.categories = [];
+        vm.startTimesChart.series[0].data = [];
+        vm.workHoursChart.series[0].data = [];
         //根据月份升序排列
-        for(var i = 0; i < sensorData.length;i++){
+        for (var i = 0; i < sensorData.length; i++) {
           vm.startTimesChart.xAxis.categories.push($filter('date')(sensorData[i].workDate, 'yyyy-MM-dd'));
           vm.workHoursChart.xAxis.categories.push($filter('date')(sensorData[i].workDate, 'yyyy-MM-dd'));
           vm.startTimesChart.series[0].data.push(sensorData[i].startTimes);
