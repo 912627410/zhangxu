@@ -5,7 +5,7 @@
     .module('GPSCloud')
     .controller('rentalGoSiteController', rentalGoSiteController);
 
-  function rentalGoSiteController($rootScope, $uibModalInstance, $stateParams, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory,
+  function rentalGoSiteController($rootScope, $uibModalInstance, $uibModal, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, RENTAL_MACHINE_MONITOR_URL,
                                   rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTANL_UNUSED_MACHINE_PAGE_URL, Notification, languages) {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -35,6 +35,31 @@
     };
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
+
+    vm.machineMonitor = function (licenseId) {
+      var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + licenseId;
+      var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
+      deviceDataPromis.then(function (data) {
+        //打开模态框
+        var currentOpenModal = $uibModal.open({
+          animation: true,
+          backdrop: false,
+          templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
+          controller: 'machineMonitorController',
+          controllerAs:'vm',
+          openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
+          windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
+          size: 'super-lgs',
+          resolve: { //用来向controller传数据
+            deviceInfo: function () {
+              return data.content;
+            }
+          }
+        });
+      },function (reason) {
+        Notification.error(languages.findKey('failedToGetDeviceInformation'));
+      })
+    }
 
     //组织树的显示
     vm.openTreeInfo = function () {

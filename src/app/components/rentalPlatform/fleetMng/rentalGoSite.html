@@ -147,7 +147,8 @@
                    ng-click="rentalGoSiteCtrl.updateSelection($event,machine)" ng-model="machine.checked">
           </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-            {{machine.licenseId}}
+
+              <a  ng-click="rentalGoSiteCtrl.machineMonitor(machine.licenseId)">{{machine.licenseId}}</a>
           </td>
             <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
             <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
