@@ -3,7 +3,7 @@
 </div>
 <form name="newFileForm" class="form-horizontal">
   <div class="modal-body" style="padding-bottom: 0;">
-    <div class="box-body form-horizontal">
+    <div class="box-body form-horizontal table-responsive">
       <table ng-table="selectUpdateFileCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="updateFile in $data">
           <td class="text-nowrap text-center">
@@ -29,7 +29,7 @@
           <!--<td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'">BIN文件</td>-->
 
           <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-          <td class="text-nowrap" data-title="'remarks'|translate" sortable="'remarks'" style="max-width: 300px;white-space: normal;">{{updateFile.remarks}}</td>
+          <td class="text-nowrap" data-title="'remarks'|translate" sortable="'remarks'" style="min-width: 300px;white-space: normal;">{{updateFile.remarks}}</td>
         </tr>
       </table>
     </div>
