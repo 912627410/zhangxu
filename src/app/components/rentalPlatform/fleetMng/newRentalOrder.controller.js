@@ -14,16 +14,12 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrder={};
-    var path="/rental/order";
     //订单车辆类型 List
     vm.rentalOrderMachineTypeVos = [];
     vm.addRentalOrderOption = {
       orderVo:'',
       orderMachineTypeVoList:'',
-      orderMachineVoList:''
-
     }
-
     vm.jcOption = {
       deviceType :{id:1}
     }
@@ -69,24 +65,12 @@
     };
 
 
-    vm.startDateSetting = {
+    vm.paymentdateSetting = {
       open: function($event) {
-        vm.startDateSetting.status.opened = true;
+        vm.paymentdateSetting.status.opened = true;
       },
       dateOptions: {
-        formatYear: 'yy',
-        startingDay: 1
-      },
-      status: {
-        opened: false
-      }
-    };
-    vm.endDateSetting = {
-      open: function($event) {
-        vm.endDateSetting.status.opened = true;
-      },
-      dateOptions: {
-        formatYear: 'yy',
+        formatYear: 'yyyy',
         startingDay: 1
       },
       status: {
@@ -118,11 +102,6 @@
     }
 
     vm.ok = function (rentalOrder) {
-      if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
-        Notification.error(languages.findKey('selTime'));
-      }
-
-
       vm.rentalOrder.jc = vm.jcOption.quantity;
       vm.rentalOrder.zb= vm.zbOption.quantity;
       vm.rentalOrder.qb = vm.qbOption.quantity;
@@ -136,14 +115,11 @@
        if(vm.zbOption.quantity){
          vm.rentalOrderMachineTypeVos.push(vm.zbOption)
        }
-
-        //订单所属组织为客户的所属组织
+        //订单所属组织为登录用户的所属组织
         vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
-
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;
        vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
-       vm.addRentalOrderOption.orderMachineVoList = vm.orderMachineVoList;
 
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {

@@ -192,7 +192,6 @@
           }
         }
       });
-
       modalInstance.result.then(function (result) {
         for(var i=0; i <result.length;i++){
           vm.tableParams.data.splice(0, 0, result[i]);
