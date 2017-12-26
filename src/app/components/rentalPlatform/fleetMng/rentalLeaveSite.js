@@ -4,7 +4,7 @@
   angular
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
-  function rentalLeaveSiteController($rootScope, $uibModalInstance, Notification, languages,RENTAL_MACHINE_MONITOR_URL, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL) {
+  function rentalLeaveSiteController($rootScope, $uibModalInstance, Notification,$uibModal, languages,RENTAL_MACHINE_MONITOR_URL, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
