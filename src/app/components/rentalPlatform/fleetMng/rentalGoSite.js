@@ -5,7 +5,7 @@
     .module('GPSCloud')
     .controller('rentalGoSiteController', rentalGoSiteController);
 
-  function rentalGoSiteController($rootScope, $uibModalInstance, $stateParams, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory,$timeout,
+  function rentalGoSiteController($rootScope, $uibModalInstance, $stateParams,RENTAL_MACHINE_MONITOR_URL, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory,$timeout,
                                   rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, Notification, languages) {
 
     var vm = this;
