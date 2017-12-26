@@ -1,0 +1,57 @@
+
+<div class="modal-header">
+  <h3 class="modal-title">{{'修改用户信息'|translate}}</h3>
+</div>
+<form name="newUserForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'工号'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'工号'|translate}}"
+                 ng-model="minemngUpdateUserMngCtrl.minemnguser.jobNumber" name="jobNumber" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'姓名'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'name'|translate}}"
+                 ng-model="minemngUpdateUserMngCtrl.minemnguser.name" name="name" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'入职时间'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'入职时间'|translate}}"
+                 ng-model="minemngUpdateUserMngCtrl.minemnguser.entryTime" name="entryTime" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'角色类型'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'角色类型'|translate}}"
+                 ng-model="minemngUpdateUserMngCtrl.minemnguser.roleType" name="roleType" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'系统用户名'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'系统用户名'|translate}}"
+                 ng-model="minemngUpdateUserMngCtrl.minemnguser.systemName" name="systemName" typeahead-show-hint="true"
+                 validator="required" />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="newUserForm" ng-click="minemngUpdateUserMngCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="minemngUpdateUserMngCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>
+
+

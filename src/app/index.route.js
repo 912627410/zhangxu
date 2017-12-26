@@ -286,7 +286,18 @@
             controllerAs: 'minemngUserMngCtrl'
           }
         }
-      });
+      })
+      //终端信息管理
+  .state('minemng.minemngTerminalMng', {
+      url: '/minemngTerminalMng',
+      views: {
+        'rightside@minemng': {
+          templateUrl: 'app/components/mineManagement/terminalManagement/minemngTerminalMng.html',
+          controller: 'minemngTerminalMngController',
+          controllerAs: 'minemngTerminalMngCtrl'
+        }
+      }
+    });
 
 
 

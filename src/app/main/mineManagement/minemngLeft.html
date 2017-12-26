@@ -24,8 +24,8 @@
         <a ng-click="minemngHome=!minemngHome"  href="">
           <i class="fa fa-dashboard"></i>
           <span>首页</span>
-          <span class="glyphicon pull-right"
-                ng-class="minemngHome?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>
+          <!--<span class="glyphicon pull-right"-->
+                <!--ng-class="minemngHome?'glyphicon-chevron-up':'glyphicon-chevron-down'"></span>-->
         </a>
         <ul class="panel-collapse collapse treeview-menu" ng-class="{in: minemngHome}">
           <li>
@@ -41,19 +41,58 @@
         </ul>
       </li>
 
+      <!--<li class="treeview">-->
+        <!--<a ng-click="basicInfoMng=!basicInfoMng" href="" >-->
+          <!--<i class="fa ion-clipboard"></i>-->
+          <!--<span class="font-nomal">工作计划与调度</span>-->
+          <!--&lt;!&ndash;<span class="glyphicon pull-right"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;&ndash;&gt;-->
+          <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--</a>-->
+      <!--</li>-->
+
+      <!--<li class="treeview">-->
+        <!--<a ng-click="basicInfoMng=!basicInfoMng" href="" >-->
+          <!--<i class="fa ion-clipboard"></i>-->
+          <!--<span class="font-nomal">维修与保养</span>-->
+          <!--&lt;!&ndash;<span class="glyphicon pull-right"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;&ndash;&gt;-->
+          <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--</a>-->
+      <!--</li>-->
+
+      <!--<li class="treeview">-->
+        <!--<a ng-click="basicInfoMng=!basicInfoMng" href="" >-->
+          <!--<i class="fa ion-clipboard"></i>-->
+          <!--<span class="font-nomal">数据统计</span>-->
+          <!--&lt;!&ndash;<span class="glyphicon pull-right"&ndash;&gt;-->
+          <!--&lt;!&ndash;ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;&ndash;&gt;-->
+          <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--</a>-->
+      <!--</li>-->
+
+
       <li class="treeview">
         <a ng-click="basicInfoMng=!basicInfoMng" href="" >
           <i class="fa ion-clipboard"></i>
-          <span>基本信息管理</span>
-          <span class="glyphicon pull-right"
-                ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
-          </span>
+          <span class="font-nomal">基本信息管理</span>
+          <!--<span class="glyphicon pull-right"-->
+                <!--ng-class="basicInfoMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;-->
+          <!--</span>-->
         </a>
-        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: basicInfoMng}">
+        <ul class="treeview-menu panel-collapse collapse " ng-class="{in: basicInfoMng}">
           <li>
-            <a ui-sref="minemng.minemngUserMng">
-              <i class="fa ion-ios-location"></i> <span>人员基本信息</span>
+            <a ui-sref="minemng.minemngUserMng" style="margin-bottom: 10px">
+              <i class="fa"></i> <span class="font-nomal">人员基本信息</span>
             </a>
+          </li>
+
+          <li>
+            <a ui-sref="minemng.minemngTerminalMng" style="margin-bottom: 10px">
+              <i class="fa"></i> <span class="font-nomal">终端基本信息</span>
+            </a>
+          </li>
+          <li>
           </li>
         </ul>
       </li>
