@@ -1,4 +1,39 @@
-<div class="modal-header modal-header-padding">
+<style>
+  .editable-table > tbody > tr > td {
+    padding: 4px
+  }
+
+  .editable-text {
+    padding-left: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: inline-block;
+  }
+
+  .editable-table tbody > tr > td > .controls {
+  / / width: 100 %
+  }
+
+  .editable-input > .ui-select-match {
+      padding: 0px!important;
+      height: auto!important;
+      border: none!important;
+  }
+  .editable-input > .ui-select-match>.ui-select-toggle{
+    height: 28px!important;
+    border: none!important;
+  }
+  .editable-input.input-sm {
+    height: 30px;
+    font-size: 14px;
+    padding: 0;
+  }
+
+
+
+
+</style>
+<div class="modal-header modal-header-padding" class="newRentalOrder">
   <div class="modal-title">
       <div class="modal-title-text">
         {{'newOrder'|translate}}
@@ -143,8 +178,7 @@
         </div>
       </div>
     </form>
-    <div style="width: 90%;height: 200px;border: 1px solid #eeeeff">
-      <div class="col-md-12" >
+    <div class="form-group">
         <div class="brn-group pull-right">
           <button class="btn btn-default" ng-if="newRentalOrderCtrl.isEditing" ng-click="newRentalOrderCtrl.cancelChanges()">
             <span class="glyphicon glyphicon-remove"></span>
@@ -159,30 +193,72 @@
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
-        <table ng-table="newRentalOrderCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table" ng-form="newRentalOrderCtrl.tableForm" disable-filter="newRentalOrderCtrl.isAdding" demo-tracked-table="demo.tableTracker">
+        <table ng-table="newRentalOrderCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table" ng-form="newRentalOrderCtrl.tableForm" disable-filter="newRentalOrderCtrl.isAdding" demo-tracked-table="newRentalOrderCtrl.tableTracker">
           <colgroup>
-            <col width="70%" />
-            <col width="12%" />
-            <col width="13%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
+            <col width="15%" />
             <col width="5%" />
           </colgroup>
           <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
-            <td title="'设备类型'" filter="{name: 'text'}" sortable="'name'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" demo-tracked-table-cell>
-              <span ng-switch-default class="editable-text">{{row.name}}</span>
-              <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
-                <input type="text" name="name" ng-model="row.name" class="editable-input form-control input-sm" required />
+            <td title="'deviceType'" filter="{deviceType: 'text'}" sortable="'deviceType'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="deviceType.$dirty ? 'bg-warning' : ''" ng-form="deviceType" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.deviceType}}</span>
+              <div class="controls" ng-class="deviceType.$invalid && deviceType.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <!--<input type="text" name="deviceType" ng-model="row.deviceType" class="editable-input form-control input-sm" required />-->
+                <ui-select  ng-model="row.deviceType"  ng-disabled="disabled" class="editable-input form-control input-sm" required>
+                  <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name |translate}}</ui-select-match>
+                  <ui-select-choices repeat="entryorexit.id as entryorexit in newRentalOrderCtrl.entryorexitList | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="entryorexit.name | highlight: $select.search |translate"></div>
+                  </ui-select-choices>
+                </ui-select>
               </div>
             </td>
-            <td title="'高度类型'" filter="{age: 'number'}" sortable="'age'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="age.$dirty ? 'bg-warning' : ''" ng-form="age" demo-tracked-table-cell>
-              <span ng-switch-default class="editable-text">{{row.age}}</span>
-              <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
-                <input type="number" name="age" ng-model="row.age" class="editable-input form-control input-sm" required/>
+            <td title="'heightType'" filter="{age: 'number'}" sortable="'age'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="heightType.$dirty ? 'bg-warning' : ''" ng-form="heightType" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.heightType}}</span>
+              <div class="controls" ng-class="heightType.$invalid && heightType.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="number" name="heightType" ng-model="row.heightType" class="editable-input form-control input-sm" required/>
               </div>
             </td>
-            <td title="'数量'" filter="{money: 'number'}" sortable="'money'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="money.$dirty ? 'bg-warning' : ''" ng-form="money" demo-tracked-table-cell>
-              <span ng-switch-default class="editable-text">{{row.money}}</span>
-              <div class="controls" ng-class="money.$invalid && money.$dirty ? 'has-error' : ''" ng-switch-when="true">
-                <input type="number" name="money" ng-model="row.money" class="editable-input form-control input-sm" required/>
+            <td title="'dayPrice'" filter="{dayPrice: 'number'}" sortable="'dayPrice'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="dayPrice.$dirty ? 'bg-warning' : ''" ng-form="dayPrice" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.dayPrice}}</span>
+              <div class="controls" ng-class="dayPrice.$invalid && dayPrice.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="number" name="dayPrice" ng-model="row.dayPrice" class="editable-input form-control input-sm" required/>
+              </div>
+            </td>
+            <td title="'unit'" filter="{unit: 'text'}" sortable="'unit'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="unit.$dirty ? 'bg-warning' : ''" ng-form="unit" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.unit}}</span>
+              <div class="controls" ng-class="unit.$invalid && unit.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <!--<input type="text" name="deviceType" ng-model="row.deviceType" class="editable-input form-control input-sm" required />-->
+                <ui-select  ng-model="row.unit"  ng-disabled="disabled" class="editable-input form-control input-sm" required>
+                  <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name |translate}}</ui-select-match>
+                  <ui-select-choices repeat="entryorexit.id as entryorexit in newRentalOrderCtrl.entryorexitList | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="entryorexit.name | highlight: $select.search |translate"></div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </td>
+            <td title="'number'" filter="{number: 'number'}" sortable="'dayPrice'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="number.$dirty ? 'bg-warning' : ''" ng-form="number" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.number}}</span>
+              <div class="controls" ng-class="number.$invalid && number.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="number" name="number" ng-model="row.number" class="editable-input form-control input-sm" required/>
+              </div>
+            </td>
+            <td title="'startDate'"  sortable="'startDate'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="number.$dirty ? 'bg-warning' : ''" ng-form="number" demo-tracked-table-cell>
+              <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
+                       datepicker-options="newRentalOrderCtrl.dateOptions"
+                       min-date="newRentalOrderCtrl.minDate"
+                       max-date="newRentalOrderCtrl.maxDate" ng-required="true"
+                       current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"  />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="newRentalOrderCtrl. ($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+          </span>
               </div>
             </td>
             <td>
@@ -190,7 +266,6 @@
             </td>
           </tr>
         </table>
-      </div>
     </div>
   </div>
   <div class="modal-footer">

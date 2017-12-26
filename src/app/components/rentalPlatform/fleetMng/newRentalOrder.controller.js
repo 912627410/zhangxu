@@ -191,7 +191,7 @@
     var originalData = [];
 
     vm.tableParams = new NgTableParams({}, {
-      // dataset: angular.copy(simpleList)
+      dataset: originalData
     });
 
     vm.deleteCount = 0;
@@ -207,9 +207,9 @@
       vm.isEditing = true;
       vm.isAdding = true;
       vm.tableParams.settings().dataset.unshift({
-        name: "",
-        age: null,
-        money: null
+        deviceType: "",
+        heightType: null,
+        num: null
       });
       // we need to ensure the user sees the new row we've just added.
       // it seems a poor but reliable choice to remove sorting and move them to the first page
@@ -232,21 +232,21 @@
     }
 
     function del(row) {
-      _.remove(self.tableParams.settings().dataset, function(item) {
+      _.remove(vm.tableParams.settings().dataset, function(item) {
         return row === item;
       });
       vm.deleteCount++;
       vm.tableTracker.untrack(row);
       vm.tableParams.reload().then(function(data) {
-        if (data.length === 0 && self.tableParams.total() > 0) {
-          vm.tableParams.page(self.tableParams.page() - 1);
+        if (data.length === 0 && vm.tableParams.total() > 0) {
+          vm.tableParams.page(vm.tableParams.page() - 1);
           vm.tableParams.reload();
         }
       });
     }
 
     function hasChanges() {
-      return self.tableForm.$dirty || self.deleteCount > 0
+      return vm.tableForm.$dirty || vm.deleteCount > 0
     }
 
     function resetTableStatus() {
