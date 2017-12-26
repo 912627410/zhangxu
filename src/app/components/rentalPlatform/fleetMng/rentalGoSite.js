@@ -102,50 +102,6 @@
       Notification.error(languages.findKey('getDriFail'));
     })
 
-
-    //批量进场（批量调入）
-    vm.batchMoveMachine = function (file) {
-      /*        var rentalOrderMachineOperVo = {"addMachineIdList": vm.selected, "orderId": vm.rentalOrder.id,"operationType":2,"recordTime":vm.goSiteDate};
-              var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
-              restPromise.then(function (data) {
-                if(data.code==0){
-                  Notification.success(languages.findKey('transVehicle'));
-
-                  }
-                }, function (reason) {
-                  Notification.error(languages.findKey('transVehiclFail'));
-                });*/
-
-      var recordTime = serviceResource.getChangeChinaTime(vm.goSiteDate);
-      var startMonth = recordTime.getMonth() + 1;  //getMonth返回的是0-11
-      recordTime = recordTime.getFullYear() + '-' + startMonth + '-' + recordTime.getDate() + ' ' + recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
-
-      var uploadurl = RENTANL_ORDER_MACHINE_BATCH_MOVE_URL;
-      uploadurl += "?orderId=" + vm.rentalOrder.id + "&operationType=" + 1 + "&machineIdList=" + vm.selected + "&recordTime=" + recordTime
-      file.upload = Upload.upload({
-        url: uploadurl,
-        file: file
-      });
-      file.upload.then(function (response) {
-        $timeout(function () {
-          file.result = response.data;
-          if (file.result.code == 0) {
-            Notification.success("新增文件成功!");
-            $uibModalInstance.close();
-          } else {
-            Notification.error(data.message);
-          }
-        })
-      }, function (reason) {
-        vm.errorMsg = reason.data.message;
-        Notification.error("新增文件失败!");
-        Notification.error(vm.errorMsg);
-      }, function (evt) {
-      });
-
-      $uibModalInstance.close(vm.selected.length);
-
-    };
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
