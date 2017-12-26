@@ -54,8 +54,8 @@
           <div class="col-md-3">
             <ui-select  ng-model="newRentalOrderCtrl.rentalOrder.payType" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="支付方式">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="jobContent.id as jobContent in newRentalOrderCtrl.jobContentList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="jobContent.name | highlight: $select.search |translate"></div>
+              <ui-select-choices repeat="payType.id as payType in newRentalOrderCtrl.payTypeList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="payType.name | highlight: $select.search |translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -66,8 +66,8 @@
           <div class="col-md-3">
            <ui-select  ng-model="newRentalOrderCtrl.rentalOrder.collectionagreement" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="租金收取约定">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="jobContent.id as jobContent in newRentalOrderCtrl.jobContentList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="jobContent.name | highlight: $select.search |translate"></div>
+              <ui-select-choices repeat="collectionagreement.id as collectionagreement in newRentalOrderCtrl.collectionagreementList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="collectionagreement.name | highlight: $select.search |translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -81,13 +81,12 @@
                      current-text="{{'today'|translate}}"
                      clear-text="{{'cleanUp'|translate}}"
                      close-text="{{'close'|translate}}"readonly/>
-
-              <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"
-                          ng-click="newRentalOrderCtrl.paymentdateSetting.open($event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                                ng-click="newRentalOrderCtrl.paymentdateSetting.open($event)">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
             </div>
             <span id="bootstrap"></span>
           </div>
@@ -97,29 +96,24 @@
           <div class="col-md-2">
             <ui-select  ng-model="newRentalOrderCtrl.rentalOrder.entryorexit" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="jobContent.id as jobContent in newRentalOrderCtrl.jobContentList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="jobContent.name | highlight: $select.search |translate"></div>
+              <ui-select-choices repeat="entryorexit.id as entryorexit in newRentalOrderCtrl.entryorexitList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="entryorexit.name | highlight: $select.search |translate"></div>
               </ui-select-choices>
             </ui-select>
           </div>
           <div class="col-md-2">
             <ui-select  ng-model="newRentalOrderCtrl.rentalOrder.entryexitcostresponsiblepersion" ng-disabled="disabled" required>
               <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="jobContent.id as jobContent in newRentalOrderCtrl.jobContentList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="jobContent.name | highlight: $select.search |translate"></div>
+              <ui-select-choices repeat="entryexitcostresponsiblepersion.id as entryexitcostresponsiblepersion in newRentalOrderCtrl.entryexitcostresponsiblepersionList | propsFilter: {name: $select.search}">
+                <div ng-bind-html="entryexitcostresponsiblepersion.name | highlight: $select.search |translate"></div>
               </ui-select-choices>
             </ui-select>
+          </div>
+          <div  class="col-md-1">
+            <i>¥</i>
           </div>
           <div  class="col-md-2">
-            <input type="text" class="form-control" placeholder="entryorexitcost" ng-model="newRentalOrderCtrl.rentalOrder.entryorexitcost" name="entryorexitcost" typeahead-show-hint="true" validator="money" />
-          </div>
-          <div class="col-md-2">
-            <ui-select  ng-model="newRentalOrderCtrl.rentalOrder.entryexitcostresponsiblepersion" ng-disabled="disabled" required>
-              <ui-select-match allow-clear="true" placeholder="">{{$select.selected.name |translate}}</ui-select-match>
-              <ui-select-choices repeat="jobContent.id as jobContent in newRentalOrderCtrl.jobContentList | propsFilter: {name: $select.search}">
-                <div ng-bind-html="jobContent.name | highlight: $select.search |translate"></div>
-              </ui-select-choices>
-            </ui-select>
+            <input type="text" class="form-control" placeholder="" ng-model="newRentalOrderCtrl.rentalOrder.entryorexitcost" name="entryorexitcost" typeahead-show-hint="true" validator="money" />
           </div>
 
         </div>
@@ -129,12 +123,6 @@
             <div class="col-md-3">
               <input type="text" class="form-control" placeholder="{{'amount'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.prepaidrent" name="prepaidrent" typeahead-show-hint="true" validator="money" />
             </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-2 control-label font-nomal">乙方支付设备进退场费:</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" placeholder="{{'deposit'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.deposit" name="deposit" typeahead-show-hint="true" validator="money" />
           </div>
 
           <label class="col-md-2 control-label font-nomal">预付款总额:</label>
@@ -156,7 +144,53 @@
       </div>
     </form>
     <div style="width: 90%;height: 200px;border: 1px solid #eeeeff">
-
+      <div class="col-md-12" >
+        <div class="brn-group pull-right">
+          <button class="btn btn-default" ng-if="newRentalOrderCtrl.isEditing" ng-click="newRentalOrderCtrl.cancelChanges()">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+          <button class="btn btn-primary" ng-if="!newRentalOrderCtrl.isEditing" ng-click="newRentalOrderCtrl.isEditing = true">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button class="btn btn-primary" ng-if="newRentalOrderCtrl.isEditing" ng-disabled="!newRentalOrderCtrl.hasChanges() || newRentalOrderCtrl.tableTracker.$invalid" ng-click="newRentalOrderCtrl.saveChanges()">
+            <span class="glyphicon glyphicon-ok"></span>
+          </button>
+          <button class="btn btn-default" ng-click="newRentalOrderCtrl.add()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
+        <table ng-table="newRentalOrderCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table" ng-form="newRentalOrderCtrl.tableForm" disable-filter="newRentalOrderCtrl.isAdding" demo-tracked-table="demo.tableTracker">
+          <colgroup>
+            <col width="70%" />
+            <col width="12%" />
+            <col width="13%" />
+            <col width="5%" />
+          </colgroup>
+          <tr ng-repeat="row in $data" ng-form="rowForm" demo-tracked-table-row="row">
+            <td title="'设备类型'" filter="{name: 'text'}" sortable="'name'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="name.$dirty ? 'bg-warning' : ''" ng-form="name" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.name}}</span>
+              <div class="controls" ng-class="name.$invalid && name.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="text" name="name" ng-model="row.name" class="editable-input form-control input-sm" required />
+              </div>
+            </td>
+            <td title="'高度类型'" filter="{age: 'number'}" sortable="'age'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="age.$dirty ? 'bg-warning' : ''" ng-form="age" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.age}}</span>
+              <div class="controls" ng-class="age.$invalid && age.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="number" name="age" ng-model="row.age" class="editable-input form-control input-sm" required/>
+              </div>
+            </td>
+            <td title="'数量'" filter="{money: 'number'}" sortable="'money'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="money.$dirty ? 'bg-warning' : ''" ng-form="money" demo-tracked-table-cell>
+              <span ng-switch-default class="editable-text">{{row.money}}</span>
+              <div class="controls" ng-class="money.$invalid && money.$dirty ? 'has-error' : ''" ng-switch-when="true">
+                <input type="number" name="money" ng-model="row.money" class="editable-input form-control input-sm" required/>
+              </div>
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" ng-click="newRentalOrderCtrl.del(row)" ng-disabled="!newRentalOrderCtrl.isEditing"><span class="glyphicon glyphicon-trash"></span></button>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
   <div class="modal-footer">

@@ -8,9 +8,8 @@
   angular
     .module('GPSCloud')
     .controller('newRentalOrderController', newRentalOrderController);
-
   /** @ngInject */
-  function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages) {
+  function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages,NgTableParams) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrder={};
@@ -156,6 +155,113 @@
       }, function () {
       });
     };
+
+
+    vm.jobContentList = [
+      {id:1,name:"消防"},
+      {id:2,name:"水电"},
+      {id:3,name:"保温"},
+      {id:4,name:"外墙"},
+      {id:5,name:"安装"},
+      {id:6,name:"涂装"},
+      {id:7,name:"其他"}
+    ];
+
+    vm.payTypeList = [
+      {id:1,name:"现金"},
+      {id:2,name:"转账"}
+    ];
+    vm.collectionagreementList = [
+      {id:1,name:"先付保证金及租金后使用设备"},
+      {id:2,name:"先付租金后使用设备"},
+      {id:3,name:"先付保证金后使用设备"},
+      {id:4,name:"先使用设备后付租金"},
+    ]
+    vm.entryorexitList = [
+      {id:1,name:"进场"},
+      {id:2,name:"退场"},
+    ]
+    vm.entryexitcostresponsiblepersionList = [
+      {id:1,name:"出租方"},
+      {id:1,name:"承租方"},
+    ]
+
+
+    // var originalData = angular.copy(simpleList);
+    var originalData = [];
+
+    vm.tableParams = new NgTableParams({}, {
+      // dataset: angular.copy(simpleList)
+    });
+
+    vm.deleteCount = 0;
+
+    vm.add = add;
+    vm.cancelChanges = cancelChanges;
+    vm.del = del;
+    vm.hasChanges = hasChanges;
+    vm.saveChanges = saveChanges;
+
+
+    function add() {
+      vm.isEditing = true;
+      vm.isAdding = true;
+      vm.tableParams.settings().dataset.unshift({
+        name: "",
+        age: null,
+        money: null
+      });
+      // we need to ensure the user sees the new row we've just added.
+      // it seems a poor but reliable choice to remove sorting and move them to the first page
+      // where we know that our new item was added to
+      vm.tableParams.sorting({});
+      vm.tableParams.page(1);
+      vm.tableParams.reload();
+    }
+
+    function cancelChanges() {
+      resetTableStatus();
+      var currentPage = vm.tableParams.page();
+      vm.tableParams.settings({
+        dataset: angular.copy(originalData)
+      });
+      // keep the user on the current page when we can
+      if (!vm.isAdding) {
+        vm.tableParams.page(currentPage);
+      }
+    }
+
+    function del(row) {
+      _.remove(self.tableParams.settings().dataset, function(item) {
+        return row === item;
+      });
+      vm.deleteCount++;
+      vm.tableTracker.untrack(row);
+      vm.tableParams.reload().then(function(data) {
+        if (data.length === 0 && self.tableParams.total() > 0) {
+          vm.tableParams.page(self.tableParams.page() - 1);
+          vm.tableParams.reload();
+        }
+      });
+    }
+
+    function hasChanges() {
+      return self.tableForm.$dirty || self.deleteCount > 0
+    }
+
+    function resetTableStatus() {
+      vm.isEditing = false;
+      vm.isAdding = false;
+      vm.deleteCount = 0;
+      vm.tableTracker.reset();
+      vm.tableForm.$setPristine();
+    }
+
+    function saveChanges() {
+      resetTableStatus();
+      var currentPage = vm.tableParams.page();
+      originalData = angular.copy(vm.tableParams.settings().dataset);
+    }
 
   }
 })();
