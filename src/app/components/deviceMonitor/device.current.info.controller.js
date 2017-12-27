@@ -15,16 +15,33 @@
                                        GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL, GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, DEVCE_LOCK_DATA_PAGED_QUERY, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,
                                        DEVCEDATA_EXCELEXPORT, PORTRAIT_ENGINEPERFORMS_URL, PORTRAIT_RECENTLYSPEED_URL, PORTRAIT_RECENTLYOIL_URL, PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL, PORTRAIT_CUSTOMERINFO_URL, MACHINE_STORAGE_URL) {
     var vm = this;
+    var startDate = new Date();
     vm.sensorItem = {};//状态量列表
     $scope.myInterval = 5000;//轮播间隔
     $scope.noWrapSlides = false;// 是否轮播 默认false
     $scope.noTransition = false;// 是否有过场动画 默认false
     $scope.notices = [];//消息提醒轮播list
-    vm.maxDate = new Date();
+    vm.maxDate = startDate;
+    startDate.setDate(startDate.getDate() - 5);
+    vm.startDateDeviceData = startDate;
+    vm.endDateDeviceData = new Date();
     vm.dateOptions = {
       formatYear: 'yyyy',
       startingDay: 1
     };
+    vm.queryStartDateOpenStatus = {
+      opened: false
+    };
+    vm.queryEndDateOpenStatus = {
+      opened: false
+    };
+    vm.queryStartDateOpen = function ($event) {
+      vm.queryStartDateOpenStatus.opened = true;
+    };
+    vm.queryEndDateOpen = function ($event) {
+      vm.queryEndDateOpenStatus.opened = true;
+    };
+
 
     /********************  数据begin  ***********************/
     //刷新当前页面
@@ -178,8 +195,6 @@
         }
       });
     }
-
-    var oilTemperature = parseInt(vm.deviceinfo.oilTemperature);
 
     //气压图
     vm.highchartsAir = {
@@ -907,7 +922,7 @@
       title: languages.findKey('OilTemperature') + '',
       series: [{
         name: languages.findKey('OilTemperature') + '',
-        data: [oilTemperature],
+        data: [parseInt(vm.deviceinfo.oilTemperature)],
         dataLabels: {
           format: '<div style="text-align:center"><span style="border:none;line-height:12px;font-size:12px;color:' +
           ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}℃</span>' + '</div>',
@@ -934,78 +949,63 @@
 
 
     /********************  历史数据begin  ***********************/
-    var startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
-    vm.startDate = startDate;
-    vm.endDate = new Date();
 
-    vm.startDateDeviceData = startDate;
-    vm.endDateDeviceData = new Date();
-
-    vm.startDateOpenStatusDeviceData = {
-      opened: false
-    };
-    vm.endDateOpenStatusDeviceData = {
-      opened: false
-    };
-
-    vm.startDateOpenDeviceData = function ($event) {
-      vm.startDateOpenStatusDeviceData.opened = true;
-    };
-    vm.endDateOpenDeviceData = function ($event) {
-      vm.endDateOpenStatusDeviceData.opened = true;
-    };
-
-    vm.setDefaultAddress = function () {
-      if (vm.deviceDataList != null) {
-        vm.deviceDataList.forEach(function (deviceData) {
-          if (deviceData.address === languages.findKey('requestingLocationData') + '...') {
-            deviceData.address = '--';
-          }
-        })
-      }
-    }
-
-    vm.getDeviceData = function (page, size, sort, deviceNum, startDate, endDate) {
+    /**
+     * 查询历史数据
+     *
+     * @param pagess
+     * @param size
+     * @param sort
+     * @param deviceNum
+     * @param startDate
+     * @param endDate
+     */
+    vm.getDeviceData = function (page, size, sort, deviceNum, startDate, endDate,totalElements) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
-      var deviceDataPromis = serviceResource.queryDeviceData(page, size, sort, filterTerm);
-      deviceDataPromis.then(function (data) {
-          vm.deviceDataList = data.content;
-          vm.deviceDataPage = data.page;
+      if (totalElements != null && totalElements != undefined) {
+        filterTerm += "&totalElements=" + totalElements;
+      }
+      var deviceDataPromise = serviceResource.queryDeviceData(page, size, sort, filterTerm);
+      deviceDataPromise.then(function (data) {
+          if (data.content.length <= 0) {
+            Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
+          }
+          vm.historyTotalElements = data.page.totalElements;
           vm.deviceDataPageNumber = data.page.number + 1;
-          vm.deviceDataBasePath = DEVCE_DATA_PAGED_QUERY;
+          vm.itemsPerPageNumber = data.page.size;
+          vm.deviceDataList = data.content;
           angular.forEach(vm.deviceDataList, function (data) {
-            //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
-            data.alertStatus = parseInt(data.alertStatus, 2);
-            data.alertStatus = data.alertStatus.toString(16).toUpperCase();
-            data.ecuLockStatusDesc = '';
+            data.ecuLockStatusDesc = "已绑定";
             if (data.ecuLockStatus.substr(7, 1) == "0") {
-              data.ecuLockStatusDesc += "未绑定";
-            }
-            else {
-              data.ecuLockStatusDesc += "已绑定";
+              data.ecuLockStatusDesc = "未绑定";
             }
             if (data.voltageHigthAlarmValue != 0) {
               data.voltageHigthAlarmValue = data.voltageHigthAlarmValue * 0.1 + 10;
@@ -1013,65 +1013,68 @@
             if (data.voltageLowAlarmValue != 0) {
               data.voltageLowAlarmValue = data.voltageLowAlarmValue * 0.1 + 10;
             }
-          });
-          if (vm.deviceDataList.length == 0) {
-            Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
-          }
+          })
         }, function (reason) {
           Notification.error(languages.findKey('historicalDataAcquisitionDeviceFailure'));
         }
       )
     }
 
+    /**
+     * 历史数据导出Excel
+     * @param deviceNum 设备号
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     */
     vm.excelExport = function (deviceNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + deviceNum;
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       var restCallURL = DEVCEDATA_EXCELEXPORT;
       if (filterTerm) {
         restCallURL += "?";
         restCallURL += filterTerm;
       }
-
       $http({
         url: restCallURL,
         method: "GET",
         responseType: 'arraybuffer'
       }).success(function (data, status, headers, config) {
         var blob = new Blob([data], {type: "application/vnd.ms-excel"});
-        var objectUrl = window.URL.createObjectURL(blob);
-
+        window.URL.createObjectURL(blob);
         var anchor = angular.element('<a/>');
-
         //兼容多种浏览器
         if (window.navigator.msSaveBlob) { // IE
           window.navigator.msSaveOrOpenBlob(blob, deviceNum + '.xls')
         } else if (navigator.userAgent.search("Firefox") !== -1) { // Firefox
-
           anchor.css({display: 'none'});
           angular.element(document.body).append(anchor);
-
-
           anchor.attr({
             href: URL.createObjectURL(blob),
             target: '_blank',
@@ -1086,15 +1089,16 @@
             download: deviceNum + '.xls'
           })[0].click();
         }
-
-
       }).error(function (data, status, headers, config) {
         Notification.error("下载失败!");
       });
-
     }
 
-    //监控
+    /**
+     * 历史数据工作详情页面
+     * @param data 数据
+     * @param size 页面大小
+     */
     vm.currentInfo = function (data, size) {
       vm.deviceinfoMonitor = data;
       $rootScope.currentOpenModal = $uibModal.open({
@@ -1103,7 +1107,7 @@
         templateUrl: 'app/components/deviceMonitor/devicecurrentinfodetails.html',
         controller: 'DeviceCurrentInfoDetailsController as deviceCurrentInfoDetailsCtrl',
         size: size,
-        resolve: { //用来向controller传数据
+        resolve: {
           deviceinfo: function () {
             return vm.deviceinfoMonitor;
           }
@@ -1113,46 +1117,35 @@
     /********************  历史数据end  ***********************/
 
     /********************  报警数据begin  ***********************/
-    vm.startDateDeviceWarningData = startDate;
-    vm.endDateDeviceWarningData = new Date();
-
-    vm.startDateOpenStatusDeviceWarningData = {
-      opened: false
-    };
-    vm.endDateOpenStatusDeviceWarningData = {
-      opened: false
-    };
-
-    vm.startDateOpenDeviceWarningData = function ($event) {
-      vm.startDateOpenStatusDeviceWarningData.opened = true;
-    };
-    vm.endDateOpenDeviceWarningData = function ($event) {
-      vm.endDateOpenStatusDeviceWarningData.opened = true;
-    };
-
     vm.getDeviceWarningData = function (page, size, sort, deviceNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       }
       if (startDate) {
         var startMonth = startDate.getMonth() + 1;  //getMonth返回的是0-11
-        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate();
+        var startDateFormated = startDate.getFullYear() + '-' + startMonth + '-' + startDate.getDate() + ' ' + startDate.getHours() + ':' + startDate.getMinutes() + ':' + startDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&startDate=" + startDateFormated
         }
         else {
           filterTerm += "startDate=" + startDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       if (endDate) {
         var endMonth = endDate.getMonth() + 1;  //getMonth返回的是0-11
-        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate();
+        var endDateFormated = endDate.getFullYear() + '-' + endMonth + '-' + endDate.getDate() + ' ' + endDate.getHours() + ':' + endDate.getMinutes() + ':' + endDate.getSeconds();
         if (filterTerm) {
           filterTerm += "&endDate=" + endDateFormated;
         }
         else {
           filterTerm += "endDate=" + endDateFormated;
         }
+      } else {
+        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
       }
       var deviceWarningDataPromis = serviceResource.queryDeviceWarningData(page, size, sort, filterTerm);
       deviceWarningDataPromis.then(function (data) {
@@ -1209,6 +1202,10 @@
     /********************  操作日志end ***********************/
 
     /********************  地图begin  ***********************/
+    /**
+     * 初始化地图
+     * @param deviceInfo
+     */
     vm.initMapTab = function (deviceInfo) {
       $timeout(function () {
         var deviceInfoList = new Array();
@@ -1218,31 +1215,12 @@
       })
     };
 
-    vm.startDateMapData = startDate;
-    vm.endDateMapData = new Date();
-
-    vm.startDateOpenStatusMapData = {
-      opened: false
-    };
-    vm.endDateOpenStatusMapData = {
-      opened: false
-    };
-
-    vm.startDateOpenMapData = function ($event) {
-      vm.startDateOpenStatusMapData.opened = true;
-    };
-    vm.endDateOpenMapData = function ($event) {
-      vm.endDateOpenStatusMapData.opened = true;
-    };
-
+    /**
+     *  车模型,地图按钮监听
+     * @param lineAttr
+     */
     vm.refreshMapTab = function (lineAttr) {
-      /*****************     第一部分，动画暂停、继续的实现 通过自定义一个控件对象来控制位置变化    ********************/
-      /**
-       * Marker移动控件
-       * @param {Map} map    地图对象
-       * @param {Marker} marker Marker对象
-       * @param {Array} path   移动的路径，以坐标数组表示
-       */
+
       var MarkerMovingControl = function (map, marker, path) {
         this._map = map;
         this._marker = marker;
@@ -1251,7 +1229,7 @@
         marker.setMap(map);
         marker.setPosition(path[0]);
       }
-      /**************************************结束 ***********************************************************/
+
       var marker;
 
       var carPostion = lineAttr[0];
@@ -1347,6 +1325,15 @@
       }, false);
     };
 
+    /**
+     * 获取车辆的轨迹信息
+     * @param page
+     * @param size
+     * @param sort
+     * @param deviceNum
+     * @param startDate
+     * @param endDate
+     */
     vm.getDeviceMapData = function (page, size, sort, deviceNum, startDate, endDate) {
       if (deviceNum) {
         var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
@@ -1384,8 +1371,7 @@
           var deviceMapDataList = data.content;
           if (deviceMapDataList.length == 0) {
             Notification.warning(languages.findKey('deviceIsNotHistoricalDataForThisTimePeriodPleaseReselect'));
-          }
-          else {
+          } else {
             vm.deviceMapDataList = _.sortBy(deviceMapDataList, "locateDateTime");
             vm.deviceMapDataList.forEach(function (deviceData) {
               lineArr.push(new AMap.LngLat(deviceData.amaplongitudeNum, deviceData.amaplatitudeNum));
@@ -1403,6 +1389,10 @@
       )
     }
 
+    /**
+     * 画出仓库地址
+     * @param ids
+     */
     vm.draw = function (ids) {
       var storageDataURL = MACHINE_STORAGE_URL + "?licenseId=" + ids;
       var storageDataPromis = serviceResource.restCallService(storageDataURL, "GET");
@@ -1423,7 +1413,6 @@
 
     /********************  远程控制begin  ***********************/
     vm.serverHost = "iotserver1.nvr-china.com";
-
     vm.serverPort = "09999";
     if (vm.deviceinfo.versionNum != null && vm.deviceinfo.versionNum == '2001') {
       vm.serverPort = "09998";
@@ -2375,12 +2364,11 @@
           Notification.error("暂无数据！");
           return;
         }
-        vm.chartConfig.xAxis = [];
+        vm.chartConfig.xAxis.categories = [];
         vm.chartConfig.series = [];
-        vm.chartConfig.series = []; 
         for (var i = sensorData.length - 1; i >= 0; i--) {
           if (sensorData[i].name == 'locateDate') {
-            vm.chartConfig.xAxis.categories = (sensorData[i].data)
+            vm.chartConfig.xAxis.categories = sensorData[i].data
           } else {
             vm.chartConfig.series.push({
               name: vm.sensorItem[sensorData[i].name],
