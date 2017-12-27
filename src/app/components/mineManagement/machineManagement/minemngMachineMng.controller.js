@@ -8,9 +8,9 @@
     .controller('minemngMachineController', minemngMachineController);
 
   /** @ngInject */
-  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,  $confirm,$filter,permissions, NgTableParams,
-                                treeFactory, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
-                                MACHINE_PAGE_URL,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
+  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_MACHINE_URL ,$filter,permissions, NgTableParams,
+                                    MINE_MACHINE_DELETE, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
+                                    $confirm ,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
                                 MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -70,13 +70,81 @@
     //默认查询
     vm.query(null,null,null,null);
 
+    //更新车辆
+    vm.updateMineMachine = function (machine, size) {
+      //var sourceMachine = angular.copy(machine); //深度copy
+
+      var singlUrl = MINE_MACHINE_URL + "?id=" + machine.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+        var operMachine = data.content;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/mineManagement/machineManagement/updateMineMachinemng.html',
+          controller: 'updateMineMachineController as updateMineMachineCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            machine: function () {
+              return operMachine;
+            },
+            machineTypeInfo: function () {
+              return vm.machineTypeList;
+            }
+          }
+        });
+
+        modalInstance.result.then(function(result) {
+
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
+
+
+      }, function (reason) {
+        Notification.error('获取车辆信息失败');
+      });
+    };
+
+    /**
+     * 删除车辆
+     * @param id
+     */
+    vm.delete = function (id) {
+      $confirm({text: languages.findKey('areYouWanttoDeleteIt'), title: languages.findKey('deleteConfirmation'), ok: languages.findKey('confirm'), cancel:languages.findKey('cancel')})
+        .then(function () {
+          var restCall = MINE_MACHINE_DELETE + "?id=" + id;
+          var restPromise = serviceResource.restCallService(restCall, "UPDATE");
+          restPromise.then(function (data) {
+            Notification.error(languages.findKey('delSuccess'));
+            vm.query(null, null, null, null);
+          }, function (reason) {
+            Notification.error(languages.findKey('delFail'));
+          });
+        });
+    };
 
 
 
+    vm.newMachineMng = function (size,type) {
+      var machineType ;
 
-
-
-    vm.newMachineMng = function (size) {
+      if(null!=type){
+        if(type ==1 ){
+           machineType = 1
+        }
+        if(type ==2 ){
+           machineType = 2
+        }
+      }
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -85,11 +153,8 @@
         size: size,
         backdrop: false,
         resolve: {
-          operatorInfo: function () {
-            return vm.operatorInfo;
-          },
-          machineTypeInfo: function () {
-            return vm.machineTypeList;
+          machineType: function () {
+            return machineType;
           }
         }
       });

@@ -1,7 +1,7 @@
 /* global malarkey:false, moment:false */
 (function() {
   'use strict';
-   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+   var SERVER_BASE_URL = 'http://192.168.8.209:8080/rest/';
    var WEBSOCKET_DOMAIN_NAME = 'localhost';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
@@ -381,8 +381,11 @@
     //矿车管理相关
     .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'mine/machine')   //新增车辆
     .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'mine/refresh')   //刷新车辆
-
-
+    .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'mine/updateMineMachine')   //修改车辆
+    .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'mine/machineState') //矿车状态集合
+    .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'mine/deleteMineMachine')   //删除车辆
+    .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'fleet/queryParentFleet')   //查询组织
+    .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'fleet/getMinemngFleet')   //查询组织
   ;
 
 
