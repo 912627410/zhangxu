@@ -82,6 +82,26 @@
     //初始化controller
     vm.controllerInitialization = function (deviceinfo) {
       vm.deviceinfo = deviceinfo;
+
+      //设置ECU 锁车状态 描述
+      vm.ecuLockStatusDesc = "";
+      if (vm.deviceinfo.ecuLockStatus != null) {
+        if (vm.deviceinfo.ecuLockStatus.length == 8) {
+          if (vm.deviceinfo.ecuLockStatus.substr(7, 1) == "0") {
+            vm.ecuLockStatusDesc += "未绑定";
+          }
+          else {
+            vm.ecuLockStatusDesc += "已绑定";
+          }
+          /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
+           vm.ecuLockStatusDesc += ".";
+           }
+           else{
+           vm.ecuLockStatusDesc += ".";
+           }*/
+        }
+      }
+
       // 页面打开后根据初始化查询的结果判断是否写入消息
       if (vm.deviceinfo.maintainNoticeNum != null && vm.deviceinfo.maintainNoticeNum > 0) {
         //存在保养提醒
