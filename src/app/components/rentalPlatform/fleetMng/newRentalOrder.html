@@ -196,8 +196,9 @@
         <table ng-table="newRentalOrderCtrl.tableParams" class="table table-bordered table-hover table-condensed editable-table" ng-form="newRentalOrderCtrl.tableForm" disable-filter="newRentalOrderCtrl.isAdding" demo-tracked-table="newRentalOrderCtrl.tableTracker">
           <colgroup>
             <col width="15%" />
+            <col width="10%" />
             <col width="15%" />
-            <col width="15%" />
+            <col width="10%" />
             <col width="15%" />
             <col width="15%" />
             <col width="15%" />
@@ -246,19 +247,35 @@
                 <input type="number" name="number" ng-model="row.number" class="editable-input form-control input-sm" required/>
               </div>
             </td>
-            <td title="'startDate'"  sortable="'startDate'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="number.$dirty ? 'bg-warning' : ''" ng-form="number" demo-tracked-table-cell>
+            <td title="'startDate'"  sortable="'startDate'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="startDate.$dirty ? 'bg-warning' : ''" ng-form="startDate" demo-tracked-table-cell>
               <div class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
-                       datepicker-options="newRentalOrderCtrl.dateOptions"
-                       min-date="newRentalOrderCtrl.minDate"
-                       max-date="newRentalOrderCtrl.maxDate" ng-required="true"
-                       current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}"  />
+                <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="newRentalOrderCtrl.startDate" is-open="newRentalOrderCtrl.startDateSetting.status.opened"
+                       datepicker-options="newRentalOrderCtrl.startDateSetting.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"  readonly required/>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                                ng-click="newRentalOrderCtrl.startDateSetting.open($event)">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                      </span>
+              </div>
+            </td>
+            <td title="'endDate'"  sortable="'endDate'" ng-switch="newRentalOrderCtrl.isEditing" ng-class="endDate.$dirty ? 'bg-warning' : ''" ng-form="endDate" demo-tracked-table-cell>
+              <div class="input-group">
+                <input type="text" name="endDate" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}" ng-model="newRentalOrderCtrl.endDate" is-open="newRentalOrderCtrl.endDateSetting.status.opened"
+                       datepicker-options="newRentalOrderCtrl.endDateSetting.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"  readonly required/>
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="newRentalOrderCtrl. ($event)">
-                  <i class="glyphicon glyphicon-calendar"></i>
-                </button>
-          </span>
+                  <button type="button" class="btn btn-default"
+                          ng-click="newRentalOrderCtrl.endDateSetting.open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
               </div>
             </td>
             <td>
@@ -270,7 +287,7 @@
   </div>
   <div class="modal-footer">
     <div class="form-group" style="text-align: center;">
-      <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newrentalOrderForm" ng-click="newRentalOrderCtrl.ok(newRentalOrderCtrl.rentalOrder)">{{'confirm'|translate}}
+      <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newrentalOrderForm" ng-click="newRentalOrderCtrl.newOrder(newRentalOrderCtrl.rentalOrder)">{{'confirm'|translate}}
       </button>
       <button class="btn  btn-warning  " type="button" ng-click="newRentalOrderCtrl.cancel()">
         {{'cancel'|translate}}

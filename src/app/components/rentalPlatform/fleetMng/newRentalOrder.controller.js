@@ -19,15 +19,6 @@
       orderVo:'',
       orderMachineTypeVoList:'',
     }
-    vm.jcOption = {
-      deviceType :{id:1}
-    }
-    vm.qbOption = {
-      deviceType :{id:2}
-    }
-    vm.zbOption = {
-      deviceType :{id:3}
-    }
 
     vm.rightBoxBottomHeight=20;
     vm.rightBoxTopHeightTemp=20;
@@ -63,6 +54,30 @@
       $uibModalInstance.close();
     };
 
+    vm.startDateSetting = {
+      open: function($event) {
+        vm.startDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yyyy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
+    vm.endDateSetting = {
+      open: function($event) {
+        vm.endDateSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yyyy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
 
     vm.paymentdateSetting = {
       open: function($event) {
@@ -76,34 +91,11 @@
         opened: false
       }
     };
-    //加载品牌信息
-    var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
-    deviceManufactureListPromise.then(function (data) {
-      vm.deviceManufactureList= data.content;
-      //    console.log(vm.userinfoStatusList);
-    }, function (reason) {
-      Notification.error('获取厂家失败');
-    })
-
-    //加载高度信息
-    var deviceHeightTypeListPromise = rentalService.getDeviceHeightTypeList();
-    deviceHeightTypeListPromise.then(function (data) {
-      vm.deviceHeightTypeList= data.content;
-    }, function (reason) {
-      Notification.error('获取高度失败');
-    })
-
-    //组织树的显示
-    vm.openTreeInfo=function() {
-      treeFactory.treeShow(function (selectedItem) {
-        vm.org =selectedItem;
-      });
-    }
-
-    vm.ok = function (rentalOrder) {
-      vm.rentalOrder.jc = vm.jcOption.quantity;
-      vm.rentalOrder.zb= vm.zbOption.quantity;
-      vm.rentalOrder.qb = vm.qbOption.quantity;
+    /**
+     * 新建订单确认
+     * @param rentalOrder
+     */
+    vm.newOrder = function (rentalOrder) {
       if(vm.jcOption.quantity){
         vm.rentalOrderMachineTypeVos.push(vm.jcOption)
       }
@@ -117,8 +109,8 @@
         //订单所属组织为登录用户的所属组织
         vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
-       vm.addRentalOrderOption.orderVo = vm.rentalOrder;
-       vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+         vm.addRentalOrderOption.orderVo = vm.rentalOrder;
+         vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
 
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
@@ -135,7 +127,7 @@
 
 
 
-    //选择订单客户
+    //选择订单的所属客户
     vm.selectCustomer = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -149,7 +141,6 @@
           }
         }
       });
-
       modalInstance.result.then(function (result) {
         vm.rentalOrder.rentalCustomer=result;
       }, function () {

@@ -187,8 +187,6 @@
         if (searchConditions.address != null) {
           restCallURL += "&address=" + searchConditions.address;
         }
-
-
       }
       if (null != vm.org && null != vm.org.id && !vm.querySubOrg) {
         restCallURL += "&orgId=" + vm.org.id;
