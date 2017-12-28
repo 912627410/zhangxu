@@ -17,28 +17,28 @@
         <div class="form-group">
           <label class="col-md-1 control-label font-nomal">{{'终端号码'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
+            <input type="text" name="number" class="form-control"  ng-model="minemngTerminalMngCtrl.terminal.number"
                    placeholder="{{'输入终端号码'|translate}}"/>
           </div>
           <label class="col-md-1 control-label font-nomal">{{'SIM卡号'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
+            <input type="text" name="simNum" class="form-control"  ng-model="minemngTerminalMngCtrl.terminal.simNum"
                    placeholder="{{'输入SIM卡号'|translate}}" />
           </div>
           <label class="col-md-1 control-label font-nomal">{{'状态'|translate}}:</label>
           <div class="col-md-2">
-            <ui-select name="status" ng-model="rentalOrderMngCtrl.rentalOrder.status" theme="bootstrap"
+            <ui-select name="status" ng-model="minemngTerminalMngCtrl.terminal.status" theme="bootstrap"
                        ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'状态'|translate}}">
                 {{$select.selected.desc|translate}}
               </ui-select-match>
-              <ui-select-choices repeat="retanlOrderStatus in rentalOrderMngCtrl.retanlOrderStatusList">
-                <div ng-bind-html="retanlOrderStatus.desc | highlight: $select.search |translate"></div>
+              <ui-select-choices repeat="terminalStatus in minemngTerminalMngCtrl.terminalStatusList">
+                <div ng-bind-html="terminalStatus.desc | highlight: $select.search |translate"></div>
               </ui-select-choices>
           </div>
           <label class="col-md-1 control-label font-nomal">{{'绑定车辆'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="name" class="form-control"  ng-model="rentalCustomerMngController.customer.name"
+            <input type="text" name="machinename" class="form-control"  ng-model="minemngTerminalMngCtrl.machinename"
                    placeholder="{{'输入绑定车辆'|translate}}"/>
           </div>
 
@@ -47,28 +47,28 @@
         <div class="form-group">
           <div class="col-md-3 pull-right">
           <div class=" col-md-4 ">
-            <button class="btn btn-primary " type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
+            <button class="btn btn-primary " type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.terminal)">{{'query'|translate}}
             </button>
           </div>
 
           <div class="col-md-4">
             <button class="btn btn-primary" type="button"
-                    ng-click="rentalCustomerMngController.new()">{{'rentalAdd'|translate}}
+                    ng-click="minemngTerminalMngCtrl.new()">{{'新增'|translate}}
             </button>
           </div>
 
           <div class="col-md-4">
-            <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'批量导入'|translate}}
+            <button class="btn btn-primary" type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.terminal)">{{'批量增加'|translate}}
             </button>
           </div>
         </div>
         </div>
       </form>
     </div>
-    <div class="row" ng-style="rentalCustomerMngController.baseBoxContainer">
+    <div class="row" ng-style="minemngTerminalMngCtrl.baseBoxContainer">
 
       <div class="col-lg-12 table-responsive "><!--表格框-->
-        <table ng-table="rentalCustomerMngController.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="minemngTerminalMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="customer in $data">
             <td class="text-nowrap" data-title="'终端号码'|translate" sortable="'name'">{{customer.name}}</td>
             <td class="text-nowrap" data-title="'SIM卡号'|translate" sortable="'contacts'">{{customer.contacts}}</td>
@@ -76,19 +76,19 @@
             <td class="text-nowrap" data-title="'绑定车辆'|translate" sortable="'mobile'">{{customer.mobile}}</td>
             <td class="text-nowrap" data-title="'rentalOperations'|translate">
               <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="rentalCustomerMngController.updateCustomer(customer)">{{'rentalEdit'|translate}}
+                      ng-click="minemngTerminalMngCtrl.updateCustomer(customer)">{{'rentalEdit'|translate}}
               </button>
               <button type="button" class="btn btn-default btn-xs"
-                      ng-click="rentalCustomerMngController.view(customer.id)">{{'rentalView'|translate}}
+                      ng-click="minemngTerminalMngCtrl.view(customer.id)">{{'rentalView'|translate}}
               </button>
             </td>
           </tr>
         </table>
       </div>
       <div class="col-lg-12"><!--分页框-->
-        <uib-pagination total-items="rentalCustomerMngController.page.totalElements"
-                        ng-change="rentalCustomerMngController.query(rentalCustomerMngController.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="rentalCustomerMngController.pageNumber" items-per-page="rentalCustomerMngController.page.size"
+        <uib-pagination total-items="minemngTerminalMngCtrl.page.totalElements"
+                        ng-change="minemngTerminalMngCtrl.query(minemngTerminalMngCtrl.pageNumber-1,null,null,null)"
+                        max-size="5" ng-model="minemngTerminalMngCtrl.pageNumber" items-per-page="minemngTerminalMngCtrl.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
       </div>

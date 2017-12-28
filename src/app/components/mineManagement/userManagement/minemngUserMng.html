@@ -42,10 +42,10 @@
             <label class="col-md-1 control-label font-nomal">{{'入职时间'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-                <input type="text" name="entryTime" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
+                <input type="text" name="entryTime" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
                        ng-model="minemngUserMngCtrl.minemnguser.entryTime"
                        is-open="minemngUserMngCtrl.entryTimeSetting.status.opened"
-                       datepicker-options="minemngUserMngCtrl.entryTimeSetting.dateOptions"
+                       datepicker-options="minemngUserMngCtrl.dateOptions"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"
@@ -94,7 +94,7 @@
               </div>
 
               <div class="col-md-4">
-                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量导入'|translate}}
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量增加'|translate}}
                 </button>
               </div>
             </div>
@@ -108,15 +108,15 @@
             <tr ng-repeat="minemnguser in $data">
               <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
               <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
-              <td class="text-nowrap" data-title="'入职时间'|translate" sortable="'entryTime'">{{minemnguser.entryTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td class="text-nowrap" data-title="'入职时间'|translate" sortable="'entryTime'">{{minemnguser.entryTime | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
               <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"
-                        ng-click="minemngUserMngCtrl.update(minemnguser)">{{'rentalEdit'|translate}}
+                        ng-click="minemngUserMngCtrl.update(minemnguser)">{{'修改'|translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="minemngUserMngCtrl.reset(minemnguser.id)">{{'重置密码'|translate}}
+                        ng-click="minemngUserMngCtrl.updatePassword(minemnguser.id)">{{'重置密码'|translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
                         ng-click="minemngUserMngCtrl.delete(minemnguser.id)">{{'删除'|translate}}

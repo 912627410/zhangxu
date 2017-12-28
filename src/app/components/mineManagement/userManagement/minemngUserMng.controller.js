@@ -9,9 +9,11 @@
     .controller('minemngUserMngController', minemngUserMngController);
 
   /** @ngInject */
-  function minemngUserMngController($scope,$uibModal,NgTableParams,MINEMNG_USERINFOPAGE_URL,DEFAULT_MINSIZE_PER_PAGE,ROLE_URL,MINEMNG_USERINFO_URL,serviceResource,Notification,languages) {
+  function minemngUserMngController($scope,$uibModal,NgTableParams,ngTableDefaults,$confirm,MINEMNG_USERINFOPAGE_URL,MINEMNG_USERINFO_DELETE_URL,DEFAULT_MINSIZE_PER_PAGE,ROLE_URL,MINEMNG_USERINFO_URL,serviceResource,Notification,languages) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
     vm.entryTimeSetting = {
       //dt: "请选择开始日期",
@@ -35,6 +37,10 @@
 
     vm.entryTimeOpen = function ($event) {
       vm.entryTimeOpenStatus.opened = true;
+    };
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
     };
 
     //加载角色类型
@@ -63,9 +69,20 @@
         if (null != minemnguser.jobNumber && minemnguser.jobNumber != "") {
           restCallURL += "&jobNumber=" + minemnguser.jobNumber;
         }
-
+        if (null != minemnguser.name && minemnguser.name != "") {
+          restCallURL += "&name=" + minemnguser.name;
+        }
         if (null != minemnguser.entryTime && minemnguser.entryTime != "") {
-          restCallURL += "&entryTime=" + minemnguser.entryTime;
+          var startMonth = minemnguser.entryTime.getMonth() + 1;
+          var startDateFormated = minemnguser.entryTime.getFullYear() + '-' + startMonth + '-' + minemnguser.entryTime.getDate();
+            // + ' ' + minemnguser.entryTime.getHours() + ':'
+            // + minemnguser.entryTime.getMinutes() + ':' + minemnguser.entryTime.entryTimetDate.getSeconds();
+          if (restCallURL) {
+            restCallURL += "&entryTime=" + startDateFormated
+          }
+          else {
+            restCallURL += "entryTime=" + startDateFormated;
+          }
         }
       }
 
@@ -80,6 +97,8 @@
           dataset: data.content
 
         });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
 
       }, function (reason) {
         Notification.error(languages.findKey('FaGetCu'));
@@ -141,6 +160,45 @@
       });
 
 
+    };
+
+    //重置密碼
+    vm.updatePassword = function (userinfoId) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/userManagement/minemngResetPassword.html',
+        controller: 'minemngResetPasswordController as minemngResetPasswordCtrl',
+        size: 'md',
+        backdrop: false,
+        resolve: {
+          userinfoId: function () {
+            return userinfoId;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+          //console.log(selectedItem);
+      }, function () {
+      });
+    };
+
+
+  /* 删除操作
+    * @param id
+    */
+    vm.delete = function (id) {
+      $confirm({text: languages.findKey('areYouWanttoDeleteIt'), title: languages.findKey('deleteConfirmation'), ok: languages.findKey('confirm'), cancel:languages.findKey('cancel')})
+        .then(function () {
+          var restCall = MINEMNG_USERINFO_DELETE_URL + "?id=" + id;
+          var restPromise = serviceResource.restCallService(restCall, "UPDATE");
+          restPromise.then(function (data) {
+            Notification.error(languages.findKey('delSuccess'));
+            vm.query(null, null, null, null);
+          }, function (reason) {
+            Notification.error(languages.findKey('delFail'));
+          });
+        });
     };
   }
 })();
