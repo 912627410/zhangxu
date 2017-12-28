@@ -319,8 +319,29 @@
               controllerAs: 'minemngTerminalMngCtrl'
             }
           }
-        });
-
+        })
+      //车辆管理
+      .state('minemng.mineMachine', {
+        url: '/machinemng',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/machineManagement/minemngMachine.html',
+            controller: 'minemngMachineController',
+            controllerAs: 'minemngMachineCtrl'
+          }
+        }
+      })
+     //车队管理
+    .state('minemng.mineMachineFleet', {
+      url: '/mineMachineFleet',
+      views: {
+        'rightside@minemng': {
+          templateUrl: 'app/components/mineManagement/machineManagement/minemngFleet.html',
+          controller: 'minemngFleetController',
+          controllerAs: 'minemngFleetCtrl'
+        }
+      }
+     });
 
 
     //物联网系统
