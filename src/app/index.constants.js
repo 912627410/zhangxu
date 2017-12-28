@@ -21,6 +21,10 @@
     .constant('UPDATE_FILE_DATA_BY', 'createTime,desc')   //读取升级文件时的默认排序规则
     .constant('UPDATE_RECORD_SORT_BY', 'recordTime,desc') //读取设备升级记录时的默认排序规则
     .constant('WEBSOCKET_URL', 'ws://'+ WEBSOCKET_DOMAIN_NAME +':8085/')  //WebSocket 请求地址
+    .constant('MQTT_CLIENT_HOST', 'localhost')
+    .constant('MQTT_CLIENT_PORT', 15675)
+    .constant('MQTT_CLIENT_USERNAME', 'guest')
+    .constant('MQTT_CLIENT_PASSWORD', 'guest')
 
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder,AMap.MarkerClusterer')
@@ -370,6 +374,16 @@
     .constant('RENTAL_PROFIT_DATA_URL', SERVER_BASE_URL + 'rental/asset/getProfitsDetails')   //各时间段利润及同比
     .constant('RENTAL_ORDERMACHINETYPE_URL', SERVER_BASE_URL + 'rental/orderMachineType/orderMachineType')   //各时间段利润及同比
 
+
+    .constant('MINEMNG_DISPATCH_SEND', SERVER_BASE_URL + 'minemngDispatch/send')   //发送调度命令
+    .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
+    .constant('MINEMNG_SEND_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/sendTotalDispatch')   //下发总调度
+    .constant('MINEMNG_WORKFACE_LIST', SERVER_BASE_URL + 'minemngWorkface/getWorkfaceList')   //获取工作面列表
+    .constant('MINEMNG_DUMP_FIELD_LIST', SERVER_BASE_URL + 'minemngDumpField/getDumpFieldList')   //获取排土场列表
+    .constant('MINEMNG_FLEET_LIST', SERVER_BASE_URL + 'minemngFleet/getFleetList')   //获取车队列表
+    .constant('MINEMNG_WORK_SHIFT_LIST', SERVER_BASE_URL + 'minemngDispatch/getWorkShiftList')   //获取车队列表
+
+    .constant('MINEMNG_CHECK_POINT', SERVER_BASE_URL + 'minemngCheckPoint/checkPoint')   //check point
 
 
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势

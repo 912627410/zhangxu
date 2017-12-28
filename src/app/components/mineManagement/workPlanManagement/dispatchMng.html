@@ -1,0 +1,144 @@
+<section class="content-header" style="overflow: hidden">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>
+    <li class="active">调度管理</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal" style="overflow: hidden">
+
+  <uib-tabset active="active" type="tabs">
+       <uib-tab index="0" active="true" heading="总调度">
+         <div style="padding: 10px;">
+           <div class="row form-group text-right">
+             <div class="col-md-1">
+               <label class="control-label">车队</label>
+             </div>
+             <div class="col-md-2">
+               <select name="fleet" class="form-control"
+                       ng-model="dispatchMngCtrl.totalDispatch.fleet"
+                       ng-options="fleets.id as fleets.name for fleets in dispatchMngCtrl.fleetList"
+                       ng-change="dispatchMngCtrl.getTeamList(dispatchMngCtrl.totalDispatch.fleet)">
+                 <option value="">{{'pleaseSelect'|translate}}</option>
+               </select>
+             </div>
+             <div class="col-md-1">
+               <label class="control-label">小组</label>
+             </div>
+             <div class="col-md-2">
+               <select name="fleet" class="form-control"
+                       ng-model="dispatchMngCtrl.totalDispatch.team"
+                       ng-options="teams.id as teams.name for teams in dispatchMngCtrl.teamList">
+                 <option value="">{{'pleaseSelect'|translate}}</option>
+               </select>
+             </div>
+             <div class="col-md-1">
+               <label class="control-label">班次</label>
+             </div>
+             <div class="col-md-2">
+               <select name="workShift" class="form-control"
+                       ng-model="dispatchMngCtrl.totalDispatch.workShift"
+                       ng-options="workShifts.value as workShifts.desc for workShifts in dispatchMngCtrl.workShiftList">
+                 <option value="">{{'pleaseSelect'|translate}}</option>
+               </select>
+             </div>
+             <div class="col-md-3 text-right">
+               <button class="btn btn-default" ng-click="dispatchMngCtrl.resetTotalDispatch()">重置</button>
+               <button class="btn btn-primary" ng-click="dispatchMngCtrl.queryTotalDispatch(null, null, null)">查询</button>
+             </div>
+           </div>
+           <div class="row form-group text-right">
+             <div class="col-md-1">
+               <label class="control-label">作业面</label>
+             </div>
+             <div class="col-md-2">
+               <select name="workface" class="form-control"
+                       ng-model="dispatchMngCtrl.totalDispatch.workface"
+                       ng-options="workfaces.id as workfaces.name for workfaces in dispatchMngCtrl.workfaceList">
+                 <option value="">{{'pleaseSelect'|translate}}</option>
+               </select>
+             </div>
+             <div class="col-md-1">
+               <label class="control-label">排土场</label>
+             </div>
+             <div class="col-md-2">
+               <select name="dumpField" class="form-control"
+                       ng-model="dispatchMngCtrl.totalDispatch.dumpField"
+                       ng-options="dumpFields.id as dumpFields.name for dumpFields in dispatchMngCtrl.dumpFieldList">
+                 <option value="">{{'pleaseSelect'|translate}}</option>
+               </select>
+             </div>
+           </div>
+           <div class="row form-group" style="padding-top: 20px;">
+             <div class="btn-group col-md-6" style="line-height: 34px;">
+               <span style="font-size: 18px;font-weight: bold;">分配列表</span>
+               <span>{{'totalNumberOfRecords'|translate}} {{dispatchMngCtrl.totalDispatchPage.totalElements}}</span>
+             </div>
+             <div class="col-md-6 text-right">
+               <button class="btn btn-warning" ng-click="dispatchMngCtrl.addTotalDispatch()">增加</button>
+             </div>
+           </div>
+
+           <div class="table-responsive mailbox-messages">
+             <table class="table table-condensed table-bordered table-striped text-nowrap">
+               <thead>
+                 <tr class="table-center">
+                   <th>车队</th>
+                   <th>小组</th>
+                   <th>工作面</th>
+                   <th>排土场</th>
+                   <th>班次</th>
+                   <th>记录时间</th>
+                   <th>状态</th>
+                   <th>操作</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr ng-repeat="totalDispatchList in dispatchMngCtrl.totalDispatchList track by $index">
+                   <td>{{totalDispatchList.fleetName}}</td>
+                   <td>{{totalDispatchList.teamName}}</td>
+                   <td>{{totalDispatchList.workfaceName}}</td>
+                   <td>{{totalDispatchList.dumpFieldName}}</td>
+                   <td>{{totalDispatchList.workShiftDesc}}</td>
+                   <td>{{totalDispatchList.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                   <td ng-if="totalDispatchList.status != 1">未发布</td>
+                   <td ng-if="totalDispatchList.status == 1">已发布</td>
+                   <td>
+                     <button class="btn btn-sm btn-danger" ng-click="dispatchMngCtrl.deleteTotalDispatch(totalDispatchList.id)">删除</button>
+                     <button class="btn btn-sm btn-primary" ng-click="dispatchMngCtrl.sendTotalDispatch(totalDispatchList.id)">发布</button>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+           <div class="row">
+             <div class="col-md-12">
+               <uib-pagination total-items="dispatchMngCtrl.totalDispatchPage.totalElements"
+                               ng-change="dispatchMngCtrl.queryTotalDispatch(dispatchMngCtrl.totalDispatch_pagenumber-1,null,sort)" max-size="10"
+                               ng-model="dispatchMngCtrl.totalDispatch_pagenumber"
+                               items-per-page="dispatchMngCtrl.totalDispatchPage.size"
+                               class="pagination-sm" boundary-links="true" rotate="false"
+                               first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+             </div>
+           </div>
+         </div>
+
+       </uib-tab>
+       <uib-tab index="2" heading="临时调度">
+
+       </uib-tab>
+       <!--<uib-tab index="3" select="alertMe()">-->
+           <!--<uib-tab-heading>-->
+               <!--<i class="glyphicon glyphicon-bell"></i> Alert!-->
+           <!--</uib-tab-heading>-->
+           <!--内容部分-->
+       <!--</uib-tab>-->
+   </uib-tabset>
+
+
+</section>
+

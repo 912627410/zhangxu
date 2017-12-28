@@ -42,6 +42,23 @@
       </li>
 
       <li class="treeview">
+        <a ng-click="workPlanMng=!workPlanMng" href="" >
+          <i class="fa ion-clipboard"></i>
+          <span>工作计划与调度</span>
+          <span class="glyphicon pull-right"
+                ng-class="workPlanMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: workPlanMng}">
+          <li>
+            <a ui-sref="minemng.dispatchMng">
+              <i class="fa ion-ios-location"></i> <span>调度管理</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview">
         <a ng-click="basicInfoMng=!basicInfoMng" href="" >
           <i class="fa ion-clipboard"></i>
           <span>基本信息管理</span>
@@ -53,6 +70,11 @@
           <li>
             <a ui-sref="minemng.minemngUserMng">
               <i class="fa ion-ios-location"></i> <span>人员基本信息</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="minemng.minemngCheckPointMng">
+              <i class="fa ion-ios-location"></i> <span>Check Point</span>
             </a>
           </li>
         </ul>

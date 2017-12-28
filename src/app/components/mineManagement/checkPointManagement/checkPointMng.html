@@ -1,0 +1,70 @@
+<section class="content-header" style="overflow: hidden">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>
+    <li class="active">Check Point</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal" style="overflow: hidden">
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">编号</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="name" class="form-control" ng-model="checkPointMngCtrl.queryName" placeholder="请录入..."/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">工作半径</label>
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" ng-model="checkPointMngCtrl.queryRadius">
+        <option value="">请选择...</option>
+        <option value="10">10米</option>
+        <option value="20">20米</option>
+        <option value="30">30米</option>
+        <option value="40">40米</option>
+        <option value="50">50米</option>
+      </select>
+    </div>
+    <div class="col-md-6 text-right">
+      <button class="btn btn-primary" type="button" ng-click="checkPointMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="checkPointMngCtrl.query()" style="margin: 0 12px;">{{'rentalQuery'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="table-responsive mailbox-messages">
+    <table class="table table-condensed table-bordered table-striped text-nowrap">
+      <caption class="text-right">
+        <button class="btn btn-primary" type="button" style="margin: 0 12px;" ng-click="checkPointMngCtrl.addCheckPoint()">增加</button>
+      </caption>
+      <!--<caption style="font-size: 20px;color: #000;">分配列表</caption>-->
+      <thead>
+      <tr  class="table-center">
+        <th >编号</th>
+        <th >经度</th>
+        <th >纬度</th>
+        <th >工作半径</th>
+        <th >更新时间</th>
+        <th >操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="checkPointList in checkPointMngCtrl.checkPointList track by $index">
+        <td>{{checkPointList.name}}</td>
+        <td>{{checkPointList.longitudeNum}}</td>
+        <td>{{checkPointList.latitudeNum}}</td>
+        <td>{{checkPointList.radius}}米</td>
+        <td>{{checkPointList.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary">修改</button>
+          <button class="btn btn-sm btn-danger" ng-click="dispatchMngCtrl.deleteCheckPoint(checkPointList.id)">删除</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

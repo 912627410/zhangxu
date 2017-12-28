@@ -254,6 +254,17 @@
           }
         }
       })
+      //调度管理
+      .state('minemng.dispatchMng', {
+        url: '/dispatchMng',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/workPlanManagement/dispatchMng.html',
+            controller: 'dispatchMngController',
+            controllerAs: 'dispatchMngCtrl'
+          }
+        }
+      })
       //趟数
       .state('minemng.minemngTrip', {
         url: '/minemngTrip',
@@ -286,7 +297,19 @@
             controllerAs: 'minemngUserMngCtrl'
           }
         }
-      });
+      })
+    //Check Point
+      .state('minemng.minemngCheckPointMng', {
+        url: '/minemngCheckPointMng',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/checkPointManagement/checkPointMng.html',
+            controller: 'checkPointMngController',
+            controllerAs: 'checkPointMngCtrl'
+          }
+        }
+      })
+    ;
 
 
 

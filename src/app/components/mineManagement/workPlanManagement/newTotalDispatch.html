@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h3 class="modal-title">新增总调度</h3>
+</div>
+
+<form name="newCheckPoint" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车队</label>
+        <div class="col-sm-10">
+          <select name="fleet" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.fleet"
+                  ng-options="fleets.id as fleets.name for fleets in newTotalDispatchCtrl.fleetList"
+                  ng-change="newTotalDispatchCtrl.getTeamList(newTotalDispatchCtrl.newTotalDispatch.fleet)">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">小组</label>
+        <div class="col-sm-10">
+          <select name="team" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.team"
+                  ng-options="teams.id as teams.name for teams in newTotalDispatchCtrl.teamList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">工作面</label>
+        <div class="col-sm-10">
+          <select name="workface" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.workface"
+                  ng-options="workfaces.id as workfaces.name for workfaces in newTotalDispatchCtrl.workfaceList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">排土场</label>
+        <div class="col-sm-10">
+          <select name="dumpField" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.dumpField"
+                  ng-options="dumpFields.id as dumpFields.name for dumpFields in newTotalDispatchCtrl.dumpFieldList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">班次</label>
+        <div class="col-sm-10">
+          <select name="workShift" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.workShift"
+                  ng-options="workShifts.value as workShifts.desc for workShifts in newTotalDispatchCtrl.workShiftList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="newCheckPoint" ng-click="newTotalDispatchCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newTotalDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+</form>

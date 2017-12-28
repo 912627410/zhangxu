@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h3 class="modal-title">新增Check Point</h3>
+</div>
+
+<form name="newCheckPoint" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">编号</label>
+        <div class="col-sm-10">
+          <input type="text" id="name" class="form-control" ng-model="newCheckPointCtrl.newCheckPoint.name" name="name" validator="required" placeholder="请录入..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="longitudeNum" class="col-sm-2 control-label">经度</label>
+        <div class="col-sm-10">
+          <input type="text" id="longitudeNum" class="form-control" ng-model="newCheckPointCtrl.newCheckPoint.longitudeNum" name="longitudeNum" validator="required" placeholder="请录入..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="latitudeNum" class="col-sm-2 control-label">纬度</label>
+        <div class="col-sm-10">
+          <input type="text" id="latitudeNum" class="form-control" ng-model="newCheckPointCtrl.newCheckPoint.latitudeNum" name="latitudeNum" validator="required" placeholder="请录入..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="radius" class="col-sm-2 control-label">工作半径</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="radius" ng-model="newCheckPointCtrl.newCheckPoint.radius">
+            <option value="">请选择...</option>
+            <option value="10">10米</option>
+            <option value="20">20米</option>
+            <option value="30">30米</option>
+            <option value="40">40米</option>
+            <option value="50">50米</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="newCheckPoint" ng-click="newCheckPointCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newCheckPointCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+</form>

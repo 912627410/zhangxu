@@ -1,0 +1,148 @@
+syntax = "proto3";
+option java_package = "com.nvrcloud.android.presentation.model.im";
+option java_outer_classname = "MineMqttMessageProto";
+
+//矿山管理MQTT通信消息体
+message MineMqttMessage {
+    //MQTT消息类型
+    enum MessageType {
+        MQTT_MINE_MESSAGE_NOTICE = 0; //通知
+        MQTT_MINE_MESSAGE_FEEDBACK = 1; //反馈
+        MQTT_MINE_MESSAGE_CHAT = 2; //单聊
+        MQTT_MINE_MESSAGE_GROUPCHAT = 3; //群聊
+    };
+    //操作类型
+    enum OperationType {
+        MQTT_MINE_OPERATION_STOWAGE_WAIT = 0; //等待装车
+        MQTT_MINE_OPERATION_STOWAGE_START = 1; //开始装车
+        MQTT_MINE_OPERATION_STOWAGE_COMPLETED = 2; //装满
+        MQTT_MINE_OPERATION_STORAGE_CANCEL = 3; //取消装车
+        MQTT_MINE_OPERATION_TOTAL_DISPATCH = 4; //总调度
+        MQTT_MINE_OPERATION_TEMP_DISPATCH = 5; //临时调度
+        MQTT_MINE_OPERATION_MOVE = 6; //调整位置
+        MQTT_MINE_OPERATION_SPEED_ALARM = 7; //超速报警
+        MQTT_MINE_OPERATION_REPAIR = 8; //报修
+        MQTT_MINE_OPERATION_GASOLINE_REQUEST = 9; //请求加油
+        MQTT_MINE_OPERATION_GASOLINE_START = 10; //开始加油
+        MQTT_MINE_OPERATION_GASOLINE_END = 11; //加油完毕
+        MQTT_MINE_OPERATION_TIME_OUT = 12; //超时提醒
+        MQTT_MINE_OPERATION_MAINTENANCE = 13; //保养提醒
+        MQTT_MINE_OPERATION_INVITE_CHAT = 14; //邀请群聊
+    };
+    //消息发送方
+    IMContract from = 1;
+    //接收方类型
+    ContractType contractType = 2;
+    //MQTT消息类型
+    MessageType type = 3;
+    //操作类型
+    OperationType operation = 4;
+    //时间
+    int64 time = 5;
+    //消息内容
+    IMMessage body = 6;
+}
+//接收方类型
+enum ContractType {
+    MQTT_MINE_USER = 0; //人
+    MQTT_MINE_DEVICE = 1; //车
+};
+//即时消息联系人
+message IMContract {
+    //联系人ID
+    int64 userId = 1;
+    //联系人姓名
+    string userName = 2;
+    //头像
+    string avatar = 3;
+}
+
+//即时通讯消息实体
+message IMMessage {
+    //聊天类型：Chat：单聊 GroupChat群聊
+    enum ChatType {
+        Chat = 0;
+        GroupChat = 1;
+    };
+    //消息类型：文字 图片 语音 文件
+    enum Type {
+        TXT = 0;
+        IMAGE = 1;
+        VOICE = 2;
+        FILE = 3;
+    };
+    //消息方向 SEND：发送  RECEIVE：接收
+    enum Direct {
+        SEND = 0;
+        RECEIVE = 1;
+    };
+    //消息发送状态
+    enum Status {
+        SUCCESS = 0;
+        FAIL = 1;
+        INPROGRESS = 2;
+        CREATE = 3;
+    };
+    //消息类型
+    Type type = 1;
+    //消息来源
+    Direct direct = 2;
+    //消息发送状态
+    Status status = 3;
+    //聊天类型
+    ChatType chatType = 4;
+    //消息发送方
+    IMContract from = 5;
+    //消息接收方
+    IMContract to = 6;
+    //消息内容
+    MessageBody message = 7;
+    string msgId = 8;
+    //通知内容
+    NoticeBody noticeBody = 9;
+    //是否回执
+    bool isAcked = 10;
+    //是否送达
+    bool isDelivered = 11;
+    //进度
+    int32 progress = 12;
+    //未读
+    bool unread = 13;
+    //离线
+    bool offline = 14;
+    //消息时间
+    int64 msgTime = 15;
+    //群聊 群组ID
+    string groupId = 16;
+    // 群名称
+    string groupName = 17;
+}
+
+message MessageBody {
+    //文件名称
+    string fileName = 1;
+    //文件路径
+    string filePath = 2;
+    //文件大小
+    string fileLength = 3;
+    //内容描述
+    string description = 4;
+    //内容字节数组
+    bytes content = 5;
+    //语音时长
+    int64 voiceTime = 6;
+}
+message NoticeBody {
+    enum ClassOrder {
+        DAY = 0;
+        NIGHT = 1;
+    }
+    //调度到某队
+    int32 newTeam = 1;
+    //调度到某组
+    int32 newGroup = 2;
+    //调度到某工作面
+    string newWorkPlace = 3;
+    //白班/夜班
+    ClassOrder classOrder = 4;
+}
