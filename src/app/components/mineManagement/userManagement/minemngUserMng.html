@@ -1,19 +1,142 @@
-<section class="content-header" style="overflow: hidden">
-  <h1>
-    <small></small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>
-    <li class="active">人员基本信息</li>
-  </ol>
-</section>
+<!--<section class="content-header" style="overflow: hidden">-->
+  <!--<h1>-->
+    <!--<small></small>-->
+  <!--</h1>-->
+  <!--<ol class="breadcrumb">-->
+    <!--<li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>-->
+    <!--<li class="active">人员基本信息</li>-->
+  <!--</ol>-->
+<!--</section>-->
 
-<!-- Main content -->
-<section class="content form-horizontal" style="overflow: hidden">
+<!--&lt;!&ndash; Main content &ndash;&gt;-->
+<!--<section class="content form-horizontal" style="overflow: hidden">-->
 
-  <div style="font-size: 30px;">人员基本信息人员基本信息人员基本信息人员基本信息</div>
+  <!--<div style="font-size: 30px;">人员基本信息人员基本信息人员基本信息人员基本信息</div>-->
 
-  <button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.query(minemngUserMngCtrl.data)">确定</button>
+  <!--<button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.query(minemngUserMngCtrl.data)">确定</button>-->
 
-</section>
+<!--</section>-->
+
+  <div id="currentState" class="container-fluid">
+    <section class="content-header">
+      <h1>
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>{{'首页'| translate}}</a></li>
+        <li class="active">{{'基本信息管理'| translate}}</li>
+        <li class="active">{{'人员基本信息'| translate}}</li>
+      </ol>
+    </section>
+    <div class="container-fluid table-wrapper" style="margin-top: 15px">
+      <div class="row info-box-container">
+        <form name="queryForm" class="form-horizontal" role="form">
+
+          <div class="form-group">
+            <label class="col-md-1 control-label font-nomal">{{'工号'|translate}}:</label>
+            <div class="col-md-2">
+              <input type="text" name="jobNumber" class="form-control"  ng-model="minemngUserMngCtrl.minemnguser.jobNumber"
+                     placeholder="{{'输入工号'|translate}}"/>
+            </div>
+
+            <label class="col-md-1 control-label font-nomal">{{'入职时间'|translate}}:</label>
+            <div class="col-md-2">
+              <p class="input-group">
+                <input type="text" name="entryTime" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="minemngUserMngCtrl.minemnguser.entryTime"
+                       is-open="minemngUserMngCtrl.entryTimeSetting.status.opened"
+                       datepicker-options="minemngUserMngCtrl.dateOptions"
+                       current-text="{{'today'|translate}}"
+                       clear-text="{{'cleanUp'|translate}}"
+                       close-text="{{'close'|translate}}"
+                       message-id="bootstrap" readonly/>
+
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="minemngUserMngCtrl.entryTimeSetting.open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+              </p>
+              <span id="bootstrap"></span>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label class="col-md-1 control-label font-nomal">{{'姓名'|translate}}:</label>
+            <div class="col-md-2">
+              <input type="text" name="name" class="form-control"  ng-model="minemngUserMngCtrl.minemnguser.name"
+                     placeholder="{{'输入姓名'|translate}}" />
+            </div>
+            <label class="col-md-1 control-label font-nomal">{{'角色类型'|translate}}:</label>
+            <div class="col-md-2">
+              <ui-select name="roleType" ng-model="minemngUserMngCtrl.roleType" theme="bootstrap"
+                         ng-disabled="disabled" validator="required">
+                <ui-select-match allow-clear="true" placeholder="{{'选择角色类型'|translate}}">
+                  {{$select.selected.name|translate}}
+                </ui-select-match>
+                <ui-select-choices repeat="userRoleType in minemngUserMngCtrl.userRoleTypeList">
+                  <div ng-bind-html="userRoleType.name | highlight: $select.search |translate"></div>
+                </ui-select-choices>
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="col-md-3">
+              <div class=" col-md-4 ">
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'query'|translate}}
+                </button>
+              </div>
+
+              <div class="col-md-4">
+                <button class="btn btn-primary" type="button"
+                        ng-click="minemngUserMngCtrl.new()">{{'新增'|translate}}
+                </button>
+              </div>
+
+              <div class="col-md-4">
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量增加'|translate}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row" ng-style="minemngUserMngCtrl.baseBoxContainer">
+
+        <div class="col-lg-12 table-responsive "><!--表格框-->
+          <table ng-table="minemngUserMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="minemnguser in $data">
+              <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
+              <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
+              <td class="text-nowrap" data-title="'入职时间'|translate" sortable="'entryTime'">{{minemnguser.entryTime | date:'yyyy-MM-dd'}}</td>
+              <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
+              <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
+              <td class="text-nowrap" data-title="'rentalOperations'|translate">
+                <button type="button" class="btn btn-danger btn-xs"
+                        ng-click="minemngUserMngCtrl.update(minemnguser)">{{'修改'|translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="minemngUserMngCtrl.updatePassword(minemnguser.id)">{{'重置密码'|translate}}
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="minemngUserMngCtrl.delete(minemnguser.id)">{{'删除'|translate}}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-12"><!--分页框-->
+
+          <uib-pagination total-items="minemngUserMngCtrl.page.totalElements"
+                          ng-change="minemngUserMngCtrl.query(minemngUserMngCtrl.pageNumber-1,null,null,null)"
+                          max-size="5" ng-model="minemngUserMngCtrl.pageNumber" items-per-page="minemngUserMngCtrl.page.size"
+                          class="pagination-sm" boundary-links="true" rotate="false"
+                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--currentState end-->
+
+
 
