@@ -1,5 +1,5 @@
 /* global malarkey:false, moment:false */
-(function () {
+(function() {
   'use strict';
   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
   var WEBSOCKET_DOMAIN_NAME = 'localhost';
