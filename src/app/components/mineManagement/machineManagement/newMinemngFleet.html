@@ -3,22 +3,22 @@
   <h3 class="modal-title">{{'新增'|translate}}</h3>
 </div>
 
-<form name="newOrgForm" class="form-horizontal" ng-submit="addMineMachineFleetCtrl.ok(addMineMachineFleetCtrl.newOrg)">
+<form name="newOrgForm" class="form-horizontal" ng-submit="addMineFleetCtrl.ok(addMineFleetCtrl.newOrg)">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
         <label class="col-sm-4 control-label">{{'所属组织' | translate}}:</label>
         <div class="col-sm-8">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="{{'所属组织' | translate}}" ng-model="addMineMachineFleetCtrl.selectedOrg.label" name="org" readonly required />
+            <input type="text" id="org" class="form-control" placeholder="{{'所属组织' | translate}}" ng-model="addMineFleetCtrl.selectedOrg.label" name="org" readonly required />
             <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="addMineMachineFleetCtrl.openOrgTree()">
+                  <button type="button" class="btn btn-default" ng-click="addMineFleetCtrl.openOrgTree()">
                     <i class="fa fa-sitemap"></i>
                   </button>
                 </span>
           </p>
           <div ng-controller="orgController as orgCtrl">
-            <div style="background: #FFFFDF;opacity: 1;position: absolute;z-index: 110009;display: block;width: 90%;" ng-show="addMineMachineFleetCtrl.showOrgTree">
+            <div style="background: #FFFFDF;opacity: 1;position: absolute;z-index: 110009;display: block;width: 90%;" ng-show="addMineFleetCtrl.showOrgTree">
               <abn-tree tree-data="orgCtrl.my_data" tree-control="orgCtrl.my_tree" on-select="orgCtrl.my_tree_handler(branch)" expand-level="4"></abn-tree>
             </div>
           </div>
@@ -27,13 +27,13 @@
       <div class="form-group">
         <label class="col-sm-4 control-label">{{'组织名字' | translate}}:</label>
         <div class="col-sm-8">
-          <input type="text" id="name" class="form-control" ng-model="addMineMachineFleetCtrl.newOrg.name" placeholder="insert your org name"/>
+          <input type="text" id="name" class="form-control" ng-model="addMineFleetCtrl.newOrg.name" placeholder="insert your org name"/>
         </div>
       </div>
       <div class="form-group">
         <label for="addMineMachine" class="col-sm-4 control-label">{{'添加车辆'|translate}}</label>
         <div class="col-sm-8">
-        <ui-select id="addMineMachine" name="addMineMachine" ng-model="addMineMachineFleetCtrl.newOrg.label" theme="bootstrap"
+        <ui-select id="addMineMachine" name="addMineMachine" ng-model="addMineFleetCtrl.newOrg.label" theme="bootstrap"
                    ng-disabled="disabled">
           <ui-select-match allow-clear="true" placeholder="{{'addMineMachine'|translate}}">{{$select.selected.stateDesc}}</ui-select-match>
           <ui-select-choices  repeat="addMineMachine.id as addMineMachine in addMineMachine.machineStateList " >
@@ -41,7 +41,7 @@
           </ui-select-choices>
         </ui-select>
         <!--<div class="col-sm-8">
-          <input type="text" id="label" class="form-control" ng-model="addMineMachineFleetCtrl.newOrg.label" />
+          <input type="text" id="label" class="form-control" ng-model="addMineFleetCtrl.newOrg.label" />
         </div>-->
         </div>
       </div>
@@ -50,6 +50,6 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" type="submit">{{'confirm'|translate}}</button>
-    <button class="btn btn-warning" type="button" ng-click="addMineMachineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="addMineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

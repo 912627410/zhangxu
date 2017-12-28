@@ -304,8 +304,8 @@
       views: {
         'rightside@minemng': {
           templateUrl: 'app/components/mineManagement/machineManagement/minemngFleet.html',
-          controller: 'minemngMachineFleetController',
-          controllerAs: 'minemngMachineFleetCtrl'
+          controller: 'minemngFleetController',
+          controllerAs: 'minemngFleetCtrl'
         }
       }
      });

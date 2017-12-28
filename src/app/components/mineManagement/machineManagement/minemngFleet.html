@@ -12,20 +12,20 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="input-group input-group-sm">
-        <input type="text" class="form-control" ng-model="minemngMachineFleetCtrl.searchText" placeholder="Search" >
+        <input type="text" class="form-control" ng-model="minemngFleetCtrl.searchText" placeholder="Search" >
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="minemngMachineFleetCtrl.search(minemngMachineFleetCtrl.searchText)">{{'search'|translate}}</button>
-          <button class="btn btn-default" type="button" ng-click="minemngMachineFleetCtrl.reset(minemngMachineFleetCtrl.searchText)">{{'reset'|translate}}</button>
+          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.search(minemngFleetCtrl.searchText)">{{'search'|translate}}</button>
+          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.reset(minemngFleetCtrl.searchText)">{{'reset'|translate}}</button>
         </span>
       </div>
     </div>
     <div class="col-md-7 pull-right" >
 
-      <div class="btn btn-warning" type="button"  ng-click="minemngMachineFleetCtrl.updateOrg()">{{'alter'|translate}}</div>
+      <div class="btn btn-warning" type="button"  ng-click="minemngFleetCtrl.updateOrg()">{{'alter'|translate}}</div>
       <span>&nbsp;</span>
-      <div class="btn btn-danger"  type="button"  ng-click="minemngMachineFleetCtrl.addMineMachineFleet()">{{'add'|translate}}</div>
+      <div class="btn btn-danger"  type="button"  ng-click="minemngFleetCtrl.addMineMachineFleet()">{{'add'|translate}}</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary" type="button" ng-click="minemngMachineFleetCtrl.MachineTypeMng(minemngMachineFleetCtrl.selectedOrg,'lg')">{{'manageVehicleType'|translate}}</div>
+      <div class="btn btn-primary" type="button" ng-click="minemngFleetCtrl.MachineTypeMng(minemngFleetCtrl.selectedOrg,'lg')">{{'manageVehicleType'|translate}}</div>
     </div>
 
   </div>
@@ -33,9 +33,9 @@
     <div class="col-md-5"  >
       <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 500; display: block; width: 380px;  height:820px;">
         <div style="padding-top: 10px;">
-          <abn-tree tree-data="minemngMachineFleetCtrl.fleet_data"
+          <abn-tree tree-data="minemngFleetCtrl.fleet_data"
                     tree-control="treeController"
-                    on-select="minemngMachineFleetCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                    on-select="minemngFleetCtrl.my_tree_handler(branch); $event.stopPropagation();"
                     expand-level="2"></abn-tree>
         </div>
       </div>
@@ -51,32 +51,32 @@
         <tbody>
         <tr>
           <td>{{'所属车队' | translate}}:</td>
-          <td>{{minemngMachineFleetCtrl.selectedParentOrg}}</td>
+          <td>{{minemngFleetCtrl.fleetName}}</td>
         </tr>
         <tr>
           <td>{{'所属小组' | translate}}:</td>
-          <td>{{minemngMachineFleetCtrl.selectedOrg.label}}</td>
+          <td>{{minemngFleetCtrl.selectedParentObject}}</td>
         </tr>
 
         <tr>
           <td>{{'车辆信息'|translate}}:</td>
           <td>
-          <span ng-repeat="machineType in minemngMachineFleetCtrl.machineType">
+          <span ng-repeat="machineType in minemngFleetCtrl.machineType">
           <span class="label label-info">{{machineType.typeName}}<span>&nbsp;</span></span>
           </span>
           </td>
         </tr>
-        <tr ng-show="minemngMachineFleetCtrl.isShow">
+        <tr ng-show="minemngFleetCtrl.isShow">
           <td>{{'legalRepresentative' | translate}}:</td>
-          <td>{{minemngMachineFleetCtrl.selectedOrg.org_legalRepresentative}}</td>
+          <td>{{minemngFleetCtrl.selectedOrg.org_legalRepresentative}}</td>
         </tr>
-        <tr ng-show="minemngMachineFleetCtrl.isShow">
+        <tr ng-show="minemngFleetCtrl.isShow">
           <td>{{'tellPhoneNumber' | translate}}:</td>
-          <td>{{minemngMachineFleetCtrl.selectedOrg.orgTellPhone}}</td>
+          <td>{{minemngFleetCtrl.selectedOrg.orgTellPhone}}</td>
         </tr>
-        <tr ng-show="minemngMachineFleetCtrl.isShow">
+        <tr ng-show="minemngFleetCtrl.isShow">
           <td>{{'fax' | translate}}:</td>
-          <td>{{minemngMachineFleetCtrl.selectedOrg.orgFax}}</td>
+          <td>{{minemngFleetCtrl.selectedOrg.orgFax}}</td>
         </tr>
         </tbody>
       </table>

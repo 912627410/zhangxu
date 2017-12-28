@@ -7,16 +7,17 @@
 
   angular
     .module('GPSCloud')
-    .controller('minemngMachineFleetController', minemngMachineFleetCtrl);
+    .controller('minemngFleetController', minemngFleetCtrl);
 
   /** @ngInject */
-  function minemngMachineFleetCtrl($rootScope,$scope, $uibModal, languages,GET_MINE_MACHINE_FLEET, Notification, serviceResource,$window , DEFAULT_SIZE_PER_PAGE,MINE_MACHINE_FLEET,ORG_ID_URL,USER_MACHINE_TYPE_URL) {
+  function minemngFleetCtrl( $uibModal,GET_MINE_MACHINE_FLEET, Notification, serviceResource,MINE_MACHINE_FLEET) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedObject = '';
     vm.selectedParentObject = '';
     vm.searchText = '';     //搜索的数据
     vm.fleet_data = [];
+    vm.fleetName='';
     vm.selectedArray = [];
     vm.newBtnShow = true;
 
@@ -61,16 +62,20 @@
     //选中组织事件
     vm.my_tree_handler = function (branch) {
       vm.selectedObject = branch;
-      if(branch.level == 3) {
-        vm.newBtnShow = false;
-      } else {
-        vm.newBtnShow = true;
-      }
       var restCallURL = MINE_MACHINE_FLEET;
-      restCallURL += "?id=" + vm.selectedObject.parentId;
+      restCallURL += "?id=" + vm.selectedObject.id;
       var dataPromis = serviceResource.restCallService(restCallURL, "GET");
       dataPromis.then(function (data) {
-        vm.selectedParentObject = data;
+        if(0!=data.parentId){
+          vm.selectedParentObject = data.name;
+        }else {
+          var restCallURL = MINE_MACHINE_FLEET;
+          restCallURL += "?id=" + vm.selectedObject.id;
+          var dataPromis = serviceResource.restCallService(restCallURL, "GET");
+          dataPromis.then(function (data) {
+            vm.fleetName=data.name;
+          });
+        }
         vm.selectedArray[data.level - 1] = data;
       });
     };
@@ -122,18 +127,14 @@
       }
     };
 
+    //新增
     vm.addMineMachineFleet = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/mineManagement/machineManagement/newMinemngFleet.html',
-        controller: 'newMineMachinemngController as newMineMachinemngCtrl',
+        controller: 'addMineFleetController as addMineFleetCtrl',
         size: 'sx',
-        backdrop: false,
-        resolve: {
-          selectedObject: function () {
-            return vm.selectedObject;
-          }
-        }
+        backdrop: false
       });
       modalInstance.result.then(function () {
         vm.reset();
@@ -146,6 +147,7 @@
       vm.searchText = "";
       vm.selectedObject = '';
       vm.selectedParentObject = '';
+      vm.fleetName='';
       vm.init();
     };
     vm.init()

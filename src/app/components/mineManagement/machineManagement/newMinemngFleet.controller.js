@@ -5,11 +5,11 @@
 
 (function(){
   'use strict'
-  angular.module('GPSCloud').controller('addMineMachineFleetController',addMineMachineFleetCtrl);
+  angular.module('GPSCloud').controller('addMineFleetController',addMineFleetCtrl);
 
-  function addMineMachineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,selectedOrg) {
+  function addMineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification) {
     var vm= this;
-    vm.selectedOrg=selectedOrg;
+
     vm.ok= function(newOrg){
       if(vm.selectedOrg==null){
         Notification.error("添加组织失败: 请选择上级部门!");
@@ -45,7 +45,7 @@
       vm.selectedOrg = data;
     })
     vm.cancel=function(){
-      vm.selectedOrg = selectedOrg;
+
       $uibModalInstance.dismiss('cancel');
     }
   }
