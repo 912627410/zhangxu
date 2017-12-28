@@ -1,8 +1,8 @@
 /* global malarkey:false, moment:false */
-(function() {
+(function () {
   'use strict';
-   var SERVER_BASE_URL = 'http://localhost:8080/rest/';
-   var WEBSOCKET_DOMAIN_NAME = 'localhost';
+  var SERVER_BASE_URL = 'http://localhost:8080/rest/';
+  var WEBSOCKET_DOMAIN_NAME = 'localhost';
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
   angular
@@ -16,16 +16,16 @@
     .constant('DEFAULT_USER_SORT_BY', 'ssn,desc')    //读取用户信息时的默认排序规则
     .constant('DEFAULT_DEVICE_DATA_SORT_BY', 'recordTime,desc')    //读取设备数据时的默认排序规则
     .constant('DEFAULT_DEVICE_WARNING_DATA_SORT_BY', 'warningTime,desc')    //读取设备报警数据时的默认排序规则
-    .constant('DEFAULT_DEVICE_LOCK_DATA_SORT_BY','sendTime,desc')     //读取锁车短信的默认排序规则
+    .constant('DEFAULT_DEVICE_LOCK_DATA_SORT_BY', 'sendTime,desc')     //读取锁车短信的默认排序规则
     .constant('DEFAULT_NOTIFICATION_SORT_BY', 'recordTime,desc')    //读取提醒数据时的默认排序规则
     .constant('UPDATE_FILE_DATA_BY', 'createTime,desc')   //读取升级文件时的默认排序规则
     .constant('UPDATE_RECORD_SORT_BY', 'recordTime,desc') //读取设备升级记录时的默认排序规则
-    .constant('WEBSOCKET_URL', 'ws://'+ WEBSOCKET_DOMAIN_NAME +':8085/')  //WebSocket 请求地址
+    .constant('WEBSOCKET_URL', 'ws://' + WEBSOCKET_DOMAIN_NAME + ':8085/')  //WebSocket 请求地址
 
     .constant('AMAP_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&callback=init')   //高德地图URL
     .constant('AMAP_GEO_CODER_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Geocoder,AMap.MarkerClusterer')
     .constant('AMAP_PLACESEARCH_URL', 'https://webapi.amap.com/maps?v=1.4.0&key=d73f64a6c9a3286448bf45a2fe6863c2&plugin=AMap.Autocomplete,AMap.PlaceSearch')
-    .constant('GOOLE_MAP_SDK_URL','https://maps.googleapis.com/maps/api/js?key=AIzaSyAuPqfrGN8p4Dax8QBo9KvC3YO-ksoI6LU&libraries=drawing,geometry,places,visualization')
+    .constant('GOOLE_MAP_SDK_URL', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAuPqfrGN8p4Dax8QBo9KvC3YO-ksoI6LU&libraries=drawing,geometry,places,visualization')
 
     .constant('SERVER_BASE_URL', SERVER_BASE_URL)
 
@@ -67,7 +67,7 @@
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
     .constant('DEVCEMONITOR_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'deviceMonitor/warningdata')   //分页查询设备报警数据URL
-    .constant('DEVCE_LOCK_DATA_PAGED_QUERY',SERVER_BASE_URL+'sms/locksms')//分页查询设备锁车数据url
+    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'sms/locksms')//分页查询设备锁车数据url
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码
     .constant('SUPER_RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/superpassword')   //管理员修改用户密码
     .constant('USERINFO_URL', SERVER_BASE_URL + 'user/userinfo')   //用户基本信息
@@ -85,8 +85,8 @@
 
 
     //车辆管理相关
-    .constant('MACHINE_PAGE_URL',SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
-    .constant('MACHINE_LOANPAGE_URL',SERVER_BASE_URL + 'machine/loanMachinePage') //车辆信息分页
+    .constant('MACHINE_PAGE_URL', SERVER_BASE_URL + 'machine/machinepage') //车辆信息分页
+    .constant('MACHINE_LOANPAGE_URL', SERVER_BASE_URL + 'machine/loanMachinePage') //车辆信息分页
     .constant('MACHINE_URL', SERVER_BASE_URL + 'machine/machine')   //车辆基本信息
     .constant('MACHINE_MOVE_ORG_URL', SERVER_BASE_URL + 'machine/moveOrg')   //车辆调拨
     .constant('MACHINE_MOVE_FLEET_URL', SERVER_BASE_URL + 'machine/moveFleet')   //车辆借调
@@ -95,8 +95,8 @@
     .constant('MACHINE_UPKEETP_PRICE_TYPE_URL', SERVER_BASE_URL + 'machine/upkeepPriceType')   //保养成本类型
     .constant('MACHINE_UPLOADTEMPLATE_DOWNLOAD_URL', SERVER_BASE_URL + 'machine/uploadTemplateDownload')   //车辆导入模板下载
     .constant('MACHINE_UPLOAD_URL', SERVER_BASE_URL + 'machine/upload')   //车辆批量导入
-    .constant('MACHINE_FENCE',SERVER_BASE_URL+'machine/setfence')  //车辆电子围栏
-    .constant('MACHINE_FENCE_CACHE',SERVER_BASE_URL+'machine/cachefence')  //取消电子围栏
+    .constant('MACHINE_FENCE', SERVER_BASE_URL + 'machine/setfence')  //车辆电子围栏
+    .constant('MACHINE_FENCE_CACHE', SERVER_BASE_URL + 'machine/cachefence')  //取消电子围栏
     .constant('MACHINE_EXCELEXPORT', SERVER_BASE_URL + 'machine/machineinfoexport')   //machineInfoMng导出
     .constant('MACHINE_TRANSPORTINFO_URL', SERVER_BASE_URL + 'machine/getMachineTransportInfos')   //查询车辆运行状态信息
 
@@ -104,10 +104,10 @@
     //系统参数相关
     .constant('SYS_CONFIG_URL', SERVER_BASE_URL + 'config/sysconfig')
     .constant('SYS_CONFIG_LIST_URL', SERVER_BASE_URL + 'config/sysconfigList')//系统参数List
-    .constant('SYS_CONFIG_PAGE_URL',SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
+    .constant('SYS_CONFIG_PAGE_URL', SERVER_BASE_URL + 'config/sysconfigpage')//系统参数信息分
 
     //sim卡管理相关
-    .constant('SIM_PAGE_URL',SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页
+    .constant('SIM_PAGE_URL', SERVER_BASE_URL + 'sim/simpage') //sim卡信息分页
     .constant('SIM_URL', SERVER_BASE_URL + 'sim/sim')   //sim基本信息
     .constant('SIM_UPLOAD_URL', SERVER_BASE_URL + 'sim/upload')   //sim批量导入
     .constant('SIM_STATUS_URL', SERVER_BASE_URL + 'sim/simStatus')   //sim基本信息
@@ -199,11 +199,11 @@
     .constant('USER_STATUS_DISABLE_URL', SERVER_BASE_URL + 'user/statusDisable')    //用户禁止
     .constant('USER_STATUS_ENABLE_URL', SERVER_BASE_URL + 'user/statusEnable')      //用户启用
 
-     //车辆类型管理相关
+    //车辆类型管理相关
     .constant('MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineType')   //车辆管理分页信息  新增车辆类型 修改车辆类型
     .constant('MACHINE_TYPE_ORG_URL', SERVER_BASE_URL + 'machineType/machineTypeOrg')   //查询车辆类型与组织关系list,更新车辆类型与组织映射关系
     .constant('ORG_MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/orgManchineTypeInfo')   //查询组织车辆类型信息,更新组织与车辆类型映射关系
-    .constant('USER_MACHINE_TYPE_URL',SERVER_BASE_URL + 'machineType/machineTypeList') //通过用户所属组织id查询拥有的车辆类型信息
+    .constant('USER_MACHINE_TYPE_URL', SERVER_BASE_URL + 'machineType/machineTypeList') //通过用户所属组织id查询拥有的车辆类型信息
 
     // 燃油配置相关
     .constant('FUEL_CONFIG_PAGE_URL', SERVER_BASE_URL + 'fuelConfig/fuelConfigpage')   //燃油配置查询
@@ -289,64 +289,66 @@
 
     // ---------------------------------------租赁系统URL----------------------------------------------------------------
     //车辆管理
-    .constant('RENTAL_HOME_MAP_GPSDATA_URL',SERVER_BASE_URL + 'rental/homeMapData')//租赁平台首页地图数据
-    .constant('RENTAL_ALARM_MSG_URL',SERVER_BASE_URL + 'rental/alarmCount')//租赁平台首页报警消息
-    .constant('RENTAL_MACHINE_COUNT_URL',SERVER_BASE_URL + 'rental/getMachineCount')//租赁平台首页车辆数量
-    .constant('RENTAL_MACHINE_DATA_URL',SERVER_BASE_URL + 'rental/machines')//租赁平台车辆数据
-    .constant('RENTAL_ALARM_MSG_DATA_URL',SERVER_BASE_URL + 'rental/getRentalNotifications')//租赁平台报警数据
-    .constant('RENTAL_MACHINE_MONITOR_URL',SERVER_BASE_URL + 'rental/machineCurrentStatus')//租赁平台车辆当前位置
-    .constant('RENTAL_MACHINE_URL',SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
-    .constant('RENTAL_NOTIFICATION_URL',SERVER_BASE_URL + 'rental/processRentalNotificationDeal')//租赁平台标记消息为已处理
-    .constant('RENTAL_MACHINE_RATE_URL',SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
-    .constant('RENTAL_MACHINE_NEW',SERVER_BASE_URL + 'rental/machine')//租赁平台车辆信息
+    .constant('RENTAL_HOME_MAP_GPSDATA_URL', SERVER_BASE_URL + 'rental/homeMapData')//租赁平台首页地图数据
+    .constant('RENTAL_ALARM_MSG_URL', SERVER_BASE_URL + 'rental/alarmCount')//租赁平台首页报警消息
+    .constant('RENTAL_MACHINE_COUNT_URL', SERVER_BASE_URL + 'rental/getMachineCount')//租赁平台首页车辆数量
+    .constant('RENTAL_MACHINE_DATA_URL', SERVER_BASE_URL + 'rental/machines')//租赁平台车辆数据
+    .constant('RENTAL_ALARM_MSG_DATA_URL', SERVER_BASE_URL + 'rental/getRentalNotifications')//租赁平台报警数据
+    .constant('RENTAL_MACHINE_MONITOR_URL', SERVER_BASE_URL + 'rental/machineCurrentStatus')//租赁平台车辆当前位置
+    .constant('RENTAL_MACHINE_URL', SERVER_BASE_URL + 'rental/machine')//租赁平台管理车辆
+    .constant('RENTAL_NOTIFICATION_URL', SERVER_BASE_URL + 'rental/processRentalNotificationDeal')//租赁平台标记消息为已处理
+    .constant('RENTAL_MACHINE_RATE_URL', SERVER_BASE_URL + 'rental/rentalRate')//租赁平台出租率
+    .constant('RENTAL_MACHINE_NEW', SERVER_BASE_URL + 'rental/machine')//租赁平台车辆信息
     .constant('MACHINE_RENT_URL', SERVER_BASE_URL + 'rental/rentalRate7day')  //出租率七天数据
     .constant('MACHINE_DEVICETYPE_URL', SERVER_BASE_URL + 'rental/deviceType')  //出租率七天数据
     .constant('RENTAL_PRCESS_ALARM', SERVER_BASE_URL + 'rental/process-alarm')  //
     .constant('RENTAL_PRCESS_ALARMS', SERVER_BASE_URL + 'rental/process-multiple-alarm')  //
-    .constant('RENTAL_LOCUS_DATA',SERVER_BASE_URL+'rental/device-locus-data')//定位历史数据
-    .constant('RENTAL_TRAJECTORY_DATA',SERVER_BASE_URL+'rental/trajectory')//轨迹历史数据
-    .constant('RENTAL_DEVCE_DATA_PAGED_QUERY',SERVER_BASE_URL+'rental/deviceHistoryData')//定位历史数据
-    .constant('RENTAL_DEVCE_MONITOR_DATA',SERVER_BASE_URL+'rental/monitor')//设备监控(数据)
-    .constant('RENTAL_WARNING_DATA',SERVER_BASE_URL + 'rental/warning')//车报警数据
+    .constant('RENTAL_LOCUS_DATA', SERVER_BASE_URL + 'rental/device-locus-data')//定位历史数据
+    .constant('RENTAL_TRAJECTORY_DATA', SERVER_BASE_URL + 'rental/trajectory')//轨迹历史数据
+    .constant('RENTAL_DEVCE_DATA_PAGED_QUERY', SERVER_BASE_URL + 'rental/deviceHistoryData')//定位历史数据
+    .constant('RENTAL_DEVCE_MONITOR_DATA', SERVER_BASE_URL + 'rental/monitor')//设备监控(数据)
+    .constant('RENTAL_WARNING_DATA', SERVER_BASE_URL + 'rental/warning')//车报警数据
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate')  //报警七天趋势
 
     //租赁客户信息
-    .constant('RENTAL_CUSTOMER_PAGE_URL',SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
-    .constant('RENTAL_CUSTOMER_URL',SERVER_BASE_URL + 'rental/customer/customer')//租赁平台维护客户信息
+    .constant('RENTAL_CUSTOMER_PAGE_URL', SERVER_BASE_URL + 'rental/customer/customerpage')//租赁平台客户信息
+    .constant('RENTAL_CUSTOMER_URL', SERVER_BASE_URL + 'rental/customer/customer')//租赁平台维护客户信息
 
     //保养管理
-    .constant('RENTAL_MAINTENANCE_PAGE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenancepage')//分页查询车辆保养信息
-    .constant('RENTAL_MAINTENANCE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenance')//查询车辆保养信息
-    .constant('RENTAL_MAINTENANCE_TYPE_URL',SERVER_BASE_URL + 'rental/maintenance/maintenanceType')//查询保养类别
-    .constant('RENTAL_MAINTENANCE_STATUS_URL',SERVER_BASE_URL + 'rental/maintenance/statusList')//查询保养状态
-    .constant('RENTAL_MAINTENANCE_LIST_STATUS_URL',SERVER_BASE_URL + 'rental/maintenance/listStatusList')//查询保养状态List
-    .constant('RENTAL_MAINTENANCE_GROUP_BY_STATUS',SERVER_BASE_URL + 'rental/maintenance/groupByStatus')//根据状态查询保养的车辆总数
-    .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines')
+    .constant('RENTAL_MAINTENANCE_PAGE_URL', SERVER_BASE_URL + 'rental/maintenance/maintenancepage')//分页查询车辆保养信息
+    .constant('RENTAL_MAINTENANCE_URL', SERVER_BASE_URL + 'rental/maintenance/maintenance')//查询车辆保养信息
+    .constant('RENTAL_MAINTENANCE_TYPE_URL', SERVER_BASE_URL + 'rental/maintenance/maintenanceType')//查询保养类别
+    .constant('RENTAL_MAINTENANCE_STATUS_URL', SERVER_BASE_URL + 'rental/maintenance/statusList')//查询保养状态
+    .constant('RENTAL_MAINTENANCE_LIST_STATUS_URL', SERVER_BASE_URL + 'rental/maintenance/listStatusList')//查询保养状态List
+    .constant('RENTAL_MAINTENANCE_GROUP_BY_STATUS', SERVER_BASE_URL + 'rental/maintenance/groupByStatus')//根据状态查询保养的车辆总数
+    .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL', SERVER_BASE_URL + 'rental/maintanceMachines')
 
     //租赁订单
-    .constant('RENTAL_ORDER_PAGE_URL',SERVER_BASE_URL + 'rental/order/orderpage')//分页查询租赁订单信息
-    .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
-    .constant('RENTAL_ORDER_STATUS',SERVER_BASE_URL + 'rental/order/statusList')//租赁平台订单状态List
-    .constant('RENTAL_ORDER_GROUP_BY_STATUS',SERVER_BASE_URL + 'rental/order/groupByStatus')//租赁平台维护订单信息
+    .constant('RENTAL_ORDER_PAGE_URL', SERVER_BASE_URL + 'rental/order/orderpage')//分页查询租赁订单信息
+    .constant('RENTAL_ORDER_URL', SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
+    .constant('RENTAL_ORDER_STATUS', SERVER_BASE_URL + 'rental/order/statusList')//租赁平台订单状态List
+    .constant('RENTAL_ORDER_GROUP_BY_STATUS', SERVER_BASE_URL + 'rental/order/groupByStatus')//租赁平台维护订单信息
 
     //租赁围栏
-    .constant('RENTAL_ORG_FENCE_PAGE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//分页查询围栏信息
-    .constant('RENTAL_ORG_FENCE_COUNT',SERVER_BASE_URL + 'rental/orgFence/fence-count')//围栏总数
-    .constant('RENTAL_ORG_FENCE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFence')//围栏信息维护
-    .constant('RENTAL_ORG_FENCE_STATUS',SERVER_BASE_URL + 'rental/orgFence/statusList')//围栏状态
-    .constant('RENTAL_ORG_FENCE_DELETE_STATUS',SERVER_BASE_URL + 'rental/orgFence/delete')//删除围栏
+    .constant('RENTAL_ORG_FENCE_PAGE_URL', SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//分页查询围栏信息
+    .constant('RENTAL_ORG_FENCE_COUNT', SERVER_BASE_URL + 'rental/orgFence/fence-count')//围栏总数
+    .constant('RENTAL_ORG_FENCE_URL', SERVER_BASE_URL + 'rental/orgFence/orgFence')//围栏信息维护
+    .constant('RENTAL_ORG_FENCE_STATUS', SERVER_BASE_URL + 'rental/orgFence/statusList')//围栏状态
+    .constant('RENTAL_ORG_FENCE_DELETE_STATUS', SERVER_BASE_URL + 'rental/orgFence/delete')//删除围栏
 
     //租赁管理
-    .constant('RENTAL_ORDER_ENTRY_MACHINE_URL',SERVER_BASE_URL + 'rental/orderMachine/entryMachinelist')//订单进场的车辆(未出场)
-    .constant('RENTAL_ORDER_MACHINE_HISTORY_URL',SERVER_BASE_URL + 'rental/orderMachine/historyMachinelist')//租赁订单车辆历史List
-    .constant('RENTAL_ORDER_ENTRY_EXIT_LIST_URL',SERVER_BASE_URL + 'rental/orderMachine/entryExitlist')//租赁订单进退场单List
-    .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL',SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
-    .constant('RENTANL_UNUSED_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
-    .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//进退场
-    .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachineWeb')//进退场附件上传
-    .constant('RENTANL_ATTACH_UPLOAD_URL',SERVER_BASE_URL + 'rental/orderMachine/attachmentsUpload')//附件上传
+    .constant('RENTAL_ORDER_ENTRY_MACHINE_URL', SERVER_BASE_URL + 'rental/orderMachine/entryMachinelist')//订单进场的车辆(未出场)
+    .constant('RENTAL_ORDER_MACHINE_HISTORY_URL', SERVER_BASE_URL + 'rental/orderMachine/historyMachinelist')//租赁订单车辆历史List
+    .constant('RENTAL_ORDER_ENTRY_EXIT_LIST_URL', SERVER_BASE_URL + 'rental/orderMachine/entryExitlist')//租赁订单进退场单List
+    .constant('RENTANL_ORDER_MACHINE_BATCH_OPER_URL', SERVER_BASE_URL + 'rental/orderMachine/batchOper')//租赁车辆批量管理信息
+    .constant('RENTANL_UNUSED_MACHINE_PAGE_URL', SERVER_BASE_URL + 'rental/unUsedMachines')//未出租车辆查询信息
+    .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_URL', SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachine')//进退场
+    .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL', SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachineWeb')//进退场附件上传
+    .constant('RENTANL_ATTACH_UPLOAD_URL', SERVER_BASE_URL + 'rental/orderMachine/attachmentsUpload')//附件上传
+    .constant('RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL', SERVER_BASE_URL + 'rental/orderMachine/entryAndExit')//进退场的同时附件上传
 
-     //租赁资产管理
+
+    //租赁资产管理
     .constant('RENTAL_TOTALINCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeTotal') //收入统计上方四个方框 总收入和每种类型的总收入
     .constant('RENTAL_TOTALCOST_URL', SERVER_BASE_URL + 'rental/asset/getCostTotal') //成本统计上方四个方框数据总数
     .constant('RENTAL_INCOME_ORDER_QUERY', SERVER_BASE_URL + 'rental/asset/getIncomeByOrder')  //收入统计右侧折线图根据订单统计的收入数据
@@ -364,15 +366,6 @@
     .constant('RENTAL_ORG_TREE_JSON_DATA_URL', SERVER_BASE_URL + 'rental/org/organazition')   //组织机构信息,返回树状json代码
     .constant('RENTAL_ORG_URL', SERVER_BASE_URL + 'rental/org/organization')   //组织基本信息
     .constant('RENTAL_ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
-
-
-
-
-
-
-
-
-
 
 
 })();

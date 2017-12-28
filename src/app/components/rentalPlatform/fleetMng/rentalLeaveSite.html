@@ -2,27 +2,27 @@
   <div class="modal-title">
     <div class="col-md-2 control-label">
       <div class="modal-title-text">
-      {{'leaveSite'|translate}}
+        {{'leaveSite'|translate}}
       </div>
     </div>
-    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button" ng-click="rentalLeaveSiteCtrl.cancel()">{{'close'|translate}}</button>
-    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button" ng-click="rentalLeaveSiteCtrl.bringUpBatch(rentalLeaveSiteCtrl.file)">{{'leaveSite'|translate}}</button>
+    <button style="margin-left: 5px" class="btn btn-warning pull-right" type="button"
+            ng-click="rentalLeaveSiteCtrl.cancel()">{{'close'|translate}}
+    </button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button"
+            ng-click="rentalLeaveSiteCtrl.bringUpBatch(rentalLeaveSiteCtrl.file)">{{'leaveSite'|translate}}
+    </button>
   </div>
 </div>
 <div class="modal-body">
-
   <form class="form-horizontal" role="form">
     <div class="form-group">
       <label class="col-md-1 control-label font-nomal">{{'operator'|translate}}:</label>
       <div class="col-md-3 text-left">
         {{rentalLeaveSiteCtrl.userInfo.userdto.ssn}}
       </div>
-
       <label class="col-md-2 control-label font-nomal">退场原因:</label>
       <div class="col-md-3">
-        <input type="text"  class="form-control"  ng-model="rentalLeaveSiteCtrl.leaveReason"
-
-               placeholder="退场原因"/>
+        <input type="text" class="form-control" ng-model="rentalLeaveSiteCtrl.leaveReason" placeholder="退场原因"/>
       </div>
     </div>
 
@@ -30,10 +30,15 @@
       <label class="col-md-1 control-label font-nomal ">{{'exitTime'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
-         <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalLeaveSiteCtrl.leaveSiteDate" is-open="rentalLeaveSiteCtrl.leaveSiteDateOpenStatusData.opened"
-             datepicker-options="rentalLeaveSiteCtrl.dateOptions" min-date="rentalLeaveSiteCtrl.minDate" max-date="rentalLeaveSiteCtrl.maxDate" ng-required="true"
-             current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}"  ng-blur="rentalLeaveSiteCtrl.timeValidate(rentalLeaveSiteCtrl.leaveSiteDate)"/>
-         <span class="input-group-btn">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="rentalLeaveSiteCtrl.leaveSiteDate"
+                 is-open="rentalLeaveSiteCtrl.leaveSiteDateOpenStatusData.opened"
+                 datepicker-options="rentalLeaveSiteCtrl.dateOptions" min-date="rentalLeaveSiteCtrl.minDate"
+                 max-date="rentalLeaveSiteCtrl.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"
+                 ng-blur="rentalLeaveSiteCtrl.timeValidate(rentalLeaveSiteCtrl.leaveSiteDate)"/>
+          <span class="input-group-btn">
            <button type="button" class="btn btn-default" ng-click="rentalLeaveSiteCtrl.leaveSiteDateOpenData($event)">
            <i class="glyphicon glyphicon-calendar"></i>
            </button>
@@ -44,34 +49,44 @@
     <div class="form-group">
       <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
       <div class="col-md-3 text-left">
-        <input type="file" ngf-select id="uploadFile" ng-model="rentalLeaveSiteCtrl.file" ngf-max-size="2MB" required ngf-model-invalid="errorFiles" name="uploadFile" />
+        <input type="file" ngf-select id="uploadFile" ng-model="rentalLeaveSiteCtrl.file" ngf-max-size="2MB" required
+               ngf-model-invalid="errorFiles" name="uploadFile"
+               accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" class="file-loading" multiple/>
       </div>
     </div>
     <hr>
     <div class="row">
       <script id="selectAllHeader" type="text/ng-template">
-        <input type="checkbox"  ng-click="rentalLeaveSiteCtrl.updateAllSelection($event)"
+        <input type="checkbox" ng-click="rentalLeaveSiteCtrl.updateAllSelection($event)"
                ng-model="rentalLeaveSiteCtrl.checked">
       </script>
       <div class="col-lg-12 table-responsive "><!--表格框-->
-        <table ng-table="rentalLeaveSiteCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="rentalLeaveSiteCtrl.tableParams"
+               class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="orderMachine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'" align="center">
               <input type="checkbox" ng-checked="rentalLeaveSiteCtrl.isSelected(orderMachine.id)"
-                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" ng-model="orderMachine.checked">
+                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)"
+                     ng-model="orderMachine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
-              <a  ng-click="rentalLeaveSiteCtrl.machineMonitor(machine.licenseId)"> {{orderMachine.machine.licenseId}}</a>
-
+              <a ng-click="rentalLeaveSiteCtrl.machineMonitor(machine.licenseId)">{{orderMachine.machine.licenseId}}</a>
             </td>
-
-            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{orderMachine.rentalOrder.org.label}}</td>
+            <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">
+              {{orderMachine.rentalOrder.org.label}}
+            </td>
             <td class="text-nowrap" data-title="'deviceType'|translate" sortable="'typeName'">
-              {{orderMachine.machine.deviceType.name|translate}}</td>
-            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">{{orderMachine.machine.deviceHeightType.name|translate}}</td>
-            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">{{orderMachine.machine.devicePowerType.name|translate}}</td>
-            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">{{orderMachine.machine.deviceManufacture.name|translate}}</td>
-
+              {{orderMachine.machine.deviceType.name|translate}}
+            </td>
+            <td class="text-nowrap" data-title="'highlyType'|translate" sortable="'heightTypeName'">
+              {{orderMachine.machine.deviceHeightType.name|translate}}
+            </td>
+            <td class="text-nowrap" data-title="'driveType'|translate" sortable="'powerTypeName'">
+              {{orderMachine.machine.devicePowerType.name|translate}}
+            </td>
+            <td class="text-nowrap" data-title="'brandType'|translate" sortable="'factoryName'">
+              {{orderMachine.machine.deviceManufacture.name|translate}}
+            </td>
           </tr>
         </table>
       </div>
