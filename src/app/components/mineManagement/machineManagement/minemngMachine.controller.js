@@ -8,14 +8,11 @@
     .controller('minemngMachineController', minemngMachineController);
 
   /** @ngInject */
-  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_MACHINE_URL ,$filter,permissions, NgTableParams,
+  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_MACHINE_URL ,$filter, NgTableParams,
                                     MINE_MACHINE_DELETE, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
-                                    $confirm ,MACHINE_UNBIND_DEVICE_URL, MACHINE_MOVE_ORG_URL,
-                                MACHINE_URL,MACHINE_ALLOCATION,MACHINE_EXCELEXPORT) {
+                                    $confirm ,MACHINE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
-    vm.org = {label: ""};    //所属组织
-    vm.allot = {label: ""}; //调拨组织
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
     vm.querySubOrg = true;
@@ -23,30 +20,27 @@
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    vm.query = function (page, size, sort, machine) {
+    vm.query= function (page, size, sort, machine,type) {
       var restCallURL = MINE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
+      restCallURL += "&search_EQ_machineType=" + type;
       if (null != machine) {
 
-        if (null != machine.deviceNum&&machine.deviceNum!="") {
-          restCallURL += "&search_LIKE_deviceinfo.deviceNum=" + $filter('uppercase')(machine.deviceNum);
+        if (null != machine.carNumber&&machine.carNumber!="") {
+          restCallURL += "&search_LIKE_carNumber=" + $filter('uppercase')(machine.carNumber);
         }
         if (null != machine.licenseId&&machine.licenseId!="") {
           restCallURL += "&search_LIKE_licenseId=" + $filter('uppercase')(machine.licenseId);
         }
-
-      }
-
-      if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
-        restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
-      }
-
-      if(null != vm.org&&null != vm.org.id&&undefined != vm.org&&vm.querySubOrg){
-        restCallURL += "&parentOrgId=" +vm.org.id;
+        if (null != machine.productModel&&machine.productModel!="") {
+          restCallURL += "&search_LIKE_productModel=" + $filter('uppercase')(machine.productModel);
+        }
+        if (null != machine.manufacotryName&&machine.manufacotryName!="") {
+          restCallURL += "&search_LIKE_manufacotryName=" + $filter('uppercase')(machine.manufacotryName);
+        }
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -67,8 +61,22 @@
     };
 
 
-    //默认查询
-    vm.query(null,null,null,null);
+    //重置查询框
+    vm.reset = function () {
+      vm.machine = null;
+      vm.org=null;
+      vm.selected=[]; //把选中的设备设置为空
+      vm.allot=null;
+    }
+
+    vm.reset2 = function () {
+      vm.machine = null;
+      vm.org=null;
+      vm.selected=[]; //把选中的设备设置为空
+      vm.allot=null;
+    }
+   /* //默认查询
+    vm.query(null,null,null,null);*/
 
     //更新车辆
     vm.updateMineMachine = function (machine, size) {
@@ -80,7 +88,7 @@
         var operMachine = data.content;
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
-          templateUrl: 'app/components/mineManagement/machineManagement/updateMineMachinemng.html',
+          templateUrl: 'app/components/mineManagement/machineManagement/updateMinemngMachine.html',
           controller: 'updateMineMachineController as updateMineMachineCtrl',
           size: size,
           backdrop: false,
@@ -148,7 +156,7 @@
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/machineManagement/newMineMachinemng.html',
+        templateUrl: 'app/components/mineManagement/machineManagement/newMinemngMachine.html',
         controller: 'newMineMachinemngController as newMineMachinemngCtrl',
         size: size,
         backdrop: false,

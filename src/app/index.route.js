@@ -292,7 +292,7 @@
         url: '/machinemng',
         views: {
           'rightside@minemng': {
-            templateUrl: 'app/components/mineManagement/machineManagement/minemngMachineMng.html',
+            templateUrl: 'app/components/mineManagement/machineManagement/minemngMachine.html',
             controller: 'minemngMachineController',
             controllerAs: 'minemngMachineCtrl'
           }
@@ -303,7 +303,7 @@
       url: '/mineMachineFleet',
       views: {
         'rightside@minemng': {
-          templateUrl: 'app/components/mineManagement/machineManagement/minemngMachineMngFleet.html',
+          templateUrl: 'app/components/mineManagement/machineManagement/minemngFleet.html',
           controller: 'minemngMachineFleetController',
           controllerAs: 'minemngMachineFleetCtrl'
         }

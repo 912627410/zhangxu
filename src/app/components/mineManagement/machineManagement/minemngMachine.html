@@ -16,7 +16,7 @@
 
 <uib-tabset active="active" type="tabs">
 
-    <uib-tab index="3" active="true" heading="矿车" >
+    <uib-tab index="3" active="true" heading="矿车" select="minemngMachineCtrl.query(null,null,null,null,1)">
     <section class="content form-horizontal">
       <!--上半部分-->
       <div class="row form-group">
@@ -55,7 +55,7 @@
           <label class="control-label">{{'车号'| translate}}</label>
         </div>
         <div class="col-md-3 table.align">
-          <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+          <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
@@ -63,15 +63,15 @@
           <label class="control-label">{{'整机编号'|translate}}:</label>
         </div>
         <div class="col-md-3">
-          <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+          <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.licenseId"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
 
         <div class="col-md-3">
-          <button class="btn btn-primary pull-right" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+          <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset()">{{'reset'|translate}}</button>
           <button class="btn btn-primary margin_right5 pull-right" type="button"
-                  ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
+                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine,1)">{{'query'|translate}}
           </button>
 
         </div>
@@ -82,7 +82,7 @@
           <label class="control-label">{{'产品型号'| translate}}</label>
         </div>
         <div class="col-md-3 table.align">
-          <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+          <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
@@ -90,7 +90,7 @@
           <label class="control-label">{{'厂家名称'|translate}}:</label>
         </div>
         <div class="col-md-3">
-          <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+          <input type="text" name="deviceNum" class="form-control " ng-model="minemngMachineCtrl.machine.manufacotryName"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
@@ -142,47 +142,7 @@
 
       </div>
 
-      <!--  <div class="row form-group">
-          <div class="col-md-1">
-            <label class="control-label">{{'organisation'|translate}}:</label>
-          </div>
-          <div class="col-md-3">
-            <p class="input-group">
 
-              <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="minemngMachineCtrl.org.label" name="org" readonly required/>
-              <span class="input-group-btn">
-                  &lt;!&ndash;打开组织树&ndash;&gt;
-                  <button type="button" class="btn btn-default" ng-click="minemngMachineCtrl.openTreeInfo()">
-                    <i class="fa fa-sitemap"></i>
-                  </button>
-                </span>
-            </p>
-          </div>
-          <div class="col-md-2">
-            <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
-            <input type="checkbox" checked="checked" ng-model="minemngMachineCtrl.querySubOrg"/>
-          </div>
-          <div class="col-md-1">
-            <label class="control-label">{{'allotOrganization'|translate}}:</label>
-          </div>
-          <div class="col-md-3">
-            <p class="input-group">
-              <input type="text" id="allot" class="form-control" placeholder="{{'allotOrganization'|translate}}" ng-model="minemngMachineCtrl.allot.label" name="allot" readonly required/>
-              <span class="input-group-btn">
-                &lt;!&ndash;打开组织树&ndash;&gt;
-                <button type="button" class="btn btn-default" ng-click="minemngMachineCtrl.openTreeInfoAllot()">
-                  <i class="fa fa-sitemap"></i>
-                </button>
-              </span>
-            </p>
-          </div>
-
-          <div class="col-md-2">
-            <button class="btn btn-warning" type="button"  ng-click="minemngMachineCtrl.batchMoveOrg()">{{'transfer'|translate}}</button>
-
-          </div>
-
-        </div>-->
 
 
       <div class="box-footer">
@@ -197,22 +157,13 @@
     </uib-tab>
 
 
-    <uib-tab index="4" heading="挖掘机" >
+    <uib-tab index="4" heading="挖掘机" select="minemngMachineCtrl.query(null,null,null,null,2)">
       <section class="content form-horizontal">
 
         <!--上半部分-->
         <div class="row form-group">
 
-          <!--车辆总数-->
-          <!--<div class="btn-group col-md-3">
-            <span class="label label-info pull-left">{{'totalNumberOfMachine'|translate}}:{{minemngMachineCtrl.page.totalElements}}</span>
-          </div>-->
-          <!--<div class="col-md-4">
-            <button class="btn btn-primary" type="button" ng-click="minemngMachineCtrl.reset()">{{'tramcar'|translate}}</button>
-            <button class="btn btn-primary" type="button"
-                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'excavator'|translate}}
-            </button>
--->
+
 
 
           <div class="col-md-8"></div>
@@ -234,7 +185,7 @@
             <label class="control-label">{{'车号'| translate}}</label>
           </div>
           <div class="col-md-3 table.align">
-            <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+            <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
@@ -242,15 +193,15 @@
             <label class="control-label">{{'整机编号'|translate}}:</label>
           </div>
           <div class="col-md-3">
-            <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+            <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.licenseId"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
 
           <div class="col-md-3">
-            <button class="btn btn-primary pull-right" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+            <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset2()">{{'reset'|translate}}</button>
             <button class="btn btn-primary margin_right5 pull-right" type="button"
-                    ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
+                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine,2)">{{'query'|translate}}
             </button>
 
           </div>
@@ -261,7 +212,7 @@
             <label class="control-label">{{'产品型号'| translate}}</label>
           </div>
           <div class="col-md-3 table.align">
-            <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+            <input type="text" name="productModel" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
@@ -269,7 +220,7 @@
             <label class="control-label">{{'厂家名称'|translate}}:</label>
           </div>
           <div class="col-md-3">
-            <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+            <input type="text" name="manufacotryName" class="form-control " ng-model="minemngMachineCtrl.machine.manufacotryName"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
@@ -279,7 +230,7 @@
 
         <!--表单-->
         <div class="row form-group" style="padding: 10px">
-          <script id="selectAllHeader" type="text/ng-template">
+          <script id="selectAllHeader2" type="text/ng-template">
             <input type="checkbox" ng-click="minemngMachineCtrl.updateAllSelection($event)"
                    ng-model="minemngMachineCtrl.checked">
           </script>
@@ -288,7 +239,7 @@
 
             <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="machine in $data">
-                <td class="text-nowrap" data-header="'selectAllHeader'">
+                <td class="text-nowrap" data-header="'selectAllHeader1'">
                   <input type="checkbox" ng-checked="minemngMachineCtrl.isSelected(machine.id)"
                          ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
                 </td>
@@ -321,47 +272,7 @@
 
         </div>
 
-        <!--  <div class="row form-group">
-            <div class="col-md-1">
-              <label class="control-label">{{'organisation'|translate}}:</label>
-            </div>
-            <div class="col-md-3">
-              <p class="input-group">
 
-                <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="minemngMachineCtrl.org.label" name="org" readonly required/>
-                <span class="input-group-btn">
-                    &lt;!&ndash;打开组织树&ndash;&gt;
-                    <button type="button" class="btn btn-default" ng-click="minemngMachineCtrl.openTreeInfo()">
-                      <i class="fa fa-sitemap"></i>
-                    </button>
-                  </span>
-              </p>
-            </div>
-            <div class="col-md-2">
-              <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
-              <input type="checkbox" checked="checked" ng-model="minemngMachineCtrl.querySubOrg"/>
-            </div>
-            <div class="col-md-1">
-              <label class="control-label">{{'allotOrganization'|translate}}:</label>
-            </div>
-            <div class="col-md-3">
-              <p class="input-group">
-                <input type="text" id="allot" class="form-control" placeholder="{{'allotOrganization'|translate}}" ng-model="minemngMachineCtrl.allot.label" name="allot" readonly required/>
-                <span class="input-group-btn">
-                  &lt;!&ndash;打开组织树&ndash;&gt;
-                  <button type="button" class="btn btn-default" ng-click="minemngMachineCtrl.openTreeInfoAllot()">
-                    <i class="fa fa-sitemap"></i>
-                  </button>
-                </span>
-              </p>
-            </div>
-
-            <div class="col-md-2">
-              <button class="btn btn-warning" type="button"  ng-click="minemngMachineCtrl.batchMoveOrg()">{{'transfer'|translate}}</button>
-
-            </div>
-
-          </div>-->
 
 
         <div class="box-footer">
