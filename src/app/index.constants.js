@@ -367,5 +367,7 @@
     .constant('RENTAL_ORG_URL', SERVER_BASE_URL + 'rental/org/organization')   //组织基本信息
     .constant('RENTAL_ORG_ID_URL', SERVER_BASE_URL + 'config/getOrgById')   //根据ID查询组织信息
 
+    .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate');  //报警七天趋势
+
 
 })();
