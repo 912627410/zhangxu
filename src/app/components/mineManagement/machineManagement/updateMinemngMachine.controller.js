@@ -10,7 +10,7 @@
     .controller('updateMineMachineController', updateMineMachineCtrl);
 
   /** @ngInject */
-  function updateMineMachineCtrl(machineService,machine, $uibModalInstance,languages, DEIVCIE_FETCH_UNUSED_URL,MINE_MACHINE_URL, serviceResource, Notification) {
+  function updateMineMachineCtrl($filter,machineService,machine, $uibModalInstance,languages, MINE_UPDATEMACHINE_URL, serviceResource, Notification,MINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
     var vm = this;
     vm.machine = machine;
 
@@ -51,11 +51,15 @@
 
     vm.ok = function (machine) {
 
-      var restPromise = serviceResource.restAddRequest(MINE_MACHINE_URL, machine);
+      var restPromise = serviceResource.restUpdateRequest(MINE_UPDATEMACHINE_URL, machine);
       restPromise.then(function (data) {
           if(data.code===0){
             vm.machine = data.content;
-            // Notification.error(data.message);
+            Notification.success("更新成功");
+            $uibModalInstance.close(data.content);
+
+
+
           }
         }, function (reason) {
           // alert(reason.data.message);
