@@ -11,7 +11,7 @@
   </section>
   <!--alarmInfo begin-->
   <div id="alarmInfo" class="container-fluid">
-    <div class="row info-box-container">
+    <div class="row info-box-container" presentation-href="rental:machinemng:alarm:topNavigation">
       <div class="col-md-3 col-sm-6 col-xs-12">
        <div class="info-box  info-card">
           <div class="row">
@@ -105,7 +105,7 @@
     </div>
     <div class="row base-box-container alarm-md-box" ng-style="machineAlarmInfoCtr.baseBoxContainer" style="margin-top: 10px">
       <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-4">
+        <div class="col-lg-2 col-md-2 col-sm-4"  presentation-href="rental:machinemng:alarm:leftMenu">
           <div class="box base-left-map-box-container">
             <div class="box-header with-border">
               <h3 class="box-title">{{'type'|translate}}</h3>
@@ -151,7 +151,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-10 col-md-10 col-sm-8 table-wrapper">
+        <div class="col-lg-10 col-md-10 col-sm-8 table-wrapper" >
           <div class="box base-left-map-box-container ">
             <div class="box-header with-border">
               <div class="row">
@@ -176,7 +176,7 @@
                                  ng-model="machineAlarmInfoCtr.searchConditions.content"/>
 
                         <div class="col-md-3">
-                          <button class="btn btn-primary" type="button"
+                          <button class="btn btn-primary" type="button" presentation-href="rental:machinemng:alarm:query"
                                   ng-click="machineAlarmInfoCtr.getMsgByAlarmType(0,machineAlarmInfoCtr.pageSize,null,machineAlarmInfoCtr.searchConditions)">{{'query'|translate}}
                           </button>
                           <button class="btn btn-default" type="button"

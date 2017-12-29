@@ -10,12 +10,11 @@
     .controller('costStatisticsController', costStatisticsController);
 
   /** @ngInject */
-  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
+  function costStatisticsController($scope,$rootScope, $window, $location, $anchorScroll,permissions, NgTableParams, languages,ngTableDefaults,$filter, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,DEVCE_MF,Notification,RENTAL_COST_PAGED_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_TOTALCOST_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryCost = {};
-
 
 
     //定义偏移量

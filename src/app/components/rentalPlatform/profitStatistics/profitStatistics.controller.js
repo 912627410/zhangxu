@@ -9,7 +9,7 @@
     .controller('profitStatisticsController', profitStatisticsController);
 
   /** @ngInject */
-  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages, serviceResource, DEVCE_HIGHTTYPE,RENTAL_PROFIT_DATA_URL, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,MACHINE_DEVICETYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL,RENTAL_TOTALPROFIT_DATA_URL) {
+  function profitStatisticsController($scope,$rootScope, $window, $filter,$location, $anchorScroll,languages,permissions, serviceResource, DEVCE_HIGHTTYPE,RENTAL_PROFIT_DATA_URL, Notification,RENTAL_ASSET_STATISTICS_DATA_URL,MACHINE_DEVICETYPE_URL,DEVCE_MF,RENTAL_PROFIT_URL,RENTAL_TOTALPROFIT_DATA_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;

@@ -10,7 +10,7 @@
     </ol>
   </section>
   <div id="currentState" class="container-fluid">
-    <div class="row info-box-container">
+    <div class="row info-box-container"  presentation-href="rental:rentalMng:order:topNavigation">
       <div class="col-lg-3 col-md-3">
         <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus()">
           <div class="info-title">{{'rentalTotal'|translate}}</div>
@@ -125,7 +125,7 @@
             </div>
             <div class="col-md-3">
               <div class="col-md-8">
-                <button class="btn btn-primary" type="button"
+                <button class="btn btn-primary" type="button"  presentation-href="rental:rentalMng:order:query"
                         ng-click="rentalOrderMngCtrl.query(null,null,null,rentalOrderMngCtrl.rentalOrder)">
                   {{'rentalQuery'|translate}}
                 </button>
@@ -133,7 +133,7 @@
                   {{'rentalReset'|translate}}
                 </button>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-2"  presentation-href="rental:rentalMng:order:create">
                 <button class="btn btn-primary" type="button" ng-click="rentalOrderMngCtrl.new()">
                   {{'rentalAdd'|translate}}
                 </button>
@@ -171,16 +171,16 @@
 
               </td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-danger btn-xs"
+                <button type="button" class="btn btn-danger btn-xs"  presentation-href="rental:rentalMng:order:modify"
                         ng-click="rentalOrderMngCtrl.update(rentalOrder.id,rentalOrder.realNumber)">{{'rentalEdit'| translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:view"
                         ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:entry"
                         ng-click="rentalOrderMngCtrl.goSite(rentalOrder)">{{'goSite'| translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:exit"
                         ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder)">{{'leaveSite'| translate}}
                 </button>
                 <!--<button type="button" class="btn btn-default btn-xs"-->

@@ -55,14 +55,13 @@
             <div class="col-md-3">
               <div class=" col-md-8 font-nomal">
 
-                <button class="btn btn-primary" type="button"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}
-                </button>
+                <button class="btn btn-primary" type="button" presentation-href="rental:rentalMng:customer:query"  ng-click="rentalCustomerMngController.query(null,null,null,rentalCustomerMngController.customer)">{{'query'|translate}}</button>
                 <button class="btn btn-default" type="button" ng-click="rentalCustomerMngController.reset()">{{'reset'|translate}}</button>
               </div>
 
               <div class="col-md-2">
 
-                <button class="btn btn-primary" type="button"
+                <button class="btn btn-primary" type="button" presentation-href="rental:rentalMng:customer:create"
                         ng-click="rentalCustomerMngController.new()">{{'rentalAdd'|translate}}
                 </button>
               </div>
@@ -90,10 +89,10 @@
               <td class="text-nowrap" data-title="'rentalUpdateTime'|translate" sortable="'updateTime'">{{customer.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
 
-                <button type="button" class="btn btn-danger btn-xs"
+                <button type="button" class="btn btn-danger btn-xs" presentation-href="rental:rentalMng:customer:modify"
                         ng-click="rentalCustomerMngController.updateCustomer(customer)">{{'rentalEdit'|translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:customer:viewDetails"
                         ng-click="rentalCustomerMngController.view(customer.id)">{{'rentalView'|translate}}
                 </button>
               </td>

@@ -11,7 +11,7 @@
   </section>
   <div id="Cost" class="container-fluid profitItem">
 
-    <div class="row info-box-container">
+    <div class="row info-box-container" presentation-href="rental:assetMng:cost:topNavigation">
 
       <div class="col-lg-3 col-md-3 col-xs-6">
         <div class=" info-card cost-info-height">
@@ -122,7 +122,7 @@
           </div>
         <div class="col-md-4 ">
           <button  type="button" class="btn btn-default searchButton pull-right" ng-click="costStatisticsCtr.reset()">{{'reset'|translate}}</button>
-          <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
+          <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" presentation-href="rental:assetMng:cost:query" ng-click="costStatisticsCtr.queryCost(null,null,null,costStatisticsCtr.startDateDeviceData,costStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
 
         </div>
 
@@ -134,7 +134,7 @@
     </div>
     <div class="info-box-container table-wrapper costPic">
       <div class="row">
-        <div class="leftTable col-md-6">
+        <div class="leftTable col-md-6" presentation-href="rental:assetMng:cost:leftTable">
           <div class="table-responsive">
             <table ng-table="costStatisticsCtr.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="costdata in $data">
@@ -157,7 +157,7 @@
                             previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
           </div>
         </div>
-        <div class="rightPic col-md-6">
+        <div class="rightPic col-md-6"  presentation-href="rental:assetMng:cost:rightChart">
           <div id="topPie" ng-style="costStatisticsCtr.baseBoxContainer" ></div>
         </div>
       </div>

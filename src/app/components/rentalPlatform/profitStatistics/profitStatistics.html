@@ -11,7 +11,7 @@
         <li class="active"><i class="fa fa-line-chart"></i>{{'rentalProfit'| translate}}</li>
       </ol>
     </section>
-    <div class="row info-box-container ">
+    <div class="row info-box-container " presentation-href="rental:assetMng;profit:topNavigation">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box info-card">
           <div class="row"  style="cursor:pointer;">
@@ -152,10 +152,8 @@
 
             <div class="col-md-4 ">
               <button  type="button" class="btn btn-default searchButton pull-right " ng-click="profitStatisticsCtr.reset()">{{'reset'|translate}}</button>
-              <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="profitStatisticsCtr.queryProfit(profitStatisticsCtr.startDateDeviceData,profitStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
-
+              <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" presentation-href="rental:assetMng;profit:query" ng-click="profitStatisticsCtr.queryProfit(profitStatisticsCtr.startDateDeviceData,profitStatisticsCtr.endDateDeviceData)">{{'query'|translate}}</button>
             </div>
-
         </div>
       </form>
     <div class="row profitPic">

@@ -9,10 +9,14 @@
       </span>
       <div ng-show="submenuShow" ng-mouseleave="submenuShow=false">
         <ul>
-          <li ><a ui-sref="rental">{{'rentalcurrentPosition'| translate}}</a></li>
-          <li ><a ui-sref="rental.machineCurrentStatus">{{'currentState'| translate}}</a></li>
-          <li ><a ui-sref="rental.orgFence">{{'fenceMng'|translate}}</a></li>
-          <li ><a ui-sref="rental.machineAlarmInfo">{{'alarmInformation'| translate}}</a></li>
+          <li ng-show="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:currentLocate')"><a ui-sref="rental">{{'rentalcurrentPosition'| translate}}</a></li>
+          <li  ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:currentLocate')"><a>{{'rentalcurrentPosition'| translate}}</a></li>
+          <li ng-show="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:currentState')"><a ui-sref="rental.machineCurrentStatus">{{'currentState'| translate}}</a></li>
+          <li  ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:currentState')"><a >{{'currentState'| translate}}</a></li>
+          <li ng-show="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:fenceMng')"><a ui-sref="rental.orgFence">{{'fenceMng'|translate}}</a></li>
+          <li  ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:fenceMng')"><a >{{'fenceMng'|translate}}</a></li>
+          <li ng-show="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:alarm')"><a ui-sref="rental.machineAlarmInfo">{{'alarmInformation'| translate}}</a></li>
+          <li  ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:machinemng:alarm')"><a >{{'alarmInformation'| translate}}</a></li>
         </ul>
       </div>
     </div>
@@ -23,10 +27,13 @@
       </span>
       <div ng-show="submenuShow1" ng-mouseleave="submenuShow1=false">
         <ul>
-          <li ng-click=""><a ui-sref="rental.order">{{'rentalOrderMng'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:order')"><a ui-sref="rental.order">{{'rentalOrderMng'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:order')"><a>{{'rentalOrderMng'| translate}}</a></li>
           <!--<li ng-click=""><a ui-sref="rental.fleet">{{'rentalfleet'| translate}}</a></li>-->
-          <li ng-click=""><a ui-sref="rental.maintenance">{{'maintenance'| translate}}</a></li>
-          <li ng-click=""><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:maintenance')"><a ui-sref="rental.maintenance">{{'maintenance'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:maintenance')"><a>{{'maintenance'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:customer')"><a ui-sref="rental.customer">{{'customerInfo'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:rentalMng:customer')"><a>{{'customerInfo'| translate}}</a></li>
         </ul>
       </div>
     </div>
@@ -36,9 +43,12 @@
       </span>
       <div ng-show="submenuShow2" ng-mouseleave="submenuShow2=false">
         <ul>
-          <li ng-click=""><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
-          <li ng-click=""><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
-          <li ng-click=""><a ui-sref="rental.profitStatistics">{{'rentalProfit'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:income')"><a ui-sref="rental.incomeStatistics">{{'incomeStatistics'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:income')"><a>{{'incomeStatistics'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:cost')"><a ui-sref="rental.costStatistics">{{'costStatistics'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:cost')"><a>{{'costStatistics'| translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:profit')"><a ui-sref="rental.profitStatistics">{{'rentalProfit'| translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();" ng-hide="rentalPlatformTopbarCtr.validatePermission('rental:assetMng:profit')"><a >{{'rentalProfit'| translate}}</a></li>
         </ul>
       </div>
     </div>
