@@ -10,8 +10,8 @@
     </ol>
   </section>
 
-  <div class="container-fluid">
-    <div class="row info-box-container">
+  <div class="container-fluid" >
+    <div class="row info-box-container"  presentation-href="rental:machinemng:currentState:topNavigation">
       <div class="col-lg-2 col-md-2">
         <div class="info-card" ng-click="machineCurrentStatusCtr.machineStatusLoadData()">
           <div class="info-title">{{'rentalMachineTotal'|translate}}</div>
@@ -88,13 +88,13 @@
                 <button class="btn btn-default" type="button"
                         ng-click="machineCurrentStatusCtr.searchConditions=null">{{'reset'|translate}}
                 </button>
-                <button class="btn btn-primary" type="button"
+                <button class="btn btn-primary" type="button" presentation-href="rental:machinemng:currentState:query"
                         ng-click="machineCurrentStatusCtr.loadMachineData(0,machineCurrentStatusCtr.pageSize,null,machineCurrentStatusCtr.searchConditions)">
                   {{'query'|translate}}
                 </button>
               </div>
               <div class="col-md-3">
-                <button class="btn btn-primary ng-binding pull-right" type="button"
+                <button class="btn btn-primary ng-binding pull-right" type="button" presentation-href="rental:machinemng:currentState:addMachine"
                         ng-click="machineCurrentStatusCtr.addMachine()">{{'rentalNewMachine'|translate}}
                 </button>
               </div>
@@ -120,10 +120,10 @@
                 {{row.lastDataUploadTime| date:'yyyy-MM-dd HH:mm:ss':machineCurrentStatusCtr.timezone}}
               </td>
               <td data-title="'operation'|translate" style="text-align: center">
-                <button type="button" class="btn  btn-danger btn-xs"
+                <button type="button" class="btn  btn-danger btn-xs"   presentation-href="rental:machinemng:currentState:modify"
                         ng-click="machineCurrentStatusCtr.machineMng(row.machineLicenseId)">{{'rentalEdit'|translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs" presentation-href="rental:machinemng:currentState:monitor"
                         ng-click="machineCurrentStatusCtr.machineMonitor(row.machineLicenseId)">
                   {{'equipmentMonitoring'|translate}}
                 </button>
