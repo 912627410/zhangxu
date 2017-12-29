@@ -1774,6 +1774,28 @@
       });
     }
 
+    vm.viewCancelLockInputMsg = function (devicenum) {
+      vm.queryCode = 5;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/ViewKeyInputConfirmation.html',
+        controller: 'ViewKeyInputConfirmationController as ViewKeyInputConfirmationController',
+        backdrop: false,
+        resolve: {
+          deviceinfo: function () {
+            return vm.deviceinfo;
+          },
+          queryCode: function () {
+            return vm.queryCode;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+        vm.cancelLockKeyboardMsg = result;
+      }, function () {
+        //取消
+      });
+    };
 
 
     //发送回传地址信息
