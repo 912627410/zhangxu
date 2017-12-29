@@ -12,6 +12,7 @@
   /** @ngInject */
   function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages) {
     var vm = this;
+    vm.operatorInfo = $rootScope.userInfo;
     vm.rentalOrder={};
     var path="/rental/order";
     //订单车辆类型 List
@@ -62,11 +63,7 @@
     //初始化高度
     vm.adjustWindow($window.innerHeight);
 
-
-
-    var path="/rental/order";
-    vm.operatorInfo =$rootScope.userInfo;
-
+    //取消
     vm.cancel = function () {
       $uibModalInstance.close();
     };
@@ -113,54 +110,6 @@
       Notification.error('获取高度失败');
     })
 
-
-
-    // 订单关联车辆
-    vm.addMachine=function (size,machineOption,machineType) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/newOrderMoveMachine.html',
-        controller: 'newOrderMoveMachineController',
-        controllerAs:'newOrderMoveMachineCtrl',
-        size: size,
-        backdrop: false,
-        resolve: {
-          machineOption: function () {
-            return machineOption;
-          },
-          machineType: function () {
-            return machineType;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (result) {
-        vm.orderMachineVoList=result;
-      }, function () {
-      });
-    };
-
-
-    // 日期控件相关
-    // date picker
-    vm.startDateOpenStatus = {
-      opened: false
-    };
-
-    vm.startDateOpen = function ($event) {
-      vm.startDateOpenStatus.opened = true;
-    };
-
-    vm.endDateOpenStatus = {
-      opened: false
-    };
-
-    vm.endDateOpen = function ($event) {
-      vm.endDateOpenStatus.opened = true;
-    };
-
-
     //组织树的显示
     vm.openTreeInfo=function() {
       treeFactory.treeShow(function (selectedItem) {
@@ -168,29 +117,10 @@
       });
     }
 
-
     vm.ok = function (rentalOrder) {
       if(rentalOrder.endDate==null||rentalOrder.startDate==null||rentalOrder.endDate==undefined||rentalOrder.startDate==undefined){
         Notification.error(languages.findKey('selTime'));
       }
-      // if(vm.jcOption.quantity!= null||vm.zbOption.quantity!= null||vm.qbOption.quantity!= null){
-      //   if(vm.jcOption.quantity!= null){
-      //     if(vm.jcOption.deviceHeightType == null||vm.jcOption.deviceManufacture == null||vm.jcOption.price ==null){
-      //       alert(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //   }
-      //   if(vm.zbOption.quantity!= null){
-      //     if(vm.zbOption.deviceHeightType == null||vm.zbOption.deviceManufacture == null||vm.zbOption.price==null){
-      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //   }
-      //   if(vm.qbOption.quantity!= null){
-      //     if(vm.qbOption.deviceHeightType == null||vm.qbOption.deviceManufacture == null||vm.qbOption.price==null){
-      //       Notification.error(languages.findKey('请填写完整的一条信息，包括数量，高度，品牌，单价!'));
-      //     }
-      //
-      //   }
-      // }
 
 
       vm.rentalOrder.jc = vm.jcOption.quantity;
@@ -207,7 +137,8 @@
          vm.rentalOrderMachineTypeVos.push(vm.zbOption)
        }
 
-        vm.rentalOrder.org= vm.rentalOrder.rentalCustomer.org;
+        //订单所属组织为客户的所属组织
+        vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
         vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
        vm.addRentalOrderOption.orderVo = vm.rentalOrder;
@@ -216,9 +147,11 @@
 
         var rspdata = serviceResource.restAddRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
         rspdata.then(function (data) {
-          // $uibModalInstance.close(data.content);
           Notification.success(languages.findKey('newOrderSucc'));
-          $uibModalInstance.close(data.content);
+          var result = data.content.orderVo;
+          result.customerName = result.rentalCustomer.name;
+          result.realNumber = 0;
+          $uibModalInstance.close(result);
         },function (reason) {
           Notification.error(reason.data.message);
         })
@@ -229,7 +162,6 @@
 
     //选择订单客户
     vm.selectCustomer = function (size) {
-
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalCustomerListMng.html',
@@ -248,12 +180,6 @@
       }, function () {
       });
     };
-
-
-
-
-
-
 
   }
 })();

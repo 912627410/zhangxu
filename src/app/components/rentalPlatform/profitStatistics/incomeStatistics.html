@@ -1,27 +1,27 @@
-<div class="profit-content" ng-controller="incomeStatisticsController as incomeStatisticsCtr" resize>
+<div class="machine-content"  resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'incomeStatistics'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
+      <li class="active"><i class="fa fa-credit-card "></i>{{'incomeStatistics'| translate}}</li>
+    </ol>
+  </section>
   <div id="income" class="container-fluid  profitItem ">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-money"></i>{{'assetMng'| translate}}</a></li>
-        <li class="active"><i class="fa fa-credit-card "></i>{{'incomeStatistics'| translate}}</li>
-      </ol>
-    </section>
-
     <div class="row info-box-container">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height">
-              <img class="profit-info-height"  style="max-width: 6vw;width:80px;padding-left: 25px;"
-                   src="assets/images/shouru.png"/>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height">
+              <img class="profit-info-height"  style="width:70px;padding-left: 5px;"
+                   src="assets/images/icon_money.png"/>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalTotalIncome'|translate}}</span>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height ">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.totalIncome}}</span>
             </div>
           </div>
@@ -31,14 +31,14 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height">
-              <img class="profit-info-height"  style="max-width: 6vw;width:80px;padding-left: 25px;"
-                   src="assets/images/orderlist_shear.png"/>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height">
+              <img class="profit-info-height"  style="width:70px;padding-left: 5px;"
+                   src="assets/images/icon_Shear.png"/>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalScissorLiftIncome'|translate}}</span>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height ">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.jcTotalIncome}}</span>
             </div>
           </div>
@@ -47,14 +47,14 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height">
-              <img class="profit-info-height"  style="max-width: 6vw;width:80px;padding-left: 25px;"
-                   src="assets/images/orderlist_straight.png"/>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height">
+              <img class="profit-info-height"  style="width:70px;padding-left: 5px;"
+                   src="assets/images/icon_Straight.png"/>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalBoomLiftIncome'|translate}}</span>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height ">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.zbTotalIncome}}</span>
             </div>
           </div>
@@ -63,14 +63,14 @@
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height">
-              <img class="profit-info-height"  style="max-width: 6vw;width:80px;padding-left: 25px;"
-                   src="assets/images/orderlist_crank.png"/>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height">
+              <img class="profit-info-height"  style="width:70px;padding-left: 5px;"
+                   src="assets/images/icon_melody.png"/>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 profit-info-height" style="text-align: center;">
               <span class="profit-info-height">{{'rentalArticulatingBoomLiftIncome'|translate}}</span>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 profit-info-height ">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height ">
               <span class="info-box-number" >¥{{incomeStatisticsCtr.qbTotalIncome}}</span>
             </div>
           </div>
@@ -90,8 +90,7 @@
               <option value="2">{{'rentalByMachine'|translate}}</option>
             </select>
           </div>
-
-        </form>
+          </form>
       </div>
       <div  class=" col-md-9" ng-show="incomeStatisticsCtr.orderQuery">
         <form class="form-horizontal" role="form">
@@ -144,7 +143,8 @@
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}" required readonly="readonly" />
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.startDateOpenDeviceData($event)">
+                                <i class="glyphicon glyphicon-calendar"></i></button>
 
 
                           </span>
@@ -161,7 +161,8 @@
                          clear-text="{{'cleanUp'|translate}}"
                          close-text="{{'close'|translate}}" required readonly="readonly" />
                   <span class="input-group-btn">
-                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              <button type="button" class="btn btn-default" ng-click="incomeStatisticsCtr.endDateOpenDeviceData($event)">
+                                <i class="glyphicon glyphicon-calendar"></i></button>
                           </span>
                 </p>
               </div>
@@ -263,7 +264,7 @@
       </div>
     </div>
 
-    <div class="row incomePic table-wrapper paddingBotom0"  style="margin-top: 15px;">
+    <div class="container-fluid incomePic table-wrapper paddingBotom0"  style="margin-top: 15px;">
       <div class="col-md-6 leftSelect">
         <div class="liBox" >
           <div class="row" ng-show="incomeStatisticsCtr.orderQuery">

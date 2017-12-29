@@ -1,46 +1,48 @@
 <div class="modal-body" ng-controller="machineMonitorWaringController as vm">
   <input type="hidden" ng-model="vm.deviceInfo">
   <div class="row">
-    <div class="col-md-2">
-      <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.queryStartDate" is-open="openStartDate"
-               ng-required="true" max-date="vm.queryEndDate"
-               current-text="{{'today'|translate}}"
-               clear-text="{{'cleanUp'|translate}}"
-               close-text="{{'close'|translate}}"/>
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openStartDate=true">
-              <i class="glyphicon glyphicon-calendar"></i>
-            </button>
-        </span>
-      </p>
-    </div>
-    <div class="col-md-2">
-      <label class="control-label font-nomal">{{'endDate'|translate}}:</label>
-    </div>
-    <div class="col-md-3">
-      <p class="input-group">
-        <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
-               ng-model="vm.queryEndDate" is-open="openEndDate"
-               ng-required="true" current-text="{{'today'|translate}}"
-               clear-text="{{'cleanUp'|translate}}"
-               close-text="{{'close'|translate}}"/>
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="openEndDate=true">
-              <i class="glyphicon glyphicon-calendar"></i></button>
-        </span>
-      </p>
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary" type="button"
-              ng-click="vm.getDeviceWarningData(0,vm.pageSize,null,'record_time,desc',vm.deviceInfo.licenseId,vm.queryStartDate,vm.queryEndDate)">
-        {{'confirm'|translate}}
-      </button>
-    </div>
+    <form   class="form-horizontal">
+      <div class="col-md-1">
+        <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="vm.queryStartDate" is-open="openStartDate"
+                 ng-required="true" max-date="vm.queryEndDate"
+                 current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openStartDate=true">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-1">
+        <label class="control-label font-nomal">{{'endDate'|translate}}:</label>
+      </div>
+      <div class="col-md-3">
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="vm.queryEndDate" is-open="openEndDate"
+                 ng-required="true" current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openEndDate=true">
+                <i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary" type="button"
+                ng-click="vm.getDeviceWarningData(0,vm.pageSize,null,'record_time,desc',vm.deviceInfo.licenseId,vm.queryStartDate,vm.queryEndDate)">
+          {{'confirm'|translate}}
+        </button>
+      </div>
+      </form>
   </div>
   <div class="row">
     <div class="col-md-12">

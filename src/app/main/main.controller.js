@@ -15,7 +15,7 @@
     if (userInfo == null) {
       $rootScope.$state.go("entry");
     }
-
+    var orgTenantType = $rootScope.userInfo.userdto.organizationDto.tenantType;
     $scope.$on('$stateChangeSuccess', function (evt, toState, toParams, fromState, fromParams) {
       if (fromState.name=='selectApp'&& toState.name=='home'){
         $rootScope.$state.go("home");
@@ -24,16 +24,16 @@
     });
 
     //验证用户类别
-    if (userInfo.tenantType != null && userInfo.tenantType != '' && userInfo.tenantType!=undefined) {
-      var userTypes = userInfo.tenantType.split(",");
+    if (orgTenantType != null && orgTenantType != '' && orgTenantType!=undefined) {
+      var orgTypes = orgTenantType.split(",");
 
-      if (userTypes.length >= 2) {
+      if (orgTypes.length >= 2) {
         //如果多种类型的用户,给出选择框进入系统
         $rootScope.$state.go('selectApp');
         return;
       }
       //增加判断是不是租赁平台的用户,如果是直接转到租赁的页面.1:代表物联网用户,2代表租赁用户如果有拥有多种类型中间逗号隔开.例如1,2既是物联网用户又是租赁用户
-      if (userInfo.tenantType == '2') {
+      if (orgTenantType == '2') {
         $rootScope.$state.go('rental');
         return;
       }

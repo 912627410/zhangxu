@@ -1,15 +1,16 @@
 <div class="machine-content" resize>
+  <section class="content-header">
+    <h1>
+      <small>{{'customerInfo'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</li>
+      <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
+    </ol>
+  </section>
   <!--currentState begin-->
   <div id="currentState" class="container-fluid">
-    <section class="renatlcontent-header">
-      <h1>
-        <small>{{'rentalCurrentLocate'|translate}}:</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</a></li>
-        <li class="active"><i class="fa  fa-user"></i>{{'customerInfo'| translate}}</li>
-      </ol>
-    </section>
     <div class="row info-box-container">
       <div class="col-lg-3 col-md-3">
         <div class="info-card">
@@ -32,16 +33,14 @@
             <label class="col-md-1 control-label font-nomal">{{'rentalPhoneNumber'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="mobile" class="form-control"  ng-model="rentalCustomerMngController.customer.mobile"
-                     placeholder="{{'rentalPhoneNumber'|translate}}" />
+                     placeholder="{{'rentalPhoneNumber'|translate}}"  />
             </div>
 
             <label class="col-md-1 control-label font-nomal">{{'rentalOrganization'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-
-                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" required/>
+                <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}" ng-model="rentalCustomerMngController.org.label" name="org" readonly />
                 <span class="input-group-btn">
-            <!--打开组织树-->
                   <button type="button" class="btn btn-default" ng-click="rentalCustomerMngController.openTreeInfo()">
                     <i class="fa fa-sitemap"></i>
                   </button>

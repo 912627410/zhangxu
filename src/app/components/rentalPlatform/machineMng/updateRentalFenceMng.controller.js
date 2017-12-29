@@ -82,7 +82,7 @@
      *
      * @param zoomsize
      */
-    vm.initMap = function (mapId, zoomsize,longitude,latitude) {
+    vm.initMap = function (mapId, zoomsize,radius,longitude,latitude) {
       $LAB.setGlobalDefaults({AllowDuplicates: true, CacheBust: true});
       $LAB.script({src: AMAP_PLACESEARCH_URL, type: "text/javascript"}).wait(function () {
         //初始化地图对象
@@ -95,7 +95,7 @@
         /*var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近*/
         var localCenterAddr=[,];
         if (zoomsize == null || zoomsize == undefined) {
-          zoomsize = 5;
+          zoomsize = 4;
         }
         if(longitude==null||longitude==undefined){
           longitude=103.39;
@@ -163,7 +163,6 @@
           map.addControl(circleEditor);
         });
 
-
         //构造地点查询类
         map.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], function () {
           var autoOptions = {
@@ -184,11 +183,16 @@
           });
         });
 
+        //在地图中添加聚类插件
+        map.plugin(["AMap.MarkerClusterer"], function() {
+          var cluster = new AMap.MarkerClusterer(map, []);
+        });
+
         //当点击地图的时候
         map.on('click', function (e) {
           //如果地图上有圆,重新绘制
           if (circle != null) {
-            vm.initMap("newOrderMap", 14)
+            vm.initMap("newOrderMap", vm.scopeMap.getZoom(),vm.rentalOrgFence.radius,e.lnglat.getLng(), e.lnglat.getLat())
           }
           var lnglatXY = [e.lnglat.getLng(), e.lnglat.getLat()];
           vm.rentalOrgFence.longitude = e.lnglat.getLng();
@@ -211,7 +215,7 @@
     };
 
     //加载地图
-    vm.initMap("newOrderMap", 14,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
+    vm.initMap("newOrderMap", 14,vm.rentalOrgFence.radius,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
 
 
     /**
@@ -251,6 +255,7 @@
         var lnglatXY = [vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude];
         circle = createCircle(lnglatXY, vm.rentalOrgFence.radius);
         circle.setMap(map);
+        map.setFitView();
         var circleEditor = new AMap.CircleEditor(map, circle);
         //监听圆移动
         AMap.event.addListener(circleEditor, "move", function (e) {
@@ -287,7 +292,7 @@
      * @param radius
      */
     vm.adjustCircleRadius = function (radius) {
-      vm.initMap("initMap", vm.scopeMap.getZoom());
+      vm.initMap("newOrderMap",vm.scopeMap.getZoom(),radius,vm.rentalOrgFence.longitude, vm.rentalOrgFence.latitude);
     };
 
   }

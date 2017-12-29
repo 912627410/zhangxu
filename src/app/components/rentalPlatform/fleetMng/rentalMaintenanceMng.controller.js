@@ -247,7 +247,7 @@
         templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalMaintenanceMng.html',
         controller: 'newRentalMaintenanceController',
         controllerAs:'newRentalMaintenanceCtrl',
-        size: 'lg'
+        size: 'super-lgs',
       });
        modalInstance.result.then(function (newMaintence) {
         vm.totalOrders += 1;

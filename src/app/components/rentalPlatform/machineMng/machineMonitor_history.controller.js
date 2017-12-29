@@ -10,7 +10,7 @@
     .controller('machineMonitorHistoryController', machineMonitorHistoryController);
 
   /** @ngInject */
-  function machineMonitorHistoryController($rootScope, $window, $scope, $http, $location, $timeout, $filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY) {
+  function machineMonitorHistoryController($filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY,languages) {
     var vm = this;
     //获取共享数据deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
@@ -19,9 +19,9 @@
     var date = new Date();
     //查询开始时间默认为昨天
     date.setDate(date.getDate() - 1);
-    vm.startDateDeviceData = date;
+    vm.queryStartDate = date;
     //结束时间
-    vm.endDateDeviceData = new Date();
+    vm.queryEndDate = new Date();
 
     vm.startDateOpenStatusDeviceData = {
       opened: false
@@ -43,9 +43,7 @@
       startingDay: 1
     };
 
-
     vm.timezone='new Date(2017,1,1).toString().match(/\+[0-9]+|\-[0-9]+/)';
-
 
     /**
      * 获取历史运行信息
@@ -58,26 +56,39 @@
      */
     vm.getHistoryRunData = function (page, size, sort, deviceNum, queryStartDate, queryEndDate) {
       var restCallURL = RENTAL_DEVCE_DATA_PAGED_QUERY;
-      //时间参数
-      if (queryStartDate && queryEndDate) {
-        //开始时间
-        var formatStartDate = $filter('date')(queryStartDate, 'yyyy-MM-dd HH:mm:ss');
-        restCallURL += "?startDateDeviceData=" + formatStartDate;
+      if (queryStartDate) {
+        queryStartDate = serviceResource.getChangeChinaTime(queryStartDate);
+        var startMonth = queryStartDate.getMonth() + 1;  //getMonth返回的是0-11
+        var startDateFormated = queryStartDate.getFullYear() + '-' + startMonth + '-' + queryStartDate.getDate() + ' ' + queryStartDate.getHours() + ':' + queryStartDate.getMinutes() + ':' + queryStartDate.getSeconds();
+        if (restCallURL) {
+          restCallURL += "?startDate=" + startDateFormated;
+        }
+        else {
+          restCallURL += "startDate=" + startDateFormated;
+        }
+      }else {
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
+        return;
+      }
 
-        //结束时间
-        var formatEndDate = $filter('date')(queryEndDate, 'yyyy-MM-dd HH:mm:ss');
-        restCallURL += "&endDateDeviceData=" + formatEndDate;
-      } else {
-        Notification.error("输入的时间格式有误,格式为:HH:mm:ss,如09:32:08(9点32分8秒)");
+      if (queryEndDate) {
+        queryEndDate = serviceResource.getChangeChinaTime(queryEndDate);
+        var endMonth = queryEndDate.getMonth() + 1;  //getMonth返回的是0-11
+        var endDateFormated = queryEndDate.getFullYear() + '-' + endMonth + '-' + queryEndDate.getDate() + ' ' + queryEndDate.getHours() + ':' + queryEndDate.getMinutes() + ':' + queryEndDate.getSeconds();
+        if (restCallURL) {
+          restCallURL += "&endDate=" + endDateFormated;
+        }
+        else {
+          restCallURL += "endDate=" + endDateFormated;
+        }
+      }else {
+        Notification.error(languages.findKey('theInputTimeFormatIsIncorrect')+","+languages.findKey('theFormatIs')+":HH:mm:ss,如09:32:08(9点32分8秒)");
         return;
       }
 
       if (deviceNum) {
         restCallURL += "&deviceNum=" + deviceNum;
       }
-
-      console.log(restCallURL);
-
       var pageUrl = page || 0;
       var sizeUrl = size || vm.pageSize;
       var sortUrl = sort || "dataGenerateTime,desc";
@@ -99,5 +110,6 @@
     }
 
    // vm.getHistoryRunData(0,vm.pageSize,'dataGenerateTime,desc',vm.deviceInfo.deviceNum,vm.queryStartDate,vm.queryEndDate);
+
   }
 })();

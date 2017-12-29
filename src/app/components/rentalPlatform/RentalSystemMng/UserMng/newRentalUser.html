@@ -1,0 +1,96 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{'newUser'|translate}}</h3>
+</div>
+<form name="newUserForm" class="form-horizontal" ng-submit="newRentalUserCtrl.ok(newRentalUserCtrl.newUser)">
+    <div class="modal-body">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="ssn" class="col-sm-2 control-label">{{'userName'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="ssn" class="form-control" placeholder="{{'userName'|translate}}" ng-model="newRentalUserCtrl.newUser.ssn" name="ssn" required/>
+                    </div>
+                </div>
+
+              <div class="form-group">
+                <label for="org" class="col-sm-2 control-label">{{'organisation'|translate}}</label>
+                <!--<div ng-controller="orgController as orgCtrl1">-->
+                <!--<button uib-popover-template="updateUserinfoCtrl.dynamicPopover.templateUrl" popover-title="{{updateUserinfoCtrl.dynamicPopover.title}}" type="button" class="btn btn-default">组织机构</button>-->
+                <!--</div>-->
+                <div class="col-sm-10">
+                  <p class="input-group">
+                    <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="newRentalUserCtrl.newUser.organizationDto.label" name="org" readonly required/>
+                    <span class="input-group-btn">
+                       <!--打开组织树-->
+                      <button type="button" class="btn btn-default" ng-click="newRentalUserCtrl.openTreeInfo()">
+                        <i class="fa fa-sitemap"></i>
+                      </button>
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+                <div class="form-group">
+                    <label for="lastName" class="col-sm-2 control-label">{{'laseName'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="lastName" class="form-control" placeholder="{{'laseName'|translate}}" ng-model="newRentalUserCtrl.newUser.lastname" name="lastName" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="firstName" class="col-sm-2 control-label">{{'firstName'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="firstName" class="form-control" placeholder="{{'firstName'|translate}}" ng-model="newRentalUserCtrl.newUser.firstname" name="firstName" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-sm-2 control-label">{{'phoneNumber'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="mobile" class="form-control" placeholder="{{'phoneNumber'|translate}}" ng-model="newRentalUserCtrl.newUser.mobile" name="mobile" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">{{'email'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="email" id="email" class="form-control" placeholder="{{'email'|translate}}" ng-model="newRentalUserCtrl.newUser.email" name="email"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label">{{'address'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="address" class="form-control" placeholder="{{'address'|translate}}" ng-model="newRentalUserCtrl.newUser.address" name="address" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">{{'password'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="password" class="form-control" placeholder="{{'password'|translate}}" ng-model="newRentalUserCtrl.newUser.password" name="password" validator="numberAndCharForPass"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="col-sm-2 control-label">{{'repeatPassword'|translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="{{'repeatPassword'|translate}}" ng-model="newRentalUserCtrl.newUser.confirmPassword" name="confirmPassword" data-match="newRentalUserCtrl.newUser.password" validator="numberAndCharForPass"/>
+                      <div class="text-red" data-ng-show="newUserForm.confirmPassword.$error.match">{{'mismatching'|translate}}</div>
+                    </div>
+                </div>
+
+              <div class="form-group">
+                <label for="email" class="col-sm-2 control-label"></label>
+                <div class="form-group col-sm-10">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="locationAlarmReceiver" ng-model="newRentalUserCtrl.locationAlarmReceiverChk" id="locationAlarmReceiver">
+                      {{'AbnormalAlarmReceivingMachine'|translate}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-show="newUserForm.confirmPassword.$valid">{{'rentalAdd'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="newRentalUserCtrl.cancel()">{{'cancel'|translate}}</button>
+    </div>
+</form>

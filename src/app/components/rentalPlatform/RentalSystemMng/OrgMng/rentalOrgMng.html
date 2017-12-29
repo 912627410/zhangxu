@@ -1,0 +1,77 @@
+<div class="machine-content" resize>
+  <!--导航栏-->
+  <section class="content-header">
+    <h1>
+      <small>{{'orgManagement'| translate}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      {{'rentalCurrentLocate'|translate}}:
+      <li><a href="#"><i class="fa fa-home"></i>{{'systemManagement'| translate}}</a></li>
+      <li class="active"><i class="fa  fa-user"></i>{{'orgManagement'| translate}}</li>
+    </ol>
+  </section>
+
+  <div  class="container-fluid ">
+    <div class="row info-box-container table-wrapper">
+      <div class="col-sm-4 col-md-4">
+        <div class="input-group ">
+          <input type="text" class="form-control" ng-model="rentalOrgMngCtrl.searchText" placeholder="Search" >
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="rentalOrgMngCtrl.search(rentalOrgMngCtrl.searchText)">{{'search'|translate}}</button>
+            <button class="btn btn-default" type="button" ng-click="rentalOrgMngCtrl.reset(rentalOrgMngCtrl.searchText)">{{'reset'|translate}}</button>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-7 col-md-7 pull-right" >
+        <div class="btn btn-primary" type="button"  ng-click="rentalOrgMngCtrl.updateOrg()">{{'alter'|translate}}</div>
+        <div class="btn btn-danger"  type="button"  ng-click="rentalOrgMngCtrl.addOrg()">{{'add'|translate}}</div>
+     </div>
+    </div>
+  </div>
+  <div class=" row info-box-container table-wrapper">
+    <div class="col-md-5">
+      <div >
+        <div >
+          <abn-tree tree-data="rentalOrgMngCtrl.my_data" tree-control="treeController"
+                    on-select="rentalOrgMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                    expand-level="2"></abn-tree>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-5" style="border: 1px solid #ddd;margin-top: 20px;">
+    <table class="table table-striped" >
+      <caption style="color:#292828;text-align: left;
+    font-size: 18px;"><strong>{{'organizationInformation' | translate}}：</strong></caption>
+      <tbody>
+      <tr>
+        <td>{{'parentOrganization' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedParentOrg}}</td>
+      </tr>
+      <tr>
+        <td>{{'organizationName' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedOrg.label}}</td>
+      </tr>
+      <tr>
+        <td>{{'organizationAbbreviation' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedOrg.orgSimpleName}}</td>
+      </tr>
+      <tr ng-show="rentalOrgMngCtrl.isShow">
+        <td>{{'legalRepresentative' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedOrg.org_legalRepresentative}}</td>
+      </tr>
+      <tr ng-show="rentalOrgMngCtrl.isShow">
+        <td>{{'tellPhoneNumber' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedOrg.orgTellPhone}}</td>
+      </tr>
+      <tr ng-show="rentalOrgMngCtrl.isShow">
+        <td>{{'fax' | translate}}:</td>
+        <td>{{rentalOrgMngCtrl.selectedOrg.orgFax}}</td>
+      </tr>
+      </tbody>
+    </table>
+      </div>
+  </div>
+  </div>

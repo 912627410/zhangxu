@@ -793,7 +793,7 @@
   "rentalInProgress":"进行中",
   "rentalPlan":"计划",
   "rentalComplete":"已结束",
-  "rentalTotalNumberOfMachine": "车辆总数 剪叉/直臂/曲臂",
+  "rentalTotalNumberOfMachine": "车辆总数(实际/计划)",
   "rentalCustomer":"客户",
   "rentalOrganization":"组织",
   "rentalStartingDate":"开始时间",
@@ -825,7 +825,7 @@
   "rentalMaintenanceDescripition":"保养描述",
   "rentalLinkman":"联系人",
   "rentalCustomerPosition":"职位",
-  "rentalCustomerName":"客户名字",
+  "rentalCustomerName":"客户名称",
   "rentalMail":"邮箱",
   "rentalPostcode":"邮编",
   "rentalTel":"电话",
@@ -1557,11 +1557,16 @@
   "goSite":"进场",
   "leaveSite":"退场",
 
+  "goSiteList":"进场单",
+  "goSiteListNumber":"进场单号",
+  "leaveSiteList":"退场单",
+  "leaveSiteListNumber":"退场单号",
+
   "admissionTime":"进场时间",
   "exitTime":"退场时间",
   "workingHoursWhenEntry":"进场工作小时数",
   "workingHoursWhenExit":"退场工作小时数",
-
+  "attachment":"附件",
   "enterDate":"请录入生产日期",
   "connectServerTime":"连接平台用时",
   "wireStatus":"天线状态",
@@ -1572,8 +1577,15 @@
   "NoCalibrationParameter":"没有车辆标定参数数据,请获取最新数据",
   "pleaseChooseTheModeOfOperation":"请选择操作方式",
   "deviceNumNull":"设备号为空",
+  "rightAmount":"请填写正确的金额格式(实例格式：100,100.0,100.00)",
+
   "maxValue":"不能大于",
-  "minValue":"不能小于"
+  "minValue":"不能小于",
+  "nonspecificChar":"不能包含~%&',;=?$[]{}这些特殊字符",
+  "telephoneNoNotLegal":"请输入正确的手机号码",
+  "postcodesNotLegal":"请输入正确的邮编",
+  "exitTimeFormatIsNotCorrect": "输入的时间格式不对，格式应为:yyyy-MM-dd HH:mm:ss"
+
 
 
 

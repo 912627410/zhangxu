@@ -179,6 +179,7 @@
         restCallURL += "&search_DGTE_locateDateTime=" + $filter('date')(startDate, 'yyyy-MM-dd');
       }
       if (null != vm.endDate ) {
+        var endDate = new Date(vm.endDate.getTime() + 1000*3600*24);
         vm.endDate = serviceResource.getChangeChinaTime(endDate);
         restCallURL += "&search_DLTE_locateDateTime=" + $filter('date')(vm.endDate, 'yyyy-MM-dd');
       }

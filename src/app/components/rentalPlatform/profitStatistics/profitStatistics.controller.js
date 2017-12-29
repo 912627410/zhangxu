@@ -127,7 +127,7 @@
         quarter = 3;
       }
 
-      if(date.getMonth()>8&&date.getMonth()<11){
+      if(date.getMonth()>8&&date.getMonth()<12){
         quarter = 4;
       }
       return quarter;

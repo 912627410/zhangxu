@@ -1,10 +1,8 @@
 <header class="renatlHeader">
-
   <a ui-sref="rental" class="logo navbar-static-top">
     <img src='assets/images/logo4.png' height="36">
   </a>
   <nav class="navbar navbar-static-top" role="navigation">
-
     <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(0)" ng-mouseover="submenuShow=true"  ng-mouseleave="submenuShow=false">
       <span ng-init="submenuShow=false">
          {{'vehicleManagement'|translate}}
@@ -44,6 +42,17 @@
         </ul>
       </div>
     </div>
+    <div class="sidebar-toggle center" role="button" ng-click="rentalPlatformTopbarCtr.topButtonClick(3)" ng-mouseover="submenuShow3=true" ng-mouseleave="submenuShow3=false">
+      <span ng-mouseover="submenuShow3=true" ng-init="submenuShow3=false">
+         {{'systemManagement'|translate}}
+      </span>
+      <div ng-show="submenuShow3" ng-mouseleave="submenuShow3=false">
+        <ul>
+          <li ng-click=""><a ui-sref="rental.orgMng">{{'orgManagement' | translate}}</a></li>
+          <li ng-click=""><a ui-sref="rental.userMng">{{'userManagement' | translate}}</a></li>
+        </ul>
+      </div>
+    </div>
     <a class="settingBox">
       <span ng-click="settingItemShow=true" ng-init="settingItemShow=false" ng-hide="settingItemShow"><i
         class="fa fa-bars"></i></span>
@@ -52,7 +61,7 @@
       <ul ng-show="settingItemShow">
         <li>{{'profile'|translate}}</li>
         <li>{{'setting'|translate}}</li>
-        <li>{{'logout'|translate}}</li>
+        <li ng-click="rentalPlatformTopbarCtr.logout()">{{'logout'|translate}}</li>
       </ul>
     </a>
 
@@ -85,6 +94,14 @@
             <img src="assets/images/pic-02.jpg" width="17" height="11" style="margin-top: -1px;">&nbsp;English
           </a>
         </li>
+
+        <li ui-sref="rental.account" role="button" ng-if="userInfo">
+          <a style="padding-top: 15px;padding-bottom: 15px;">
+            <i class="glyphicon glyphicon-user" >
+            </i>
+          </a>
+        </li>
+
         <li class="user user-menu">
           <a ng-click="rentalPlatformTopbarCtr.logout()" href="">{{'logout'|translate}}</a>
         </li>

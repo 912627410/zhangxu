@@ -179,9 +179,9 @@
           content += languages.findKey('deviceType')+":" +(item.machineType==null ?'无':languages.findKey(item.machineType)) + "<br/>";
           content += languages.findKey('rentalBrand')+":" +(item.manufacture==null ?'无':languages.findKey(item.manufacture)) + "<br/>";
           content += languages.findKey('rentalHeight')+":" +(item.deviceHeight==null ?'无':languages.findKey(item.deviceHeight)) + "<br/>";
-          content += languages.findKey('maintenanceReminder')+":" +(item.deviceHeight==null ?'无':item.maintenanceReminder) + "<br/>";
-          content += languages.findKey('lastMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.lastMaintenanceDate) + "<br/>";
-          content += languages.findKey('nextMaintenanceDate')+":" +(item.deviceHeight==null ?'无':item.nextMaintenanceDate) + "<br/>";
+          content += languages.findKey('maintenanceReminder')+":" +(item.maintenanceReminder==null ?'无':item.maintenanceReminder) + "<br/>";
+          content += languages.findKey('lastMaintenanceDate')+":" +(item.lastMaintenanceDate==null ?'无':item.lastMaintenanceDate) + "<br/>";
+          content += languages.findKey('nextMaintenanceDate')+":" +(item.nextMaintenanceDate==null ?'无':item.nextMaintenanceDate) + "<br/>";
         }
         // 定义中部内容
         var middle = document.createElement("div");
@@ -255,6 +255,94 @@
 
       return marker;
     };
+
+
+
+    var addFenceMarker=function(mapObj,item){
+      var mapObj = mapObj;
+      //实例化信息窗体
+      var infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        offset: new AMap.Pixel(15, -43)//-113, -140
+      });
+
+      var marker = new AMap.Marker({
+        map: mapObj,
+        position: new AMap.LngLat(item.longitude, item.latitude), //基点位置
+      });
+
+      AMap.event.addListener(marker, 'click',function () { //鼠标点击marker弹出自定义的信息窗体
+        infoWindow.open(mapObj, marker.getPosition());
+        //title内容
+        var title =languages.findKey('name')+": "
+
+        if(item.fenceName != null){
+          title = languages.findKey('name')+": "+item.fenceName;
+        }
+        //窗体内容
+        var contentInfo="";
+        contentInfo += languages.findKey('longitude')+": "+(item.longitude==null ?'':$filter('number')(item.longitude,2))+"<br/>";
+        contentInfo += languages.findKey('latitude')+": "+(item.latitude==null ?'':$filter('number')(item.latitude,2))+"<br/>";
+        contentInfo += languages.findKey('radius')+":" +(item.radius==null ?'':item.radius) + "<br/>";
+        contentInfo += languages.findKey('address')+":" +(item.fenceAddress==null ?'':item.fenceAddress) + "<br/>";
+
+        var info = createInfoWindow(title, contentInfo,mapObj);
+        //设置窗体内容
+        infoWindow.setContent(info);
+
+        mapObj.panTo([item.longitude, item.latitude]);
+
+      });
+      //构建自定义信息窗体
+      function createInfoWindow(title, content) {
+        var info = document.createElement("div");
+        info.className = "info";
+        //可以通过下面的方式修改自定义窗体的宽高
+        info.style.width = "220px";
+        // 定义顶部标题
+        var top = document.createElement("div");
+        var titleD = document.createElement("div");
+        var closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
+        closeX.src = "http://webapi.amap.com/images/close2.gif";
+        closeX.onclick = closeInfoWindow;
+
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
+
+        // 定义中部内容
+        var middle = document.createElement("div");
+        var mcont = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        mcont.innerHTML = content;
+
+        middle.appendChild(mcont);
+        info.appendChild(middle);
+
+        // 定义底部内容
+        var bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        var sharp = document.createElement("img");
+        sharp.src = "http://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+      };
+
+      function closeInfoWindow() {
+        mapObj.clearInfoWindow();
+      };
+
+      return marker;
+    }
+
+
 
     /**
      * 点聚合方式展示数据
@@ -333,7 +421,7 @@
         })
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
-      refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
+        refreshMapWithDeviceInfo: function (mapId,deviceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -450,15 +538,14 @@
       refreshMapWithFenceInfo: function (mapId,fenceList,zoomsize,langkey,centeraddr,aggregation,callback,scrollWheel,rental) {
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
-          if (!AMap) {
-            location.reload(false);
-          }
-          var amapRuler, amapScale, toolBar,overView,circleEditor;
+          // if (!AMap) {
+          //   location.reload(false);
+          // }
+          var amapRuler, amapScale, toolBar,overView;
           var localZoomSize = 4;  //默认缩放级别
           if (zoomsize){
             localZoomSize = zoomsize;
           }
-          //var localCenterAddr = [106.13,38.44];//设置中心点大概在银川附近
           var localCenterAddr = [104.06,30.83];//设置中心点大概在重庆附近
           if (centeraddr){
             localCenterAddr = centeraddr;
@@ -505,43 +592,14 @@
             map.addControl(overView);
           });
           //在地图中画圆的插件
-          map.plugin(["AMap.CircleEditor"], function () {
-            circleEditor = new AMap.CircleEditor({
-              visible: true //初始化隐藏鹰眼
-            });
-            map.addControl(circleEditor);
-          });
+          // map.plugin(["AMap.CircleEditor"], function () {
+          //   circleEditor = new AMap.CircleEditor({
+          //     visible: true //初始化隐藏鹰眼
+          //   });
+          //   map.addControl(circleEditor);
+          // });
           //读取所有设备的gps信息，home map使用
           if ($rootScope.userInfo ) {
-            if(fenceList == null){
-              var rspdata = restCallService(HOME_GPSDATA_URL, "GET");
-              rspdata.then(function (data) {
-                var deviceGPSInfo = data.content;  //返回的数组列表
-                var markers =[];
-                for (var i = 0; i < deviceGPSInfo.length; i++) {
-                  if (deviceGPSInfo[i].amaplatitudeNum != null) {
-                    var latitude = deviceGPSInfo[i].amaplatitudeNum;     //纬度
-                  }
-                  if (deviceGPSInfo[i].amaplongitudeNum != null) {
-                    var longitude = deviceGPSInfo[i].amaplongitudeNum;   //经度
-                  }
-                  if (latitude != null && longitude != null) {
-                    // addMarkerModel(map,deviceGPSInfo[i],"http://webapi.amap.com/images/marker_sprite.png");
-                    var marker="assets/images/orangeMarker.png";
-
-                    markers.push(addMarkerModel(map,deviceGPSInfo[i],marker,callback,rental));
-                  }
-                }
-                //是否以点聚合的方式显示
-                if(aggregation){
-                  aggregationShow(map, markers);
-                }
-              }, function (reason) {
-                map.clearMap();
-                Notification.error(languages.findKey('failedToGetDeviceInformation'));
-              })
-            }
-            else{
               var markers =[];
               var drawcircle=function(long,lat,radius){
                 var circle = new AMap.Circle({
@@ -559,24 +617,25 @@
               fenceList.forEach(function(fenceInfo){
                 if ( fenceInfo.longitude != null && fenceInfo.latitude != null) {
                   var markerpic=drawcircle(fenceInfo.longitude,fenceInfo.latitude,fenceInfo.radius);
-                  var marker = new AMap.Marker({
+                  /*var marker = new AMap.Marker({
                     map: map,
                     position: new AMap.LngLat(fenceInfo.longitude, fenceInfo.latitude), //基点位置
-                    icon:new AMap.Icon({
+                    /!*icon:new AMap.Icon({
                       image: markerpic,
-                    })
+                    })*!/
                   });
-               /*   var markerPoint = addMarkerModel(map,fenceInfo,marker,callback,rental);*/
-                  markers.push(marker);
+                  markers.push(marker);*/
+
+                  /*   var markerPoint = addMarkerModel(map,fenceInfo,marker,callback,rental);*/
+                  var markerPoint =addFenceMarker(map,fenceInfo);
+                  markers.push(markerPoint)
                 }
               })
               //是否以点聚合的方式显示
               if(aggregation){
                 aggregationShow(map, markers);
               }
-
-            }
-          }
+          };
         })
       },
 

@@ -139,18 +139,6 @@
         }
       })
 
-      //租赁订单管理--新建订单
-      // .state('rental.newOrder', {
-      //   url: '/newOrder',
-      //   views: {
-      //     'main@rental': {
-      //       templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
-      //       controller: 'newRentalOrderController',
-      //       controllerAs: 'newRentalOrderCtrl'
-      //     }
-      //   }
-      // })
-
       //租赁车辆管理围栏列表
       .state('rental.orgFence', {
         url: '/orgFence',
@@ -220,6 +208,41 @@
             templateUrl: 'app/components/rentalPlatform/profitStatistics/profitStatistics.html',
             controller: 'profitStatisticsController',
             controllerAs: 'profitStatisticsCtr'
+          }
+        }
+      })
+
+      //租赁利润统计
+      .state('rental.orgMng', {
+        url: '/orgMng',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/RentalSystemMng/OrgMng/rentalOrgMng.html',
+            controller: 'rentalOrgMngController',
+            controllerAs: 'rentalOrgMngCtrl'
+          }
+        }
+      })
+      //租赁利润统计
+      .state('rental.userMng', {
+        url: '/userMng',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalUserMng.html',
+            controller: 'rentalUserMngController',
+            controllerAs: 'rentalUserMngCtrl'
+          }
+        }
+      })
+
+      //租赁利润统计
+      .state('rental.account', {
+        url: '/account',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalAccount.html',
+            controller: 'rentalAccountController',
+            controllerAs: 'rentalAccountCtrl'
           }
         }
       })

@@ -23,7 +23,7 @@
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
 
 
-    //加载品牌信息
+    //订单状态List
     var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
     retanlOrderStatusListPromise.then(function (data) {
       vm.retanlOrderStatusList= data;
