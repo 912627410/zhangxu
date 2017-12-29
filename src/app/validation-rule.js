@@ -27,6 +27,7 @@
       //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
       numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
       numberForPass:/^\d{6}$/,
+      numberForSsn:/^\d{7}$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
@@ -102,6 +103,10 @@
       },
       numberForPass: {
         error:"密码为6位数字",
+        success:''
+      },
+      numberForSsn: {
+        error:"系统用户名为7位数字",
         success:''
       },
       telephoneNo: {
