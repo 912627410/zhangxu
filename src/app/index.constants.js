@@ -375,17 +375,6 @@
     .constant('RENTAL_ORDERMACHINETYPE_URL', SERVER_BASE_URL + 'rental/orderMachineType/orderMachineType')   //各时间段利润及同比
 
 
-    .constant('MINEMNG_DISPATCH_SEND', SERVER_BASE_URL + 'minemngDispatch/send')   //发送调度命令
-    .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
-    .constant('MINEMNG_SEND_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/sendTotalDispatch')   //下发总调度
-    .constant('MINEMNG_WORKFACE_LIST', SERVER_BASE_URL + 'minemngWorkface/getWorkfaceList')   //获取工作面列表
-    .constant('MINEMNG_DUMP_FIELD_LIST', SERVER_BASE_URL + 'minemngDumpField/getDumpFieldList')   //获取排土场列表
-    .constant('MINEMNG_FLEET_LIST', SERVER_BASE_URL + 'minemngFleet/getFleetList')   //获取车队列表
-    .constant('MINEMNG_WORK_SHIFT_LIST', SERVER_BASE_URL + 'minemngDispatch/getWorkShiftList')   //获取车队列表
-
-    .constant('MINEMNG_CHECK_POINT', SERVER_BASE_URL + 'minemngCheckPoint/checkPoint')   //check point
-
-
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate')  //报警七天趋势
 
 
@@ -395,7 +384,28 @@
     .constant('MINEMNG_USERINFOPAGE_URL', SERVER_BASE_URL +'minemngUserInfo/minemngUserInfoPage')//分页查询用户信息
     .constant('MINEMNG_USERINFO_UPDATE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfo')//更新用户信息;
     .constant('MINEMNG_USERINFO_RESET_PASSWORD_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfoPassword')//重置用户密码
-    .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngdelete');//删除用户
+    .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngdelete')//删除用户
+    .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate') //报警七天趋势
+
+    .constant('MINEMNG_DISPATCH_SEND', SERVER_BASE_URL + 'minemngDispatch/send')   //发送调度命令
+    .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
+    .constant('MINEMNG_SEND_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/sendTotalDispatch')   //下发总调度
+    .constant('MINEMNG_WORKFACE_LIST', SERVER_BASE_URL + 'minemngWorkface/getWorkfaceList')   //获取工作面列表
+    .constant('MINEMNG_DUMP_FIELD_LIST', SERVER_BASE_URL + 'minemngDumpField/getDumpFieldList')   //获取排土场列表
+    .constant('MINEMNG_FLEET_LIST', SERVER_BASE_URL + 'minemngFleet/getFleetList')   //获取车队列表
+    .constant('MINEMNG_WORK_SHIFT_LIST', SERVER_BASE_URL + 'minemngDispatch/getWorkShiftList')   //获取车队列表
+    .constant('MINEMNG_CHECK_POINT', SERVER_BASE_URL + 'minemngCheckPoint/checkPoint')   //check point
+
+
+
+    .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'mine/machine')   //新增车辆
+    .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'mine/refresh')   //刷新车辆
+    .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'mine/updateMineMachine')   //修改车辆
+    .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'mine/machineState') //矿车状态集合
+    .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'mine/deleteMineMachine')   //删除车辆
+    .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询组织
+    .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询组织
+  ;
 
 
 
