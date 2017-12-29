@@ -16,7 +16,7 @@
 
 <uib-tabset active="active" type="tabs">
 
-    <uib-tab index="3" active="true" heading="矿车" select="minemngMachineCtrl.query(null,null,null,null,1)">
+    <uib-tab index="3" active="true" heading="矿车" select="minemngMachineCtrl.selectTab(1)">
     <section class="content form-horizontal">
       <!--上半部分-->
       <div class="row form-group">
@@ -71,7 +71,7 @@
         <div class="col-md-3">
           <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset()">{{'reset'|translate}}</button>
           <button class="btn btn-primary margin_right5 pull-right" type="button"
-                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine,1)">{{'query'|translate}}
+                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'query'|translate}}
           </button>
 
         </div>
@@ -157,7 +157,7 @@
     </uib-tab>
 
 
-    <uib-tab index="4" heading="挖掘机" select="minemngMachineCtrl.query(null,null,null,null,2)">
+    <uib-tab index="4" heading="挖掘机" select="minemngMachineCtrl.selectTab(2)">
       <section class="content form-horizontal">
 
         <!--上半部分-->
@@ -201,7 +201,7 @@
           <div class="col-md-3">
             <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset2()">{{'reset'|translate}}</button>
             <button class="btn btn-primary margin_right5 pull-right" type="button"
-                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine,2)">{{'query'|translate}}
+                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'query'|translate}}
             </button>
 
           </div>

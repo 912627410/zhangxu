@@ -400,6 +400,7 @@
 
     .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'mine/machine')   //新增车辆
     .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'mine/refresh')   //刷新车辆
+    .constant('MINE_QUERY_URL', SERVER_BASE_URL + 'mine/query')   //新增车辆
     .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'mine/updateMineMachine')   //修改车辆
     .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'mine/machineState') //矿车状态集合
     .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'mine/deleteMineMachine')   //删除车辆
