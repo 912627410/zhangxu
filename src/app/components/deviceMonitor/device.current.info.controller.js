@@ -59,7 +59,6 @@
             vm.highchartsRpm.series[0].data = [vm.deviceinfo.engineRotate];
           }
           if (vm.highchartsOil != null) {
-            vm.deviceinfo.oilLevel = vm.deviceinfo.oilLevel > 100 ? 100 : vm.deviceinfo.oilLevel;
             vm.highchartsOil.series[0].data = [vm.deviceinfo.oilLevel];
           }
 

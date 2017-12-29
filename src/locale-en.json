@@ -1558,6 +1558,12 @@
 
   "admissionTime":"Admission time",
 
+  "goSite":"Go site",
+  "leaveSite":"Leave site",
+
+  "goSiteList":"Go site list",
+  "leaveSiteList":"Leave site list",
+
   "exitTime":"Exit time",
   "workingHoursWhenEntry":"Working hours when entry",
   "workingHoursWhenExit":"Working count when exit",
