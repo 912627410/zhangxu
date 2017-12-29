@@ -66,7 +66,7 @@
           <tr ng-repeat="orderMachine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'" align="center">
               <input type="checkbox" ng-checked="rentalLeaveSiteCtrl.isSelected(orderMachine.id)"
-                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)"
+                     ng-click="rentalLeaveSiteCtrl.updateSelection($event,orderMachine)" style="cursor:pointer;"
                      ng-model="orderMachine.checked">
             </td>
             <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">

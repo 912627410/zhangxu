@@ -148,7 +148,7 @@
                  class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="rentalOrder in $data">
               <td class="text-nowrap" data-title="'rentalOrderNumber'|translate" sortable="'id'" >
-                <a  ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{rentalOrder.orderNumber}}</a>
+                <a style="cursor:pointer;" ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{rentalOrder.orderNumber}}</a>
               </td>
               <td class="text-nowrap" data-title="'rentalStartingDate'|translate" sortable="'startDate'">
                 {{rentalOrder.startDate | date:'yyyy-MM-dd'}}
