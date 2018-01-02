@@ -49,7 +49,6 @@
     .constant('DEVICEREPORT_EXPORT_URL', SERVER_BASE_URL + 'deviceReport/excelExport')   //deviceReport导出
 
     .constant('DEVCE_WARNING_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/warningdata')   //分页查询设备报警数据URL
-    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'device/locksms')//分页查询设备锁车数据url
     .constant('RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/password')   //修改用户密码
     .constant('SUPER_RESET_PASSWORD_URL', SERVER_BASE_URL + 'user/superpassword')   //管理员修改用户密码
     .constant('USERINFO_URL', SERVER_BASE_URL + 'user/userinfo')   //用户基本信息
@@ -114,23 +113,19 @@
     .constant('DEIVCIE_UNLOCK_FACTOR_URL', SERVER_BASE_URL + 'device/deviceunlock')   //查询解锁url
 
     //短信相关URL
-    .constant('GET_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/getActiveSms')   //得到短消息内容
-    .constant('SEND_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/sendActiveSms')   //发送短消息
-    .constant('GET_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getUnActiveLockSMS')   //得到短消息内容
-    .constant('SEND_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnActiveLockSMS')   //发送短消息
-    .constant('GET_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getLockSMS')   //得到短消息内容
-    .constant('SEND_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendLockSMS')   //发送短消息
-    .constant('GET_UN_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/getUnLockSMS')   //得到短消息内容
-    .constant('SEND_UN_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnLockSMS')   //发送短消息
-    .constant('GET_SET_IP_SMS_URL', SERVER_BASE_URL + 'sms/getSetIpSMS')   //得到短消息内容
-    .constant('SEND_SET_IP_SMS_URL', SERVER_BASE_URL + 'sms/sendSetIpSMS')   //发送短消息
-    .constant('GET_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/getSetStartTimesSMS')   //得到短消息内容
-    .constant('SEND_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/sendSetStartTimesSMS')   //发送短消息
-    .constant('GET_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/getSetWorkHoursSMS')   //得到短消息内容
-    .constant('SEND_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/sendSetWorkHoursSMS')   //发送短消息
-    .constant('GET_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/getSetInterSMS')   //得到短消息内容
-    .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
+    //查询URL
+    .constant('DEVCE_LOCK_DATA_PAGED_QUERY', SERVER_BASE_URL + 'sms/locksms')//分页查询设备锁车数据url
     .constant('SMS_SEND_REPORT_URL', SERVER_BASE_URL + 'sms/smsSendReport')   //短信发送报表
+
+    //发送URL
+    .constant('SEND_ACTIVE_SMS_URL', SERVER_BASE_URL + 'sms/sendActiveSms')   //发送短消息
+    .constant('SEND_UN_ACTIVE_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnActiveLockSMS')   //发送短消息
+    .constant('SEND_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendLockSMS')   //发送短消息
+    .constant('SEND_UN_LOCK_SMS_URL', SERVER_BASE_URL + 'sms/sendUnLockSMS')   //发送短消息
+    .constant('SEND_SET_IP_SMS_URL', SERVER_BASE_URL + 'sms/sendSetIpSMS')   //发送短消息
+    .constant('SEND_SET_START_TIMES_SMS_URL', SERVER_BASE_URL + 'sms/sendSetStartTimesSMS')   //发送短消息
+    .constant('SEND_SET_WORK_HOURS_SMS_URL', SERVER_BASE_URL + 'sms/sendSetWorkHoursSMS')   //发送短消息
+    .constant('SEND_SET_INTER_SMS_URL', SERVER_BASE_URL + 'sms/sendSetInterSMS')   //发送短消息
     .constant('SMS_SEND_CUSTOMIZED_URL', SERVER_BASE_URL + 'sms/sendCustomizedSMS')
     .constant('SMS_SEND_SETALARMFUNC_URL', SERVER_BASE_URL + 'sms/sendSetAlarmFunc')
     .constant('SMS_SEND_SETSERIALNUM_URL', SERVER_BASE_URL + 'sms/sendSetSericalNumSMS')
@@ -142,11 +137,9 @@
     .constant('VIEW_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getLockInputMsg')
     .constant('VIEW_UN_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getUnLockInputMsg')
     .constant('VIEW_CANCEL_LOCK_INPUT_MSG_URL', SERVER_BASE_URL + 'deviceKeyboard/getCancelLockInputMsg')
-
-
     .constant('VIEW_KEYBOARD_MSG_URL', SERVER_BASE_URL + 'device/keyboard')   //得到键盘输入数据
 
-
+    //登录相关
     .constant('PERMISSIONS_URL', SERVER_BASE_URL + 'user/permissions')   //得到登陆用户的权限信息
 
     //角色相关
@@ -273,5 +266,11 @@
     //v2 版本接口定义
     .constant('MACHINE_DISTRIBUTION', SERVER_BASE_URL + 'deviceMonitor/v2/machine-distribution?pageSize=200')
     .constant('NO_PROCESS_NOTICE', SERVER_BASE_URL + 'user/v2/no-process-notice')
+
+    .constant('UPDATE_OBJECT_TREE_JSON_URL', SERVER_BASE_URL + 'updateObject/getUpdateObjectTree')   //升级对象信息,返回树状json代码
+    .constant('UPDATE_OBJECT_URL', SERVER_BASE_URL + 'updateObject/updateObject') // 升级对象管理
+    .constant('UPDATE_OBJECT_LIST', SERVER_BASE_URL + 'updateObject/getUpdateObjectList') // 根据parentId查询升级对象集合
+  ;
+
 
 })();

@@ -903,12 +903,10 @@
                     <td>{{deviceCurrentInfoCtrl.ecuLockStatusDesc}}</td>
                   <tr>
                     <td>{{'fuelLevel'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel==null?'N/A
-                      ':deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.oilLevel==null?'N/A':deviceCurrentInfoCtrl.deviceinfo.oilLevel}}%
                     </td>
                     <td>{{'coolantTemperature'|translate}}</td>
-                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature==null?'N/A
-                      ':deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C
+                    <td ng-cloak>{{deviceCurrentInfoCtrl.deviceinfo.engineTemperature==null?'N/A':deviceCurrentInfoCtrl.deviceinfo.engineTemperature}}°C
                     </td>
                     <td>{{'GPRSSignalQuality'|translate}}</td>
                     <td ng-cloak>{{(deviceCurrentInfoCtrl.deviceinfo.gsmSignal/31)*100 | number:0}}%</td>
@@ -1087,12 +1085,24 @@
                     </td>
                     <td>{{'oilPressAlarmValue'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.oilPressAlarmValue}}</td>
-                    <td></td>
-                    <td></td>
+                    <!--增加车载蓄电池电压显示-->
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol/1000 | number:2}} V</td>
+                  </tr>
+
+                  <tr>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">{{'visibleSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">{{'noData' |translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">{{'usableSatelliteNumber'|translate}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}</td>
+                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">{{'noData' |translate}}</td>
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{'simCardSerialNum'|translate}}</td>
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
                   </tr>
                   <!--装载机通信协议2010 Start-->
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'"
-                      presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>开盖锁车使能</td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.autoLockSwitch | limitTo:1:0">
                       <div ng-switch-when="0">关</div>
@@ -1106,8 +1116,7 @@
                     <td>光敏电阻电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'"
-                      presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>天线电压高</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltH}}mV</td>
                     <td>天线电压低</td>
@@ -1115,8 +1124,8 @@
                     <td>硬件版本电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.hardwareVerVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'"
-                      presentation-href="device:monitorAdmin">
+
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>仪表或控制器软件版本</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.extDeviceVersion}}</td>
                     <td>发动机工作时间</td>
@@ -1124,54 +1133,38 @@
                     <td>GPS工作时间</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.gpsOpeDuration/10}}小时</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'"
-                      presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
                     <td>基站号</td>
-                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
-                    <td>基站信号强度</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.gsmRxl}}</td>
-                  </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'"
-                      presentation-href="device:monitorAdmin">
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
                     <td>基站小区号</td>
-                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
+                  </tr>
+
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>基站小区号</td>
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
                     <td>短信流水号</td>
-                    <td>{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
+                    <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
                   </tr>
+
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>GPS信息</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.gps}}</td>
+                    <td>仪表盘</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.dashboard}}</td>
+                    <td>显示器</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.display}}</td>
+                  </tr>
+                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                    <td>控制器</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.controller}}</td>
+                    <td>预留设备一</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveOne}}</td>
+                    <td>预留设备二</td>
+                    <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveTwo}}</td>
                   <!--装载机通信协议2010 end-->
-                  <tr
-                    ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">
-                    <td>{{'simCardSerialNum'|translate}}</td>
-                    <td colspan="5">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
-                  </tr>
-                  <tr>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">
-                      {{'visibleSatelliteNumber'|translate}}
-                    </td>
-                    <td
-                      ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber!=null">
-                      {{deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.visibleSatelliteNumber==null">{{'noData' |translate}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">
-                      {{'usableSatelliteNumber'|translate}}
-                    </td>
-                    <td
-                      ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">
-                      {{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}
-                    </td>
-                    <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">{{'noData' |translate}}
-                    </td>
-                    <!--增加车载蓄电池电压显示-->
-                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
-                      {{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V
-                    </td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='lx01'">
-                      {{deviceCurrentInfoCtrl.deviceinfo.batteryVol/1000 | number:2}} V
-                    </td>
-                  </tr>
+
+
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">
                   <tr>
@@ -1660,11 +1653,21 @@
             <div class="panel panel-success">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a ng-click="smsCtrl = !smsCtrl" href="">
-                    <div class="row">
-                      <div class="col-md-12 text-center">{{'telecontrol'|translate}}</div>
+                  <div class="row">
+                    <a ng-click="smsCtrl = !smsCtrl" href="">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4 text-center">
+                        {{'telecontrol'|translate}}
+                      </div>
+                    </a>
+                    <div class="col-md-4 text-right" ng-show="smsCtrl && deviceCurrentInfoCtrl.directiveSendType!=null">
+                      <form>
+                        发送方式:&nbsp;
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="0">短信
+                        <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="1">TCP
+                      </form>
                     </div>
-                  </a>
+                  </div>
                 </h4>
               </div>
               <div id="smsCtrlContent" class="panel-collapse collapse" ng-class="{in: smsCtrl}">
@@ -1853,9 +1856,9 @@
                           </div>
                           <div class="row" presentation-href="sms:setWorkHoursSMS">
                             <div class="col-md-6">
-                              <input type="text" id="workHours" class="form-control"
-                                     placeholder="{{'workingHours'|translate}}"
-                                     ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+                              <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
+                                     validator="numberAndDot,maxValue=100000" ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow"
@@ -2326,6 +2329,14 @@
     <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.sim.phoneNumber)"
              ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
       <uib-tab-heading>操作日志</uib-tab-heading>
+      <div class="box-header">
+        <div class="pull-right box-tools" style="margin-right: 20px">
+          <button class="btn btn-danger btn-sm refresh-btn" data-toggle="tooltip" ng-click="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.deviceNum)"
+                  title="刷新"><i class="fa fa-refresh"></i></button>
+        </div>
+        <i class="fa fa-envelope fa-2x" style="margin-left: 20px"></i>
+        <h3 class="box-title">短信发送记录</h3>
+      </div>
       <div class="modal-body">
         <div class="box-body">
           <div class="row">
@@ -2334,16 +2345,18 @@
                 <table ng-table="deviceCurrentInfoCtrl.lockDataTable" class="table table-striped">
                   <tr>
                     <th class="text-nowrap">下发时间</th>
+                    <th class="text-nowrap">流水号</th>
                     <th class="text-nowrap">操作人</th>
                     <th class="text-nowrap">操作人姓名</th>
                     <th class="text-nowrap">操作类型</th>
                     <th class="text-nowrap">操作结果</th>
                     <th class="text-nowrap">终端ip</th>
+                    <th class="text-nowrap">下发方式</th>
                   </tr>
                   <tr ng-repeat="deviceLockDataList in $data">
-                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd
-                      HH:mm:ss'}}
-                    </td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsSerialNum}}</td>
+
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.operator}}</td>
                     <td ng-cloak class="text-nowrap text-center">
                       {{deviceLockDataList.lastname}}{{deviceLockDataList.firstname}}
@@ -2351,6 +2364,7 @@
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsType}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsStatus}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.clientIp}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendType}}</td>
                   </tr>
                 </table>
               </div>

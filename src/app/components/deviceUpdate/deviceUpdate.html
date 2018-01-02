@@ -52,10 +52,10 @@
     </div>
     <div class="col-md-3">
       <select class="form-control" ng-model="deviceUpdateCtrl.queryDeviceType">
-        <option value="A1">小挖</option>
-        <option value="30">矿机</option>
-        <option value="40">中挖</option>
-        <option value="1,2,3">装载机</option>
+        <option value="2001,2002">小挖</option>
+        <!--<option value="">矿机</option>-->
+        <!--<option value="">中挖</option>-->
+        <option value="2010">装载机</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -93,12 +93,12 @@
             <td class="text-nowrap" data-title="'协议版本'" sortable="'versionNum'">{{deviceinfo.versionNum}}</td>
             <!--<td class="text-nowrap" data-title="'机器类型'" sortable="'machineType'">{{deviceinfo.machineType}}</td>-->
             <td class="text-nowrap" data-title="'所属组织'" sortable="'orgLabel'">{{deviceinfo.orgLabel}}</td>
-            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion!=null">VER{{deviceinfo.terminalVersion/100 | number: 2}}</td>
-            <td class="text-nowrap" data-title="'当前软件版本'" sortable="'versionNum'" ng-if="deviceinfo.terminalVersion==null"></td>
-            <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.updatingVersion!=null">VER{{deviceinfo.deviceUpdate.updatingVersion/100 | number: 2}}</td>
-            <td class="text-nowrap" data-title="'升级的版本'" sortable="'updatingVersion'" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.updatingVersion==null"></td>
-            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate==null || deviceinfo.deviceUpdate.updateDesc==null"></td>
-            <td class="text-nowrap" data-title="'升级状态'" sortable="'updateState'" ng-if="deviceinfo.deviceUpdate!=null && deviceinfo.deviceUpdate.updateDesc!=null">{{deviceinfo.deviceUpdate.updateDesc}}</td>
+            <td class="text-nowrap" data-title="'当前软件版本'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.terminalVersion!=null">VER{{deviceinfo.deviceUpdate.terminalVersion/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'当前软件版本'" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.terminalVersion==null"></td>
+            <td class="text-nowrap" data-title="'升级的版本'" ng-if="deviceinfo.deviceUpdate!=null&&deviceinfo.deviceUpdate.updatingVersion!=null">VER{{deviceinfo.deviceUpdate.updatingVersion/100 | number: 2}}</td>
+            <td class="text-nowrap" data-title="'升级的版本'" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.updatingVersion==null"></td>
+            <td class="text-nowrap" data-title="'升级状态'" ng-if="deviceinfo.deviceUpdate==null || deviceinfo.deviceUpdate.updateDesc==null"></td>
+            <td class="text-nowrap" data-title="'升级状态'" ng-if="deviceinfo.deviceUpdate!=null && deviceinfo.deviceUpdate.updateDesc!=null">{{deviceinfo.deviceUpdate.updateDesc}}</td>
             <td class="text-nowrap" data-title="'最近数据上传时间'" sortable="'lastDataUploadTime'">{{deviceinfo.lastDataUploadTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
               <button type="button" class="btn btn-default btn-xs" ng-if="deviceinfo.deviceUpdate==null||deviceinfo.deviceUpdate.whetherToUpdate==0" ng-click="deviceUpdateCtrl.deviceUpdate(deviceinfo)" presentation-href="deviceUpdate:update">升级</button>

@@ -26,14 +26,6 @@
       <span style="position: absolute;left: 28px;height: 34px;line-height: 34px;">VER</span>
       <input type="text" name="querySoftVersion" class="form-control" ng-model="updateFileMngCtrl.querySoftVersion" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询" style="padding-left: 42px;"/>
     </div>
-
-    <div class="col-md-3 text-center">
-      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" presentation-href="updateFile:page">查询</button>
-      <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()" style="margin: 0 12px;">重置</button>
-      <button class="btn btn-default" type="button" ng-click="updateFileMngCtrl.newUpdateFile();" presentation-href="updateFile:upload"><i class="fa fa-plus"></i>上传</button>
-    </div>
-  </div>
-  <div class="row form-group">
     <div class="col-md-1">
       <label class="control-label">文件名</label>
     </div>
@@ -41,17 +33,80 @@
       <input type="text" name="queryFileName" class="form-control" ng-model="updateFileMngCtrl.queryFileName" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>
     </div>
     <div class="col-md-1">
-      <label class="control-label">适用对象</label>
+      <label class="control-label">升级方式</label>
     </div>
     <div class="col-md-2">
-      <!--<input type="text" name="queryApplicableProducts" class="form-control" ng-model="updateFileMngCtrl.queryApplicableProducts" ng-keyup="$event.keyCode == 13 ? updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update) : null" placeholder="支持模糊查询"/>-->
-      <select class="form-control" id="applicableProducts" ng-model="updateFileMngCtrl.queryApplicableProducts">
+      <select name="upgradeMethod" class="form-control" ng-model="updateFileMngCtrl.queryUpgradeMethod">
+        <option value="" selected>请选择...</option>
         <option value="1">GPS自身</option>
-        <option value="2">显示器</option>
-        <option value="3">控制器</option>
+        <option value="2">HY64</option>
+        <option value="3">BIN文件</option>
       </select>
     </div>
 
+  </div>
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">项目组</label>
+    </div>
+    <div class="col-md-2">
+      <select name="projectTeam" class="form-control" ng-model="updateFileMngCtrl.queryProjectTeam"
+              ng-change="updateFileMngCtrl.getProjectCodes(updateFileMngCtrl.queryProjectTeam)"
+              ng-options="projectTeam.code as projectTeam.label for projectTeam in updateFileMngCtrl.projectTeams">
+        <option value="">请选择...</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">项目代号</label>
+    </div>
+    <div class="col-md-2">
+      <select name="projectCode" class="form-control" ng-model="updateFileMngCtrl.queryProjectCode"
+              ng-change="updateFileMngCtrl.getCustomerCodes(updateFileMngCtrl.queryProjectCode)"
+              ng-options="projectCode.code as projectCode.label for projectCode in updateFileMngCtrl.projectCodes">
+        <option value="">请选择...</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">客户编码</label>
+    </div>
+    <div class="col-md-2">
+      <select name="customerCode" class="form-control" ng-model="updateFileMngCtrl.queryCustomerCode"
+              ng-options="customerCode.code as customerCode.label for customerCode in updateFileMngCtrl.customerCodes">
+        <option value="">请选择...</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">硬件版本</label>
+    </div>
+    <div class="col-md-2">
+      <select name="hardwareVersion" class="form-control" ng-model="updateFileMngCtrl.queryHardwareVersion">
+        <option value="" selected>请选择...</option>
+        <option value="0">全部为0</option>
+        <option value="1">VER1</option>
+        <option value="2">VER2</option>
+        <option value="3">VER3</option>
+        <option value="4">VER4</option>
+        <option value="5">VER5</option>
+        <option value="6">VER6</option>
+        <option value="7">VER7</option>
+        <option value="8">VER8</option>
+        <option value="9">VER9</option>
+        <option value="10">VER10</option>
+        <option value="11">VER11</option>
+        <option value="12">VER12</option>
+        <option value="13">VER13</option>
+        <option value="14">VER14</option>
+        <option value="15">VER15</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="row form-group">
+    <div class="col-md-12 text-right">
+      <button class="btn btn-primary" type="button" ng-click="updateFileMngCtrl.query(0,null,null,updateFileMngCtrl.update)" presentation-href="updateFile:page">查询</button>
+      <button class="btn btn-primary" type="button"  ng-click="updateFileMngCtrl.reset()" style="margin: 0 12px;">重置</button>
+      <button class="btn btn-default" type="button" ng-click="updateFileMngCtrl.newUpdateFile();" presentation-href="updateFile:upload"><i class="fa fa-plus"></i>上传</button>
+    </div>
   </div>
 
   <div class="row form-group">
@@ -69,13 +124,18 @@
             <td class="text-nowrap" data-title="'协议版本'" sortable="'versionNum'">{{updateFile.versionNum}}</td>
             <td class="text-nowrap" data-title="'软件版本'" sortable="'softVersion'">VER{{updateFile.softVersion/100 | number: 2}}</td>
             <td class="text-nowrap" data-title="'文件名'" sortable="'fileName'">{{updateFile.fileName}}</td>
-            <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size}}</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==null"></td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==1">GPS自身</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==2">显示器</td>
-            <td class="text-nowrap" data-title="'适用对象'" sortable="'applicableProducts'" ng-if="updateFile.applicableProducts==3">控制器</td>
+            <td class="text-nowrap" data-title="'文件大小'" sortable="'size'">{{updateFile.size/1024 | number: 1}}KB</td>
+            <td class="text-nowrap" data-title="'项目组'" sortable="'projectTeam'">{{updateFile.projectTeamSec}}</td>
+            <td class="text-nowrap" data-title="'项目代号'" sortable="'projectCode'">{{updateFile.projectCodeSec}}</td>
+            <td class="text-nowrap" data-title="'客户编码'" sortable="'customerCode'">{{updateFile.customerCodeSec}}</td>
+            <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion=='0'">全部为0</td>
+            <td class="text-nowrap" data-title="'硬件版本'" sortable="'hardwareVersion'" ng-if="updateFile.hardwareVersion!='0'">VER{{updateFile.hardwareVersion}}</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='1'">GPS自身</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='2'">HY64</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod=='3'">BIN文件</td>
+            <td class="text-nowrap" data-title="'升级方式'" sortable="'upgradeMethod'" ng-if="updateFile.upgradeMethod!='1'&&updateFile.upgradeMethod!='2'&&updateFile.upgradeMethod!='3'">{{updateFile.upgradeMethod}}</td>
             <td class="text-nowrap" data-title="'上传时间'" sortable="'createTime'">{{updateFile.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td data-title="'remarks'|translate" sortable="'备注'" style="max-width: 500px;white-space: normal;">{{updateFile.remarks}}</td>
+            <td data-title="'remarks'|translate" sortable="'备注'" style="min-width: 300px;white-space: normal;">{{updateFile.remarks}}</td>
             <td class="text-nowrap text-center" data-title="'操作'">
               <button type="button" class="btn btn-default btn-xs" ng-click="updateFileMngCtrl.modifyFile(updateFile)" presentation-href="updateFile:modify">修改</button>
               <button type="button" class="btn btn-default btn-xs btn-danger" ng-click="updateFileMngCtrl.removeFile(updateFile.id)" presentation-href="upgrade:upgradeFile:remove">删除</button>
