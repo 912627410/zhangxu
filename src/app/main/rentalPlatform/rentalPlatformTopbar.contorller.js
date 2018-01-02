@@ -42,6 +42,14 @@
       Notification.success(languages.findKey('successfulExit'));
     };
 
+    vm.validatePermission = function (permission) {
+      return permissions.getPermissions(permission);
+    }
+
+    vm.noPermissionNote = function () {
+      Notification.error("抱歉，您暂时还没有相关权限！")
+    }
+
     /**
      * 切换语言
      * @param langKey

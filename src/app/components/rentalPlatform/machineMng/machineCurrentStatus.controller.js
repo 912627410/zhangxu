@@ -215,7 +215,7 @@
          $rootScope.currentOpenModal = $uibModal.open({
            animation: true,
            backdrop: false,
-           templateUrl: 'app/components/rentalPlatform/machineMng/machineMng.html',
+           templateUrl: 'app/components/rentalPlatform/machineMng/rentalUpdateMachine.html',
            controller: 'machineMngControllerRental',
            controllerAs:'vm',
            // openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
