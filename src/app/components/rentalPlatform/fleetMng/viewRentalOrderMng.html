@@ -143,12 +143,12 @@
                 <td ng-cloak data-title="'admissionTime'|translate">{{orderData.enterTime| date:'yyyy-MM-dd HH:mm:ss'}}
                 </td>
                 <td ng-if="orderData.enterTime!= null" ng-cloak data-title="'workingHoursWhenEntry'|translate">
-                  {{orderData.enterfactoryworkhours* 5 / 60|number:2}}小时
+                  {{orderData.enterfactoryworkhours* 5 / 60|number:2}}{{'hour'|translate}}
                 </td>
                 <td ng-if="orderData.enterTime== null" ng-cloak data-title="'workingHoursWhenEntry'|translate"></td>
                 <td ng-cloak data-title="'exitTime'|translate">{{orderData.leaveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td ng-if="orderData.leaveTime != null" ng-cloak data-title="'workingHoursWhenExit'|translate">
-                  {{orderData.leavefactoryworkhours* 5 / 60|number:2}}小时
+                  {{orderData.leavefactoryworkhours* 5 / 60|number:2}}{{'hour'|translate}}
                 </td>
                 <td ng-if="orderData.leaveTime == null" ng-cloak data-title="'workingHoursWhenExit'|translate"></td>
                 <td ng-if="orderData.leaveTime == null" ng-cloak data-title="'在场天数(/天)'"></td>
@@ -177,7 +177,7 @@
                 <td ng-cloak data-title="'operationTime'|translate">{{entryData.operationTime| date:'yyyy-MM-dd HH:mm:ss'}}
                 </td>
                 <td ng-cloak data-title="'totalNumberOfMachine'|translate">{{entryData.machineVoList.length}}</td>
-                <td ng-cloak data-title="'attachment'|translate">{{}}</td>
+                <td ng-cloak data-title="'attachment'|translate">{{entryData.rentalAttachVos.length}}</td>
               </tr>
             </table>
           </div>
@@ -200,7 +200,7 @@
                 <td ng-cloak data-title="'operationTime'|translate">{{exitData.operationTime| date:'yyyy-MM-dd HH:mm:ss'}}
                 </td>
                 <td ng-cloak data-title="'totalNumberOfMachine'|translate">{{exitData.machineVoList.length}}</td>
-                <td ng-cloak data-title="'attachment'|translate">{{}}</td>
+                <td ng-cloak data-title="'attachment'|translate">{{exitData.rentalAttachVos.length}}</td>
               </tr>
             </table>
           </div>
