@@ -274,7 +274,12 @@
     .constant('RENTAL_MAINTENANCE_STATUS_URL',SERVER_BASE_URL + 'rental/maintenance/statusList')//查询保养状态
     .constant('RENTAL_MAINTENANCE_LIST_STATUS_URL',SERVER_BASE_URL + 'rental/maintenance/listStatusList')//查询保养状态List
     .constant('RENTAL_MAINTENANCE_GROUP_BY_STATUS',SERVER_BASE_URL + 'rental/maintenance/groupByStatus')//根据状态查询保养的车辆总数
+<<<<<<< HEAD
+    .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines') //新建保养可选择的车辆查询
+
+=======
     .constant('RENTANL_MAINTENANCE_MACHINE_PAGE_URL',SERVER_BASE_URL + 'rental/maintanceMachines')
+>>>>>>> RENTAL2.00
     //租赁订单
     .constant('RENTAL_ORDER_PAGE_URL',SERVER_BASE_URL + 'rental/order/orderpage')//分页查询租赁订单信息
     .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息

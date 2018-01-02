@@ -207,7 +207,7 @@
         templateUrl: 'app/components/rentalPlatform/fleetMng/newRentalOrder.html',
         controller: 'newRentalOrderController',
         controllerAs: 'newRentalOrderCtrl',
-        size: 'lg'
+        size: 'super-lgs'
       });
       modalInstance.result.then(function (result) {
         if (null != result) {

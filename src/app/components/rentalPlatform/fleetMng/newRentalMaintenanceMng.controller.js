@@ -55,7 +55,6 @@
         vm.maintenance.maintenanceListVo[i].status=vm.maintenance.maintenanceListVo[i].status.value;
       }
 
-
       var rspdata = serviceResource.restAddRequest(RENTAL_MAINTENANCE_URL,vm.maintenance);
 
       rspdata.then(function (data) {
@@ -89,26 +88,17 @@
         }
         }
       });
-
       modalInstance.result.then(function (result) {
         vm.rightRentalOrder=result;
-
-
         // console.log(result);
         vm.machine=result;
-
         vm.queryTypes(vm.machine.id);
-
-
-
 
       }, function () {
       });
     };
 
     vm.queryTypes = function ( machineId) {
-
-
       var restCallURL = RENTAL_MAINTENANCE_TYPE_URL;
       restCallURL += "?id="+machineId;
 
