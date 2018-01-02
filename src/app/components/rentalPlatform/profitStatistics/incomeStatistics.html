@@ -10,7 +10,7 @@
     </ol>
   </section>
   <div id="income" class="container-fluid  profitItem ">
-    <div class="row info-box-container">
+    <div class="row info-box-container" presentation-href="rental:assetMng:income:topNavigation">
       <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box   info-card">
           <div class="row"  style="cursor:pointer;">
@@ -123,7 +123,7 @@
 
               <div class="col-md-4">
                 <button  type="button" class="btn btn-default searchButton pull-right " ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
-                <button  type="button" class="btn btn-primary searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
+                <button  type="button" class="btn btn-primary searchButton pull-right marginRight5"  presentation-href="rental:assetMng:income:query" ng-click="incomeStatisticsCtr.queryByOrder(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalOrder)">{{'query'|translate}}</button>
               </div>
             </div>
 
@@ -256,7 +256,7 @@
 
               <div class="col-md-4 pull-right">
                 <button  type="button" class="btn  btn-default  searchButton pull-right" ng-click="incomeStatisticsCtr.reset()">{{'reset'|translate}}</button>
-                <button  type="button" class="btn  btn-primary  searchButton pull-right marginRight5" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">{{'query'|translate}}</button>
+                <button  type="button" class="btn  btn-primary  searchButton pull-right marginRight5"  presentation-href="rental:assetMng:income:query" ng-click="incomeStatisticsCtr.queryByMachine(0,incomeStatisticsCtr.pageSize,null,incomeStatisticsCtr.rentalMachine)">{{'query'|translate}}</button>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@
 
   /** @ngInject */
 
-  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,NgTableParams,$uibModal, $location,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,Notification,$filter,DEVCE_MF,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
+  function incomeStatisticsController($scope,$rootScope,$window,ngTableDefaults,permissions,NgTableParams,$uibModal, $location,$anchorScroll, serviceResource,DEVCE_HIGHTTYPE,MACHINE_DEVICETYPE_URL,Notification,$filter,DEVCE_MF,RENTAL_ORDER_PAGE_URL,DEFAULT_MINSIZE_PER_PAGE,RENTAL_INCOME_ORDER_QUERY,RENTAL_MACHINEINCOME_PAGE_URL,RENTAL_INCOME_MACHINE_QUERY,RENTAL_TOTALINCOME_URL,languages) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;

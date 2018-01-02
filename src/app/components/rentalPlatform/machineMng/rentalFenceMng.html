@@ -47,11 +47,11 @@
           </div>
           <div class="col-md-3"></div>
           <div class="col-md-3">
-            <button class="btn btn-primary" type="button"
+            <button class="btn btn-primary" type="button" presentation-href="rental:machinemng:fenceMng:query"
                     ng-click="rentalFenceMngController.query(null,null,null,rentalFenceMngController.searchCondition)">{{'search'|translate}}
             </button>
             <button class="btn btn-default" type="button" ng-click="rentalFenceMngController.searchCondition=null">{{'rentalReset'|translate}}</button>
-            <button class="btn btn-primary pull-right" type="button"
+            <button class="btn btn-primary pull-right" type="button"  presentation-href="rental:machinemng:fenceMng:create"
                     ng-click="rentalFenceMngController.new()">{{'rentalAdd'|translate}}
             </button>
           </div>
@@ -74,10 +74,10 @@
               <td class="text-nowrap" data-title="'modificationTime'|translate" sortable="'updateTime'">{{rentalOrgFence.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td class="text-nowrap" data-title="'modifier'|translate" sortable="'updateTime'">{{rentalOrgFence.updateUser}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-danger btn-xs"
+                <button type="button" class="btn btn-danger btn-xs"  presentation-href="rental:machinemng:fenceMng:delete"
                         ng-click="rentalFenceMngController.delete(rentalOrgFence.id)">{{'rentalDelete'| translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-default btn-xs" presentation-href="rental:machinemng:fenceMng:modify"
                         ng-click="rentalFenceMngController.view(rentalOrgFence.id)">{{'manage'|translate}}
                 </button>
               </td>

@@ -12,7 +12,7 @@
 
   /** @ngInject */
   function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, $uibModal, serviceResource, languages, commonFactory,
-                                      RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL,Notification) {
+                                      RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL, RENTAL_PRCESS_ALARM, Notification) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
     vm.fenceAlarm = 0;//围栏报警
@@ -221,11 +221,12 @@
     }
 
     /**
-     *  处理报警信息
+     * 忽略报警信息(设置为已处理）
      *
-     * @param status
+     * @param notification
+     * @param index
      */
-    vm.processRentalNotificationDeal = function (notification, index) {
+    vm.neglect = function (notification, index) {
       var restCallUrl = RENTAL_NOTIFICATION_URL + "?id=" + notification.id + "&dealStatus=" + notification.processStatus;
       var notificationPromis = serviceResource.restCallService(restCallUrl, "UPDATE");
       notificationPromis.then(function (data) {
@@ -276,11 +277,11 @@
 
       $rootScope.currentOpenModal.result.then(function (newVal) {
         //数据
-        var tabList=vm.notificationList;
+        var tabList = vm.notificationList;
         //更新内容
-        for(var i=0;i<tabList.length;i++){
-          if(tabList[i].id==newVal.id){
-            tabList[i].processStatus=newVal.processStatus;
+        for (var i = 0; i < tabList.length; i++) {
+          if (tabList[i].id == newVal.id) {
+            tabList[i].processStatus = newVal.processStatus;
             break;
           }
         }
@@ -297,13 +298,13 @@
      * @param status
      */
     vm.processAll = function () {
-      var selected=[];
-      angular.forEach(vm.notificationList,function (data,index,array) {
-        if (data.state===true){
+      var selected = [];
+      angular.forEach(vm.notificationList, function (data, index, array) {
+        if (data.state === true) {
           selected.push(data)
         }
       })
-      if (selected==null||selected.length<=0){
+      if (selected == null || selected.length <= 0) {
         Notification.warning(languages.findKey('checkAlarm'));
         return;
       }
@@ -330,12 +331,12 @@
       $rootScope.currentOpenModal.result.then(function (newVal) {
         console.log(newVal);
         //数据
-        var tabList=vm.notificationList;
+        var tabList = vm.notificationList;
         //更新内容
-        angular.forEach(newVal,function (data,index,array) {
-          for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==data.id){
-              tabList[i].processStatus=data.processStatus;
+        angular.forEach(newVal, function (data, index, array) {
+          for (var i = 0; i < tabList.length; i++) {
+            if (tabList[i].id == data.id) {
+              tabList[i].processStatus = data.processStatus;
             }
           }
         })
@@ -505,16 +506,5 @@
         vm.notificationList[i].state = !vm.notificationList[i].state;
       }
     }
-
-    /**
-     * 忽略报警信息
-     *
-     * @param data
-     * @param index
-     */
-    vm.neglect=function (data,index) {
-
-    }
-
   }
 })();

@@ -4,8 +4,9 @@
   angular
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
-  function rentalLeaveSiteController($rootScope, $uibModalInstance,RENTAL_MACHINE_MONITOR_URL, Notification, languages, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL) {
 
+  function rentalLeaveSiteController($rootScope, $uibModalInstance, $timeout, Notification, languages, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, RENTAL_MACHINE_MONITOR_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL)
+  {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     vm.orderId = orderId;
@@ -16,7 +17,7 @@
 
     //时间格式检验
     vm.timeValidate = function (date) {
-      if (date == undefined){
+      if (date == undefined) {
         Notification.error(languages.findKey('exitTimeFormatIsNotCorrect'));
       }
     }
@@ -36,7 +37,7 @@
       startingDay: 1
     };
 
-    vm.machineMonitor = function(licenseId){
+    vm.machineMonitor = function (licenseId) {
       var restCallUrl = RENTAL_MACHINE_MONITOR_URL + "?licenseId=" + licenseId;
       var deviceDataPromis = serviceResource.restCallService(restCallUrl, "GET");
       deviceDataPromis.then(function (data) {
@@ -46,7 +47,7 @@
           backdrop: false,
           templateUrl: 'app/components/rentalPlatform/machineMng/machineMonitor.html',
           controller: 'machineMonitorController',
-          controllerAs:'vm',
+          controllerAs: 'vm',
           openedClass: 'hide-y',//class名 加载到整个页面的body 上面可以取消右边的滚动条
           windowClass: 'top-spacing',//class名 加载到ui-model 的顶级div上面
           size: 'super-lgs',
@@ -56,7 +57,7 @@
             }
           }
         });
-      },function (reason) {
+      }, function (reason) {
         Notification.error(languages.findKey('failedToGetDeviceInformation'));
       })
     }
@@ -134,59 +135,56 @@
       var recordTime = serviceResource.getChangeChinaTime(vm.leaveSiteDate);
       var startMonth = recordTime.getMonth() + 1;  //getMonth返回的是0-11
       recordTime = recordTime.getFullYear() + '-' + startMonth + '-' + recordTime.getDate() + ' ' + recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
-      if (file != null && file != undefined) {
-        var uploadurl = RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL;
-        uploadurl += "?orderId=" + vm.orderId + "&operationType=" + 2 + "&orderMachineIdList=" + vm.selected + "&recordTime=" + recordTime + "&recordTime=" + recordTime + "&reason=" + vm.leaveReason
-        file.upload = Upload.upload({
-          url: uploadurl,
-          file: file
-        });
-        file.upload.then(function (response) {
-            $timeout(function () {
-              file.result = response.data;
-              if (file.result.code == 0) {
-                Notification.success("新增文件成功!");
-                $uibModalInstance.close();
-              } else {
-                Notification.error(data.message);
-              }
-            })
-          },
-          function (reason) {
-            vm.errorMsg = reason.data.message;
-            Notification.error("新增文件失败!");
-            Notification.error(vm.errorMsg);
-          }, function (evt) {
-          });
-      }
-      else {
-        var rentalOrderMachineOperVo = {
-          "orderMachineIdList": vm.selected,
-          "orderId": vm.orderId,
-          "operationType": 2,
-          "recordTime": vm.leaveSiteDate,
-          "reason": vm.leaveReason
-        };
-        var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
-        restPromise.then(function (data) {
-
-          if (data.code == 0) {
-            //页面上同步移除调出的车辆
-            // for(var i = 0;i<vm.selected.length;i++){
-            //   vm.tableParams.data.splice(0,1);
-            // }
-            vm.query(vm.orderId);
-            Notification.success(languages.findKey('批量调出车辆成功'));
-            vm.selected = [];
+      var rentalOrderMachineOperVo = {
+        "orderMachineIdList": vm.selected,
+        "orderId": vm.orderId,
+        "operationType": 2,
+        "recordTime": vm.leaveSiteDate,
+        "reason": vm.leaveReason
+      };
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, rentalOrderMachineOperVo);
+      restPromise.then(function (data) {
+        if (data.code == 0) {
+          if (file) {
+            var Id = data.content;
+            vm.fileUpload(Id, file);
           }
-
-        }, function (reason) {
-          Notification.error(" 批量调出车辆失败!");
-        });
-      }
-
+          vm.query(vm.orderId);
+          Notification.success(languages.findKey('批量调出车辆成功'));
+          vm.selected = [];
+          vm.file = []
+        }
+      }, function (reason) {
+        Notification.error(" 批量调出车辆失败!");
+      });
     }
 
+    //附件上传
+    vm.fileUpload = function (id, files) {
+      var uploadUrl = RENTANL_ATTACH_UPLOAD_URL;
+      uploadUrl += "?leavefactoryrecordid=" + id
+      if (files != null) {
+        angular.forEach(files, function (file) {
+          file.upload = Upload.upload({
+            url: uploadUrl,
+            file: file
+          });
+          file.upload.then(function (response) {
+              $timeout(function () {
+                file.result = response.data;
+                if (file.result.code != 0) {
+                  Notification.error(data.message);
+                }
+              })
+            },
+            function (reason) {
+              vm.errorMsg = reason.data.message;
+              Notification.error("批量调出车辆失败!");
+              Notification.error(vm.errorMsg);
+            }, function (evt) {
+            });
+        })
+      }
+    }
   }
-
 })();

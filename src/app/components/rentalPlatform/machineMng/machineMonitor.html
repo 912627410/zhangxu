@@ -10,7 +10,7 @@
 <!--ng-include延迟加载-->
 <uib-tabset justified="true">
   <!--数据-->
-  <uib-tab select="vm.data='app/components/rentalPlatform/machineMng/machineMonitor_monitor.html'">
+  <uib-tab select="vm.data='app/components/rentalPlatform/machineMng/machineMonitor_monitor.html'" presentation-href="rental:machinemng:currentState:monitor:data">
     <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.data"></div>
@@ -18,7 +18,7 @@
   </uib-tab>
 
   <!--历史数据-->
-  <uib-tab select="vm.historyData='app/components/rentalPlatform/machineMng/machineMonitor_history.html'">
+  <uib-tab select="vm.historyData='app/components/rentalPlatform/machineMng/machineMonitor_history.html'"  presentation-href="rental:machinemng:currentState:monitor:history">
     <uib-tab-heading>{{'historicalData'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.historyData"></div>
@@ -26,7 +26,7 @@
   </uib-tab>
 
   <!--位置信息-->
-  <uib-tab select="vm.positionData='app/components/rentalPlatform/machineMng/machineMonitor_position.html'">
+  <uib-tab select="vm.positionData='app/components/rentalPlatform/machineMng/machineMonitor_position.html'"  presentation-href="rental:machinemng:currentState:monitor:location">
     <uib-tab-heading>{{'locationInformation'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.positionData"></div>
@@ -34,7 +34,7 @@
   </uib-tab>
 
   <!--报警数据-->
-  <uib-tab select="vm.waringData='app/components/rentalPlatform/machineMng/machineMonitor_waring.html'">
+  <uib-tab select="vm.waringData='app/components/rentalPlatform/machineMng/machineMonitor_waring.html'"  presentation-href="rental:machinemng:currentState:monitor:alarm">
     <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.waringData"></div>
@@ -42,7 +42,7 @@
   </uib-tab>
 
   <!--地图-->
-  <uib-tab select="vm.map='app/components/rentalPlatform/machineMng/machineMonitor_map.html'">
+  <uib-tab select="vm.map='app/components/rentalPlatform/machineMng/machineMonitor_map.html'"  presentation-href="rental:machinemng:currentState:monitor:locus">
     <uib-tab-heading>{{'rentalLocus'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.map"></div>
@@ -50,7 +50,7 @@
   </uib-tab>
 
   <!--数据分析-->
-  <uib-tab select="vm.dataAnalysis='app/components/rentalPlatform/machineMng/machineMonitor_analysis.html'">
+  <uib-tab select="vm.dataAnalysis='app/components/rentalPlatform/machineMng/machineMonitor_analysis.html'"  presentation-href="rental:machinemng:currentState:monitor:analysis">
     <uib-tab-heading>{{'dataAnalysis'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight">
       <div ng-include="vm.dataAnalysis"></div>
@@ -58,7 +58,7 @@
   </uib-tab>
 
   <!--生命周期-->
-  <uib-tab select="vm.liftCycle='app/components/rentalPlatform/machineMng/machineMonitor_lifeCycle.html'">
+  <uib-tab select="vm.liftCycle='app/components/rentalPlatform/machineMng/machineMonitor_lifeCycle.html'"  presentation-href="rental:machinemng:currentState:monitor:lifecycle">
     <uib-tab-heading>{{'rentalLifecycle'|translate}}</uib-tab-heading>
     <div class="modal-body" ng-style="vm.monitorheight" >
       <div ng-include="vm.liftCycle"></div>

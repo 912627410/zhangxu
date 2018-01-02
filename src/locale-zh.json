@@ -1557,11 +1557,16 @@
   "goSite":"进场",
   "leaveSite":"退场",
 
+  "goSiteList":"进场单",
+  "goSiteListNumber":"进场单号",
+  "leaveSiteList":"退场单",
+  "leaveSiteListNumber":"退场单号",
+
   "admissionTime":"进场时间",
   "exitTime":"退场时间",
   "workingHoursWhenEntry":"进场工作小时数",
   "workingHoursWhenExit":"退场工作小时数",
-
+  "attachment":"附件",
   "enterDate":"请录入生产日期",
   "connectServerTime":"连接平台用时",
   "wireStatus":"天线状态",

@@ -48,9 +48,13 @@
       <label class="col-md-2 control-label font-nomal ">{{'admissionTime'|translate}}:</label>
       <div class="col-md-3">
         <div class="input-group">
-          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}" ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
-                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate" max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
-                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" ng-blur="rentalGoSiteCtrl.timeValidate(rentalGoSiteCtrl.goSiteDate)" />
+          <input type="text" class="form-control" uib-datepicker-popup="{{formatCustomTime}}"
+                 ng-model="rentalGoSiteCtrl.goSiteDate" is-open="rentalGoSiteCtrl.goSiteDateOpenStatusData.opened"
+                 datepicker-options="rentalGoSiteCtrl.dateOptions" min-date="rentalGoSiteCtrl.minDate"
+                 max-date="rentalGoSiteCtrl.maxDate" ng-required="true"
+                 current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"
+                 ng-blur="rentalGoSiteCtrl.timeValidate(rentalGoSiteCtrl.goSiteDate)"/>
           <span class="input-group-btn">
             <button type="button" class="btn btn-default" ng-click="rentalGoSiteCtrl.goSiteDateOpenData($event)">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -63,7 +67,8 @@
       <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
       <div class="col-md-3 text-left">
         <input type="file" ngf-select id="uploadFile" ng-model="rentalGoSiteCtrl.file" ngf-max-size="2MB" required
-               ngf-model-invalid="errorFiles" name="uploadFile"/>
+               ngf-model-invalid="errorFiles" name="uploadFile"
+               accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" class="file-loading" multiple/>
       </div>
     </div>
     <hr>
@@ -157,9 +162,9 @@
             <input type="checkbox" ng-checked="rentalGoSiteCtrl.isSelected(machine.id)"
                    ng-click="rentalGoSiteCtrl.updateSelection($event,machine)" ng-model="machine.checked">
           </td>
-            <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">
 
-              <a  ng-click="rentalGoSiteCtrl.machineMonitor(machine.licenseId)">{{machine.licenseId}}</a>
+            <a style="cursor:pointer;"  ng-click="rentalGoSiteCtrl.machineMonitor(machine.licenseId)">{{machine.licenseId}}</a>
 
           </td>
           <td class="text-nowrap" data-title="'rentalOrganization'|translate" sortable="'label'">{{machine.label}}</td>
