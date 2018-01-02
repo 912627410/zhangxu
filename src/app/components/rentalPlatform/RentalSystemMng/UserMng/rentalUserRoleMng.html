@@ -7,53 +7,8 @@
 <section class="content">
   <uib-tabset justified="true">
 
-    <uib-tab>
-      <uib-tab-heading>{{'customRole'|translate}}</uib-tab-heading>
-      <div class="row">
-        <div class="col-md-6 col-sm-6">
-          <div class="panel-group" id="orgPanel">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h4 class="panel-title text-center">
-                  {{'organizationInformation'|translate}}
-                </h4>
-              </div>
-              <div class="panel-body" style="height: 400px">
-                <abn-tree tree-data="rentalUserRoleMngCtrl.my_data"
-                          on-select="rentalUserRoleMngCtrl.my_tree_handler(branch); $event.stopPropagation();"
-                          expand-level="2"></abn-tree>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6">
-          <div class="panel-group" id="userPanel">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h4 class="panel-title text-center">
-                  {{'roleManagement'|translate}}
-                </h4>
-              </div>
-              <div class="panel-body" style="height: 400px;overflow:auto;">
-                <li class="list-group-item repeat"  ng-repeat="role in rentalUserRoleMngCtrl.roleList">
-                  <div class="row">
-                    <div class="col-sm-2">
-                      <input type="checkbox" ng-checked="rentalUserRoleMngCtrl.isSelected(role.id)"
-                             ng-click="rentalUserRoleMngCtrl.updateSelection($event, role.id)" ng-model="role.checked">
-                    </div>
-                    <div class="col-sm-5">{{role.name}}</div>
-                  </div>
 
-                </li>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </uib-tab>
-    <uib-tab>
-      <uib-tab-heading>{{'systemRole'|translate}}</uib-tab-heading>
+      <p>{{'systemRole'|translate}}:</p>
 
       <div class="row " style="padding: 10px">
         <li class="list-group-item repeat"  ng-repeat="sysRole in rentalUserRoleMngCtrl.sysRoleList">
@@ -68,7 +23,7 @@
           </div>
         </li>
       </div>
-    </uib-tab>
+
   </uib-tabset>
 
   <div class="modal-footer">
