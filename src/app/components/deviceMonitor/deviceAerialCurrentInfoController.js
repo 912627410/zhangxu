@@ -5,7 +5,7 @@
         .controller('deviceAerialCurrentInfoController', deviceAerialCurrentInfoController);
 
     /** @ngInject */
-    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,ngTableDefaults,$window,
+    function deviceAerialCurrentInfoController($rootScope, $scope,$http, $location, $timeout, $filter, $uibModalInstance, $confirm,ngTableDefaults,$window,permissions,
                                                Notification, serviceResource, DEVCE_LOCK_DATA_PAGED_QUERY, DEIVCIE_UNLOCK_FACTOR_URL,DEVCE_DATA_PAGED_QUERY,BATTERY_CHART_DATA,BATTERY_FORM_DATA,
                                                VIEW_SMS_EMCLOUD_URL,AMAP_GEO_CODER_URL,MACHINE_FENCE,deviceinfo,DEVCE_CHARGER_DATA,DEVCEINFO_PARAMETER_URL, NgTableParams,
                                                DEVCEMONITOR_SIMPLE_DATA_PAGED_QUERY,DEVCEMONITOR_WARNING_DATA_PAGED_QUERY,MACHINE_FENCE_CACHE,DEVCEDATA_EXCELEXPORT,
@@ -357,6 +357,26 @@
 
 
         //******************远程控制tab**********************]
+      // 验证权限,拥有解绑和绑定任意一个权限就显示，锁车和解锁同理
+      vm.validatePermission = function () {
+        if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:bind")){
+          vm.bindModuleShow = true;
+        }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unBind")){
+          vm.bindModuleShow = true;
+        }else {
+          vm.bindModuleShow = false;
+        }
+
+        if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:lock")){
+          vm.lockModuleShow = true;
+        }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unLock")){
+          vm.lockModuleShow = true;
+        } else{
+          vm.lockModuleShow = false;
+        }
+      }
+      vm.validatePermission();
+
         vm.serverHost = "iot.nvr-china.com";
         //高空车TCP协议默认端口号
         if(vm.deviceinfo.versionNum == "A001") {
