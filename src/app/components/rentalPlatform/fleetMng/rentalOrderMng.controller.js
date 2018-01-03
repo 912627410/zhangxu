@@ -9,8 +9,8 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($rootScope, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
+  function rentalOrderMngController($rootScope, $window, $uibModal, $filter, $anchorScroll, serviceResource,Upload, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,RENTANL_ATTACH_UPLOAD_URL) {
 
 
     var vm = this;
@@ -22,7 +22,6 @@
     vm.processOrders=0;
     vm.fininshOrders=0;
     vm.rentalOrder = {};
-
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
 
@@ -226,7 +225,6 @@
       vm.id = null;
     }
 
-
     //租赁订单管理--更新订单
     vm.update = function (id, realNumber) {
       var realNumber = realNumber;
@@ -291,6 +289,7 @@
 
 
     }
+
     vm.goSite = function (rentalOrder) {
       var rentalOrder = rentalOrder;
       var modalInstance = $uibModal.open({
@@ -310,7 +309,6 @@
         //取消
       });
     }
-
 
     vm.leaveSite = function (rentalOrder) {
 
@@ -334,15 +332,20 @@
       });
     }
 
-    vm.enAnOutTest = function (id) {
-      var orderUrl = RENTAL_ORDER_ENTRY_EXIT_LIST_URL + "?orderId=" + id +"&type=" + 1 ;
-      var rspdata = serviceResource.restCallService(orderUrl, "GET");
-      rspdata.then(function (data) {
-      console.log(data)
-      }, function () {
-        //取消
+    //附件上传
+    vm.fileUpload = function (rentalOrder) {
+      vm.singleRentalOrder=rentalOrder;
+      $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/orderFileUpload.html',
+        controller: 'rentalOrderFileUploadController as rentalOrderFileUploadMngCtrl',
+        size: 'lg',
+        resolve: {
+          rentalOrder: function () {
+            return rentalOrder;
+          }
+        }
       });
     }
-
   }
 })();

@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <div class="modal-title">
+    <div class="col-md-2 control-label">
+      <div class="modal-title-text">
+        {{'attachmentUpload'|translate}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" role="form">
+    <div class="form-group">
+      <label class="col-md-1 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        {{rentalOrderFileUploadMngCtrl.rentalOrder.orderNumber}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="uploadFile" class="col-md-1 control-label font-nomal">{{'selectFile'|translate}}:</label>
+      <div class="col-md-3 text-left">
+        <input type="file" ngf-select id="uploadFile" ng-model="rentalOrderFileUploadMngCtrl.file" ngf-max-size="2MB" required
+               ngf-model-invalid="errorFiles" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" class="file-loading" multiple/>
+      </div>
+    </div>
+    <button style="margin-left:  5px" class="btn btn-warning pull-right" type="button"
+            ng-click="rentalOrderFileUploadMngCtrl.fileUpload(rentalOrderFileUploadMngCtrl.file)">{{'upload'|translate}}
+    </button>
+    <button style="margin-left: 15px" class="btn btn-primary pull-right" type="button"
+            ng-click="rentalOrderFileUploadMngCtrl.cancel()">{{'cancel'|translate}}
+    </button>
+    <div class="form-group">
+    </div>
+  </form>
+</div>

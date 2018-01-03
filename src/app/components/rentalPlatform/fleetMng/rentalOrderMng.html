@@ -168,7 +168,6 @@
               <td style="text-align: center;" class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
                 <span >{{rentalOrder.realNumber}}</span>/
                 <span >{{rentalOrder.jc + rentalOrder.zb + rentalOrder.qb}}</span>
-
               </td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-danger btn-xs"  presentation-href="rental:rentalMng:order:modify"
@@ -183,9 +182,7 @@
                 <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:exit"
                         ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder)">{{'leaveSite'| translate}}
                 </button>
-                <!--<button type="button" class="btn btn-default btn-xs"-->
-                        <!--ng-click="rentalOrderMngCtrl.enAnOutTest(rentalOrder.id)">进退场单List-->
-                <!--</button>-->
+                <i  ng-click="rentalOrderMngCtrl.fileUpload(rentalOrder)" class="fa fa-paperclip" />
               </td>
             </tr>
           </table>
