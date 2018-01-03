@@ -112,6 +112,10 @@
     }
 
     vm.batchMoveMachine = function (file) {
+      if (vm.selected.length == 0) {
+        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+        return;
+      }
       var recordTime = serviceResource.getChangeChinaTime(vm.goSiteDate);
       var startMonth = recordTime.getMonth() + 1;  //getMonth返回的是0-11
       recordTime = recordTime.getFullYear() + '-' + startMonth + '-' + recordTime.getDate() + ' ' + recordTime.getHours() + ':' + recordTime.getMinutes() + ':' + recordTime.getSeconds();
