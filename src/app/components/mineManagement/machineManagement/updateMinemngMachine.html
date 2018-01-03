@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{'newVehicleInfo'|translate}}</h3>
+  <h3 class="modal-title">{{'修改车辆'|translate}}</h3>
 </div>
 <form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
   <div class="modal-body row">
@@ -117,16 +117,14 @@
 
         <label for="status" class="col-sm-2 control-label padding5">{{'status'|translate}}</label>
         <div class="col-sm-4">
-          <ui-select id="status" name="status" ng-model="updateMineMachineCtrl.machine.status" theme="bootstrap"
+          <ui-select id="status" name="machineState" ng-model="updateMineMachineCtrl.machine.status" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'status'|translate}}">{{$select.selected.machineState}}</ui-select-match>
-            <ui-select-choices  repeat="machineState.code as machineState in updateMineMachineCtrl.machineStateList | propsFilter: {machineState: $select.search}" >
-              <div  ng-bind-html="machineState.machineState | highlight: $select.search"></div>
+            <ui-select-match allow-clear="true" placeholder="{{'status'|translate}}">{{$select.selected.stateDesc}}</ui-select-match>
+            <ui-select-choices  repeat="machineState.id as machineState in updateMineMachineCtrl.machineStateList ">
+              <div  ng-bind-html="machineState.stateDesc | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
-
-      </div>
 
     </div>
   </div>

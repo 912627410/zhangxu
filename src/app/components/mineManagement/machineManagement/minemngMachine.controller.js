@@ -101,9 +101,6 @@
             machine: function () {
               return operMachine;
             },
-            machineTypeInfo: function () {
-              return vm.machineTypeList;
-            }
           }
         });
 

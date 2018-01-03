@@ -122,11 +122,11 @@
               <td class="text-nowrap" data-title="'purchaseDate'|translate" sortable="'purchaseDate'">{{machine.purchaseDate | date:'yyyy-MM-dd '}}</td>
               <td class="text-nowrap" data-title="'archivesDate'|translate" sortable="'archivesDate'">{{machine.archivesDate | date:'yyyy-MM-dd '}}</td>
               <td class="text-nowrap" data-title="'manufacotryName'|translate" sortable="'manufacotryName'">{{machine.manufacotryName }}</td>
-              <td class="text-nowrap" data-title="'status'|translate" sortable="'status'">{{machine.statusDesc }}</td>
+              <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
               <td class="text-nowrap" data-title="'operation'|translate">
 
                 <button type="button" class="btn btn-primary btn-xs"
-                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'lg')">{{'alter'| translate}}
+                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'alter'| translate}}
                 </button>
                 <button type="button" class="btn btn-warning btn-xs"
                         ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
@@ -239,7 +239,7 @@
 
             <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="machine in $data">
-                <td class="text-nowrap" data-header="'selectAllHeader1'">
+                <td class="text-nowrap" data-header="'selectAllHeader'">
                   <input type="checkbox" ng-checked="minemngMachineCtrl.isSelected(machine.id)"
                          ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
                 </td>
@@ -252,11 +252,11 @@
                 <td class="text-nowrap" data-title="'purchaseDate'|translate" sortable="'purchaseDate'">{{machine.purchaseDate | date:'yyyy-MM-dd '}}</td>
                 <td class="text-nowrap" data-title="'archivesDate'|translate" sortable="'archivesDate'">{{machine.archivesDate | date:'yyyy-MM-dd '}}</td>
                 <td class="text-nowrap" data-title="'manufacotryName'|translate" sortable="'manufacotryName'">{{machine.manufacotryName }}</td>
-                <td class="text-nowrap" data-title="'status'|translate" sortable="'status'">{{machine.statusDesc }}</td>
+                <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
                 <td class="text-nowrap" data-title="'operation'|translate">
 
                   <button type="button" class="btn btn-primary btn-xs"
-                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'lg')">{{'alter'| translate}}
+                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'alter'| translate}}
                   </button>
                   <button type="button" class="btn btn-warning btn-xs"
                           ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
