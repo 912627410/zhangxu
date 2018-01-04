@@ -34,8 +34,10 @@
       if (null != vm.queryMachineLicenseId&&vm.queryMachineLicenseId!="") {
         restCallURL += "&search_LIKES_machine.licenseId=" +$filter('uppercase')(vm.queryMachineLicenseId);
       }
-      if (null != vm.queryDeviceType&&vm.queryDeviceType!="") {
+      if (null != vm.queryDeviceType) {
         restCallURL += "&search_INSTRING_versionNum=" + $filter('uppercase')(vm.queryDeviceType);
+      } else {
+        restCallURL += "&search_LIKES_versionNum=2001,2002,2010";
       }
 
       var deviceDataPromis = serviceResource.restCallService(restCallURL, "GET");
@@ -130,6 +132,12 @@
       if(vm.selected.length == 0){
         Notification.warning({message: '请选择要升级的设备', positionY: 'top', positionX: 'center'});
         return;
+      }
+      for(var i = 1; i < vm.selected.length; i++) {
+        if(vm.selected[i].versionNum != vm.selected[i-1].versionNum) {
+          Notification.error({message: '请选择相同协议版本的设备', positionY: 'top', positionX: 'center'});
+          return;
+        }
       }
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,

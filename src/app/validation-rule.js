@@ -17,7 +17,9 @@
       numberAndChar: /^[a-zA-Z0-9]+$/,
       numberAndCharAndDot: /^[a-zA-Z0-9.-]+$/,
       numberAndDot: /^[0-9.]+$/,
-      numberAndCharForPass: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+      numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+      softVersionNum: /^\d{1,2}(\.\d{1,2})?$/,
+
       minlength: function (value, scope, element, attrs, param) {
         return value.length >= param;
       },
@@ -81,8 +83,12 @@
       numberAndCharForPass: {
         error: '密码必须包含大写字母、小写字母和数字，长度8-20',
         success: ''
+      },
+      softVersionNum: {
+        error: '版本号取值范围：0.01~99.99',
+        success: ''
       }
-    }
+    };
 
     $validationProvider.setExpression(expression).setDefaultMsg(defaultMsg);
 

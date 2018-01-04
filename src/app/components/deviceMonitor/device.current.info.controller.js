@@ -10,9 +10,9 @@
 
   /** @ngInject */
   function DeviceCurrentInfoController($rootScope, $window, $scope, $timeout, $resource, $interval, $http, $uibModal, $confirm, $filter, $uibModalInstance, permissions, languages, serviceResource, deviceinfo, ngTableDefaults, NgTableParams, Notification,
-                                       DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS, AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, GET_ACTIVE_SMS_URL, SEND_ACTIVE_SMS_URL, GET_UN_ACTIVE_LOCK_SMS_URL,
-                                       SEND_UN_ACTIVE_LOCK_SMS_URL, GET_LOCK_SMS_URL, SEND_LOCK_SMS_URL, GET_UN_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL, GET_SET_IP_SMS_URL, SEND_SET_IP_SMS_URL, SMS_SEND_CUSTOMIZED_URL, SMS_SEND_SETALARMFUNC_URL, SMS_SEND_SETSERIALNUM_URL,
-                                       GET_SET_START_TIMES_SMS_URL, SEND_SET_START_TIMES_SMS_URL, GET_SET_WORK_HOURS_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, DEVCE_LOCK_DATA_PAGED_QUERY, GET_SET_INTER_SMS_URL, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,
+                                       DEVCE_MONITOR_SINGL_QUERY, DEVCE_DATA_PAGED_QUERY, DEVCE_WARNING_DATA_PAGED_QUERY, AMAP_QUERY_TIMEOUT_MS, AMAP_GEO_CODER_URL, DEIVCIE_UNLOCK_FACTOR_URL, SEND_ACTIVE_SMS_URL,
+                                       SEND_UN_ACTIVE_LOCK_SMS_URL,  SEND_LOCK_SMS_URL, SEND_UN_LOCK_SMS_URL, SEND_SET_IP_SMS_URL, SMS_SEND_CUSTOMIZED_URL, SMS_SEND_SETALARMFUNC_URL, SMS_SEND_SETSERIALNUM_URL,
+                                       SEND_SET_START_TIMES_SMS_URL, SEND_SET_WORK_HOURS_SMS_URL, DEVCE_LOCK_DATA_PAGED_QUERY, SEND_SET_INTER_SMS_URL, ANALYSIS_POSTGRES, ANALYSIS_GREENPLUM,
                                        DEVCEDATA_EXCELEXPORT, PORTRAIT_ENGINEPERFORMS_URL, PORTRAIT_RECENTLYSPEED_URL, PORTRAIT_RECENTLYOIL_URL, PORTRAIT_WORKTIMELABEL_URL, PORTRAIT_MACHINEEVENT_URL, PORTRAIT_CUSTOMERINFO_URL, MACHINE_STORAGE_URL) {
     var vm = this;
     var startDate = new Date();
@@ -99,6 +99,26 @@
     //初始化controller
     vm.controllerInitialization = function (deviceinfo) {
       vm.deviceinfo = deviceinfo;
+
+      //设置ECU 锁车状态 描述
+      vm.ecuLockStatusDesc = "";
+      if (vm.deviceinfo.ecuLockStatus != null) {
+        if (vm.deviceinfo.ecuLockStatus.length == 8) {
+          if (vm.deviceinfo.ecuLockStatus.substr(7, 1) == "0") {
+            vm.ecuLockStatusDesc += "未绑定";
+          }
+          else {
+            vm.ecuLockStatusDesc += "已绑定";
+          }
+          /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
+           vm.ecuLockStatusDesc += ".";
+           }
+           else{
+           vm.ecuLockStatusDesc += ".";
+           }*/
+        }
+      }
+
       // 页面打开后根据初始化查询的结果判断是否写入消息
       if (vm.deviceinfo.maintainNoticeNum != null && vm.deviceinfo.maintainNoticeNum > 0) {
         //存在保养提醒
@@ -1169,13 +1189,13 @@
     /********************  报警数据end  ***********************/
 
     /********************  操作日志begin  ***********************/
-    vm.getLockData = function (phoneNumber) {
+    vm.getLockData = function (deviceNum) {
       var restCallURL = DEVCE_LOCK_DATA_PAGED_QUERY;
 
-      if (phoneNumber && !angular.isUndefined(phoneNumber)) {
-        var filterTerm = "phoneNumber=" + $filter('uppercase')(phoneNumber);
+      if (deviceNum && !angular.isUndefined(deviceNum)) {
+        var filterTerm = "deviceNum=" + $filter('uppercase')(deviceNum);
       } else {
-        Notification.warning('设备未绑定sim卡！');
+        Notification.warning('设备不存在！');
         return;
       }
       if (filterTerm) {
@@ -1414,13 +1434,51 @@
     /********************  远程控制begin  ***********************/
     vm.serverHost = "iotserver1.nvr-china.com";
     vm.serverPort = "09999";
-    if (vm.deviceinfo.versionNum != null && vm.deviceinfo.versionNum == '2001') {
+    if (vm.deviceinfo.versionNum != null && vm.deviceinfo.versionNum.substring(0,2) == '20') {
       vm.serverPort = "09998";
     }
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.workHours = $filter('number')(vm.deviceinfo.totalDuration, 1);
     if (vm.workHours != null) {
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
+    }
+
+    //2010 、2030协议初始化TCP下发短信,默认通过短信
+    if(vm.deviceinfo.versionNum != null && (vm.deviceinfo.versionNum == '2010' || vm.deviceinfo.versionNum == '2030')){
+      vm.directiveSendType = 0;
+    }
+    //如果通过不同发送方式下发短信的URL
+    vm.updateUrlBySendType = function (url) {
+      if(vm.directiveSendType!=null && vm.directiveSendType!=undefined){
+        url +="&sendType=" + vm.directiveSendType;
+      }
+      return url;
+    }
+
+    //通用的短信发送后的提示
+    vm.alarmAfterSendSms =function (data) {
+      if (data.code == 0) {
+        var sms = data.content;
+        vm.activeMsg = sms.smsContent;
+
+        if(sms.sendType!=null && sms.sendType=="TCP"){
+          Notification.success("TCP指令已提交");
+          vm.initSmsSendBtn();
+        }else {
+          if (sms.smsStatus == 0) {
+            Notification.success(sms.resultDescribe);
+            vm.initSmsSendBtn();
+          } else if (sms.smsStatus == 18) {
+            Notification.success("短信已提交短信平台" + sms.resultDescribe);
+            vm.initSmsSendBtn();
+          } else {
+            Notification.error(sms.resultDescribe);
+          }
+        }
+
+      } else {
+        Notification.error(data.content.message);
+      }
     }
 
     //设置ECU 锁车状态 描述
@@ -1455,28 +1513,6 @@
 
     vm.cancelLockTimes = "";
 
-    //查询绑定短信的短信内容
-    vm.getActiveLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.activeMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
-
     // 短信发送成功后的初始化button
     vm.initSmsSendBtn = function () {
       $window.sessionStorage["sendBtnStatus"] = true;
@@ -1492,6 +1528,8 @@
         return;
       }
       var restURL = SEND_ACTIVE_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
 
       // 如果是中挖，并且当前已经绑定（“已绑定”），则提示是否继续发送绑定短信
       if (vm.deviceinfo.versionNum == '40' && vm.ecuLockStatusDesc == "已绑定") {
@@ -1507,21 +1545,7 @@
       }).then(function () {
         var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
         rspData.then(function (data) {
-          if (data.code == 0) {
-            if (data.content.smsStatus == 0) {
-              vm.activeMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            } else if (data.content.smsStatus == 18) {
-              vm.activeMsg = data.content.smsContent;
-              Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            } else {
-              Notification.error(data.content.resultDescribe);
-            }
-          } else {
-            Notification.error(data.content.message);
-          }
+          vm.alarmAfterSendSms(data);
         }, function (reason) {
           Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
         })
@@ -1532,27 +1556,7 @@
       return permissions.getPermissions("device:monitorShow");
     }
 
-    //查询解绑短信的短信内容
-    vm.getUnActiveLockSMS = function (devicenum) {
 
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.unActiveMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送解绑短信
     vm.sendUnActiveLockSMS = function (devicenum) {
@@ -1561,6 +1565,9 @@
         return;
       }
       var restURL = SEND_UN_ACTIVE_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
 
       // 如果是中挖，并且当前未绑定（“未绑定”），则提示是否继续发送解绑短信
       if (vm.deviceinfo.versionNum == '40' && vm.ecuLockStatusDesc == "未绑定") {
@@ -1578,48 +1585,13 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
     }
 
-    //查询锁车的短信内容
-    vm.getLockSMS = function (devicenum) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.lockMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送锁车短信
     vm.sendLockSMS = function (devicenum) {
@@ -1628,6 +1600,9 @@
         return;
       }
       var restURL = SEND_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
 
       // 如果是中挖，并且当前已经锁车，则提示是否继续发送锁车短信
       if (vm.deviceinfo.versionNum == '40' && vm.deviceinfo.gprsSignal == "90") {
@@ -1645,48 +1620,14 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
     }
 
-    //查询解锁短信的短信内容
-    vm.getUnLockSMS = function (devicenum) {
 
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.unLockMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //格式化显示，使数字每4位以“-”连接
     vm.XReplace = function (str) {
@@ -1701,6 +1642,9 @@
         return;
       }
       var restURL = SEND_UN_LOCK_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
+
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
 
       // 如果是中挖，并且当前未锁车，则提示是否继续发送解锁短信
       if (vm.deviceinfo.versionNum == '40' && vm.deviceinfo.gprsSignal != "90") {
@@ -1718,21 +1662,7 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
@@ -1854,31 +1784,8 @@
       }, function () {
         //取消
       });
+    };
 
-    }
-
-    //查询回传地址
-    vm.getSetIpSMS = function (devicenum, host, port) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
-      ;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setIpMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送回传地址信息
     vm.sendSetIpSMS = function (devicenum, host, port) {
@@ -1887,7 +1794,9 @@
         return;
       }
       var restURL = SEND_SET_IP_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&host=" + host + "&port=" + port;
-      ;
+
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
 
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
@@ -1898,21 +1807,7 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
@@ -1927,6 +1822,9 @@
       }
       var restURL = SMS_SEND_CUSTOMIZED_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&funcNum=" + funcNum + "&customizedData=" + customizedData;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -1936,20 +1834,7 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.sendCustomizedMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
-              } else {
-                Notification.error(data.content.message);
-              }
-
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
@@ -1964,6 +1849,9 @@
       }
       var restURL = SMS_SEND_SETALARMFUNC_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&setCode=" + setCode;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -1973,20 +1861,7 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.sendSetAlarmFuncMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
-              } else {
-                Notification.error(data.content.message);
-              }
-
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
@@ -2001,6 +1876,9 @@
       }
       var restURL = SMS_SEND_SETSERIALNUM_URL + "?devicenum=" + vm.deviceinfo.deviceNum;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -2010,47 +1888,13 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0 && data.content.smsStatus == 0) {
-              vm.sendSetAlarmFuncMsg = data.content.smsContent;
-              Notification.success(data.content.resultDescribe);
-              vm.initSmsSendBtn();
-            }
-            else {
-
-              if (data.code == 0) {
-                Notification.error(data.content.resultDescribe);
-              } else {
-                Notification.error(data.content.message);
-              }
-
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
     }
 
-    //查询启动次数信息
-    vm.getSetStartTimesSMS = function (devicenum, startTimes) {
-
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setStartTImesMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送启动次数信息
     vm.sendSetStartTimesSMS = function (devicenum, startTimes) {
@@ -2060,6 +1904,9 @@
       }
       var restURL = SEND_SET_START_TIMES_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&startTimes=" + startTimes;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -2069,48 +1916,14 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
     }
 
-    //查询工作小时信息
-    vm.getSetWorkHoursSMS = function (devicenum, workHours) {
 
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setWorkHoursMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送回传地址信息
     vm.sendSetWorkHoursSMS = function (devicenum, workHours) {
@@ -2120,6 +1933,9 @@
       }
       var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -2129,52 +1945,13 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })
         });
     }
 
-    //查询间隔信息
-    vm.getSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
-      if (angular.isUndefined(secOutsidePower) || angular.isUndefined(secLocateInt) || angular.isUndefined(secInnerPower)) {
-        Notification.error("请检查时间设置，三个回传时间须全部设置！");
-        return;
-      }
-      if (devicenum == null) {
-        Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
-        return;
-      }
-      var restURL = GET_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
-        + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
-
-      var rspData = serviceResource.restCallService(restURL, "GET");
-      rspData.then(function (data) {
-        if (data.code === 0) {
-          vm.setWorkIntMsg = data.content;
-        } else {
-          Notification.error(data.message);
-        }
-
-      }, function (reason) {
-        Notification.error(languages.findKey('getTheMessageContentFailed') + reason.data.message);
-      })
-    }
 
     //发送间隔信息
     vm.sendSetInterSMS = function (devicenum, secOutsidePower, secLocateInt, secInnerPower) {
@@ -2189,6 +1966,9 @@
       var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="
         + secOutsidePower + "&secLocateInt=" + secLocateInt + "&secInnerPower=" + secInnerPower;
 
+      //设置短信发送方式
+      restURL = vm.updateUrlBySendType(restURL);
+
       $confirm({
         text: languages.findKey('youSureYouWantToSendThisMessage') + '',
         title: languages.findKey('SMSConfirmation') + '',
@@ -2198,21 +1978,7 @@
         .then(function () {
           var rspData = serviceResource.restCallService(restURL, "ADD", null);  //post请求
           rspData.then(function (data) {
-            if (data.code == 0) {
-              if (data.content.smsStatus == 0) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success(data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else if (data.content.smsStatus == 18) {
-                vm.activeMsg = data.content.smsContent;
-                Notification.success("短信已提交短信平台" + data.content.resultDescribe);
-                vm.initSmsSendBtn();
-              } else {
-                Notification.error(data.content.resultDescribe);
-              }
-            } else {
-              Notification.error(data.content.message);
-            }
+            vm.alarmAfterSendSms(data);
           }, function (reason) {
             Notification.error(languages.findKey('messageSendFiled') + ": " + reason.data.message);
           })

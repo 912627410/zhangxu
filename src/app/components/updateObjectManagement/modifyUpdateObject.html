@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h3 class="modal-title">修改</h3>
+</div>
+
+<form name="modifyUpdateObject" class="form-horizontal" ng-submit="">
+  <div class="modal-body">
+    <div class="box-body">
+
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">名称</label>
+        <div class="col-sm-10">
+          <input type="text" id="newLabel" class="form-control"
+                 placeholder="请录入名称"
+                 ng-model="modifyUpdateObjectCtrl.label"
+                 name="label"  validator="required"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newLabel" class="col-sm-2 control-label">代码</label>
+        <div class="col-sm-10">
+          <input type="text" id="name" class="form-control"
+                 placeholder="请录入代码"
+                 ng-model="modifyUpdateObjectCtrl.code"
+                 name="newName"  validator="required"/>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit" validation-submit="modifyUpdateObject" ng-click="modifyUpdateObjectCtrl.ok()">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="modifyUpdateObjectCtrl.cancel()">取消</button>
+  </div>
+</form>

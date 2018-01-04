@@ -15,7 +15,8 @@
     vm.checked = null; //选中的设备id
     vm.updateVersionNum = null;
     vm.updateSoftVersion = null;
-    vm.updateApplicableProducts = null;
+    vm.fileType1 = null;
+    vm.fileType2 = null;
 
     ngTableDefaults.params.count = 8;
     ngTableDefaults.settings.counts = [];
@@ -26,7 +27,9 @@
       var sizeUrl = size || 8;
       var sortUrl = sort || UPDATE_FILE_DATA_BY;
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl + "&search_EQ_status=1";
-
+      if(vm.updateDevice.length > 0) {
+        restCallURL += "&search_EQ_versionNum=" + vm.updateDevice[0].versionNum;
+      }
       var updateFilePromis = serviceResource.restCallService(restCallURL, "GET");
       updateFilePromis.then(function(data){
         vm.updateFileList = data.content;
@@ -42,11 +45,15 @@
 
     vm.query(null, null, null, null);
 
-    vm.fileSelection = function (id, versionNum, softVersion, applicableProducts) {
-      vm.checked = id;
-      vm.updateVersionNum = versionNum;
-      vm.updateSoftVersion = softVersion;
-      vm.updateApplicableProducts = applicableProducts;
+    vm.fileSelection = function (updateFile) {
+      vm.checked = updateFile.id;
+      vm.updateVersionNum = updateFile.versionNum;
+      vm.updateSoftVersion = updateFile.softVersion;
+      vm.projectTeam = updateFile.projectTeam;
+      vm.projectCode = updateFile.projectCode;
+      vm.customerCode = updateFile.customerCode;
+      vm.hardwareVersion = updateFile.hardwareVersion;
+      vm.upgradeMethod = updateFile.upgradeMethod;
     };
 
     vm.ok = function () {
@@ -56,9 +63,9 @@
       }
       var updateDevice = angular.copy(vm.updateDevice);
       var content = "", count = 0;
-      if(vm.updateApplicableProducts == "1") { // GPS自身升级
+      if(vm.upgradeMethod == "1") { // GPS自身升级
         for(var i=0,flag=true,len=updateDevice.length;i<len;flag?i++:i) {
-          if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion || updateDevice[i].versionNum != vm.updateVersionNum)) {
+          if(updateDevice[i] && (updateDevice[i].terminalVersion == vm.updateSoftVersion)) {
             content += updateDevice[i].deviceNum + ",";
             updateDevice.splice(i, 1);
             flag = false;
@@ -68,26 +75,24 @@
           }
         }
         if(updateDevice.length <=0) {
-          content = "选择的设备的软件版本与选择的升级文件的软件版本相同，或选择的设备的协议版本与选择的升级文件的协议版本不同，不做升级。";
+          content = "选择的设备的软件版本与选择的升级文件的软件版本相同，不做升级。";
           vm.confirmUpdate = false;
         } else if(content && count > 0) {
           content = content.slice(0, -1);
-          content += "的软件版本与选择的升级文件的软件版本相同，或协议版本与选择的升级文件的协议版本不同，不作升级。" + "您确定将选择的其余设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+          content += "的软件版本与选择的升级文件的软件版本相同，不作升级。" + "您确定将选择的其余设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
           vm.confirmUpdate = true;
         } else {
           content += "您确定将选择的设备升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
           vm.confirmUpdate = true;
         }
+      } else {
+        content += "您确定升级成VER" + (vm.updateSoftVersion/100).toFixed(2) + "版本?";
+        vm.confirmUpdate = true;
       }
       var updateDataVo = {
         devices : updateDevice,
         fileId : vm.checked
       };
-
-      if(vm.updateApplicableProducts != "1") {
-        content = "您选择的升级文件不适合当前设备，请重新选择！";
-        vm.confirmUpdate = false;
-      }
 
       $confirm({
         title:"操作提示",
@@ -97,10 +102,10 @@
           var restPromise = serviceResource.restAddRequest(UPDATE_URL, updateDataVo);
           restPromise.then(function (data) {
             if(data.code == 0){
-              Notification.success("升级指令已下发!");
+              Notification.success(data.content);
               $uibModalInstance.close();
             } else if(data.code == -1){
-
+              Notification.warning(data.content);
             } else {
               Notification.error(data.content);
             }

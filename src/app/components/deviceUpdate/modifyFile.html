@@ -22,12 +22,64 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="applicableProducts" class="col-sm-2 control-label">适用对象</label>
+        <label class="col-sm-2 control-label">项目组</label>
         <div class="col-sm-10">
-          <select class="form-control" id="applicableProducts" ng-model="modifyFileCtrl.updateFile.applicableProducts">
+          <select name="projectTeam" class="form-control" ng-model="modifyFileCtrl.updateFile.projectTeam"
+                  ng-change="modifyFileCtrl.getProjectCodeList(modifyFileCtrl.updateFile.projectTeam)"
+                  ng-options="projectTeam.code as projectTeam.label for projectTeam in modifyFileCtrl.projectTeamList">
+            <option value="">请选择...</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">项目代号</label>
+        <div class="col-sm-10">
+          <select name="projectCode" class="form-control" ng-model="modifyFileCtrl.updateFile.projectCode"
+                  ng-change="modifyFileCtrl.getCustomerCodeList(modifyFileCtrl.updateFile.projectCode)"
+                  ng-options="projectCode.code as projectCode.label for projectCode in modifyFileCtrl.projectCodeList">
+            <option value="">请选择...</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">客户编码</label>
+        <div class="col-sm-10">
+          <select name="customerCode" class="form-control" ng-model="modifyFileCtrl.updateFile.customerCode"
+                  ng-options="customerCode.code as customerCode.label for customerCode in modifyFileCtrl.customerCodeList">
+            <option value="">请选择...</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">硬件版本</label>
+        <div class="col-sm-10">
+          <select name="hardwareVersion" class="form-control" ng-model="modifyFileCtrl.updateFile.hardwareVersion" validator="required">
+            <option value="0">全部为0</option>
+            <option value="1">VER1</option>
+            <option value="2">VER2</option>
+            <option value="3">VER3</option>
+            <option value="4">VER4</option>
+            <option value="5">VER5</option>
+            <option value="6">VER6</option>
+            <option value="7">VER7</option>
+            <option value="8">VER8</option>
+            <option value="9">VER9</option>
+            <option value="10">VER10</option>
+            <option value="11">VER11</option>
+            <option value="12">VER12</option>
+            <option value="13">VER13</option>
+            <option value="14">VER14</option>
+            <option value="15">VER15</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">升级方式</label>
+        <div class="col-sm-10">
+          <select name="upgradeMethod" class="form-control" ng-model="modifyFileCtrl.updateFile.upgradeMethod" validator="required">
             <option value="1">GPS自身</option>
-            <option value="2">显示器</option>
-            <option value="3">控制器</option>
+            <option value="2">HY64</option>
+            <option value="3">BIN文件</option>
           </select>
         </div>
       </div>
