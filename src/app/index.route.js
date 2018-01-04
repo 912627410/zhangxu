@@ -139,6 +139,18 @@
         }
       })
 
+      //租赁订单详情页面
+      .state('rental.orderDetails', {
+        url: '/orderDetails/:id',
+        views: {
+          'main@rental': {
+            templateUrl: 'app/components/rentalPlatform/fleetMng/RentalOrderDetailMng.html',
+            controller: 'rentalOrderDetailController',
+            controllerAs: 'rentalOrderDetailCtrl'
+          }
+        }
+      })
+
       //租赁车辆管理围栏列表
       .state('rental.orgFence', {
         url: '/orgFence',

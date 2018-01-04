@@ -1554,9 +1554,10 @@
   "gsmSignal":"GSM信号百分比",
   "gpsState":"GPS状态",
   "photoresistorVoltage":"光敏电阻电压值",
-  "goSite":"进场",
-  "leaveSite":"退场",
-
+  "goSite":"车辆进场",
+  "leaveSite":"车辆退场",
+  "orderEdit":"订单变更",
+  "orderApproval":"订单审批",
   "goSiteList":"进场单",
   "goSiteListNumber":"进场单号",
   "leaveSiteList":"退场单",
