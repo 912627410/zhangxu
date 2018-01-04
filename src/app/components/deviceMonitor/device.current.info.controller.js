@@ -1443,8 +1443,23 @@
       vm.workHours = vm.workHours.replace(/,/g, '');  //去掉千位分隔符
     }
 
-    //2010 、2030协议初始化TCP下发短信,默认通过短信
-    if(vm.deviceinfo.versionNum != null && (vm.deviceinfo.versionNum == '2010' || vm.deviceinfo.versionNum == '2030')){
+    //通用的2010/2030/2040显示内容
+    vm.showV2ContentByVersionNum = function(versionNum){
+      if(angular.isUndefined(versionNum) || versionNum==null){
+        return false;
+      }
+
+      if(versionNum == '2010'|| versionNum =='2030'|| versionNum =='2040'){
+        return true;
+      }else{
+        return false;
+      }
+
+    }
+
+
+    //2010 、2030、2040协议初始化TCP下发短信,默认通过短信
+    if(vm.showV2ContentByVersionNum(vm.deviceinfo.versionNum)){
       vm.directiveSendType = 0;
     }
     //如果通过不同发送方式下发短信的URL
