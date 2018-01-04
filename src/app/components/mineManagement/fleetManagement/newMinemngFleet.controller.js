@@ -7,7 +7,7 @@
   'use strict'
   angular.module('GPSCloud').controller('addMineFleetController',addMineFleetCtrl);
 
-  function addMineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification) {
+  function addMineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
     var vm= this;
 
     vm.ok= function(newOrg){
@@ -44,6 +44,28 @@
       vm.showOrgTree=false;
       vm.selectedOrg = data;
     })
+
+
+
+    //打开车队组织
+    vm.addMinemngMachine = function() {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/fleetManagement/addMinemngMachine.html',
+        controller: 'addMinemngMachineController as addMinemngMachineCtrl',
+        size: 'sx',
+        backdrop: false
+      });
+      modalInstance.result.then(function () {
+        vm.reset();
+      }, function () {
+      });
+    };
+
+
+
+
+
     vm.cancel=function(){
 
       $uibModalInstance.dismiss('cancel');

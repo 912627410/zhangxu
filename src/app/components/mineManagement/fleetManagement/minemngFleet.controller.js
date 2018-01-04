@@ -68,12 +68,19 @@
       dataPromis.then(function (data) {
         if(0!=data.parentId){
           vm.selectedParentObject = data.name;
+          var restCallURL = MINE_MACHINE_FLEET;
+          restCallURL += "?id=" + vm.selectedObject.parentId;
+          var dataPromis = serviceResource.restCallService(restCallURL, "GET");
+          dataPromis.then(function (data) {
+            vm.fleetName=data.name;
+          });
         }else {
           var restCallURL = MINE_MACHINE_FLEET;
           restCallURL += "?id=" + vm.selectedObject.id;
           var dataPromis = serviceResource.restCallService(restCallURL, "GET");
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
+            vm.selectedParentObject =null;
           });
         }
         vm.selectedArray[data.level - 1] = data;
@@ -131,7 +138,7 @@
     vm.addMineMachineFleet = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/machineManagement/newMinemngFleet.html',
+        templateUrl: 'app/components/mineManagement/fleetManagement/newMinemngFleet.html',
         controller: 'addMineFleetController as addMineFleetCtrl',
         size: 'sx',
         backdrop: false
@@ -150,11 +157,18 @@
       vm.fleetName='';
       vm.init();
     };
+
+
+
+
+
+
+
+
+
+
+
     vm.init()
-
-
-
-
 
   }
 })();

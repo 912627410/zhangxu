@@ -1,8 +1,9 @@
 <div class="modal-header">
   <h3 class="modal-title">{{'newVehicleInfo'|translate}}</h3>
 </div>
-<form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
-  <div class="modal-body row">
+<div class="modal-body row">
+  <form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
+
     <div class="box-body col-sm-12">
 
       <div class="form-group">
@@ -59,7 +60,9 @@
             <input type="text" name="acceptDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                    ng-model="newMineMachinemngCtrl.machine.acceptDate"
                    is-open="newMineMachinemngCtrl.acceptDateOpenStatus.opened"
-                   datepicker-options="dateOptions" ng-readonly="true"  close-text="Close"/>
+                   datepicker-options="dateOptions" ng-readonly="true"  current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newMineMachinemngCtrl.acceptDateOpen($event)">
@@ -78,7 +81,9 @@
             <input type="text" name="purchaseDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                    ng-model="newMineMachinemngCtrl.machine.purchaseDate"
                    is-open="newMineMachinemngCtrl.purchaseDateOpenStatus.opened"
-                   datepicker-options="dateOptions" ng-readonly="true"  close-text="Close"/>
+                   datepicker-options="dateOptions" ng-readonly="true" current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newMineMachinemngCtrl.purchaseDateOpen($event)">
@@ -93,7 +98,9 @@
             <input type="text" name="archivesDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
                    ng-model="newMineMachinemngCtrl.machine.archivesDate"
                    is-open="newMineMachinemngCtrl.archivesDateOpenStatus.opened"
-                   datepicker-options="dateOptions" ng-readonly="true"  close-text="Close"/>
+                   datepicker-options="dateOptions" ng-readonly="true"  current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
                         ng-click="newMineMachinemngCtrl.archivesDateOpen($event)">
@@ -127,8 +134,9 @@
       </div>
 
       </div>
-  </div>
+
 </form>
+</div>
 <div class="modal-footer">
   <button class="btn btn-primary" type="button" validation-submit="newMachineForm" ng-click="newMineMachinemngCtrl.ok(newMineMachinemngCtrl.machine)">{{'submit'|translate}}</button>
   <button class="btn btn-warning" type="button" ng-click="newMineMachinemngCtrl.cancel()">{{'cancel'|translate}}</button>

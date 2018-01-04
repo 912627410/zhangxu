@@ -12,7 +12,7 @@
 
 
 <!-- Main content -->
-
+<section class="content form-horizontal" style="overflow: hidden">
 
 <uib-tabset active="active" type="tabs">
 
@@ -20,32 +20,19 @@
     <section class="content form-horizontal">
       <!--上半部分-->
       <div class="row form-group">
-
-        <!--车辆总数-->
-        <!--<div class="btn-group col-md-3">
-          <span class="label label-info pull-left">{{'totalNumberOfMachine'|translate}}:{{minemngMachineCtrl.page.totalElements}}</span>
-        </div>-->
         <div class="col-md-4">
-          <!--<button class="btn btn-primary" type="button" ng-click="minemngMachineCtrl.reset()">{{'tramcar'|translate}}</button>
-          <button class="btn btn-primary" type="button"
-                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'excavator'|translate}}
-          </button>-->
-
-
-
-
         </div>
 
         <div class="col-md-4"></div>
 
-        <div class="col-md-4">
+        <!--<div class="col-md-4">
           <a  class="btn btn-default pull-right" ng-click="minemngMachineCtrl.newMachineMng('md',1)">
             <i class="fa fa-plus"></i>{{'add'|translate}}
           </a>
           <a class="btn btn-default pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
             <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
           </a>
-        </div>
+        </div>-->
 
       </div>
 
@@ -69,11 +56,11 @@
 
 
         <div class="col-md-3">
-          <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset()">{{'reset'|translate}}</button>
-          <button class="btn btn-primary margin_right5 pull-right" type="button"
-                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'query'|translate}}
-          </button>
 
+          <button class="btn btn-primary  pull-right" type="button"
+                  ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'查询'|translate}}
+          </button>
+          <button class="btn btn-default margin_right5 pull-right" type="button" ng-click="minemngMachineCtrl.reset()">{{'重置'|translate}}</button>
         </div>
       </div>
 
@@ -94,7 +81,14 @@
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
 
-
+        <div class="col-md-3">
+          <button class="btn btn-primary  pull-right" type="button"
+                  ng-click="minemngMachineCtrl.newMachineMng('md',1)">{{'增加'|translate}}
+          </button>
+          <a class="btn btn-default margin_right5 pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
+            <i class="fa fa-plus"></i> {{'批量导入'|translate}}
+          </a>
+        </div>
 
       </div>
 
@@ -109,10 +103,11 @@
 
           <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="machine in $data">
-              <td class="text-nowrap" data-header="'selectAllHeader'">
+              <!--选择框-->
+              <!--<td class="text-nowrap" data-header="'selectAllHeader'">
                 <input type="checkbox" ng-checked="minemngMachineCtrl.isSelected(machine.id)"
                        ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
-              </td>
+              </td>-->
               <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
               <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'lienseId'">{{machine.licenseId}}</td>
               <td class="text-nowrap" data-title="'orderNumber'|translate" sortable="'orderNumber'">{{machine.orderNumber}}</td>
@@ -125,10 +120,10 @@
               <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
               <td class="text-nowrap" data-title="'operation'|translate">
 
-                <button type="button" class="btn btn-primary btn-xs"
-                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'alter'| translate}}
-                </button>
                 <button type="button" class="btn btn-warning btn-xs"
+                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'修改'| translate}}
+                </button>
+                <button type="button" class="btn btn-danger btn-xs"
                         ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
                 </button>
 
@@ -168,15 +163,6 @@
 
           <div class="col-md-8"></div>
 
-          <div class="col-md-4">
-            <a  class="btn btn-default pull-right" ng-click="minemngMachineCtrl.newMachineMng('md',2)">
-              <i class="fa fa-plus"></i>{{'add'|translate}}
-            </a>
-            <a class="btn btn-default pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
-              <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
-            </a>
-          </div>
-
         </div>
 
 
@@ -199,11 +185,10 @@
 
 
           <div class="col-md-3">
-            <button class="btn btn-primary pull-right" type="button" ng-click="minemngMachineCtrl.reset2()">{{'reset'|translate}}</button>
-            <button class="btn btn-primary margin_right5 pull-right" type="button"
-                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'query'|translate}}
+            <button class="btn btn-primary  pull-right" type="button"
+                    ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'查询'|translate}}
             </button>
-
+            <button class="btn btn-default margin_right5 pull-right" type="button" ng-click="minemngMachineCtrl.reset2()">{{'重置'|translate}}</button>
           </div>
         </div>
 
@@ -224,7 +209,14 @@
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
 
-
+          <div class="col-md-3">
+            <button class="btn btn-primary  pull-right" type="button"
+                    ng-click="minemngMachineCtrl.newMachineMng('md',1)">{{'增加'|translate}}
+            </button>
+            <a class="btn btn-default margin_right5 pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
+              <i class="fa fa-plus"></i> {{'批量导入'|translate}}
+            </a>
+          </div>
 
         </div>
 
@@ -239,10 +231,10 @@
 
             <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
               <tr ng-repeat="machine in $data">
-                <td class="text-nowrap" data-header="'selectAllHeader'">
+               <!-- <td class="text-nowrap" data-header="'selectAllHeader'">
                   <input type="checkbox" ng-checked="minemngMachineCtrl.isSelected(machine.id)"
                          ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
-                </td>
+                </td>-->
                 <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
                 <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'lienseId'">{{machine.licenseId}}</td>
                 <td class="text-nowrap" data-title="'orderNumber'|translate" sortable="'orderNumber'">{{machine.orderNumber}}</td>
@@ -255,10 +247,10 @@
                 <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
                 <td class="text-nowrap" data-title="'operation'|translate">
 
-                  <button type="button" class="btn btn-primary btn-xs"
-                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'alter'| translate}}
-                  </button>
                   <button type="button" class="btn btn-warning btn-xs"
+                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'修改'| translate}}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs"
                           ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
                   </button>
 
@@ -288,4 +280,4 @@
 
 
 </uib-tabset>
-
+</section>

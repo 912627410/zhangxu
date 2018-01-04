@@ -28,6 +28,7 @@
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&search_EQ_machineType=" + vm.machineType;
+      restCallURL += "&search_EQ_deleteStatus=" +1 ;
       if (null != machine) {
 
         if (null != machine.carNumber&&machine.carNumber!="") {
@@ -43,7 +44,6 @@
           restCallURL += "&search_LIKE_manufacotryName=" + $filter('uppercase')(machine.manufacotryName);
         }
       }
-
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
 
@@ -264,16 +264,37 @@
 
 
 
+    var updateSelected = function (action, id) {
+      if (action == 'add' && vm.selected.indexOf(id) == -1) {
+        vm.selected.push(id);
+      }
+      if (action == 'remove' && vm.selected.indexOf(id) != -1) {
+        var idx = vm.selected.indexOf(id);
+        vm.selected.splice(idx, 1);
 
+      }
+    }
 
+    vm.updateSelection = function ($event, id, status) {
 
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      updateSelected(action, id);
+    }
 
+    vm.updateAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      vm.tableParams.data.forEach(function (machine) {
+        updateSelected(action, machine.id);
+      })
 
+    }
 
     vm.isSelected = function (id) {
-
       return vm.selected.indexOf(id) >= 0;
     }
+
 
     vm.checkAll = function () {
       var operStatus = false;

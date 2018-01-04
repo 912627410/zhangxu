@@ -398,12 +398,12 @@
 
 
 
-    .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'mine/machine')   //新增车辆
-    .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'mine/refresh')   //刷新车辆
-    .constant('MINE_QUERY_URL', SERVER_BASE_URL + 'mine/query')   //新增车辆
-    .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'mine/updateMineMachine')   //修改车辆
-    .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'mine/machineState') //矿车状态集合
-    .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'mine/deleteMineMachine')   //删除车辆
+    .constant('MINE_MACHINE_URL', SERVER_BASE_URL + 'minemngMachine/machine')   //新增车辆
+    .constant('MINE_PAGE_URL', SERVER_BASE_URL + 'minemngMachine/refresh')   //刷新车辆
+    .constant('MINE_QUERY_URL', SERVER_BASE_URL + 'minemngMachine/query')   //新增车辆
+    .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'minemngMachine/updateMineMachine')   //修改车辆
+    .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'minemngMachine/machineState') //矿车状态集合
+    .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'minemngMachine/deleteMineMachine')   //删除车辆
     .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询组织
     .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询组织
   ;

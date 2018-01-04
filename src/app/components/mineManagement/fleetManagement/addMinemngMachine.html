@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3 class="modal-title"> {{'organizationInformation'|translate}}
+    <button class="btn btn-warning pull-right" type="button" ng-click="treeController.cancel()" >{{'close'|translate}}
+    </button> <button class="btn btn-warning pull-right" type="button" ng-click="treeController.confirm()" style="margin-right: 10px;">{{'confirm'|translate}}</button>
+  </h3>
+</div>
+
+<section class="content" style="width: 600px;  height:440px; "  >
+  <div class="row">
+    <div class="col-md-12" ng-controller="orgController as orgCtrl" >
+      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 580px;  height:420px;">
+        <div class="input-group input-group-sm"  style="padding-top: 10px;padding-left: 25px;  width:60%">
+          <input type="text" class="form-control" ng-model="orgCtrl.searchText" placeholder="Search" >
+          <span class="input-group-btn">
+                   <button class="btn btn-default" type="button" ng-click="orgCtrl.search(orgCtrl.searchText)">{{'search'|translate}}</button>
+               </span>
+        </div>
+        <div style="padding-top: 20px;padding-left: 20px; ">
+          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;"> {{'selectedOrganization'|translate}}：{{orgCtrl.selectedOrg.label}}</p>
+        </div>
+        <div style="padding-top: 10px;">
+          <abn-tree tree-data="orgCtrl.my_data" tree-control="treeController" on-select="orgCtrl.my_tree_handler(branch); $event.stopPropagation();" expand-level="4"></abn-tree>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
