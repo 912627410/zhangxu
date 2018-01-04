@@ -1444,7 +1444,8 @@
     }
 
     //通用的2010/2030/2040显示内容
-    vm.showV2ContentByVersionNum = function(versionNum){
+    vm.showV2ContentByVersionNum = function(){
+      var versionNum = vm.deviceinfo.versionNum;
       if(angular.isUndefined(versionNum) || versionNum==null){
         return false;
       }
