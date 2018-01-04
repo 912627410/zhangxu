@@ -387,14 +387,16 @@
     .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngdelete')//删除用户
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate') //报警七天趋势
 
-    .constant('MINEMNG_DISPATCH_SEND', SERVER_BASE_URL + 'minemngDispatch/send')   //发送调度命令
     .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
     .constant('MINEMNG_SEND_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/sendTotalDispatch')   //下发总调度
+    .constant('MINEMNG_TEMPORARY_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/temporaryDispatch')   //临时调度
     .constant('MINEMNG_WORKFACE_LIST', SERVER_BASE_URL + 'minemngWorkface/getWorkfaceList')   //获取工作面列表
     .constant('MINEMNG_DUMP_FIELD_LIST', SERVER_BASE_URL + 'minemngDumpField/getDumpFieldList')   //获取排土场列表
     .constant('MINEMNG_FLEET_LIST', SERVER_BASE_URL + 'minemngFleet/getFleetList')   //获取车队列表
     .constant('MINEMNG_WORK_SHIFT_LIST', SERVER_BASE_URL + 'minemngDispatch/getWorkShiftList')   //获取车队列表
     .constant('MINEMNG_CHECK_POINT', SERVER_BASE_URL + 'minemngCheckPoint/checkPoint')   //check point
+    .constant('MINEMNG_DELETE_CHECK_POINT', SERVER_BASE_URL + 'minemngCheckPoint/deleteCheckPoint')   //删除check point
+
 
 
 
