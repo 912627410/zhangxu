@@ -18,6 +18,14 @@
     vm.query = function (data) {
       console.log(data);
     }
+    /**
+     * 重置查询框
+     */
+    vm.reset = function () {
+      vm.terminalNumber = null;
+      vm.simCardNumber = null;
+      vm.carNumber = null;
+    };
 
 
   }

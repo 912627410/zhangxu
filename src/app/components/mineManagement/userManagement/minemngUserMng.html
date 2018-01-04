@@ -52,7 +52,7 @@
             <label class="col-md-1 control-label font-nomal">{{'角色类型'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="roleType" ng-model="minemngUserMngCtrl.roleType" theme="bootstrap"
-                         ng-disabled="disabled" validator="required">
+                         ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'选择角色类型'|translate}}">
                   {{$select.selected.name|translate}}
                 </ui-select-match>
@@ -93,13 +93,13 @@
               <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
               <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
               <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-danger btn-xs"
+                <button type="button" class="btn btn-warning btn-xs"
                         ng-click="minemngUserMngCtrl.update(minemnguser)">{{'修改'|translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
                         ng-click="minemngUserMngCtrl.updatePassword(minemnguser.id)">{{'重置密码'|translate}}
                 </button>
-                <button type="button" class="btn btn-default btn-xs"
+                <button type="button" class="btn btn-danger btn-xs"
                         ng-click="minemngUserMngCtrl.delete(minemnguser.id)">{{'删除'|translate}}
                 </button>
               </td>
