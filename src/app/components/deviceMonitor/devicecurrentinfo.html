@@ -993,12 +993,12 @@
                   <tr>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2040'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">{{'fuelConsumption'|translate}}
                     </td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '3'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '30'
-                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2001'
+                              || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2040'
                               || deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
                       {{deviceCurrentInfoCtrl.deviceinfo.fuelConsumption | number:2}}L/H
                     </td>
@@ -1085,10 +1085,6 @@
                     </td>
                     <td>{{'oilPressAlarmValue'|translate}}</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.oilPressAlarmValue}}</td>
-                    <!--增加车载蓄电池电压显示-->
-                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
-                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol/1000 | number:2}} V</td>
                   </tr>
 
                   <tr>
@@ -1098,8 +1094,10 @@
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A'">{{'usableSatelliteNumber'|translate}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.locateStatus=='A' && deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber!=null">{{deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber}}</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.usableSatelliteNumber==null">{{'noData' |translate}}</td>
-                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{'simCardSerialNum'|translate}}</td>
-                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
+                    <!--增加车载蓄电池电压显示-->
+                    <td>{{'vehicleMountedBatteryVoltage'|translate}}</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol| number:2}} V</td>
+                    <td ng-cloak ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum=='lx01'">{{deviceCurrentInfoCtrl.deviceinfo.batteryVol/1000 | number:2}} V</td>
                   </tr>
                   <!--装载机通信协议2010/2030/2040 Start-->
                   <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
@@ -1116,7 +1114,7 @@
                     <td>光敏电阻电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum() && deviceCurrentInfoCtrl.deviceinfo.versionNum!='2040'" presentation-href="device:monitorAdmin">
                     <td>天线电压高</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltH}}mV</td>
                     <td>天线电压低</td>
@@ -1136,8 +1134,8 @@
                   <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>基站号</td>
                     <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
-                    <td>基站小区号</td>
-                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
+                    <td>基站信号强度</td>
+                    <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmRxl}}</td>
                   </tr>
 
                   <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
@@ -1162,8 +1160,12 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveOne}}</td>
                     <td>预留设备二</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveTwo}}</td>
+                  </tr>
                   <!--装载机通信协议2010/2030/2040 end-->
-
+                  <tr>
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{'simCardSerialNum'|translate}}</td>
+                    <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
+                  </tr>
 
                 </table>
                 <table class="table table-striped" ng-init="rowInx=0">

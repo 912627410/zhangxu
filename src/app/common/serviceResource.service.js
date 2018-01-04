@@ -452,10 +452,10 @@
         if (version_num == '3' && deviceType == '5') {
           return '05';
         }
-        if (version_num == null || version_num == '' || version_num == '1' || version_num == '2' || version_num == '3' || version_num == '2010') {
+        if (version_num == null || version_num == '' || version_num == '1' || version_num == '2' || version_num == '3' || version_num == '2010' || version_num == '2040') {
           return '00';
         }
-        if (version_num == 'A1') {
+        if (version_num == 'A1' || version_num == '2030') {
           return '01';
         }
         if (version_num == '30') {
