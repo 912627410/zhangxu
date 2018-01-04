@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h3 class="modal-title">修改总调度</h3>
+</div>
+
+<form name="updateCheckPoint" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">编号</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateCheckPointCtrl.checkPoint.name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">经度</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateCheckPointCtrl.checkPoint.longitudeNum">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">纬度</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateCheckPointCtrl.checkPoint.latitudeNum">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">工作半径</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="updateCheckPointCtrl.checkPoint.radius">
+            <option value="">请选择...</option>
+            <option value="10">10米</option>
+            <option value="20">20米</option>
+            <option value="30">30米</option>
+            <option value="40">40米</option>
+            <option value="50">50米</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="updateCheckPoint" ng-click="updateCheckPointCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="updateCheckPointCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+</form>

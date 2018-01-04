@@ -8,7 +8,7 @@
     .controller('minemngMachineController', minemngMachineController);
 
   /** @ngInject */
-  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_MACHINE_URL ,$filter, NgTableParams,
+  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_QUERY_URL ,$filter, NgTableParams,
                                     MINE_MACHINE_DELETE, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
                                     $confirm ,MACHINE_EXCELEXPORT) {
     var vm = this;
@@ -16,17 +16,18 @@
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
     vm.querySubOrg = true;
+    vm.machineType = 1;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    vm.query= function (page, size, sort, machine,type) {
+    vm.query= function (page, size, sort, machine) {
       var restCallURL = MINE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      restCallURL += "&search_EQ_machineType=" + type;
+      restCallURL += "&search_EQ_machineType=" + vm.machineType;
       if (null != machine) {
 
         if (null != machine.carNumber&&machine.carNumber!="") {
@@ -60,6 +61,10 @@
       });
     };
 
+    vm.selectTab = function (machineType) {
+      vm.machineType = machineType;
+      vm.query(null, null, null, null);
+    };
 
     //重置查询框
     vm.reset = function () {
@@ -82,7 +87,7 @@
     vm.updateMineMachine = function (machine, size) {
       //var sourceMachine = angular.copy(machine); //深度copy
 
-      var singlUrl = MINE_MACHINE_URL + "?id=" + machine.id;
+      var singlUrl = MINE_QUERY_URL + "?id=" + machine.id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
         var operMachine = data.content;
@@ -132,7 +137,7 @@
           var restCall = MINE_MACHINE_DELETE + "?id=" + id;
           var restPromise = serviceResource.restCallService(restCall, "UPDATE");
           restPromise.then(function (data) {
-            Notification.error(languages.findKey('delSuccess'));
+            Notification.success(languages.findKey('delSuccess'));
             vm.query(null, null, null, null);
           }, function (reason) {
             Notification.error(languages.findKey('delFail'));
