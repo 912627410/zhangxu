@@ -75,8 +75,6 @@
         if (null != minemnguser.entryTime && minemnguser.entryTime != "") {
           var startMonth = minemnguser.entryTime.getMonth() + 1;
           var startDateFormated = minemnguser.entryTime.getFullYear() + '-' + startMonth + '-' + minemnguser.entryTime.getDate();
-            // + ' ' + minemnguser.entryTime.getHours() + ':'
-            // + minemnguser.entryTime.getMinutes() + ':' + minemnguser.entryTime.entryTimetDate.getSeconds();
           if (restCallURL) {
             restCallURL += "&entryTime=" + startDateFormated
           }
@@ -118,6 +116,7 @@
 
       modalInstance.result.then(function (result) {
         vm.tableParams.data.splice(0, 0, result);
+        vm.query(null, null, null, null);
       }, function () {
         //取消
       });
