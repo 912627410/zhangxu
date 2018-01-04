@@ -273,5 +273,7 @@
     //v2 版本接口定义
     .constant('MACHINE_DISTRIBUTION', SERVER_BASE_URL + 'deviceMonitor/v2/machine-distribution?pageSize=200')
     .constant('NO_PROCESS_NOTICE', SERVER_BASE_URL + 'user/v2/no-process-notice')
+    .constant('LX_DEVCE_MONITOR_SINGL_QUERY', SERVER_BASE_URL + 'deviceMonitor/lxdeviceinfo')
+
 
 })();
