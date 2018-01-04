@@ -1101,8 +1101,8 @@
                     <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{'simCardSerialNum'|translate}}</td>
                     <td ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum && deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum != 'null'">{{deviceCurrentInfoCtrl.deviceinfo.simCardSerialNum}}</td>
                   </tr>
-                  <!--装载机通信协议2010 Start-->
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <!--装载机通信协议2010/2030/2040 Start-->
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>开盖锁车使能</td>
                     <td ng-switch on="deviceCurrentInfoCtrl.deviceinfo.autoLockSwitch | limitTo:1:0">
                       <div ng-switch-when="0">关</div>
@@ -1116,7 +1116,7 @@
                     <td>光敏电阻电压</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.photoresistorVolt}}mV</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>天线电压高</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.antennaVoltH}}mV</td>
                     <td>天线电压低</td>
@@ -1125,7 +1125,7 @@
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.hardwareVerVolt}}mV</td>
                   </tr>
 
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>仪表或控制器软件版本</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.extDeviceVersion}}</td>
                     <td>发动机工作时间</td>
@@ -1133,21 +1133,21 @@
                     <td>GPS工作时间</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.gpsOpeDuration/10}}小时</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>基站号</td>
                     <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmLac}}</td>
                     <td>基站小区号</td>
                     <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
                   </tr>
 
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>基站小区号</td>
                     <td colspan="2">{{deviceCurrentInfoCtrl.deviceinfo.gsmCellid}}</td>
                     <td>短信流水号</td>
                     <td colspan="3">{{deviceCurrentInfoCtrl.deviceinfo.smsSerialNum}}</td>
                   </tr>
 
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>GPS信息</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.gps}}</td>
                     <td>仪表盘</td>
@@ -1155,14 +1155,14 @@
                     <td>显示器</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.display}}</td>
                   </tr>
-                  <tr ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'" presentation-href="device:monitorAdmin">
+                  <tr ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()" presentation-href="device:monitorAdmin">
                     <td>控制器</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.controller}}</td>
                     <td>预留设备一</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveOne}}</td>
                     <td>预留设备二</td>
                     <td>{{deviceCurrentInfoCtrl.deviceinfo.reserveTwo}}</td>
-                  <!--装载机通信协议2010 end-->
+                  <!--装载机通信协议2010/2030/2040 end-->
 
 
                 </table>
@@ -1970,7 +1970,7 @@
                     </div>
 
                     <div class="col-md-3" presentation-href="sms:SetAlarmFunc"
-                         ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                         ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">开盖锁车功能</h5>
@@ -2017,7 +2017,7 @@
                     </div>
 
                     <div class="col-md-3" presentation-href="sms:SetAlarmFunc"
-                         ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                         ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">61天无信号锁车</h5>
@@ -2064,7 +2064,7 @@
                     </div>
 
                     <div class="col-md-6" presentation-href="sms:customizedSMS"
-                         ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                         ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()">
                       <div class="box box-success">
                         <div class="box-header">
                           <h5 class="box-title text-gray">自定义短信（内部调试）</h5>
@@ -2121,7 +2121,7 @@
                     </div>
 
                     <div class="col-md-3" presentation-href="sms:sendSetSericalNumSMS"
-                         ng-if="deviceCurrentInfoCtrl.deviceinfo.versionNum == '2010'">
+                         ng-if="deviceCurrentInfoCtrl.showV2ContentByVersionNum()">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">初始化流水号</h5>
