@@ -199,5 +199,17 @@
           });
         });
     };
+
+    /**
+     * 重置查询框
+     */
+
+    vm.reset=function () {
+      vm.minemnguser.name=null;
+      vm.minemnguser.jobNumber=null;
+      vm.minemnguser.entryTime=null;
+      vm.roleType=null;
+
+    };
   }
 })();
