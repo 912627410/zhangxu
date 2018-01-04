@@ -9,9 +9,9 @@
     .controller('rentalOrderMngController', rentalOrderMngController);
 
   /** @ngInject */
-  function rentalOrderMngController($rootScope, $window, $uibModal, $filter, $anchorScroll, serviceResource,Upload, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,RENTANL_ATTACH_UPLOAD_URL) {
 
+  function rentalOrderMngController($rootScope,$state, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -225,6 +225,7 @@
       vm.id = null;
     }
 
+
     //租赁订单管理--更新订单
     vm.update = function (id, realNumber) {
       var realNumber = realNumber;
@@ -265,7 +266,7 @@
 
     }
 
-    vm.view = function (id) {
+    /*vm.view = function (id) {
       // $state.go('rental.viewOrder', {id: id});
       var orderUrl = RENTAL_ORDER_URL + "?id=" + id;
       var rspdata = serviceResource.restCallService(orderUrl, "GET");
@@ -288,7 +289,7 @@
       });
 
 
-    }
+    }*/
 
     vm.goSite = function (rentalOrder) {
       var rentalOrder = rentalOrder;
@@ -346,6 +347,15 @@
           }
         }
       });
+    }
+
+
+     /**
+     * 查看订单详情页面
+     * @param id  订单id
+     */
+    vm.view = function (id) {
+      $state.go('rental.orderDetails', {id: id});
     }
   }
 })();

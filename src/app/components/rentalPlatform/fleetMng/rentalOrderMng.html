@@ -5,7 +5,7 @@
     </h1>
     <ol class="breadcrumb">
       {{'rentalCurrentLocate'|translate}}:
-      <li><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</li>
+      <li ><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</li>
       <li class="active"><i class="fa fa-file-text-o"></i>{{'rentalOrderMng'| translate}}</li>
     </ol>
   </section>
@@ -18,15 +18,15 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
-          <div class="info-title">{{'rentalInProgress'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3">
         <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(1)">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
+          <div class="info-title">{{'rentalInProgress'|translate}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -156,6 +156,10 @@
               <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
                 | date:'yyyy-MM-dd'}}
               </td>
+              <td class="text-nowrap" data-title="'审批状态'" >
+              </td>
+              <td class="text-nowrap" data-title="'审批人'" >
+              </td>
               <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
                 {{rentalOrder.customerName }}
               </td>
@@ -165,15 +169,15 @@
               <td class="text-nowrap" data-title="'rentalAddress'|translate" sortable="'location'">
                 {{rentalOrder.location }}
               </td>
-              <td style="text-align: center;" class="text-nowrap" data-title="'rentalTotalNumberOfMachine'|translate">
+              <td class="text-nowrap text-center" data-title="'rentalTotalNumberOfMachine'|translate">
                 <span >{{rentalOrder.realNumber}}</span>/
                 <span >{{rentalOrder.jc + rentalOrder.zb + rentalOrder.qb}}</span>
               </td>
-              <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-danger btn-xs"  presentation-href="rental:rentalMng:order:modify"
-                        ng-click="rentalOrderMngCtrl.update(rentalOrder.id,rentalOrder.realNumber)">{{'rentalEdit'| translate}}
+              <td class="text-nowrap text-center" data-title="'rentalOperations'|translate">
+                <button type="button" class="btn btn-default btn-xs"
+                        ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">详情
                 </button>
-                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:view"
+<!--                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:view"
                         ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
                 </button>
                 <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:entry"
@@ -181,8 +185,11 @@
                 </button>
                 <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:exit"
                         ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder)">{{'leaveSite'| translate}}
-                </button>
+                </button>-->
                 <!--<i  ng-click="rentalOrderMngCtrl.fileUpload(rentalOrder)" class="fa fa-paperclip" />-->
+              </td>
+              <td class="text-nowrap text-center" data-title="'附件'" >
+                <a><i class="fa fa-paperclip"></i></a>
               </td>
             </tr>
           </table>

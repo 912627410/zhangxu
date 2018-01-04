@@ -1562,7 +1562,8 @@
 
   "goSite":"Go site",
   "leaveSite":"Leave site",
-
+  "orderEdit":"Order Edit",
+  "orderApproval":"Order Approval",
   "goSiteList":"Go site list",
   "leaveSiteList":"Leave site list",
 
