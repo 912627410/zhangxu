@@ -140,7 +140,6 @@
         Notification.success(languages.findKey('loginSuccess'));
 
         //监控用户登录超时
-        Idle.watch();
         vm.getPermission();
 
       }, function (reason) {
@@ -189,7 +188,6 @@
         Notification.success(languages.findKey('loginSuccess'));
         $cookies.remove("LGSTATUS");
         //监控用户登录超时
-        Idle.watch();
         vm.getPermission(passwordPattenStatus);
       }, function (reason) {
         Notification.error(reason.data.message);

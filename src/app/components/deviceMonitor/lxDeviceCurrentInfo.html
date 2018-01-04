@@ -39,6 +39,9 @@
             </div>
           </div>
 
+          <div class="row middle-height">
+
+          </div>
           <!--车辆实时状态信息begin-->
           <div class="row">
             <div class="col-md-12">
@@ -58,16 +61,13 @@
                     <td ng-cloak>{{ vm.lxDeviceInfo.deviceNum}}</td>
                     <td>车号</td>
                     <td ng-cloak>{{ vm.lxDeviceInfo.machine.licenseId}}</td>
-                    <td>回传时间</td>
+                    <td>数据回传时间</td>
                     <td ng-cloak>{{ vm.lxDeviceInfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
 
                   <tr>
-                    <td>ACC状态</td>
-                    <td state-value="{{vm.lxDeviceInfo.accStatus}}"
-                        state-style="{'01':'bg-info text-info','10':'bg-danger text-danger'}"
-                        state-format
-                        ng-cloak>{{ vm.lxDeviceInfo.accStatus| stateConversionFilter:'{"01":"ON","10":"OFF"}'}}
+                    <td>点火</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.accStatus| stateConversionFilter:'{"01":"点火","10":"未点火"}'}}
                     </td>
                     <td>运行总时间(小时)</td>
                     <td ng-cloak>{{ vm.lxDeviceInfo.totalDuration | convertToMins}}</td>
@@ -115,12 +115,6 @@
                         state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
                         state-format
                         ng-cloak>{{ vm.lxDeviceInfo.commStatus | stateConversionFilter:'{"0":"未被拆或有电","1":"被拆或无外电"}'}}
-                    </td>
-                    <td>开盖锁车</td>
-                    <td state-value="{{vm.lxDeviceInfo.lockerStatus}}"
-                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
-                        state-format
-                        ng-cloak>{{ vm.lxDeviceInfo.lockerStatus | stateConversionFilter:'{"0":"未开盖","1":"已开盖锁车"}'}}
                     </td>
                     <td>远程锁车</td>
                     <td state-value="{{vm.lxDeviceInfo.lockStatus}}"
@@ -237,7 +231,9 @@
           </div>
           <div class="col-md-1">
             <button class="btn btn-primary"
-                    type="button">{{'confirm'|translate}}
+                    type="button"
+                    ng-click="vm.queryLxHistory(0,8,null,null,vm.totalElement,vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">
+              {{'confirm'|translate}}
             </button>
           </div>
           <div class="col-md-3">
@@ -245,10 +241,105 @@
                ng-click='csv.generate()'
                ng-href="{{csv.link()}}"
                download="{{vm.lxDeviceInfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
-            <a class="btn" title="导出所选时间范围的数据"
-               ng-click="vm.excelExport(vm.lxDeviceInfo.deviceNum,vm.lxDeviceInfo.startDate,vm.lxDeviceInfo.endDate)">全部导出</a>
+            <!--<a class="btn" title="导出所选时间范围的数据"
+               ng-click="vm.lxDeviceDataExport(vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">全部导出</a>-->
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-md-12" style="overflow-x: auto;">
+            <table ng-table="vm.deviceHistoryRunData" class="table table-responsive history-tab-tr-nowrap"
+                   export-csv='csv'>
+              <tr ng-repeat="deviceData in $data">{{deviceData}}
+                <td data-title="'设备号'" ng-cloak>{{deviceData.deviceNum}}</td>
+                <td data-title="'数据回传时间'" ng-cloak>{{ deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'定位时间'" ng-cloak>{{ deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'当前位置'" ng-cloak>{{ deviceData.address}}</td>
+                <td data-title="'点火'"
+                    ng-cloak>{{ deviceData.accStatus| stateConversionFilter:'{"01":"点火","10":"未点火"}'}}
+                </td>
+                <td data-title="'定位状态'"
+                    state-value="{{deviceData.locateStatus}}"
+                    state-style="{A:'bg-info text-info',V:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.locateStatus | stateConversionFilter:'{"A":"已定位","V":"未定位"}'}}
+                </td>
+                <td data-title="'车辆电压'" ng-cloak>{{ deviceData.batteryVol/100}} V</td>
+                <td data-title="'电池电压'" ng-cloak>{{ deviceData.imitate1/100}} V</td>
+                <td data-title="'天线断线'"
+                    state-value="{{deviceData.wireStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{deviceData.wireStatus | stateConversionFilter:'{"0":"未断线","1":"断线"}'}}
+                </td>
+                <td data-title="'开盖锁车'"
+                    state-value="{{deviceData.lockerStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.lockerStatus | stateConversionFilter:'{"0":"未开盖","1":"开盖锁车"}' }}
+                </td>
+                <td data-title="'主电源低电压'"
+                    state-value="{{deviceData.gpsPowerStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.gpsPowerStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                </td>
+                <td data-title="'备用电池低电压'"
+                    state-value="{{deviceData.elecStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.elecStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                </td>
+                <td data-title="'GPS被拆或无外电'"
+                    state-value="{{deviceData.commStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.commStatus | stateConversionFilter:'{"0":"未被拆或有电","1":"被拆或无外电"}'}}
+                </td>
+                <td data-title="'定位状态'"
+                    state-value="{{deviceData.locateStatus}}"
+                    state-style="{A:'bg-info text-info',V:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.locateStatus | stateConversionFilter:'{"A":"已定位","V":"未定位"}'}}
+                </td>
+                <td data-title="'密码激活'"
+                    state-value="{{deviceData.workMonitor}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.workMonitor | stateConversionFilter:'{"0":"非激活","1":"激活"}'}}
+                </td>
+                <td data-title="'永久解锁'"
+                    state-value="{{deviceData.ecuLockStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.ecuLockStatus | stateConversionFilter:'{"0":"非永久解锁","1":"永久解锁"}'}}
+                </td>
+                <td data-title="'远程锁车'"
+                    state-value="{{deviceData.lockStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.lockStatus | stateConversionFilter:'{"0":"解锁","1":"锁车"}'}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <uib-pagination class="pagination-sm pagination-custom"
+                          boundary-links="true"
+                          rotate="false"
+                          max-size="10"
+                          total-items="vm.totalElements"
+                          ng-change="vm.queryLxHistory(vm.currentPage-1,vm.pageSize,null,null,vm.totalElement,vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)"
+                          ng-model="vm.currentPage"
+                          items-per-page="vm.pageSize"
+                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+          </uib-pagination>
+        </div>
+      </div>
       </div>
     </uib-tab>
     <!--历史数据end-->
@@ -306,7 +397,9 @@
           </div>
           <div class="col-md-1">
             <button class="btn btn-primary"
-                    type="button">{{'confirm'|translate}}
+                    type="button"
+                    ng-click="vm.queryLxHistoryMap(0,1000,'locateDateTime,desc',1,null,
+                    vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">{{'confirm'|translate}}
             </button>
           </div>
           <div class="col-md-3 btn-group " role="group">
@@ -314,7 +407,7 @@
             <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
             <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
             <button id="draw" class="btn  btn-sm" type="button"
-                    ng-click="vm.draw(vm.deviceinfo.machine.licenseId)">仓库围栏
+                    ng-click="vm.drawWarehouse(vm.lxDeviceInfo.machine.licenseId)">仓库围栏
             </button>
           </div>
         </div>

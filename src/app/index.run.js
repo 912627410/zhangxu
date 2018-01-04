@@ -43,13 +43,6 @@
       $rootScope.permissionList = JSON.parse($window.sessionStorage["permissionList"]);
     }
 
-
-    //判断是否登录
-    if ($rootScope.userInfo){
-      //监控用户登录超时
-      Idle.watch();
-    }
-
     //保存当前打开的modal,用于超时时关闭
     $rootScope.currentOpenModal = null;
 
@@ -57,8 +50,6 @@
     $rootScope.$on('$stateChangeSuccess', function() {
       $uibModalStack.dismissAll();
     });
-
-    $log.debug('runBlock end');
 
     //定义全局日期格式
     $rootScope.formatCustom = "yyyy-M!-d!";

@@ -889,7 +889,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>{{'vehicleType'|translate}}</td>
+                    <td>发动机类型</td>
                     <td ng-if="deviceCurrentInfoCtrl.deviceinfo.machine==null">{{'noMessage'|translate}}</td>
                     <td ng-cloak ng-if="null!=deviceCurrentInfoCtrl.deviceinfo.machine">
                       {{deviceCurrentInfoCtrl.deviceinfo.machine.engineType.engineName}}
@@ -1422,7 +1422,7 @@
     </uib-tab>
 
     <!--报警数据-->
-    <uib-tab ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
+    <uib-tab >
       <uib-tab-heading>{{'warningData'|translate}}</uib-tab-heading>
       <div class="modal-body">
         <div class="box-body">
@@ -1591,7 +1591,7 @@
     </uib-tab>
 
     <!--远程控制-->
-    <uib-tab presentation-href="device:remoteControl" ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
+    <uib-tab presentation-href="device:remoteControl" >
       <uib-tab-heading>
         {{'telecontrol'|translate}}
       </uib-tab-heading>
@@ -2326,8 +2326,7 @@
     </uib-tab>
 
     <!--操作日志-->
-    <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.deviceNum)"
-             ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
+    <uib-tab select="deviceCurrentInfoCtrl.getLockData(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>操作日志</uib-tab-heading>
       <div class="box-header">
         <div class="pull-right box-tools" style="margin-right: 20px">
@@ -2375,8 +2374,7 @@
     </uib-tab>
 
     <!--数据分析-->
-    <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)"
-             ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
+    <uib-tab select="deviceCurrentInfoCtrl.initConfig(deviceCurrentInfoCtrl.deviceinfo.deviceNum)">
       <uib-tab-heading>数据分析</uib-tab-heading>
       <div class="modal-body" style="overflow-y:scroll; overflow-x:hidden; height:600px;">
         <div class="box-body">
@@ -2488,8 +2486,7 @@
     </uib-tab>
 
     <!--用户画像-->
-    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait"
-             ng-show="deviceCurrentInfoCtrl.deviceinfo.versionNum!='lx01'">
+    <uib-tab select="deviceCurrentInfoCtrl.initPortrait()" presentation-href="deviceMonitor:portrait">
       <uib-tab-heading>用户画像</uib-tab-heading>
       <div class="modal-body" style="overflow-y: auto; overflow-x:hidden;  height:600px;">
         <div class="row">

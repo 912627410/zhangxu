@@ -3091,10 +3091,6 @@
 
           Notification.success(languages.findKey('loginSuccess'));
 
-
-          //监控用户登录超时
-          Idle.watch();
-
           //获取权限
           var rspData = serviceResource.getPermission();
           rspData.then(function (data) {
