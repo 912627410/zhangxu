@@ -62,13 +62,16 @@
        * @param fleetId
        */
       vm.getTeamList = function (fleetId) {
-        var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
-        var rspDate = serviceResource.restCallService(url, "QUERY");
-        rspDate.then(function (data) {
-          vm.teamList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
+        vm.newTotalDispatch.teamList = [];
+        if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
+          var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
+          var rspDate = serviceResource.restCallService(url, "QUERY");
+          rspDate.then(function (data) {
+            vm.teamList = data;
+          },function (reason) {
+            Notification.error(reason.data);
+          })
+        }
       };
 
       /**

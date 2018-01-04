@@ -2,7 +2,7 @@
   <h3 class="modal-title">新增总调度</h3>
 </div>
 
-<form name="newCheckPoint" class="form-horizontal">
+<form name="newTotalDispatch" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body form-horizontal">
       <div class="form-group">
@@ -19,11 +19,12 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">小组</label>
         <div class="col-sm-10">
-          <select name="team" class="form-control"
-                  ng-model="newTotalDispatchCtrl.newTotalDispatch.team"
-                  ng-options="teams.id as teams.name for teams in newTotalDispatchCtrl.teamList">
-            <option value="">{{'pleaseSelect'|translate}}</option>
-          </select>
+          <ui-select multiple ng-model="newTotalDispatchCtrl.newTotalDispatch.teamList" theme="bootstrap" close-on-select="false" style="padding: 2px 12px;">
+            <ui-select-match placeholder="{{'pleaseSelect'|translate}}">{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="teams in newTotalDispatchCtrl.teamList">
+              {{teams.name}}
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
       <div class="form-group">
@@ -59,7 +60,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="newCheckPoint" ng-click="newTotalDispatchCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-primary" type="button" validation-submit="newTotalDispatch" ng-click="newTotalDispatchCtrl.ok()" >{{'save'|translate}}</button>
     <button class="btn btn-warning" type="button" ng-click="newTotalDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

@@ -13,14 +13,14 @@
       <div class="row info-box-container">
         <form name="queryForm" class="form-horizontal" role="form">
 
-          <div class="form-group">
-            <label class="col-md-1 control-label font-nomal">{{'工号'|translate}}:</label>
+          <div class="form-group minemngFormGroup">
+            <label class="col-md-1 control-label font-normal">{{'工号'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="jobNumber" class="form-control"  ng-model="minemngUserMngCtrl.minemnguser.jobNumber"
                      placeholder="{{'输入工号'|translate}}"/>
             </div>
 
-            <label class="col-md-1 control-label font-nomal">{{'入职时间'|translate}}:</label>
+            <label class="col-md-1 control-label font-normal">{{'入职时间'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="entryTime" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
@@ -41,18 +41,15 @@
               </p>
               <span id="bootstrap"></span>
             </div>
-
-          </div>
-          <div class="form-group">
-            <label class="col-md-1 control-label font-nomal">{{'姓名'|translate}}:</label>
+            <label class="col-md-1 control-label font-normal">{{'姓名'|translate}}:</label>
             <div class="col-md-2">
-              <input type="text" name="name" class="form-control"  ng-model="minemngUserMngCtrl.minemnguser.name"
+              <input type="text" name="name" class="form-control" ng-model="minemngUserMngCtrl.minemnguser.name"
                      placeholder="{{'输入姓名'|translate}}" />
             </div>
-            <label class="col-md-1 control-label font-nomal">{{'角色类型'|translate}}:</label>
+            <label class="col-md-1 control-label font-normal">{{'角色类型'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="roleType" ng-model="minemngUserMngCtrl.roleType" theme="bootstrap"
-                         ng-disabled="disabled" validator="required">
+                         ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'选择角色类型'|translate}}">
                   {{$select.selected.name|translate}}
                 </ui-select-match>
@@ -60,24 +57,12 @@
                   <div ng-bind-html="userRoleType.name | highlight: $select.search |translate"></div>
                 </ui-select-choices>
             </div>
-            <div class="col-md-1"></div>
-
-            <div class="col-md-3">
-              <div class=" col-md-4 ">
-                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'query'|translate}}
-                </button>
-              </div>
-
-              <div class="col-md-4">
-                <button class="btn btn-primary" type="button"
-                        ng-click="minemngUserMngCtrl.new()">{{'新增'|translate}}
-                </button>
-              </div>
-
-              <div class="col-md-4">
-                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量增加'|translate}}
-                </button>
-              </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-12 text-right">
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'query'|translate}}</button>
+                <button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.new()">{{'新增'|translate}}</button>
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量增加'|translate}}</button>
             </div>
           </div>
         </form>
