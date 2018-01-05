@@ -408,6 +408,9 @@
     .constant('MINEMNG_MACHINE_TYPE_LIST', SERVER_BASE_URL + 'mine/getMachineTypeList')   //车辆类型集合
     .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询组织
     .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询组织
+
+
+    .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息
   ;
 
 
