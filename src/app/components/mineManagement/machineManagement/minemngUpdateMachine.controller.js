@@ -10,7 +10,7 @@
     .controller('updateMineMachineController', updateMineMachineCtrl);
 
   /** @ngInject */
-  function updateMineMachineCtrl($filter,machineService,machine, $uibModalInstance,languages, MINE_UPDATEMACHINE_URL, serviceResource, Notification,MINE_PAGE_URL,DEFAULT_SIZE_PER_PAGE) {
+  function updateMineMachineCtrl($filter,machineService,machine, $uibModalInstance,languages, MINE_UPDATEMACHINE_URL, serviceResource, Notification,MINE_PAGE_URL,MINEMACHINE_STATE_LIST_URL) {
     var vm = this;
     vm.machine = machine;
 
@@ -40,7 +40,7 @@
       opened: false
     };
 
-    var machineStatePromise = machineService.getMachineStateList();
+    var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
     machineStatePromise.then(function (data) {
       vm.machineStateList= data;
     }, function () {

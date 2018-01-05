@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'修改车辆'|translate}}</h3>
+</div>
+<div class="modal-body row">
+  <form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
+
+      <div class="box-body col-sm-12">
+
+        <div class="form-group">
+          <label for="carNumber" class="col-sm-2 control-label padding5">{{'carNumber'|translate}}</label>
+          <div class="col-sm-4">
+            <input type="text" id="carNumber" class="form-control" placeholder="{{'carNumber'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.carNumber" name="carNumber" typeahead-show-hint="true"
+                   validator="required" />
+          </div>
+
+          <label for="licenseId" class="col-sm-2 control-label padding5">{{'licenseId'|translate}}</label>
+          <div class="col-sm-4">
+            <input type="text" id="licenseId" class="form-control" placeholder="{{'licenseId'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.licenseId" name="licenseId" typeahead-show-hint="true"
+                   validator="required"/>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="orderNumber" class="col-sm-2 control-label padding5">{{'orderNumber'|translate}}</label>
+          <div class="col-sm-4">
+            <input type="text" id="orderNumber" class="form-control" placeholder="{{'orderNumber'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.orderNumber" name="orderNumber" typeahead-show-hint="true"
+            />
+          </div>
+
+
+          <label for="productName" class="col-sm-2 control-label padding5">{{'productName'|translate}}</label>
+          <div class="col-sm-4">
+            <input type="text" id="productName" class="form-control" placeholder="{{'productName'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.productName" name="productName" typeahead-show-hint="true"
+                   validator="required"/>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="productModel" class="col-sm-2 control-label padding5">{{'productModel'|translate}}</label>
+          <div class="col-sm-4">
+
+            <input type="text" id="productModel" class="form-control" placeholder="{{'productModel'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.productModel" name="productModel" typeahead-show-hint="true"
+                   validator="required" />
+          </div>
+
+          <label for="acceptDate" id="acceptDate" class="col-sm-2 control-label padding5">{{'acceptDate'|translate}}</label>
+          <div class="col-sm-4">
+            <p class="input-group">
+              <input type="text" name="acceptDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                     ng-model="updateMineMachineCtrl.machine.acceptDate"
+                     is-open="updateMineMachineCtrl.acceptDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true"  current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="updateMineMachineCtrl.acceptDateOpen($event)">
+                    <i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="purchaseDate" id="purchaseDate" class="col-sm-2 control-label padding5">{{'purchaseDate'|translate}}</label>
+          <div class="col-sm-4">
+            <p class="input-group">
+              <input type="text" name="purchaseDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                     ng-model="updateMineMachineCtrl.machine.purchaseDate"
+                     is-open="updateMineMachineCtrl.purchaseDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true" current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="updateMineMachineCtrl.purchaseDateOpen($event)">
+                    <i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+          </div>
+
+          <label for="archivesDate" id="archivesDate" class="col-sm-2 control-label padding5">{{'archivesDate'|translate}}</label>
+          <div class="col-sm-4">
+            <p class="input-group">
+              <input type="text" name="archivesDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                     ng-model="updateMineMachineCtrl.machine.archivesDate"
+                     is-open="updateMineMachineCtrl.archivesDateOpenStatus.opened"
+                     datepicker-options="dateOptions" ng-readonly="true"  current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"
+                          ng-click="updateMineMachineCtrl.archivesDateOpen($event)">
+                    <i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="manufacotryName" class="col-sm-2 control-label padding5">{{'manufacotryName'|translate}}</label>
+          <div class="col-sm-4">
+
+            <input type="text" id="manufacotryName" class="form-control" placeholder="{{'manufacotryName'|translate}}"
+                   ng-model="updateMineMachineCtrl.machine.manufacotryName" name="manufacotryName" typeahead-show-hint="true"
+                   validator="required" />
+          </div>
+
+            <label for="status" class="col-sm-2 control-label padding5">{{'status'|translate}}</label>
+            <div class="col-sm-4">
+              <ui-select id="status" name="machineState" ng-model="updateMineMachineCtrl.machine.machineStatus" theme="bootstrap"
+                         ng-disabled="disabled">
+                <ui-select-match allow-clear="true" placeholder="{{'status'|translate}}">{{$select.selected.stateDesc}}</ui-select-match>
+                <ui-select-choices  repeat="machineState.id as machineState in updateMineMachineCtrl.machineStateList ">
+                  <div  ng-bind-html="machineState.stateDesc | highlight: $select.search"></div>
+                </ui-select-choices>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+
+      </div>
+
+</form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="newMachineForm" ng-click="updateMineMachineCtrl.ok(updateMineMachineCtrl.machine)">{{'submit'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="updateMineMachineCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>

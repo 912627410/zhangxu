@@ -336,7 +336,7 @@
       url: '/mineMachineFleet',
       views: {
         'rightside@minemng': {
-          templateUrl: 'app/components/mineManagement/machineManagement/minemngFleet.html',
+          templateUrl: 'app/components/mineManagement/fleetManagement/minemngFleet.html',
           controller: 'minemngFleetController',
           controllerAs: 'minemngFleetCtrl'
         }
