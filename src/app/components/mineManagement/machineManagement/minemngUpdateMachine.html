@@ -116,11 +116,12 @@
 
             <label for="status" class="col-sm-2 control-label padding5">{{'status'|translate}}</label>
             <div class="col-sm-4">
-              <ui-select id="status" name="machineState" ng-model="updateMineMachineCtrl.machine.status" theme="bootstrap"
+              <ui-select id="status" name="machineState" ng-model="updateMineMachineCtrl.machine.machineStatus" theme="bootstrap"
                          ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'status'|translate}}">{{$select.selected.stateDesc}}</ui-select-match>
                 <ui-select-choices  repeat="machineState.id as machineState in updateMineMachineCtrl.machineStateList ">
                   <div  ng-bind-html="machineState.stateDesc | highlight: $select.search"></div>
+                </ui-select-choices>
                 </ui-select-choices>
               </ui-select>
             </div>

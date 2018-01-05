@@ -28,7 +28,7 @@
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&search_EQ_machineType=" + vm.machineType;
-      restCallURL += "&search_EQ_deleteStatus=" +1 ;
+      restCallURL += "&search_EQ_status=" +1 ;
       if (null != machine) {
 
         if (null != machine.carNumber&&machine.carNumber!="") {
@@ -93,7 +93,7 @@
         var operMachine = data.content;
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
-          templateUrl: 'app/components/mineManagement/machineManagement/updateMinemngMachine.html',
+          templateUrl: 'app/components/mineManagement/machineManagement/minemngUpdateMachine.html',
           controller: 'updateMineMachineController as updateMineMachineCtrl',
           size: size,
           backdrop: false,
@@ -158,7 +158,7 @@
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/machineManagement/newMinemngMachine.html',
+        templateUrl: 'app/components/mineManagement/machineManagement/minemngNewMachine.html',
         controller: 'newMineMachinemngController as newMineMachinemngCtrl',
         size: size,
         backdrop: false,

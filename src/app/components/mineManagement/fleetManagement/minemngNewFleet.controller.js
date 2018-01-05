@@ -51,7 +51,7 @@
     vm.addMinemngMachine = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/addMinemngMachine.html',
+        templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
         controller: 'addMinemngMachineController as addMinemngMachineCtrl',
         size: 'sx',
         backdrop: false
