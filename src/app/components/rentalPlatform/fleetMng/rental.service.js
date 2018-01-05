@@ -9,8 +9,8 @@
     .factory('rentalService', rentalService);
 
   /** @ngInject */
-  function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE,RENTAL_ORDER_STATUS,
-                         RENTAL_MAINTENANCE_STATUS_URL,RENTAL_MAINTENANCE_LIST_STATUS_URL,RENTAL_ORG_FENCE_STATUS) {
+  function rentalService(RENTAL_JOB_CONTENT_LIST, RENTAL_COLLECTION_AGREEMENT_LIST, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE,RENTAL_ORDER_STATUS,RENTAL_OPERATION_TYPE_LIST,
+                         RENTAL_MAINTENANCE_STATUS_URL,RENTAL_MAINTENANCE_LIST_STATUS_URL,RENTAL_ORG_FENCE_STATUS,RENTAL_MACHINE_PRICE_UNIT_LIST,RENTAL_RESPONSIBILITY_LIST,RENTAL_PAY_TYPE_LIST) {
 
 
 
@@ -29,6 +29,9 @@
       getDevicePowerTypeList: function () {
         return serviceResource.restCallService(DEVCE_POWERTYPE,"GET");
       },
+      getJobContentList: function () {
+        return serviceResource.restCallService(RENTAL_JOB_CONTENT_LIST,"GET");
+      },
       getRetnalOrderStatusList: function () {
         return serviceResource.restCallService(RENTAL_ORDER_STATUS,"QUERY"); //返回结果是List,所以用Query
       },
@@ -41,6 +44,22 @@
       getRetnalOrgFenceStatusList: function () {
         return serviceResource.restCallService(RENTAL_ORG_FENCE_STATUS,"QUERY"); //返回结果是List,所以用Query
       },
+      getCollectionAgreementList: function () {
+        return serviceResource.restCallService(RENTAL_COLLECTION_AGREEMENT_LIST,"QUERY"); //返回结果是List,所以用Query
+      },
+      getMachinePriceUnitList: function () {
+        return serviceResource.restCallService(RENTAL_MACHINE_PRICE_UNIT_LIST,"QUERY"); //返回结果是List,所以用Query
+      },
+      getResponsibilityList: function () {
+        return serviceResource.restCallService(RENTAL_RESPONSIBILITY_LIST,"QUERY"); //返回结果是List,所以用Query
+      },
+      getoperationType: function () {
+        return serviceResource.restCallService(RENTAL_OPERATION_TYPE_LIST,"QUERY"); //返回结果是List,所以用Query
+      },
+      getPayTypeList: function () {
+        return serviceResource.restCallService(RENTAL_PAY_TYPE_LIST,"QUERY"); //返回结果是List,所以用Query
+      },
+
 
     };
 

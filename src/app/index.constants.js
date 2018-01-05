@@ -281,6 +281,14 @@
     .constant('RENTAL_ORDER_URL',SERVER_BASE_URL + 'rental/order/order')//租赁平台维护订单信息
     .constant('RENTAL_ORDER_STATUS',SERVER_BASE_URL + 'rental/order/statusList')//租赁平台订单状态List
     .constant('RENTAL_ORDER_GROUP_BY_STATUS',SERVER_BASE_URL + 'rental/order/groupByStatus')//租赁平台维护订单信息
+    .constant('RENTAL_COLLECTION_AGREEMENT_LIST',SERVER_BASE_URL + 'rental/order/CollectionAgreementList')//订单租金收取约定List
+    .constant('RENTAL_MACHINE_PRICE_UNIT_LIST',SERVER_BASE_URL + 'rental/order/MachinePriceUnitList')//订单车辆租金单位List
+    .constant('RENTAL_RESPONSIBILITY_LIST',SERVER_BASE_URL + 'rental/order/ResponsibilityList')//进退场费用责任方List
+    .constant('RENTAL_JOB_CONTENT_LIST',SERVER_BASE_URL + 'rental/order/getJobContentList')//查找订单所有的工作内容类别List
+    .constant('RENTAL_PAY_TYPE_LIST',SERVER_BASE_URL + 'rental/order/payTypeList')//支付方式List
+    .constant('RENTAL_OPERATION_TYPE_LIST',SERVER_BASE_URL + 'rental/order/operationType')//操作类型（进场/退场）
+
+
     //租赁围栏
     .constant('RENTAL_ORG_FENCE_PAGE_URL',SERVER_BASE_URL + 'rental/orgFence/orgFencepage')//分页查询围栏信息
     .constant('RENTAL_ORG_FENCE_COUNT',SERVER_BASE_URL + 'rental/orgFence/fence-count')//围栏总数
