@@ -822,7 +822,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:2000,
+        max:2200,
         interval: 150,
         // max:'dataMax',
         minInterval: 5,
