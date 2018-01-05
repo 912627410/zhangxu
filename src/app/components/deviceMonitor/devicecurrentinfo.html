@@ -2354,10 +2354,11 @@
                     <th class="text-nowrap">操作结果</th>
                     <th class="text-nowrap">终端ip</th>
                     <th class="text-nowrap">下发方式</th>
+                    <th class="text-nowrap">设备应答时间</th>
                   </tr>
                   <tr ng-repeat="deviceLockDataList in $data">
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsSerialNum}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.serialTime}}</td>
 
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.operator}}</td>
                     <td ng-cloak class="text-nowrap text-center">
@@ -2367,6 +2368,7 @@
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsStatus}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.clientIp}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendType}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.deviceReceiveTime}}</td>
                   </tr>
                 </table>
               </div>
