@@ -370,7 +370,7 @@
     function getBar1_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
+        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope+'&startQuarter=201701'+'&endQuarter=201704'
       }).success(function(data,header,config,status){
 
         data = fixData(data);
@@ -478,7 +478,7 @@
     function getBar2_Data(productType,machineType,hourScope,statisticalType){
       $http({
         method: 'GET',
-        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope
+        url: WAR_ZONE_QUERY + 'fourQuarter?statisticalType=' + statisticalType + '&produceType=' + productType + '&machineType=' + machineType +'&hourScope=' + hourScope+'&startQuarter=201701'+'&endQuarter=201704'
       }).success(function(data,header,config,status){
 
         data = fixData(data);
