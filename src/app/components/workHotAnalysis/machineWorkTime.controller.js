@@ -10,7 +10,7 @@
     .controller('machineWorkTimeController', machineWorkTimeController);
 
   /** @ngInject */
-  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification,$uibModal, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY,serviceResource, NgTableParams, ngTableDefaults,DEVCE_MONITOR_SINGL_QUERY,languages) {
+  function machineWorkTimeController($rootScope, $scope, $http, $filter, Notification, $uibModal, WORK_DISTRIBUTE_TIME_QUERY, WORK_DISTRIBUTE_DAYS_QUERY, serviceResource, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, languages) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
@@ -34,16 +34,16 @@
       startingDay: 1,
       minMode: 'month'
     };
-    vm.change = function(dateType1){
-      if(dateType1==1){
+    vm.change = function (dateType1) {
+      if (dateType1 == 1) {
         vm.quarterQuery = true;
         vm.monthQuery = false;
         var quarterDate = new Date();
         var dates = [];
         //默认生成最近的10个季度周期供用户选择
-        for(var i=0;i<10;i++) {
+        for (var i = 0; i < 10; i++) {
           quarterDate.setMonth(quarterDate.getMonth() - 3);
-          var quarter = Math.ceil((quarterDate.getMonth()+1) / 3);
+          var quarter = Math.ceil((quarterDate.getMonth() + 1) / 3);
           switch (quarter) {
             case 1:
               var key = '01';
@@ -72,13 +72,13 @@
         vm.quarter = dates;
         vm.monthDateDeviceData = '';
         vm.title = dates[0].value;
-      } else if(dateType1==2){
+      } else if (dateType1 == 2) {
         vm.quarterQuery = false;
         vm.monthQuery = true;
         vm.monthDateDeviceData = new Date();
         vm.dateType2 = '';
-        vm.title = vm.monthDateDeviceData.getFullYear()+'年'+(vm.monthDateDeviceData.getMonth()+1)+'月';
-      } else if(dateType1==0){
+        vm.title = vm.monthDateDeviceData.getFullYear() + '年' + (vm.monthDateDeviceData.getMonth() + 1) + '月';
+      } else if (dateType1 == 0) {
         vm.quarterQuery = false;
         vm.monthQuery = false;
         vm.monthDateDeviceData = '';
@@ -86,41 +86,43 @@
       }
     };
 
-    vm.change1 = function(){
-      var x=document.getElementById("qwert").selectedIndex+3;
-      var y=document.getElementsByTagName("option");
-      vm.title = y[x].text ;
+    vm.change1 = function () {
+      var x = document.getElementById("qwert").selectedIndex + 3;
+      var y = document.getElementsByTagName("option");
+      vm.title = y[x].text;
     };
-    vm.change2 = function(monthDateDeviceData){
+    vm.change2 = function (monthDateDeviceData) {
 
-      var month = monthDateDeviceData.getMonth() +1;
-      vm.title = monthDateDeviceData.getFullYear() +'年'+ month + '月';
+      var month = monthDateDeviceData.getMonth() + 1;
+      vm.title = monthDateDeviceData.getFullYear() + '年' + month + '月';
     };
 
 
     vm.dataList = [];
     var barChart1 = echarts.init(document.getElementById('barChartContainer'));
     //设置图形自适应
-    window.onresize = function(){barChart1.resize();}
+    window.onresize = function () {
+      barChart1.resize();
+    }
     var barOption1 = {
       title: {
         text: '机器作业时间分布',
         // textAlign: 'center'
         left: 'center'
       },
-      toolbox:{
-        orient:'horizontal',
-        itemSize:20,
-        itemGap:15,
-        right:120,
-        top:'25',
-        showTitle:'true',
+      toolbox: {
+        orient: 'horizontal',
+        itemSize: 20,
+        itemGap: 15,
+        right: 120,
+        top: '25',
+        showTitle: 'true',
         feature: {
           dataZoom: {
-            show:true,
-            iconStyle:{
-              normal:{
-                textPosition:'top'
+            show: true,
+            iconStyle: {
+              normal: {
+                textPosition: 'top'
               },
               emphasis: {
                 textPosition: 'top'
@@ -129,10 +131,10 @@
           },
           brush: {
             type: ['rect', 'polygon', 'clear'],
-            iconStyle:{
-              normal:{
-                opacity:0.8,
-                textPosition:'top'
+            iconStyle: {
+              normal: {
+                opacity: 0.8,
+                textPosition: 'top'
               },
               emphasis: {
                 textPosition: 'top'
@@ -140,11 +142,11 @@
             }
           },
           restore: {
-            show:true,
-            iconStyle:{
-              normal:{
-                opacity:0.8,
-                textPosition:'top'
+            show: true,
+            iconStyle: {
+              normal: {
+                opacity: 0.8,
+                textPosition: 'top'
               },
               emphasis: {
                 textPosition: 'top'
@@ -159,7 +161,7 @@
         nameLocation: 'middle',
         nameGap: 30,
         type: 'value',
-        min:0,
+        min: 0,
         max: 7000,
         splitNumber: 14,
         splitLine: {
@@ -173,7 +175,7 @@
         nameLocation: 'middle',
         nameGap: 30,
         type: 'value',
-        min:0,
+        min: 0,
         max: 24,
         splitNumber: 5,
         splitLine: {
@@ -209,9 +211,7 @@
           symbol: false
         },
         markArea: {
-          data: [
-
-          ],
+          data: [],
           label: {
             normal: {
               position: 'inside',
@@ -231,7 +231,7 @@
       }]
     };
 
-    barOption1.series[0].markLine.lineStyle.normal.type='solid';
+    barOption1.series[0].markLine.lineStyle.normal.type = 'solid';
     barOption1.series[0].markLine.data.push({
         name: '0-5',
         yAxis: 6
@@ -312,7 +312,7 @@
 
     barChart1.setOption(barOption1);
 
-    vm.ok = function (machineType, totalDateType,averageDateType, dateType1, dateType2,monthDateDeviceData) {
+    vm.ok = function (machineType, totalDateType, averageDateType, dateType1, dateType2, monthDateDeviceData) {
       if (null == machineType || "" == machineType) {
         machineType = 1; //默认为装载机
       }
@@ -320,7 +320,7 @@
         averageDateType = 1;
       }
       if (null == totalDateType || "" == totalDateType) {
-        vm.totalDateType=1;
+        vm.totalDateType = 1;
         totalDateType = 1; //默认为小时
       }
       if (null == dateType1 || "" == dateType1) {
@@ -340,7 +340,7 @@
       //判断查询时间还是天
       if (totalDateType == 1) {
         var restUrl = WORK_DISTRIBUTE_TIME_QUERY;//shijian
-      } else if(totalDateType==2){
+      } else if (totalDateType == 2) {
         var restUrl = WORK_DISTRIBUTE_DAYS_QUERY;//tian
       }
       //判断全部/季度/月
@@ -355,26 +355,26 @@
       restUrl += 'machineType=' + machineType;
       //拼接时间
       if (totalDateType == 1) {
-        if(dateType1==1) {
+        if (dateType1 == 1) {
           restUrl += '&workTimeQuarter=' + dateType2;
-        } else if(dateType1==2){
-          var month = monthDateDeviceData.getMonth() +1;
-          if(month<10){
-            var monthDateFormated = monthDateDeviceData.getFullYear() +'0'+ month;
-          }else{
-            monthDateFormated = ''+ monthDateDeviceData.getFullYear() + month;
+        } else if (dateType1 == 2) {
+          var month = monthDateDeviceData.getMonth() + 1;
+          if (month < 10) {
+            var monthDateFormated = monthDateDeviceData.getFullYear() + '0' + month;
+          } else {
+            monthDateFormated = '' + monthDateDeviceData.getFullYear() + month;
           }
           restUrl += '&workTimeMonth=' + monthDateFormated;
         }
-      } else if(totalDateType==2){
-        if(dateType1==1) {
+      } else if (totalDateType == 2) {
+        if (dateType1 == 1) {
           restUrl += '&workDaysQuarter=' + dateType2;
-        } else if(dateType1==2){
-          var month = monthDateDeviceData.getMonth() +1;
-          if(month<10){
-            var monthDateFormated = monthDateDeviceData.getFullYear() +'0'+ month;
-          }else{
-            monthDateFormated = ''+ monthDateDeviceData.getFullYear() + month;
+        } else if (dateType1 == 2) {
+          var month = monthDateDeviceData.getMonth() + 1;
+          if (month < 10) {
+            var monthDateFormated = monthDateDeviceData.getFullYear() + '0' + month;
+          } else {
+            monthDateFormated = '' + monthDateDeviceData.getFullYear() + month;
           }
           restUrl += '&workDaysMonth=' + monthDateFormated;
         }
@@ -407,7 +407,7 @@
         var time1000_2000 = 0;
         var time2000_4000 = 0;
 
-        var xMax =0;
+        var xMax = 0;
         //计算日均作业台数
         for (var i = 0; i < data[0].length; i++) {
           if (data[0][i][0] < 1000) {
@@ -416,12 +416,12 @@
           } else if (data[0][i][0] < 2000) {
             machine1000_2000++;
             time1000_2000 += data[0][i][1];
-          } else if(data[0][i][0] >= 2000) {
+          } else if (data[0][i][0] >= 2000) {
             machine2000_4000++;
             time2000_4000 += data[0][i][1];
           }
           //找出X轴数据最大值
-          if(xMax<data[0][i][0]){
+          if (xMax < data[0][i][0]) {
             xMax = data[0][i][0];
           }
         }
@@ -438,7 +438,7 @@
           }
         }
 
-        if(totalDateType == 1) {
+        if (totalDateType == 1) {
           //计算日均作业台数百分比
           machine0_1000_p = machine0_1000 / machine * 100;
           machine1000_2000_p = machine1000_2000 / machine * 100;
@@ -461,7 +461,9 @@
         //初始化
         var barChart = echarts.init(document.getElementById('barChartContainer'));
         //设置图形自适应
-        window.onresize = function(){barChart.resize();}
+        window.onresize = function () {
+          barChart.resize();
+        }
         var barOption = {
           title: {
             text: '机器作业时间分布',
@@ -469,46 +471,46 @@
             left: 'center'
           },
           toolbox: {
-            orient:'horizontal',
-            itemSize:20,
-            itemGap:15,
-            right:120,
-            top:'25',
-            showTitle:'true',
+            orient: 'horizontal',
+            itemSize: 20,
+            itemGap: 15,
+            right: 120,
+            top: '25',
+            showTitle: 'true',
             feature: {
               dataZoom: {
-                show:true,
-                iconStyle:{
-                  normal:{
-                    textPosition:'top'
+                show: true,
+                iconStyle: {
+                  normal: {
+                    textPosition: 'top'
                   },
-                  emphasis:{
-                    textPosition:'top',
+                  emphasis: {
+                    textPosition: 'top',
                     color: '#2F4056'
                   }
                 }
               },
               brush: {
                 type: ['rect', 'polygon', 'clear'],
-                iconStyle:{
-                  normal:{
-                    textPosition:'top'
+                iconStyle: {
+                  normal: {
+                    textPosition: 'top'
                   },
-                  emphasis:{
-                    textPosition:'top',
+                  emphasis: {
+                    textPosition: 'top',
                     color: '#2F4056'
                   }
                 }
               },
               restore: {
-                show :true,
-                iconStyle:{
-                  normal:{
-                    opacity:0.8,
-                    textPosition:'top'
+                show: true,
+                iconStyle: {
+                  normal: {
+                    opacity: 0.8,
+                    textPosition: 'top'
                   },
-                  emphasis:{
-                    textPosition:'top',
+                  emphasis: {
+                    textPosition: 'top',
                     color: '#2F4056'
                   }
                 }
@@ -520,7 +522,7 @@
             // name: '累计作业时间(h)',
             nameLocation: 'middle',
             nameGap: 30,
-            max:'dataMax',
+            max: 'dataMax',
             type: 'value',
             // max: 7000,
             // splitNumber: 14,
@@ -570,9 +572,7 @@
               symbol: false
             },
             markArea: {
-              data: [
-
-              ],
+              data: [],
               label: {
                 normal: {
                   position: 'inside',
@@ -592,19 +592,19 @@
           }]
         };
 
-        if(averageDateType == 1) {
+        if (averageDateType == 1) {
 
-          if(machineType=="1,2,3" && totalDateType ==1 && dateType1==0){
+          if (machineType == "1,2,3" && totalDateType == 1 && dateType1 == 0) {
             //计算斜线
             var stringTime = "2016-03-01 00:00:00";
             var k2 = Date.parse(new Date(stringTime));
-            var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
-            var xie=xMax/days;
+            var days = Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 / 24);
+            var xie = xMax / days;
 
-            barOption.yAxis.name="日平均作业时间(h)";
-            barOption.yAxis.max=24;
-            barOption.yAxis.splitNumber=5;
-            barOption.series[0].markLine.lineStyle.normal.type='solid';
+            barOption.yAxis.name = "日平均作业时间(h)";
+            barOption.yAxis.max = 24;
+            barOption.yAxis.splitNumber = 5;
+            barOption.series[0].markLine.lineStyle.normal.type = 'solid';
             barOption.series[0].markLine.data.push({
                 name: '0-5',
                 yAxis: 6
@@ -629,41 +629,41 @@
               }, {
                 coord: [xMax, xie]
               }]);
-          }else {
+          } else {
             // //计算斜线
             // var stringTime = "2016-03-01 00:00:00";
             // var k2 = Date.parse(new Date(stringTime));
             // var days =Math.floor(Math.abs(new Date() - k2) / 1000 / 60 / 60 /24);
             // var xie=xMax/days;
 
-            barOption.yAxis.name="日平均作业时间(h)";
-            barOption.yAxis.max=24;
-            barOption.yAxis.splitNumber=5;
-            barOption.series[0].markLine.lineStyle.normal.type='solid';
+            barOption.yAxis.name = "日平均作业时间(h)";
+            barOption.yAxis.max = 24;
+            barOption.yAxis.splitNumber = 5;
+            barOption.series[0].markLine.lineStyle.normal.type = 'solid';
             barOption.series[0].markLine.data.push({
-                name: '0-5',
-                yAxis: 6
-              }, {
-                name: '5-10',
-                yAxis: 12
-              }, {
-                name: '10-15',
-                yAxis: 18
-              }, {
-                name: '20-25',
-                yAxis: 24
-              }, {
-                name: '0-1000',
-                xAxis: 1000
-              }, {
-                name: '1000-2000',
-                xAxis: 2000
-              });
+              name: '0-5',
+              yAxis: 6
+            }, {
+              name: '5-10',
+              yAxis: 12
+            }, {
+              name: '10-15',
+              yAxis: 18
+            }, {
+              name: '20-25',
+              yAxis: 24
+            }, {
+              name: '0-1000',
+              xAxis: 1000
+            }, {
+              name: '1000-2000',
+              xAxis: 2000
+            });
           }
-        } else if(averageDateType == 2) {
-          barOption.yAxis.name="月平均作业时间(h)";
-          barOption.yAxis.max=750;
-          barOption.yAxis.splitNumber=5;
+        } else if (averageDateType == 2) {
+          barOption.yAxis.name = "月平均作业时间(h)";
+          barOption.yAxis.max = 750;
+          barOption.yAxis.splitNumber = 5;
           barOption.series[0].markLine.data.push({
             name: '0-150',
             yAxis: 188
@@ -679,10 +679,10 @@
           });
         }
 
-        if(totalDateType == 1) {
-          barOption.xAxis.name="累计作业时间(h)";
+        if (totalDateType == 1) {
+          barOption.xAxis.name = "累计作业时间(h)";
           // barOption.xAxis.max = 8000;
-          barOption.xAxis.splitNumber= 14;
+          barOption.xAxis.splitNumber = 14;
           barOption.series[0].markLine.data.push({
             name: '0-1000',
             xAxis: 1000
@@ -735,9 +735,9 @@
             }]
           );
         } else if (totalDateType == 2) {
-          barOption.xAxis.name="车龄(天)";
+          barOption.xAxis.name = "车龄(天)";
           // barOption.xAxis.max = 500;
-          barOption.xAxis.splitNumber= 10;
+          barOption.xAxis.splitNumber = 10;
           // barOption.series[0].markLine.data.push({
           //   name: '0-50',
           //   xAxis: 50
@@ -782,11 +782,11 @@
 
         function renderBrushed(params) {
           var mainSeries = params.batch[0].selected[0];
-          vm.dataList=[];
+          vm.dataList = [];
           for (var i = 0; i < mainSeries.dataIndex.length; i++) {
             var rawIndex = mainSeries.dataIndex[i];
             var dataItem = data[0][rawIndex];
-            vm.dataList.push({name: dataItem[2], avgHours: dataItem[1],cumulative:dataItem[0]});
+            vm.dataList.push({name: dataItem[2], avgHours: dataItem[1], cumulative: dataItem[0]});
           }
 
           vm.tableParams = new NgTableParams({
@@ -802,27 +802,56 @@
       })
     };
 
+    /**
+     * 南京理学
+     * @param deviceData
+     */
+    function lxDeviceInfShow(deviceData) {
+      $rootScope.currentOpenModal = $uibModal.open({
+        animation: vm.animationsEnabled,
+        backdrop: false,
+        templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+        controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+        size: 'super-lgs',
+        resolve: { //用来向controller传数据
+          lxDeviceInfo: function () {
+            return deviceData;
+          }
+        }
+      });
+    }
+
+    /**
+     * 北谷电子
+     * @param deviceData
+     */
+    function nvrDeviceInfoShow(deviceData) {
+      $rootScope.currentOpenModal = $uibModal.open({
+        animation: vm.animationsEnabled,
+        backdrop: false,
+        templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
+        controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+        size: 'super-lgs',
+        resolve: { //用来向controller传数据
+          deviceinfo: function () {
+            return deviceData;
+          }
+        }
+      });
+    }
+
     // vm.ok('1,2,3', 1,1, 0, null);
     //点击车号的超链接
     vm.currentInfo = function (licenseId, size) {
-
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + 1001 + "&licenseId=" + licenseId;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
-          $rootScope.currentOpenModal = $uibModal.open({
-            animation: vm.animationsEnabled,
-            backdrop: false,
-            templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-            controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-            size: size,
-            resolve: { //用来向controller传数据
-              deviceinfo: function () {
-                return vm.deviceinfoMonitor;
-              }
-            }
-          });
-
+          if (vm.deviceinfoMonitor.versionNum != null && vm.deviceinfoMonitor.versionNum != undefined && vm.deviceinfoMonitor.versionNum === 'lx01') {
+            lxDeviceInfShow(vm.deviceinfoMonitor);
+            return;
+          }
+          nvrDeviceInfoShow(vm.deviceinfoMonitor);
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
