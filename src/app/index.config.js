@@ -61,12 +61,14 @@
     /**
      * 超时时间 seconds
      */
-    IdleProvider.idle(20 * 60);
+    //IdleProvider.idle(20 * 60);
+    IdleProvider.idle(10);
 
     /**
      * 超时时间倒计时 seconds
      */
-    IdleProvider.timeout(60);
+    //IdleProvider.timeout(60);
+    IdleProvider.timeout(6);
 
     /**
      * 保鲜机制 seconds

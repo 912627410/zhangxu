@@ -59,14 +59,14 @@
     };
 
     //用户登录超时设置
-    $rootScope.events = [];
+    $scope.events = [];
 
     /**
      * 开始弹出超时报警model
      */
-    $rootScope.$on('IdleStart', function () {
+    $scope.$on('IdleStart', function () {
       closeModals();
-      $rootScope.warning = $uibModal.open({
+      $scope.warning = $uibModal.open({
         templateUrl: 'app/components/common/warning-dialog.html',
         windowClass: 'modal-warning'
       });
@@ -75,35 +75,35 @@
     /**
      * 超时提醒过程中每一秒执行一次
      */
-    $rootScope.$on('IdleWarn', function (e, countdown) {
+    $scope.$on('IdleWarn', function (e, countdown) {
 
     });
 
     /**
      * 超时退出
      */
-    $rootScope.$on('IdleTimeout', function () {
+    $scope.$on('IdleTimeout', function () {
       closeModals();
       vm.logout();
     });
 
-    $rootScope.$on('IdleEnd', function () {
+    $scope.$on('IdleEnd', function () {
       closeModals();
     });
 
     /**
      * 保鲜机制监听
      */
-    $rootScope.$on('Keepalive', function () {
+    $scope.$on('Keepalive', function () {
     });
 
     /**
      * 关闭超时框
      */
     function closeModals() {
-      if ($rootScope.warning) {
-        $rootScope.warning.close();
-        $rootScope.warning = null;
+      if ($scope.warning) {
+        $scope.warning.close();
+        $scope.warning = null;
       }
       if ($rootScope.currentOpenModal) {
         $rootScope.currentOpenModal.close();

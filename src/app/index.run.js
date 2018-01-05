@@ -43,7 +43,7 @@
       $rootScope.permissionList = JSON.parse($window.sessionStorage["permissionList"]);
     }
 
-    //保存当前打开的modal,用于超时时关闭
+    //保存当前打开的modal,用于esc键关闭
     $rootScope.currentOpenModal = null;
 
     //用户在modal打开的时候按回退键时把所有打开的modal关掉
