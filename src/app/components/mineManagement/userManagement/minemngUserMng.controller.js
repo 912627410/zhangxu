@@ -97,6 +97,7 @@
         });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        vm.page.totalElements=data.page.totalElements;
 
       }, function (reason) {
         Notification.error(languages.findKey('FaGetCu'));

@@ -59,7 +59,10 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-12 text-right">
+            <div class="btn-group col-md-6" style="line-height: 34px;">
+              <span>{{'totalNumberOfRecords'|translate}} {{minemngUserMngCtrl.page.totalElements}}</span>
+            </div>
+            <div class="col-md-6 text-right">
                 <button class="btn btn-default" type="button" ng-click="minemngUserMngCtrl.reset()">{{'重置'|translate}}</button>
                 <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'query'|translate}}</button>
                 <button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.new()">{{'新增'|translate}}</button>
