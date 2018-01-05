@@ -2368,7 +2368,7 @@
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.smsStatus}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.clientIp}}</td>
                     <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.sendType}}</td>
-                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.deviceReceiveTime}}</td>
+                    <td ng-cloak class="text-nowrap text-center">{{deviceLockDataList.deviceReceiveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   </tr>
                 </table>
               </div>
