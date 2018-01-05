@@ -740,6 +740,26 @@
 
 
     /*******************远程控制tab***********************/
+    // 验证权限,拥有解绑和绑定任意一个权限就显示，锁车和解锁同理
+    vm.validatePermission = function () {
+      if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:bind")){
+        vm.bindModuleShow = true;
+      }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unBind")){
+        vm.bindModuleShow = true;
+      }else {
+        vm.bindModuleShow = false;
+      }
+
+      if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:lock")){
+        vm.lockModuleShow = true;
+      }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unLock")){
+        vm.lockModuleShow = true;
+      } else{
+        vm.lockModuleShow = false;
+      }
+
+    }
+    vm.validatePermission();
     vm.startDateMapData = startDate;
     vm.endDateMapData = new Date();
     vm.startDateOpenStatusMapData = {
