@@ -1,0 +1,425 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'equipmentWorkingStatusDetails'|translate}}
+    <button class="btn btn-warning pull-right model-button"
+            type="button"
+            ng-click="vm.cancelLxUibModal()">{{'close'|translate}}
+    </button>
+    <button class="btn btn-primary pull-right model-button"
+            type="button"
+            ng-click="vm.refreshCurrentLxDeviceInfo()">{{'refresh'|translate}}
+    </button>
+  </h3>
+</div>
+<form name="lxDeviceInfoFrom" class="form-horizontal">
+  <!--设备监控-->
+  <uib-tabset justified="true">
+    <!--数据begin-->
+    <uib-tab>
+      <uib-tab-heading>{{'data'|translate}}</uib-tab-heading>
+      <div class="modal-body model-styles">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-3 col-md-offset-1">
+              <highchart id="container-air"
+                         class="highchart-styles"
+                         config=" vm.highchartsAir">
+              </highchart>
+            </div>
+            <div class="col-md-3 col-md-offset-1">
+              <highchart id="container-rpm"
+                         class="highchart-styles"
+                         config=" vm.highchartsRpm">
+              </highchart>
+            </div>
+            <div class="col-md-3 col-md-offset-1">
+              <highchart id="container-oil"
+                         class="highchart-styles"
+                         config=" vm.highchartsOil">
+              </highchart>
+            </div>
+          </div>
+
+          <div class="row middle-height">
+
+          </div>
+          <!--车辆实时状态信息begin-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row detailMargin">
+                <table class="table table-striped" ng-init="rowInx=0">
+                  <tr>
+                    <th>{{'name'|translate}}</th>
+                    <th>{{'state'|translate}}</th>
+                    <th>{{'name'|translate}}</th>
+                    <th>{{'state'|translate}}</th>
+                    <th>{{'name'|translate}}</th>
+                    <th>{{'state'|translate}}</th>
+                  </tr>
+
+                  <tr>
+                    <td>{{'terminalNumber'|translate}}</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.deviceNum}}</td>
+                    <td>车号</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.machine.licenseId}}</td>
+                    <td>数据回传时间</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  </tr>
+
+                  <tr>
+                    <td>点火</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.accStatus| stateConversionFilter:'{"01":"点火","10":"未点火"}'}}
+                    </td>
+                    <td>运行总时间(小时)</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.totalDuration | convertToMins}}</td>
+                    <td>启动次数</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.startTimes}}</td>
+                  </tr>
+
+                  <tr>
+                    <td>车辆电压</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.batteryVol/100}} V</td>
+                    <td>电池电压</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.imitate1/100}} V</td>
+                    <td>天线断线</td>
+                    <td state-value="{{vm.lxDeviceInfo.wireStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.wireStatus | stateConversionFilter:'{"0":"未断线","1":"断线"}'}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>开盖锁车</td>
+                    <td state-value="{{vm.lxDeviceInfo.lockerStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.lockerStatus | stateConversionFilter:'{"0":"未开盖","1":"开盖锁车"}' }}
+                    </td>
+                    <td>主电源低电压</td>
+                    <td state-value="{{vm.lxDeviceInfo.gpsPowerStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.gpsPowerStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                    </td>
+                    <td>备用电池低电压</td>
+                    <td state-value="{{vm.lxDeviceInfo.elecStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.elecStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>GPS被拆或无外电</td>
+                    <td state-value="{{vm.lxDeviceInfo.commStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.commStatus | stateConversionFilter:'{"0":"未被拆或有电","1":"被拆或无外电"}'}}
+                    </td>
+                    <td>远程锁车</td>
+                    <td state-value="{{vm.lxDeviceInfo.lockStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.lockStatus | stateConversionFilter:'{"0":"解锁","1":"锁车"}'}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>密码激活</td>
+                    <td state-value="{{vm.lxDeviceInfo.workMonitor}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.workMonitor | stateConversionFilter:'{"0":"非激活","1":"激活"}'}}
+                    </td>
+                    <td>永久解锁</td>
+                    <td state-value="{{vm.lxDeviceInfo.ecuLockStatus}}"
+                        state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.ecuLockStatus | stateConversionFilter:'{"0":"非永久解锁","1":"永久解锁"}'}}
+                    </td>
+                    <td>车辆类型</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.machineType}}</td>
+                  </tr>
+
+                  <tr>
+                    <td>定位状态</td>
+                    <td state-value="{{vm.lxDeviceInfo.locateStatus}}"
+                        state-style="{A:'bg-info text-info',V:'bg-danger text-danger'}"
+                        state-format
+                        ng-cloak>{{ vm.lxDeviceInfo.locateStatus | stateConversionFilter:'{"A":"已定位","V":"未定位"}'}}
+                    </td>
+                    <td>省份</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.province}}</td>
+                    <td>城市</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.city}}</td>
+                  </tr>
+
+                </table>
+
+                <table class="table table-striped" ng-init="rowInx=0">
+                  <tr>
+                    <td>定位时间</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>当前位置</td>
+                    <td ng-cloak>
+                      {{ vm.lxDeviceInfo.address}}
+                      经度:{{ vm.lxDeviceInfo.amaplongitudeNum}}
+                      纬度:{{ vm.lxDeviceInfo.amaplatitudeNum}}
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+          <!--车辆实时状态信息end-->
+        </div>
+      </div>
+    </uib-tab>
+    <!--数据end-->
+
+    <!--历史数据begin-->
+    <uib-tab>
+      <uib-tab-heading> {{'historicalData'|translate}}</uib-tab-heading>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-1">
+            <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control"
+                     uib-datepicker-popup="{{formatCustomTime}}"
+                     ng-model="vm.startDate"
+                     is-open="vm.startDateOpenStatus.opened"
+                     datepicker-options="vm.dateOptions"
+                     ng-required="true"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="vm.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <label class="control-label text-nowrap font-nomal">{{'endDate'|translate}}:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control"
+                     uib-datepicker-popup="{{formatCustomTime}}"
+                     ng-model="vm.endDate"
+                     is-open="vm.endDateOpenStatus.opened"
+                     datepicker-options="vm.dateOptions"
+                     ng-required="true"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="vm.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-primary"
+                    type="button"
+                    ng-click="vm.queryLxHistory(0,8,null,null,vm.totalElement,vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">
+              {{'confirm'|translate}}
+            </button>
+          </div>
+          <div class="col-md-3">
+            <a class="btn" title="导出当前页的数据"
+               ng-click='csv.generate()'
+               ng-href="{{csv.link()}}"
+               download="{{vm.lxDeviceInfo.deviceNum}}{{'historicalData'|translate}}.csv">导出当前页</a>
+            <!--<a class="btn" title="导出所选时间范围的数据"
+               ng-click="vm.lxDeviceDataExport(vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">全部导出</a>-->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12" style="overflow-x: auto;">
+            <table ng-table="vm.deviceHistoryRunData" class="table table-responsive history-tab-tr-nowrap"
+                   export-csv='csv'>
+              <tr ng-repeat="deviceData in $data">{{deviceData}}
+                <td data-title="'设备号'" ng-cloak>{{deviceData.deviceNum}}</td>
+                <td data-title="'数据回传时间'" ng-cloak>{{ deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'定位时间'" ng-cloak>{{ deviceData.locateDateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td data-title="'当前位置'" ng-cloak>{{ deviceData.address}}</td>
+                <td data-title="'点火'"
+                    ng-cloak>{{ deviceData.accStatus| stateConversionFilter:'{"01":"点火","10":"未点火"}'}}
+                </td>
+                <td data-title="'定位状态'"
+                    state-value="{{deviceData.locateStatus}}"
+                    state-style="{A:'bg-info text-info',V:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.locateStatus | stateConversionFilter:'{"A":"已定位","V":"未定位"}'}}
+                </td>
+                <td data-title="'车辆电压'" ng-cloak>{{ deviceData.batteryVol/100}} V</td>
+                <td data-title="'电池电压'" ng-cloak>{{ deviceData.imitate1/100}} V</td>
+                <td data-title="'天线断线'"
+                    state-value="{{deviceData.wireStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{deviceData.wireStatus | stateConversionFilter:'{"0":"未断线","1":"断线"}'}}
+                </td>
+                <td data-title="'开盖锁车'"
+                    state-value="{{deviceData.lockerStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.lockerStatus | stateConversionFilter:'{"0":"未开盖","1":"开盖锁车"}' }}
+                </td>
+                <td data-title="'主电源低电压'"
+                    state-value="{{deviceData.gpsPowerStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.gpsPowerStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                </td>
+                <td data-title="'备用电池低电压'"
+                    state-value="{{deviceData.elecStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.elecStatus | stateConversionFilter:'{"0":"正常","1":"异常"}'}}
+                </td>
+                <td data-title="'GPS被拆或无外电'"
+                    state-value="{{deviceData.commStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.commStatus | stateConversionFilter:'{"0":"未被拆或有电","1":"被拆或无外电"}'}}
+                </td>
+                <td data-title="'定位状态'"
+                    state-value="{{deviceData.locateStatus}}"
+                    state-style="{A:'bg-info text-info',V:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.locateStatus | stateConversionFilter:'{"A":"已定位","V":"未定位"}'}}
+                </td>
+                <td data-title="'密码激活'"
+                    state-value="{{deviceData.workMonitor}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.workMonitor | stateConversionFilter:'{"0":"非激活","1":"激活"}'}}
+                </td>
+                <td data-title="'永久解锁'"
+                    state-value="{{deviceData.ecuLockStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.ecuLockStatus | stateConversionFilter:'{"0":"非永久解锁","1":"永久解锁"}'}}
+                </td>
+                <td data-title="'远程锁车'"
+                    state-value="{{deviceData.lockStatus}}"
+                    state-style="{0:'bg-info text-info',1:'bg-danger text-danger'}"
+                    state-format
+                    ng-cloak>{{ deviceData.lockStatus | stateConversionFilter:'{"0":"解锁","1":"锁车"}'}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <uib-pagination class="pagination-sm pagination-custom"
+                          boundary-links="true"
+                          rotate="false"
+                          max-size="10"
+                          total-items="vm.totalElements"
+                          ng-change="vm.queryLxHistory(vm.currentPage-1,vm.pageSize,null,null,vm.totalElement,vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)"
+                          ng-model="vm.currentPage"
+                          items-per-page="vm.pageSize"
+                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+          </uib-pagination>
+        </div>
+      </div>
+      </div>
+    </uib-tab>
+    <!--历史数据end-->
+
+    <!--地图begin-->
+    <uib-tab select="vm.initLxMapTab(vm.lxDeviceInfo)">
+      <uib-tab-heading> {{'map'|translate}}</uib-tab-heading>
+      <div class="modal-body model-styles">
+        <div class="row">
+          <div class="col-md-1">
+            <label class="control-label font-nomal">{{'startDate'|translate}}:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control"
+                     uib-datepicker-popup="{{formatCustomTime}}"
+                     ng-model="vm.startDate"
+                     is-open="vm.startDateOpenStatus.opened"
+                     datepicker-options="vm.dateOptions"
+                     ng-required="true"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="vm.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <label class="control-label text-nowrap font-nomal">{{'endDate'|translate}}:</label>
+          </div>
+          <div class="col-md-3">
+            <p class="input-group">
+              <input type="text" class="form-control"
+                     uib-datepicker-popup="{{formatCustomTime}}"
+                     ng-model="vm.endDate"
+                     is-open="vm.endDateOpenStatus.opened"
+                     datepicker-options="vm.dateOptions"
+                     ng-required="true"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"/>
+              <span class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="vm.endDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-primary"
+                    type="button"
+                    ng-click="vm.queryLxHistoryMap(0,1000,'locateDateTime,desc',1,null,
+                    vm.lxDeviceInfo.deviceNum,vm.startDate,vm.endDate)">{{'confirm'|translate}}
+            </button>
+          </div>
+          <div class="col-md-3 btn-group " role="group">
+            <button id="start" class="btn  btn-sm" type="button">{{'startAnimation'|translate}}</button>
+            <button id="stop" class="btn  btn-sm" type="button">{{'endAnimation'|translate}}</button>
+            <button id="move" class="btn  btn-sm" type="button">{{'moveAnimation'|translate}}</button>
+            <button id="draw" class="btn  btn-sm" type="button"
+                    ng-click="vm.drawWarehouse(vm.lxDeviceInfo.machine.licenseId)">仓库围栏
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box-body map-height" id="lxDeviceDetailMap"></div>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <!--地图end-->
+
+  </uib-tabset>
+  <div class="modal-footer"></div>
+</form>

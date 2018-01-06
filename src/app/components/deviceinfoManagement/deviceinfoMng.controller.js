@@ -250,9 +250,12 @@
 
     };
 
-
-    //读取最新设备信息
-    vm.currentDeviceinfo = function (deviceinfo, size) {
+    /**
+     * 北谷设备的详情展示
+     *
+     * @param id
+     */
+    function nvrDeviceInfoShow(deviceinfo, size) {
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + deviceinfo.id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
@@ -274,11 +277,25 @@
           Notification.error('获取设备信息失败');
         }
       )
+    }
+
+    /**
+     * 南京理学deviceinfo展示
+     *
+     * @param id
+     */
+    function lxDeviceInfShow(id) {
+
+    }
+
+    //读取最新设备信息
+    vm.currentDeviceinfo = function (deviceinfo, size) {
+      if (deviceinfo.versionNum != null && deviceinfo.versionNum != undefined && deviceinfo.versionNum === 'lx01') {
+        lxDeviceInfShow(deviceinfo.id);
+        return;
+      }
+      nvrDeviceInfoShow(deviceinfo.id);
     };
-
-
-
-
 
     //组织树的显示
     vm.openTreeInfo=function() {

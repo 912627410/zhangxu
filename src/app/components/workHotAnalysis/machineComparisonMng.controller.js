@@ -822,7 +822,7 @@
         boundaryGap:true,
         type: 'value',
         min:0,
-        max:2000,
+        max:2200,
         interval: 150,
         // max:'dataMax',
         minInterval: 5,
@@ -1689,13 +1689,13 @@
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
           var yearData2 = [];
-          var date = new Date();
-          var month = (date.getMonth()+1)+'月';
+          //var date = new Date();
+          //var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            if(data[i].tMonth!=month){
+            //if(data[i].tMonth!=month){
               var value = data[i].tData;
               yearData2.push(value);
-            }
+            //}
           }
           if(heatType1==0){
             if(machineType1=="A1"){
@@ -1738,13 +1738,13 @@
               var workHoursYearData2 = serviceResource.restCallService(YearOwnership2, 'QUERY');//2017
               workHoursYearData2.then(function (data2) {
                 var ownershipData2 = [];
-                var date = new Date();
-                var month = (date.getMonth()+1)+'月';
+                //var date = new Date();
+                //var month = (date.getMonth()+1)+'月';
                 for(var i=0;i<data2.length;i++){
-                  if(data2[i].tMonth!=month){
+                  //if(data2[i].tMonth!=month){
                     var value = data2[i].tData;
                     ownershipData2.push(value);
-                  }
+                  //}
                 }
                 mmuLine.series[3].data = ownershipData2;
                 if(machineType1=="A1"){
@@ -1832,15 +1832,13 @@
         var workHoursYearData2 = serviceResource.restCallService(YearURL2, 'QUERY');//2017
         workHoursYearData2.then(function (data) {
           var yearData4 = [];
-          var date = new Date();
-          var month = (date.getMonth()+1)+'月';
+          //var date = new Date();
+          //var month = (date.getMonth()+1)+'月';
           for(var i=0;i<data.length;i++){
-            if(data[i].tMonth==month){
-
-            }else{
+            //if(data[i].tMonth!=month){
               var value = data[i].tData;
               yearData4.push(value);
-            }
+            //}
           }
           if(heatType2==0){
             if(machineType2=="A1"){
@@ -1880,13 +1878,13 @@
               var workHoursYearData2 = serviceResource.restCallService(YearOwnership2, 'QUERY');//2017
               workHoursYearData2.then(function (data2) {
                 var ownershipData2 = [];
-                var date = new Date();
-                var month = (date.getMonth()+1)+'月';
+                //var date = new Date();
+                //var month = (date.getMonth()+1)+'月';
                 for(var i=0;i<data2.length;i++){
-                  if(data2[i].tMonth!=month){
+                  //if(data2[i].tMonth!=month){
                     var value = data2[i].tData;
                     ownershipData2.push(value);
-                  }
+                  //}
                 }
                 mmuLine2.series[3].data = ownershipData2;
                 if(machineType2=="A1"){
@@ -3090,10 +3088,6 @@
           $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
 
           Notification.success(languages.findKey('loginSuccess'));
-
-
-          //监控用户登录超时
-          Idle.watch();
 
           //获取权限
           var rspData = serviceResource.getPermission();

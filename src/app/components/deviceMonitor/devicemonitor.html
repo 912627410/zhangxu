@@ -204,7 +204,7 @@
           <div class="box-footer">
             <div class="pull-right">
               <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage"
-                      ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}
+                      ng-click="monitorCtrl.currentInfo(deviceinfo)">{{'equipmentMonitoring'|translate}}
               </button>
             </div>
           </div>
@@ -218,7 +218,7 @@
 
             <td data-title="'terminalno'|translate" sortable="'deviceNum'">
               <a href ng-if="monitorCtrl.validateOperPermission()"
-                 ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{deviceinfo.deviceNum}}</a>
+                 ng-click="monitorCtrl.currentInfo(deviceinfo)">{{deviceinfo.deviceNum}}</a>
             </td>
             <td data-title="'machineNumberAndCarNumber'|translate" sortable="'machineLicenseId'">
               {{deviceinfo.machineLicenseId}}
@@ -255,7 +255,7 @@
             </td>
             <td data-title="'operation'|translate">
               <button type="button" class="btn btn-default btn-xs" presentation-href="device:monitorPage"
-                      ng-click="monitorCtrl.currentInfo(deviceinfo.id,'lg')">{{'equipmentMonitoring'|translate}}
+                      ng-click="monitorCtrl.currentInfo(deviceinfo)">{{'equipmentMonitoring'|translate}}
               </button>
             </td>
           </tr>

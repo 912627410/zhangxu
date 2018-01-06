@@ -10,7 +10,7 @@
 
   /** @ngInject */
 
-  function DeviceMonitorController($rootScope, $scope, $http, $uibModal, $timeout, $filter, permissions, $translate, languages, treeFactory, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification, DEVCEMONITOR_EXCELEXPORT) {
+  function DeviceMonitorController($rootScope, $scope, $http, $uibModal, $timeout, $filter, permissions, $translate, languages, treeFactory, NgTableParams, ngTableDefaults, DEVCE_MONITOR_SINGL_QUERY, LX_DEVCE_MONITOR_SINGL_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_DEVICE_SORT_BY, DEFAULT_SIZE_PER_PAGE, AMAP_QUERY_TIMEOUT_MS, serviceResource, Notification, DEVCEMONITOR_EXCELEXPORT) {
     var vm = this;
     var userInfo = $rootScope.userInfo;
     vm.animationsEnabled = true;
@@ -94,7 +94,7 @@
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
-    }
+    };
 
     /**
      * 初始化列表
@@ -102,11 +102,11 @@
     vm.queryDeviceInfo(0, null, null, null);
 
     /**
-     * 设备监控页面
-     * @param id deviceInfo的id
-     * @param size 页面大小
+     * 北谷设备的详情展示
+     *
+     * @param id
      */
-    vm.currentInfo = function (id, size) {
+    function nvrDeviceInfoShow(id) {
       var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
@@ -128,6 +128,46 @@
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
+    }
+
+    /**
+     * 南京理学deviceinfo展示
+     *
+     * @param id
+     */
+    function lxDeviceInfShow(id) {
+      var singleUrl = LX_DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
+      var deviceInfoPromise = serviceResource.restCallService(singleUrl, "GET");
+      deviceInfoPromise.then(function (data) {
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/lxDeviceCurrentInfo.html',
+            controller: 'lxDeviceCurrentInfoController as vm',
+            size: 'super-lgs',
+            resolve: { //用来向controller传数据
+              lxDeviceInfo: function () {
+                return data.content;
+              }
+            }
+          });
+
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        }
+      )
+    }
+
+    /**
+     * 设备监控页面
+     * @param id deviceInfo的id
+     */
+    vm.currentInfo = function (deviceinfo) {
+      if (deviceinfo.versionNum != null && deviceinfo.versionNum != undefined && deviceinfo.versionNum === 'lx01') {
+        lxDeviceInfShow(deviceinfo.id);
+        return;
+      }
+      nvrDeviceInfoShow(deviceinfo.id);
     };
 
     /**

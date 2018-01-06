@@ -12,8 +12,9 @@
 
   function serviceResource($rootScope, $resource, $http, $q, $uibModal, $window, $filter, Notification, languages, USER_LOGIN_URL, NOTIFICATION_STATISTICS_URL, DEVCE_MONITOR_SINGL_QUERY,
                            HOME_GPSDATA_URL, DEVCE_PAGED_QUERY, DEVCE_MONITOR_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEVCE_DATA_PAGED_QUERY, DEVCE_SIMPLE_DATA_PAGED_QUERY,
-                           NOTIFICATION_PAGED_URL, USER_PAGED_URL, DEVCE_WARNING_DATA_PAGED_QUERY, DEFAULT_USER_SORT_BY, DEFAULT_NOTIFICATION_SORT_BY,
-                           DEFAULT_DEVICE_SORT_BY, DEFAULT_DEVICE_DATA_SORT_BY, DEFAULT_DEVICE_DATA_SORT_BY_ASC, DEFAULT_DEVICE_WARNING_DATA_SORT_BY, DEFAULT_DEVICE_LOCK_DATA_SORT_BY, DEVCE_LOCK_DATA_PAGED_QUERY, AMAP_GEO_CODER_URL, PERMISSIONS_URL, USER_LOGINBYTOKEN_URL) {
+                           NOTIFICATION_PAGED_URL, USER_PAGED_URL, DEVCE_WARNING_DATA_PAGED_QUERY, DEFAULT_USER_SORT_BY, DEFAULT_NOTIFICATION_SORT_BY, LX_DEVCE_MONITOR_SINGL_QUERY,
+                           DEFAULT_DEVICE_SORT_BY, DEFAULT_DEVICE_DATA_SORT_BY, DEFAULT_DEVICE_DATA_SORT_BY_ASC, DEFAULT_DEVICE_WARNING_DATA_SORT_BY,
+                           DEFAULT_DEVICE_LOCK_DATA_SORT_BY, DEVCE_LOCK_DATA_PAGED_QUERY, AMAP_GEO_CODER_URL, PERMISSIONS_URL, USER_LOGINBYTOKEN_URL) {
     var restCallService = function (URL, action, params) {
       var restCall = $resource(URL);
 
@@ -190,7 +191,12 @@
         mapObj.clearInfoWindow();
       };
 
-      function Viewdetails(id, size) {
+      /**
+       * 北谷设备的详情展示
+       *
+       * @param id
+       */
+      function nvrDevinfoShow() {
         var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + item.id;
         var deviceinfoPromis = restCallService(singlUrl, "GET");
         deviceinfoPromis.then(function (data) {
@@ -213,6 +219,42 @@
         )
       }
 
+      /**
+       * 南京理学deviceinfo展示
+       *
+       * @param id
+       */
+      function lxDeviceInfShow() {
+        var singleUrl = LX_DEVCE_MONITOR_SINGL_QUERY + "?id=" + item.id;
+        var deviceInfoPromise = restCallService(singleUrl, "GET");
+        deviceInfoPromise.then(function (data) {
+            $rootScope.currentOpenModal = $uibModal.open({
+              animation: true,
+              backdrop: false,
+              templateUrl: 'app/components/deviceMonitor/lxDeviceCurrentInfo.html',
+              controller: 'lxDeviceCurrentInfoController as vm',
+              size: 'super-lgs',
+              resolve: { //用来向controller传数据
+                lxDeviceInfo: function () {
+                  return data.content;
+                }
+              }
+            });
+
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetDeviceInformation'));
+          }
+        )
+      }
+
+      function Viewdetails(id, size) {
+        if (item.versionNum != null && item.versionNum != undefined && item.versionNum === 'lx01') {
+          lxDeviceInfShow();
+          return;
+        }
+        nvrDevinfoShow();
+      }
+
     };
 
     return {
@@ -225,6 +267,7 @@
       },
       //查询设备数据并更新地图 mapid 是DOM中地图放置位置的id
       refreshMapWithDeviceInfo: function (mapId, deviceList, zoomsize, centeraddr) {
+        var maps;
         $LAB.script(AMAP_GEO_CODER_URL).wait(function () {
           //初始化地图对象
           if (!AMap) {
@@ -243,9 +286,10 @@
             resizeEnable: true,
             center: localCenterAddr,
             scrollWheel: false,
-            zooms: [localZoomSize, 18]
+            zooms: [3, 18]
           });
-          map.setZoom(1);
+          maps=map;
+          map.setZoom(localZoomSize);
           map.plugin(['AMap.ToolBar'], function () {
             map.addControl(new AMap.ToolBar());
           });
@@ -320,6 +364,7 @@
           })
 
         })
+        return maps;
       },
       //登录认证接口--a
       authenticatea: function (credentials) {
@@ -437,14 +482,14 @@
       },
 
       /**
-      * 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
-      * 00 - 无特定类型
-      * 01 - 小挖
-      * 02 - 矿车
-      * 03 - 中挖
-      * 04 - 平地机T3   设备类型为 7
-      * 05 - 巴黎(T3)   设备类型为 5
-      */
+       * 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
+       * 00 - 无特定类型
+       * 01 - 小挖
+       * 02 - 矿车
+       * 03 - 中挖
+       * 04 - 平地机T3   设备类型为 7
+       * 05 - 巴黎(T3)   设备类型为 5
+       */
       getDeviceTypeForVersionNum: function (version_num, deviceType) {
         if (version_num == '3' && deviceType == '7') {
           return '04';

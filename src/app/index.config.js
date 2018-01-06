@@ -7,8 +7,7 @@
   GPSCloudConfig.config(config);
 
   /** @ngInject */
-  function config($httpProvider, toastrConfig, IdleProvider) {
-
+  function config($httpProvider, toastrConfig, IdleProvider, KeepaliveProvider) {
     toastrConfig.allowHtml = true;
     toastrConfig.timeOut = 3000;
     toastrConfig.positionClass = 'toast-top-right';
@@ -25,7 +24,7 @@
             var config = rejection.config;
             var method = config.method;
             var url = config.url;
-            if (status == 401) {
+            if (status === 401) {
               $rootScope.userInfo = null;
               $rootScope.deviceGPSInfo = null;
               $rootScope.statisticInfo = null;
@@ -60,14 +59,20 @@
     });
 
     /**
-     * 超时时间
+     * 超时时间 seconds
      */
-    IdleProvider.idle(20 * 60); // in seconds
+    IdleProvider.idle(20 * 60);
 
     /**
-     * 超时时间倒计时
+     * 超时时间倒计时 seconds
      */
-    IdleProvider.timeout(60); // in seconds
+    IdleProvider.timeout(60);
+
+    /**
+     * 保鲜机制 seconds
+     */
+    KeepaliveProvider.interval(10);
+
   }
 
   /**
@@ -92,6 +97,7 @@
       current_lang_map = 'en';
     }
     $translateProvider.preferredLanguage(current_lang_map);
+    $translateProvider.useSanitizeValueStrategy('escape');
   }]);
 
 })();
