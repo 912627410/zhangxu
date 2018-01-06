@@ -406,6 +406,7 @@
     .constant('MINE_UPDATEMACHINE_URL', SERVER_BASE_URL + 'minemngMachine/updateMineMachine')   //修改车辆
     .constant('MINEMACHINE_STATE_LIST_URL', SERVER_BASE_URL + 'minemngMachine/machineState') //矿车状态集合
     .constant('MINE_MACHINE_DELETE', SERVER_BASE_URL + 'minemngMachine/deleteMineMachine')   //删除车辆
+    .constant('MINEMNG_MACHINE_TYPE_LIST', SERVER_BASE_URL + 'minemngMachine/getMachineTypeList')   //车辆类型集合
     .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询组织
     .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询组织
 
