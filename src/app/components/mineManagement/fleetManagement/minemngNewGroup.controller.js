@@ -1,13 +1,16 @@
 /**
+ * Created by 刘鲁振 on 2018/1/8.
+ */
+/**
  * Created by luzhen on 12/26/17.
  */
 
 
 (function(){
   'use strict'
-  angular.module('GPSCloud').controller('addMineFleetController',addMineFleetCtrl);
+  angular.module('GPSCloud').controller('addGroupController',addGroupCtrl);
 
-  function addMineFleetCtrl(NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
+  function addGroupCtrl(NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
     var vm= this;
     vm.machineType = 1;
 
@@ -63,42 +66,15 @@
         backdrop: false
       });
       modalInstance.result.then(function (result) {
-           vm.selectAllInfo=result;
+        vm.selectAllInfo=result;
+        if(vm.selectAllInfo.indexOf(vm.selectedParentObject)>=0){
 
-      }, function () {
-      });
-    };
-
-    vm.query= function (page, size, sort, machine) {
-      var restCallURL = MINE_PAGE_URL;
-      var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      restCallURL += "&search_EQ_machineType=" + vm.machineType;
-      restCallURL += "&search_EQ_status=" +1 ;
-      if (null != machine) {
-
-        if (null != machine.carNumber&&machine.carNumber!="") {
-          restCallURL += "&search_LIKE_carNumber=" + $filter('uppercase')(machine.carNumber);
         }
-      }
-      var rspData = serviceResource.restCallService(restCallURL, "GET");
-      rspData.then(function (data) {
-
-        vm.tableParams = new NgTableParams({
-          // initial sort order
-          // sorting: { name: "desc" }
-        }, {
-          dataset: data.content
-        });
-        vm.page = data.page;
-        vm.pageNumber = data.page.number + 1;
-      }, function (reason) {
-        vm.machineList = null;
-        Notification.error(languages.findKey('getDataVeFail'));
+      }, function () {
+        Notification.error('请选择车队！');
       });
     };
+
 
 
 

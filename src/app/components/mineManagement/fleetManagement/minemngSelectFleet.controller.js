@@ -1,16 +1,11 @@
 /**
- * Created by luzhen on 12/26/17.
+ * Created by 刘鲁振 on 2018/1/4.
  */
-
 (function () {
   'use strict';
+  angular.module('GPSCloud').controller('minemngSelectFleetController', minemngSelectFleetCtrl);
 
-  angular
-    .module('GPSCloud')
-    .controller('minemngFleetController', minemngFleetCtrl);
-
-  /** @ngInject */
-  function minemngFleetCtrl( $uibModal,GET_MINE_MACHINE_FLEET, Notification, serviceResource,MINE_MACHINE_FLEET) {
+  function minemngSelectFleetCtrl(serviceResource,MINE_MACHINE_FLEET,GET_MINE_MACHINE_FLEET,$rootScope, $scope, $timeout, $confirm, $filter, $uibModalInstance) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedObject = '';
@@ -18,11 +13,25 @@
     vm.searchText = '';     //搜索的数据
     vm.fleet_data = [];
     vm.fleetName='';
+    vm.selectAllInfo="";
     vm.selectedArray = [];
     vm.newBtnShow = true;
 
+
     vm.init = function () {
       vm.getUpdateObject();
+    };
+
+    //确定
+    vm.confirm = function () {
+      //关闭modal
+      $uibModalInstance.close(vm.selectAllInfo);
+      //取消选中
+      vm.select_branch();
+    }
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
     };
 
 
@@ -73,6 +82,7 @@
           var dataPromis = serviceResource.restCallService(restCallURL, "GET");
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
+            vm.selectAllInfo=vm.fleetName+vm.selectedParentObject;
           });
         }else {
           var restCallURL = MINE_MACHINE_FLEET;
@@ -80,6 +90,7 @@
           var dataPromis = serviceResource.restCallService(restCallURL, "GET");
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
+            vm.selectAllInfo=vm.fleetName;
             vm.selectedParentObject =null;
           });
         }
@@ -134,56 +145,6 @@
       }
     };
 
-    //增加车队车辆
-    vm.addMineFleetMachine = function() {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
-        controller: 'addMineFleetController as addMineFleetCtrl',
-        size: 'sx',
-        backdrop: false
-      });
-      modalInstance.result.then(function () {
-        vm.reset();
-      }, function () {
-      });
-    };
-
-    //新建车队
-    vm.newFleet = function (size) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngNewFleet.html',
-        controller: 'addFleetController as addFleetCtrl',
-        size: size,
-        backdrop: false,
-      });
-
-      modalInstance.result.then(function (result) {
-
-      }, function () {
-        //取消
-      });
-    };
-
-    //新建小组
-    vm.newGroup = function (size) {
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngNewGroup.html',
-        controller: 'addGroupController as addGroupCtrl',
-        size: size,
-        backdrop: false,
-      });
-
-      modalInstance.result.then(function (result) {
-
-      }, function () {
-        //取消
-      });
-    };
 
     vm.reset = function () {
       vm.searchText = "";
@@ -194,5 +155,7 @@
     };
     vm.init()
 
+
   }
+
 })();
