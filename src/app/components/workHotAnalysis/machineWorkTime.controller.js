@@ -815,7 +815,7 @@
         size: 'super-lgs',
         resolve: { //用来向controller传数据
           lxDeviceInfo: function () {
-            return data.content;
+            return deviceData;
           }
         }
       });
