@@ -810,12 +810,12 @@
       $rootScope.currentOpenModal = $uibModal.open({
         animation: vm.animationsEnabled,
         backdrop: false,
-        templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
-        controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
+        templateUrl: 'app/components/deviceMonitor/lxDeviceCurrentInfo.html',
+        controller: 'lxDeviceCurrentInfoController as vm',
         size: 'super-lgs',
         resolve: { //用来向controller传数据
           lxDeviceInfo: function () {
-            return deviceData;
+            return data.content;
           }
         }
       });

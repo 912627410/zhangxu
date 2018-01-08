@@ -7,7 +7,7 @@
 
   /** @ngInject */
 
-  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,DEVCE_ALLOCATION,MACHINE_BIND_DEVICE_RECORD) {
+  function deviceinfoMngController($rootScope, $scope, $uibModal,$filter,$http,treeFactory,permissions, Notification, NgTableParams, ngTableDefaults, serviceResource, DEVCE_MONITOR_SINGL_QUERY,DEVCE_PAGED_QUERY, DEFAULT_SIZE_PER_PAGE, DEIVCIE_MOVE_ORG_URL,DEVCEINFO_URL,DEVCEDINFO_EXCELEXPORT,LX_DEVCE_MONITOR_SINGL_QUERY,DEVCE_ALLOCATION,MACHINE_BIND_DEVICE_RECORD) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.queryDeviceinfo = {};
@@ -255,8 +255,8 @@
      *
      * @param id
      */
-    function nvrDeviceInfoShow(deviceinfo, size) {
-      var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + deviceinfo.id;
+    function nvrDeviceInfoShow(id) {
+      var singlUrl = DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           vm.deviceinfoMonitor = data.content;
@@ -265,7 +265,7 @@
             backdrop: false,
             templateUrl: 'app/components/deviceMonitor/devicecurrentinfo.html',
             controller: 'DeviceCurrentInfoController as deviceCurrentInfoCtrl',
-            size: size,
+            size: 'super-lgs',
             resolve: { //用来向controller传数据
               deviceinfo: function () {
                 return vm.deviceinfoMonitor;
@@ -285,11 +285,30 @@
      * @param id
      */
     function lxDeviceInfShow(id) {
+      var singleUrl = LX_DEVCE_MONITOR_SINGL_QUERY + "?id=" + id;
+      var deviceInfoPromise = serviceResource.restCallService(singleUrl, "GET");
+      deviceInfoPromise.then(function (data) {
+          $rootScope.currentOpenModal = $uibModal.open({
+            animation: vm.animationsEnabled,
+            backdrop: false,
+            templateUrl: 'app/components/deviceMonitor/lxDeviceCurrentInfo.html',
+            controller: 'lxDeviceCurrentInfoController as vm',
+            size: 'super-lgs',
+            resolve: { //用来向controller传数据
+              lxDeviceInfo: function () {
+                return data.content;
+              }
+            }
+          });
 
+        }, function (reason) {
+          Notification.error(languages.findKey('failedToGetDeviceInformation'));
+        }
+      )
     }
 
     //读取最新设备信息
-    vm.currentDeviceinfo = function (deviceinfo, size) {
+    vm.currentDeviceinfo = function (deviceinfo) {
       if (deviceinfo.versionNum != null && deviceinfo.versionNum != undefined && deviceinfo.versionNum === 'lx01') {
         lxDeviceInfShow(deviceinfo.id);
         return;
