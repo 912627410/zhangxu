@@ -97,6 +97,7 @@
         });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        vm.page.totalElements=data.page.totalElements;
 
       }, function (reason) {
         Notification.error(languages.findKey('FaGetCu'));
@@ -198,6 +199,18 @@
             Notification.error(languages.findKey('delFail'));
           });
         });
+    };
+
+    /**
+     * 重置查询框
+     */
+
+    vm.reset=function () {
+      vm.minemnguser.name=null;
+      vm.minemnguser.jobNumber=null;
+      vm.minemnguser.entryTime=null;
+      vm.roleType=null;
+
     };
   }
 })();

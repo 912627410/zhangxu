@@ -985,8 +985,8 @@
                 <table class="table">
                   <tr>
                     <th class="text-nowrap">{{'machineRunningState'|translate}}</th>
-                    <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}</th>
-                    <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}</th>
+                    <th class="text-nowrap">{{'Built-inBatteryVoltage'|translate}}V</th>
+                    <th class="text-nowrap">{{'GPRSSignalQuality'|translate}}%</th>
                     <th class="text-nowrap">{{'GPSvisibleSatelliteNumber'|translate}}</th>
                     <th class="text-nowrap">{{'GPSavailableSatelliteNumber'|translate}}</th>
                     <th class="text-nowrap">{{'ECUstate'|translate}}</th>
@@ -1011,15 +1011,15 @@
                     <th class="text-nowrap">{{'pumpEnabled'|translate}}</th>
                     <th class="text-nowrap">{{'electricDriveEnabled'|translate}}</th>
                     <th class="text-nowrap">{{'buzzer'|translate}}</th>
-                    <th class="text-nowrap">{{'platformHeight'|translate}}</th>
-                    <th class="text-nowrap">{{'cylinderPressure'|translate}}</th>
-                    <th class="text-nowrap">{{'pumpMotorSpeed'|translate}}</th>
-                    <th class="text-nowrap">{{'maximumFastWalkingSpeed'|translate}}</th>
-                    <th class="text-nowrap">{{'maximumSlowWalkingSpeed'|translate}}</th>
+                    <th class="text-nowrap">{{'platformHeight'|translate}}%</th>
+                    <th class="text-nowrap">{{'cylinderPressure'|translate}}MPa</th>
+                    <th class="text-nowrap">{{'pumpMotorSpeed'|translate}}%</th>
+                    <th class="text-nowrap">{{'maximumFastWalkingSpeed'|translate}}%</th>
+                    <th class="text-nowrap">{{'maximumSlowWalkingSpeed'|translate}}%</th>
                     <th class="text-nowrap">{{'currentWalkingSpeed'|translate}}</th>
                     <th class="text-nowrap">{{'currentRisingSpeed'|translate}}</th>
-                    <th class="text-nowrap">{{'maximumRisingSpeed'|translate}}</th>
-                    <th class="text-nowrap">{{'maximumWalkingSpeedAfterLifting'|translate}}</th>
+                    <th class="text-nowrap">{{'maximumRisingSpeed'|translate}}%</th>
+                    <th class="text-nowrap">{{'maximumWalkingSpeedAfterLifting'|translate}}%</th>
                     <th class="text-nowrap">{{'batteryLevelSwitch'|translate}}</th>
                     <th class="text-nowrap">{{'dataAcquisitionTime'|translate}}</th>
                     <th class="text-nowrap">{{'dataReceptionTime'|translate}}</th>
@@ -1028,11 +1028,12 @@
                     <!--车辆运行状态-->
                     <td ng-if="deviceData.machineStatus==1">{{'work'|translate}}</td>
                     <td ng-if="deviceData.machineStatus==0">{{'notWork'|translate}}</td>
-                    <td ng-if="deviceData.machineStatus!==1&&deviceData.machineStatus!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.machineStatus!==1&&deviceData.machineStatus!==0">-</td>
                     <!--内置电池电压-->
-                    <td ng-cloak>{{deviceData.builtInVoltage}}v</td>
+                    <td ng-cloak>{{deviceData.builtInVoltage}}</td>
                     <!--GPRS信号质量-->
-                    <td ng-cloak>{{deviceData.gsmsignalStrength/31*100 | number :0}}%</td>
+                    <td ng-cloak ng-if="deviceData.gsmsignalStrength != null">{{deviceData.gsmsignalStrength/31*100 | number :0}}</td>
+                    <td ng-cloak ng-if="deviceData.gsmsignalStrength == null"></td>
                     <!--GPS可见卫星数-->
                     <td ng-cloak>{{deviceData.gpssignalStrength}}</td>
                     <!--GPS可用卫星数-->
@@ -1049,114 +1050,116 @@
                     <td ng-if="deviceData.ecuStatus==8">{{'saveState'|translate}}</td>
                     <td ng-if="deviceData.ecuStatus==9">{{'limitOperatingState'|translate}}</td>
                     <td ng-if="deviceData.ecuStatus==10">{{'breakLease'|translate}}</td>
-                    <td ng-if="!(deviceData.ecuStatus==0 || deviceData.ecuStatus==1 || deviceData.ecuStatus==2 || deviceData.ecuStatus==3 || deviceData.ecuStatus==4 || deviceData.ecuStatus==5 || deviceData.ecuStatus==6 || deviceData.ecuStatus==7 || deviceData.ecuStatus==8 || deviceData.ecuStatus==9 || deviceData.ecuStatus==10)">{{'noData'|translate}}</td>
+                    <td ng-if="!(deviceData.ecuStatus==0 || deviceData.ecuStatus==1 || deviceData.ecuStatus==2 || deviceData.ecuStatus==3 || deviceData.ecuStatus==4 || deviceData.ecuStatus==5 || deviceData.ecuStatus==6 || deviceData.ecuStatus==7 || deviceData.ecuStatus==8 || deviceData.ecuStatus==9 || deviceData.ecuStatus==10)">-</td>
                     <!--运行总时间(小时)-->
-                    <td ng-cloak>{{5*deviceData.workDuration/60 | convertToMins}}</td>
+                    <td ng-cloak ng-if="deviceData.workDuration != null">{{5*deviceData.workDuration/60 | convertToMins}}</td>
+                    <td ng-cloak ng-if="deviceData.workDuration == null"></td>
                     <!--面板上升操作开关-->
                     <td ng-if="deviceData.chassisUp==1">{{'open'|translate}}</td>
                     <td ng-if="deviceData.chassisUp==0">{{'shut'|translate}}</td>
-                    <td ng-if="deviceData.chassisUp !== 1 && deviceData.chassisUp !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.chassisUp !== 1 && deviceData.chassisUp !== 0">-</td>
                     <!--左刹车线圈状态-->
                     <td ng-if="deviceData.leftBrake==1">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.leftBrake==0">{{'exception'|translate}}</td>
-                    <td ng-if="deviceData.leftBrake!==1&&deviceData.leftBrake!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.leftBrake!==1&&deviceData.leftBrake!==0">-</td>
                     <!--上限位开关-->
                     <td ng-if="deviceData.upLimit==1">{{'notReachTheLimit'|translate}}</td>
                     <td ng-if="deviceData.upLimit==0">{{'alreadyReachTheLimit'|translate}}</td>
-                    <td ng-if="deviceData.upLimit!== 1 && deviceData.upLimit !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.upLimit!== 1 && deviceData.upLimit !== 0">-</td>
                     <!--面板下降操作开关-->
                     <td ng-if="deviceData.chassisDown==1">{{'open'|translate}}</td>
                     <td ng-if="deviceData.chassisDown==0">{{'shut'|translate}}</td>
-                    <td ng-if="deviceData.chassisDown !== 1 && deviceData.chassisDown !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.chassisDown !== 1 && deviceData.chassisDown !== 0">-</td>
                     <!--右刹车线圈状态-->
                     <td ng-if="deviceData.rightBrake==1">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.rightBrake==0">{{'exception'|translate}}</td>
-                    <td ng-if="deviceData.rightBrake!==1&&deviceData.rightBrake!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.rightBrake!==1&&deviceData.rightBrake!==0">-</td>
                     <!--下限位开关-->
                     <td ng-if="deviceData.downLimit==1">{{'putAway'|translate}}</td>
                     <td ng-if="deviceData.downLimit==0">{{'raising'|translate}}</td>
-                    <td ng-if="deviceData.downLimit !== 1 && deviceData.downLimit !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.downLimit !== 1 && deviceData.downLimit !== 0">-</td>
                     <!--钥匙开关-->
                     <td ng-if="deviceData.key==1">{{'platformControl'|translate}}</td>
                     <td ng-if="deviceData.key==0">{{'offlineControl'|translate}}</td>
-                    <td ng-if="deviceData.key !== 1 && deviceData.key !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.key !== 1 && deviceData.key !== 0">-</td>
                     <!--坑洞保护开关-->
                     <td ng-if="deviceData.pothole==1">{{'open'|translate}}</td>
                     <td ng-if="deviceData.pothole==0">{{'shut'|translate}}</td>
-                    <td ng-if="deviceData.pothole !== 1 && deviceData.pothole !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.pothole !== 1 && deviceData.pothole !== 0">-</td>
                     <!--前进-->
                     <td ng-if="deviceData.fetForward==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetForward==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetForward !== 0 && deviceData.fetForward !== 1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetForward !== 0 && deviceData.fetForward !== 1">-</td>
                     <!--上升-->
                     <td ng-if="deviceData.fetUp==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetUp==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetUp!==0&&deviceData.fetUp!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetUp!==0&&deviceData.fetUp!==1">-</td>
                     <!--右转-->
                     <td ng-if="deviceData.fetRigth==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetRigth==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetRigth!==0&&deviceData.fetRigth!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetRigth!==0&&deviceData.fetRigth!==1">-</td>
                     <!--后退-->
                     <td ng-if="deviceData.fetReverse==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetReverse==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetReverse!==0&&deviceData.fetReverse!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetReverse!==0&&deviceData.fetReverse!==1">-</td>
                     <!--下降-->
                     <td ng-if="deviceData.fetDown==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetDown==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetDown!==0&&deviceData.fetDown!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetDown!==0&&deviceData.fetDown!==1">-</td>
                     <!--左转-->
                     <td ng-if="deviceData.fetLeft==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetLeft==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetLeft!==0&&deviceData.fetLeft!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetLeft!==0&&deviceData.fetLeft!==1">-</td>
                     <!--刹车-->
                     <td ng-if="deviceData.fetBrakes==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetBrakes==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetBrakes!==1&&deviceData.fetBrakes!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetBrakes!==1&&deviceData.fetBrakes!==0">-</td>
                     <!--喇叭-->
                     <td ng-if="deviceData.fetHorn==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetHorn==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetHorn!==0&&deviceData.fetHorn!==1">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetHorn!==0&&deviceData.fetHorn!==1">-</td>
                     <!--速度阀/电驱使能2-->
                     <td ng-if="deviceData.fetParallel==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetParallel==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetParallel !== 1 && deviceData.fetParallel !== 0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetParallel !== 1 && deviceData.fetParallel !== 0">-</td>
                     <!--泵使能-->
                     <td ng-if="deviceData.fetMCE==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetMCE==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetMCE!==1&&deviceData.fetMCE!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetMCE!==1&&deviceData.fetMCE!==0">-</td>
                     <!--电驱使能-->
                     <td ng-if="deviceData.fetMCE2==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetMCE2==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetMCE2!==1&&deviceData.fetMCE2!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetMCE2!==1&&deviceData.fetMCE2!==0">-</td>
                     <!--蜂鸣器-->
                     <td ng-if="deviceData.fetAlarm==1">{{'yes'|translate}}</td>
                     <td ng-if="deviceData.fetAlarm==0">{{'no'|translate}}</td>
-                    <td ng-if="deviceData.fetAlarm!==0&&deviceData.fetAlarm!==1" class="text-nowrap">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.fetAlarm!==0&&deviceData.fetAlarm!==1" class="text-nowrap">-</td>
                     <!--平台高度-->
-                    <td nowrap ng-if="deviceData.calibrationStatus=='192' && deviceData.hostHeight!=null && deviceData.hostHeight<='100' && deviceData.hostHeight >='0'">{{deviceData.hostHeight}}%</td>
+                    <td nowrap ng-if="deviceData.calibrationStatus=='192' && deviceData.hostHeight!=null && deviceData.hostHeight<='100' && deviceData.hostHeight >='0'">{{deviceData.hostHeight}}</td>
                     <td ng-if="deviceData.calibrationStatus!='192' || deviceData.hostHeight==null || deviceData.hostHeight<'0'|| deviceData.hostHeight>'100'">-</td>
                     <!--油缸压力-->
-                    <td ng-cloak>{{25*deviceData.oilPressure/4095 |number: 2}}MPa</td>
+                    <td ng-cloak ng-if="deviceData.oilPressure != null">{{25*deviceData.oilPressure/4095 |number: 2}}</td>
+                    <td ng-cloak ng-if="deviceData.oilPressure == null"></td>
                     <!--泵电机转速-->
-                    <td ng-cloak>{{deviceData.engineRPM}}%</td>
+                    <td ng-cloak>{{deviceData.engineRPM}}</td>
                     <!--最大快速行走速度-->
-                    <td ng-cloak>{{deviceData.highSpeedPercent}}%</td>
+                    <td ng-cloak>{{deviceData.highSpeedPercent}}</td>
                     <!--最大慢速行走速度-->
-                    <td ng-cloak>{{deviceData.lowSpeedPercent}}%</td>
+                    <td ng-cloak>{{deviceData.lowSpeedPercent}}</td>
                     <!--当前行走速度-->
                     <td ng-if="deviceData.fetForward==1 || deviceData.fetReverse==1">{{deviceData.hostSpeed}}</td>
-                    <td ng-if="!(deviceData.fetForward==1 || deviceData.fetReverse==1)">{{'noData'|translate}}</td>
+                    <td ng-if="!(deviceData.fetForward==1 || deviceData.fetReverse==1)">-</td>
                     <!--当前上升速度-->
                     <td ng-if="deviceData.fetDown==1 || deviceData.fetUp==1">{{deviceData.hostSpeed}}</td>
-                    <td ng-if="!(deviceData.fetDown==1 || deviceData.fetUp==1)">{{'noData'|translate}}</td>
+                    <td ng-if="!(deviceData.fetDown==1 || deviceData.fetUp==1)">-</td>
                     <!--最大上升速度-->
-                    <td ng-cloak>{{deviceData.maxUpSpeedPercent}}%</td>
+                    <td ng-cloak>{{deviceData.maxUpSpeedPercent}}</td>
                     <!--起升后最大行走速度-->
-                    <td ng-cloak>{{deviceData.maxStandSpeedPercent}}%</td>
+                    <td ng-cloak>{{deviceData.maxStandSpeedPercent}}</td>
                     <!--蓄电池液位-->
                     <td ng-if="deviceData.liquidLevelSw==1">{{'normal'|translate}}</td>
                     <td ng-if="deviceData.liquidLevelSw==0">{{'exception'|translate}}</td>
-                    <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">{{'noData'|translate}}</td>
+                    <td ng-if="deviceData.liquidLevelSw!==1&&deviceData.liquidLevelSw!==0">-</td>
                     <!--数据采集时间-->
                     <td ng-cloak class="text-nowrap">{{deviceData.dataGenerateTime | date:'yyyy-MM-dd HH:mm:ss':deviceAerialCurrentInfoController.timezone}}</td>
                     <!--数据接收时间-->
@@ -1748,7 +1751,7 @@
                     </div>
 
                     <!-- 绑定-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
+                    <div class="col-md-3" ng-show="deviceAerialCurrentInfoController.bindModuleShow">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
@@ -1796,7 +1799,7 @@
                     </div>
 
                     <!-- 锁车-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
+                    <div class="col-md-3" ng-show="deviceAerialCurrentInfoController.lockModuleShow">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>

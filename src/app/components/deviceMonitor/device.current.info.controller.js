@@ -59,7 +59,6 @@
             vm.highchartsRpm.series[0].data = [vm.deviceinfo.engineRotate];
           }
           if (vm.highchartsOil != null) {
-
             vm.highchartsOil.series[0].data = [vm.deviceinfo.oilLevel];
           }
 
@@ -741,6 +740,26 @@
 
 
     /*******************远程控制tab***********************/
+    // 验证权限,拥有解绑和绑定任意一个权限就显示，锁车和解锁同理
+    vm.validatePermission = function () {
+      if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:bind")){
+        vm.bindModuleShow = true;
+      }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unBind")){
+        vm.bindModuleShow = true;
+      }else {
+        vm.bindModuleShow = false;
+      }
+
+      if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:lock")){
+        vm.lockModuleShow = true;
+      }else if(permissions.getPermissions("dashboard:deviceMonitor:remoteControl:smsControl:unLock")){
+        vm.lockModuleShow = true;
+      } else{
+        vm.lockModuleShow = false;
+      }
+
+    }
+    vm.validatePermission();
     vm.startDateMapData = startDate;
     vm.endDateMapData = new Date();
     vm.startDateOpenStatusMapData = {
@@ -1085,7 +1104,8 @@
     }
     //临工平台矿车(TCP)转物联网平台(MQTT)默认端口号
     else {
-      vm.serverPort = "7883";
+      vm.serverHost = "iotserver1.nvr-china.com";
+      vm.serverPort = "09999";
     }
     vm.startTimes = vm.deviceinfo.startTimes;
     vm.cancelLockTimes = "";
@@ -1489,8 +1509,8 @@
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
         return;
       }
-      if(workHours > 65535) {
-        Notification.error(languages.findKey("maxValue") + "65535");
+      if(workHours > 999999) {
+        Notification.error(languages.findKey("maxValue") + "999999");
         return;
       }
       var restURL = SEND_SET_WORK_HOURS_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&workHours=" + workHours;
@@ -1534,6 +1554,18 @@
       }
       if (devicenum == null) {
         Notification.error(languages.findKey('pleaseProvideTheParametersToBeSet'));
+        return;
+      }
+      if(secOutsidePower > 65000) {
+        Notification.error(languages.findKey("maxValue") + "65000");
+        return;
+      }
+      if(secLocateInt > 65000) {
+        Notification.error(languages.findKey("maxValue") + "65000");
+        return;
+      }
+      if(secInnerPower > 1417) {
+        Notification.error(languages.findKey("maxValue") + "1417");
         return;
       }
       var restURL = SEND_SET_INTER_SMS_URL + "?devicenum=" + vm.deviceinfo.deviceNum + "&secOutsidePower="

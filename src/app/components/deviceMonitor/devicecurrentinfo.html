@@ -1081,7 +1081,7 @@
                               </div>
                               <div class="row">
                                 <div class="col-md-12">
-                                  <input type="text" id="secOutPower" class="form-control" validator="number" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
+                                  <input type="text" id="secOutPower" class="form-control" validator="number,maxValue=65000" ng-model="deviceCurrentInfoCtrl.secOutPower" name="secOutPower"/>
                                 </div>
                               </div>
                             </div>
@@ -1092,7 +1092,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="secLocateInt" class="form-control"
-                                         validator="number" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
+                                         validator="number,maxValue=65000" ng-model="deviceCurrentInfoCtrl.secLocateInt" name="secLocateInt"/>
                                 </div>
                               </div>
                             </div>
@@ -1103,7 +1103,7 @@
                               <div class="row">
                                 <div class="col-md-12">
                                   <input type="text" id="secInnerPower" class="form-control"
-                                         validator="number" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
+                                         validator="number,maxValue=1417" ng-model="deviceCurrentInfoCtrl.secInnerPower" name="secInnerPower"/>
                                 </div>
                               </div>
                             </div>
@@ -1176,7 +1176,7 @@
                           <div class="row" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:setWorkTime">
                             <div class="col-md-6">
                               <input type="text" id="workHours" class="form-control" placeholder="{{'workingHours'|translate}}"
-                                     validator="maxValue=65535" ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
+                                     validator="maxValue=999999" ng-model="deviceCurrentInfoCtrl.workHours" name="workHours"/>
                             </div>
                             <div class="col-md-6">
                               <sms-send-btn send-btn-show="deviceCurrentInfoCtrl.sendBtnShow" btn-label="{{'send'|translate}}"
@@ -1192,7 +1192,7 @@
                     </div>
 
                     <!--绑定-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:bind">
+                    <div class="col-md-3" ng-show="deviceCurrentInfoCtrl.bindModuleShow">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'binding'|translate}}</h5>
@@ -1238,7 +1238,7 @@
                     </div>
 
                     <!--锁车-->
-                    <div class="col-md-3" presentation-href="dashboard:deviceMonitor:remoteControl:smsControl:lock">
+                    <div class="col-md-3" ng-show="deviceAerialCurrentInfoController.lockModuleShow">
                       <div class="box box-danger">
                         <div class="box-header">
                           <h5 class="box-title text-gray">{{'lockYourCar'|translate}}</h5>

@@ -341,6 +341,7 @@
      * 切换总调度
      */
     vm.totalDispatchTab = function () {
+      vm.resetTotalDispatch();
       vm.queryTotalDispatch(null, null, null);
     };
 
@@ -348,6 +349,7 @@
      * 切换临时调度
      */
     vm.temporaryDispatchTab = function () {
+      vm.resetTemporaryDispatch();
       vm.queryTemporaryDispatch(null, null, null);
     };
 
@@ -387,6 +389,10 @@
         } else {
           Notification.warning(languages.findKey('noDataYet'));
           vm.temporaryDispatchList = null;
+          vm.temporaryDispatchTableParams = new NgTableParams({}, {
+            dataset: null
+          });
+          vm.temporaryDispatchPage.totalElements = 0;
         }
       }, function (reason) {
         Notification.error(reason);
