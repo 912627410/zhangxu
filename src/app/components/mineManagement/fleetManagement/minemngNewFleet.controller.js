@@ -7,8 +7,14 @@
   'use strict'
   angular.module('GPSCloud').controller('addMineFleetController',addMineFleetCtrl);
 
-  function addMineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
+  function addMineFleetCtrl(NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
     var vm= this;
+    vm.machineType = 1;
+
+
+    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
+
 
     vm.ok= function(newOrg){
       if(vm.selectedOrg==null){
@@ -52,17 +58,47 @@
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
-        controller: 'addMinemngMachineController as addMinemngMachineCtrl',
+        controller: 'minemngAddFleetMachineController as minemngAddFleetMachineCtrl',
         size: 'sx',
         backdrop: false
       });
-      modalInstance.result.then(function () {
-        vm.reset();
+      modalInstance.result.then(function (result) {
+           vm.selectAllInfo=result;
+
       }, function () {
       });
     };
 
+    vm.query= function (page, size, sort, machine) {
+      var restCallURL = MINE_PAGE_URL;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      restCallURL += "&search_EQ_machineType=" + vm.machineType;
+      restCallURL += "&search_EQ_status=" +1 ;
+      if (null != machine) {
 
+        if (null != machine.carNumber&&machine.carNumber!="") {
+          restCallURL += "&search_LIKE_carNumber=" + $filter('uppercase')(machine.carNumber);
+        }
+      }
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+
+        vm.tableParams = new NgTableParams({
+          // initial sort order
+          // sorting: { name: "desc" }
+        }, {
+          dataset: data.content
+        });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
+      }, function (reason) {
+        vm.machineList = null;
+        Notification.error(languages.findKey('getDataVeFail'));
+      });
+    };
 
 
 

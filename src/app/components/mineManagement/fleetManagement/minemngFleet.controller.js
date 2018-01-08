@@ -157,17 +157,6 @@
       vm.fleetName='';
       vm.init();
     };
-
-
-
-
-
-
-
-
-
-
-
     vm.init()
 
   }

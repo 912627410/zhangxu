@@ -3,39 +3,36 @@
  */
 (function () {
   'use strict';
-  angular.module('GPSCloud').controller('addMinemngMachineController', addMinemngMachineCtrl);
+  angular.module('GPSCloud').controller('minemngAddFleetMachineController', minemngAddFleetMachineController);
 
-  function addMinemngMachineCtrl($rootScope, $scope, $timeout, $confirm, $filter, $uibModalInstance, languages, serviceResource) {
+  function minemngAddFleetMachineController(serviceResource,MINE_MACHINE_FLEET,GET_MINE_MACHINE_FLEET,$rootScope, $scope, $timeout, $confirm, $filter, $uibModalInstance) {
     var vm = this;
-    vm.showOrgTree = true;    //默认显示树
-    vm.selectedOrg;         //选中的组织
     vm.animationsEnabled = true;
     vm.selectedObject = '';
     vm.selectedParentObject = '';
     vm.searchText = '';     //搜索的数据
     vm.fleet_data = [];
     vm.fleetName='';
+    vm.selectAllInfo='';
     vm.selectedArray = [];
     vm.newBtnShow = true;
-    //响应的选中事件
-    $scope.$on('OrgSelectedEvent', function (event, data) {
-      vm.selectedOrg = data;
-    });
 
-    //关闭选择org的页面
-    vm.cancel = function () {
-      vm.select_branch();
-      $uibModalInstance.dismiss('cancel');
+
+    vm.init = function () {
+      vm.getUpdateObject();
     };
 
     //确定
     vm.confirm = function () {
-
       //关闭modal
-      $uibModalInstance.close(vm.selectedOrg);
+      $uibModalInstance.close(vm.selectAllInfo);
       //取消选中
       vm.select_branch();
     }
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
 
 
     vm.getUpdateObject = function () {
@@ -85,6 +82,7 @@
           var dataPromis = serviceResource.restCallService(restCallURL, "GET");
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
+            vm.selectAllInfo=vm.fleetName+vm.selectedParentObject;
           });
         }else {
           var restCallURL = MINE_MACHINE_FLEET;
@@ -145,6 +143,17 @@
         vm.fleet_data= vm.searched_array;
       }
     };
+
+
+    vm.reset = function () {
+      vm.searchText = "";
+      vm.selectedObject = '';
+      vm.selectedParentObject = '';
+      vm.fleetName='';
+      vm.init();
+    };
+    vm.init()
+
 
   }
 
