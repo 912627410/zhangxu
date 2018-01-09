@@ -11,8 +11,6 @@
   /** @ngInject */
   function rentalOrderMngController($rootScope,$state, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
                                     DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
-
-
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     //定义每页显示多少条数据
@@ -22,7 +20,6 @@
     vm.processOrders=0;
     vm.fininshOrders=0;
     vm.rentalOrder = {};
-
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
 
@@ -236,6 +233,22 @@
     }
 
 
+
+    //附件上传
+    vm.fileUpload = function (rentalOrder) {
+      vm.singleRentalOrder=rentalOrder;
+      $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/rentalPlatform/fleetMng/orderFileUpload.html',
+        controller: 'rentalOrderFileUploadController as rentalOrderFileUploadMngCtrl',
+        size: 'lg',
+        resolve: {
+          rentalOrder: function () {
+            return rentalOrder;
+          }
+        }
+      });
+    }
 
   }
 })();

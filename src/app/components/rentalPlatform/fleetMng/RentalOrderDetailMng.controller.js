@@ -67,6 +67,7 @@
     };
     vm.entryList(null,vm.orderId);
 
+
     var path="/rental/order";
     vm.cancel = function(){
       $location.path(path);

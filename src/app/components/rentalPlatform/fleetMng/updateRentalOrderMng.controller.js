@@ -14,67 +14,17 @@
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     vm.rentalOrder= retalOrder;
-    vm.addRentalOrderOption = {
-      orderVo:'',
-      orderMachineTypeVoList:'',
-      orderMachineVoList:''
-    }
-    vm.jcOption = {
-      deviceType :{id:1}
-    }
-    vm.qbOption = {
-      deviceType :{id:2}
-    }
-    vm.zbOption = {
-      deviceType :{id:3}
-    }
     vm.rentalOrderMachineTypeVos = [];
+    vm.updateRentalOrderOption = {
+      orderVo:'',
+      orderMachineTypeVoList:''
+    }
+
+
     vm.orderMachineTypeVoList = orderMachineTypeVoList;
     for(var i = 0;i<vm.orderMachineTypeVoList.length;i++){
-      if(vm.orderMachineTypeVoList[i].deviceType.id == 1){
-        vm.jcOption = vm.orderMachineTypeVoList[i]
-      }
-      if(vm.orderMachineTypeVoList[i].deviceType.id == 2){
-        vm.qbOption = vm.orderMachineTypeVoList[i]
-      }
-      if(vm.orderMachineTypeVoList[i].deviceType.id == 3){
-        vm.zbOption = vm.orderMachineTypeVoList[i]
-      }
+
     }
-
-
-    // vm.customer=vm.rentalOrder.rentalCustomer;
-    // vm.org=vm.rentalOrder.org;
-
-    vm.rightBoxBottomHeight=20;
-    vm.rightBoxTopHeightTemp=20;
-    /**
-     * 自适应高度函数
-     * @param windowHeight
-     */
-    vm.adjustWindow = function (windowHeight) {
-      var baseBoxContainerHeight = windowHeight - 50 - 10 -25 -5 - 90 - 15 - 7;//50 topBar的高,10间距,25面包屑导航,5间距90msgBox高,15间距,8 预留
-      //baseBox自适应高度
-      vm.baseBoxContainer = {
-        "min-height": baseBoxContainerHeight + "px"
-      }
-      var baseBoxMapContainerHeight = baseBoxContainerHeight - 45;//地图上方的header高度
-      //地图的自适应高度
-      vm.baseBoxMapContainer = {
-        "min-height": baseBoxMapContainerHeight + "px"
-      }
-
-      var rightBoxTopHeight=baseBoxContainerHeight/2;
-      vm.rightBoxTopHeightTemp=rightBoxTopHeight-20;
-      //地图的右边自适应高度
-      vm.rightBoxTopHeight = {
-        "min-height": vm.rightBoxTopHeightTemp+ "px"
-      }
-      vm.rightBoxBottomHeight=rightBoxTopHeight;
-    }
-    //初始化高度
-    vm.adjustWindow($window.innerHeight);
-
 
     vm.startDateSetting = {
       //dt: "请选择开始日期",
@@ -139,32 +89,16 @@
 
     vm.ok = function () {
 
-      if(vm.rentalOrder.endDate==null||vm.rentalOrder.startDate==null||vm.rentalOrder.endDate==undefined||vm.rentalOrder.startDate==undefined){
-        Notification.error(languages.findKey('selTime'));
-      }
-      vm.rentalOrder.jc = vm.jcOption.quantity;
-      vm.rentalOrder.zb= vm.zbOption.quantity;
-      vm.rentalOrder.qb = vm.qbOption.quantity;
-      if(vm.jcOption.quantity){
-        vm.rentalOrderMachineTypeVos.push(vm.jcOption)
-      }
-      if( vm.qbOption.quantity){
-        vm.rentalOrderMachineTypeVos.push(vm.qbOption)
-      }
-
-      if(vm.zbOption.quantity){
-        vm.rentalOrderMachineTypeVos.push(vm.zbOption)
-      }
       //订单所属组织为客户的所属组织
       vm.rentalOrder.org = vm.operatorInfo.userdto.organizationDto;
       vm.rentalOrder.machineTypeVos = vm.rentalOrderMachineTypeVos;
 
-      vm.addRentalOrderOption.orderVo = vm.rentalOrder;
-      vm.addRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
-      vm.addRentalOrderOption.orderMachineVoList = null;
+      vm.updateRentalOrderOption.orderVo = vm.rentalOrder;
+      vm.updateRentalOrderOption.orderMachineTypeVoList =  vm.rentalOrderMachineTypeVos;
+      vm.updateRentalOrderOption.orderMachineVoList = null;
 
 
-      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.addRentalOrderOption);
+      var rspdata = serviceResource.restUpdateRequest(RENTAL_ORDER_URL,vm.updateRentalOrderOption);
       rspdata.then(function (data) {
         Notification.success(languages.findKey('upOrderSucc'));
         var result = data.content.orderVo;

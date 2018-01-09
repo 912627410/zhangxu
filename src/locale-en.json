@@ -1555,6 +1555,8 @@
   "NoCalibrationParameter":"No vehicle calibration parameter data, please get the latest data",
   "pleaseChooseTheModeOfOperation":"Please choose the mode of operation",
   "deviceNumNull":"Device number is empty",
+  "attachment":"Attachment",
+  "attachmentUpload":"Attachment Upload",
 
   "admissionTime":"Admission time",
 

@@ -101,7 +101,7 @@
     <div class="container-fluid table-wrapper" >
       <uib-tabset justified="true">
         <!--车辆列表-->
-        <uib-tab>
+        <uib-tab select="rentalOrderDetailCtrl.carlist(null,rentalOrderDetailCtrl.rentalOrder.id);">
           <uib-tab-heading>
             {{'machineInfo'|translate}}
           </uib-tab-heading>
@@ -136,7 +136,7 @@
           </div>
         </uib-tab>
         <!--进场单-->
-        <uib-tab>
+        <uib-tab select="rentalOrderDetailCtrl.entryList(null,rentalOrderDetailCtrl.rentalOrder.id);">
           <uib-tab-heading>
             {{'goSiteList'|translate}}
           </uib-tab-heading>
@@ -167,7 +167,7 @@
           </div>
         </uib-tab>
         <!--退场单-->
-        <uib-tab>
+        <uib-tab  select="rentalOrderDetailCtrl.entryList(null,rentalOrderDetailCtrl.rentalOrder.id);">
           <uib-tab-heading>
             {{'leaveSiteList'|translate}}
           </uib-tab-heading>
