@@ -9,11 +9,42 @@
     .controller('minemngTerminalMngController', minemngTerminalMngController);
 
   /** @ngInject */
-  function minemngTerminalMngController($rootScope,serviceResource, MINEMNG_TERMINALPAGE_URL, DEFAULT_MINSIZE_PER_PAGE, NgTableParams, Notification, languages) {
+  function minemngTerminalMngController($rootScope,$uibModal,serviceResource,ngTableDefaults, MINEMNG_TERMINALPAGE_URL, DEFAULT_MINSIZE_PER_PAGE, NgTableParams, Notification, languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
+    ngTableDefaults.settings.counts = [];
 
-    //分页查询用户信息
+    /**
+     * 修改终端信息
+     */
+    vm.updateTerminal=function () {
+
+    }
+
+    /**
+     * 新增终端
+     */
+    vm.new=function () {
+      var modalInstance=$uibModal.open({
+        animation: true,
+        templateUrl:'app/components/mineManagement/terminalManagement/minemngNewTerminal.html',
+        controller:'minemngNewTerminalMngController',
+        controllerAs:'minemngNewTerminalMngCtrl',
+        size:'md'
+      });
+      modalInstance.result.then(function (result) {
+        vm.tableParams.data.splice(0,0,result);
+        vm.query(null,null,null,null)
+      },function () {
+
+      });
+
+    }
+
+    /**
+     *  分页查询终端信息
+     */
     vm.query = function (page, size, sort, minemngTerminal) {
       var restCallURL = MINEMNG_TERMINALPAGE_URL;
       var pageUrl = page || 0;
@@ -43,19 +74,20 @@
         });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        vm.page.totalElements=data.page.totalElements;
 
       }, function (reason) {
         Notification.error(languages.findKey('获取终端信息数据失败'));
       });
     };
-    //vm.query(null, null, null, null);
+    vm.query(null, null, null, null);
 
     /**
      * 重置查询框
      */
     vm.reset = function () {
-      vm.terminalNumber = null;
-      vm.simCardNumber = null;
+      vm.minemngTerminal.terminalNumber = null;
+      vm.minemngTerminal.simCardNumber = null;
       vm.carNumber = null;
     };
 
