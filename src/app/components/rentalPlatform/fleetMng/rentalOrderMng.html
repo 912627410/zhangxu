@@ -177,19 +177,9 @@
                 <button type="button" class="btn btn-default btn-xs"
                         ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">详情
                 </button>
-<!--                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:view"
-                        ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'rentalView'| translate}}
-                </button>
-                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:entry"
-                        ng-click="rentalOrderMngCtrl.goSite(rentalOrder)">{{'goSite'| translate}}
-                </button>
-                <button type="button" class="btn btn-default btn-xs"  presentation-href="rental:rentalMng:order:exit"
-                        ng-click="rentalOrderMngCtrl.leaveSite(rentalOrder)">{{'leaveSite'| translate}}
-                </button>-->
-                <!--<i  ng-click="rentalOrderMngCtrl.fileUpload(rentalOrder)" class="fa fa-paperclip" />-->
               </td>
               <td class="text-nowrap text-center" data-title="'附件'" >
-                <a><i class="fa fa-paperclip"></i></a>
+                <a><i ng-click="rentalOrderMngCtrl.fileUpload(rentalOrder)"  class="fa fa-paperclip"></i></a>
               </td>
             </tr>
           </table>

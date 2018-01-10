@@ -297,6 +297,8 @@
     .constant('RENTANL_ORDER_MACHINE_BATCH_MOVE_ATTACH_UPLOAD_URL',SERVER_BASE_URL + 'rental/orderMachine/batchMoveMachineWeb')//进退场附件上传
     .constant('RENTANL_ATTACH_UPLOAD_URL',SERVER_BASE_URL + 'rental/orderMachine/attachmentsUpload')//附件上传
     .constant('RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL', SERVER_BASE_URL + 'rental/orderMachine/entryAndExit')//进退场的同时附件上传
+    .constant('RENTANL_ATTACH_DELETE_URL',SERVER_BASE_URL + 'rental/orderMachine/delete')//附件删除
+
     //租赁资产管理
     .constant('RENTAL_TOTALINCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeTotal') //收入统计上方四个方框 总收入和每种类型的总收入
     .constant('RENTAL_TOTALCOST_URL', SERVER_BASE_URL + 'rental/asset/getCostTotal') //成本统计上方四个方框数据总数

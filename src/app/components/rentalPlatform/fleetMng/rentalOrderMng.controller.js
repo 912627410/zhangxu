@@ -11,7 +11,7 @@
   /** @ngInject */
 
   function rentalOrderMngController($rootScope,$state, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages,RENTAL_ORDER_ENTRY_EXIT_LIST_URL) {
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -25,12 +25,10 @@
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//表格中每页展示多少条数据
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
 
-
     //定义偏移量
     $anchorScroll.yOffset = 50;
     //定义页面的喵点
     vm.anchorList = ["currentLocation", "currentState", "alarmInfo"];
-
 
     //订单状态List
     var retanlOrderStatusListPromise = rentalService.getRetnalOrderStatusList();
@@ -71,7 +69,6 @@
       }
     }
 
-
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -85,7 +82,6 @@
     }
     //初始化高度
     vm.adjustWindow($window.innerHeight);
-
 
     vm.startDateSetting = {
       //dt: "请选择开始日期",
@@ -121,7 +117,6 @@
       vm.endDateOpenStatus.opened = true;
     };
 
-
     //组织树的显示
     vm.openTreeInfo = function () {
       treeFactory.treeShow(function (selectedItem) {
@@ -148,7 +143,6 @@
       }, function () {
       });
     };
-
 
     vm.query = function (currentPage, pageSize, totalElements, rentalOrder) {
 
@@ -224,7 +218,6 @@
       vm.org = null;
       vm.id = null;
     }
-
 
     //租赁订单管理--更新订单
     vm.update = function (id, realNumber) {
@@ -348,7 +341,6 @@
         }
       });
     }
-
 
      /**
      * 查看订单详情页面

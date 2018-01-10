@@ -10,7 +10,7 @@
     .controller('rentalOrderDetailController',rentalOrderDetailController);
 
   /** @ngInject */
-  function rentalOrderDetailController ($rootScope,$location,$uibModal,$stateParams,serviceResource,RENTAL_ORDER_URL,Notification,RENTAL_ORDER_MACHINE_HISTORY_URL,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,NgTableParams){
+  function rentalOrderDetailController ($rootScope,$location,$uibModal,$stateParams,$confirm,serviceResource,RENTAL_ORDER_URL,Notification,languages,RENTAL_ORDER_MACHINE_HISTORY_URL,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,RENTANL_ATTACH_DELETE_URL,NgTableParams){
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.orderId=$stateParams.id;
@@ -159,7 +159,27 @@
 
 
 
-
+    /**
+     * 删除操作
+     * @param id
+     */
+    vm.delete = function (id) {
+      $confirm({
+        text: languages.findKey('areYouWanttoDeleteIt'),
+        title: languages.findKey('deleteConfirmation'),
+        ok: languages.findKey('confirm'),
+        cancel: languages.findKey('cancel')
+      })
+        .then(function () {
+          var rentalAttachVo = {"id": 3335635643};
+          var restPromise = serviceResource.restUpdateRequest(RENTANL_ATTACH_DELETE_URL, rentalAttachVo)
+          restPromise.then(function (data) {
+            Notification.success(languages.findKey('delSuccess'));
+          }, function (reason) {
+            Notification.error(languages.findKey('delFail'));
+          });
+        });
+    };
 
 
 

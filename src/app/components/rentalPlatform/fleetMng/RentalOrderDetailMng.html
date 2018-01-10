@@ -134,6 +134,18 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination class="pagination-sm pagination-custom"
+                              boundary-links="true"
+                              rotate="false" max-size="10"
+                              total-items="vm.totalElements"
+                              ng-model="vm.currentPage"
+                              items-per-page="vm.pageSize"
+                              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+              </uib-pagination>
+            </div>
+          </div>
         </uib-tab>
         <!--进场单-->
         <uib-tab>
@@ -151,7 +163,7 @@
                     <td ng-cloak data-title="'operationTime'|translate">{{entryData.operationTime| date:'yyyy-MM-dd HH:mm:ss'}}
                     </td>
                     <td ng-cloak data-title="'totalNumberOfMachine'|translate">{{entryData.machineVoList.length}}</td>
-                    <td ng-cloak data-title="'attachment'|translate">{{}}</td>
+                    <td ng-cloak data-title="'attachment'|translate">{{entryData.rentalAttachVos.length}}</td>
                     <td class="text-nowrap text-center" data-title="'rentalOperations'|translate">
                       <button type="button" class="btn btn-default btn-xs"
                               ng-click="">{{'rentalDelete'|translate}}
@@ -163,6 +175,18 @@
                   </tr>
                 </table>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination class="pagination-sm pagination-custom"
+                              boundary-links="true"
+                              rotate="false" max-size="10"
+                              total-items="vm.totalElements"
+                              ng-model="vm.currentPage"
+                              items-per-page="vm.pageSize"
+                              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+              </uib-pagination>
             </div>
           </div>
         </uib-tab>
@@ -182,7 +206,7 @@
                     <td ng-cloak data-title="'operationTime'|translate">{{exitData.operationTime| date:'yyyy-MM-dd HH:mm:ss'}}
                     </td>
                     <td ng-cloak data-title="'totalNumberOfMachine'|translate">{{exitData.machineVoList.length}}</td>
-                    <td ng-cloak data-title="'attachment'|translate">{{}}</td>
+                    <td ng-cloak data-title="'attachment'|translate">{{exitData.rentalAttachVos.length}}</td>
                     <td class="text-nowrap text-center" data-title="'rentalOperations'|translate">
                       <button type="button" class="btn btn-default btn-xs"
                               ng-click="">{{'rentalDelete'|translate}}
@@ -196,6 +220,18 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <uib-pagination class="pagination-sm pagination-custom"
+                              boundary-links="true"
+                              rotate="false" max-size="10"
+                              total-items="vm.totalElements"
+                              ng-model="vm.currentPage"
+                              items-per-page="vm.pageSize"
+                              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+              </uib-pagination>
+            </div>
+          </div>
         </uib-tab>
       </uib-tabset>
     </div>
@@ -203,6 +239,12 @@
       <button class="btn btn-warning pull-right" type="button" ng-click="rentalOrderDetailCtrl.cancel()">
         {{'return'|translate}}
       </button>
+
+<!--      <button type="button" class="btn btn-danger btn-xs"
+              ng-click="rentalOrderDetailCtrl.delete(rentalOrderDetailCtrl.id)">{{'rentalDelete'| translate}}
+      </button>-->
+
+
     </div>
 
   </div>
