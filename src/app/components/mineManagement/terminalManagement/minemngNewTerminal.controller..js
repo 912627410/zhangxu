@@ -34,11 +34,9 @@
 
     vm.ok=function () {
 
-      if(vm.newTerminal.unboundCar == null || vm.newTerminal.unboundCar=== 'undefined' || vm.newTerminal.unboundCar=== '') {
-        Notification.warning("请选择要绑定的车辆");
-        return;
+      if(vm.newTerminal.unboundCar != null && vm.newTerminal.unboundCar !== 'undefined' && vm.newTerminal.unboundCar !== '') {
+        vm.newTerminal.minemngMachineId = vm.newTerminal.unboundCar.id;
       }
-      vm.newTerminal.minemngMachineId = vm.newTerminal.unboundCar.id;
 
       var rspdata=serviceResource.restAddRequest(MINEMNG_TERMINAL_URL,vm.newTerminal);
       rspdata.then(function (data) {
