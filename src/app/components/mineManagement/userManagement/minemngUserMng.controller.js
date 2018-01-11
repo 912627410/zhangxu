@@ -1,5 +1,5 @@
 /**
- * Created by yalong on 17-12-8.
+ * Created by weihua on 17-12-8.
  */
 (function() {
   'use strict';
@@ -75,12 +75,9 @@
         if (null != minemnguser.entryTime && minemnguser.entryTime != "") {
           var startMonth = minemnguser.entryTime.getMonth() + 1;
           var startDateFormated = minemnguser.entryTime.getFullYear() + '-' + startMonth + '-' + minemnguser.entryTime.getDate();
-          if (restCallURL) {
-            restCallURL += "&entryTime=" + startDateFormated
-          }
-          else {
-            restCallURL += "entryTime=" + startDateFormated;
-          }
+
+          restCallURL += "entryTime=" + startDateFormated;
+
         }
       }
 
@@ -109,7 +106,7 @@
     vm.new = function () {
       var modalInstance = $uibModal.open({
         animation: true,
-        templateUrl: 'app/components/mineManagement/userManagement/minemngNewUserMng.html',
+        templateUrl: 'app/components/mineManagement/userManagement/minemngNewUser.html',
         controller: 'minemngNewUserMngController',
         controllerAs: 'minemngNewUserMngCtrl',
         size: 'lg'
@@ -130,7 +127,7 @@
       rspData.then(function (data) {
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: 'app/components/mineManagement/userManagement/minemngUpdateUserMng.html',
+          templateUrl: 'app/components/mineManagement/userManagement/minemngUpdateUser.html',
           controller: 'minemngUpdateUserMngController',
           controllerAs: 'minemngUpdateUserMngCtrl',
           size: 'lg',

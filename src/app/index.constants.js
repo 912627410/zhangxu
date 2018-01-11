@@ -413,6 +413,8 @@
 
 
     .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息
+    .constant('MINEMNG_TERMINAL_URL', SERVER_BASE_URL+ 'minemngTerminal/minemngTerminal')//新增终端
+    .constant('MINEMNG_GET_UNBOUND_MACHINE',SERVER_BASE_URL+'minemngMachine/getUnboundMachineList')//查询未绑定的车辆
   ;
 
 
