@@ -26,7 +26,12 @@
     ngTableDefaults.params.count = 20;
     ngTableDefaults.settings.counts = [];
 
-    vm.totalDispatchPage = {};
+    vm.totalDispatchPage = {
+      totalElements: 0
+    };
+    vm.temporaryDispatchPage = {
+      totalElements: 0
+    };
 
     vm.entryTimeSetting = {
       //dt: "请选择开始日期",

@@ -18,6 +18,10 @@
       ngTableDefaults.params.count = 20;
       ngTableDefaults.settings.counts = [];
 
+      vm.checkPointPage = {
+        totalElements: 0
+      };
+
       /**
        * 分页查询
        * @param page
