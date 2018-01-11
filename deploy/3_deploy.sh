@@ -1,9 +1,8 @@
-
-#tomcat path
+#nginx path
 nginxPath=/usr/local/openresty/nginx/www/;
 appName="GPSCloudWeb";
 
-#deploy war path
+#deploy www path
 warPath=/mnt/deploy/war;
 #bakPath=/mnt/deploy/bak/$appName/;
 
@@ -20,7 +19,7 @@ DATE=$(date +%Y%m%d)
 bakPath=/mnt/deploy/bak/$appName/$DATE;
 #echo $DATE
 
-if [ ! -d "$bakPath" ]; then 
+if [ ! -d "$bakPath" ]; then
    mkdir -p $bakPath
    cp -r $nginxPath $bakPath/1/
 else
@@ -30,12 +29,12 @@ else
     mkdir -p $newPath
     cp -r $nginxPath $newPath
 
-fi 
+fi
 fi
 
 
 # delete old file
-rm -rf $nginxPath/*; 
+rm -rf $nginxPath/*;
 
 #copy new war file
 
