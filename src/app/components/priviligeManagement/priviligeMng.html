@@ -62,8 +62,6 @@
       <div class="table-responsive">
       <table ng-table="priviligeMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="priviligeInfo in $data">
-
-          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{priviligeInfo.id}}</td>
           <td class="text-nowrap" data-title="'权限名'" sortable="'permission'">{{priviligeInfo.permission}}</td>
           <td class="text-nowrap" data-title="'描述'" sortable="'remark'">{{priviligeInfo.remark}}</td>
           <td class="text-nowrap" data-title="'状态'" sortable="'statusDesc'">{{priviligeInfo.statusDesc}}</td>

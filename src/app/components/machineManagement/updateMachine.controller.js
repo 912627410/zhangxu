@@ -31,13 +31,6 @@
       Notification.error('获取保养费用类型失败');
     })
 
-    var fuelTypePromise = machineService.getFuelTypeList();
-    fuelTypePromise.then(function (data) {
-      vm.fuelConfigList= data.content;
-    }, function (reason) {
-      Notification.error('获取燃油类型失败');
-    })
-
     var machineStatePromise = machineService.getMachineStateList();
     machineStatePromise.then(function (data) {
       vm.machineStateList= data;
