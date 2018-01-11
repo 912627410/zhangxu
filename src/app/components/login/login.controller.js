@@ -282,14 +282,12 @@
           $window.sessionStorage["sensor"] = JSON.stringify(data);
         });
 
-        //判断是否需要提示修改密码
-        if (passwordPattenStatus == false) {
-          Notification.error({message: languages.findKey('passwordIsTooSimplePleaseModify'), positionX: 'center'});
-
-        }
 
         //验证用户类别
         if (userInfo.tenantType != null && userInfo.tenantType != '') {
+          if(userInfo.tenantType !== '3' && passwordPattenStatus == false) {
+            Notification.error({message: languages.findKey('passwordIsTooSimplePleaseModify'), positionX: 'center'});
+          }
           var userTypes = userInfo.tenantType.split(",");
 
           if (userTypes.length >= 2) {
@@ -307,6 +305,11 @@
             //直接转入到矿车管理页面
             $rootScope.$state.go('minemng');
             return;
+          }
+        } else {
+          //判断是否需要提示修改密码
+          if (passwordPattenStatus == false) {
+            Notification.error({message: languages.findKey('passwordIsTooSimplePleaseModify'), positionX: 'center'});
           }
         }
 
