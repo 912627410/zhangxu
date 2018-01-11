@@ -37,7 +37,7 @@
           return;
         }
         if(vm.newCheckPoint.radius == null || vm.newCheckPoint.radius === '') {
-          Notification.warning("请选择工作半径");
+          Notification.warning("请录入工作半径");
           return;
         }
         var restPromise = serviceResource.restAddRequest(MINEMNG_CHECK_POINT, vm.newCheckPoint);

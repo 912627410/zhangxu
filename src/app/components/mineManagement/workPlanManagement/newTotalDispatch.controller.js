@@ -16,19 +16,50 @@
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
+      // 默认时间为第二天
+      var effectiveDate = new Date();
+      effectiveDate.setDate(effectiveDate.getDate() + 1);
+      vm.effectiveDate = effectiveDate;
+
+      vm.entryTimeSetting = {
+        //dt: "请选择开始日期",
+        open: function ($event) {
+          vm.entryTimeSetting.status.opened = true;
+        },
+        dateOptions: {
+          formatYear: 'yy',
+          startingDay: 1
+        },
+        status: {
+          opened: false
+        }
+      };
+
+      // 日期控件相关
+      vm.dateOptions = {
+        dateDisabled: function(data) {  // 只能选择设定的日期（默认的日期：当前日期的第二天）
+          var date = data.date;
+          var mode = data.mode;
+          if(vm.effectiveDate.getDate() !== date.getDate() || vm.effectiveDate.getMonth() !== date.getMonth()) {
+            return mode === 'day' && (date.getDate() || date.getModel());
+          }
+        },
+        formatYear: 'yyyy',
+        startingDay: 1
+      };
 
       /**
        * 加载作业面列表
        */
-      vm.getWorkfaceList = function () {
+      vm.getWorkFaceList = function () {
         var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
         rspDate.then(function (data) {
-          vm.workfaceList = data;
+          vm.workFaceList = data;
         },function (reason) {
           Notification.error(reason.data);
         })
       };
-      vm.getWorkfaceList();
+      vm.getWorkFaceList();
 
       /**
        * 加载排土场列表
@@ -97,7 +128,7 @@
           Notification.warning("请选择车队");
           return;
         }
-        if(vm.newTotalDispatch.workface == null || vm.newTotalDispatch.workface === "") {
+        if(vm.newTotalDispatch.workFace == null || vm.newTotalDispatch.workFace === "") {
           Notification.warning("请选择工作面");
           return;
         }
@@ -109,6 +140,11 @@
           Notification.warning("请选择班次");
           return;
         }
+        if(vm.effectiveDate == null || vm.effectiveDate === "") {
+          Notification.warning("请选择日期");
+          return;
+        }
+        vm.newTotalDispatch.effectiveDate = vm.effectiveDate;
         var rspData = serviceResource.restCallService(MINEMNG_TOTAL_DISPATCH, "ADD", vm.newTotalDispatch);  //post请求
         rspData.then(function (data) {
           if(data.code === 0){

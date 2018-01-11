@@ -20,9 +20,9 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">工作面</label>
         <div class="col-sm-10">
-          <select name="workface" class="form-control"
-                  ng-model="updateTotalDispatchCtrl.totalDispatch.workface"
-                  ng-options="workfaces.id as workfaces.name for workfaces in updateTotalDispatchCtrl.workfaceList">
+          <select name="workFace" class="form-control"
+                  ng-model="updateTotalDispatchCtrl.totalDispatch.workFace"
+                  ng-options="workFaces.id as workFaces.name for workFaces in updateTotalDispatchCtrl.workFaceList">
             <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="updateTotalDispatch" ng-click="updateTotalDispatchCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-primary" type="button" validation-submit="updateTotalDispatch" ng-click="updateTotalDispatchCtrl.ok()" >发布</button>
     <button class="btn btn-warning" type="button" ng-click="updateTotalDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

@@ -9,7 +9,7 @@
 </section>
 
 <!-- Main content -->
-<section class="content form-horizontal" style="overflow-x: hidden; overflow-y: auto;min-height: 350px;">
+<section class="content form-horizontal">
 
   <uib-tabset active="active" type="tabs">
     <uib-tab index="0" active="true" heading="总调度" select="dispatchMngCtrl.totalDispatchTab()">
@@ -48,9 +48,9 @@
         <div class="row form-group minemngFormGroup text-right">
           <label class="col-md-1 control-label">作业面</label>
           <div class="col-md-2">
-            <select name="workface" class="form-control"
-                    ng-model="dispatchMngCtrl.totalDispatch.workface"
-                    ng-options="workfaces.id as workfaces.name for workfaces in dispatchMngCtrl.workfaceList">
+            <select name="workFace" class="form-control"
+                    ng-model="dispatchMngCtrl.totalDispatch.workFace"
+                    ng-options="workFaces.id as workFaces.name for workFaces in dispatchMngCtrl.workFaceList">
               <option value="">{{'pleaseSelect'|translate}}</option>
             </select>
           </div>
@@ -62,6 +62,25 @@
               <option value="">{{'pleaseSelect'|translate}}</option>
             </select>
           </div>
+          <label class="col-md-1 control-label">日期</label>
+          <div class="col-md-2">
+            <p class="input-group">
+              <input type="text" name="effectiveDate" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
+                     ng-model="dispatchMngCtrl.effectiveDate"
+                     is-open="dispatchMngCtrl.entryTimeSetting.status.opened"
+                     datepicker-options="dispatchMngCtrl.dateOptions"
+                     current-text="{{'today'|translate}}"
+                     clear-text="{{'cleanUp'|translate}}"
+                     close-text="{{'close'|translate}}"
+                     message-id="bootstrap" readonly/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="dispatchMngCtrl.entryTimeSetting.open($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>
+          </div>
         </div>
         <div class="row form-group" style="padding-top: 20px;">
           <div class="btn-group col-md-6" style="line-height: 34px;">
@@ -70,7 +89,6 @@
           </div>
           <div class="col-md-6 text-right">
             <button class="btn btn-primary" ng-click="dispatchMngCtrl.addTotalDispatch()">增加</button>
-            <button class="btn btn-warning" ng-click="dispatchMngCtrl.batchSendTotalDispatch()">一键发布</button>
           </div>
         </div>
 
@@ -91,24 +109,13 @@
                   </td>
                   <td class="text-nowrap" data-title="'车队'" sortable="'fleet'">{{totalDispatch.fleetName}}</td>
                   <td class="text-nowrap" data-title="'小组'" sortable="'team'">{{totalDispatch.teamName}}</td>
-                  <td class="text-nowrap" data-title="'工作面'" sortable="'workface'">{{totalDispatch.workfaceName}}</td>
+                  <td class="text-nowrap" data-title="'工作面'" sortable="'workFace'">{{totalDispatch.workFaceName}}</td>
                   <td class="text-nowrap" data-title="'排土场'" sortable="'dumpField'">{{totalDispatch.dumpFieldName}}</td>
                   <td class="text-nowrap" data-title="'班次'" sortable="'workShift'">{{totalDispatch.workShiftDesc}}</td>
-                  <td class="text-nowrap" data-title="'记录时间'" sortable="'recordTime'">{{totalDispatch.recordTime |
-                    date:'yyyy-MM-dd HH:mm:ss'}}
-                  </td>
-                  <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="totalDispatch.status != 1">未发布
-                  </td>
-                  <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="totalDispatch.status == 1">已发布
-                  </td>
+                  <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{totalDispatch.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{totalDispatch.updateTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td class="text-nowrap text-center" data-title="'操作'">
-                    <button class="btn btn-xs btn-warning"
-                            ng-click="dispatchMngCtrl.updateTotalDispatch(totalDispatch)">
-                      修改
-                    </button>
-                    <button class="btn btn-xs btn-primary"
-                            ng-click="dispatchMngCtrl.sendTotalDispatch(totalDispatch.id)">发布
-                    </button>
+                    <button class="btn btn-xs btn-warning" ng-click="dispatchMngCtrl.updateTotalDispatch(totalDispatch)">修改</button>
                   </td>
                 </tr>
               </table>
@@ -134,14 +141,6 @@
     <uib-tab index="1" heading="临时调度" select="dispatchMngCtrl.temporaryDispatchTab()">
       <div style="padding: 10px;">
         <div class="row form-group minemngFormGroup text-right">
-          <label class="col-md-1 control-label">车型</label>
-          <div class="col-md-2">
-            <select name="machineType" class="form-control"
-                    ng-model="dispatchMngCtrl.temporaryDispatch.machineType"
-                    ng-options="machineTypes.id as machineTypes.description for machineTypes in dispatchMngCtrl.machineTypeList">
-              <option value="">{{'pleaseSelect'|translate}}</option>
-            </select>
-          </div>
           <label class="col-md-1 control-label">车号</label>
           <div class="col-md-2">
             <input type="text" class="form-control" ng-model="dispatchMngCtrl.temporaryDispatch.carNumber"

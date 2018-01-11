@@ -26,14 +26,8 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">工作半径</label>
         <div class="col-sm-10">
-          <select class="form-control" ng-model="updateCheckPointCtrl.checkPoint.radius">
-            <option value="">请选择...</option>
-            <option value="10">10米</option>
-            <option value="20">20米</option>
-            <option value="30">30米</option>
-            <option value="40">40米</option>
-            <option value="50">50米</option>
-          </select>
+          <input type="text" id="radius" name="radius" class="form-control" ng-model="updateCheckPointCtrl.checkPoint.radius" placeholder="请录入..."/>
+          <span style="position: absolute;top: 6px;right: 26px;">米</span>
         </div>
       </div>
     </div>
