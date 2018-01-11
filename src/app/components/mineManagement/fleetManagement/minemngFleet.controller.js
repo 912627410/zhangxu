@@ -168,7 +168,7 @@
     };
 
     //新建小组
-    vm.newGroup = function (size) {
+    vm.newTeam = function (size) {
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,

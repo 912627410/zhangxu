@@ -410,7 +410,8 @@
     .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询单个车队
     .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询所有车队
     .constant('MINE_NEW_FLEET', SERVER_BASE_URL + 'minemngFleet/fleet')   //新增车队
-
+    .constant('MINE_NEW_TEAM', SERVER_BASE_URL + 'minemngFleet/team')   //新增小组
+    .constant('MINE_ADD_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/addFleetMahcine')   //添加小组车辆
 
     .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息
   ;
