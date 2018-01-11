@@ -52,7 +52,7 @@
               {{$select.selected.name|translate}}
             </ui-select-match>
             <ui-select-choices repeat="userRoleType in minemngNewUserMngCtrl.userRoleTypeList">
-              <div ng-bind-html="userRoleType.name | highlight: $select.search |translate"></div>
+                <div ng-bind-html="userRoleType.name | highlight: $select.search |translate"></div>
             </ui-select-choices>
         </div>
       </div>

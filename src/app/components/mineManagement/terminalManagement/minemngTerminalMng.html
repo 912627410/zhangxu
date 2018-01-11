@@ -31,29 +31,30 @@
                    placeholder="{{'输入绑定车辆'|translate}}"/>
           </div>
 
-          <div class="col-md-3 ">
+          <div class="col-md-3  text-right">
 
-            <div class="col-md-3 ">
+
             <button class="btn btn-default  " type="button"  ng-click="minemngTerminalMngCtrl.reset()">{{'重置'|translate}}
             </button>
-          </div>
 
-            <div class="col-md-3 ">
+
+
               <button class="btn btn-primary " type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.terminal)">{{'query'|translate}}
               </button>
-            </div>
 
-            <div class="col-md-3">
+          </div>
+
+
+        </div>
+        <div class="form-group">
+          <div class="btn-group col-md-6" style="line-height: 34px;">
+            <span>{{'totalNumberOfRecords'|translate}} {{minemngTerminalMngCtrl.page.totalElements}}</span>
+          </div>
+          <div class="col-md-6 text-right">
+
             <button class="btn btn-primary" type="button"
                     ng-click="minemngTerminalMngCtrl.new()">{{'新增'|translate}}
             </button>
-          </div>
-
-          </div>
-        </div>
-        <div class="form-group">
-          <div class=""></div>
-          <div class="col-md-3">
             <button class="btn btn-primary" type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.terminal)">{{'批量增加'|translate}}
             </button>
           </div>
@@ -65,16 +66,15 @@
       <div class="col-lg-12 table-responsive "><!--表格框-->
         <table ng-table="minemngTerminalMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="minemngTerminal in $data">
-            <td class="text-nowrap" data-title="'终端号码'|translate" sortable="'name'">{{minemngTerminal.name}}</td>
-            <td class="text-nowrap" data-title="'SIM卡号'|translate" sortable="'contacts'">{{minemngTerminal.contacts}}</td>
-            <td class="text-nowrap" data-title="'状态'|translate" sortable="'tel'">{{minemngTerminal.tel}}</td>
-            <td class="text-nowrap" data-title="'绑定车辆'|translate" sortable="'mobile'">{{minemngTerminal.mobile}}</td>
+            <td class="text-nowrap" data-title="'终端号码'|translate" sortable="'name'">{{minemngTerminal.terminalNumber}}</td>
+            <td class="text-nowrap" data-title="'SIM卡号'|translate" sortable="'contacts'">{{minemngTerminal.simCardNumber}}</td>
+            <td class="text-nowrap" data-title="'绑定车辆'|translate" sortable="'mobile'">{{minemngTerminal.carNumber}}</td>
             <td class="text-nowrap" data-title="'操作'|translate">
-              <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="minemngTerminalMngCtrl.updateCustomer(customer)">{{'rentalEdit'|translate}}
+              <button type="button" class="btn btn-warning btn-xs"
+                      ng-click="minemngTerminalMngCtrl.updateTerminal(minemngTerminal)">{{'修改'|translate}}
               </button>
-              <button type="button" class="btn btn-default btn-xs"
-                      ng-click="minemngTerminalMngCtrl.view(customer.id)">{{'rentalView'|translate}}
+              <button type="button" class="btn btn-danger btn-xs"
+                      ng-click="minemngTerminalMngCtrl.delete(minemngTerminal.id)">{{'删除'|translate}}
               </button>
             </td>
           </tr>
@@ -85,7 +85,8 @@
                         ng-change="minemngTerminalMngCtrl.query(minemngTerminalMngCtrl.pageNumber-1,null,null,null)"
                         max-size="5" ng-model="minemngTerminalMngCtrl.pageNumber" items-per-page="minemngTerminalMngCtrl.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}"
+                        previous-text="{{'previousPage'|translate}}"></uib-pagination>
       </div>
     </div>
   </div>

@@ -101,7 +101,7 @@
                           ng-change="minemngUserMngCtrl.query(minemngUserMngCtrl.pageNumber-1,null,null,null)"
                           max-size="5" ng-model="minemngUserMngCtrl.pageNumber" items-per-page="minemngUserMngCtrl.page.size"
                           class="pagination-sm" boundary-links="true" rotate="false"
-                          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+                          first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
         </div>
       </div>
     </div>

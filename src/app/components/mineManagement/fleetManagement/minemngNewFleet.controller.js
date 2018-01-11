@@ -1,75 +1,52 @@
 /**
- * Created by luzhen on 12/26/17.
+ * Created by 刘鲁振 on 2018/1/8.
  */
+(function () {
+  'use strict';
+
+  angular
+    .module('GPSCloud')
+    .controller('addFleetController', addFleetCtrl);
+
+  /** @ngInject */
+  function addFleetCtrl(MINEMACHINE_STATE_LIST_URL, $uibModalInstance,languages, MINE_NEW_FLEET, serviceResource, Notification) {
+    var vm = this;
 
 
-(function(){
-  'use strict'
-  angular.module('GPSCloud').controller('addMineFleetController',addMineFleetCtrl);
 
-  function addMineFleetCtrl($scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
-    var vm= this;
+    /*var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
+    machineStatePromise.then(function (data) {
+      vm.machineStateList= data;
+    }, function () {
+      Notification.error(languages.findKey('getVeStaFail'));
+    })*/
 
-    vm.ok= function(newOrg){
-      if(vm.selectedOrg==null){
-        Notification.error("添加组织失败: 请选择上级部门!");
-        return;
-      }
-      if(!newOrg) {
-        Notification.error("添加组织失败: 部门名称为空!");
-        return;
-      }
-      newOrg.parentId = vm.selectedOrg.id;
-      var restPromise =serviceResource.restAddRequest(GET_MINE_MACHINE_FLEET,newOrg);
+
+
+    vm.ok = function (minemngFleet) {
+
+      var restPromise = serviceResource.restAddRequest(MINE_NEW_FLEET, minemngFleet);
       restPromise.then(function (data) {
-        if(data.code == 0) {
-          Notification.success("添加组织成功");
-          $uibModalInstance.close(data.content);
-        } else {
-          Notification.error("添加组织失败" + data.message);
+          if(data.code===0){
+            vm.minemngFleet = data.content;
+            // Notification.error(data.message);
+            $uibModalInstance.close(data.content);
+          }
+        }, function (reason) {
+          // alert(reason.data.message);
+          vm.errorMsg=reason.data.message;
+          Notification.error(reason.data.message);
         }
 
-      },function(reason){
-        Notification.error("添加组织失败: "+reason.data.message);
-      });
+      );
     };
 
-    vm.showOrgTree = false;
-
-    vm.openOrgTree = function(){
-      vm.showOrgTree = !vm.showOrgTree;
-    }
-
-    $scope.$on('OrgSelectedEvent',function(event,data){
-      vm.showOrgTree=false;
-      vm.selectedOrg = data;
-    })
-
-
-
-    //打开车队组织
-    vm.addMinemngMachine = function() {
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
-        controller: 'addMinemngMachineController as addMinemngMachineCtrl',
-        size: 'sx',
-        backdrop: false
-      });
-      modalInstance.result.then(function () {
-        vm.reset();
-      }, function () {
-      });
-    };
-
-
-
-
-
-    vm.cancel=function(){
-
+    vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
-    }
-  }
+    };
 
+
+
+
+  }
 })();
