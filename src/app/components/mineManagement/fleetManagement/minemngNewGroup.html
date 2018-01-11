@@ -3,7 +3,7 @@
   <h3 class="modal-title">{{'添加小组'|translate}}</h3>
 </div>
 
-<form name="newOrgForm" class="form-horizontal" ng-submit="addGroupCtrl.ok(addGroupCtrl.newOrg)">
+<form name="newGroupForm" class="form-horizontal" >
   <div class="modal-body">
     <div class="box-body">
 
@@ -12,7 +12,7 @@
         <label class="col-sm-3 control-label">{{'选择车队' | translate}}:</label>
         <div class="col-sm-8">
           <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="addGroupCtrl.selectAllInfo" name="org" readonly required />
+            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="addGroupCtrl.minemngFleet.parentFleet.name" name="group" readonly required />
             <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="addGroupCtrl.addMinemngMachine()">
                     <i class="fa fa-sitemap"></i>
@@ -25,23 +25,20 @@
 
 
       <div class="form-group">
-        <label for="addMineMachine" class="col-sm-3 control-label">{{'小组名字'|translate}}</label>
-        <div class="col-sm-8">
-          <ui-select id="addMineMachine" name="addMineMachine" ng-model="addGroupCtrl.newOrg.label" theme="bootstrap"
-                     ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'addMineMachine'|translate}}">{{$select.selected.stateDesc}}</ui-select-match>
-            <ui-select-choices  repeat="addMineMachine.id as addMineMachine in addMineMachine.machineStateList " >
-              <div  ng-bind-html="addMineMachine.stateDesc | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+        <label class="col-sm-3 control-label">{{'小组名字' | translate}}:</label>
+
+        <div class="col-lg-8">
+
+          <input type="text" id="fleetName" class="form-control" placeholder="{{'小组名字'|translate}}"
+                 ng-model="addGroupCtrl.minemngFleet.label"  name="label"  typeahead-show-hint="true"
+                 validator="required" />
         </div>
       </div>
-
 
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="submit">{{'confirm'|translate}}</button>
-    <button class="btn btn-warning" type="button" ng-click="addGroupCtrl.cancel()">{{'cancel'|translate}}</button>
+    <button class="btn btn-primary" type="button" ng-click="addGroupCtrl.ok(addGroupCtrl.minemngFleet)">{{'确定'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="addGroupCtrl.cancel()">{{'取消'|translate}}</button>
   </div>
 </form>
