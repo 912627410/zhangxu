@@ -69,6 +69,8 @@
        * @param fleetId
        */
       vm.getTeamList = function (fleetId) {
+        vm.teamList = null;
+        vm.newTemporaryDispatch.team = null;
         if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
           var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
           var rspDate = serviceResource.restCallService(url, "QUERY");

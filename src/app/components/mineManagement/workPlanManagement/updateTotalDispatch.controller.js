@@ -13,12 +13,19 @@
         .controller('updateTotalDispatchController', updateTotalDispatchController);
 
     function updateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, totalDispatch,
-                                           MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_WORK_SHIFT_LIST, MINEMNG_TOTAL_DISPATCH) {
+                                           MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
       vm.totalDispatch = angular.copy(totalDispatch);
       vm.oldWorkFace = totalDispatch.workFace;
       vm.oldDumpField = totalDispatch.dumpField;
+
+      var nowDate = new Date(new Date().toLocaleDateString());
+      if(nowDate < vm.totalDispatch.effectiveDate) {
+        vm.okDesc = "确定";
+      } else {
+        vm.okDesc = "发布";
+      }
 
       /**
        * 加载作业面列表

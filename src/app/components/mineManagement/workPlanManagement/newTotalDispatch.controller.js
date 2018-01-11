@@ -12,7 +12,7 @@
         .module('GPSCloud')
         .controller('newTotalDispatchController', newTotalDispatchController);
     function newTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, operatorInfo,
-                                        MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_LIST, MINEMNG_TOTAL_DISPATCH) {
+                                        MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
@@ -40,8 +40,9 @@
         dateDisabled: function(data) {  // 只能选择设定的日期（默认的日期：当前日期的第二天）
           var date = data.date;
           var mode = data.mode;
-          if(vm.effectiveDate.getDate() !== date.getDate() || vm.effectiveDate.getMonth() !== date.getMonth()) {
-            return mode === 'day' && (date.getDate() || date.getModel());
+          if(vm.effectiveDate.getDate() !== date.getDate() || vm.effectiveDate.getMonth() !== date.getMonth()
+            || vm.effectiveDate.getFullYear() !== date.getFullYear()) {
+            return mode === 'day' && (date.getDate() || date.getMonth() || date.getFullYear());
           }
         },
         formatYear: 'yyyy',
@@ -109,7 +110,7 @@
        * 加载班次列表
        */
       vm.getWorkShiftList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_LIST, "QUERY");
+        var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_ALL_LIST, "QUERY");
         rspDate.then(function (data) {
           vm.workShiftList = data;
         },function (reason) {
