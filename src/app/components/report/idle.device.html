@@ -46,7 +46,7 @@
 
   <div class="table-responsive tableBox">
     <div class="tableBoxLeft twoColumnFixedLeft">
-      <table ng-table="idleDeviceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <table ng-table="idleDeviceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" style="background: #F9F9F9">
         <tr ng-repeat="device in $data">
           <td class="text-nowrap" data-title="'设备编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
           <td class="text-nowrap" data-title="'车辆编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
@@ -56,8 +56,8 @@
     <div class="twoColumnFixedRight">
       <table ng-table="idleDeviceCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="device in $data">
-          <td class="text-nowrap" data-title="'设备编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'车辆编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
+          <td class="text-nowrap"> </td>
+          <td class="text-nowrap"> </td>
           <td class="text-nowrap" data-title="'SIM卡号'" sortable="'sim.phoneNumber'">{{device.sim.phoneNumber}}</td>
           <td class="text-nowrap" data-title="'运行总时间'" sortable="'totalDuration'">{{device.totalDuration * 0.05 | convertToMins}}</td>
 

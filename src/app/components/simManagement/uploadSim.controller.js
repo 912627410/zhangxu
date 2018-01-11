@@ -9,10 +9,9 @@
     .controller('uploadSimController', uploadSimController);
 
   /** @ngInject */
-  function uploadSimController($scope,$timeout, $uibModalInstance,Upload, SIM_UPLOAD_URL,serviceResource, Notification, operatorInfo) {
+  function uploadSimController($scope,$timeout,$http, $uibModalInstance,Upload, SIM_UPLOAD_URL,serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
-
 
     vm.upload = function(file) {
         file.upload = Upload.upload({
@@ -41,7 +40,7 @@
           // Math.min is to fix IE which reports 200% sometimes
           file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
-      }
+      };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
