@@ -30,9 +30,9 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">工作面</label>
         <div class="col-sm-10">
-          <select name="workface" class="form-control"
-                  ng-model="newTotalDispatchCtrl.newTotalDispatch.workface"
-                  ng-options="workfaces.id as workfaces.name for workfaces in newTotalDispatchCtrl.workfaceList">
+          <select name="workFace" class="form-control"
+                  ng-model="newTotalDispatchCtrl.newTotalDispatch.workFace"
+                  ng-options="workFaces.id as workFaces.name for workFaces in newTotalDispatchCtrl.workFaceList">
             <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
         </div>
@@ -52,9 +52,30 @@
         <div class="col-sm-10">
           <select name="workShift" class="form-control"
                   ng-model="newTotalDispatchCtrl.newTotalDispatch.workShift"
-                  ng-options="workShifts.value as workShifts.desc for workShifts in newTotalDispatchCtrl.workShiftList">
+                  ng-options="workShifts.code as workShifts.description for workShifts in newTotalDispatchCtrl.workShiftList">
             <option value="">{{'pleaseSelect'|translate}}</option>
           </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">日期</label>
+        <div class="col-sm-10">
+          <p class="input-group cleanDateButton">
+            <input type="text" name="effectiveDate" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
+                   ng-model="newTotalDispatchCtrl.effectiveDate"
+                   is-open="newTotalDispatchCtrl.entryTimeSetting.status.opened"
+                   datepicker-options="newTotalDispatchCtrl.dateOptions"
+                   current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"
+                   message-id="bootstrap" readonly/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="newTotalDispatchCtrl.entryTimeSetting.open($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+          </p>
         </div>
       </div>
     </div>

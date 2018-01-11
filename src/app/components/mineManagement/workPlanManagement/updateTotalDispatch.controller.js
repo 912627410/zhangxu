@@ -13,23 +13,32 @@
         .controller('updateTotalDispatchController', updateTotalDispatchController);
 
     function updateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, totalDispatch,
-                                           MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_WORK_SHIFT_LIST, MINEMNG_TOTAL_DISPATCH) {
+                                           MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
-      vm.totalDispatch = totalDispatch;
+      vm.totalDispatch = angular.copy(totalDispatch);
+      vm.oldWorkFace = totalDispatch.workFace;
+      vm.oldDumpField = totalDispatch.dumpField;
+
+      var nowDate = new Date(new Date().toLocaleDateString());
+      if(nowDate < vm.totalDispatch.effectiveDate) {
+        vm.okDesc = "确定";
+      } else {
+        vm.okDesc = "发布";
+      }
 
       /**
        * 加载作业面列表
        */
-      vm.getWorkfaceList = function () {
+      vm.getWorkFaceList = function () {
         var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
         rspDate.then(function (data) {
-          vm.workfaceList = data;
+          vm.workFaceList = data;
         },function (reason) {
           Notification.error(reason.data);
         })
       };
-      vm.getWorkfaceList();
+      vm.getWorkFaceList();
 
       /**
        * 加载排土场列表
@@ -46,12 +55,16 @@
 
 
       vm.ok = function () {
-        if(vm.totalDispatch.workface == null || vm.totalDispatch.workface === "") {
+        if(vm.totalDispatch.workFace == null || vm.totalDispatch.workFace === "") {
           Notification.warning("请选择工作面");
           return;
         }
         if(vm.totalDispatch.dumpField == null || vm.totalDispatch.dumpField === "") {
           Notification.warning("请选择排土场");
+          return;
+        }
+        if(vm.totalDispatch.workFace === vm.oldWorkFace && vm.totalDispatch.dumpField === vm.oldDumpField) {
+          Notification.warning("没有修改内容");
           return;
         }
         var restPromise = serviceResource.restUpdateRequest(MINEMNG_TOTAL_DISPATCH, vm.totalDispatch);

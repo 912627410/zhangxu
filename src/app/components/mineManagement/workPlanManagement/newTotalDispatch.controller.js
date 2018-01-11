@@ -12,23 +12,55 @@
         .module('GPSCloud')
         .controller('newTotalDispatchController', newTotalDispatchController);
     function newTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, operatorInfo,
-                                        MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_LIST, MINEMNG_TOTAL_DISPATCH) {
+                                        MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
+      // 默认时间为第二天
+      var effectiveDate = new Date();
+      effectiveDate.setDate(effectiveDate.getDate() + 1);
+      vm.effectiveDate = effectiveDate;
+
+      vm.entryTimeSetting = {
+        //dt: "请选择开始日期",
+        open: function ($event) {
+          vm.entryTimeSetting.status.opened = true;
+        },
+        dateOptions: {
+          formatYear: 'yy',
+          startingDay: 1
+        },
+        status: {
+          opened: false
+        }
+      };
+
+      // 日期控件相关
+      vm.dateOptions = {
+        dateDisabled: function(data) {  // 只能选择设定的日期（默认的日期：当前日期的第二天）
+          var date = data.date;
+          var mode = data.mode;
+          if(vm.effectiveDate.getDate() !== date.getDate() || vm.effectiveDate.getMonth() !== date.getMonth()
+            || vm.effectiveDate.getFullYear() !== date.getFullYear()) {
+            return mode === 'day' && (date.getDate() || date.getMonth() || date.getFullYear());
+          }
+        },
+        formatYear: 'yyyy',
+        startingDay: 1
+      };
 
       /**
        * 加载作业面列表
        */
-      vm.getWorkfaceList = function () {
+      vm.getWorkFaceList = function () {
         var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
         rspDate.then(function (data) {
-          vm.workfaceList = data;
+          vm.workFaceList = data;
         },function (reason) {
           Notification.error(reason.data);
         })
       };
-      vm.getWorkfaceList();
+      vm.getWorkFaceList();
 
       /**
        * 加载排土场列表
@@ -78,7 +110,7 @@
        * 加载班次列表
        */
       vm.getWorkShiftList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_LIST, "QUERY");
+        var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_ALL_LIST, "QUERY");
         rspDate.then(function (data) {
           vm.workShiftList = data;
         },function (reason) {
@@ -97,7 +129,7 @@
           Notification.warning("请选择车队");
           return;
         }
-        if(vm.newTotalDispatch.workface == null || vm.newTotalDispatch.workface === "") {
+        if(vm.newTotalDispatch.workFace == null || vm.newTotalDispatch.workFace === "") {
           Notification.warning("请选择工作面");
           return;
         }
@@ -109,6 +141,11 @@
           Notification.warning("请选择班次");
           return;
         }
+        if(vm.effectiveDate == null || vm.effectiveDate === "") {
+          Notification.warning("请选择日期");
+          return;
+        }
+        vm.newTotalDispatch.effectiveDate = vm.effectiveDate;
         var rspData = serviceResource.restCallService(MINEMNG_TOTAL_DISPATCH, "ADD", vm.newTotalDispatch);  //post请求
         rspData.then(function (data) {
           if(data.code === 0){

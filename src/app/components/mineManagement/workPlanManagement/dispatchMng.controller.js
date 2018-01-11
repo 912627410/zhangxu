@@ -13,8 +13,8 @@
     .controller('dispatchMngController', dispatchMngController);
 
   function dispatchMngController($rootScope, $filter, $confirm, $uibModal, $scope, serviceResource, permissions, languages, Notification, mqttws,
-                                 NgTableParams, ngTableDefaults, MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_LIST,
-                                 MINEMNG_TOTAL_DISPATCH, MINEMNG_SEND_TOTAL_DISPATCH, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
+                                 NgTableParams, ngTableDefaults, MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_ALL_LIST,
+                                 MINEMNG_TOTAL_DISPATCH, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     vm.sendTopic = "IM.Harvesters.";
@@ -25,6 +25,57 @@
 
     ngTableDefaults.params.count = 20;
     ngTableDefaults.settings.counts = [];
+
+    vm.totalDispatchPage = {};
+
+    vm.entryTimeSetting = {
+      //dt: "请选择开始日期",
+      open: function ($event) {
+        vm.entryTimeSetting.status.opened = true;
+      },
+      dateOptions: {
+        formatYear: 'yy',
+        startingDay: 1
+      },
+      status: {
+        opened: false
+      }
+    };
+
+    // 日期控件相关
+    // date picker
+    vm.entryTimeOpenStatus = {
+      opened: false
+    };
+    vm.entryTimeOpen = function ($event) {
+      vm.entryTimeOpenStatus.opened = true;
+    };
+    vm.dateOptions = {
+      dateDisabled: function(data) {  //设置可以选择的日期(2018-01-01 到当前日期的第二天)
+        var nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + 1);
+        var longTimeAgo = new Date('2018-01-01');
+        var date = data.date;
+        var mode = data.mode;
+        if(nextDate.getTime() < date.getTime() || longTimeAgo.getTime() > date.getTime()) {
+          return mode === 'day' && (date.getTime());
+        }
+      },
+      formatYear: 'yyyy',
+      startingDay: 1
+    };
+
+    vm.effectiveDate = new Date(); // 默认日期为当天
+    vm.updateTotalDispatchBtn = true; // 总调度修改按钮
+
+    vm.updateTotalDispatchBtnIsShow = function() {
+      var nowDate = new Date(new Date().toLocaleDateString());
+      if(vm.effectiveDate > nowDate) {
+        vm.updateTotalDispatchBtn = true;
+        return;
+      }
+      vm.updateTotalDispatchBtn = false;
+    };
 
 
     // var topic = 'IM.Harvesters.'+userInfo.userdto.ssn;
@@ -63,15 +114,15 @@
     /**
      * 加载作业面列表
      */
-    vm.getWorkfaceList = function () {
+    vm.getWorkFaceList = function () {
       var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
       rspDate.then(function (data) {
-        vm.workfaceList = data;
+        vm.workFaceList = data;
       }, function (reason) {
         Notification.error(reason.data);
       })
     };
-    vm.getWorkfaceList();
+    vm.getWorkFaceList();
 
     /**
      * 加载排土场列表
@@ -105,20 +156,24 @@
      * @param fleetId
      */
     vm.getTeamList = function (fleetId) {
-      var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
-      var rspDate = serviceResource.restCallService(url, "QUERY");
-      rspDate.then(function (data) {
-        vm.teamList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
+      vm.teamList = null;
+      vm.totalDispatch.team = null;
+      if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
+        var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
+        var rspDate = serviceResource.restCallService(url, "QUERY");
+        rspDate.then(function (data) {
+          vm.teamList = data;
+        }, function (reason) {
+          Notification.error(reason.data);
+        })
+      }
     };
 
     /**
      * 加载班次列表
      */
     vm.getWorkShiftList = function () {
-      var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_LIST, "QUERY");
+      var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_ALL_LIST, "QUERY");
       rspDate.then(function (data) {
         vm.workShiftList = data;
       }, function (reason) {
@@ -140,6 +195,13 @@
       var sizeUrl = size || 20;
       var sortUrl = sort || "record_time";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+      if(vm.effectiveDate == null || vm.effectiveDate === "") {
+        Notification.warning("请选择日期");
+        return;
+      }
+      var month = vm.effectiveDate.getMonth() + 1;
+      var effectiveDate = vm.effectiveDate.getFullYear() + '-' + month + '-' + vm.effectiveDate.getDate();
+      restCallURL += "&effectiveDate=" + effectiveDate;
 
       if (vm.totalDispatch != null && vm.totalDispatch !== '' && vm.totalDispatch !== 'undefined') {
         if (vm.totalDispatch.fleet != null && vm.totalDispatch.fleet !== '') {
@@ -148,8 +210,8 @@
         if (vm.totalDispatch.team != null && vm.totalDispatch.team !== '') {
           restCallURL += "&team=" + vm.totalDispatch.team;
         }
-        if (vm.totalDispatch.workface != null && vm.totalDispatch.workface !== '') {
-          restCallURL += "&workface=" + vm.totalDispatch.workface;
+        if (vm.totalDispatch.workFace != null && vm.totalDispatch.workFace !== '') {
+          restCallURL += "&workFace=" + vm.totalDispatch.workFace;
         }
         if (vm.totalDispatch.dumpField != null && vm.totalDispatch.dumpField !== '') {
           restCallURL += "&dumpField=" + vm.totalDispatch.dumpField;
@@ -170,6 +232,7 @@
           vm.totalDispatchPage = data.page;
           vm.totalDispatch_pagenumber = data.page.number + 1;
           vm.totalDispatchSelected = [];
+          vm.updateTotalDispatchBtnIsShow();
         } else {
           Notification.warning(languages.findKey('noDataYet'));
           vm.totalDispatchList = null;
@@ -263,60 +326,6 @@
     };
 
     /**
-     * 发布总调度命令
-     * @param id
-     */
-    vm.sendTotalDispatch = function (id) {
-      $confirm({
-        title: "发布",
-        text: "确定发布?"
-      }).then(function () {
-        var idList = [];
-        idList[0] = id;
-        var restURL = MINEMNG_SEND_TOTAL_DISPATCH + "?idList=" + idList;
-        var rspData = serviceResource.restCallService(restURL, "ADD", null);
-        rspData.then(function (data) {
-          if (data.code === 0) {
-            Notification.success(data.content);
-            vm.queryTotalDispatch();
-          } else {
-            Notification.error(data.content);
-          }
-        }, function (reason) {
-          Notification.error(reason.data);
-        });
-      })
-    };
-
-    /**
-     * 批量发布总调度
-     */
-    vm.batchSendTotalDispatch = function () {
-      if (vm.totalDispatchSelected.length <= 0) {
-        Notification.warning("请选择发布的信息");
-        return;
-      }
-      $confirm({
-        title: "发布",
-        text: "确定发布?"
-      }).then(function () {
-        var restURL = MINEMNG_SEND_TOTAL_DISPATCH + "?idList=" + vm.totalDispatchSelected;
-        var rspData = serviceResource.restCallService(restURL, "ADD", null);
-        rspData.then(function (data) {
-          if (data.code === 0) {
-            Notification.success(data.content);
-            vm.queryTotalDispatch();
-          } else {
-            Notification.error(data.content);
-          }
-        }, function (reason) {
-          Notification.error(reason.data);
-        });
-      })
-    };
-
-
-    /**
      * 重置总调度搜索框
      */
     vm.resetTotalDispatch = function () {
@@ -327,15 +336,15 @@
     /**
      * 加载车辆类型列表
      */
-    vm.getMachineTypeList = function () {
-      var rspDate = serviceResource.restCallService(MINEMNG_MACHINE_TYPE_LIST, "QUERY");
-      rspDate.then(function (data) {
-        vm.machineTypeList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
-    };
-    vm.getMachineTypeList();
+    // vm.getMachineTypeList = function () {
+    //   var rspDate = serviceResource.restCallService(MINEMNG_MACHINE_TYPE_LIST, "QUERY");
+    //   rspDate.then(function (data) {
+    //     vm.machineTypeList = data;
+    //   }, function (reason) {
+    //     Notification.error(reason.data);
+    //   })
+    // };
+    // vm.getMachineTypeList();
 
     /**
      * 切换总调度
