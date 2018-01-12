@@ -10,7 +10,7 @@
     .controller('workRecordController', workRecordController);
 
   /** @ngInject */
-  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
+  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,fleetTreeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
 
     var vm = this;
     ngTableDefaults.settings.counts = [];
@@ -44,12 +44,12 @@
     vm.initDate();
 
 
-    //组织树的显示
+    //车队组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
       });
-    }
+    };
 
 
 

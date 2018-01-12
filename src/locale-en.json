@@ -34,6 +34,7 @@
   "loginFailure": "The user name or password error",
   "failedToGetRemindInformation": "Failed to get remind information",
   "failedToGetOrganizationInformation": "Failed to get organization information",
+  "failedToGetFleetInformation": "Failed to get fleet information",
   "failedToGetDeviceInformation": "Failed to get equipment information",
   "failedToGetSysconfig": "Failed to get system config",
   "moreInvalidLocationRemindInformation": "More than 1 device in invalid location, please take a look",

@@ -9,12 +9,11 @@
     .controller('newFuelConfigController', newFuelConfigController);
 
   /** @ngInject */
-  function newFuelConfigController($rootScope,$scope, $uibModalInstance, treeFactory,fuelConfigService,FUEL_CONFIG_OPER_URL, serviceResource, Notification, operatorInfo) {
+  function newFuelConfigController($rootScope,$scope, $uibModalInstance, fleetTreeFactory,fuelConfigService,FUEL_CONFIG_OPER_URL, serviceResource, Notification, operatorInfo) {
     var vm = this;
     vm.operatorInfo = operatorInfo;
     vm.fuelConfig = {};
     vm.fuelConfig.startDate=new Date();
-    vm.fuelConfig.orgEntity=operatorInfo.userdto.organizationDto;
 
     // 日期控件相关
     // date picker
@@ -59,7 +58,7 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.fuelConfig.orgEntity =selectedItem;
       });
     }
