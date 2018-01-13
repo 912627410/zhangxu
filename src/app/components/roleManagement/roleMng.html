@@ -50,8 +50,6 @@
       <div class="table-responsive">
       <table ng-table="roleMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="roleInfo in $data">
-
-          <td class="text-nowrap" data-title="'ID'" sortable="'id'">{{roleInfo.id}}</td>
           <td class="text-nowrap" data-title="'角色名'" sortable="'name'">{{roleInfo.name}}</td>
           <td class="text-nowrap" data-title="'组织'" sortable="'label'">{{roleInfo.organizationDto.label}}</td>
           <td class="text-nowrap" data-title="'创建时间'" sortable="'createTime'">{{roleInfo.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>

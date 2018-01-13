@@ -18,10 +18,6 @@
       getSalaryTypeList: function () {
         return serviceResource.restCallService(MACHINE_SALARY_TYPE_URL, "QUERY");
       },
-
-      getFuelTypeList: function () {
-        return serviceResource.restCallService(FUEL_CONFIGT_LIST_URL, "GET");
-      },
       getUpkeepPriceTypeList: function () {
         return serviceResource.restCallService(MACHINE_UPKEETP_PRICE_TYPE_URL, "QUERY");
       },

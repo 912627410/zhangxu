@@ -41,9 +41,9 @@
     </div>
   </div>
 
-  <div class="table-responsive tableBox">
+  <div class="table-responsive tableBox" >
     <div class="tableBoxLeft twoColumnFixedLeft">
-      <table ng-table="ecuNotActiveCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+      <table ng-table="ecuNotActiveCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap" style="background: #F9F9F9">
         <tr ng-repeat="device in $data">
           <td class="text-nowrap" data-title="'终端编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
           <td class="text-nowrap" data-title="'整机编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
@@ -53,8 +53,8 @@
     <div class="twoColumnFixedRight">
       <table ng-table="ecuNotActiveCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
         <tr ng-repeat="device in $data">
-          <td class="text-nowrap" data-title="'终端编号'" sortable="'deviceNum'">{{device.deviceNum}}</td>
-          <td class="text-nowrap" data-title="'整机编号'" sortable="'machine.licenseId'">{{device.machine.licenseId}}</td>
+          <td class="text-nowrap"  > </td>
+          <td class="text-nowrap" > </td>
 
           <td class="text-nowrap" ng-if="device.lockerStatus=='00'" data-title="'开盖状态'" sortable="'lockerStatus'">未开盖</td>
           <td class="text-nowrap" ng-if="device.lockerStatus=='11'" data-title="'开盖状态'" sortable="'lockerStatus'">开盖</td>

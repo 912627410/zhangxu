@@ -109,15 +109,6 @@
           }
         }
       })
-      .state('home.attendance', {
-        url: '/attendance',
-        views: {
-          'rightside@home': {
-            templateUrl: 'app/components/report/attendance.html',
-            controller: 'attendanceController as attendanceCtrl'
-          }
-        }
-      })
       .state('home.smsSendReport', {
         url: '/smsSendReport',
         views: {
@@ -244,104 +235,12 @@
 
         }
       })
-      //设备升级类型管理页面
       .state('home.updateObjectMng', {
         url: '/updateObjectMng',
         views: {
           'rightside@home': {
             templateUrl: 'app/components/updateObjectManagement/updateObjectMng.html',
             controller: 'updateObjectMngController as updateObjectMngCtrl'
-          }
-        }
-      })
-      .state('home.machineMove', {
-        url: '/machineMove',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/machineMove.html',
-            controller: 'machineMoveController',
-            controllerAs: 'machineMoveCtrl'
-          }
-        }
-      })
-      .state('home.workplane', {
-        url: '/workplane',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/workplaneMng.html',
-            controller: 'workplaneMngController',
-            controllerAs: 'workplaneMngCtrl'
-          }
-        }
-      })
-      .state('home.fleetMng', {
-        url: '/fleetMng',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/fleetManagement/fleetMng.html',
-            controller: 'fleetMngController',
-            controllerAs: 'fleetMngCtrl'
-          }
-        }
-      })
-      .state('home.revenue', {
-        url: '/revenue',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/revenueManagement/revenueMng.html',
-            controller: 'revenueMngController',
-            controllerAs: 'revenueMngController'
-          }
-        }
-      })
-      .state('home.cost', {
-        url: '/cost',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/costManagement/costMng.html',
-            controller: 'costMngController',
-            controllerAs: 'costMngController'
-          }
-        }
-      })
-      .state('home.fuelConfig', {
-        url: '/fuelConfig',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/fuelConfigManagement/fuelConfigMng.html',
-            controller: 'fuelConfigMngController',
-            controllerAs: 'fuelConfigMngController'
-          }
-        }
-      })
-      .state('home.weightData', {
-        url: '/weightData',
-        views: {
-          'footer@home': {
-            templateUrl: 'app/main/footer.html'
-          },
-          'rightside@home': {
-            templateUrl: 'app/components/revenueManagement/weightData.html',
-            controller: 'weightDataController',
-            controllerAs: 'weightDataCtrl'
           }
         }
       })
