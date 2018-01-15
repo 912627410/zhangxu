@@ -7,7 +7,7 @@
     .controller('fuelConfigMngController', fuelConfigMngController);
 
   /** @ngInject */
-  function fuelConfigMngController($rootScope,$scope,$filter,$timeout,$uibModal,treeFactory,NgTableParams, ngTableDefaults,Notification,FUEL_CONFIG_PAGE_URL,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
+  function fuelConfigMngController($rootScope,$scope,$filter,$timeout,$uibModal,fleetTreeFactory,NgTableParams, ngTableDefaults,Notification,FUEL_CONFIG_PAGE_URL,serviceResource,DEFAULT_SIZE_PER_PAGE,SIM_STATUS_URL,SIM_URL, SIM_PAGE_URL) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -126,7 +126,7 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
       });
     }

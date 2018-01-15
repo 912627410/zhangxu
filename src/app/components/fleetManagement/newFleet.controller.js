@@ -10,7 +10,7 @@
     .controller('newFleetController', newFleetController);
 
   /** @ngInject */
-  function newFleetController($rootScope,$scope,$http,$confirm,$uibModalInstance,treeFactory,serviceResource,FLEET_URL, Notification) {
+  function newFleetController($rootScope,$scope,$http,$confirm,$uibModalInstance,fleetTreeFactory,serviceResource,FLEET_URL, Notification) {
     var vm = this;
     vm.operatorInfo =$rootScope.userInfo;
     vm.cancel = function () {
@@ -19,7 +19,7 @@
 
     //组织树的显示
     vm.openTreeInfo=function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
       });
     }

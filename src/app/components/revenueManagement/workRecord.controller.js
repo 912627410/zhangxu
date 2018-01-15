@@ -10,9 +10,10 @@
     .controller('workRecordController', workRecordController);
 
   /** @ngInject */
-  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,treeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
+  function workRecordController($rootScope,languages,$timeout,$uibModal,WORK_RECORD_URL ,$filter,fleetTreeFactory,NgTableParams, ngTableDefaults,Notification,simService,serviceResource) {
 
     var vm = this;
+    vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.settings.counts = [];
 
     // 日期控件相关
@@ -44,12 +45,12 @@
     vm.initDate();
 
 
-    //组织树的显示
+    //车队组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
       });
-    }
+    };
 
 
 
@@ -68,6 +69,8 @@
 
       if (null != vm.org&&null != vm.org.id) {
         restCallURL += "&fleetId=" + vm.org.id;
+      } else {
+        restCallURL += "&fleetId=" + vm.operatorInfo.userdto.organizationDto.id;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");

@@ -26,7 +26,8 @@
     if ($rootScope.fleetChart && $rootScope.fleetChart.length > 0) {
       vm.my_data = [$rootScope.fleetChart[0]];
     } else {
-      Notification.error(languages.findKey('failedToGetOrganizationInformation'));
+      vm.my_data = [];
+      Notification.error(languages.findKey('failedToGetFleetInformation'));
     }
 
     vm.search = function (searchText) {
