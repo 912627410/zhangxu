@@ -13,12 +13,6 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    var fleetChart = $rootScope.fleetChart[0];
-    while (fleetChart.children.length > 0) {
-      fleetChart = fleetChart.children[0];
-    }
-    vm.fleet = fleetChart;
-
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
     var wsUrl = WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
@@ -86,6 +80,9 @@
      * 初始化数据
      */
     vm.initMonitorQuery = function () {
+      if(vm.fleet == null) {
+        return;
+      }
       var restCallURL = WORK_INITIAL_MONITOR + "?fleetId=" + vm.fleet.id;
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
