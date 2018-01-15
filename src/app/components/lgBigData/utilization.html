@@ -1,0 +1,96 @@
+<!--
+  -临工大数据项目-开工率与闲置率分布图
+  -author: fxp
+  -date:2018-1-5
+-->
+
+<div>
+  <section>
+    <ol class="breadcrumb" ng-hide="utilizationCtrl.hiteTopLink">
+      <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
+      <li>统计分析</li>
+      <li>开工热度分析</li>
+      <li class="active">开工率与闲置率</li>
+    </ol>
+  </section>
+
+  <div class="container-fluid">
+    <!--查询条件-->
+    <div class="row form-group" >
+      <!--查询周期-->
+      <div class="form-inline col-md-2">
+        <label class="control-label">查询周期:</label>
+        <select class="form-control"
+                ng-change="utilizationCtrl.changeDateType(utilizationCtrl.dateType)"
+                ng-model="utilizationCtrl.dateType">
+          <option value="1"  ng-selected="true">日</option>
+          <option value="30" >月</option>
+          <option value="90" >季</option>
+          <option value="365">年</option>
+        </select>
+      </div>
+
+      <!--季度-->
+      <div class="col-md-3" ng-show="utilizationCtrl.dateType==90">
+        <ui-select ng-model="utilizationCtrl.queryDate" theme="bootstrap" ng-disabled="disabled" style="width: 60%">
+          <ui-select-match allow-clear="true" placeholder="季度">{{$select.selected.quarterName}}
+          </ui-select-match>
+          <ui-select-choices  repeat="quarter.quarterValue as quarter in utilizationCtrl.quarterList" >
+            <div  ng-bind-html="quarter.quarterName | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+
+      <!--日期-->
+      <div class="form-inline col-md-3" ng-hide="utilizationCtrl.dateType==90" >
+        <label class="control-label">日期:</label>
+        <div class="input-group">
+          <input type="text" class="form-control"  uib-datepicker-popup="{{utilizationCtrl.dateFormat}}"
+                 ng-model="utilizationCtrl.queryDate"
+                 is-open="utilizationCtrl.dateOpenStatus"
+                 datepicker-options="utilizationCtrl.dateOptions"
+                 ng-required="true"
+                 current-text="{{'today'|translate}}"
+                 clear-text="{{'cleanUp'|translate}}"
+                 close-text="{{'close'|translate}}"/>
+
+          <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="utilizationCtrl.datePickerOnClick($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+        </div>
+      </div>
+
+      <!--机型-->
+      <div class="form-inline col-md-3">
+
+        <form>
+          <label class="control-label">机型:</label>
+          <input type="radio" ng-model="utilizationCtrl.machineType" value="装载机">装载机
+          <input type="radio" ng-model="utilizationCtrl.machineType" value="挖掘机">挖掘机
+        </form>
+      </div>
+
+      <!--button-->
+      <div class="form-inline col-md-2">
+
+        <button class="btn btn-primary" type="button" ng-click="utilizationCtrl.query()">{{'query'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="utilizationCtrl.reset()">{{'reset'|translate}}</button>
+      </div>
+    </div>
+    <!--中间地图-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="centerMap" style="height:600px;"></div>
+      </div>
+    </div>
+    <!--底部折线图-->
+    <div class="row">
+      <div class="col-md-12">
+        <div id="bottomMap" style="height:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
