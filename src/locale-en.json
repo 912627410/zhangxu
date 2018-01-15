@@ -977,6 +977,7 @@
   "GPSFactoryDate":"GPS factory date",
   "gsmCelid":"Base station number",
   "gsmLac":"Base station area number",
+  "mcc":"Country code",
   "gsmRxl":"Receive signal quality",
   "setWorkHoursMessage":"Working hours shall not be greater than the total time of the rise + travel time +5 minutes",
   "calibrationStatus":"Calibration status",

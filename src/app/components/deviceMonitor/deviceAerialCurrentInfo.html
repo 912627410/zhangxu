@@ -256,9 +256,9 @@
                         <!--GPS-IMEI-->
                         <td>GPS-IMEI</td>
                         <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsIMEI}}</td>
-                        <!--GPS出厂日期-->
-                        <td>{{'GPSFactoryDate'|translate}}</td>
-                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsYearMonthDay}}</td>
+                        <!--GPS-IMSI-->
+                        <td>GPS-IMSI</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsIMSI}}</td>
                       </tr>
                       <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
                         <!--GPS总工时-->
@@ -329,9 +329,9 @@
                         <!--基站小区号-->
                         <td>{{'gsmLac'|translate}}</td>
                         <td colspan="3">{{deviceAerialCurrentInfoController.deviceinfo.gsmLac}}</td>
-                        <!--实际绑定车号-->
-                        <td>{{'bindMachineId'|translate}}</td>
-                        <td>{{deviceAerialCurrentInfoController.deviceinfo.bindMachineId}}</td>
+                        <!--国家码-->
+                        <td>{{'mcc'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.mcc}}</td>
                       </tr>
                       <tr ng-if="deviceAerialCurrentInfoController.deviceinfo.versionNum=='11'" presentation-href="dashboard:deviceMonitor:currentData:query:allData">
                         <!--通信模块版本号-->
@@ -359,11 +359,12 @@
                         <!--GPS最新指令时间戳-->
                         <td>{{'gpsLocalDate'|translate}}</td>
                         <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsLocalDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                        <!--预留-->
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <!--GPS出厂日期-->
+                        <td>{{'GPSFactoryDate'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.gpsYearMonthDay}}</td>
+                        <!--实际绑定车号-->
+                        <td>{{'bindMachineId'|translate}}</td>
+                        <td>{{deviceAerialCurrentInfoController.deviceinfo.bindMachineId}}</td>
                       </tr>
                     </table>
                   </tr>
