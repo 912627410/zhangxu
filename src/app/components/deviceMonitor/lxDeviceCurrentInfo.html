@@ -70,7 +70,7 @@
                     <td ng-cloak>{{ vm.lxDeviceInfo.accStatus| stateConversionFilter:'{"01":"点火","10":"未点火"}'}}
                     </td>
                     <td>运行总时间(小时)</td>
-                    <td ng-cloak>{{ vm.lxDeviceInfo.totalDuration | convertToMins}}</td>
+                    <td ng-cloak>{{ vm.lxDeviceInfo.totalDuration*0.05 | convertToMins}}</td>
                     <td>启动次数</td>
                     <td ng-cloak>{{ vm.lxDeviceInfo.startTimes}}</td>
                   </tr>
