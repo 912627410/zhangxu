@@ -14,52 +14,36 @@
     vm.machine = machine;
     vm.operatorInfo =$rootScope.userInfo;
 
-
     var salaryTypePromise = machineService.getSalaryTypeList();
     salaryTypePromise.then(function (data) {
       vm.salaryTypeList= data;
-      //    console.log(vm.userinfoStatusList);
     }, function (reason) {
       Notification.error('获取人工成本类型失败');
-    })
+    });
 
     var upkeepPriceTypePromise = machineService.getUpkeepPriceTypeList();
     upkeepPriceTypePromise.then(function (data) {
       vm.upkeepPriceTypeList= data;
-      //    console.log(vm.userinfoStatusList);
     }, function (reason) {
       Notification.error('获取保养费用类型失败');
-    })
+    });
 
     var machineStatePromise = machineService.getMachineStateList();
     machineStatePromise.then(function (data) {
       vm.machineStateList= data;
-      console.log(vm.machineStateList);
-
       for(var i=0;i<vm.machineStateList.length;i++){
         if(vm.machine.machineState ==  vm.machineStateList[i].machineState){
           vm.machine.machineState =vm.machineStateList[i].code;
         }
       }
-
     }, function (reason) {
       Notification.error('获取车辆状态失败');
-    })
+    });
 
-
-    // vm.deviceinfoList=[];
-
-    //如果设备号不存在,则设置设备为空
-    //if(vm.machine.deviceinfo==null){
-    //  vm.machine.deviceinfo={deviceNum:""};åååå
-    //}
 
     if(null!=vm.machine.deviceinfo) {
       vm.oldMachine=vm.machine.deviceinfo;
     }
-
-    //vm.deviceinfoList=[];
-   // vm.deviceinfoList.push(vm.machine.deviceinfo);
 
     //动态查询未使用的本组织的设备
     vm.refreshDeviceList = function(value) {
@@ -88,7 +72,7 @@
       vm.engineTypeList = data;
     }, function (reason) {
       Notification.error('获取发动机类型失败');
-    })
+    });
 
     //日期控件相关
     //date picker
@@ -177,11 +161,6 @@
       }
       postInfo.org={id:machine.org.id};
 
-      //if(null!=machine.fuelConfig){
-      //  postInfo.fuelConfig={id:machine.fuelConfig.id};
-      //}else{
-      //  postInfo.fuelConfig=null;
-      //}
 
 
       //更换GPS

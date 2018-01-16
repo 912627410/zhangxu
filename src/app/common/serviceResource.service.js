@@ -288,7 +288,7 @@
             scrollWheel: false,
             zooms: [3, 18]
           });
-          maps=map;
+          maps = map;
           map.setZoom(localZoomSize);
           map.plugin(['AMap.ToolBar'], function () {
             map.addControl(new AMap.ToolBar());
@@ -482,36 +482,112 @@
       },
 
       /**
-       * 先根据version_num来判断是否为矿车，装载机，小挖， 123为装载机，A1为小挖，30为矿车,40为中挖
-       * 00 - 无特定类型
+       * 00 - 装载机
        * 01 - 小挖
        * 02 - 矿车
-       * 03 - 中挖
-       * 04 - 平地机T3   设备类型为 7
-       * 05 - 巴黎(T3)   设备类型为 5
+       * 03 - 中挖(中挖无LED灯)
+       * 04 - 巴黎(T3,特殊)
        */
       getDeviceTypeForVersionNum: function (version_num, deviceType) {
-        if (version_num == '3' && deviceType == '7') {
+        //巴黎(T3,特殊*)
+        if (version_num == '3' && deviceType == '5') {
           return '04';
         }
-        if (version_num == '3' && deviceType == '5') {
-          return '05';
-        }
+        //装载机
         if (version_num == null || version_num == '' || version_num == '1' || version_num == '2' || version_num == '3' || version_num == '2010' || version_num == '2040') {
           return '00';
         }
+        //小挖
         if (version_num == 'A1' || version_num == '2030') {
           return '01';
         }
+        //矿车
         if (version_num == '30') {
           return '02';
         }
+        //中挖无LED灯
         if (version_num == '40') {
           return '03';
         }
-        if (deviceType == '3') {
-          return '04';
+      },
+      /**
+       * 中央报警灯,只考虑设备类型为0x03,0x04,0x05
+       * @param deviceinfo deviceinfo
+       */
+      getCenterCodeStatus: function (deviceinfo) {
+        /*
+         中央报警灯
+          1.电锁开,发动机转速>1000,驻车制动指示灯常亮,中央报警灯亮
+          2.转速<400
+              机油压力低,
+              制动压力低,
+              变速油压力低,
+              冷却液温度高,
+              充电指示报警,
+              油水分离报警,
+              燃油粗滤报警,
+              燃油油位低报警,
+              发动机故障报警,
+              空滤阻塞报警,
+              传动油粗滤报警,
+              冷却液位低,
+              后罩开启
+              液压油温高
+        */
+        //中央报警
+        var centerCode = '0';
+        if (!!deviceinfo.ledStatus && !!deviceinfo.deviceType && (deviceinfo.deviceType === '3' || deviceinfo.deviceType === '4' || deviceinfo.deviceType === '5')) {
+          //电锁
+          var accStatus = deviceinfo.accStatus;
+          //转速
+          var engineRotate = deviceinfo.enginRotate;
+          //驻车制动指示灯
+          var stopParkingBrake = deviceinfo.ledStatus.substring(6, 7);
+          if (accStatus === '01' && engineRotate > 1000 && stopParkingBrake === '1') {
+            centerCode = '1';
+            return centerCode;
+          }
+
+          //机油压力低指示灯
+          var engineOilPressure = deviceinfo.ledStatus.substring(28, 29);
+          //制动压力低指示灯
+          var parkingBrake = deviceinfo.ledStatus.substring(4, 5);
+          //变速油压力低
+          var lowPressureOilPressure = deviceinfo.ledStatus.substring(24, 25);
+          //冷却液温度高
+          var HighTemperatureCoolant = deviceinfo.ledStatus.substring(27, 28);
+          //充电
+          var charge = deviceinfo.ledStatus.substring(1, 2);
+          //油水分离报警
+          var oilWaterSeparationAlarm = deviceinfo.ledStatus.substring(12, 13);
+          //燃油粗滤报警
+          var fuelCrudeFilterAlarm = deviceinfo.ledStatus.substring(13, 14);
+          //燃油油位低报警
+          var lowFuelOilLevelAlarm = deviceinfo.ledStatus.substring(5, 6);
+          //发动机故障报警
+          var engineFailure1 = deviceinfo.ledStatus.substring(25, 26);
+          var engineFailure2 = deviceinfo.ledStatus.substring(26, 27);
+          //空滤阻塞报警
+          var airFiltrationObstruction = deviceinfo.ledStatus.substring(22, 23);
+          //传动油粗滤报警
+          var crudeOilFilter = deviceinfo.ledStatus.substring(21, 22);
+          //冷却液位低
+          var lowCoolingLevel = deviceinfo.ledStatus.substring(16, 17);
+          //后罩开启
+          var rearHoodOpening = deviceinfo.ledStatus.substring(20, 21);
+          //液压油温高
+          var highTemperatureHydraulicOil = deviceinfo.ledStatus.substring(14, 15);
+
+          if (engineRotate < 400) {
+            if (engineOilPressure === '1' || parkingBrake === '1' || lowPressureOilPressure === '1' || HighTemperatureCoolant === '1' || charge === '1' ||
+              oilWaterSeparationAlarm === '1' || fuelCrudeFilterAlarm === '1' || lowFuelOilLevelAlarm === '1' || engineFailure1 === '1' || engineFailure2 === '1' ||
+              airFiltrationObstruction === '1' || crudeOilFilter === '1' || lowCoolingLevel === '1' || rearHoodOpening === '1' || highTemperatureHydraulicOil === '1') {
+              centerCode = '1';
+              return centerCode;
+            }
+          }
         }
+        return centerCode;
       },
 
       /**
