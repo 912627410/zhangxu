@@ -384,7 +384,7 @@
     .constant('MINEMNG_USERINFOPAGE_URL', SERVER_BASE_URL +'minemngUserInfo/minemngUserInfoPage')//分页查询用户信息
     .constant('MINEMNG_USERINFO_UPDATE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfo')//更新用户信息;
     .constant('MINEMNG_USERINFO_RESET_PASSWORD_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfoPassword')//重置用户密码
-    .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngdelete')//删除用户
+    .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngDeleteUserInfo')//删除用户
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate') //报警七天趋势
 
     .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
@@ -420,6 +420,8 @@
     .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息
     .constant('MINEMNG_TERMINAL_URL', SERVER_BASE_URL+ 'minemngTerminal/minemngTerminal')//新增终端
     .constant('MINEMNG_GET_UNBOUND_MACHINE',SERVER_BASE_URL+'minemngMachine/getUnboundMachineList')//查询未绑定的车辆
+    .constant('MINEMNG_UPDATE_TERMINAL',SERVER_BASE_URL+'minemngTerminal/minemngUpdateTerminal')//更新终端信息
+    .constant('MINEMNG_TERMINAL_DELETE',SERVER_BASE_URL+'minemngTerminal/minemngDeleteTerminal')//删除终端
   ;
 
 

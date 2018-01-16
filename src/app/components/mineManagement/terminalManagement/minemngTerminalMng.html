@@ -6,7 +6,6 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i>{{'首页'| translate}}</a></li>
-      <li class="active">{{'基本信息管理'| translate}}</li>
       <li class="active">{{'终端基本信息'| translate}}</li>
     </ol>
   </section>
@@ -17,17 +16,17 @@
         <div class="form-group">
           <label class="col-md-1 control-label font-nomal">{{'终端号码'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="number" class="form-control"  ng-model="minemngTerminalMngCtrl.minemngTerminal.terminalNumber"
+            <input type="text" name="terminalNumber" class="form-control"  ng-model="minemngTerminalMngCtrl.minemngTerminal.terminalNumber"
                    placeholder="{{'输入终端号码'|translate}}"/>
           </div>
           <label class="col-md-1 control-label font-nomal">{{'SIM卡号'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="simNum" class="form-control"  ng-model="minemngTerminalMngCtrl.minemngTerminal.simCardNumber"
+            <input type="text" name="simCardNumber" class="form-control"  ng-model="minemngTerminalMngCtrl.minemngTerminal.simCardNumber"
                    placeholder="{{'输入SIM卡号'|translate}}" />
           </div>
           <label class="col-md-1 control-label font-nomal">{{'绑定车辆'|translate}}:</label>
           <div class="col-md-2">
-            <input type="text" name="machinename" class="form-control"  ng-model="minemngTerminalMngCtrl.carNumber"
+            <input type="text" name="carNumber" class="form-control"  ng-model="minemngTerminalMngCtrl.carNumber"
                    placeholder="{{'输入绑定车辆'|translate}}"/>
           </div>
 
@@ -39,7 +38,7 @@
 
 
 
-              <button class="btn btn-primary " type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.terminal)">{{'query'|translate}}
+              <button class="btn btn-primary " type="button"  ng-click="minemngTerminalMngCtrl.query(null,null,null,minemngTerminalMngCtrl.minemngTerminal)">{{'query'|translate}}
               </button>
 
           </div>

@@ -1,5 +1,5 @@
 /**
- * Created by weihua on 17-12-8.
+ * Created by weihua on 18-1-8.
  */
 (function() {
   'use strict';
@@ -9,18 +9,13 @@
     .controller('minemngTerminalMngController', minemngTerminalMngController);
 
   /** @ngInject */
-  function minemngTerminalMngController($rootScope,$uibModal,serviceResource,ngTableDefaults, MINEMNG_TERMINALPAGE_URL, DEFAULT_MINSIZE_PER_PAGE, NgTableParams, Notification, languages) {
+  function minemngTerminalMngController($rootScope,$uibModal,$confirm,serviceResource,ngTableDefaults,MINEMNG_TERMINALPAGE_URL,MINEMNG_UPDATE_TERMINAL,
+                                        MINEMNG_TERMINAL_DELETE, DEFAULT_MINSIZE_PER_PAGE,MINEMNG_TERMINAL_URL, NgTableParams, Notification, languages) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
-    /**
-     * 修改终端信息
-     */
-    vm.updateTerminal=function () {
-
-    }
 
     /**
      * 新增终端
@@ -41,6 +36,62 @@
       });
 
     }
+
+    /**
+     * 修改终端相关信息
+     */
+    vm.updateTerminal=function(minemngterminal){
+      var restCallURL = MINEMNG_TERMINAL_URL + "?id=" + minemngterminal.id;
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
+      rspData.then(function (data) {
+      var modalInstance=$uibModal.open({
+        animation: true,
+        templateUrl:'app/components/mineManagement/terminalManagement/minemngUpdateTerminal.html',
+        controller:'minemngUpdateTerminalController',
+        controllerAs:'minemngUpdateTerminalCtrl',
+        size:'md',
+        resolve:{
+          minemngterminal:function () {
+            return minemngterminal;
+          }
+        }
+      });
+      modalInstance.result.then(function (result) {
+
+        var tabList = vm.tableParams.data;
+        //更新内容
+        for (var i = 0; i < tabList.length; i++) {
+          if (tabList[i].id == result.id) {
+            tabList[i] = result;
+          }
+        }
+       }, function (reason) {
+
+       });
+
+      }, function (reason) {
+      });
+
+
+    };
+
+    /* 删除操作
+    * @param id
+    */
+    vm.delete = function (id) {
+      $confirm({text: languages.findKey('areYouWanttoDeleteIt'), title: languages.findKey('deleteConfirmation'), ok: languages.findKey('confirm'), cancel:languages.findKey('cancel')})
+        .then(function () {
+          var restCall = MINEMNG_TERMINAL_DELETE + "?id=" + id;
+          var restPromise = serviceResource.restCallService(restCall, "UPDATE");
+          restPromise.then(function (data) {
+            Notification.success(languages.findKey('delSuccess'));
+            vm.query(null, null, null, null);
+          }, function (reason) {
+            Notification.error(languages.findKey('delFail'));
+          });
+        });
+    };
+
 
     /**
      *  分页查询终端信息
