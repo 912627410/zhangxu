@@ -28,8 +28,6 @@
       numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
       numberForPass:/^\d{6}$/,
       numberForSsn:/^\d{7}$/,
-      numberForSimCard:/^\d{13}$/,
-      numberForTerminal:/^\d{14}$|^\d{15}$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
@@ -41,6 +39,9 @@
       },
       maxlength: function(value, scope, element, attrs, param) {
         return value.length <= param;
+      },
+      islength: function (value, scope, element, attrs, param) {
+        return value.length === param;
       },
       nullOrNumber : function (value) {
         return value ==null || value =='' || /^\d+$/.test(value);
@@ -111,14 +112,6 @@
         error:"系统用户名为7位数字",
         success:''
       },
-      numberForSimCard:{
-        error:"SIM卡号为13位数字",
-        success:''
-      },
-      numberForTerminal: {
-        error: "终端号为14位或者15位数字",
-        success: ''
-      },
       telephoneNo: {
         error: "{{'telephoneNo' |translate}}",
         success: ''
@@ -173,6 +166,35 @@
           return value === attrs.validfoo;
         },
         url:"abc"
+      }
+    );
+
+    //自定义最大长度最小长度消息
+    $validationProvider.setExpression({
+        maxlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxlength: {
+              error: "{{'maxLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length <= param;
+        },
+        minlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minlength: {
+              error: "{{'minLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length >= param;
+        },
+        islength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            islength: {
+              error: "{{'isLength' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length === param;
+        }
       }
     );
 

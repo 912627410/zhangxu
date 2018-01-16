@@ -10,14 +10,14 @@
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'终端号码'|translate}}"
                  ng-model="minemngNewTerminalMngCtrl.newTerminal.terminalNumber" name="terminalNumber"
-                 validator="numberForTerminal"/>
+                 validator="required,minlength=14,maxlength=15"/>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">{{'SIM卡号'|translate}}</label>
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'SIM卡号'|translate}}"
-                 ng-model="minemngNewTerminalMngCtrl.newTerminal.simCardNumber" name="simCardNumber" validator="numberForSimCard"/>
+                 ng-model="minemngNewTerminalMngCtrl.newTerminal.simCardNumber" name="simCardNumber" validator="required,islength=13"/>
         </div>
       </div>
       <div class="form-group">
