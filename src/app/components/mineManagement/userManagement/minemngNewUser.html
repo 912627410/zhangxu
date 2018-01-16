@@ -17,7 +17,7 @@
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'姓名'|translate}}"
                  ng-model="minemngNewUserMngCtrl.minemnguser.name" name="name" typeahead-show-hint="true"
-                 validator="required" />
+                 validator="required,minlength=2,maxlength=7" />
         </div>
       </div>
       <div class="form-group">
@@ -69,7 +69,7 @@
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'密码'|translate}}"
                  ng-model="minemngNewUserMngCtrl.minemnguser.password" name="password" typeahead-show-hint="true"
-                 validator="required,numberForPass" />
+                 validator="numberForPass" />
         </div>
       </div>
     </div>

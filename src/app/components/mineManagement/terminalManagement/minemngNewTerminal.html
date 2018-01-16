@@ -9,14 +9,15 @@
         <label class="col-sm-3 control-label">{{'终端号码'|translate}}</label>
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'终端号码'|translate}}"
-                 ng-model="minemngNewTerminalMngCtrl.newTerminal.terminalNumber" name="terminalNumber" validator="required"/>
+                 ng-model="minemngNewTerminalMngCtrl.newTerminal.terminalNumber" name="terminalNumber"
+                 validator="numberForTerminal"/>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">{{'SIM卡号'|translate}}</label>
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="{{'SIM卡号'|translate}}"
-                 ng-model="minemngNewTerminalMngCtrl.newTerminal.simCardNumber" name="simCardNumber" validator="required"/>
+                 ng-model="minemngNewTerminalMngCtrl.newTerminal.simCardNumber" name="simCardNumber" validator="numberForSimCard"/>
         </div>
       </div>
       <div class="form-group">

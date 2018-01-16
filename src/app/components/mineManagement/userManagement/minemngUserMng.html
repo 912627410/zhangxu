@@ -29,7 +29,7 @@
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"
-                       message-id="bootstrap" readonly/>
+                       message-id="bootstrap"/>
 
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default"
@@ -56,7 +56,17 @@
                   <div ng-bind-html="userRoleType.name | highlight: $select.search |translate"></div>
                 </ui-select-choices>
             </div>
+
+
           </div>
+          <div class="form-group minemngFormGroup"><label class="col-md-1 control-label font-normal">{{'状态'|translate}}:</label>
+            <div class="col-md-2">
+              <select class="form-control"name="status"
+                      ng-model="minemngUserMngCtrl.minemnguser.status">
+                <option value="0">离职</option>
+                <option value="1">在职</option>
+              </select>
+            </div></div>
           <div class="form-group">
             <div class="btn-group col-md-6" style="line-height: 34px;">
               <span>{{'totalNumberOfRecords'|translate}} {{minemngUserMngCtrl.page.totalElements}}</span>
@@ -80,16 +90,23 @@
               <td class="text-nowrap" data-title="'入职时间'|translate" sortable="'entryTime'">{{minemnguser.entryTime | date:'yyyy-MM-dd'}}</td>
               <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
               <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
-              <td class="text-nowrap" data-title="'rentalOperations'|translate">
-                <button type="button" class="btn btn-warning btn-xs"
-                        ng-click="minemngUserMngCtrl.update(minemnguser)">{{'修改'|translate}}
-                </button>
-                <button type="button" class="btn btn-default btn-xs"
-                        ng-click="minemngUserMngCtrl.updatePassword(minemnguser.id)">{{'重置密码'|translate}}
-                </button>
-                <button type="button" class="btn btn-danger btn-xs"
-                        ng-click="minemngUserMngCtrl.delete(minemnguser.id)">{{'删除'|translate}}
-                </button>
+              <td class="text-nowrap" data-title="'状态'|translate" sortable="'status'">
+                <span ng-if="minemnguser.status=='0'">离职</span>
+                <span ng-if="minemnguser.status=='1'">在职</span>
+              </td>
+              <td class="text-nowrap" data-title="'rentalOperations'|translate" >
+                <span ng-if="minemnguser.status=='0'"></span>
+                <span ng-if="minemnguser.status=='1'">
+                  <button type="button" class="btn btn-warning btn-xs"
+                          ng-click="minemngUserMngCtrl.update(minemnguser)">{{'修改'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-default btn-xs"
+                          ng-click="minemngUserMngCtrl.updatePassword(minemnguser.id)">{{'重置密码'|translate}}
+                  </button>
+                  <button type="button" class="btn btn-danger btn-xs"
+                          ng-click="minemngUserMngCtrl.delete(minemnguser.id)">{{'删除'|translate}}
+                  </button>
+                </span>
               </td>
             </tr>
           </table>

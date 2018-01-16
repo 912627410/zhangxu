@@ -17,10 +17,15 @@
       var vm = this;
       vm.operatorInfo = $rootScope.userInfo;
       vm.terminal=minemngterminal;
+      vm.unboundCar = {
+        id: minemngterminal.minemngMachineId,
+        carNumber: minemngterminal.carNumber
+      };
 
 
       vm.ok = function () {
-        console.log(vm.terminal.carNumber);
+        vm.terminal.minemngMachineId = vm.unboundCar.id;
+        vm.terminal.carNumber = vm.unboundCar.carNumber;
         var rspdata = serviceResource.restUpdateRequest(MINEMNG_UPDATE_TERMINAL,vm.terminal);
         rspdata.then(function (data) {
           Notification.success("修改用户信息成功!");
