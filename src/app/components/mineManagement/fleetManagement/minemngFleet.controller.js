@@ -10,7 +10,7 @@
     .controller('minemngFleetController', minemngFleetCtrl);
 
   /** @ngInject */
-  function minemngFleetCtrl( $uibModal,GET_MINE_MACHINE_FLEET, Notification, serviceResource,MINE_MACHINE_FLEET) {
+  function minemngFleetCtrl(ngTableDefaults,languages,NgTableParams,MINE_ADD_MACHINE_INFO, $uibModal,GET_MINE_MACHINE_FLEET, Notification, serviceResource,MINE_MACHINE_FLEET) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedObject = '';
@@ -18,9 +18,10 @@
     vm.searchText = '';     //搜索的数据
     vm.fleet_data = [];
     vm.fleetName='';
+    vm.fleetMachine;
     vm.selectedArray = [];
     vm.newBtnShow = true;
-
+    ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
     vm.init = function () {
       vm.getUpdateObject();
     };
@@ -66,7 +67,20 @@
       restCallURL += "?id=" + vm.selectedObject.id;
       var dataPromis = serviceResource.restCallService(restCallURL, "GET");
       dataPromis.then(function (data) {
+        //选中小组事件
         if(0!=data.parentId){
+            var restCallURL = MINE_ADD_MACHINE_INFO;
+            restCallURL += "?teamId=" + data.id;
+            var restPromise = serviceResource.restCallService(restCallURL,"GET");
+            restPromise.then(function (data) {
+
+              vm.tableParams2 = new NgTableParams({}, {
+                dataset: data.content
+              });
+            }, function (reason) {
+              Notification.error(languages.findKey('getDataVeFail'));
+            });
+
           vm.selectedParentObject = data.name;
           var restCallURL = MINE_MACHINE_FLEET;
           restCallURL += "?id=" + vm.selectedObject.parentId;
@@ -75,12 +89,16 @@
             vm.fleetName=data.name;
           });
         }else {
+          //选中车队事件
           var restCallURL = MINE_MACHINE_FLEET;
           restCallURL += "?id=" + vm.selectedObject.id;
           var dataPromis = serviceResource.restCallService(restCallURL, "GET");
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
             vm.selectedParentObject =null;
+            vm.tableParams2= new NgTableParams({}, {
+              dataset:null
+            })
           });
         }
         vm.selectedArray[data.level - 1] = data;
@@ -134,14 +152,19 @@
       }
     };
 
-    //增加车队车辆
+    //新建车辆
     vm.addMineFleetMachine = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
         controller: 'addMineFleetController as addMineFleetCtrl',
         size: 'sx',
-        backdrop: false
+        backdrop: false,
+       /* resolve: {
+          fleetTeam: function () {
+            return vm.selectedObject;
+          },
+        }*/
       });
       modalInstance.result.then(function () {
         vm.reset();
@@ -185,11 +208,40 @@
       });
     };
 
+    //修改车队小组
+    vm.updateFleetTeam = function (size) {
+      if(vm.selectedObject.parentId==null){
+        Notification.warning({message:"请选择车队小组!",positionX: 'center'});
+        return;
+      }
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/fleetManagement/minemngUpdateFleetTeam.html',
+        controller: 'updateFleetTeamController as updateFleetTeamCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          fleetTeam: function () {
+            return vm.selectedObject;
+          },
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+
+      }, function () {
+        //取消
+      });
+    };
+
     vm.reset = function () {
       vm.searchText = "";
       vm.selectedObject = '';
       vm.selectedParentObject = '';
       vm.fleetName='';
+      vm.tableParams2= new NgTableParams({}, {
+        dataset:null
+      })
       vm.init();
     };
     vm.init()
