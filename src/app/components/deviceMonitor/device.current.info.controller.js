@@ -106,16 +106,9 @@
         if (vm.deviceinfo.ecuLockStatus.length == 8) {
           if (vm.deviceinfo.ecuLockStatus.substr(7, 1) == "0") {
             vm.ecuLockStatusDesc += "未绑定";
-          }
-          else {
+          } else {
             vm.ecuLockStatusDesc += "已绑定";
           }
-          /* if (vm.deviceinfo.ecuLockStatus.substr(5,1) == "0"){
-           vm.ecuLockStatusDesc += ".";
-           }
-           else{
-           vm.ecuLockStatusDesc += ".";
-           }*/
         }
       }
 
@@ -126,8 +119,7 @@
           title: '该设备需要保养',
           url: "app/components/deviceMonitor/maintainNotice.html",
           controller: "maintainNoticeController as maintainNoticeCtrl"
-
-        }
+        };
         $scope.notices.push(maintainNotice);
       }
 
@@ -141,45 +133,21 @@
         }
         var currentTime = new Date();
         if (vm.deviceinfo.lastDataUploadTime != null && (currentTime - vm.deviceinfo.lastDataUploadTime) > vm.longTimeNoData * 24 * 3600 * 1000) {
-
           var longTime = Math.floor((currentTime - vm.deviceinfo.lastDataUploadTime) / 24 / 3600 / 1000);
           //存在长时间未上传数据提醒
           var longTimeNoDataNotice = {
             title: "该设备超过" + longTime + "天未上传数据",
             url: null,
             controller: null
-          }
+          };
           $scope.notices.push(longTimeNoDataNotice);
         }
       }
-
       //因无指示灯图标，alertStatus暂时显示为16进制，后续调整
       vm.deviceinfo.alertStatus = parseInt(vm.deviceinfo.alertStatus, 2);
-      vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16);
       vm.deviceinfo.alertStatus = vm.deviceinfo.alertStatus.toString(16).toUpperCase();
-      /*
-       中央报警灯   指的就是三角报警灯
-       另：1、当转速小于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯也不亮
-          2、当转速大于500转时，充电指示灯和机油压力指示灯亮时，三角报警灯亮
-          3、当转速小于1000转时，手制动指示灯亮时，三角报警灯也不亮
-          4、当转速大于1000转时，手制动指示灯亮时，三角报警灯亮
-       */
-      //转速
-      vm.enginRotate = vm.deviceinfo.enginRotate;
-      //充电指示灯
-      vm.charge = vm.deviceinfo.ledStatus.substring(0, 1);
-      //中央报警
-      vm.centerCode = '0';
-      //机油压力指示灯
-      vm.engineOilPressure = vm.deviceinfo.ledStatus.substring(28, 29);
-      //制动指示灯
-      vm.parkingBrake = vm.deviceinfo.ledStatus.substring(6, 7);
-      if (vm.enginRotate > 500 && vm.charge == "1" && vm.engineOilPressure == "1") {
-        vm.centerCode = '1';
-      }
-      if (vm.enginRotate > 1000 && vm.parkingBrake == "1") {
-        vm.centerCode = '1';
-      }
+      //中央报警灯
+      vm.centerCode=serviceResource.getCenterCodeStatus(deviceinfo);
       //根据中挖协议修改
       if (vm.deviceinfo.voltageHigthAlarmValue != 0) {
         vm.deviceinfo.voltageHigthAlarmValue = vm.deviceinfo.voltageHigthAlarmValue * 0.1 + 10;
@@ -195,7 +163,8 @@
       if (deviceinfo.versionNum != null) {
         vm.DeviceType = serviceResource.getDeviceTypeForVersionNum(deviceinfo.versionNum, deviceinfo.deviceType);
       }
-    }
+
+    };
 
     //初始化controller
     vm.controllerInitialization(deviceinfo);
