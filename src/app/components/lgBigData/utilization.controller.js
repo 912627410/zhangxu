@@ -61,9 +61,10 @@
     //初始化配置/重置
     vm.reset = function () {
       vm.machineType = "装载机";
-      vm.dateType = 1;
+      vm.dateType = "1";
       vm.dateOpenStatus = false;
       vm.queryDate = new Date();
+      vm.queryDate.setTime(vm.queryDate.getTime() - 24 * 60 * 60 * 1000);
       vm.changeDateType(vm.dateType);
       //三年之内的季度列表
       vm.quarterList = [];
@@ -77,7 +78,6 @@
         });
 
       }
-
 
     };
 
@@ -110,7 +110,7 @@
 
           return params.data.name + '<br />'
             + '广义开工率：' + value + '% <br />'
-            + '狭义开工率：' + value1 + '% <br />'
+            + '活跃设备开工率：' + value1 + '% <br />'
             + '闲置率：' + value2 + '% <br />';
         }
       },
@@ -141,14 +141,14 @@
         bottom: 15,
         calculable: true,
         precision: 2,
-        color: ['orangered', 'yellow', 'lightskyblue'],
+        //color: ['orangered', 'yellow', 'lightskyblue'],
         text: ['高', '低'],
         dimension: 0
 
       },
       grid: {
         right: 40,
-        top: 50,
+        top: 30,
         width: '22%'
       },
       xAxis: [{
@@ -202,10 +202,19 @@
               show: true
             }
           },
-          data: []
+          data: [],
+          itemStyle: {
+            normal: {
+            },
+            emphasis: {
+              color: 'rgb(255,223,51)',
+              borderWidth: 0
+            }
+          },
         }
       ]
     };
+
 
     //曲线图配置
     vm.lineOption = {
@@ -217,7 +226,7 @@
         trigger: 'axis'
       },
       legend: {
-        data: ['开工率', '广义开工率', '闲置率'],
+        data: ['活跃设备开工率', '广义开工率', '闲置率'],
         bottom: 'top',
         show: true
       },
@@ -244,9 +253,9 @@
       },
       series: [
         {
-          name: '开工率',
+          name: '活跃设备开工率',
           type: 'line',
-          stack: '开工率',
+          stack: '活跃设备开工率',
           showSymbol: false,
           smooth: true,
           smoothMonotone: 'x',
@@ -282,36 +291,50 @@
       restCallURL += "&machineType=" + vm.machineType;
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
-        if (data.content == null || data.content.length == 0 || data.content == []) {
-          Notification.warning("未查询到数据");
-          return;
-        }
-        var dataList = _.sortBy(data.content, "broadUtilizationRate");
-        var maxRate = _.max(data.content, function (value) {
-          return value.broadUtilizationRate;
-        });
 
         vm.mapOption.series[0].data = [];
         vm.mapOption.series[1].data = [];
         vm.mapOption.yAxis[0].data = [];
-        vm.mapOption.visualMap.max = maxRate.broadUtilizationRate;
+        vm.china = {
+          province: '全国',
+          broadUtilizationRate: 0,
+          narrowUtilizationRate: 0,
+          idleRate: 0
+        };
 
-        angular.forEach(dataList, function (value, key) {
-          if (value.province == '全国') {
+        if (data.content == null || data.content.length == 0 || data.content == []) {
+          Notification.warning("未查询到数据");
 
-          } else {
-            var data = {
-              name: value.province,
-              value: value.broadUtilizationRate,
-              value1: value.narrowUtilizationRate,
-              value2: value.idleRate
-            };
-            vm.mapOption.series[0].data.push(data);
-            vm.mapOption.series[1].data.push(data);
-            vm.mapOption.yAxis[0].data.push(value.province.substring(0, 2));
-          }
-        });
+        }else{
+          var dataList = _.sortBy(data.content, "broadUtilizationRate");
+          var maxRate = _.max(data.content, function (value) {
+            return value.broadUtilizationRate;
+          });
+          vm.mapOption.visualMap.max = maxRate.broadUtilizationRate;
+
+          angular.forEach(dataList, function (value, key) {
+            if (value.province == '全国') {
+              vm.china = value;
+
+            } else {
+              var data = {
+                name: value.province,
+                value: value.broadUtilizationRate,
+                value1: value.narrowUtilizationRate,
+                value2: value.idleRate
+              };
+              vm.mapOption.series[0].data.push(data);
+              vm.mapOption.series[1].data.push(data);
+              vm.mapOption.yAxis[0].data.push(value.province.substring(0,2));
+            }
+          });
+        }
         vm.centerMap.setOption(vm.mapOption);
+
+        //点击省份查询对应省份的折线图
+        vm.centerMap.on('click', function (params) {
+          vm.queryForLine(params.data.name);
+        });
 
       }, function (reason) {
         vm.errorMsg = reason.data.message;
@@ -319,7 +342,7 @@
       });
     };
 
-    vm.queryForLine = function () {
+    vm.queryForLine = function (province) {
 
       var dateType = vm.dateType;
       var queryDate = angular.copy(vm.queryDate);
@@ -353,25 +376,28 @@
       restCallURL += "&beginDate=" + $filter('date')(beginDate, 'yyyy-MM-dd');
       restCallURL += "&endDate=" + $filter('date')(endDate, 'yyyy-MM-dd');
       restCallURL += "&machineType=" + vm.machineType;
+      restCallURL += "&province=" + province;
 
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
-        if (data.content == null || data.content.length == 0 || data.content == []) {
-          Notification.warning("未查询到数据");
-          return;
-        }
-        var dataList = _.sortBy(data.content, "cDate");
+
         vm.lineOption.xAxis.data = [];
         vm.lineOption.series[0].data = [];
         vm.lineOption.series[1].data = [];
         vm.lineOption.series[2].data = [];
 
-        angular.forEach(dataList, function (value, key) {
-          vm.lineOption.xAxis.data.push(value.cDate);
-          vm.lineOption.series[0].data.push(value.narrowUtilizationRate);
-          vm.lineOption.series[1].data.push(value.broadUtilizationRate);
-          vm.lineOption.series[2].data.push(value.idleRate);
-        });
+        if (data.content == null || data.content.length == 0 || data.content == []) {
+          Notification.warning("未查询到数据");
+        }else{
+          var dataList = _.sortBy(data.content, "cDate");
+          angular.forEach(dataList, function (value, key) {
+            vm.lineOption.xAxis.data.push(value.cDate);
+            vm.lineOption.series[0].data.push(value.narrowUtilizationRate);
+            vm.lineOption.series[1].data.push(value.broadUtilizationRate);
+            vm.lineOption.series[2].data.push(value.idleRate);
+          });
+
+        }
 
         vm.bottomLine.setOption(vm.lineOption);
 
@@ -384,7 +410,7 @@
 
     vm.query = function () {
       vm.queryForMap();
-      vm.queryForLine();
+      vm.queryForLine('全国');
     };
 
     vm.reset();

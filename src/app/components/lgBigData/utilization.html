@@ -19,7 +19,7 @@
     <div class="row form-group" >
       <!--查询周期-->
       <div class="form-inline col-md-2">
-        <label class="control-label">查询周期:</label>
+        <label class="control-label">查询日期:</label>
         <select class="form-control"
                 ng-change="utilizationCtrl.changeDateType(utilizationCtrl.dateType)"
                 ng-model="utilizationCtrl.dateType">
@@ -31,8 +31,8 @@
       </div>
 
       <!--季度-->
-      <div class="col-md-3" ng-show="utilizationCtrl.dateType==90">
-        <ui-select ng-model="utilizationCtrl.queryDate" theme="bootstrap" ng-disabled="disabled" style="width: 60%">
+      <div class="form-inline col-md-3" ng-show="utilizationCtrl.dateType==90">
+        <ui-select ng-model="utilizationCtrl.queryDate" theme="bootstrap" ng-disabled="disabled" style="width: 70%">
           <ui-select-match allow-clear="true" placeholder="季度">{{$select.selected.quarterName}}
           </ui-select-match>
           <ui-select-choices  repeat="quarter.quarterValue as quarter in utilizationCtrl.quarterList" >
@@ -43,7 +43,6 @@
 
       <!--日期-->
       <div class="form-inline col-md-3" ng-hide="utilizationCtrl.dateType==90" >
-        <label class="control-label">日期:</label>
         <div class="input-group">
           <input type="text" class="form-control"  uib-datepicker-popup="{{utilizationCtrl.dateFormat}}"
                  ng-model="utilizationCtrl.queryDate"
@@ -73,8 +72,7 @@
       </div>
 
       <!--button-->
-      <div class="form-inline col-md-2">
-
+      <div class="form-inline col-md-3">
         <button class="btn btn-primary" type="button" ng-click="utilizationCtrl.query()">{{'query'|translate}}</button>
         <button class="btn btn-warning" type="button" ng-click="utilizationCtrl.reset()">{{'reset'|translate}}</button>
       </div>
@@ -82,6 +80,31 @@
     <!--中间地图-->
     <div class="row">
       <div class="col-md-12">
+        <a ng-click="utilizationCtrl.queryForLine('全国')" href="">
+          <div class="panel" style="position:absolute;left: 2%;top: 2%;z-index: 999">
+            <div class="box-header">
+              <h6 class="box-title text-gray">全国</h6>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table table-condensed table-bordered table-striped text-nowrap">
+                  <tr>
+                    <td>广义开工率</td>
+                    <td>{{utilizationCtrl.china.broadUtilizationRate}}%</td>
+                  </tr>
+                  <tr>
+                    <td>活跃设备开工率</td>
+                    <td>{{utilizationCtrl.china.narrowUtilizationRate}}%</td>
+                  </tr>
+                  <tr>
+                    <td>闲置率</td>
+                    <td>{{utilizationCtrl.china.idleRate}}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </a>
         <div id="centerMap" style="height:600px;"></div>
       </div>
     </div>
