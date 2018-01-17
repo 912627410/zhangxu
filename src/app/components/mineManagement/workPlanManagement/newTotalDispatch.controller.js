@@ -11,8 +11,7 @@
     angular
         .module('GPSCloud')
         .controller('newTotalDispatchController', newTotalDispatchController);
-    function newTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, operatorInfo,
-                                        MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
+    function newTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, operatorInfo,minemngResource, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
@@ -52,42 +51,32 @@
       /**
        * 加载作业面列表
        */
-      vm.getWorkFaceList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.workFaceList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getWorkFaceList();
+      var workFaceListPromise = minemngResource.getWorkFaceList();
+      workFaceListPromise.then(function (data) {
+        vm.workFaceList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
       /**
        * 加载排土场列表
        */
-      vm.getDumpFieldList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_DUMP_FIELD_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.dumpFieldList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getDumpFieldList();
+      var dumpFieldListPromise = minemngResource.getDumpFieldList();
+      dumpFieldListPromise.then(function (data) {
+        vm.dumpFieldList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
       /**
        * 加载车队列表
        */
-      vm.getFleetList = function () {
-        var url = MINEMNG_FLEET_LIST + "?parentId=0";
-        var rspDate = serviceResource.restCallService(url, "QUERY");
-        rspDate.then(function (data) {
-          vm.fleetList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getFleetList();
+      var fleetListPromise = minemngResource.getFleetList();
+      fleetListPromise.then(function (data) {
+        vm.fleetList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
       /**
        * 加载小组列表
@@ -95,29 +84,25 @@
        */
       vm.getTeamList = function (fleetId) {
         vm.newTotalDispatch.teamList = [];
-        if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
-          var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
-          var rspDate = serviceResource.restCallService(url, "QUERY");
-          rspDate.then(function (data) {
+        var teamListPromise = minemngResource.getTeamList(fleetId);
+        if(teamListPromise != null) {
+          teamListPromise.then(function (data) {
             vm.teamList = data;
-          },function (reason) {
+          }, function (reason) {
             Notification.error(reason.data);
-          })
+          });
         }
       };
 
       /**
        * 加载班次列表
        */
-      vm.getWorkShiftList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_ALL_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.workShiftList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getWorkShiftList();
+      var workShiftListPromise = minemngResource.getWorkShiftAllList();
+      workShiftListPromise.then(function (data) {
+        vm.workShiftList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
 
       vm.ok = function () {
