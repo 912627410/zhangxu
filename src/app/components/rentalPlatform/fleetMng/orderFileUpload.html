@@ -1,8 +1,44 @@
+<style>
+  /* 图片放大的代码 */
+  .imgview-mask {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 999998;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: .75;
+    filter: alpha(opacity=75);
+    display: none;
+  }
+
+  .show-img {
+    position: fixed;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    background: #fff;
+    z-index: 999999;
+    margin-left: -40%;
+    margin-top: -20%;
+    display: none;
+  }
+
+  .show-img img {
+    max-width: 800px;
+    width: auto;
+    height: auto;
+  }
+
+</style>
+
 <div class="modal-header">
   <div class="modal-title">
     <div class="col-md-2 control-label">
       <div class="modal-title-text">
-        {{'attachmentUpload'|translate}}
+        {{'attachment'|translate}}
       </div>
     </div>
   </div>
@@ -29,6 +65,25 @@
             ng-click="rentalOrderFileUploadMngCtrl.cancel()">{{'cancel'|translate}}
     </button>
     <div class="form-group">
+    </div>
+    <hr>
+    <button type="button" class="btn btn-danger btn-xs"
+            ng-click="rentalOrderFileUploadMngCtrl.delete(rentalOrderFileUploadMngCtrl.selected)">{{'rentalDelete'| translate}}
+    </button>
+    <div style=" overflow: hidden;">
+      <div ng-repeat="attach in rentalOrderFileUploadMngCtrl.attachList" data-header="'selectAllHeader'">
+        <div  class="col-md-3" style="height: 150px;display:{{attach.display}}" id="{{attach.id}}" >
+          <input name="attach" type="radio"  style="position:relative; z-index: 2 " ng-checked="rentalOrderFileUploadMngCtrl.isSelected(attach)"
+                 ng-click="rentalOrderFileUploadMngCtrl.updateSelection($event,attach)" ng-model="attach.checked" >
+          <img ng-src="{{attach.path}}" width="110%" height="95%" style="position:relative;z-index:1;margin-top: -9.5% "
+               ng-click="rentalOrderFileUploadMngCtrl.changePic($event)">
+        </div>
+      </div>
+    </div>
+    <div id="js-imgview-mask" class="imgview-mask" style="display: none;" ng-click="rentalOrderFileUploadMngCtrl.closePic()">
+    </div>
+    <div id="js-imgview" class="show-img">
+      <img id="bigimage" ng-click="rentalOrderFileUploadMngCtrl.closePic()">
     </div>
   </form>
 </div>

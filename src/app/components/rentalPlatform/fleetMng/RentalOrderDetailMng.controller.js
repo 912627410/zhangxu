@@ -74,7 +74,6 @@
 
     //车辆进场
     vm.goSite = function (rentalOrder) {
-      var rentalOrder = rentalOrder;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalGoSite.html',
@@ -95,8 +94,6 @@
 
     //车辆退场
     vm.leaveSite = function (rentalOrder) {
-
-      var rentalOrder = rentalOrder;
       var orderId = rentalOrder.id;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -118,13 +115,11 @@
 
     //订单变更
     vm.update = function (id, realNumber) {
-      var realNumber = realNumber;
       var orderUrl = RENTAL_ORDER_URL + "?id=" + id;
       var rspdata = serviceResource.restCallService(orderUrl, "GET");
       rspdata.then(function (data) {
         var retalOrder = data.content.orderVo;
         var orderMachineTypeVoList = data.content.orderMachineTypeVoList;
-
         var modalInstance = $uibModal.open({
           animation: true,
           templateUrl: 'app/components/rentalPlatform/fleetMng/updateRentalOrderMng.html',
@@ -147,41 +142,12 @@
             if (tabList[i].id == result.id) {
               tabList[i] = result;
             }
-          };
+          }
           vm.getStatusNumber();
         }, function () {
           //取消
         });
       })
-
     }
-
-
-
-
-    /**
-     * 删除操作
-     * @param id
-     */
-    vm.delete = function (id) {
-      $confirm({
-        text: languages.findKey('areYouWanttoDeleteIt'),
-        title: languages.findKey('deleteConfirmation'),
-        ok: languages.findKey('confirm'),
-        cancel: languages.findKey('cancel')
-      })
-        .then(function () {
-          var rentalAttachVo = {"id": 3335635643};
-          var restPromise = serviceResource.restUpdateRequest(RENTANL_ATTACH_DELETE_URL, rentalAttachVo)
-          restPromise.then(function (data) {
-            Notification.success(languages.findKey('delSuccess'));
-          }, function (reason) {
-            Notification.error(languages.findKey('delFail'));
-          });
-        });
-    };
-
-
-
   }
 })();

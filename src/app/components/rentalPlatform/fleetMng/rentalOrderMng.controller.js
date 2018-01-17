@@ -11,7 +11,7 @@
   /** @ngInject */
 
   function rentalOrderMngController($rootScope,$state, $window, $uibModal, $filter, $anchorScroll, serviceResource, NgTableParams, ngTableDefaults, treeFactory, Notification, rentalService,
-                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL, languages) {
+                                    DEFAULT_MINSIZE_PER_PAGE, RENTAL_ORDER_PAGE_URL, RENTAL_ORDER_GROUP_BY_STATUS, RENTAL_ORDER_URL,RENTANL_ATTACH_VIEW_URL, languages) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -285,7 +285,6 @@
     }*/
 
     vm.goSite = function (rentalOrder) {
-      var rentalOrder = rentalOrder;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalGoSite.html',
@@ -305,8 +304,6 @@
     }
 
     vm.leaveSite = function (rentalOrder) {
-
-      var rentalOrder = rentalOrder;
       var orderId = rentalOrder.id;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -326,19 +323,27 @@
       });
     }
 
-    //附件上传
-    vm.fileUpload = function (rentalOrder) {
-      vm.singleRentalOrder=rentalOrder;
-      $uibModal.open({
-        animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/fleetMng/orderFileUpload.html',
-        controller: 'rentalOrderFileUploadController as rentalOrderFileUploadMngCtrl',
-        size: 'lg',
-        resolve: {
-          rentalOrder: function () {
-            return rentalOrder;
+    vm.attchView=function(rentalOrder){
+      var customerUrl=RENTANL_ATTACH_VIEW_URL+"?orderId="+ rentalOrder.id;
+      var rspdata = serviceResource.restCallService(customerUrl,"GET");
+      rspdata.then(function (data) {
+        var rentalAttachInfo=data.content;
+        $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/rentalPlatform/fleetMng/orderFileUpload.html',
+          controller: 'rentalOrderFileUploadController as rentalOrderFileUploadMngCtrl',
+          size: 'lg',
+          resolve: {
+            rentalOrder: function () {
+              return rentalOrder;
+            },
+            rentalAttachInfo: function () {
+              return rentalAttachInfo;
+            }
           }
-        }
+        });
+      }, function () {
+        //取消
       });
     }
 

@@ -1,20 +1,20 @@
 <div class="machine-content" resize>
   <section class="content-header">
     <h1>
-      <small>订单详情</small>
+      <small>{{'orderDetails'| translate}}</small>
     </h1>
     <ol class="breadcrumb">
       {{'rentalCurrentLocate'|translate}}:
       <li><i class="fa fa-taxi"></i>{{'rentalMng'| translate}}</li>
       <li class="active"><i class="fa fa-file-text-o"></i>{{'rentalOrderMng'| translate}}</li>
-      <li class="active"><i class="fa fa-file-text-o"></i>订单详情</li>
+      <li class="active"><i class="fa fa-file-text-o"></i>{{'orderDetails'| translate}}</li>
     </ol>
   </section>
   <div class="container-fluid">
     <div class="container-fluid table-wrapper">
       <div class="row info-box-container">
         <div class="col-lg-8 col-md-8 orderDetailBox" >
-          <h4>订单信息</h4>
+          <h4>{{'orderInformation'| translate}}</h4>
           <form name="orderDetail" class="form-horizontal">
             <div class="row form-group">
               <label class="col-md-2 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
@@ -117,12 +117,12 @@
                     <td ng-cloak data-title="'admissionTime'|translate">{{orderData.enterTime| date:'yyyy-MM-dd HH:mm:ss'}}
                     </td>
                     <td ng-if="orderData.enterTime!= null" ng-cloak data-title="'workingHoursWhenEntry'|translate">
-                      {{orderData.enterfactoryworkhours* 5 / 60|number:2}}小时
+                      {{orderData.enterfactoryworkhours* 5 / 60|number:2}}{{'hour'| translate}}
                     </td>
                     <td ng-if="orderData.enterTime== null" ng-cloak data-title="'workingHoursWhenEntry'|translate"></td>
                     <td ng-cloak data-title="'exitTime'|translate">{{orderData.leaveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td ng-if="orderData.leaveTime != null" ng-cloak data-title="'workingHoursWhenExit'|translate">
-                      {{orderData.leavefactoryworkhours* 5 / 60|number:2}}小时
+                      {{orderData.leavefactoryworkhours* 5 / 60|number:2}}{{'hour'| translate}}
                     </td>
                     <td ng-if="orderData.leaveTime == null" ng-cloak data-title="'workingHoursWhenExit'|translate"></td>
                     <td ng-if="orderData.leaveTime == null" ng-cloak data-title="'在场天数(/天)'"></td>
@@ -239,14 +239,7 @@
       <button class="btn btn-warning pull-right" type="button" ng-click="rentalOrderDetailCtrl.cancel()">
         {{'return'|translate}}
       </button>
-
-<!--      <button type="button" class="btn btn-danger btn-xs"
-              ng-click="rentalOrderDetailCtrl.delete(rentalOrderDetailCtrl.id)">{{'rentalDelete'| translate}}
-      </button>-->
-
-
     </div>
-
   </div>
 </div>
 

@@ -156,9 +156,9 @@
               <td class="text-nowrap" data-title="'rentalEndDate'|translate" sortable="'endDate'">{{rentalOrder.endDate
                 | date:'yyyy-MM-dd'}}
               </td>
-              <td class="text-nowrap" data-title="'审批状态'" >
+              <td class="text-nowrap" data-title="'approvalStatus'|translate" >
               </td>
-              <td class="text-nowrap" data-title="'审批人'" >
+              <td class="text-nowrap" data-title="'approver'|translate" >
               </td>
               <td class="text-nowrap" data-title="'rentalCustomer'|translate" sortable="'rentalCustomer.name'">
                 {{rentalOrder.customerName }}
@@ -175,11 +175,11 @@
               </td>
               <td class="text-nowrap text-center" data-title="'rentalOperations'|translate">
                 <button type="button" class="btn btn-default btn-xs"
-                        ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">详情
+                        ng-click="rentalOrderMngCtrl.view(rentalOrder.id)">{{'details' |translate }}
                 </button>
               </td>
-              <td class="text-nowrap text-center" data-title="'附件'" >
-                <a><i ng-click="rentalOrderMngCtrl.fileUpload(rentalOrder)"  class="fa fa-paperclip"></i></a>
+              <td class="text-nowrap text-center" data-title="'attachment'|translate" >
+                <a><i ng-click="rentalOrderMngCtrl.attchView(rentalOrder)"  class="fa fa-paperclip"></i></a>
               </td>
             </tr>
           </table>

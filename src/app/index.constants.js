@@ -298,6 +298,8 @@
     .constant('RENTANL_ATTACH_UPLOAD_URL',SERVER_BASE_URL + 'rental/orderMachine/attachmentsUpload')//附件上传
     .constant('RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL', SERVER_BASE_URL + 'rental/orderMachine/entryAndExit')//进退场的同时附件上传
     .constant('RENTANL_ATTACH_DELETE_URL',SERVER_BASE_URL + 'rental/orderMachine/delete')//附件删除
+    .constant('RENTANL_ATTACH_VIEW_URL',SERVER_BASE_URL + 'rental/orderMachine/attachInfo')//获取附件信息列表
+    .constant('RENTAL_ATTCHMENT_INFO_URL', SERVER_BASE_URL + 'rental/orderMachine/attachmentInfo')//附件查看
 
     //租赁资产管理
     .constant('RENTAL_TOTALINCOME_URL', SERVER_BASE_URL + 'rental/asset/getIncomeTotal') //收入统计上方四个方框 总收入和每种类型的总收入
