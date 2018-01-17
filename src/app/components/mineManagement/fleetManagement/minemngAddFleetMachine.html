@@ -1,28 +1,36 @@
 
+<script src="minemngAddFleetMachine.controller.js"></script>
 <div class="modal-header">
-  <h3 class="modal-title">{{'添加车辆'|translate}}</h3>
+  <h3 class="modal-title">{{'管理车辆'|translate}}</h3>
 </div>
 
 <div class="modal-body row">
-<form name="newFleetMachineForm" class="form-horizontal" >
 
-    <div class="box-body col-sm-12">
-
-
-      <div class="form-group">
-        <label class="col-md-2 control-label">{{'选择小组' | translate}}:</label>
-        <div class="col-md-6 ">
-          <p class="input-group">
-            <input type="text" id="org" class="form-control" placeholder="{{'选择小组' | translate}} {{addMineFleetCtrl.fleetName}} "    ng-model="addMineFleetCtrl.fleetTeamName" name="org" readonly required />
-            <span class="input-group-btn">
+  <div class="modal-body row">
+    <label class="col-md-2 control-label">{{'选择小组' | translate}}:</label>
+    <div class="col-md-6">
+      <p class="input-group">
+        <input type="text" id="org" class="form-control" placeholder="{{'选择小组' | translate}} {{addMineFleetCtrl.fleetName}} "    ng-model="addMineFleetCtrl.fleetTeamName" name="org" readonly required />
+        <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="addMineFleetCtrl.addTeam()">
                     <i class="fa fa-sitemap"></i>
                   </button>
                 </span>
-          </p>
+      </p>
 
-        </div>
-      </div>
+    </div>
+  </div>
+
+  <uib-tabset active="active" type="tabs">
+    <uib-tab index="3" active="true" heading="添加车辆"  select="addMineFleetCtrl.query()">
+
+  <form name="newFleetMachineForm" class="form-horizontal" >
+
+    <div class="box-body col-sm-12">
+
+
+
+
 
 
       <div class="row form-group">
@@ -36,11 +44,11 @@
 
         <label for="status" class="col-sm-2 control-label padding5">{{'车辆类型'|translate}}</label>
         <div class="col-md-4">
-          <ui-select id="status" name="machineType" ng-model="addMineFleetCtrl.machineTypeList.name" theme="bootstrap"
+          <ui-select id="status" name="machineTypeList" ng-model="addMineFleetCtrl.machineType" theme="bootstrap"
                      ng-disabled="disabled">
-            <ui-select-match allow-clear="true" placeholder="{{'车辆类型'|translate}}">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices  repeat="machineType.id as machineType in addMineFleetCtrl.machineTypeList " >
-              <div  ng-bind-html="machineType.name | highlight: $select.search"></div>
+            <ui-select-match allow-clear="true" placeholder="{{'车辆类型'|translate}}">{{$select.selected.description}}</ui-select-match>
+            <ui-select-choices  repeat="machineTypeList.code as machineTypeList in addMineFleetCtrl.machineTypeList " >
+              <div  ng-bind-html="machineTypeList.description | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -60,21 +68,20 @@
 
       <div class="row form-group" style="padding: 10px">
         <script id="selectAllHeader" type="text/ng-template">
-        <input type="checkbox" ng-click="addMineFleetCtrl.updateAllSelection($event)"
+        <input type="checkbox" ng-click="addMineFleetCtrl.addUpdateAllSelection($event)"
                ng-model="addMineFleetCtrl.checked">
         </script>
         <div class="table-responsive">
-        <table ng-table="addMineFleetCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="addMineFleetCtrl.addTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="machine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'" style="text-align:center">
-               <input type="checkbox" ng-checked="addMineFleetCtrl.isSelected(machine.id)"
-                      ng-click="addMineFleetCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+               <input type="checkbox" ng-checked="addMineFleetCtrl.isAddSelected(machine.id)"
+                      ng-click="addMineFleetCtrl.addUpdateSelection($event,machine.id)" ng-model="machine.checked">
              </td>
             <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
             <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
-            <td class="text-nowrap" data-title="'车辆类型'|translate" sortable="'machineType'" >
-              <span ng-if ="machine.machineType==1">矿车</span>
-              <span ng-if ="machine.machineType==2">挖掘机</span>
+            <td class="text-nowrap" data-title="'车辆类型'|translate" sortable="'machineType'" >{{machine.description }}
+
             </td>
           </tr>
         </table>
@@ -82,17 +89,62 @@
       </div>
 
       <div >
-        <uib-pagination total-items="addMineFleetCtrl.page.totalElements"
-                        ng-change="addMineFleetCtrl.query(addMineFleetCtrl.pageNumber-1,null,null,null)"
-                        max-size="5" ng-model="addMineFleetCtrl.pageNumber" items-per-page="addMineFleetCtrl.page.size"
+        <uib-pagination total-items="addMineFleetCtrl.totalElements"
+                        ng-change="addMineFleetCtrl.query(addMineFleetCtrl.currentPage-1,addMineFleetCtrl.currentPage,addMineFleetCtrl.pageSize,machine)"
+                        max-size="5" ng-model="addMineFleetCtrl.currentPage" items-per-page="addMineFleetCtrl.pageSize"
                         class="pagination-sm" boundary-links="true" rotate="false"
                         first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
       </div>
     </div>
 </form>
 
+  <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="addMineFleetCtrl.addFleetMachine(addMineFleetCtrl.machine)">{{'添加'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="addMineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+
+
+
+ </uib-tab>
+
+    <uib-tab index="4" heading="修改车辆" select="addMineFleetCtrl.queryMachine()">
+
+      <form name="newFleetMachineForm" class="form-horizontal" >
+
+        <div class="box-body col-sm-12">
+
+          <div class="row form-group" style="padding: 10px">
+            <script id="selectAllHeader1" type="text/ng-template">
+              <input type="checkbox" ng-click="addMineFleetCtrl.deleUpdateAllSelection($event)"
+                     ng-model="addMineFleetCtrl.checked">
+            </script>
+            <div class="table-responsive">
+              <table ng-table="addMineFleetCtrl.deleTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+                <tr ng-repeat="machine in $data ">
+                  <td class="text-nowrap" data-header="'selectAllHeader1'" style="text-align:center">
+                    <input type="checkbox" ng-checked="addMineFleetCtrl.isDeleSelected(machine.id)"
+                           ng-click="addMineFleetCtrl.deleUpdateSelection($event,machine.id)" ng-model="machine.checked">
+                  </td>
+                  <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
+                  <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
+                  <td class="text-nowrap" data-title="'车辆类型'|translate" sortable="'machineType'" >{{machine.description }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </form>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-danger "
+                  ng-click="addMineFleetCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
+          </button>
+        <button class="btn btn-warning" type="button" ng-click="addMineFleetCtrl.cancel()">{{'关闭'|translate}}</button>
+      </div>
+    </uib-tab>
+
+ </uib-tabset>
+
+
 </div>
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="addMineFleetCtrl.ok(addMineFleetCtrl.machine)">{{'确定'|translate}}</button>
-  <button class="btn btn-warning" type="button" ng-click="addMineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
-</div>
+
