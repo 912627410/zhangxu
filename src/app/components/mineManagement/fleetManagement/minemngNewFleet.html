@@ -13,7 +13,7 @@
 
           <input type="text" id="fleetName" class="form-control" placeholder="{{'车队名字'|translate}}"
                  ng-model="addFleetCtrl.minemngFleet.label"  name="label"  typeahead-show-hint="true"
-                 validator="required" />
+                 validator="required,numberAndChar,maxlength=8" />
         </div>
       </div>
 

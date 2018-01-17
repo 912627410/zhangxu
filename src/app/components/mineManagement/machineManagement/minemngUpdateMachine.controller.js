@@ -7,10 +7,10 @@
 
   angular
     .module('GPSCloud')
-    .controller('updateMineMachineController', updateMineMachineCtrl);
+    .controller('updateMineMachineController', updateMineMachineController);
 
   /** @ngInject */
-  function updateMineMachineCtrl($filter,machineService,machine, $uibModalInstance,languages, MINE_UPDATEMACHINE_URL, serviceResource, Notification,MINE_PAGE_URL,MINEMACHINE_STATE_LIST_URL) {
+  function updateMineMachineController(machine, $uibModalInstance, MINE_UPDATEMACHINE_URL, serviceResource, Notification,MINE_MACHINE_STATE_LIST_URL) {
     var vm = this;
     vm.machine = machine;
 
@@ -40,7 +40,7 @@
       opened: false
     };
 
-    var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
+    var machineStatePromise = serviceResource.restCallService(MINE_MACHINE_STATE_LIST_URL,"QUERY");
     machineStatePromise.then(function (data) {
       vm.machineStateList= data;
     }, function () {

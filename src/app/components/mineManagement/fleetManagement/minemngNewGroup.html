@@ -31,7 +31,7 @@
 
           <input type="text" id="fleetName" class="form-control" placeholder="{{'小组名字'|translate}}"
                  ng-model="addGroupCtrl.minemngFleet.label"  name="label"  typeahead-show-hint="true"
-                 validator="required" />
+                 validator="required,maxlength=8" />
         </div>
       </div>
 
