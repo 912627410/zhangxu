@@ -179,8 +179,8 @@
         restCallURL += "&search_DGTE_locateDateTime=" + $filter('date')(startDate, 'yyyy-MM-dd');
       }
       if (null != vm.endDate ) {
-        vm.endDate = serviceResource.getChangeChinaTime(endDate);
-        restCallURL += "&search_DLTE_locateDateTime=" + $filter('date')(vm.endDate, 'yyyy-MM-dd');
+        var endDate = serviceResource.getChangeChinaTime(vm.endDate);
+        restCallURL += "&search_DLTE_locateDateTime=" + $filter('date')(endDate, 'yyyy-MM-dd');
       }
       if(null != vm.queryLicenseId){
         restCallURL += "&search_LIKES_licenseId=" + $filter('uppercase')(vm.queryLicenseId);
