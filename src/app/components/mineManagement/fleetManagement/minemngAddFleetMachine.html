@@ -68,15 +68,15 @@
 
       <div class="row form-group" style="padding: 10px">
         <script id="selectAllHeader" type="text/ng-template">
-        <input type="checkbox" ng-click="addMineFleetCtrl.updateAllSelection($event)"
+        <input type="checkbox" ng-click="addMineFleetCtrl.addUpdateAllSelection($event)"
                ng-model="addMineFleetCtrl.checked">
         </script>
         <div class="table-responsive">
-        <table ng-table="addMineFleetCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <table ng-table="addMineFleetCtrl.addTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
           <tr ng-repeat="machine in $data">
             <td class="text-nowrap" data-header="'selectAllHeader'" style="text-align:center">
-               <input type="checkbox" ng-checked="addMineFleetCtrl.isSelected(machine.id)"
-                      ng-click="addMineFleetCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+               <input type="checkbox" ng-checked="addMineFleetCtrl.isAddSelected(machine.id)"
+                      ng-click="addMineFleetCtrl.addUpdateSelection($event,machine.id)" ng-model="machine.checked">
              </td>
             <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
             <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
@@ -99,7 +99,7 @@
 </form>
 
   <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="addMineFleetCtrl.ok(addMineFleetCtrl.machine)">{{'确定'|translate}}</button>
+        <button class="btn btn-primary" type="button" ng-click="addMineFleetCtrl.addFleetMachine(addMineFleetCtrl.machine)">{{'添加'|translate}}</button>
         <button class="btn btn-warning" type="button" ng-click="addMineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 
@@ -115,15 +115,15 @@
 
           <div class="row form-group" style="padding: 10px">
             <script id="selectAllHeader1" type="text/ng-template">
-              <input type="checkbox" ng-click="addMineFleetCtrl.updateAllSelection($event)"
+              <input type="checkbox" ng-click="addMineFleetCtrl.deleUpdateAllSelection($event)"
                      ng-model="addMineFleetCtrl.checked">
             </script>
             <div class="table-responsive">
-              <table ng-table="addMineFleetCtrl.tableParams2" class="table table-condensed table-bordered table-striped text-nowrap">
+              <table ng-table="addMineFleetCtrl.deleTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="machine in $data ">
                   <td class="text-nowrap" data-header="'selectAllHeader1'" style="text-align:center">
-                    <input type="checkbox" ng-checked="addMineFleetCtrl.isSelected(machine.id)"
-                           ng-click="addMineFleetCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+                    <input type="checkbox" ng-checked="addMineFleetCtrl.isDeleSelected(machine.id)"
+                           ng-click="addMineFleetCtrl.deleUpdateSelection($event,machine.id)" ng-model="machine.checked">
                   </td>
                   <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
                   <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
