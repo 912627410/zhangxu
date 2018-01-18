@@ -10,7 +10,6 @@
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
     vm.minemnguser = {
-      jobNumber: ""
     };
     vm.ssnCode = ssnCode;
 
