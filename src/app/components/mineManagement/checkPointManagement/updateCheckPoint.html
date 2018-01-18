@@ -28,7 +28,7 @@
         <label class="col-sm-2 control-label">工作半径</label>
         <div class="col-sm-10">
           <input type="text" id="radius" name="radius" class="form-control" ng-model="updateCheckPointCtrl.checkPoint.radius"
-                 typeahead-show-hint="true" validator="required,number,islength=3" placeholder="请录入..."/>
+                 typeahead-show-hint="true" validator="required,number,maxlength=3" placeholder="请录入..."/>
           <span style="position: absolute;top: 6px;right: 26px;">米</span>
         </div>
       </div>

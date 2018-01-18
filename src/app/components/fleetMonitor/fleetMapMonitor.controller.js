@@ -17,12 +17,6 @@
     vm.operatorInfo = $rootScope.userInfo;
     vm.markerMap = angular.copy(Map);
 
-    var fleetChart = $rootScope.fleetChart[0];
-    while (fleetChart.children.length > 0) {
-      fleetChart = fleetChart.children[0];
-    }
-    vm.fleet = fleetChart;
-
     var ws;//websocket实例
     var lockReconnect = false;//避免重复连接
     var wsUrl = WEBSOCKET_URL + "webSocketServer/fleetRealTimeMonitor?token=" + vm.operatorInfo.authtoken;
@@ -209,13 +203,12 @@
 
 
     vm.initQuery = function (fleet) {
-      if(fleet == null){
-        Notification.warning("请选择车队");
-        return;
-      }
       var restCallURL = WORK_POINT_URL;
       restCallURL += "?page=0&size=1000&sort=id";
-      restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+
+      if(fleet != null){
+        restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+      }
 
 
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
@@ -241,7 +234,9 @@
       var sizeUrl =  1000;
       var sortUrl =  'id';
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+      if(fleet != null){
+        restCallURL += "&search_EQ_fleet.id=" + fleet.id;
+      }
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
           vm.deviceList = data.content;

@@ -76,8 +76,11 @@
           var startMonth = minemnguser.entryTime.getMonth() + 1;
           var startDateFormated = minemnguser.entryTime.getFullYear() + '-' + startMonth + '-' + minemnguser.entryTime.getDate();
 
-          restCallURL += "entryTime=" + startDateFormated;
+          restCallURL += "&entryTime=" + startDateFormated;
 
+        }
+        if (null != minemnguser.status && minemnguser.status != "") {
+          restCallURL += "&status=" + minemnguser.status;
         }
       }
 
@@ -206,6 +209,7 @@
       vm.minemnguser.name=null;
       vm.minemnguser.jobNumber=null;
       vm.minemnguser.entryTime=null;
+      vm.minemnguser.status=null;
       vm.roleType=null;
 
     };

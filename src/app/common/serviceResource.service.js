@@ -880,6 +880,9 @@
             warningMsg.description = "设定的代码无效";
             warningMsg.action = "停止所有动作";
             break;
+          case '5':
+            warningMsg.description = "通信过程中通信中断故障";
+            break;
           case '6':
             warningMsg.description = "远程参数下发成功提示";
             warningMsg.action = "仅显示报警";
@@ -908,9 +911,33 @@
             warningMsg.description = "启动时底盘上升或下降按钮打开错误";
             warningMsg.action = "停止所有底盘控制";
             break;
+          case '13':
+            warningMsg.description = "上电时，底盘预热按钮打开错误";
+            break;
+          case '14':
+            warningMsg.description = "上电时，底盘点火按钮打开错误";
+            break;
           case '18':
             warningMsg.description = "坑洞保护错误";
             warningMsg.action = "停止起升和行走";
+            break;
+          case '19':
+            warningMsg.description = "喇叭线圈错误";
+            break;
+          case '23':
+            warningMsg.description = "喇叭未连接";
+            break;
+          case '25':
+            warningMsg.description = "超载报警灯故障";
+            break;
+          case '26':
+            warningMsg.description = "高速旁通电磁阀线圈错误";
+            break;
+          case '27':
+            warningMsg.description = "比例电磁阀线圈错误";
+            break;
+          case '28':
+            warningMsg.description = "油门电磁阀线圈错误";
             break;
           case '31':
             warningMsg.description = "压力传感器错误";
@@ -958,6 +985,12 @@
             warningMsg.description = "启动时,平台手柄不在中位错误";
             warningMsg.action = "车速降到起升后的速度";
             break;
+          case '48':
+            warningMsg.description = "上电时，平台点火按钮按下错误";
+            break;
+          case '49':
+            warningMsg.description = "上电时，平台预热按钮按下错误";
+            break;
           case '52':
             warningMsg.description = "前进线圈错误";
             warningMsg.action = "停止起升和行走";
@@ -986,17 +1019,101 @@
             warningMsg.description = "刹车线圈错误";
             warningMsg.action = "停止起升和行走";
             break;
+          case '59':
+            warningMsg.description = "速度阀(液驱)或MCE2(电驱)、行走高低速电磁阀错误";
+            break;
+          case '60':
+            warningMsg.description = "马达控制器电流故障";
+            break;
+          case '61':
+            warningMsg.description = "马达控制器电流传感器故障";
+            break;
+          case '62':
+            warningMsg.description = "马达控制器硬件破损故障";
+            break;
+          case '63':
+            warningMsg.description = "马达控制器马达输出故障";
+            break;
+          case '64':
+            warningMsg.description = "马达控制器SRO故障";
+            break;
+          case '65':
+            warningMsg.description = "马达节流阀故障";
+            break;
+          case '66':
+            warningMsg.description = "马达控制器紧急逆向故障";
+            break;
+          case '67':
+            warningMsg.description = "马达控制器HPD故障";
+            break;
           case '68':
             warningMsg.description = "低电压报警";
             warningMsg.action = "停止所有动作";
+            break;
+          case '69':
+            warningMsg.description = "高中性电流故障";
+            break;
+          case '70':
+            warningMsg.description = "转向输入超出范围";
+            break;
+          case '71':
+            warningMsg.description = "马达控制器主接触器故障";
+            break;
+          case '72':
+            warningMsg.description = "马达控制器过压故障";
+            break;
+          case '73':
+            warningMsg.description = "马达控制器热量减少故障";
+            break;
+          case '74':
+            warningMsg.description = "马达控制器马达故障";
+            break;
+          case '75':
+            warningMsg.description = "马达控制器泵马达故障";
+            break;
+          case '76':
+            warningMsg.description = "马达控制器左驱动马达故障";
+            break;
+          case '77':
+            warningMsg.description = "马达控制器右驱动马达故障";
+            break;
+          case '78':
+            warningMsg.description = "泵马达短路故障";
+            break;
+          case '79':
+            warningMsg.description = "左驱动马达短路故障";
             break;
           case '80':
             warningMsg.description = "超过80%负载报警";
             warningMsg.action = "只是报警";
             break;
+          case '81':
+            warningMsg.description = "右驱动马达短路故障";
+            break;
+          case '82':
+            warningMsg.description = "左刹车线圈故障";
+            break;
+          case '83':
+            warningMsg.description = "右刹车线圈故障";
+            break;
+          case '85':
+            warningMsg.description = "刹车故障";
+            break;
+          case '87':
+            warningMsg.description = "刹车接通故障";
+            break;
+          case '89':
+            warningMsg.description = "电机磁场打开故障";
+            break;
           case '90':
             warningMsg.description = "超过90%负载报警";
             warningMsg.action = "只是报警";
+            break;
+          case '91':
+            warningMsg.description = "电机左磁场短路故障";
+            break;
+          case '92':
+            warningMsg.description = "电机右磁场短路故障";
             break;
           case '99':
             warningMsg.description = "超过99%负载报警";
@@ -1009,6 +1126,9 @@
           case 'LL':
             warningMsg.description = "机器倾斜超过安全限定错误";
             warningMsg.action = "停止起升和行走";
+            break;
+          case '128':
+            warningMsg.description = "OL超载";
             break;
         }
         return warningMsg;

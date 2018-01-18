@@ -6,7 +6,7 @@
   .controller('fuelConsumptionController', fuelConsumptionController);
 
   /** @ngInject */
-  function fuelConsumptionController($rootScope,$filter ,treeFactory,NgTableParams, ngTableDefaults,Notification,serviceResource,DEFAULT_SIZE_PER_PAGE,FUEL_CONSUMPTION_QUERY,FUEL_CONSUMPTION_STATISTICS) {
+  function fuelConsumptionController($rootScope,$filter ,fleetTreeFactory,NgTableParams, ngTableDefaults,Notification,serviceResource,DEFAULT_SIZE_PER_PAGE,FUEL_CONSUMPTION_QUERY,FUEL_CONSUMPTION_STATISTICS) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -67,7 +67,7 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org = selectedItem;
       });
     };

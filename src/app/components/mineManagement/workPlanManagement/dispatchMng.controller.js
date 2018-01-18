@@ -21,7 +21,7 @@
     vm.temporaryDispatchShow = false;
     vm.selectAll = false; //是否全选标志
     vm.totalDispatchSelected = []; //选中的总调度
-    vm.temporaryDispatchSelected = []; //选中的临时调度的id
+    vm.temporaryDispatchSelected = []; //选中的临时调度的i车辆d
 
     ngTableDefaults.params.count = 20;
     ngTableDefaults.settings.counts = [];

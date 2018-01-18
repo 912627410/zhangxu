@@ -40,6 +40,9 @@
       maxlength: function(value, scope, element, attrs, param) {
         return value.length <= param;
       },
+      islength: function (value, scope, element, attrs, param) {
+        return value.length === param;
+      },
       nullOrNumber : function (value) {
         return value ==null || value =='' || /^\d+$/.test(value);
       },
@@ -163,6 +166,35 @@
           return value === attrs.validfoo;
         },
         url:"abc"
+      }
+    );
+
+    //自定义最大长度最小长度消息
+    $validationProvider.setExpression({
+        maxlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxlength: {
+              error: "{{'maxLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length <= param;
+        },
+        minlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minlength: {
+              error: "{{'minLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length >= param;
+        },
+        islength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            islength: {
+              error: "{{'isLength' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length === param;
+        }
       }
     );
 

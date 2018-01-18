@@ -40,8 +40,8 @@
         if (null != machine.productModel&&machine.productModel!="") {
           restCallURL += "&search_LIKE_productModel=" + $filter('uppercase')(machine.productModel);
         }
-        if (null != machine.manufacotryName&&machine.manufacotryName!="") {
-          restCallURL += "&search_LIKE_manufacotryName=" + $filter('uppercase')(machine.manufacotryName);
+        if (null != machine.manufactoryName&&machine.manufactoryName!="") {
+          restCallURL += "&search_LIKE_manufactoryName=" + $filter('uppercase')(machine.manufactoryName);
         }
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");

@@ -22,7 +22,7 @@
 
     vm.ok= function(minemngFleet){
       if(vm.minemngFleet.parentFleet==null||vm.minemngFleet.parentFleet==""){
-        Notification.error('添加小组失败：请选择车队！');
+        Notification.warning('请选择车队！');
       }else {
         vm.fleetGroup.parentId=vm.minemngFleet.parentFleet.id;
         vm.fleetGroup.label=minemngFleet.label;
@@ -69,7 +69,7 @@
       modalInstance.result.then(function (result) {
         vm.fleet=result;
         if(vm.fleet.parentId!=0){
-          Notification.error('请选择车队！');
+          Notification.warning('请选择车队！');
           vm.minemngFleet.parentFleet=null;
         }else {
           vm.minemngFleet.parentFleet=result;

@@ -9,7 +9,7 @@
   .controller('profitController', profitController);
 
   /** @ngInject */
-  function profitController($rootScope, $filter, Notification, treeFactory, serviceResource, NgTableParams, ngTableDefaults, PROFIT_STATISTICS_URL, DEFAULT_SIZE_PER_PAGE) {
+  function profitController($rootScope, $filter, Notification, fleetTreeFactory, serviceResource, NgTableParams, ngTableDefaults, PROFIT_STATISTICS_URL, DEFAULT_SIZE_PER_PAGE) {
 
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
@@ -68,7 +68,7 @@
 
     //组织树的显示
     vm.openTreeInfo= function() {
-      treeFactory.treeShow(function (selectedItem) {
+      fleetTreeFactory.treeShow(function (selectedItem) {
         vm.org =selectedItem;
       });
     };
