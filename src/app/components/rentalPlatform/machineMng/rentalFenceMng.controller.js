@@ -17,11 +17,6 @@
                                     RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT, RENTAL_ORG_FENCE_URL) {
     var vm = this;
     vm.pageSize = 12;
-    vm.fenceStatus = {
-      fenceCount: 0,
-      normalCount: 0,
-      lapseCount: 0
-    }
     vm.searchCondition = {}
     ngTableDefaults.params.count = vm.pageSize;
     ngTableDefaults.settings.counts = [];
@@ -96,11 +91,15 @@
      * 分状态统计
      */
     vm.fenceStatusCount = function () {
+      vm.fenceStatus = {
+        fenceCount: 0,
+        normalCount: 0,
+        lapseCount: 0
+      }
       var fenceCountPromis = serviceResource.restCallService(RENTAL_ORG_FENCE_COUNT, "GET");
       fenceCountPromis.then(function (data) {
         var fenceCount = data.content;
         angular.forEach(fenceCount, function (data, index, array) {
-          vm.fenceStatus.fenceCount += data.fenceStatusCount;
           if (data.status == 1) {
             vm.fenceStatus.normalCount = data.fenceStatusCount;
           }
@@ -108,11 +107,11 @@
             vm.fenceStatus.lapseCount = data.fenceStatusCount;
           }
         })
+        vm.fenceStatus.fenceCount=vm.fenceStatus.normalCount+vm.fenceStatus.lapseCount;
       }, function (reson) {
         Notification.error("获取围栏数据失败");
       })
     }
-
     vm.fenceStatusCount()
 
     /**
@@ -129,8 +128,6 @@
         size: 'lg'
       });
       modalInstance.result.then(function (result) {
-        vm.fenceStatus.fenceCount += 1;
-        vm.fenceStatus.normalCount += 1;
         vm.tableParams.data.splice(0, 0, result);
         vm.query(null, null, null, vm.searchCondition);
         vm.fenceStatusCount()
