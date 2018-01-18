@@ -9,7 +9,9 @@
   function minemngNewUserMngController($uibModalInstance,$scope,serviceResource,Notification,ssnCode,MINEMNG_USERINFO_URL,ROLE_URL) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
-    vm.minemnguser = {};
+    vm.minemnguser = {
+      jobNumber: ""
+    };
     vm.ssnCode = ssnCode;
 
     vm.entryTimeSetting = {
@@ -51,6 +53,10 @@
     vm.getUserRoleType();
 
     vm.ok = function () {
+      if(vm.minemnguser.jobNumber != null &&vm.minemnguser.jobNumber !== 'undefined' &&vm.minemnguser.jobNumber !== '' && vm.minemnguser.jobNumber.length!=6) {
+        Notification.warning("工号为6位数字");
+        return;
+      }
       vm.minemnguser.roleId = vm.roleType.id;
       vm.minemnguser.roleName = vm.roleType.name;
       vm.minemnguser.ssn = vm.ssnCode + vm.ssn;

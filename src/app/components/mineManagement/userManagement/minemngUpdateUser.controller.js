@@ -53,6 +53,10 @@
     vm.getUserRoleType();
 
     vm.ok = function () {
+      if(vm.minemnguser.jobNumber != null &&vm.minemnguser.jobNumber !== 'undefined' &&vm.minemnguser.jobNumber !== '' && vm.minemnguser.jobNumber.length!=6) {
+          Notification.warning("工号为6位数字");
+          return;
+        }
       vm.minemnguser.ssn = vm.ssnCode + vm.ssn;
       var rspdata = serviceResource.restUpdateRequest(MINEMNG_USERINFO_UPDATE_URL,vm.minemnguser);
       rspdata.then(function (data) {
