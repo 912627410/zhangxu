@@ -1,7 +1,7 @@
 /**
  *
  * @author syLong
- * @create 2018-01-02 15:07
+ * @create 2018-01-12 20:12
  * @email  yalong.shang@nvr-china.com
  * @description
  */
@@ -10,23 +10,24 @@
 
     angular
         .module('GPSCloud')
-        .controller('updateTotalDispatchController', updateTotalDispatchController);
+        .controller('batchUpdateTotalDispatchController', batchUpdateTotalDispatchController);
 
-    function updateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, totalDispatch, minemngResource, MINEMNG_TOTAL_DISPATCH) {
+    function batchUpdateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource,minemngResource, totalDispatchList, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
-      vm.oldTotalDispatch = angular.copy(totalDispatch);
-      vm.workFace = totalDispatch.workFace;
-      vm.dumpField = totalDispatch.dumpField;
+      vm.totalDispatchList = totalDispatchList;
 
-      if(getZeroDate() < totalDispatch.effectiveDate) {
-        vm.okDesc = "确定";
-      } else {
-        vm.okDesc = "发布";
+      if(vm.totalDispatchList.length > 0) {
+        if(getZeroDate() < vm.totalDispatchList[0].effectiveDate) {
+          vm.okDesc = "确定";
+        } else {
+          vm.okDesc = "发布";
+        }
       }
 
+
       /**
-       * 加载作业面列表
+       * 获取工作面集合
        */
       var workFaceListPromise = minemngResource.getWorkFaceList();
       workFaceListPromise.then(function (data) {
@@ -36,7 +37,7 @@
       });
 
       /**
-       * 加载排土场列表
+       * 获取排土场集合
        */
       var dumpFieldListPromise = minemngResource.getDumpFieldList();
       dumpFieldListPromise.then(function (data) {
@@ -45,8 +46,11 @@
         Notification.error(reason.data);
       });
 
-
       vm.ok = function () {
+        if(vm.totalDispatchList.length <= 0) {
+          Notification.warning("请选择需要修改的记录");
+          return;
+        }
         if(vm.workFace == null || vm.workFace === "") {
           Notification.warning("请选择工作面");
           return;
@@ -55,12 +59,8 @@
           Notification.warning("请选择排土场");
           return;
         }
-        if(vm.workFace === vm.oldTotalDispatch.workFace && vm.oldTotalDispatch.dumpField === vm.dumpField) {
-          Notification.warning("没有修改内容");
-          return;
-        }
         var updateTotalDispatch = {
-          totalDispatchList: [totalDispatch],
+          totalDispatchList: vm.totalDispatchList,
           workFace: vm.workFace,
           dumpField: vm.dumpField
         };

@@ -21,8 +21,8 @@
         <div class="col-sm-10">
           <ui-select multiple ng-model="newTotalDispatchCtrl.newTotalDispatch.teamList" theme="bootstrap" close-on-select="false" style="padding: 2px 12px;">
             <ui-select-match placeholder="{{'pleaseSelect'|translate}}">{{$item.name}}</ui-select-match>
-            <ui-select-choices repeat="teams in newTotalDispatchCtrl.teamList">
-              {{teams.name}}
+            <ui-select-choices repeat="teams in newTotalDispatchCtrl.teamList| filter: $select.search">
+              <span ng-bind-html="teams.name | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>
