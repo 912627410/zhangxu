@@ -4,7 +4,6 @@
   -date:2018-1-5
 -->
 
-<div>
   <section>
     <ol class="breadcrumb" ng-hide="utilizationCtrl.hiteTopLink">
       <li><a href="#"><i class="fa fa-dashboard"></i> {{'homePage'|translate}}</a></li>
@@ -14,7 +13,7 @@
     </ol>
   </section>
 
-  <div class="container-fluid">
+  <div class="container-fluid machineCompared">
     <!--查询条件-->
     <div class="row form-group" >
       <!--查询周期-->
@@ -31,9 +30,9 @@
       </div>
 
       <!--季度-->
-      <div class="form-inline col-md-3" ng-show="utilizationCtrl.dateType==90">
-        <ui-select ng-model="utilizationCtrl.queryDate" theme="bootstrap" ng-disabled="disabled" style="width: 70%">
-          <ui-select-match allow-clear="true" placeholder="季度">{{$select.selected.quarterName}}
+      <div class="select-container col-md-3" ng-show="utilizationCtrl.dateType==90">
+        <ui-select ng-model="utilizationCtrl.queryDate" style="width: 60%">
+          <ui-select-match  placeholder="季度">{{$select.selected.quarterName}}
           </ui-select-match>
           <ui-select-choices  repeat="quarter.quarterValue as quarter in utilizationCtrl.quarterList" >
             <div  ng-bind-html="quarter.quarterName | highlight: $select.search"></div>
@@ -75,13 +74,24 @@
       <div class="form-inline col-md-3">
         <button class="btn btn-primary" type="button" ng-click="utilizationCtrl.query()">{{'query'|translate}}</button>
         <button class="btn btn-warning" type="button" ng-click="utilizationCtrl.reset()">{{'reset'|translate}}</button>
+        <a id="mapExport" class="btn btn-primary" type="button" title="Export Table" ng-show="false"
+           data="utilizationCtrl.mapOption.series[0].data"
+           report-fields="{name: '区域', value: '广义开工率', value1: '活跃设备开工率', value2: '闲置率'}"
+           filename="'开工率与闲置率区域分布'" ng-json-export-excel>{{'export'|translate}}
+        </a>
+
+        <a id="lineExport" class="btn btn-primary" type="button" title="Export Table" ng-show="false"
+           data="utilizationCtrl.lineDataList"
+           report-fields="{cDate: '日期', broadUtilizationRate: '广义开工率', narrowUtilizationRate: '活跃设备开工率', idleRate: '闲置率'}"
+           filename="'开工率与闲置率时间分布'" ng-json-export-excel>{{'export'|translate}}
+        </a>
       </div>
     </div>
     <!--中间地图-->
-    <div class="row">
+    <div class="right-container row">
       <div class="col-md-12">
         <a ng-click="utilizationCtrl.queryForLine('全国')" href="">
-          <div class="panel" style="position:absolute;left: 2%;top: 2%;z-index: 999">
+          <div class="panel" style="position:absolute;left: 2%;top: 2%;z-index: 80">
             <div class="box-header">
               <h6 class="box-title text-gray">全国</h6>
             </div>
@@ -109,11 +119,9 @@
       </div>
     </div>
     <!--底部折线图-->
-    <div class="row">
+    <div class="right-container row">
       <div class="col-md-12">
         <div id="bottomMap" style="height:300px;"></div>
       </div>
     </div>
   </div>
-
-</div>

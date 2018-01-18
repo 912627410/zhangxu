@@ -22,7 +22,8 @@
     //初始化图表
     vm.centerMap = echarts.init(document.getElementById("centerMap"));
     vm.bottomLine = echarts.init(document.getElementById("bottomMap"));
-
+    vm.mapExport = document.getElementById("mapExport");
+    vm.lineExport = document.getElementById("lineExport");
     //选择日期类型
     vm.changeDateType = function (dateType) {
       var mode = 'day';
@@ -88,9 +89,6 @@
         textStyle: {
           fontSize: 26
         },
-        subtextStyle: {
-          fontSize: 17
-        },
         left: '32%'
       },
       tooltip: {
@@ -120,7 +118,17 @@
         bottom: 20,
         right: 20,
         itemGap: 30,
-
+        feature: {
+          myTool: {
+            show: true,
+            title: '导出数据',
+            icon: 'path://M768 102.4v307.2c0 34.816-26.624 61.44-61.44 61.44h-389.12c-34.816 0-61.44-26.624-61.44-61.44v-307.2h-92.16c-34.816 0-61.44 26.624-61.44 61.44V870.4c0 34.816 26.624 61.44 61.44 61.44h706.56c34.816 0 61.44-26.624 61.44-61.44v-104.448c0-12.288 8.192-20.48 20.48-20.48s20.48 8.192 20.48 20.48v104.448c0 57.344-45.056 102.4-102.4 102.4H163.84c-57.344 0-102.4-45.056-102.4-102.4v-706.56c0-57.344 45.056-102.4 102.4-102.4h706.56c57.344 0 102.4 45.056 102.4 102.4v417.792c0 12.288-8.192 20.48-20.48 20.48s-20.48-8.192-20.48-20.48v-417.792c0-34.816-26.624-61.44-61.44-61.44h-102.4z m-471.04 0v307.2c0 10.24 8.192 20.48 20.48 20.48h389.12c10.24 0 20.48-8.192 20.48-20.48v-307.2h-430.08z m301.056 92.16c0-12.288 8.192-20.48 20.48-20.48s20.48 8.192 20.48 20.48v122.88c0 12.288-8.192 20.48-20.48 20.48s-20.48-8.192-20.48-20.48v-122.88z',
+            onclick: function (){
+              vm.mapExport.click();
+            }
+          },
+          saveAsImage: {show: true}
+        },
         iconStyle: {
           normal: {
             textPosition: 'left',
@@ -220,7 +228,8 @@
     vm.lineOption = {
       title: {
         text: '日开工率跟踪',
-        left: 'center'
+        left: 'center',
+        subtext: ''
       },
       tooltip: {
         trigger: 'axis'
@@ -236,7 +245,30 @@
         //bottom: '3%',
         containLabel: true
       },
-
+      toolbox: {
+        show: true,
+        orient: 'vertical',
+        // top: 'bottom',
+        bottom: 80,
+        right: 15,
+        itemGap: 30,
+        feature: {
+          myTool: {
+            show: true,
+            title: '导出数据',
+            icon: 'path://M768 102.4v307.2c0 34.816-26.624 61.44-61.44 61.44h-389.12c-34.816 0-61.44-26.624-61.44-61.44v-307.2h-92.16c-34.816 0-61.44 26.624-61.44 61.44V870.4c0 34.816 26.624 61.44 61.44 61.44h706.56c34.816 0 61.44-26.624 61.44-61.44v-104.448c0-12.288 8.192-20.48 20.48-20.48s20.48 8.192 20.48 20.48v104.448c0 57.344-45.056 102.4-102.4 102.4H163.84c-57.344 0-102.4-45.056-102.4-102.4v-706.56c0-57.344 45.056-102.4 102.4-102.4h706.56c57.344 0 102.4 45.056 102.4 102.4v417.792c0 12.288-8.192 20.48-20.48 20.48s-20.48-8.192-20.48-20.48v-417.792c0-34.816-26.624-61.44-61.44-61.44h-102.4z m-471.04 0v307.2c0 10.24 8.192 20.48 20.48 20.48h389.12c10.24 0 20.48-8.192 20.48-20.48v-307.2h-430.08z m301.056 92.16c0-12.288 8.192-20.48 20.48-20.48s20.48 8.192 20.48 20.48v122.88c0 12.288-8.192 20.48-20.48 20.48s-20.48-8.192-20.48-20.48v-122.88z',
+            onclick: function (){
+              vm.lineExport.click();
+            }
+          },
+          //dataView: {show: true},
+          saveAsImage: {show: true},
+          magicType: {
+            show: true,
+            type: ['line', 'bar']
+          }
+        }
+      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
@@ -303,7 +335,6 @@
         };
 
         if (data.content == null || data.content.length == 0 || data.content == []) {
-          Notification.warning("未查询到数据");
 
         }else{
           var dataList = _.sortBy(data.content, "broadUtilizationRate");
@@ -381,16 +412,17 @@
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
 
+        vm.lineOption.title.subtext = province;
         vm.lineOption.xAxis.data = [];
         vm.lineOption.series[0].data = [];
         vm.lineOption.series[1].data = [];
         vm.lineOption.series[2].data = [];
 
         if (data.content == null || data.content.length == 0 || data.content == []) {
-          Notification.warning("未查询到数据");
+
         }else{
-          var dataList = _.sortBy(data.content, "cDate");
-          angular.forEach(dataList, function (value, key) {
+          vm.lineDataList = _.sortBy(data.content, "cDate");
+          angular.forEach(vm.lineDataList, function (value, key) {
             vm.lineOption.xAxis.data.push(value.cDate);
             vm.lineOption.series[0].data.push(value.narrowUtilizationRate);
             vm.lineOption.series[1].data.push(value.broadUtilizationRate);
