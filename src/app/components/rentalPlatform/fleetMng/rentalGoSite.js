@@ -133,8 +133,8 @@
             vm.fileUpload(Id, file);
           }
           Notification.success(languages.findKey('transVehicle'));
-          $uibModalInstance.close(vm.selected.length);
         }
+        $uibModalInstance.close(vm.selected.length);
       }, function (reason) {
         Notification.error(languages.findKey('transVehiclFail'));
       });

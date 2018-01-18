@@ -128,9 +128,11 @@
         size: 'lg'
       });
       modalInstance.result.then(function (result) {
-        vm.tableParams.data.splice(0, 0, result);
-        vm.query(null, null, null, vm.searchCondition);
-        vm.fenceStatusCount()
+        if(result!=null){
+          vm.tableParams.data.splice(0, 0, result);
+          vm.query(null, null, null, vm.searchCondition);
+          vm.fenceStatusCount()
+        }
       }, function () {
         //取消
       });

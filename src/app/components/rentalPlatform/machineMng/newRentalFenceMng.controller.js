@@ -73,7 +73,7 @@
         location.reload(false);
       }
       //插件定义
-      var amapScale, toolBar, overView, geocoder, circleEditor;
+      var amapScale, toolBar, overView, geocoder;
 
       var localCenterAddr = [103.39, 36.9];//设置中心点大概在兰州附近
 
@@ -116,16 +116,11 @@
         });
         map.addControl(mapType);
       });
-      map.plugin(["AMap.MarkerClusterer"], function() {
-        var cluster = new AMap.MarkerClusterer(map, []);
-      });
-
       //在地图中添加ToolBar插件
       map.plugin(["AMap.ToolBar"], function () {
         toolBar = new AMap.ToolBar();
         map.addControl(toolBar);
       });
-
       //在地图中添加鹰眼插件
       map.plugin(["AMap.OverView"], function () {
         overView = new AMap.OverView({
@@ -145,10 +140,10 @@
 
       //在地图中画圆的插件
       map.plugin(["AMap.CircleEditor"], function () {
-        circleEditor = new AMap.CircleEditor({
-          visible: true //初始化隐藏鹰眼
-        });
-        map.addControl(circleEditor);
+        // circleEditor = new AMap.CircleEditor({
+        //   visible: true //初始化隐藏鹰眼
+        // });
+        // map.addControl(circleEditor);
       });
 
       //构造地点查询类
@@ -162,6 +157,7 @@
           city: '北京',
           map: map
         });
+        map.addControl(auto,placeSearch);
         AMap.event.addListener(auto, "select", function (e) {
           placeSearch.search(e.poi.name, function (status, result) {
             if (status === 'complete' && result.info === 'OK') {

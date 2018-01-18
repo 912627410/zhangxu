@@ -291,7 +291,6 @@
     }
 
     vm.goSite = function (rentalOrder) {
-      var rentalOrder = rentalOrder;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         templateUrl: 'app/components/rentalPlatform/fleetMng/rentalGoSite.html',
