@@ -337,6 +337,21 @@
           }
         }
       })
+      .state('home.utilization', {
+        url: '/utilization',
+        views: {
+          'rightside@home': {
+            templateUrl: function(){
+              return 'app/components/lgBigData/utilization.html'
+            },
+            controller: 'utilizationController as utilizationCtrl'
+
+          },
+          'footer@home': {
+            templateUrl: ''
+          },
+        }
+      })
 
     //DMS系统页面集成
     $stateProvider

@@ -5,6 +5,10 @@
 
   //生产环境的https协议地址
   //var SERVER_BASE_URL = 'https://iotserver2.nvr-china.com/rest/';
+
+  //数据分析服务Server URL
+  var SLICE_BASE_URL = 'https://iotserver2.nvr-china.com/slice/rest/';
+  //SLICE_BASE_URL = 'http://localhost:8080/slice/rest/';
   angular
     .module('GPSCloud')
     .constant('malarkey', malarkey)
@@ -237,31 +241,37 @@
 
     .constant('OPERATION_LOG_QUERY', SERVER_BASE_URL + 'audit/operationLogQuery')   //系统日志查询
 
-    .constant("START_HEAT_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/workRate/')  //开工热度查询
-    .constant("SALES_HEAT_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/salesHeat/')  //销售热度查询
-    .constant("AVG_WORK_HOUR_QUERY_MONTH", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_QUARTER", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_DATE", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/date?')  //季度平均工作小时数查询
-    .constant("AVG_WORK_HOUR_QUERY_ALL", 'https://iotserver2.nvr-china.com/slice/rest/avgWorkHours/all?produceType=')  //按车型查询总平均工作小时数
+    .constant("START_HEAT_QUERY", SLICE_BASE_URL + 'workRate/')  //开工热度查询
+    .constant("SALES_HEAT_QUERY", SLICE_BASE_URL +'salesHeat/')  //销售热度查询
+    .constant("AVG_WORK_HOUR_QUERY_MONTH", SLICE_BASE_URL + 'avgWorkHours/month?avgWorkHourMonth=')  //月平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_QUARTER", SLICE_BASE_URL + 'avgWorkHours/quarter?avgWorkHoursQuarter=')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_DATE", SLICE_BASE_URL + 'avgWorkHours/date?')  //季度平均工作小时数查询
+    .constant("AVG_WORK_HOUR_QUERY_ALL", SLICE_BASE_URL + 'avgWorkHours/all?produceType=')  //按车型查询总平均工作小时数
 
-    .constant("WORK_DISTRIBUTE_TIME_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/distribute/workTime')  //机器作业时间分布按照累计作业时间
-    .constant("WORK_DISTRIBUTE_DAYS_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/distribute/workDays')  //机器作业时间分布按照天数
+    .constant("WORK_DISTRIBUTE_TIME_QUERY", SLICE_BASE_URL + 'distribute/workTime')  //机器作业时间分布按照累计作业时间
+    .constant("WORK_DISTRIBUTE_DAYS_QUERY", SLICE_BASE_URL + 'distribute/workDays')  //机器作业时间分布按照天数
 
-    .constant("WORK_HOUR_YEAR_QUERY_DATE", 'https://iotserver2.nvr-china.com/slice/rest/totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
-    .constant("SALES_YEAR_QUERY", 'https://iotserver2.nvr-china.com/slice/rest/salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
-    .constant("GET_OWNERSHIP_URL", 'https://iotserver2.nvr-china.com/slice/rest/ownerShip/year?ownerShipYear=')  //获取某年每个月的指定类型的保有量
-    .constant('GET_MACHINE_TYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取获取车型种类
-    .constant('GET_ACTIVERATE_URL', 'https://iotserver2.nvr-china.com/slice/rest/activeRate/area-machine?') //获取机器活跃度
-    .constant('GET_MACHINETYPE_URL', 'https://iotserver2.nvr-china.com/slice/rest/type/machineType') //获取机器型号
+    .constant("WORK_HOUR_YEAR_QUERY_DATE", SLICE_BASE_URL + 'totalWorkHours/year?totalWorkHoursYear=')  //获取某年12个月的指定类型的总的工作小时数
+    .constant("SALES_YEAR_QUERY", SLICE_BASE_URL + 'salesHeat/year?salesYear=')  //获取某年12个月的指定类型的销售数量
+    .constant("GET_OWNERSHIP_URL", SLICE_BASE_URL + 'ownerShip/year?ownerShipYear=')  //获取某年每个月的指定类型的保有量
+    .constant('GET_MACHINE_TYPE_URL', SLICE_BASE_URL + 'type/machineType') //获取获取车型种类
+    .constant('GET_ACTIVERATE_URL', SLICE_BASE_URL + 'activeRate/area-machine?') //获取机器活跃度
+    .constant('GET_MACHINETYPE_URL', SLICE_BASE_URL + 'type/machineType') //获取机器型号
 
-    .constant('ANALYSIS_GREENPLUM', 'https://iotserver2.nvr-china.com/slice/rest/analysis')//设备工作状态详情下"数据分析"一栏数据提供
+    .constant('ANALYSIS_GREENPLUM', SLICE_BASE_URL + 'analysis')//设备工作状态详情下"数据分析"一栏数据提供
 
-    .constant('WAR_ZONE_QUERY', 'https://iotserver2.nvr-china.com/slice/rest/LGWarZone/') //战区统计查询
+    .constant('WAR_ZONE_QUERY', SLICE_BASE_URL + 'LGWarZone/') //战区统计查询
     // .constant('WAR_ZONE_QUERY','http://192.168.11.10:8080/slice/rest/LGWarZone/') //战区统计查询
 
     //设备分析
-    .constant('INTERVAL_SIGNAL_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/intervalAndSignal') //上传频率与信号质量
-    .constant('DEVICE_ANALYSIS_URL', 'https://iotserver2.nvr-china.com/slice/rest/deviceAnalysis/deviceAnalysisDetail') //设备分析明细
+    .constant('INTERVAL_SIGNAL_URL', SLICE_BASE_URL + 'deviceAnalysis/intervalAndSignal') //上传频率与信号质量
+    .constant('DEVICE_ANALYSIS_URL', SLICE_BASE_URL + 'deviceAnalysis/deviceAnalysisDetail') //设备分析明细
+
+    /*
+     * 临工大数据项目接口
+    */
+    .constant('UTILIZATION_URL', SLICE_BASE_URL + 'lgBigData/utilization') //上传频率与信号质量
+
 
     //v2 版本接口定义
     .constant('MACHINE_DISTRIBUTION', SERVER_BASE_URL + 'deviceMonitor/v2/machine-distribution?pageSize=200')
