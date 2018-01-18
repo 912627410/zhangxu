@@ -3,8 +3,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
-    <li class="active">{{'orgManagement' | translate}}</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'首页'| translate}}</a></li>
+    <li class="active">{{'车队管理' | translate}}</li>
   </ol>
 </section>
 
@@ -21,13 +21,15 @@
     </div>
     <div class="col-md-7 pull-right" >
 
-      <div class="btn btn-warning" type="button"  ng-click="minemngFleetCtrl.updateOrg()">{{'修改'|translate}}</div>
+      <div class="btn btn-warning" type="button"  ng-click="minemngFleetCtrl.updateFleetTeam()">{{'修改'|translate}}</div>
       <span>&nbsp;</span>
       <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleet()">{{'新增车队'|translate}}</div>
       <span>&nbsp;</span>
       <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newTeam()">{{'新增小组'|translate}}</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.addMineFleetMachine()">{{'添加车辆'|translate}}</div>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleetCaptain()">{{'新增队长'|translate}}</div>
+      <span>&nbsp;</span>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.addMineFleetMachine()">{{'管理车辆'|translate}}</div>
     </div>
 
   </div>
@@ -65,9 +67,18 @@
         <tr>
           <td>{{'车辆信息'|translate}}:</td>
           <td>
-          <span ng-repeat="machineType in minemngFleetCtrl.machineType">
-          <span class="label label-info">{{machineType.typeName}}<span>&nbsp;</span></span>
+          <span ng-repeat="machineType in minemngFleetCtrl.machine">
+          &nbsp;</span></span>
           </span>
+            <div class="table-responsive">
+              <table ng-table="minemngFleetCtrl.tableParams2" class="table table-condensed table-bordered table-striped text-nowrap">
+                <tr ng-repeat="machine in $data ">
+                  <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
+                  <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
+                  <td class="text-nowrap" data-title="'车辆类型'|translate" sortable="'machineType'" >{{machine.description }}</td>
+                </tr>
+              </table>
+            </div>
           </td>
         </tr>
         </tbody>

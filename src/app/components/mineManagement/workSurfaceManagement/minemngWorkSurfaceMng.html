@@ -1,0 +1,29 @@
+<section class="content-header" style="overflow: hidden">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>
+    <li class="active">工作面管理</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <uib-tabset active="active" type="tabs">
+    <uib-tab index="0" active="true" heading="作业面" select="vm.workFace='app/components/mineManagement/workSurfaceManagement/minemngWorkFaceMng.html'">
+      <div class="modal-body">
+        <div ng-include="vm.workFace"></div>
+      </div>
+    </uib-tab>
+
+    <uib-tab index="1" heading="排土场" select="vm.dumpField='app/components/mineManagement/workSurfaceManagement/minemngDumpFieldMng.html'">
+      <div class="modal-body">
+        <div ng-include="vm.dumpField"></div>
+      </div>
+    </uib-tab>
+  </uib-tabset>
+
+</section>
+

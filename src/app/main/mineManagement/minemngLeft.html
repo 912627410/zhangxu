@@ -21,7 +21,7 @@
     <ul class="sidebar-menu">
 
       <li class="treeview">
-        <a ng-click="minemngHome=!minemngHome"  href="">
+        <a ng-click="minemngHome=!minemngHome"  ui-sref="minemng">
           <i class="fa fa-dashboard"></i>
           <span>首页</span>
           <span class="glyphicon pull-right"
@@ -36,6 +36,16 @@
           <li>
             <a ui-sref="minemng.minemngFuel">
               <i class="fa fa-th-list"></i> <span>油耗</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa fa-th-list"></i> <span>车辆状态</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa fa-th-list"></i> <span>报警提醒</span>
             </a>
           </li>
         </ul>
@@ -53,6 +63,70 @@
           <li>
             <a ui-sref="minemng.dispatchMng">
               <i class="fa ion-ios-location"></i> <span>调度管理</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="minemng.dispatchHistory">
+              <i class="fa ion-ios-location"></i> <span>调度历史</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="minemng.minemngWorkSurfaceMng">
+              <i class="fa ion-ios-location"></i> <span>工作面管理</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview">
+        <a ng-click="maintenance=!maintenance" href="" >
+          <i class="fa ion-clipboard"></i>
+          <span>维修与保养</span>
+          <span class="glyphicon pull-right"
+                ng-class="maintenance?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: maintenance}">
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>维修</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>保养</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview">
+        <a ng-click="dataStatistics=!dataStatistics" href="" >
+          <i class="fa ion-clipboard"></i>
+          <span>大数据统计</span>
+          <span class="glyphicon pull-right"
+                ng-class="dataStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: dataStatistics}">
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>工作量详情</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>油耗统计</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>车辆工作数据</span>
+            </a>
+          </li>
+          <li>
+            <a >
+              <i class="fa ion-ios-location"></i> <span>报警详情</span>
             </a>
           </li>
         </ul>
@@ -90,6 +164,11 @@
           <li>
             <a ui-sref="minemng.minemngCheckPointMng">
               <i class="fa ion-ios-location"></i> <span>Check Point</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="minemng.mineMachineFleet">
+              <i class="fa ion-ios-location"></i> <span>车辆状态</span>
             </a>
           </li>
         </ul>

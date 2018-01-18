@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h3 class="modal-title">批量修改</h3>
+</div>
+
+<form name="batchUpdateTotalDispatch" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">工作面</label>
+        <div class="col-sm-10">
+          <select name="workFace" class="form-control"
+                  ng-model="batchUpdateTotalDispatchCtrl.workFace"
+                  ng-options="workFaces.id as workFaces.name for workFaces in batchUpdateTotalDispatchCtrl.workFaceList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">排土场</label>
+        <div class="col-sm-10">
+          <select name="dumpField" class="form-control"
+                  ng-model="batchUpdateTotalDispatchCtrl.dumpField"
+                  ng-options="dumpFields.id as dumpFields.name for dumpFields in batchUpdateTotalDispatchCtrl.dumpFieldList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="batchUpdateTotalDispatch" ng-click="batchUpdateTotalDispatchCtrl.ok()" >{{batchUpdateTotalDispatchCtrl.okDesc}}</button>
+    <button class="btn btn-warning" type="button" ng-click="batchUpdateTotalDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+</form>

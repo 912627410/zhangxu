@@ -64,6 +64,7 @@
 
       /**
        * 新增
+       * TODO 平台暂时不能增加
        */
       vm.addCheckPoint = function(size) {
         var modalInstance = $uibModal.open({

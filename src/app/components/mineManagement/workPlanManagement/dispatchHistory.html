@@ -1,0 +1,104 @@
+<section class="content-header" style="overflow: hidden">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a ui-sref="minemng"><i class="fa fa-dashboard"></i>首页</a></li>
+    <li class="active">Check Point</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content form-horizontal">
+  <div class="row form-group minemngFormGroup text-right">
+    <label class="col-md-1 control-label">类型</label>
+    <div class="col-md-2">
+      <select name="dispatchType" class="form-control"
+              ng-model="dispatchHistoryCtrl.dispatchType"
+              ng-options="dispatchTypes.value as dispatchTypes.desc for dispatchTypes in dispatchHistoryCtrl.dispatchTypeList">
+        <option value="">{{'pleaseSelect'|translate}}</option>
+      </select>
+    </div>
+    <label class="col-md-1 control-label">开始时间</label>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" name="startDate" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
+               ng-model="dispatchHistoryCtrl.startDate"
+               is-open="dispatchHistoryCtrl.startDateOpenStatus"
+               datepicker-options="dispatchHistoryCtrl.startDateOptions"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"
+               message-id="bootstrap" readonly/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default"
+                  ng-click="dispatchHistoryCtrl.openStartDate($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </p>
+    </div>
+    <label class="col-md-1 control-label">结束时间</label>
+    <div class="col-md-2">
+      <p class="input-group">
+        <input type="text" name="endDate" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
+               ng-model="dispatchHistoryCtrl.endDate"
+               is-open="dispatchHistoryCtrl.endDateOpenStatus"
+               datepicker-options="dispatchHistoryCtrl.endDateOptions"
+               current-text="{{'today'|translate}}"
+               clear-text="{{'cleanUp'|translate}}"
+               close-text="{{'close'|translate}}"
+               message-id="bootstrap" readonly/>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default"
+                  ng-click="dispatchHistoryCtrl.openEndDate($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </p>
+    </div>
+    <div class="col-md-2 text-right">
+      <button class="btn btn-default" type="button" ng-click="dispatchHistoryCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" ng-click="dispatchHistoryCtrl.query(null, null, null)" style="margin: 0 12px;">{{'rentalQuery'|translate}}</button>
+    </div>
+  </div>
+
+  <div class="row form-group" style="padding-top: 20px;">
+    <div class="btn-group col-md-6" style="line-height: 34px;">
+      <span>{{'totalNumberOfRecords'|translate}} {{dispatchHistoryCtrl.dispatchRecordPage.totalElements}}</span>
+    </div>
+    <div class="col-md-6 text-right">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table ng-table="dispatchHistoryCtrl.dispatchRecordTableParams"
+               class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="dispatchRecord in $data">
+            <td class="text-nowrap" data-title="'类型'" sortable="'type'">{{dispatchRecord.typeDesc}}</td>
+            <td class="text-nowrap" data-title="'调度内容'">{{dispatchRecord.content}}</td>
+            <td class="text-nowrap" data-title="'操作类型'" sortable="'operationType'">{{dispatchRecord.operationTypeDesc}}</td>
+            <td class="text-nowrap" data-title="'操作人'" sortable="'operator'">{{dispatchRecord.operator}}</td>
+            <td class="text-nowrap" data-title="'时间'" sortable="'recordTime'">{{dispatchRecord.recordTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <uib-pagination total-items="dispatchHistoryCtrl.dispatchRecordPage.totalElements"
+                      ng-change="dispatchHistoryCtrl.query(dispatchHistoryCtrl.dispatchRecord_pagenumber-1,null,null)"
+                      max-size="10"
+                      ng-model="dispatchHistoryCtrl.dispatchRecord_pagenumber"
+                      items-per-page="dispatchHistoryCtrl.dispatchRecordPage.size"
+                      class="pagination-sm" boundary-links="true" rotate="false"
+                      first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
+                      next-text="{{'nextPage'|translate}}"
+                      previous-text="{{'previousPage'|translate}}"></uib-pagination>
+    </div>
+  </div>
+</section>

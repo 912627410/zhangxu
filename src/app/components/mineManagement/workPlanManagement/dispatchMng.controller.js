@@ -12,16 +12,16 @@
     .module('GPSCloud')
     .controller('dispatchMngController', dispatchMngController);
 
-  function dispatchMngController($rootScope, $filter, $confirm, $uibModal, $scope, serviceResource, permissions, languages, Notification, mqttws,
-                                 NgTableParams, ngTableDefaults, MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_FLEET_LIST, MINEMNG_WORK_SHIFT_ALL_LIST,
-                                 MINEMNG_TOTAL_DISPATCH, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
+  function dispatchMngController($rootScope, $filter, $confirm, $uibModal, $scope, serviceResource, permissions, languages, Notification, mqttws,minemngResource,
+                                 NgTableParams, ngTableDefaults, MINEMNG_TOTAL_DISPATCH, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_TEMPORARY_DISPATCH, MINEMNG_CANCEL_TEMPORARY_DISPATCH) {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     vm.sendTopic = "IM.Harvesters.";
     vm.totalDispatchShow = true;
     vm.temporaryDispatchShow = false;
     vm.selectAll = false; //是否全选标志
-    vm.totalDispatchSelected = []; //选中的总调度的id
+    vm.totalDispatchSelected = []; //选中的总调度
+    vm.temporaryDispatchSelected = []; //选中的临时调度的i车辆d
 
     ngTableDefaults.params.count = 20;
     ngTableDefaults.settings.counts = [];
@@ -72,14 +72,16 @@
 
     vm.effectiveDate = new Date(); // 默认日期为当天
     vm.updateTotalDispatchBtn = true; // 总调度修改按钮
+    vm.batchUpdateTotalDispatchBtn = true; // 批量修改总调度按钮
 
     vm.updateTotalDispatchBtnIsShow = function() {
-      var nowDate = new Date(new Date().toLocaleDateString());
-      if(vm.effectiveDate > nowDate) {
+      if(vm.effectiveDate > getZeroDate()) {
         vm.updateTotalDispatchBtn = true;
+        vm.batchUpdateTotalDispatchBtn = true;
         return;
       }
       vm.updateTotalDispatchBtn = false;
+      vm.batchUpdateTotalDispatchBtn = false;
     };
 
 
@@ -119,42 +121,32 @@
     /**
      * 加载作业面列表
      */
-    vm.getWorkFaceList = function () {
-      var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
-      rspDate.then(function (data) {
-        vm.workFaceList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
-    };
-    vm.getWorkFaceList();
+    var workFaceListPromise = minemngResource.getWorkFaceList();
+    workFaceListPromise.then(function (data) {
+      vm.workFaceList = data;
+    }, function (reason) {
+      Notification.error(reason.data);
+    });
 
     /**
      * 加载排土场列表
      */
-    vm.getDumpFieldList = function () {
-      var rspDate = serviceResource.restCallService(MINEMNG_DUMP_FIELD_LIST, "QUERY");
-      rspDate.then(function (data) {
-        vm.dumpFieldList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
-    };
-    vm.getDumpFieldList();
+    var dumpFieldListPromise = minemngResource.getDumpFieldList();
+    dumpFieldListPromise.then(function (data) {
+      vm.dumpFieldList = data;
+    }, function (reason) {
+      Notification.error(reason.data);
+    });
 
     /**
      * 加载车队列表
      */
-    vm.getFleetList = function () {
-      var url = MINEMNG_FLEET_LIST + "?parentId=0";
-      var rspDate = serviceResource.restCallService(url, "QUERY");
-      rspDate.then(function (data) {
-        vm.fleetList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
-    };
-    vm.getFleetList();
+    var fleetListPromise = minemngResource.getFleetList();
+    fleetListPromise.then(function (data) {
+      vm.fleetList = data;
+    }, function (reason) {
+      Notification.error(reason.data);
+    });
 
     /**
      * 加载小组列表
@@ -163,29 +155,25 @@
     vm.getTeamList = function (fleetId) {
       vm.teamList = null;
       vm.totalDispatch.team = null;
-      if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
-        var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
-        var rspDate = serviceResource.restCallService(url, "QUERY");
-        rspDate.then(function (data) {
+      var teamListPromise = minemngResource.getTeamList(fleetId);
+      if(teamListPromise != null) {
+        teamListPromise.then(function (data) {
           vm.teamList = data;
         }, function (reason) {
           Notification.error(reason.data);
-        })
+        });
       }
     };
 
     /**
      * 加载班次列表
      */
-    vm.getWorkShiftList = function () {
-      var rspDate = serviceResource.restCallService(MINEMNG_WORK_SHIFT_ALL_LIST, "QUERY");
-      rspDate.then(function (data) {
-        vm.workShiftList = data;
-      }, function (reason) {
-        Notification.error(reason.data);
-      })
-    };
-    vm.getWorkShiftList();
+    var workShiftListPromise = minemngResource.getWorkShiftAllList();
+    workShiftListPromise.then(function (data) {
+      vm.workShiftList = data;
+    }, function (reason) {
+      Notification.error(reason.data);
+    });
 
 
     /**
@@ -237,7 +225,6 @@
           vm.totalDispatchPage = data.page;
           vm.totalDispatch_pagenumber = data.page.number + 1;
           vm.totalDispatchSelected = [];
-          vm.updateTotalDispatchBtnIsShow();
         } else {
           Notification.warning(languages.findKey('noDataYet'));
           vm.totalDispatchList = null;
@@ -246,6 +233,7 @@
           });
           vm.totalDispatchPage.totalElements = 0;
         }
+        vm.updateTotalDispatchBtnIsShow();
       }, function (reason) {
         Notification.error(reason);
         vm.totalDispatchList = null;
@@ -253,12 +241,12 @@
     };
     vm.queryTotalDispatch(null, null, null);
 
-    var totalDispatchSelected = function (action, id) {
-      if (action === 'add' && vm.totalDispatchSelected.indexOf(id) === -1) {
-        vm.totalDispatchSelected.push(id);
+    var totalDispatchSelected = function (action, totalDispatch) {
+      if (action === 'add' && vm.totalDispatchSelected.indexOf(totalDispatch) === -1) {
+        vm.totalDispatchSelected.push(totalDispatch);
       }
-      if (action === 'remove' && vm.totalDispatchSelected.indexOf(id) !== -1) {
-        var idx = vm.totalDispatchSelected.indexOf(id);
+      if (action === 'remove' && vm.totalDispatchSelected.indexOf(totalDispatch) !== -1) {
+        var idx = vm.totalDispatchSelected.indexOf(totalDispatch);
         vm.totalDispatchSelected.splice(idx, 1);
       }
     };
@@ -266,18 +254,18 @@
     vm.totalDispatchSelection = function ($event, totalDispatch) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-      totalDispatchSelected(action, totalDispatch.id);
+      totalDispatchSelected(action, totalDispatch);
     };
 
     vm.totalDispatchAllSelection = function ($event) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       vm.totalDispatchList.forEach(function (totalDispatch) {
-        totalDispatchSelected(action, totalDispatch.id);
+        totalDispatchSelected(action, totalDispatch);
       })
     };
     vm.isTotalDispatchSelected = function (totalDispatch) {
-      return vm.totalDispatchSelected.indexOf(totalDispatch.id) >= 0;
+      return vm.totalDispatchSelected.indexOf(totalDispatch) >= 0;
     };
 
     /**
@@ -337,19 +325,34 @@
       vm.totalDispatch = null;
     };
 
-
     /**
-     * 加载车辆类型列表
+     * 批量修改总调度
+     * @param size
      */
-    // vm.getMachineTypeList = function () {
-    //   var rspDate = serviceResource.restCallService(MINEMNG_MACHINE_TYPE_LIST, "QUERY");
-    //   rspDate.then(function (data) {
-    //     vm.machineTypeList = data;
-    //   }, function (reason) {
-    //     Notification.error(reason.data);
-    //   })
-    // };
-    // vm.getMachineTypeList();
+    vm.batchUpdateTotalDispatch = function (size) {
+      if(vm.totalDispatchSelected.length <= 0) {
+        Notification.warning("请选择需要修改的记录");
+        return;
+      }
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/workPlanManagement/batchUpdateTotalDispatch.html',
+        controller: 'batchUpdateTotalDispatchController as batchUpdateTotalDispatchCtrl',
+        size: size,
+        backdrop: false,
+        scope: $scope,
+        resolve: {
+          totalDispatchList: function () {
+            return vm.totalDispatchSelected;
+          }
+        }
+      });
+      modalInstance.result.then(function () {
+        vm.queryTotalDispatch(null, null, null);
+      }, function () {
+        //取消
+      });
+    };
 
     /**
      * 切换总调度
@@ -379,14 +382,8 @@
       var sizeUrl = size || 20;
       var sortUrl = sort || "record_time";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
-      if (vm.temporaryDispatch != null && vm.temporaryDispatch !== '' && vm.temporaryDispatch !== 'undefined') {
-        if (vm.temporaryDispatch.machineType != null && vm.temporaryDispatch.machineType !== '') {
-          restCallURL += "&machineType=" + vm.temporaryDispatch.machineType;
-        }
-        if (vm.temporaryDispatch.carNumber != null && vm.temporaryDispatch.carNumber !== '') {
-          restCallURL += "&carNumber=" + vm.temporaryDispatch.carNumber;
-        }
+      if (vm.temporaryDispatchCarNumber != null && vm.temporaryDispatchCarNumber !== '' && vm.temporaryDispatchCarNumber !== 'undefined') {
+        restCallURL += "&carNumber=" + vm.temporaryDispatchCarNumber;
       }
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -414,6 +411,31 @@
       });
     };
 
+    // 选择临时调度
+    var temporaryDispatchSelected = function (action, machineId) {
+      if (action === 'add' && vm.temporaryDispatchSelected.indexOf(machineId) === -1) {
+        vm.temporaryDispatchSelected.push(machineId);
+      }
+      if (action === 'remove' && vm.temporaryDispatchSelected.indexOf(machineId) !== -1) {
+        var idx = vm.temporaryDispatchSelected.indexOf(machineId);
+        vm.temporaryDispatchSelected.splice(idx, 1);
+      }
+    };
+    vm.temporaryDispatchSelection = function ($event, temporaryDispatch) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      temporaryDispatchSelected(action, temporaryDispatch.minemngMachineId);
+    };
+    vm.temporaryDispatchAllSelection = function ($event) {
+      var checkbox = $event.target;
+      var action = (checkbox.checked ? 'add' : 'remove');
+      vm.temporaryDispatchList.forEach(function (temporaryDispatch) {
+        temporaryDispatchSelected(action, temporaryDispatch.minemngMachineId);
+      })
+    };
+    vm.isTemporaryDispatchSelected = function (temporaryDispatch) {
+      return vm.temporaryDispatchSelected.indexOf(temporaryDispatch.minemngMachineId) >= 0;
+    };
 
     /**
      * 新增临时调度
@@ -440,12 +462,83 @@
       });
     };
 
+    /**
+     * 修改临时调度
+     * @param temporaryDispatch
+     * @param size
+     */
+    vm.updateTemporaryDispatch = function (temporaryDispatch, size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/workPlanManagement/updateTemporaryDispatch.html',
+        controller: 'updateTemporaryDispatchController as updateTemporaryDispatchCtrl',
+        size: size,
+        backdrop: false,
+        scope: $scope,
+        resolve: {
+          temporaryDispatch: function () {
+            return temporaryDispatch;
+          }
+        }
+      });
+      modalInstance.result.then(function () {
+        vm.queryTemporaryDispatch(null, null, null);
+      }, function () {
+        //取消
+      });
+    };
+
+    vm.cancelTemporaryDispatch = function (machineId) {
+      $confirm({
+        text: "确定要取消调度吗？",
+        title: "取消调度",
+        ok: languages.findKey('confirm'),
+        cancel:languages.findKey('cancel')
+      }).then(function () {
+        var restPromise = serviceResource.restUpdateRequest(MINEMNG_CANCEL_TEMPORARY_DISPATCH, [machineId]);
+        restPromise.then(function (data) {
+          if(data.code === 0) {
+            Notification.success(data.content);
+            vm.queryTemporaryDispatch(null, null, null);
+          } else{
+            Notification.error(data.content);
+          }
+        }, function (reason) {
+          Notification.error(reason.data);
+        });
+      });
+    };
+
+    vm.batchCancelTemporaryDispatch = function () {
+      if(vm.temporaryDispatchSelected.length <= 0) {
+        Notification.warning("请选择需要取消的记录");
+        return;
+      }
+      $confirm({
+        text: "确定要批量取消调度吗？",
+        title: "批量取消调度",
+        ok: languages.findKey('confirm'),
+        cancel:languages.findKey('cancel')
+      }).then(function () {
+        var restPromise = serviceResource.restUpdateRequest(MINEMNG_CANCEL_TEMPORARY_DISPATCH, vm.temporaryDispatchSelected);
+        restPromise.then(function (data) {
+          if(data.code === 0) {
+            Notification.success(data.content);
+            vm.queryTemporaryDispatch(null, null, null);
+          } else{
+            Notification.error(data.content);
+          }
+        }, function (reason) {
+          Notification.error(reason.data);
+        });
+      });
+    };
 
     /**
      * 重置临时调度搜索框
      */
     vm.resetTemporaryDispatch = function () {
-      vm.temporaryDispatch = null;
+      vm.temporaryDispatchCarNumber = null;
     };
 
   }

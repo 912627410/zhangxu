@@ -88,6 +88,7 @@
             <span>{{'totalNumberOfRecords'|translate}} {{dispatchMngCtrl.totalDispatchPage.totalElements}}</span>
           </div>
           <div class="col-md-6 text-right">
+            <button class="btn btn-warning" ng-click="dispatchMngCtrl.batchUpdateTotalDispatch()" ng-show="dispatchMngCtrl.batchUpdateTotalDispatchBtn">批量修改</button>
             <button class="btn btn-primary" ng-click="dispatchMngCtrl.addTotalDispatch()">增加</button>
           </div>
         </div>
@@ -138,12 +139,14 @@
       </div>
     </uib-tab>
 
+
+
     <uib-tab index="1" heading="临时调度" select="dispatchMngCtrl.temporaryDispatchTab()">
       <div style="padding: 10px;">
         <div class="row form-group minemngFormGroup text-right">
           <label class="col-md-1 control-label">车号</label>
           <div class="col-md-2">
-            <input type="text" class="form-control" ng-model="dispatchMngCtrl.temporaryDispatch.carNumber"
+            <input type="text" class="form-control" ng-model="dispatchMngCtrl.temporaryDispatchCarNumber"
                    placeholder="{{'supportfuzzyqueries'|translate}}">
           </div>
           <div class="col-md-2 col-md-offset-7">
@@ -159,24 +162,25 @@
             <span>{{'totalNumberOfRecords'|translate}} {{dispatchMngCtrl.temporaryDispatchPage.totalElements}}</span>
           </div>
           <div class="col-md-6 text-right">
+            <button class="btn btn-warning" ng-click="dispatchMngCtrl.batchCancelTemporaryDispatch()">批量取消调度</button>
             <button class="btn btn-primary" ng-click="dispatchMngCtrl.addTemporaryDispatch()">增加</button>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <!--<script id="selectTotalDispatchAllHeader" type="text/ng-template">-->
-            <!--<input type="checkbox" ng-click="dispatchMngCtrl.totalDispatchAllSelection($event)"-->
-            <!--ng-model="dispatchMngCtrl.checked"/>-->
-            <!--</script>-->
+            <script id="selectTemporaryDispatchAllHeader" type="text/ng-template">
+              <input type="checkbox" ng-click="dispatchMngCtrl.temporaryDispatchAllSelection($event)"
+                     ng-model="dispatchMngCtrl.checked"/>
+            </script>
             <div class="table-responsive">
               <table ng-table="dispatchMngCtrl.temporaryDispatchTableParams"
                      class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="temporaryDispatch in $data">
-                  <!--<td class="text-nowrap text-center" data-header="'selectTotalDispatchAllHeader'">-->
-                  <!--<input type="checkbox" ng-checked="dispatchMngCtrl.isTotalDispatchSelected(totalDispatch)"-->
-                  <!--ng-click="dispatchMngCtrl.totalDispatchSelection($event,totalDispatch)"-->
-                  <!--ng-model="totalDispatch.checked"/>-->
-                  <!--</td>-->
+                  <td class="text-nowrap text-center" data-header="'selectTemporaryDispatchAllHeader'">
+                    <input type="checkbox" ng-checked="dispatchMngCtrl.isTemporaryDispatchSelected(temporaryDispatch)"
+                           ng-click="dispatchMngCtrl.temporaryDispatchSelection($event,temporaryDispatch)"
+                           ng-model="temporaryDispatch.checked"/>
+                  </td>
                   <td class="text-nowrap" data-title="'车型'" sortable="'machineType'">{{temporaryDispatch.machineTypeName}}</td>
                   <td class="text-nowrap" data-title="'车号'" sortable="'carNumber'">{{temporaryDispatch.carNumber}}</td>
                   <td class="text-nowrap" data-title="'原车队'" sortable="'oldFleet'">{{temporaryDispatch.oldFleetName}}</td>
@@ -187,9 +191,8 @@
                   <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="temporaryDispatch.status==1">已读</td>
                   <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="temporaryDispatch.status!=0&&temporaryDispatch.status!=1">未调度</td>
                   <td class="text-nowrap text-center" data-title="'操作'">
-                    <button class="btn btn-xs btn-warning" ng-click="">修改</button>
-                    <button class="btn btn-xs btn-primary" ng-if="temporaryDispatch.status!=1" ng-click="">调度</button>
-                    <button class="btn btn-xs btn-warning" ng-if="temporaryDispatch.status==1" ng-click="">取消调度</button>
+                    <button class="btn btn-xs btn-warning" ng-click="dispatchMngCtrl.updateTemporaryDispatch(temporaryDispatch)">修改</button>
+                    <button class="btn btn-xs btn-danger" ng-click="dispatchMngCtrl.cancelTemporaryDispatch(temporaryDispatch.minemngMachineId)">取消调度</button>
                   </td>
                 </tr>
               </table>

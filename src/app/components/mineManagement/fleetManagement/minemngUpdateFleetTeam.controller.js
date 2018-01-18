@@ -1,17 +1,17 @@
 /**
- * Created by 刘鲁振 on 2018/1/8.
+ * Created by 刘鲁振 on 2018/1/16.
  */
 (function () {
   'use strict';
 
   angular
     .module('GPSCloud')
-    .controller('addFleetController', addFleetCtrl);
+    .controller('updateFleetTeamController', updateFleetTeamController);
 
   /** @ngInject */
-  function addFleetCtrl( $uibModalInstance, MINE_NEW_FLEET, serviceResource, Notification) {
+  function updateFleetTeamController( MINE_UPDATE_FLEET_TEAM,fleetTeam,$uibModalInstance, serviceResource, Notification) {
     var vm = this;
-
+    vm.fleetTeam=fleetTeam;
 
 
     /*var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
@@ -23,13 +23,12 @@
 
 
 
-    vm.ok = function (minemngFleet) {
+    vm.ok = function (fleetTeam) {
 
-      var restPromise = serviceResource.restAddRequest(MINE_NEW_FLEET, minemngFleet);
+      var restPromise = serviceResource.restUpdateRequest(MINE_UPDATE_FLEET_TEAM, fleetTeam);
       restPromise.then(function (data) {
           if(data.code===0){
-            vm.minemngFleet = data.content;
-            // Notification.error(data.message);
+            Notification.success("更新成功");
             $uibModalInstance.close(data.content);
           }
         }, function (reason) {
