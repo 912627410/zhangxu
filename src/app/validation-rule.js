@@ -27,7 +27,7 @@
       //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
       numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
       numberForPass:/^\d{6}$/,
-      numberForSsn:/^\d{7}$/,
+      numberForSsn:/^\d{4}$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
@@ -41,7 +41,7 @@
         return value.length <= param;
       },
       islength: function (value, scope, element, attrs, param) {
-        return value.length === param;
+        return value.length == param;
       },
       nullOrNumber : function (value) {
         return value ==null || value =='' || /^\d+$/.test(value);
@@ -193,7 +193,7 @@
               error: "{{'isLength' | translate}}" + param + "{{'bits' | translate}}"
             }
           });
-          return value.length === param;
+          return value.length == param;
         }
       }
     );

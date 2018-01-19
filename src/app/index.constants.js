@@ -380,6 +380,7 @@
 
 
     //矿山管理
+    .constant('MINEMNG_ORG_SSNCODE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngOrgSsnCode')//默认显示系统用户名前三位
     .constant('MINEMNG_USERINFO_URL', SERVER_BASE_URL +'minemngUserInfo/minemngUserInfo')//用户基本信息
     .constant('MINEMNG_USERINFOPAGE_URL', SERVER_BASE_URL +'minemngUserInfo/minemngUserInfoPage')//分页查询用户信息
     .constant('MINEMNG_USERINFO_UPDATE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfo')//更新用户信息;
