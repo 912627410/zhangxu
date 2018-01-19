@@ -6,12 +6,14 @@
 
 <div class="modal-body row">
 
+  <form name="newFleetMachineForm" class="form-horizontal" >
+
   <div class="modal-body row">
     <label class="col-md-2 control-label">{{'选择小组' | translate}}:</label>
     <div class="col-md-6">
       <p class="input-group">
-        <input type="text" id="org" class="form-control" placeholder="{{'选择小组' | translate}} {{mineFleetCtrl.fleetName}} "    ng-model="mineFleetCtrl.fleetTeamName" name="org" readonly required />
-        <span class="input-group-btn">
+        <input type="text" id="org" class="form-control" placeholder="{{'选择小组' | translate}} {{mineFleetCtrl.fleetName}} "    ng-model="mineFleetCtrl.fleetTeamName" name="org" validator="required"  readonly required />
+        <span class="input-group-btn vertical-align_top">
                   <button type="button" class="btn btn-default" ng-click="mineFleetCtrl.addTeam()">
                     <i class="fa fa-sitemap"></i>
                   </button>
@@ -24,7 +26,7 @@
   <uib-tabset active="active" type="tabs">
     <uib-tab index="3" active="true" heading="添加车辆"  select="mineFleetCtrl.query()">
 
-  <form name="newFleetMachineForm" class="form-horizontal" >
+
 
     <div class="box-body col-sm-12">
 
@@ -99,7 +101,7 @@
 </form>
 
   <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="mineFleetCtrl.addFleetMachine(mineFleetCtrl.machine)">{{'添加'|translate}}</button>
+        <button class="btn btn-primary" type="button" validation-submit="newFleetMachineForm" ng-click="mineFleetCtrl.addFleetMachine(mineFleetCtrl.machine)">{{'添加'|translate}}</button>
         <button class="btn btn-warning" type="button" ng-click="mineFleetCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 
@@ -136,7 +138,7 @@
         </div>
       </form>
       <div class="modal-footer">
-          <button type="button" class="btn btn-danger "
+          <button type="button" class="btn btn-danger " validation-submit="newFleetMachineForm"
                   ng-click="mineFleetCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
           </button>
         <button class="btn btn-warning" type="button" ng-click="mineFleetCtrl.cancel()">{{'关闭'|translate}}</button>

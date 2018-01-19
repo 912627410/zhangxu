@@ -12,8 +12,9 @@
         <label class="col-sm-3 control-label">{{'选择车队' | translate}}:</label>
         <div class="col-sm-8">
           <p class="input-group">
-            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="addGroupCtrl.minemngFleet.parentFleet.name" name="group" readonly required />
-            <span class="input-group-btn">
+            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="addGroupCtrl.minemngFleet.parentFleet.name" name="group" validator="required" readonly required
+                     />
+            <span class="input-group-btn  vertical-align_top">
                   <button type="button" class="btn btn-default" ng-click="addGroupCtrl.addMinemngMachine()">
                     <i class="fa fa-sitemap"></i>
                   </button>
@@ -38,7 +39,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="addGroupCtrl.ok(addGroupCtrl.minemngFleet)">{{'确定'|translate}}</button>
+    <button class="btn btn-primary" type="button" validation-submit="newGroupForm" ng-click="addGroupCtrl.ok(addGroupCtrl.minemngFleet)">{{'确定'|translate}}</button>
     <button class="btn btn-warning" type="button" ng-click="addGroupCtrl.cancel()">{{'取消'|translate}}</button>
   </div>
 </form>

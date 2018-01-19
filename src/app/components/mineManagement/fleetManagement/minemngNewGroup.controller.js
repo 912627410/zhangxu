@@ -19,9 +19,7 @@
     vm.fleetGroup={parentId:'',label:'',status:'',id:''};
 
     vm.ok= function(minemngFleet){
-      if(vm.minemngFleet.parentFleet==null||vm.minemngFleet.parentFleet==""){
-        Notification.warning('请选择车队！');
-      }else {
+
         vm.fleetGroup.parentId=vm.minemngFleet.parentFleet.id;
         vm.fleetGroup.label=minemngFleet.label;
         var restPromise = serviceResource.restAddRequest(MINE_NEW_TEAM, vm.fleetGroup);
@@ -38,7 +36,7 @@
           }
 
         );
-      }
+
 
     };
 

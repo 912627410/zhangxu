@@ -6,15 +6,15 @@
 
   <div class="modal-body">
 
-
+    <form name="deleFleetCaptainForm" class="form-horizontal" >
 
     <div class="box-body">
       <div class="form-group">
         <label class="col-sm-3 control-label">{{'选择车队' | translate}}:</label>
         <div class="col-sm-8">
           <p class="input-group">
-            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="fleetCaptainCtrl.minemngFleet.parentFleet.name" name="group" readonly required />
-            <span class="input-group-btn">
+            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="fleetCaptainCtrl.minemngFleet.name" name="group" validator="required" readonly required />
+            <span class="input-group-btn vertical-align_top">
                   <button type="button" class="btn btn-default" ng-click="fleetCaptainCtrl.addMinemngMachine()">
                     <i class="fa fa-sitemap"></i>
                   </button>
@@ -77,8 +77,8 @@
                 </td>
                 <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
                 <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
-                <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
-                <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
+                <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'ssn'">{{minemnguser.ssn}}</td>
+                <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleName'">{{minemnguser.roleName}}</td>
                 </td>
               </tr>
             </table>
@@ -99,7 +99,7 @@
     </form>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="fleetCaptainCtrl.addFleetMachine(fleetCaptainCtrl.minemnguser)">{{'添加'|translate}}</button>
+      <button class="btn btn-primary" type="button" validation-submit="deleFleetCaptainForm" ng-click="fleetCaptainCtrl.addFleetCaptain(fleetCaptainCtrl.minemnguser)">{{'添加'|translate}}</button>
       <button class="btn btn-warning" type="button" ng-click="fleetCaptainCtrl.cancel()">{{'cancel'|translate}}</button>
     </div>
 
@@ -107,9 +107,9 @@
 
   </uib-tab>
 
-  <uib-tab index="4" heading="修改队长" select="fleetCaptainCtrl.queryminemnguser()">
+  <uib-tab index="4" heading="修改队长" select="fleetCaptainCtrl.queryFleetCaptain()">
 
-    <form name="deleFleetCaptainForm" class="form-horizontal" >
+
 
       <div class="row form-group" style="padding: 10px">
         <!--全选框-->
@@ -127,8 +127,8 @@
               </td>
               <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
               <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
-              <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleType'">{{minemnguser.roleName}}</td>
-              <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'systemName'">{{minemnguser.ssn}}</td>
+              <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'ssn'">{{minemnguser.ssn}}</td>
+              <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleName'">{{minemnguser.roleName}}</td>
               </td>
             </tr>
           </table>
@@ -136,7 +136,7 @@
       </div>
     </form>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger "
+      <button type="button" class="btn btn-danger " validation-submit="deleFleetCaptainForm"
               ng-click="fleetCaptainCtrl.delete(minemnguser.id,'lg')">{{'删除'| translate}}
       </button>
       <button class="btn btn-warning" type="button" ng-click="fleetCaptainCtrl.cancel()">{{'关闭'|translate}}</button>

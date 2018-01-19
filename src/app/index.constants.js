@@ -386,6 +386,8 @@
     .constant('MINEMNG_USERINFO_RESET_PASSWORD_URL',SERVER_BASE_URL+'minemngUserInfo/minemngUpdateUserInfoPassword')//重置用户密码
     .constant('MINEMNG_USERINFO_DELETE_URL',SERVER_BASE_URL+'minemngUserInfo/minemngDeleteUserInfo')//删除用户
     .constant('ALERT_TREND_URL', SERVER_BASE_URL + 'rental/alarmCountByDate') //报警七天趋势
+    .constant('MINEMNG_CAPTAIN_INFOPAGE_URL', SERVER_BASE_URL +'minemngUserInfo/minemngNotAddCaptainInfoPage')//分页查询未添加车队的队长信息
+    .constant('MINE_QUERY_CAPTAIN_INFO', SERVER_BASE_URL +'minemngUserInfo/minemngCaptainInfoPage')//查询添加车队的队长信息
 
     .constant('MINEMNG_TOTAL_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/totalDispatch')   //总调度
     .constant('MINEMNG_TEMPORARY_DISPATCH', SERVER_BASE_URL + 'minemngDispatch/temporaryDispatch')   //临时调度
@@ -414,7 +416,9 @@
     .constant('MINE_DELETE_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleteFleetMahcine')   //删除小组车辆
     .constant('MINE_NOT_ADD_MACHINE_INFO', SERVER_BASE_URL + 'minemngFleet/getMachineNotAddInfo')   //查询未添加车队的车辆
     .constant('MINE_ADD_MACHINE_INFO', SERVER_BASE_URL + 'minemngFleet/getMinemngFleetMachine')   //查询添加车队的车辆
-    .constant('MINE_UPDATE_FLEET_TEAM', SERVER_BASE_URL + 'minemngFleet/updateFleetTeam')   //修改车队车辆
+    .constant('MINE_UPDATE_FLEET_TEAM', SERVER_BASE_URL + 'minemngFleet/updateFleetTeam')   //修改车队小组
+    .constant('MINE_ADD_FLEET_CAPTAIN', SERVER_BASE_URL + 'minemngFleet/addFleetCaptain')   //添加车队队长
+    .constant('MINE_DELETE_CAPTAIN_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleFleetCaptain')   //删除车队队长
 
 
     .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息

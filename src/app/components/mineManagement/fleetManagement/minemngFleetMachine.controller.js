@@ -99,6 +99,7 @@
       });
     };
 
+    //查询添加的车辆
     vm.queryMachine=function(){
 
       vm.checked=false;//查询之前全选置空
@@ -171,7 +172,6 @@
       if (action == 'remove' && vm.deleSelected.indexOf(id) != -1) {
         var idx = vm.deleSelected.indexOf(id);
         vm.deleSelected.splice(idx, 1);
-
       }
     }
 

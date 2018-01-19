@@ -341,7 +341,18 @@
           controllerAs: 'minemngFleetCtrl'
         }
       }
-     });
+     })
+    //车辆状态
+      .state('minemng.mineFleetMachineStatus', {
+        url: '/mineFleetMachineStatus',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/fleetMachineStatus/minemngFleetMachineStatus.html',
+            controller: 'mineFleetMachineStatusController',
+            controllerAs: 'minemngMachineStatusCtrl'
+          }
+        }
+      });
 
 
     //物联网系统
