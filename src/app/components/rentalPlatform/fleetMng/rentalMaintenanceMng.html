@@ -46,35 +46,31 @@
               <label class="control-label">{{'rentalsubordinateOrganization'|translate}}:</label>
               <input type="checkbox" checked="checked" ng-model="v.querySubOrg"/>
             </div>-->
-            <label class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
+
+            <label  class="col-md-1 control-label font-nomal">{{'rentalStartingDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
-                <input type="text" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
-                       ng-model="rentalMaintenanceCtrl.rentalOrder.startDate"
-                       is-open="rentalMaintenanceCtrl.startDateSetting.status.opened"
-                       datepicker-options="rentalMaintenanceCtrl.startDateSetting.dateOptions"
+                <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                       ng-model="rentalMaintenanceCtrl.maintenance.startDate"
+                       is-open="rentalMaintenanceCtrl.startDateOpenStatus.opened"
+                       datepicker-options="rentalMaintenanceCtrl.dateOptions" ng-readonly="true"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
-                       close-text="{{'close'|translate}}"
-                       validator="required" message-id="bootstrap" readonly/>
-
+                       close-text="{{'close'|translate}}"/>
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"
-                          ng-click="rentalMaintenanceCtrl.startDateSetting.open($event)">
-                    <i class="glyphicon glyphicon-calendar"></i>
-                  </button>
-                </span>
+                <button type="button" class="btn btn-default"
+                        ng-click="rentalMaintenanceCtrl.startDateOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
               </p>
-              <span id="bootstrap"></span>
             </div>
-
             <label  class="col-md-1 control-label font-nomal">{{'rentalEndDate'|translate}}:</label>
             <div class="col-md-2">
               <p class="input-group">
                 <input type="text" name="endDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
-                       ng-model="rentalMaintenanceCtrl.rentalOrder.endDate"
+                       ng-model="rentalMaintenanceCtrl.maintenance.endDate"
                        is-open="rentalMaintenanceCtrl.endDateOpenStatus.opened"
-                       datepicker-options="dateOptions" ng-readonly="true"
+                       datepicker-options="rentalMaintenanceCtrl.dateOptions" ng-readonly="true"
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}"/>

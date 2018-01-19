@@ -25,7 +25,38 @@
       heightType:"",
       machineManufacture:""};
    vm.rentalOrder = {}
+    vm.init = function () {
+      /**
+       * 得到机器类型集合
+       */
+      var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
+      machineTypeData.then(function (data) {
+        vm.machineTypeList = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('rentalGetDataError'));
+      })
 
+
+      //查询高度类型
+      var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
+      var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
+      deviceHeightTypeData.then(function (data) {
+        vm.deviceHeightTypeList = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('getHtFail'));
+      })
+
+
+      //查询厂商List
+      var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
+      var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
+      deviceMFData.then(function (data) {
+        vm.machineMFList = data.content;
+      }, function (reason) {
+        Notification.error(languages.findKey('getVendorFail'));
+      })
+    }
+    vm.init();
     /**
      * 自适应高度函数
      * @param windowHeight
@@ -140,36 +171,8 @@
       startingDay: 1
     };
 
-    /**
-     * 得到机器类型集合
-     */
-
-    var machineTypeData = serviceResource.restCallService(MACHINE_DEVICETYPE_URL, "GET");
-    machineTypeData.then(function (data) {
-      vm.machineTypeList = data.content;
-    }, function (reason) {
-      Notification.error(languages.findKey('rentalGetDataError'));
-    })
 
 
-    //查询高度类型
-    var deviceHeightTypeUrl = DEVCE_HIGHTTYPE + "?search_EQ_status=1";
-    var deviceHeightTypeData = serviceResource.restCallService(deviceHeightTypeUrl, "GET");
-    deviceHeightTypeData.then(function (data) {
-      vm.deviceHeightTypeList = data.content;
-    }, function (reason) {
-      Notification.error(languages.findKey('getHtFail'));
-    })
-
-
-    //查询厂商List
-    var deviceMFUrl = DEVCE_MF + "?search_EQ_status=1";
-    var deviceMFData = serviceResource.restCallService(deviceMFUrl, "GET");
-    deviceMFData.then(function (data) {
-      vm.machineMFList = data.content;
-    }, function (reason) {
-      Notification.error(languages.findKey('getVendorFail'));
-    })
 
 
     //选择订单客户

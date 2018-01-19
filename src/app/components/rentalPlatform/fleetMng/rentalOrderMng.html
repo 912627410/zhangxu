@@ -18,15 +18,15 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
-        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
-          <div class="info-title">{{'rentalInProgress'|translate}}</div>
-          <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-3">
         <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(1)">
           <div class="info-title">{{'rentalPlan'|translate}}</div>
           <div class="info-data">{{rentalOrderMngCtrl.planOrders}}</div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="info-card" ng-click="rentalOrderMngCtrl.queryOrderByStatus(2)">
+          <div class="info-title">{{'rentalInProgress'|translate}}</div>
+          <div class="info-data">{{rentalOrderMngCtrl.processOrders}}</div>
         </div>
       </div>
       <div class="col-lg-3 col-md-3">
@@ -62,7 +62,7 @@
               <p class="input-group">
                 <input type="text" id="org" class="form-control" placeholder="{{'rentalOrganization'|translate}}"
                        ng-model="rentalOrderMngCtrl.org.label" name="org"/>
-                <span class="input-group-btn">
+                <span class="input-group-btn vertical-align_top">
             <!--打开组织树-->
                   <button type="button" class="btn btn-default" ng-click="rentalOrderMngCtrl.openTreeInfo()">
                     <i class="fa fa-sitemap"></i>
@@ -84,7 +84,7 @@
                        close-text="{{'close'|translate}}"
                        message-id="bootstrap" readonly/>
 
-                <span class="input-group-btn">
+                <span class="input-group-btn vertical-align_top">
                   <button type="button" class="btn btn-default"
                           ng-click="rentalOrderMngCtrl.startDateSetting.open($event)">
                     <i class="glyphicon glyphicon-calendar"></i>
@@ -104,7 +104,7 @@
                        current-text="{{'today'|translate}}"
                        clear-text="{{'cleanUp'|translate}}"
                        close-text="{{'close'|translate}}" readonly/>
-                <span class="input-group-btn">
+                <span class="input-group-btn vertical-align_top">
                 <button type="button" class="btn btn-default"
                         ng-click="rentalOrderMngCtrl.endDateOpen($event)">
                   <i class="glyphicon glyphicon-calendar"></i></button>

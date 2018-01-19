@@ -58,8 +58,10 @@
       </span>
       <div ng-show="submenuShow3" ng-mouseleave="submenuShow3=false">
         <ul>
-          <li ng-click=""><a ui-sref="rental.orgMng">{{'orgManagement' | translate}}</a></li>
-          <li ng-click=""><a ui-sref="rental.userMng">{{'userManagement' | translate}}</a></li>
+          <li ng-click=""  ng-show="rentalPlatformTopbarCtr.validatePermission('system:org')"><a ui-sref="rental.orgMng">{{'orgManagement' | translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();"  ng-hide="rentalPlatformTopbarCtr.validatePermission('system:org')"><a >{{'orgManagement' | translate}}</a></li>
+          <li ng-click="" ng-show="rentalPlatformTopbarCtr.validatePermission('system:user')"><a ui-sref="rental.userMng">{{'userManagement' | translate}}</a></li>
+          <li ng-click="rentalPlatformTopbarCtr.noPermissionNote();"  ng-hide="rentalPlatformTopbarCtr.validatePermission('system:user')"><a >{{'userManagement' | translate}}</a></li>
         </ul>
       </div>
     </div>

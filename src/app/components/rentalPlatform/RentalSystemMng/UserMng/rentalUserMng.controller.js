@@ -13,6 +13,7 @@
                              USER_PAGE_URL,USER_STATUS_DISABLE_URL,USER_STATUS_ENABLE_URL,USER_PRIV_EXPORT_URL,USERINFO_URL,ROLE_MENU_LIST_URL) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
+    vm.currentOrgId = $rootScope.userInfo.userdto.organizationDto.id;
 
     // select org
     vm.my_tree_handler = function (branch) {
@@ -24,10 +25,10 @@
       if (null != branch && null != branch.id) {
         restCallURL += "&search_EQ_organization.id=" + branch.id;
       }
+      vm.currentOrgId = branch.id;
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
         vm.userinfoList = data.content;
-
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetRoleData'));
       });
@@ -37,7 +38,7 @@
     //初始化组织树
     if ($rootScope.orgChart && $rootScope.orgChart.length > 0) {
       vm.my_data = angular.copy([$rootScope.orgChart[0]]);
-      vm.my_tree_handler(vm.my_data);
+      vm.my_tree_handler(vm.currentOrgId);
     } else {
       Notification.error(languages.findKey('failedToGetOrganizationInformation'));
     }
@@ -113,7 +114,6 @@
           }
         }
       });
-
       modalInstance.result.then(function (result) {
         // console.log(result);
         vm.userinfoList.splice(0, 0, result);
@@ -137,9 +137,7 @@
           }
         }
       });
-
       modalInstance.result.then(function (selectedItem) {
-
       }, function () {
         //$log.info('Modal dismissed at: ' + new Date());
       });
@@ -148,7 +146,6 @@
 
     //update userinfo
     vm.updateUserInfo = function (usermnginfo,size) {
-
       var singlUrl = USERINFO_URL + "?id=" + usermnginfo.id;
       var userfoPromis = serviceResource.restCallService(singlUrl, "GET");
       userfoPromis.then(function (data) {
@@ -167,19 +164,30 @@
         });
 
         modalInstance.result.then(function(result) {
-
-          var tabList=vm.userinfoList;
-          //更新内容
-          for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.id){
-              tabList[i]=result;
-            }
+          // var tabList=vm.userinfoList;
+          // //更新内容
+          // for(var i=0;i<tabList.length;i++){
+          //   if(tabList[i].id==result.id){
+          //     tabList[i]=result;
+          //   }
+          // }
+          var restCallURL = USER_PAGE_URL;
+          var pageUrl = 0;
+          var sizeUrl = 10000;
+          var sortUrl = "id,desc";
+          restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
+          if (null != vm.currentOrgId && null != vm.currentOrgId) {
+            restCallURL += "&search_EQ_organization.id=" + vm.currentOrgId;
           }
+          var promise = serviceResource.restCallService(restCallURL, "GET");
+          promise.then(function (data) {
+            vm.userinfoList = data.content;
 
+          }, function (reason) {
+            Notification.error(languages.findKey('failedToGetRoleData'));
+          });
         }, function(reason) {
-
         });
-
 
       }, function (reason) {
         Notification.error(languages.findKey('failureToGetUserInfo'));
@@ -188,30 +196,23 @@
 
 
     vm.query = function (page, size, sort, userinfo) {
-
       //构造查询条件
       var restCallURL = USER_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || 10000;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-
       if (null != userinfo) {
         if (null != userinfo.ssn && userinfo.ssn != "") {
           restCallURL += "&search_LIKE_ssn=" + userinfo.ssn;
         }
-
         if (null != userinfo.firstname) {
           restCallURL += "&search_LIKE_firstname=" + userinfo.firstname;
         }
-
       }
-
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
         vm.userinfoList = data.content;
-
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetUserData'));
       });
@@ -260,7 +261,6 @@
       }
     }
 
-
     /**
      * user角色管理
      * @param size
@@ -300,7 +300,7 @@
     vm.logQuery = function (userinfo,size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng//rentalOperationLog.html',
+        templateUrl: 'app/components/rentalPlatform/RentalSystemMng/UserMng/rentalOperationLog.html',
         controller: 'rentalOperationLogController as rentalOperationLogCtrl',
         size: size,
         backdrop: false,

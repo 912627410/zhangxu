@@ -113,7 +113,7 @@
 
     vm.batchMoveMachine = function (file) {
       if (vm.selected.length == 0) {
-        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: '请选择要进场的车辆', positionY: 'top', positionX: 'center'});
         return;
       }
       var recordTime = serviceResource.getChangeChinaTime(vm.goSiteDate);

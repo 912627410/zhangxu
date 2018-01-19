@@ -25,8 +25,8 @@
 
 
 
-    vm.ok = function () {
-      var rspdata = serviceResource.restAddRequest(RENTAL_CUSTOMER_URL,vm.rentalCustomer);
+    vm.ok = function (rentalCustomer) {
+      var rspdata = serviceResource.restAddRequest(RENTAL_CUSTOMER_URL,rentalCustomer);
       vm.rentalCustomer.org=vm.org;
       rspdata.then(function (data) {
 

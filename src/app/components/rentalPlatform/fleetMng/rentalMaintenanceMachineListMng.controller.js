@@ -32,7 +32,6 @@
     var deviceManufactureListPromise = rentalService.getDeviceManufactureList();
     deviceManufactureListPromise.then(function (data) {
       vm.deviceManufactureList= data.content;
-      //    console.log(vm.userinfoStatusList);
     }, function (reason) {
       Notification.error(languages.findKey('getVendorFail'));
     })

@@ -11,8 +11,8 @@
   </section>
   <div id="currentLocation" class="container-fluid" presentation-href="rental:machinemng:currentLocate:topNavigation">
     <div class="row info-box-container">
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  info-card">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)">
+        <div class="info-box  info-card" >
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height" >
               <img class="profit-info-height"  style="padding-left: 5px"
@@ -22,7 +22,7 @@
               <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" ><strong ng-bind="rentalMachineMngCtr.fenceAlarm"></strong></div>
+              <div  ><strong ng-bind="rentalMachineMngCtr.fenceAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(1)" style="cursor:pointer;">
@@ -32,8 +32,8 @@
           <!-- <div class="miniChart"></div>-->
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  info-card">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)">
+        <div class="info-box  info-card" >
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height" >
               <img class="profit-info-height"  style="padding-left: 5px"
@@ -43,7 +43,7 @@
               <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div  ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" ><strong  ng-bind="rentalMachineMngCtr.machineAlarm"></strong></div>
+              <div   ><strong  ng-bind="rentalMachineMngCtr.machineAlarm"></strong></div>
             </div>
           </div>
          <!-- <div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(4)" style=" cursor:pointer;">
@@ -53,7 +53,7 @@
           <!--<div class="miniChart"></div>-->
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-6 col-xs-12"  ng-click="rentalMachineMngCtr.queryAlarmMsg(2)">
         <div class="info-box  info-card">
           <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height" >
@@ -64,7 +64,7 @@
               <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(2)"><strong ng-bind="rentalMachineMngCtr.keepAlarm"></strong></div>
+              <div ><strong ng-bind="rentalMachineMngCtr.keepAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(2)" style=" cursor:pointer;">-->
@@ -74,8 +74,8 @@
           <!--<div class="miniChart"></div>-->
         </div>
       </div>
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="info-box  info-card">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)">
+        <div class="info-box  info-card" >
           <div class="row">
             <div class="ccol-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height" >
               <img class="profit-info-height"  style="padding-left: 5px"
@@ -85,7 +85,7 @@
               <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="rentalMachineMngCtr.queryAlarmMsg(3)"><strong ng-bind="rentalMachineMngCtr.offLineAlarm"></strong></div>
+              <div ><strong ng-bind="rentalMachineMngCtr.offLineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text" ng-click="rentalMachineMngCtr.queryAlarmMsg(3)" style=" cursor:pointer;">

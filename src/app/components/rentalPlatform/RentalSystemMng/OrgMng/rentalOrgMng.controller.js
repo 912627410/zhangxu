@@ -195,7 +195,7 @@
     };
 
     //update org
-    vm.updateOrg = function (size) {
+    vm.updateOrg = function (id,size) {
       if(null == vm.selectedOrg) {
         Notification.warning(languages.findKey('selectAnOrganizationToUpdate'));
         return;
@@ -214,8 +214,8 @@
             size: size,
             backdrop: false,
             resolve: {
-              selectedOrg: function () {
-                return vm.selectedOrg;
+              selectedOrgid: function () {
+                return id;
               },
               parentOrg:function () {
                 return parentOrg;

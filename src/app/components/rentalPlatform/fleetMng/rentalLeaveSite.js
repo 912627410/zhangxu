@@ -114,8 +114,7 @@
             // sorting: { name: "desc" }
           }, {
             filterDelay: 0,
-            dataset: angular.copy(data.content)
-            // dataset: data.content
+            dataset: data.content
           });
         }, function (reason) {
 
@@ -128,7 +127,7 @@
 
     vm.bringUpBatch = function (file) {
       if (vm.selected.length == 0) {
-        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: '请选择要退场的车辆', positionY: 'top', positionX: 'center'});
         return;
       }
       vm.leaveMachineNumber = vm.leaveMachineNumber + vm.selected.length;

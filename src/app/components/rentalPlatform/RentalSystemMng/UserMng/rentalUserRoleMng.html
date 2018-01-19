@@ -14,7 +14,7 @@
         <li class="list-group-item repeat"  ng-repeat="sysRole in rentalUserRoleMngCtrl.sysRoleList">
           <div class="row">
             <div class="col-sm-2">
-              <input type="checkbox" ng-checked="rentalUserRoleMngCtrl.isSelected(sysRole.id)"
+              <input type="radio" ng-checked="rentalUserRoleMngCtrl.isSelected(sysRole.id)"
                      ng-click="rentalUserRoleMngCtrl.updateSelection($event, sysRole.id)" ng-model="role.checked">
             </div>
             <div class="col-sm-5">
