@@ -10,12 +10,12 @@
     .controller('machineMonitorHistoryController', machineMonitorHistoryController);
 
   /** @ngInject */
-  function machineMonitorHistoryController($filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY,languages) {
+  function machineMonitorHistoryController($filter, sharedDeviceInfoFactory, Notification, serviceResource, NgTableParams, RENTAL_DEVCE_DATA_PAGED_QUERY,languages,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
     //获取共享数据deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
     //分页大小
-    vm.pageSize = 10;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     var date = new Date();
     //查询开始时间默认为昨天
     date.setDate(date.getDate() - 1);

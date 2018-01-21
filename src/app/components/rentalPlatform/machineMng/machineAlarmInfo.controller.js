@@ -11,7 +11,7 @@
     .controller('machineAlarmInfoController', machineAlarmInfoController);
 
   /** @ngInject */
-  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, $uibModal, serviceResource, languages, commonFactory,
+  function machineAlarmInfoController($rootScope, $scope, $window, $location, $anchorScroll, $uibModal, serviceResource, languages, commonFactory,DEFAULT_MINSIZE_PER_PAGE,
                                       RENTAL_ALARM_MSG_URL, RENTAL_ALARM_MSG_DATA_URL, RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL, RENTAL_NOTIFICATION_URL, RENTAL_PRCESS_ALARM, Notification) {
     var vm = this;
     //定义报警类型,1:围栏报警 2:保养提醒 3:离线提醒(长时间未回传数据)
@@ -22,7 +22,7 @@
     vm.allNotificationNumber = 0;//所有的报警
     vm.noProcessNumber = 0;//未处理报警
     vm.processedNumber = 0;//已处理报警
-    vm.pageSize = 9;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     //搜索条件定义
     vm.searchConditions = {}
     //定义页面导航

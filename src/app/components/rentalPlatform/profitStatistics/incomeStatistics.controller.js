@@ -20,7 +20,7 @@
     var xAxisDate = [];
     var realComeDate = [];
     var incomeDate = [];
-    vm.pageSize = 10;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     vm.queryIncome={machineType:"",
       heightType:"",
       machineManufacture:""};

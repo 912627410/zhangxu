@@ -9,12 +9,12 @@
     .controller('maintenanceMachineListMngController', orgMachineListMngController);
 
   /** @ngInject */
-  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, $anchorScroll, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,commonFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
+  function orgMachineListMngController($scope, $window, $location,$uibModalInstance,$filter, DEFAULT_MINSIZE_PER_PAGE, languages,serviceResource,NgTableParams,ngTableDefaults,Notification,treeFactory,commonFactory,permissions,rentalService,DEFAULT_SIZE_PER_PAGE,selectUrl) {
     var vm = this;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
     //定义每页显示多少条数据
-    vm.pageSize = 20;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
 
     ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];

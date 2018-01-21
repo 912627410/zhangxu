@@ -1576,6 +1576,10 @@
   "nonspecificChar":"Cannot contain ~% &; =? $[]{} these special characters",
   "telephoneNoNotLegal":"Please enter the correct mobile number",
   "postcodesNotLegal":"Please enter the correct postcode",
-  "exitTimeFormatIsNotCorrect": "The exit time format is not correct(ps: time format should be:yyyy-MM-dd HH:mm:ss)"
+  "exitTimeFormatIsNotCorrect": "The exit time format is not correct(ps: time format should be:yyyy-MM-dd HH:mm:ss)",
+  "minLengthDesc":"The minimum length is ",
+  "maxLengthDesc":"The maximum length is ",
+  "isLength":"Length is",
+  "bits":"bits"
 
 }

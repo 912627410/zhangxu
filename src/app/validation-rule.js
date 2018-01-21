@@ -111,6 +111,9 @@
         error: "{{'postcodesNotLegal' |translate}}",
         success: ''
       },
+      islength: function (value, scope, element, attrs, param) {
+        return value.length === param;
+      },
       port: {
         // error: 'portError',
         error: '端口号范围1000~65535',
@@ -168,7 +171,7 @@
       }
     );
 
-    //自定义最大值最小值消息
+    // //自定义最大值最小值消息
     $validationProvider.setExpression({
         maxValue: function (value, scope, element, attrs, param) {
           $validationProvider.setDefaultMsg({
@@ -185,6 +188,35 @@
             }
           });
           return parseInt(value) >= parseInt(param);
+        }
+      }
+    );
+
+    //自定义最大长度最小长度消息
+    $validationProvider.setExpression({
+        maxlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxlength: {
+              error: "{{'maxLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length <= param;
+        },
+        minlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minlength: {
+              error: "{{'minLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length >= param;
+        },
+        islength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            islength: {
+              error: "{{'isLength' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length === param;
         }
       }
     );

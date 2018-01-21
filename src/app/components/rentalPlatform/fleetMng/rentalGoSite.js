@@ -5,15 +5,15 @@
     .module('GPSCloud')
     .controller('rentalGoSiteController', rentalGoSiteController);
 
-  function rentalGoSiteController($rootScope, $uibModalInstance, $stateParams, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory, $timeout,$uibModal,
-                                  rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, Notification, languages) {
+  function rentalGoSiteController($rootScope, $uibModalInstance, DEFAULT_MINSIZE_PER_PAGE, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, $timeout,$uibModal,
+                                  rentalService, DEFAULT_SIZE_PER_PAGE, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, Notification, languages) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     vm.selectAll = false;
     vm.rentalOrder = rentalOrder
     vm.selected = [];
-    vm.pageSize = 8;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     var date = new Date();
     vm.goSiteDate = date;
     //时间格式检验
@@ -170,7 +170,7 @@
     vm.queryMachine = function (searchConditions, page, size, sort) {
       var restCallURL = RENTANL_UNUSED_MACHINE_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || 8;
+      var sizeUrl = size || vm.pageSize;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
 
