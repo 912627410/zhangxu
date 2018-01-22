@@ -10,23 +10,28 @@
 
 <!-- Main content -->
 <section class="content form-horizontal" style="overflow: hidden">
-  <div class="row form-group minemngFormGroup text-right">
-    <label class="col-md-1 control-label">编号</label>
-    <div class="col-md-2">
-      <input type="text" name="name" class="form-control" ng-model="checkPointMngCtrl.queryName" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+  <div class="row form-group">
+    <div class="col-md-1 paddingR0">
+      <label class="control-label">工作半径</label>
     </div>
-    <label class="col-md-1 control-label">工作半径</label>
     <div class="col-md-2">
       <input type="text" name="radius" class="form-control" ng-model="checkPointMngCtrl.queryRadius" placeholder="请录入..."/>
       <span style="position: absolute;top: 6px;right: 26px;">米</span>
     </div>
-    <div class="col-md-6 text-right">
+
+    <label class="col-md-2 control-label paddingR0">编号</label>
+    <div class="col-md-2">
+      <input type="text" name="name" class="form-control" ng-model="checkPointMngCtrl.queryName" placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+    <div class="col-md-5 text-right">
       <button class="btn btn-default" type="button" ng-click="checkPointMngCtrl.reset()">{{'reset'|translate}}</button>
-      <button class="btn btn-primary" type="button" ng-click="checkPointMngCtrl.query(null, null, null)" style="margin: 0 12px;">{{'rentalQuery'|translate}}</button>
+      <span>&nbsp;</span>
+      <button class="btn btn-primary" type="button" ng-click="checkPointMngCtrl.query(null, null, null)">{{'rentalQuery'|translate}}</button>
     </div>
   </div>
 
-  <div class="row form-group" style="padding-top: 20px;">
+  <div class="row form-group">
     <div class="btn-group col-md-6" style="line-height: 34px;">
       <span>{{'totalNumberOfRecords'|translate}} {{checkPointMngCtrl.checkPointPage.totalElements}}</span>
     </div>
@@ -46,7 +51,7 @@
             <td class="text-nowrap" data-title="'经度'" sortable="'longitudeNum'">{{checkPoint.longitudeNum}}</td>
             <td class="text-nowrap" data-title="'纬度'" sortable="'latitudeNum'">{{checkPoint.latitudeNum}}</td>
             <td class="text-nowrap" data-title="'工作半径'" sortable="'radius'">{{checkPoint.radius}}米</td>
-            <td class="text-nowrap" data-title="'更新时间'" sortable="'recordTime'">{{checkPoint.updateTime |
+            <td class="text-nowrap" data-title="'更新时间'" sortable="'updateTime'">{{checkPoint.updateTime |
               date:'yyyy-MM-dd HH:mm:ss'}}
             </td>
             <td class="text-nowrap text-center" data-title="'操作'">
@@ -67,9 +72,9 @@
                       ng-model="checkPointMngCtrl.checkPoint_pagenumber"
                       items-per-page="checkPointMngCtrl.checkPointPage.size"
                       class="pagination-sm" boundary-links="true" rotate="false"
-                      first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}"
-                      next-text="{{'nextPage'|translate}}"
-                      previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                      first-text="首页" last-text="最后一页"
+                      next-text="下一页"
+                      previous-text="前一页"></uib-pagination>
     </div>
   </div>
 </section>

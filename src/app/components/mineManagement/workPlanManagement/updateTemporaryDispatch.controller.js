@@ -49,20 +49,12 @@
       vm.getTeamList(vm.fleet);
 
       vm.ok = function () {
-        if(vm.fleet == null || vm.fleet=== "") {
-          Notification.warning("请选择车队");
-          return;
-        }
-        if(vm.team == null || vm.team=== "") {
-          Notification.warning("请选择小组");
-          return;
-        }
         if(vm.fleet === vm.oldTemporaryDispatch.nowFleet && vm.team === vm.oldTemporaryDispatch.nowTeam) {
-          Notification.warning("没有修改内容");
+          Notification.warning("内容没有变化");
           return;
         }
         if(vm.fleet === vm.oldTemporaryDispatch.oldFleet && vm.team === vm.oldTemporaryDispatch.oldTeam) {
-          Notification.warning("修改后的与原始数据相同");
+          Notification.warning("修改后的数据与原始数据相同");
           return;
         }
         var updateTemporaryDispatch = {

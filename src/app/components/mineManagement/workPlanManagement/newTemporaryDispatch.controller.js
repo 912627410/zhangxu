@@ -13,7 +13,7 @@
         .controller('newTemporaryDispatchController', newTemporaryDispatchController);
 
     function newTemporaryDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, languages, serviceResource, operatorInfo,
-                                            minemngResource, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_MINE_MACHINE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
+                                            minemngResource, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_MACHINE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
@@ -21,7 +21,8 @@
        * 获取车辆列表
        */
       vm.getMachineList = function () {
-        var rspData = serviceResource.restCallService(MINEMNG_MINE_MACHINE_LIST, "QUERY");
+        var url = MINEMNG_MACHINE_LIST + "?machineType=1";
+        var rspData = serviceResource.restCallService(url, "QUERY");
         rspData.then(function (data) {
           vm.machineList = data;
         }, function (reason) {
@@ -59,16 +60,8 @@
       };
 
       vm.ok = function () {
-        if(vm.machines == null || vm.machines === "" || vm.machines === "undefined") {
+        if(vm.machines == null || vm.machines.length <= 0) {
           Notification.warning("请选择车号");
-          return;
-        }
-        if(vm.fleet == null || vm.fleet === "" || vm.fleet === "undefined") {
-          Notification.warning("请选择车队");
-          return;
-        }
-        if(vm.team == null || vm.team === "" || vm.team === "undefined") {
-          Notification.warning("请选择小组");
           return;
         }
         var newTemporaryDispatch = {

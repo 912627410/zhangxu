@@ -12,10 +12,10 @@
         .module('GPSCloud')
         .controller('checkPointMngController', checkPointMngController);
     function checkPointMngController($rootScope, $scope, Notification, $uibModal, serviceResource, $confirm, languages, NgTableParams,
-                                     ngTableDefaults, MINEMNG_CHECK_POINT, MINEMNG_DELETE_CHECK_POINT) {
+                                     ngTableDefaults, DEFAULT_MINSIZE_PER_PAGE, MINEMNG_CHECK_POINT, MINEMNG_DELETE_CHECK_POINT) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
-      ngTableDefaults.params.count = 20;
+      ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
       ngTableDefaults.settings.counts = [];
 
       vm.checkPointPage = {
@@ -31,7 +31,7 @@
       vm.query = function (page, size, sort) {
         var restCallURL = MINEMNG_CHECK_POINT;
         var pageUrl = page || 0;
-        var sizeUrl = size || 20;
+        var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
         var sortUrl = sort || "update_time";
         restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
         if(vm.queryName != null && vm.queryName !== "" && vm.queryName !== "undefined") {
