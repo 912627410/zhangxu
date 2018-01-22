@@ -13,11 +13,15 @@
         .controller('dispatchHistoryController', dispatchHistoryController);
 
     function dispatchHistoryController($rootScope, $scope, Notification, $uibModal, serviceResource, $confirm, languages, NgTableParams,
-                                       ngTableDefaults, minemngResource, MINEMNG_DISPATCH_RECORD) {
+                                       ngTableDefaults, minemngResource, DEFAULT_MINSIZE_PER_PAGE, MINEMNG_DISPATCH_RECORD) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
-      ngTableDefaults.params.count = 40;
+      ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
       ngTableDefaults.settings.counts = [];
+
+      vm.dispatchRecordPage = {
+        totalElements: 0
+      };
 
       vm.initDate = function () {
         var startDate = new Date();
@@ -36,29 +40,11 @@
       vm.openEndDate = function () {
         vm.endDateOpenStatus = true;
       };
-      vm.startDateOptions = {
-        dateDisabled: function(data) {  //设置可以选择的日期(2018-01-01 到当前日期的第二天)
-          var nextDate = new Date();
-          nextDate.setDate(nextDate.getDate() + 1);
-          var longTimeAgo = new Date('2018-01-01');
+      vm.dateOptions = {
+        dateDisabled: function(data) {
           var date = data.date;
           var mode = data.mode;
-          if(nextDate.getTime() < date.getTime() || longTimeAgo.getTime() > date.getTime()) {
-            return mode === 'day' && (date.getTime());
-          }
-        },
-        formatYear: 'yyyy',
-        startingDay: 1
-      };
-
-      vm.endDateOptions = {
-        dateDisabled: function(data) {  //设置可以选择的日期(2018-01-01 到当前日期的第二天)
-          var nextDate = new Date();
-          nextDate.setDate(nextDate.getDate() + 1);
-          var longTimeAgo = new Date('2018-01-01');
-          var date = data.date;
-          var mode = data.mode;
-          if(nextDate.getTime() < date.getTime() || longTimeAgo.getTime() > date.getTime()) {
+          if(new Date().getTime() < date.getTime()) {
             return mode === 'day' && (date.getTime());
           }
         },
@@ -85,7 +71,7 @@
       vm.query = function (page, size, sort) {
         var restCallURL = MINEMNG_DISPATCH_RECORD;
         var pageUrl = page || 0;
-        var sizeUrl = size || 40;
+        var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
         var sortUrl = sort || "record_time";
         restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
         if(vm.dispatchType != null && vm.dispatchType !== "" && vm.dispatchType !== "undefined") {

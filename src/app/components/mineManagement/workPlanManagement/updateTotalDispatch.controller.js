@@ -47,16 +47,8 @@
 
 
       vm.ok = function () {
-        if(vm.workFace == null || vm.workFace === "") {
-          Notification.warning("请选择工作面");
-          return;
-        }
-        if(vm.dumpField == null || vm.dumpField === "") {
-          Notification.warning("请选择排土场");
-          return;
-        }
         if(vm.workFace === vm.oldTotalDispatch.workFace && vm.oldTotalDispatch.dumpField === vm.dumpField) {
-          Notification.warning("没有修改内容");
+          Notification.warning("内容没有变化");
           return;
         }
         var updateTotalDispatch = {

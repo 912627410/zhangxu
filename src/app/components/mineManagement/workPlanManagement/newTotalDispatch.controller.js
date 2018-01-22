@@ -106,30 +106,6 @@
 
 
       vm.ok = function () {
-        if(vm.newTotalDispatch == null || vm.newTotalDispatch === "" || vm.newTotalDispatch === "undefined") {
-          Notification.warning("请选择相关信息");
-          return;
-        }
-        if(vm.newTotalDispatch.fleet == null || vm.newTotalDispatch.fleet === "") {
-          Notification.warning("请选择车队");
-          return;
-        }
-        if(vm.newTotalDispatch.workFace == null || vm.newTotalDispatch.workFace === "") {
-          Notification.warning("请选择工作面");
-          return;
-        }
-        if(vm.newTotalDispatch.dumpField == null || vm.newTotalDispatch.dumpField === "") {
-          Notification.warning("请选择排土场");
-          return;
-        }
-        if(vm.newTotalDispatch.workShift == null || vm.newTotalDispatch.workShift === "") {
-          Notification.warning("请选择班次");
-          return;
-        }
-        if(vm.effectiveDate == null || vm.effectiveDate === "") {
-          Notification.warning("请选择日期");
-          return;
-        }
         vm.newTotalDispatch.effectiveDate = vm.effectiveDate;
         var rspData = serviceResource.restCallService(MINEMNG_TOTAL_DISPATCH, "ADD", vm.newTotalDispatch);  //post请求
         rspData.then(function (data) {
