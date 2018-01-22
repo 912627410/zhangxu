@@ -9,23 +9,21 @@
     .controller('updateFleetTeamController', updateFleetTeamController);
 
   /** @ngInject */
-  function updateFleetTeamController( MINE_UPDATE_FLEET_TEAM,fleetTeam,$uibModalInstance, serviceResource, Notification) {
+  function updateFleetTeamController(MINE_MACHINE_FLEET, MINE_UPDATE_FLEET_TEAM,fleetTeam,$uibModalInstance, serviceResource, Notification) {
     var vm = this;
     vm.fleetTeam=fleetTeam;
+    vm.object;
 
+    var restCallURL = MINE_MACHINE_FLEET;
+    restCallURL += "?id=" + vm.fleetTeam.id;
+    var dataPromis = serviceResource.restCallService(restCallURL, "GET");
+    dataPromis.then(function (data) {
+      vm.object=data;
+    });
 
-    /*var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
-    machineStatePromise.then(function (data) {
-      vm.machineStateList= data;
-    }, function () {
-      Notification.error(languages.findKey('getVeStaFail'));
-    })*/
-
-
-
-    vm.ok = function (fleetTeam) {
-
-      var restPromise = serviceResource.restUpdateRequest(MINE_UPDATE_FLEET_TEAM, fleetTeam);
+    vm.ok = function (object) {
+      vm.object.label=object.name ;
+      var restPromise = serviceResource.restUpdateRequest(MINE_UPDATE_FLEET_TEAM, object);
       restPromise.then(function (data) {
           if(data.code===0){
             Notification.success("更新成功");

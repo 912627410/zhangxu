@@ -9,7 +9,8 @@
     .controller('minemngUserMngController', minemngUserMngController);
 
   /** @ngInject */
-  function minemngUserMngController($scope,$uibModal,NgTableParams,ngTableDefaults,$confirm,MINEMNG_USERINFOPAGE_URL,MINEMNG_USERINFO_DELETE_URL,DEFAULT_MINSIZE_PER_PAGE,ROLE_URL,MINEMNG_USERINFO_URL,serviceResource,Notification,languages) {
+  function minemngUserMngController($scope,$uibModal,NgTableParams,ngTableDefaults,$confirm,MINEMNG_USERINFOPAGE_URL,MINEMNG_USERINFO_DELETE_URL,DEFAULT_MINSIZE_PER_PAGE,ROLE_URL,
+                                    MINEMNG_USERINFO_URL,serviceResource,Notification,languages,MINEMNG_ORG_SSNCODE_URL) {
     var vm = this;
     vm.operatorInfo = $scope.userInfo;
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
@@ -55,6 +56,18 @@
       })
     }
     vm.getUserRoleType();
+
+    //默认显示系统用户名的前3位
+    vm.getSsnCode=function(){
+      var url=MINEMNG_ORG_SSNCODE_URL;
+      var ssnCode=serviceResource.restCallService(url, "GET");
+      ssnCode.then(function(data){
+        vm.ssnCode=data.content;
+      },function(reason) {
+        Notification.error('获取系统用户名前三位失败');
+      })
+    }
+    vm.getSsnCode();
 
     //分页查询用户信息
     vm.query = function (page, size, sort, minemnguser) {
@@ -112,7 +125,13 @@
         templateUrl: 'app/components/mineManagement/userManagement/minemngNewUser.html',
         controller: 'minemngNewUserMngController',
         controllerAs: 'minemngNewUserMngCtrl',
-        size: 'lg'
+        size: 'lg',
+        resolve: {
+          ssnCode: function () {
+            return vm.ssnCode;
+
+          }
+        }
       });
 
       modalInstance.result.then(function (result) {
@@ -137,6 +156,9 @@
           resolve: {
             minemnguserinfo: function () {
               return data.content;
+            },
+            ssnCode: function () {
+              return vm.ssnCode;
 
             }
 

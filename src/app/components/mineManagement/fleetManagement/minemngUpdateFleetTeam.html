@@ -12,7 +12,7 @@
         <div class="col-lg-6">
 
           <input type="text" id="fleetName" class="form-control" placeholder="{{'车队名字'|translate}}"
-                 ng-model="updateFleetTeamCtrl.fleetTeam.label"  name="label"  typeahead-show-hint="true"
+                 ng-model="updateFleetTeamCtrl.object.name"  name="label"  typeahead-show-hint="true"
                  validator="required" />
         </div>
       </div>
@@ -22,6 +22,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="updateFleetTeamCtrl.ok(updateFleetTeamCtrl.fleetTeam)">{{'确定'|translate}}</button>
+  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="updateFleetTeamCtrl.ok(updateFleetTeamCtrl.object)">{{'确定'|translate}}</button>
   <button class="btn btn-warning" type="button" ng-click="updateFleetTeamCtrl.cancel()">{{'取消'|translate}}</button>
 </div>

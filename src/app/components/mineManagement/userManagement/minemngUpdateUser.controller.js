@@ -6,11 +6,13 @@
     .controller('minemngUpdateUserMngController', minemngUpdateUserMngController);
 
   /** @ngInject */
-  function minemngUpdateUserMngController($uibModalInstance,$scope,minemnguserinfo,MINEMNG_USERINFO_UPDATE_URL,ROLE_URL,serviceResource,Notification) {
+  function minemngUpdateUserMngController($uibModalInstance,$scope,minemnguserinfo,ssnCode,MINEMNG_USERINFO_UPDATE_URL,ROLE_URL,serviceResource,Notification) {
     var vm = this;
 
     vm.operatorInfo = $scope.userInfo;
     vm.minemnguser=minemnguserinfo;
+    vm.ssnCode = ssnCode;
+    vm.ssn = minemnguserinfo.ssn.substring(3);
 
     //加载角色类型
     vm.getUserRoleType = function () {
@@ -51,7 +53,11 @@
     vm.getUserRoleType();
 
     vm.ok = function () {
-
+      if(vm.minemnguser.jobNumber != null &&vm.minemnguser.jobNumber !== 'undefined' &&vm.minemnguser.jobNumber !== '' && vm.minemnguser.jobNumber.length!=6) {
+          Notification.warning("工号为6位数字");
+          return;
+        }
+      vm.minemnguser.ssn = vm.ssnCode + vm.ssn;
       var rspdata = serviceResource.restUpdateRequest(MINEMNG_USERINFO_UPDATE_URL,vm.minemnguser);
       rspdata.then(function (data) {
         Notification.success("修改用户信息成功!");

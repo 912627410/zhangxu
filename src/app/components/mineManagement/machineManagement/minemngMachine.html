@@ -6,7 +6,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i>{{'首页'| translate}}</a></li>
-    <li class="active">{{'车辆管理'| translate}}</li>
+    <li class="active">{{'车辆基本信息'| translate}}</li>
   </ol>
 </section>
 
@@ -81,6 +81,11 @@
 
       </div>
 
+      <div class="row form-group">
+        <div class="btn-group col-md-6" style="line-height: 34px;">
+          <span>{{'totalNumberOfRecords'|translate}} {{minemngMachineCtrl.page.totalElements}}</span>
+        </div>
+      </div>
       <!--表单-->
       <div class="row form-group" style="padding: 10px">
         <script id="selectAllHeader" type="text/ng-template">
@@ -92,13 +97,8 @@
 
           <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="machine in $data">
-              <!--选择框-->
-              <!--<td class="text-nowrap" data-header="'selectAllHeader'">
-                <input type="checkbox" ng-checked="minemngMachineCtrl.isSelected(machine.id)"
-                       ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
-              </td>-->
               <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
-              <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'lienseId'">{{machine.licenseId}}</td>
+              <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
               <td class="text-nowrap" data-title="'orderNumber'|translate" sortable="'orderNumber'">{{machine.orderNumber}}</td>
               <td class="text-nowrap" data-title="'productName'|translate" sortable="'productName'">{{machine.productName }}</td>
               <td class="text-nowrap" data-title="'productModel'|translate" sortable="'productModel'">{{machine.productModel}}</td>
@@ -200,7 +200,7 @@
 
           <div class="col-md-3">
             <button class="btn btn-primary  pull-right" type="button"
-                    ng-click="minemngMachineCtrl.newMachineMng('md',1)">{{'增加'|translate}}
+                    ng-click="minemngMachineCtrl.newMachineMng('md',2)">{{'增加'|translate}}
             </button>
             <a class="btn btn-default margin_right5 pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
               <i class="fa fa-plus"></i> {{'批量导入'|translate}}
@@ -209,6 +209,11 @@
 
         </div>
 
+        <div class="row form-group">
+          <div class="btn-group col-md-6" style="line-height: 34px;">
+            <span>{{'totalNumberOfRecords'|translate}} {{minemngMachineCtrl.page.totalElements}}</span>
+          </div>
+        </div>
         <!--表单-->
         <div class="row form-group" style="padding: 10px">
           <script id="selectAllHeader2" type="text/ng-template">
@@ -225,7 +230,7 @@
                          ng-click="minemngMachineCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
                 </td>-->
                 <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
-                <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'lienseId'">{{machine.licenseId}}</td>
+                <td class="text-nowrap" data-title="'licenseId'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
                 <td class="text-nowrap" data-title="'orderNumber'|translate" sortable="'orderNumber'">{{machine.orderNumber}}</td>
                 <td class="text-nowrap" data-title="'productName'|translate" sortable="'productName'">{{machine.productName }}</td>
                 <td class="text-nowrap" data-title="'productModel'|translate" sortable="'productModel'">{{machine.productModel}}</td>

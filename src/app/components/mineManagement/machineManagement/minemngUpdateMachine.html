@@ -11,14 +11,14 @@
           <div class="col-sm-4">
             <input type="text" id="carNumber" class="form-control" placeholder="{{'carNumber'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.carNumber" name="carNumber" typeahead-show-hint="true"
-                   validator="required" />
+                   validator="required,maxlength=8" />
           </div>
 
           <label for="licenseId" class="col-sm-2 control-label padding5">{{'licenseId'|translate}}</label>
           <div class="col-sm-4">
             <input type="text" id="licenseId" class="form-control" placeholder="{{'licenseId'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.licenseId" name="licenseId" typeahead-show-hint="true"
-                   validator="required"/>
+                   validator="required,numberAndChar,maxlength=17"/>
           </div>
 
         </div>
@@ -28,7 +28,7 @@
           <div class="col-sm-4">
             <input type="text" id="orderNumber" class="form-control" placeholder="{{'orderNumber'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.orderNumber" name="orderNumber" typeahead-show-hint="true"
-            />
+                   validator="numberAndChar,maxlength=20"/>
           </div>
 
 
@@ -36,7 +36,7 @@
           <div class="col-sm-4">
             <input type="text" id="productName" class="form-control" placeholder="{{'productName'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.productName" name="productName" typeahead-show-hint="true"
-                   validator="required"/>
+                   validator="required,maxlength=20"/>
           </div>
 
         </div>
@@ -47,7 +47,7 @@
 
             <input type="text" id="productModel" class="form-control" placeholder="{{'productModel'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.productModel" name="productModel" typeahead-show-hint="true"
-                   validator="required" />
+                   validator="required,numberAndChar,maxlength=20" />
           </div>
 
           <label for="acceptDate" id="acceptDate" class="col-sm-2 control-label padding5">{{'acceptDate'|translate}}</label>
@@ -111,7 +111,7 @@
 
             <input type="text" id="manufactoryName" class="form-control" placeholder="{{'manufactoryName'|translate}}"
                    ng-model="updateMineMachineCtrl.machine.manufactoryName" name="manufactoryName" typeahead-show-hint="true"
-                   validator="required" />
+                   validator="required,required,chineseAndChar,maxlength=20" />
           </div>
 
             <label for="status" class="col-sm-2 control-label padding5">{{'status'|translate}}</label>

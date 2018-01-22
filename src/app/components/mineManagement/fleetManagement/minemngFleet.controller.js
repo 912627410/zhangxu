@@ -156,15 +156,10 @@
     vm.addMineFleetMachine = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngAddFleetMachine.html',
-        controller: 'addMineFleetController as addMineFleetCtrl',
+        templateUrl: 'app/components/mineManagement/fleetManagement/minemngFleetMachine.html',
+        controller: 'mineFleetController as mineFleetCtrl',
         size: 'sx',
         backdrop: false,
-       /* resolve: {
-          fleetTeam: function () {
-            return vm.selectedObject;
-          },
-        }*/
       });
       modalInstance.result.then(function () {
         vm.reset();
@@ -202,11 +197,28 @@
       });
 
       modalInstance.result.then(function (result) {
+        vm.getUpdateObject();
+      }, function () {
+        //取消
+      });
+    };
+
+    //管理车队队长
+    vm.newFleetCaptain = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/mineManagement/fleetManagement/minemngFleetCaptain.html',
+        controller: 'fleetCaptainController as fleetCaptainCtrl',
+        size: size,
+        backdrop: false,
+      });
+      modalInstance.result.then(function (result) {
 
       }, function () {
         //取消
       });
     };
+
 
     //修改车队小组
     vm.updateFleetTeam = function (size) {
@@ -228,7 +240,7 @@
       });
 
       modalInstance.result.then(function (result) {
-
+        vm.getUpdateObject();
       }, function () {
         //取消
       });

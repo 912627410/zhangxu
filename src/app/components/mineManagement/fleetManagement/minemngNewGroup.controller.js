@@ -1,9 +1,7 @@
 /**
  * Created by 刘鲁振 on 2018/1/8.
  */
-/**
- * Created by luzhen on 12/26/17.
- */
+
 
 
 (function(){
@@ -21,9 +19,7 @@
     vm.fleetGroup={parentId:'',label:'',status:'',id:''};
 
     vm.ok= function(minemngFleet){
-      if(vm.minemngFleet.parentFleet==null||vm.minemngFleet.parentFleet==""){
-        Notification.warning('请选择车队！');
-      }else {
+
         vm.fleetGroup.parentId=vm.minemngFleet.parentFleet.id;
         vm.fleetGroup.label=minemngFleet.label;
         var restPromise = serviceResource.restAddRequest(MINE_NEW_TEAM, vm.fleetGroup);
@@ -40,7 +36,7 @@
           }
 
         );
-      }
+
 
     };
 
