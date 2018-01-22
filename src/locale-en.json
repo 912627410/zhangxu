@@ -1472,6 +1472,7 @@
   "modifyOrderInformation":"Modify Order Information",
   "modifyFenceInformation":"Modify Fence Successful!",
   "transVehicleSucc":" Vehicle Transfer Successful!",
+  "transVehicleAndFildUpload":"Vehicle Transfer and file upload Successful!!",
   "transVehiclFail":"Failed to transfer the vehicle",
   "selTime":"Please select the order start time and end time!",
   "selOrDiff":"The selected order cannot be the same!",

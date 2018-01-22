@@ -10,8 +10,11 @@
     .controller('viewRentalOrderController',viewRentalOrderController);
 
   /** @ngInject */
-  function viewRentalOrderController ($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL,retalOrderTotalVo,Notification,RENTAL_ORDER_MACHINE_HISTORY_URL,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,NgTableParams){
+  function viewRentalOrderController ($rootScope,$window,$stateParams,$uibModalInstance,serviceResource,RENTAL_ORDER_URL,ngTableDefaults,retalOrderTotalVo,Notification,RENTAL_ORDER_MACHINE_HISTORY_URL,RENTAL_ORDER_ENTRY_EXIT_LIST_URL,NgTableParams,DEFAULT_MINSIZE_PER_PAGE){
     var vm = this;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;//默认分页大小
+    ngTableDefaults.settings.counts = [];//不使用naTable默认的分页条
     vm.operatorInfo = $rootScope.userInfo;
 
     vm.jcOption = {
@@ -38,12 +41,13 @@
       }
     }
     //订单下车辆List查询
-    vm.carlist = function(sort,id){
+    vm.carlist = function(page, size,sort,id){
       var restCallURL = RENTAL_ORDER_MACHINE_HISTORY_URL;
-      var sortUrl = sort||"id,desc";
-      restCallURL += "?sort="+sortUrl;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&id="+id;
-
       var rspData = serviceResource.restCallService(restCallURL,"GET");
       rspData.then(function(data){
         vm.tableParams = new NgTableParams({
@@ -52,40 +56,56 @@
         },{
           dataset:data.content
         });
+        vm.page = data.page;
+        vm.pageNumber = data.page.number + 1;
       },function(reason){
       });
     };
-    vm.carlist(null,vm.rentalOrder.id);
+    vm.carlist(null,null,null,vm.rentalOrder.id);
 
     //订单下车辆List查询
-    vm.entryList = function(sort,id){
-      var sortUrl = sort||"id,desc";
-      var restCallURL = RENTAL_ORDER_ENTRY_EXIT_LIST_URL+"?sort="+sortUrl+"&orderId="+id;
-      var entryListURL = restCallURL+"&type="+1;
-      var exitListURL = restCallURL+"&type="+2;
+    vm.entryList = function(currentPage, pageSize, totalElements,id){
+      var restCallURL = RENTAL_ORDER_ENTRY_EXIT_LIST_URL;
+      var pageUrl = currentPage || 0;
+      var sizeUrl = pageSize || vm.pageSize;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      if (totalElements != null && totalElements != undefined) {
+        restCallURL += "&totalElements=" + totalElements;
+      }
+      var entryListURL = restCallURL+"&orderId="+id+"&type="+1;
       var entryRspData = serviceResource.restCallService(entryListURL,"GET");
       entryRspData.then(function(data){
         vm.entryTableParams = new NgTableParams({},{
           dataset:data.content
         });
+        vm.entryTotalElements = data.totalElements;
+        vm.entryCurrentPage = data.number + 1;
       },function(reason){
       });
+    };
+
+    vm.exitList = function (currentPage, pageSize, totalElements,id) {
+      var restCallURL = RENTAL_ORDER_ENTRY_EXIT_LIST_URL;
+      var pageUrl = currentPage || 0;
+      var sizeUrl = pageSize || vm.pageSize;
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      if (totalElements != null && totalElements != undefined) {
+        restCallURL += "&totalElements=" + totalElements;
+      }
+      var exitListURL = restCallURL+"&orderId="+id+"&type="+2;
       var exitRspData = serviceResource.restCallService(exitListURL,"GET");
       exitRspData.then(function(data){
         vm.exitTableParams = new NgTableParams({},{
           dataset:data.content
         });
+        vm.totalElements = data.totalElements;
+        vm.currentPage = data.number + 1;
       },function(reason){
       });
-    };
-    vm.entryList(null,vm.rentalOrder.id);
-
+    }
     vm.back = function(){
       $uibModalInstance.dismiss('cancel');
-
     };
-
-
     vm.rightBoxBottomHeight = 20;
     vm.rightBoxTopHeightTemp = 20;
     /**
@@ -103,7 +123,6 @@
       vm.baseBoxMapContainer = {
         "min-height":baseBoxMapContainerHeight+"px"
       }
-
       var rightBoxTopHeight = baseBoxContainerHeight/2;
       vm.rightBoxTopHeightTemp = rightBoxTopHeight-20;
       //地图的右边自适应高度
@@ -115,15 +134,12 @@
     //初始化高度
     vm.adjustWindow($window.innerHeight);
 
-
     //查询要修改的客户信息
     vm.getOrder = function(){
       var id = $stateParams.id;
       var url = RENTAL_ORDER_URL+"?id="+id;
       var rspdata = serviceResource.restCallService(url,"GET");
-
       rspdata.then(function(data){
-
         vm.rentalOrder = data.content.orderVo;
         vm.orderMachineTypeVoList = data.content.orderMachineTypeVoList;
         for(var i = 0; i<vm.orderMachineTypeVoList.length; i++){
@@ -137,16 +153,10 @@
             vm.qbOption = vm.orderMachineTypeVoList[i]
           }
         }
-
-
       },function(reason){
         Notification.error(reason.data.message);
       })
-
     }
-
-    //vm.getOrder();
-
 
   }
 })();

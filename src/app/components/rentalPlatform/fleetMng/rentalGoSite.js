@@ -131,8 +131,9 @@
           if (file) {
             var Id = data.content;
             vm.fileUpload(Id, file);
+            Notification.success(languages.findKey('transVehicleAndFildUpload'));
           }
-          Notification.success(languages.findKey('transVehicle'));
+          Notification.success(languages.findKey('transVehiclFail'));
           $uibModalInstance.close(vm.selected.length);
         }
       }, function (reason) {
@@ -155,6 +156,8 @@
                 file.result = response.data;
                 if (file.result.code != 0) {
                   Notification.error(data.message);
+                }else {
+                  Notification.success(languages.findKey('transVehicleAndFildUpload'));
                 }
               })
             },
@@ -168,6 +171,7 @@
       }
     }
     vm.queryMachine = function (searchConditions, page, size, sort) {
+      vm.checked = false;
       var restCallURL = RENTANL_UNUSED_MACHINE_PAGE_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || vm.pageSize;

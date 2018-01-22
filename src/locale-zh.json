@@ -1483,6 +1483,7 @@
   "modifyOrderInformation":"修改订单信息",
   "modifyFenceInformation":"修改围栏信息成功!",
   "transVehicle":"调入车辆成功!",
+  "transVehicleAndFildUpload":"调入车辆成功,上传附件成功!",
   "transVehiclFail":"调入车辆失败!",
   "selTime":"请选择订单开始时间和结束时间!",
   "selOrDiff":"选择的订单不能一样!",
