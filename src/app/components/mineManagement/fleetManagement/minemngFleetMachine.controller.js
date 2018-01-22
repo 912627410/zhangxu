@@ -5,9 +5,9 @@
 
 (function(){
   'use strict'
-  angular.module('GPSCloud').controller('addMineFleetController',addMineFleetController);
+  angular.module('GPSCloud').controller('mineFleetController',mineFleetController);
 
-  function addMineFleetController(MINE_DELETE_TEAM_MACHINE,$confirm,MINE_ADD_MACHINE_INFO,MINE_NOT_ADD_MACHINE_INFO,languages,MINEMNG_MACHINE_TYPE_LIST,MINE_ADD_TEAM_MACHINE,$filter,MINE_MACHINE_FLEET,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
+  function mineFleetController(MINE_DELETE_TEAM_MACHINE,$confirm,MINE_ADD_MACHINE_INFO,MINE_NOT_ADD_MACHINE_INFO,languages,MINEMNG_MACHINE_TYPE_LIST,MINE_ADD_TEAM_MACHINE,$filter,MINE_MACHINE_FLEET,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
     var vm= this;
     vm.machineType=null;
     vm.fleetTeam;
@@ -99,6 +99,7 @@
       });
     };
 
+    //查询添加的车辆
     vm.queryMachine=function(){
 
       vm.checked=false;//查询之前全选置空
@@ -171,7 +172,6 @@
       if (action == 'remove' && vm.deleSelected.indexOf(id) != -1) {
         var idx = vm.deleSelected.indexOf(id);
         vm.deleSelected.splice(idx, 1);
-
       }
     }
 

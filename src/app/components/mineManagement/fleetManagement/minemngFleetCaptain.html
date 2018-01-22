@@ -1,0 +1,150 @@
+
+<div class="modal-header">
+  <h3 class="modal-title">{{'管理队长'|translate}}</h3>
+</div>
+
+
+  <div class="modal-body">
+
+    <form name="deleFleetCaptainForm" class="form-horizontal" >
+
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'选择车队' | translate}}:</label>
+        <div class="col-sm-8">
+          <p class="input-group">
+            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="fleetCaptainCtrl.minemngFleet.name" name="group" validator="required" readonly required />
+            <span class="input-group-btn vertical-align_top">
+                  <button type="button" class="btn btn-default" ng-click="fleetCaptainCtrl.addMinemngMachine()">
+                    <i class="fa fa-sitemap"></i>
+                  </button>
+                </span>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+
+
+<uib-tabset active="active" type="tabs">
+
+  <uib-tab index="3" active="true" heading="添加队长"  select="fleetCaptainCtrl.query()">
+
+    <form name="newFleetCaptainForm" class="form-horizontal" >
+
+      <div class="box-body col-sm-12">
+
+        <div class="row form-group ">
+          <label class="col-md-1 control-label font-normal">{{'工号'|translate}}:</label>
+          <div class="col-md-4">
+            <input type="text" name="jobNumber" class="form-control"  ng-model="fleetCaptainCtrl.minemnguser.jobNumber"
+                   placeholder="{{'输入工号'|translate}}"/>
+          </div>
+
+          <label class="col-md-3 control-label font-normal">{{'姓名'|translate}}:</label>
+          <div class="col-md-4">
+            <input type="text" name="name" class="form-control" ng-model="fleetCaptainCtrl.minemnguser.name"
+                   placeholder="{{'输入姓名'|translate}}" />
+          </div>
+        </div>
+
+        <div class="row form-group" >
+          <div class="col-md-12">
+            <button class="btn btn-primary  pull-right" type="button"
+                    ng-click="fleetCaptainCtrl.query(null,null,null,fleetCaptainCtrl.minemnguser)">{{'查询'|translate}}
+            </button>
+            <button class="btn btn-default margin_right5 pull-right" type="button"
+                    ng-click="fleetCaptainCtrl.reset()">{{'重置'|translate}}
+            </button>
+          </div>
+        </div>
+
+
+        <div class="row form-group" style="padding: 10px">
+          <!--全选框-->
+          <script id="selectAllHeader" type="text/ng-template">
+            <input type="checkbox" ng-click="fleetCaptainCtrl.addUpdateAllSelection($event)"
+                   ng-model="fleetCaptainCtrl.checked">
+          </script>
+
+          <div class="table-responsive">
+            <table ng-table="fleetCaptainCtrl.addTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+              <tr ng-repeat="minemnguser in $data">
+                <td class="text-nowrap" data-header="'selectAllHeader'" style="text-align:center">
+                  <input type="checkbox" ng-checked="fleetCaptainCtrl.isAddSelected(minemnguser.id)"
+                         ng-click="fleetCaptainCtrl.addUpdateSelection($event,minemnguser.id)" ng-model="minemnguser.checked">
+                </td>
+                <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
+                <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
+                <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'ssn'">{{minemnguser.ssn}}</td>
+                <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleName'">{{minemnguser.roleName}}</td>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="col-lg-12"><!--分页框-->
+
+          <uib-pagination total-items="fleetCaptainCtrl.page.totalElements"
+                          ng-change="fleetCaptainCtrl.query(fleetCaptainCtrl.pageNumber-1,null,null,null)"
+                          max-size="5" ng-model="fleetCaptainCtrl.pageNumber" items-per-page="fleetCaptainCtrl.page.size"
+                          class="pagination-sm" boundary-links="true" rotate="false"
+                          first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+        </div>
+
+
+      </div>
+    </form>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" validation-submit="deleFleetCaptainForm" ng-click="fleetCaptainCtrl.addFleetCaptain(fleetCaptainCtrl.minemnguser)">{{'添加'|translate}}</button>
+      <button class="btn btn-warning" type="button" ng-click="fleetCaptainCtrl.cancel()">{{'cancel'|translate}}</button>
+    </div>
+
+
+
+  </uib-tab>
+
+  <uib-tab index="4" heading="修改队长" select="fleetCaptainCtrl.queryFleetCaptain()">
+
+
+
+      <div class="row form-group" style="padding: 10px">
+        <!--全选框-->
+        <script id="selectAllHeader1" type="text/ng-template">
+          <input type="checkbox" ng-click="fleetCaptainCtrl.deleUpdateAllSelection($event)"
+                 ng-model="fleetCaptainCtrl.checked">
+        </script>
+
+        <div class="table-responsive">
+          <table ng-table="fleetCaptainCtrl.deleTableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+            <tr ng-repeat="minemnguser in $data">
+              <td class="text-nowrap" data-header="'selectAllHeader1'" style="text-align:center">
+                <input type="checkbox" ng-checked="fleetCaptainCtrl.isDeleSelected(minemnguser.id)"
+                       ng-click="fleetCaptainCtrl.deleUpdateSelection($event,minemnguser.id)" ng-model="minemnguser.checked">
+              </td>
+              <td class="text-nowrap" data-title="'工号'|translate" sortable="'jobNumber'">{{minemnguser.jobNumber}}</td>
+              <td class="text-nowrap" data-title="'姓名'|translate" sortable="'name'">{{minemnguser.name}}</td>
+              <td class="text-nowrap" data-title="'系统用户名'|translate" sortable="'ssn'">{{minemnguser.ssn}}</td>
+              <td class="text-nowrap" data-title="'角色类型'|translate" sortable="'roleName'">{{minemnguser.roleName}}</td>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger " validation-submit="deleFleetCaptainForm"
+              ng-click="fleetCaptainCtrl.delete(minemnguser.id,'lg')">{{'删除'| translate}}
+      </button>
+      <button class="btn btn-warning" type="button" ng-click="fleetCaptainCtrl.cancel()">{{'关闭'|translate}}</button>
+    </div>
+  </uib-tab>
+
+</uib-tabset>
+
+
+
+  </div>
