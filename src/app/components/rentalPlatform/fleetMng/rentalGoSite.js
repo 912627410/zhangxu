@@ -6,7 +6,7 @@
     .controller('rentalGoSiteController', rentalGoSiteController);
 
   function rentalGoSiteController($rootScope, $uibModalInstance, $stateParams, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory, $timeout,$uibModal,
-                                  rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, Notification, languages) {
+                                  rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, Notification, languages) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -125,16 +125,16 @@
         "operationType": 1,
         "recordTime": vm.goSiteDate
       };
-      var restPromise = serviceResource.restUpdateRequest(RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, rentalOrderMachineOperVo);
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
         if (data.code == 0) {
           if (file) {
-            var Id = data.content;
+            var Id = data.content[0].enterfactoryrecordid;
             vm.fileUpload(Id, file);
           }
           Notification.success(languages.findKey('transVehicle'));
-          $uibModalInstance.close(vm.selected.length);
         }
+        $uibModalInstance.close(vm.selected.length);
       }, function (reason) {
         Notification.error(languages.findKey('transVehiclFail'));
       });
