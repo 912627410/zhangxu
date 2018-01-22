@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h3 class="modal-title">修改临时调度</h3>
+</div>
+
+<form name="updateTemporaryDispatch" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">车号</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateTemporaryDispatchCtrl.oldTemporaryDispatch.carNumber" disabled readonly>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">原车队</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateTemporaryDispatchCtrl.oldTemporaryDispatch.oldFleetName" disabled readonly>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">原小组</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="updateTemporaryDispatchCtrl.oldTemporaryDispatch.oldTeamName" disabled readonly>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">现车队</label>
+        <div class="col-sm-10">
+          <select name="fleet" class="form-control"
+                  ng-model="updateTemporaryDispatchCtrl.fleet"
+                  ng-options="fleets.id as fleets.name for fleets in updateTemporaryDispatchCtrl.fleetList"
+                  ng-change="updateTemporaryDispatchCtrl.getTeamList(updateTemporaryDispatchCtrl.fleet)">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">现小组</label>
+        <div class="col-sm-10">
+          <select name="team" class="form-control"
+                  ng-model="updateTemporaryDispatchCtrl.team"
+                  ng-options="teams.id as teams.name for teams in updateTemporaryDispatchCtrl.teamList">
+            <option value="">{{'pleaseSelect'|translate}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="updateTemporaryDispatch" ng-click="updateTemporaryDispatchCtrl.ok()" >确定</button>
+    <button class="btn btn-warning" type="button" ng-click="updateTemporaryDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
+  </div>
+</form>

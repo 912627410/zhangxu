@@ -13,7 +13,5 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    vm.data = "油耗";
-
   }
 })();

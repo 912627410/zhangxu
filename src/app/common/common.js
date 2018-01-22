@@ -392,3 +392,11 @@ function showHighLight(id,times){
 function addZero(str,length){
   return new Array(length - str.toString().length + 1).join("0") + str;
 }
+
+/**
+ * 获取当日的零点时间
+ * @returns {Date}
+ */
+function getZeroDate() {
+  return new Date(new Date().toLocaleDateString());
+}

@@ -13,7 +13,5 @@
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
 
-    console.log("tripController");
-
   }
 })();

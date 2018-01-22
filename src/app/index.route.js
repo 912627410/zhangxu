@@ -265,6 +265,28 @@
           }
         }
       })
+      //调度历史
+      .state('minemng.dispatchHistory', {
+        url: '/dispatchHistory',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/workPlanManagement/dispatchHistory.html',
+            controller: 'dispatchHistoryController',
+            controllerAs: 'dispatchHistoryCtrl'
+          }
+        }
+      })
+      //工作面管理
+      .state('minemng.minemngWorkSurfaceMng', {
+        url: '/minemngWorkSurfaceMng',
+        views: {
+          'rightside@minemng': {
+            templateUrl: 'app/components/mineManagement/workSurfaceManagement/minemngWorkSurfaceMng.html',
+            controller: 'minemngWorkSurfaceMngController',
+            controllerAs: 'minemngWorkSurfaceMngCtrl'
+          }
+        }
+      })
       //趟数
       .state('minemng.minemngTrip', {
         url: '/minemngTrip',
