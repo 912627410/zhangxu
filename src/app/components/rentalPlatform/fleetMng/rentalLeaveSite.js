@@ -5,7 +5,7 @@
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
 
-  function rentalLeaveSiteController($rootScope, $uibModalInstance, $timeout, Notification, languages, DEFAULT_MINSIZE_PER_PAGE, RENTAL_MACHINE_MONITOR_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL)
+  function rentalLeaveSiteController($rootScope, $uibModalInstance, $timeout, Notification, languages,DEFAULT_MINSIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, RENTAL_MACHINE_MONITOR_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL)
   {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -134,11 +134,11 @@
         "recordTime": vm.leaveSiteDate,
         "reason": vm.leaveReason
       };
-      var restPromise = serviceResource.restUpdateRequest(RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, rentalOrderMachineOperVo);
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
         if (data.code == 0) {
           if (file) {
-            var Id = data.content;
+            var Id = data.content[0].entryAndExitRecordId;
             vm.fileUpload(Id, file);
           }
           vm.query(null,null,null,vm.orderId);

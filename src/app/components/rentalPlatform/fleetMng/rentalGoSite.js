@@ -5,8 +5,8 @@
     .module('GPSCloud')
     .controller('rentalGoSiteController', rentalGoSiteController);
 
-  function rentalGoSiteController($rootScope, $uibModalInstance, DEFAULT_MINSIZE_PER_PAGE, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, $timeout,$uibModal,
-                                  rentalService, DEFAULT_SIZE_PER_PAGE, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, Notification, languages) {
+  function rentalGoSiteController($rootScope, $uibModalInstance,DEFAULT_MINSIZE_PER_PAGE, $stateParams, ngTableDefaults, NgTableParams, serviceResource, treeFactory, rentalOrder, commonFactory, $timeout,$uibModal,
+                                  rentalService, DEFAULT_SIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, Upload, RENTAL_MACHINE_MONITOR_URL, RENTANL_UNUSED_MACHINE_PAGE_URL, RENTANL_ATTACH_UPLOAD_URL, Notification, languages) {
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -125,17 +125,17 @@
         "operationType": 1,
         "recordTime": vm.goSiteDate
       };
-      var restPromise = serviceResource.restUpdateRequest(RENTANL_ENTER_AND_EXIT_ATTACH_UPLOAD_URL, rentalOrderMachineOperVo);
+      var restPromise = serviceResource.restUpdateRequest(RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, rentalOrderMachineOperVo);
       restPromise.then(function (data) {
         if (data.code == 0) {
           if (file) {
-            var Id = data.content;
+            var Id = data.content[0].entryAndExitRecordId;
             vm.fileUpload(Id, file);
             Notification.success(languages.findKey('transVehicleAndFildUpload'));
           }
-          Notification.success(languages.findKey('transVehiclFail'));
-          $uibModalInstance.close(vm.selected.length);
+          Notification.success(languages.findKey('transVehicle'));
         }
+        $uibModalInstance.close(vm.selected.length);
       }, function (reason) {
         Notification.error(languages.findKey('transVehiclFail'));
       });

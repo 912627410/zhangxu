@@ -22,6 +22,7 @@
       normalCount: 0,
       lapseCount: 0
     }
+
     vm.searchCondition = {}
     ngTableDefaults.params.count = vm.pageSize;
     ngTableDefaults.settings.counts = [];
@@ -51,18 +52,17 @@
       var pageUrl = page || 0;
       var sizeUrl = size || vm.pageSize;
       var sortUrl = sort || "id,desc";
-      var listrestCallURL =restCallURL+ "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
-      var maprestCallURL = restCallURL+ "?page=" + pageUrl + '&sort=' + sortUrl;
+      restCallURL +="?page=" + pageUrl + '&sort=' + sortUrl;
       if (rentalOrgFence != null) {
         if (rentalOrgFence.fenceName != null && rentalOrgFence.fenceName != undefined) {
-          listrestCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
-          maprestCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
+          restCallURL += "&search_LIKES_fenceName=" + rentalOrgFence.fenceName;
         }
         if (rentalOrgFence.fenceAddress != null && rentalOrgFence.fenceAddress != undefined) {
-          listrestCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
-          maprestCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
+          restCallURL += "&search_LIKES_fenceAddress=" + rentalOrgFence.fenceAddress;
         }
       }
+      var listrestCallURL =restCallURL + '&size=' + sizeUrl;
+      //列表数据
       var listrspData = serviceResource.restCallService(listrestCallURL, "GET");
       listrspData.then(function (data) {
         vm.tableParams = new NgTableParams({}, {
@@ -73,7 +73,8 @@
       }, function (reason) {
         Notification.error("获取围栏数据失败");
       });
-      var maprspData = serviceResource.restCallService(maprestCallURL, "GET");
+      //地图数据
+      var maprspData = serviceResource.restCallService(restCallURL, "GET");
       maprspData.then(function (data) {
         vm.dataWithoutPage = data.content;
         serviceResource.refreshMapWithFenceInfo("fenceMap", vm.dataWithoutPage, 4, null, null, true,function () {},true);
@@ -96,23 +97,31 @@
      * 分状态统计
      */
     vm.fenceStatusCount = function () {
+      vm.normalFenceCount=0
+      // vm.fenceStatus = {
+      //   fenceCount: 0,
+      //   normalCount: 0,
+      //   lapseCount: 0
+      // }
       var fenceCountPromis = serviceResource.restCallService(RENTAL_ORG_FENCE_COUNT, "GET");
       fenceCountPromis.then(function (data) {
         var fenceCount = data.content;
-        angular.forEach(fenceCount, function (data, index, array) {
-          vm.fenceStatus.fenceCount += data.fenceStatusCount;
+        angular.forEach(fenceCount, function (data) {
           if (data.status == 1) {
-            vm.fenceStatus.normalCount = data.fenceStatusCount;
+            vm.normalFenceCount = data.fenceStatusCount;
           }
-          if (data.status == 2) {
-            vm.fenceStatus.lapseCount = data.fenceStatusCount;
-          }
+          // if (data.status == 1) {
+          //   vm.fenceStatus.normalCount = data.fenceStatusCount;
+          // }
+          // if (data.status == 2) {
+          //   vm.fenceStatus.lapseCount = data.fenceStatusCount;
+          // }
         })
+        // vm.fenceStatus.fenceCount=vm.fenceStatus.normalCount+vm.fenceStatus.lapseCount;
       }, function (reson) {
         Notification.error("获取围栏数据失败");
       })
     }
-
     vm.fenceStatusCount()
 
     /**
@@ -129,11 +138,11 @@
         size: 'lg'
       });
       modalInstance.result.then(function (result) {
-        vm.fenceStatus.fenceCount += 1;
-        vm.fenceStatus.normalCount += 1;
-        vm.tableParams.data.splice(0, 0, result);
-        vm.query(null, null, null, vm.searchCondition);
-        vm.fenceStatusCount()
+        if(result!=null){
+          vm.tableParams.data.splice(0, 0, result);
+          vm.query(null, null, null, vm.searchCondition);
+          vm.fenceStatusCount()
+        }
       }, function () {
         //取消
       });
@@ -144,38 +153,42 @@
      * 管理操作
      * @param id
      */
-    vm.view = function (id) {
-      var fenceUrl = RENTAL_ORG_FENCE_URL + "?id=" + id;
-      var rspdata = serviceResource.restCallService(fenceUrl, "GET");
-      rspdata.then(function (data) {
-        var rentalFence = data.content;
-        var modalInstance = $uibModal.open({
-          animation: true,
-          backdrop: false,
-          templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
-          controller: 'updateRentalFenceController',
-          controllerAs: 'updateRentalFenceCtrl',
-          size: 'lg',
-          resolve: {
-            rentalFence: function () {
-              return rentalFence;
+    vm.view = function (rentalOrgFence) {
+      if($rootScope.userInfo.userdto.ssn==rentalOrgFence.createUser){
+        var fenceUrl = RENTAL_ORG_FENCE_URL + "?id=" + rentalOrgFence.id;
+        var rspdata = serviceResource.restCallService(fenceUrl, "GET");
+        rspdata.then(function (data) {
+          var rentalFence = data.content;
+          var modalInstance = $uibModal.open({
+            animation: true,
+            backdrop: false,
+            templateUrl: 'app/components/rentalPlatform/machineMng/updateRentalFenceMng.html',
+            controller: 'updateRentalFenceController',
+            controllerAs: 'updateRentalFenceCtrl',
+            size: 'lg',
+            resolve: {
+              rentalFence: function () {
+                return rentalFence;
+              }
             }
-          }
-        });
-        modalInstance.result.then(function (result) {
-          var tabList = vm.tableParams.data;
-          //更新内容
-          for (var i = 0; i < tabList.length; i++) {
-            if (tabList[i].id == result.id) {
-              tabList[i] = result;
+          });
+          modalInstance.result.then(function (result) {
+            var tabList = vm.tableParams.data;
+            //更新内容
+            for (var i = 0; i < tabList.length; i++) {
+              if (tabList[i].id == result.id) {
+                tabList[i] = result;
+              }
             }
-          }
-          vm.query(null, null, null, vm.searchCondition);
-        }, function () {
-          //取消
-        });
-      })
-
+            vm.query(null, null, null, vm.searchCondition);
+          }, function () {
+            //取消
+          });
+        })
+      }
+      else{
+        Notification.warning("只能操作本人创建的数据");
+      }
     }
 
     /**
