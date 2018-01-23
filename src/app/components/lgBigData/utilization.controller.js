@@ -21,6 +21,7 @@
     curYear.setDate(1);
 
     //初始化图表
+    vm.dateTypeList = [{name: '日',value: 1},{name: '月',value: 30},{name: '季',value: 90},{name: '年',value: 365}]
     vm.centerMap = echarts.init(document.getElementById("centerMap"));
     vm.bottomLine = echarts.init(document.getElementById("bottomMap"));
     vm.mapExport = document.getElementById("mapExport");
@@ -65,7 +66,7 @@
       vm.balanceLine = 62.5;
       vm.limitLine = 50;
       vm.machineType = "装载机";
-      vm.dateType = "1";
+      vm.dateType = vm.dateTypeList[0].value;
       vm.dateOpenStatus = false;
       vm.queryDate = new Date();
       vm.queryDate.setTime(vm.queryDate.getTime() - 24 * 60 * 60 * 1000);
@@ -92,7 +93,8 @@
         textStyle: {
           fontSize: 26
         },
-        left: '32%'
+        left: '32%',
+        top: '30'
       },
       tooltip: {
         trigger: 'item',
@@ -227,10 +229,11 @@
     vm.lineOption = {
       title: {
         text: '日开工率跟踪',
-        left: '35%',
+        //left: '35%',
         subtext: '',
-        subtextStyle: {
-          align: 'center'
+        left: '30%',
+        subtextStyle:{
+          left: 'center',
         }
       },
       tooltip: {
@@ -405,6 +408,8 @@
       var dateType = vm.dateType;
       var queryDate = angular.copy(vm.queryDate);
 
+      var titleName = _.propertyOf(_.findWhere(vm.dateTypeList, {value: dateType}))('name');
+
       //当月第一天
       var beginDate = queryDate;
       beginDate.setDate(1);
@@ -439,6 +444,7 @@
       var restPromise = serviceResource.restCallService(restCallURL, "GET");
       restPromise.then(function (data) {
 
+        vm.lineOption.title.text = titleName + '开工率与闲置率跟踪';
         vm.lineOption.title.subtext = province;
         vm.lineOption.xAxis.data = [];
         vm.lineOption.series[0].data = [];

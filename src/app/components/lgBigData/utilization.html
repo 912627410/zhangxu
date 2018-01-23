@@ -15,18 +15,17 @@
 
   <div class="container-fluid machineCompared">
     <!--查询条件-->
-    <div class="row form-group" >
+    <div class="row" >
       <!--查询周期-->
-      <div class="form-inline col-md-2">
-        <label class="control-label">查询日期:</label>
-        <select class="form-control"
-                ng-change="utilizationCtrl.changeDateType(utilizationCtrl.dateType)"
-                ng-model="utilizationCtrl.dateType">
-          <option value="1"  ng-selected="true">日</option>
-          <option value="30" >月</option>
-          <option value="90" >季</option>
-          <option value="365">年</option>
-        </select>
+      <label for="dateType" class="col-md-2 control-label text-center">查询周期：</label>
+      <div class="col-md-1">
+        <ui-select id="dateType" name="dateType" ng-model="utilizationCtrl.dateType" theme="bootstrap" on-select="utilizationCtrl.changeDateType(utilizationCtrl.dateType)">
+          <ui-select-match  placeholder="周期">{{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices  repeat="type.value as type in utilizationCtrl.dateTypeList" >
+            <div ng-bind-html="type.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
       </div>
 
       <!--季度-->
