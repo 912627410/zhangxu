@@ -61,7 +61,7 @@
       vm.minemnguser.ssn = vm.ssnCode + vm.ssn;
       var rspdata = serviceResource.restAddRequest(MINEMNG_USERINFO_URL,vm.minemnguser);
       rspdata.then(function (data) {
-        Notification.success("新建用户成功!");
+        Notification.success("增加成功!");
         $uibModalInstance.close(data.content);
 
       },function (reason) {

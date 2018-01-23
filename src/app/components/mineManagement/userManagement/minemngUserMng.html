@@ -12,7 +12,7 @@
       <div class="row info-box-container">
         <form name="queryForm" class="form-horizontal" role="form">
 
-          <div class="form-group minemngFormGroup">
+          <div class="form-group ">
             <label class="col-md-1 control-label font-normal">{{'工号'|translate}}:</label>
             <div class="col-md-2">
               <input type="text" name="jobNumber" class="form-control"  ng-model="minemngUserMngCtrl.minemnguser.jobNumber"
@@ -59,7 +59,7 @@
 
 
           </div>
-          <div class="form-group minemngFormGroup"><label class="col-md-1 control-label font-normal">{{'状态'|translate}}:</label>
+          <div class="form-group"><label class="col-md-1 control-label font-normal">{{'状态'|translate}}:</label>
             <div class="col-md-2">
               <select class="form-control"name="status"
                       ng-model="minemngUserMngCtrl.minemnguser.status">
@@ -74,8 +74,8 @@
             <div class="col-md-6 text-right">
                 <button class="btn btn-default" type="button" ng-click="minemngUserMngCtrl.reset()">{{'重置'|translate}}</button>
                 <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'query'|translate}}</button>
-                <button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.new()">{{'新增'|translate}}</button>
-                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量增加'|translate}}</button>
+                <button class="btn btn-primary" type="button" ng-click="minemngUserMngCtrl.new()">{{'增加'|translate}}</button>
+                <button class="btn btn-primary" type="button"  ng-click="minemngUserMngCtrl.query(null,null,null,minemngUserMngCtrl.minemnguser)">{{'批量导入'|translate}}</button>
             </div>
           </div>
         </form>

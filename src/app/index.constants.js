@@ -431,6 +431,9 @@
     .constant('MINEMNG_GET_UNBOUND_MACHINE',SERVER_BASE_URL+'minemngMachine/getUnboundMachineList')//查询未绑定的车辆
     .constant('MINEMNG_UPDATE_TERMINAL',SERVER_BASE_URL+'minemngTerminal/minemngUpdateTerminal')//更新终端信息
     .constant('MINEMNG_TERMINAL_DELETE',SERVER_BASE_URL+'minemngTerminal/minemngDeleteTerminal')//删除终端
+
+    .constant('MINEMNG_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/minemngWorkFace')//作业面
+    .constant('MINEMNG_DELETE_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/deleteWorkFace')//删除作业面
   ;
 
 

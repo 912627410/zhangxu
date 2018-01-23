@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-  <h3 class="modal-title">{{'新增终端'|translate}}</h3>
+  <h3 class="modal-title">{{'增加终端'|translate}}</h3>
 </div>
 <form name="newTerminalForm" class="form-horizontal">
   <div class="modal-body">
@@ -38,7 +38,7 @@
 </form>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" validation-submit="newTerminalForm" ng-click="minemngNewTerminalMngCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-primary" type="button" ng-show="newTerminalForm.$valid" ng-click="minemngNewTerminalMngCtrl.ok()">{{'confirm'|translate}}</button>
   <button class="btn btn-warning" type="button" ng-click="minemngNewTerminalMngCtrl.cancel()">{{'cancel'|translate}}</button>
 </div>
 

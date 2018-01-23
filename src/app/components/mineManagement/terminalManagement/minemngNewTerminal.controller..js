@@ -40,7 +40,7 @@
 
       var rspdata=serviceResource.restAddRequest(MINEMNG_TERMINAL_URL,vm.newTerminal);
       rspdata.then(function (data) {
-        Notification.success("新建终端成功!");
+        Notification.success("增加成功!");
         $uibModalInstance.close(data.content);
 
       },function (reason) {
