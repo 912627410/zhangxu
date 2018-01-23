@@ -10,10 +10,11 @@
     .controller('utilizationController', utilizationController);
 
   /** @ngInject */
-  function utilizationController($rootScope, $scope, UTILIZATION_URL, Notification, serviceResource, $filter) {
+  function utilizationController($rootScope, $scope,$timeout, UTILIZATION_URL, Notification, serviceResource, $filter) {
     var vm = this;
 
-
+    vm.balanceLine = 62.5;
+    vm.limitLine = 50;
     //year
     var curYear = new Date();
     curYear.setMonth(0);
@@ -61,6 +62,8 @@
 
     //初始化配置/重置
     vm.reset = function () {
+      vm.balanceLine = 62.5;
+      vm.limitLine = 50;
       vm.machineType = "装载机";
       vm.dateType = "1";
       vm.dateOpenStatus = false;
@@ -190,10 +193,14 @@
           right: '40%',
           label: {
             normal: {
-              show: true
-            },
-            emphasis: {
-              show: true
+              show: true,
+              formatter: function(params){
+                if (params.name.indexOf("黑龙江") >= 0) {
+                  return params.name.substr(0, 3);
+                } else {
+                  return params.name.substr(0, 2);
+                }
+              }
             }
           },
           data: []
@@ -202,14 +209,6 @@
           name: '广义开工率',
           z: 1,
           type: 'bar',
-          label: {
-            normal: {
-              show: true
-            },
-            emphasis: {
-              show: true
-            }
-          },
           data: [],
           itemStyle: {
             normal: {
@@ -228,8 +227,11 @@
     vm.lineOption = {
       title: {
         text: '日开工率跟踪',
-        left: 'center',
-        subtext: ''
+        left: '35%',
+        subtext: '',
+        subtextStyle: {
+          align: 'center'
+        }
       },
       tooltip: {
         trigger: 'axis'
@@ -240,8 +242,8 @@
         show: true
       },
       grid: {
-        left: '3%',
-        right: '4%',
+        left: '2%',
+        right: '7%',
         //bottom: '3%',
         containLabel: true
       },
@@ -250,7 +252,7 @@
         orient: 'vertical',
         // top: 'bottom',
         bottom: 80,
-        right: 15,
+        right: 10,
         itemGap: 30,
         feature: {
           myTool: {
@@ -291,7 +293,27 @@
           showSymbol: false,
           smooth: true,
           smoothMonotone: 'x',
-          data: []
+          data: [],
+          markLine:{
+            data:[
+              { name: '盈亏平衡线',
+                yAxis: vm.balanceLine,
+                itemStyle: {
+                  normal: {
+                    color: 'blue'
+                  }
+                }
+              },
+              { name: '预期风险预警线',
+                yAxis: vm.limitLine,
+                itemStyle: {
+                  normal: {
+                    color: 'red'
+                  }
+                }
+              }
+            ]
+          }
         },
         {
           name: '广义开工率',
@@ -356,7 +378,12 @@
               };
               vm.mapOption.series[0].data.push(data);
               vm.mapOption.series[1].data.push(data);
-              vm.mapOption.yAxis[0].data.push(value.province.substring(0,2));
+              if (value.province.indexOf("黑龙江") >= 0) {
+                vm.mapOption.yAxis[0].data.push(value.province.substring(0,3));
+              } else {
+                vm.mapOption.yAxis[0].data.push(value.province.substring(0,2));
+              }
+
             }
           });
         }
@@ -438,6 +465,20 @@
         Notification.error(reason.data.message);
       });
 
+    };
+
+    vm.balanceLineChange = function(){
+      vm.lineOption.series[0].markLine.data[0].yAxis = vm.balanceLine;
+      $timeout(function () {
+        vm.bottomLine.setOption(vm.lineOption);
+      }, 500);
+    };
+
+    vm.limitLineChange = function(){
+      vm.lineOption.series[0].markLine.data[1].yAxis = vm.limitLine;
+      $timeout(function () {
+        vm.bottomLine.setOption(vm.lineOption);
+      }, 500);
     };
 
     vm.query = function () {

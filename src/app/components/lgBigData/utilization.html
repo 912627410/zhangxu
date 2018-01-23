@@ -73,7 +73,7 @@
       <!--button-->
       <div class="form-inline col-md-3">
         <button class="btn btn-primary" type="button" ng-click="utilizationCtrl.query()">{{'query'|translate}}</button>
-        <button class="btn btn-warning" type="button" ng-click="utilizationCtrl.reset()">{{'reset'|translate}}</button>
+        <button class="btn btn-warning" type="button" ng-click="utilizationCtrl.reset()">重置</button>
         <a id="mapExport" class="btn btn-primary" type="button" title="Export Table" ng-show="false"
            data="utilizationCtrl.mapOption.series[0].data"
            report-fields="{name: '区域', value: '广义开工率', value1: '活跃设备开工率', value2: '闲置率'}"
@@ -119,9 +119,28 @@
       </div>
     </div>
     <!--底部折线图-->
-    <div class="right-container row">
-      <div class="col-md-12">
-        <div id="bottomMap" style="height:300px;"></div>
-      </div>
+    <div class="col-md-12 leftBox">
+      <div id="bottomMap" style="height:320px;padding: 0px"></div>
+      <form name="settingForm" class="form-horizontal"  style="z-index: 80;top: 10px;width: 500px; margin-left:50%; position: absolute">
+        <div class="row">
+          <div class="col-md-12 pull-right">
+            <div class="form-group">
+              <label for="balanceLine" class="col-sm-3 control-label">盈亏平衡线</label>
+              <div class="col-sm-2">
+                <input type="text" id="balanceLine" class="form-control"
+                       ng-model="utilizationCtrl.balanceLine" name="balanceLine" typeahead-show-hint="true"
+                       ng-change="utilizationCtrl.balanceLineChange()"/>
+              </div>
+
+              <label for="limitLine" class="col-sm-4 control-label">预期风险预警线</label>
+              <div class="col-sm-2">
+                <input type="text" id="limitLine" class="form-control"
+                       ng-model="utilizationCtrl.limitLine" name="limitLine" typeahead-show-hint="true"
+                       ng-change="utilizationCtrl.limitLineChange()"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
