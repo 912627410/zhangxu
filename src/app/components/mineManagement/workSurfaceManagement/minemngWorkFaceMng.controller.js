@@ -12,9 +12,14 @@
         .module('GPSCloud')
         .controller('minemngWorkFaceMngController', minemngWorkFaceMngController);
 
-    function minemngWorkFaceMngController($scope, $uibModal,$confirm, ngTableDefaults, languages, serviceResource,NgTableParams,Notification, MINEMNG_DELETE_WORKFACE, DEFAULT_MINSIZE_PER_PAGE, MINEMNG_PAGE_WORKFACE) {
+    function minemngWorkFaceMngController($scope, $uibModal,$confirm, ngTableDefaults, languages, serviceResource,NgTableParams,Notification,
+                                          MINEMNG_DELETE_WORKFACE, DEFAULT_MINSIZE_PER_PAGE, MINEMNG_WORKFACE) {
       var vm = this;
       vm.operatorInfo = $scope.userInfo;
+
+      vm.page = {
+        totalElements: 0
+      };
       ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
       ngTableDefaults.settings.counts = [];
 
@@ -22,7 +27,7 @@
        * 分页查询
        */
       vm.query=function (page, size, sort) {
-        var restCallURL=MINEMNG_PAGE_WORKFACE;
+        var restCallURL=MINEMNG_WORKFACE;
         var pageUrl = page||0;
         var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
         var sortUrl = sort || "id,desc";

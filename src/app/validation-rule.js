@@ -29,7 +29,7 @@
       numberForPass:/^\d{6}$/,
       numberForSsn:/^\d{4}$/,
       numberAndCharAndChinese:/^[\u4e00-\u9fa5a-zA-Z0-9]+$/,  // 汉字、字母、数字的组合
-      numberAndChineseAndPlusOrMinus:/^[-|\+]{1}[0-9\u4e00-\u9fa5]+$/,//以“-”或“+”开头的数字和汉字的组合
+      numberAndPlusOrMinus:/^[-|\+]{1}[0-9]+$/,//以“-”或“+”开头的数字
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
@@ -118,8 +118,8 @@
         error:"作业面名称为汉字、数字和字母的组合",
         success:''
       },
-      numberAndChineseAndPlusOrMinus: {
-        error:"海拔高度为以-或+开头的汉字和数字的组合",
+      numberAndPlusOrMinus: {
+        error:"海拔高度为以-或+开头和数字的组合",
         success:''
       },
       telephoneNo: {

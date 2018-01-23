@@ -428,9 +428,7 @@
     .constant('MINEMNG_UPDATE_TERMINAL',SERVER_BASE_URL+'minemngTerminal/minemngUpdateTerminal')//更新终端信息
     .constant('MINEMNG_TERMINAL_DELETE',SERVER_BASE_URL+'minemngTerminal/minemngDeleteTerminal')//删除终端
 
-    .constant('MINEMNG_ADD_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/addWorkFace')//新增作业面
-    .constant('MINEMNG_UPDAT_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/updateWorkFace')//修改作业面
-    .constant('MINEMNG_PAGE_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/workFacePage')//分页查询作业面
+    .constant('MINEMNG_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/minemngWorkFace')//作业面
     .constant('MINEMNG_DELETE_WORKFACE',SERVER_BASE_URL+'minemngWorkFace/deleteWorkFace')//删除作业面
   ;
 

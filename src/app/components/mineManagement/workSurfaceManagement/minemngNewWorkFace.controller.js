@@ -12,7 +12,7 @@
         .module('GPSCloud')
         .controller('minemngNewWorkFaceController', minemngNewWorkFaceController);
 
-    function minemngNewWorkFaceController($scope,$uibModalInstance ,Notification ,serviceResource, MINEMNG_ADD_WORKFACE) {
+    function minemngNewWorkFaceController($scope,$uibModalInstance ,Notification ,serviceResource, MINEMNG_WORKFACE) {
       var vm = this;
       vm.operatorInfo = $scope.userInfo;
 
@@ -32,7 +32,7 @@
           Notification.warning("请录入海拔高度");
           return;
         }
-        var restPromise =serviceResource.restAddRequest(MINEMNG_ADD_WORKFACE,vm.newWorkFace);
+        var restPromise =serviceResource.restAddRequest(MINEMNG_WORKFACE,vm.newWorkFace);
         restPromise.then(function (data) {
           if(data.code==0){
             Notification.success("增加成功!");

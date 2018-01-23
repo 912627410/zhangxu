@@ -16,7 +16,8 @@
         <label for="altitude" class="col-sm-2 control-label">海拔高度<i class="input-must">*</i></label>
         <div class="col-sm-10">
           <input type="text" id="altitude" class="form-control" ng-model="minemngNewWorkFaceCtrl.newWorkFace.altitude"
-                 validator="required,numberAndChineseAndPlusOrMinus,maxlength=6" placeholder="请录入..."/>
+                 validator="required,numberAndPlusOrMinus,maxlength=6" placeholder="请录入..."/>
+          <span style="position: absolute;top: 6px;right: 26px;">米</span>
         </div>
       </div>
     </div>
