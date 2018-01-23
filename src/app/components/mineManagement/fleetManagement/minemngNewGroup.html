@@ -1,36 +1,30 @@
 
 <div class="modal-header">
-  <h3 class="modal-title">{{'添加小组'|translate}}</h3>
+  <h3 class="modal-title">增加小组</h3>
 </div>
 
 <form name="newGroupForm" class="form-horizontal" >
   <div class="modal-body">
     <div class="box-body">
-
-
-      <div class="form-group">
-        <label class="col-sm-3 control-label">{{'选择车队' | translate}}:</label>
-        <div class="col-sm-8">
+      <div class="form-group row">
+        <label class="col-sm-2 control-label">选择车队<i class="input-must">*</i></label>
+        <div class="col-sm-10">
           <p class="input-group">
-            <input type="text" id="group" class="form-control" placeholder="{{'选择车队' | translate}}" ng-model="addGroupCtrl.minemngFleet.parentFleet.name" name="group" validator="required" readonly required
-                     />
+            <input type="text" id="group" class="form-control" placeholder="请选择..."
+                   ng-model="addGroupCtrl.minemngFleet.parentFleet.name" name="group" validator="required" readonly required/>
             <span class="input-group-btn  vertical-align_top">
-                  <button type="button" class="btn btn-default" ng-click="addGroupCtrl.addMinemngMachine()">
-                    <i class="fa fa-sitemap"></i>
-                  </button>
-                </span>
+              <button type="button" class="btn btn-default" ng-click="addGroupCtrl.addMinemngMachine()">
+                <i class="fa fa-sitemap"></i>
+              </button>
+            </span>
           </p>
-
         </div>
       </div>
 
-
-      <div class="form-group">
-        <label class="col-sm-3 control-label">{{'小组名字' | translate}}:</label>
-
-        <div class="col-lg-8">
-
-          <input type="text" id="fleetName" class="form-control" placeholder="{{'小组名字'|translate}}"
+      <div class="form-group row">
+        <label class="col-sm-2 control-label">小组名字<i class="input-must">*</i></label>
+        <div class="col-sm-10">
+          <input type="text" id="fleetName" class="form-control" placeholder="请录入..."
                  ng-model="addGroupCtrl.minemngFleet.label"  name="label"  typeahead-show-hint="true"
                  validator="required,maxlength=8" />
         </div>
@@ -39,7 +33,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="newGroupForm" ng-click="addGroupCtrl.ok(addGroupCtrl.minemngFleet)">{{'确定'|translate}}</button>
+    <button class="btn btn-primary" type="button" ng-show="newGroupForm.$valid" ng-click="addGroupCtrl.ok(addGroupCtrl.minemngFleet)">{{'确定'|translate}}</button>
     <button class="btn btn-warning" type="button" ng-click="addGroupCtrl.cancel()">{{'取消'|translate}}</button>
   </div>
 </form>

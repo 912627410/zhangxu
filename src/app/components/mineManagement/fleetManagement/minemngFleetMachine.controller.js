@@ -4,10 +4,11 @@
 
 
 (function(){
-  'use strict'
+  'use strict';
   angular.module('GPSCloud').controller('mineFleetController',mineFleetController);
 
-  function mineFleetController(MINE_DELETE_TEAM_MACHINE,$confirm,MINE_ADD_MACHINE_INFO,MINE_NOT_ADD_MACHINE_INFO,languages,MINEMNG_MACHINE_TYPE_LIST,MINE_ADD_TEAM_MACHINE,$filter,MINE_MACHINE_FLEET,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
+  function mineFleetController(MINE_DELETE_TEAM_MACHINE,$confirm,MINE_ADD_MACHINE_INFO,MINE_NOT_ADD_MACHINE_INFO,languages,MINEMNG_MACHINE_TYPE_LIST,
+                               MINE_ADD_TEAM_MACHINE,$filter,MINE_MACHINE_FLEET,NgTableParams,ngTableDefaults, $uibModalInstance,serviceResource,Notification,$uibModal) {
     var vm= this;
     vm.machineType=null;
     vm.fleetTeam;
@@ -20,6 +21,7 @@
     vm.pageSize = 10;
     //接受添加车队的车辆
     vm.fleetMachine;
+    vm.queryMachineStatus = false;
 
 
     vm.init = function () {
@@ -43,8 +45,8 @@
     vm.addTeam = function() {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/mineManagement/fleetManagement/minemngSelectFleet.html',
-        controller: 'minemngSelectFleetController as minemngSelectFleetCtrl',
+        templateUrl: 'app/components/mineManagement/fleetManagement/minemngSelectFleetTeam.html',
+        controller: 'minemngSelectFleetTeamController as minemngSelectFleetTeamCtrl',
         size: 'sx',
         backdrop: false
       });
@@ -61,7 +63,9 @@
           dataPromis.then(function (data) {
             vm.fleetName=data.name;
             vm.fleetTeamName=vm.fleetName+"  "+vm.fleetTeam.name;
-            vm.queryMachine();
+            if(vm.queryMachineStatus) {
+              vm.queryMachine();
+            }
           });
         }
 
@@ -116,6 +120,9 @@
         vm.deleTableParams = new NgTableParams({}, {
           dataset: data.content
         });
+        if(data.content.length <= 0 && vm.queryMachineStatus) {
+          Notification.warning("暂无数据");
+        }
       }, function (reason) {
         Notification.error(languages.findKey('getDataVeFail'));
       });
@@ -196,9 +203,8 @@
 
     /**
      * 删除绑定的车辆
-     * @param id
      */
-    vm.delete = function (machine) {
+    vm.delete = function () {
       if(vm.deleSelected.length==0){
         Notification.warning({message:"请选择车辆!",positionX: 'center'});
         return;
@@ -226,7 +232,7 @@
 
 
 
-    vm.addFleetMachine= function(machine){
+    vm.addFleetMachine= function(){
       if(vm.fleetTeam==null){
         Notification.warning({message:"请选择小组!",positionX: 'center'});
         return;
@@ -241,6 +247,7 @@
           if(data.code===0){
             vm.query(null,null,null,null);
             vm.addSelected=[];
+            Notification.success("增加成功");
           }
         }, function (reason) {
           // alert(reason.data.message);
@@ -250,6 +257,18 @@
 
       );
 
+    };
+
+    // 选中增加车辆
+    vm.selectedAddTab = function () {
+      vm.query();
+      vm.queryMachineStatus = false;
+    };
+
+    // 选中修改车辆
+    vm.selectedUpdateTab = function () {
+      vm.queryMachine();
+      vm.queryMachineStatus = true;
     };
 
     vm.cancel=function(){
