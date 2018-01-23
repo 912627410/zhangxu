@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">车队信息
+    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetTeamCtrl.cancel()" >关闭</button>
+    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetTeamCtrl.confirm()" style="margin-right: 10px;">确定</button>
+  </h3>
+</div>
+
+<section class="content" style="width: 600px;  height:440px; "  >
+  <div class="row">
+    <div class="col-md-12"  >
+      <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 580px;  height:420px;">
+        <div style="padding-top: 20px;padding-left: 20px; ">
+          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;">选择为：{{minemngSelectFleetTeamCtrl.fleetName}}&nbsp;&nbsp;{{minemngSelectFleetTeamCtrl.teamName}}</p>
+        </div>
+
+        <div style="padding-top: 10px;">
+          <abn-tree tree-data="minemngSelectFleetTeamCtrl.fleet_data"
+                    tree-control="treeController"
+                    on-select="minemngSelectFleetTeamCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                    expand-level="2"></abn-tree>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

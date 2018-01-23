@@ -414,16 +414,17 @@
     .constant('MINEMNG_MACHINE_LIST', SERVER_BASE_URL + 'minemngMachine/getMinemngMachineList')   // 获取矿车车辆集合
     .constant('MINEMNG_MINE_MACHINE_LIST', SERVER_BASE_URL + 'minemngMachine/getMineMachineList')   // 获取矿车车辆集合
     .constant('MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/queryParentFleet')   //查询单个车队
-    .constant('GET_MINE_MACHINE_FLEET', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询所有车队
+    .constant('MINE_MACHINE_FLEET_TEAM', SERVER_BASE_URL + 'minemngFleet/getMinemngFleetTeam')   //查询所有车队小组
+    .constant('MINE_MACHINE_FLEET_LIST', SERVER_BASE_URL + 'minemngFleet/getMinemngFleet')   //查询所有车队
     .constant('MINE_NEW_FLEET', SERVER_BASE_URL + 'minemngFleet/addFleet')   //新增车队
     .constant('MINE_NEW_TEAM', SERVER_BASE_URL + 'minemngFleet/addTeam')   //新增小组
-    .constant('MINE_ADD_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/addFleetMahcine')   //添加小组车辆
-    .constant('MINE_DELETE_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleteFleetMahcine')   //删除小组车辆
+    .constant('MINE_ADD_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/addFleetMachine')   //添加小组车辆
+    .constant('MINE_DELETE_TEAM_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleteFleetMachine')   //删除小组车辆
     .constant('MINE_NOT_ADD_MACHINE_INFO', SERVER_BASE_URL + 'minemngFleet/getMachineNotAddInfo')   //查询未添加车队的车辆
     .constant('MINE_ADD_MACHINE_INFO', SERVER_BASE_URL + 'minemngFleet/getMinemngFleetMachine')   //查询添加车队的车辆
     .constant('MINE_UPDATE_FLEET_TEAM', SERVER_BASE_URL + 'minemngFleet/updateFleetTeam')   //修改车队小组
     .constant('MINE_ADD_FLEET_CAPTAIN', SERVER_BASE_URL + 'minemngFleet/addFleetCaptain')   //添加车队队长
-    .constant('MINE_DELETE_CAPTAIN_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleFleetCaptain')   //删除车队队长
+    .constant('MINE_DELETE_CAPTAIN_MACHINE', SERVER_BASE_URL + 'minemngFleet/deleteFleetCaptain')   //删除车队队长
 
 
     .constant('MINEMNG_TERMINALPAGE_URL', SERVER_BASE_URL + 'minemngTerminal/minemngTerminalPage')//分页查询终端信息

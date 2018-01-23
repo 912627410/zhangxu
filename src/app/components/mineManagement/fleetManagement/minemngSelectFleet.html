@@ -1,7 +1,7 @@
 <div class="modal-header">
-  <h3 class="modal-title"> {{'车队信息'|translate}}
-    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetCtrl.cancel()" >{{'关闭'|translate}}</button>
-    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetCtrl.confirm()" style="margin-right: 10px;">{{'确定'|translate}}</button>
+  <h3 class="modal-title">车队信息
+    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetCtrl.cancel()" >关闭</button>
+    <button class="btn btn-warning pull-right" type="button" ng-click="minemngSelectFleetCtrl.confirm()" style="margin-right: 10px;">确定</button>
   </h3>
 </div>
 
@@ -11,22 +11,15 @@
       <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 1000; display: block; width: 580px;  height:420px;">
 
         <div style="padding-top: 20px;padding-left: 20px; ">
-          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;"> {{'选择为'|translate}}：{{minemngSelectFleetCtrl.fleetName}}&nbsp;&nbsp;{{minemngSelectFleetCtrl.teamName}}</p>
+          <p style="background: #FCF8E3;color: #c09853; font-size: 18px;">选择为：{{minemngSelectFleetCtrl.fleetName}}</p>
         </div>
 
-
-        <div class="col-md-5"  >
-          <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 500; display: block; width: 380px;  height:820px;">
-            <div style="padding-top: 10px;">
-              <abn-tree tree-data="minemngSelectFleetCtrl.fleet_data"
-                        tree-control="treeController"
-                        on-select="minemngSelectFleetCtrl.my_tree_handler(branch); $event.stopPropagation();"
-                        expand-level="2"></abn-tree>
-            </div>
-          </div>
+        <div style="padding-top: 10px;">
+          <abn-tree tree-data="minemngSelectFleetCtrl.fleet_data"
+                    tree-control="treeController"
+                    on-select="minemngSelectFleetCtrl.my_tree_handler(branch); $event.stopPropagation();"
+                    expand-level="2"></abn-tree>
         </div>
-
-
       </div>
     </div>
   </div>

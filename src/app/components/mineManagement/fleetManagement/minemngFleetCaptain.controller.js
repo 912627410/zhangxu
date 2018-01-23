@@ -5,27 +5,29 @@
 
 
 (function(){
-  'use strict'
+  'use strict';
   angular.module('GPSCloud').controller('fleetCaptainController',fleetCaptainController);
 
-  function fleetCaptainController($confirm,languages,MINE_DELETE_CAPTAIN_MACHINE,MINE_QUERY_CAPTAIN_INFO,MINE_ADD_FLEET_CAPTAIN,MINEMNG_CAPTAIN_INFOPAGE_URL,DEFAULT_MINSIZE_PER_PAGE,MINE_NEW_TEAM,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
-    var vm= this
+  function fleetCaptainController($confirm,languages,MINE_DELETE_CAPTAIN_MACHINE,MINE_QUERY_CAPTAIN_INFO,MINE_ADD_FLEET_CAPTAIN,MINEMNG_CAPTAIN_INFOPAGE_URL,
+                                  DEFAULT_MINSIZE_PER_PAGE,NgTableParams,ngTableDefaults,$scope,$uibModalInstance,serviceResource,Notification,$uibModal) {
+    var vm= this;
     vm.addSelected = []; //选中的设备id
     vm.deleSelected=[];
-    vm.minemngFleet;//车队
+    vm.minemngFleet = null;//车队
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
+    vm.queryCaptainStatus = false;
 
     //组织树
     vm.showOrgTree = false;
     vm.openOrgTree = function(){
       vm.showOrgTree = !vm.showOrgTree;
-    }
+    };
 
     $scope.$on('OrgSelectedEvent',function(event,data){
       vm.showOrgTree=false;
       vm.selectedOrg = data;
-    })
+    });
 
     //打开车队组织
     vm.addMinemngMachine = function() {
@@ -40,10 +42,12 @@
         vm.fleet=result;
         if(vm.fleet.parentId!=0){
            vm.minemngFleet=null;
-           Notification.warning('请选择车队！');
+           Notification.warning('请选择车队');
         }else {
           vm.minemngFleet=result;
-          vm.queryFleetCaptain()
+          if(vm.queryCaptainStatus) {
+            vm.queryFleetCaptain();
+          }
         }
       }, function () {
 
@@ -96,7 +100,7 @@
       vm.addSelected = []; //查询之前全选置空
       var restCallURL = MINE_QUERY_CAPTAIN_INFO;
       if(vm.minemngFleet==null){
-        Notification.warning({message:"请选择车队!",positionX: 'center'});
+        Notification.warning({message:"请选择车队",positionX: 'center'});
         return;
       }
       restCallURL += "?fleetId=" + vm.minemngFleet.id;
@@ -105,6 +109,9 @@
         vm.deleTableParams = new NgTableParams({}, {
           dataset: data.content
         });
+        if(data.content.length <= 0 && vm.queryCaptainStatus) {
+          Notification.warning("暂无数据");
+        }
       }, function (reason) {
         Notification.error(languages.findKey('getDataVeFail'));
       });
@@ -119,14 +126,14 @@
         var idx = vm.addSelected.indexOf(id);
         vm.addSelected.splice(idx, 1);
       }
-    }
+    };
 
     vm.addUpdateSelection = function ($event, id, status) {
 
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       addUpdateSelected(action, id);
-    }
+    };
 
     vm.addUpdateAllSelection = function ($event) {
       var checkbox = $event.target;
@@ -134,11 +141,11 @@
       vm.addTableParams.data.forEach(function (minemnguser) {
         addUpdateSelected(action, minemnguser.id);
       })
-    }
+    };
 
     vm.isAddSelected = function (id) {
       return vm.addSelected.indexOf(id) >= 0;
-    }
+    };
 
     //删除队长的单选全选
     var deleUpdateSelected = function (action, id) {
@@ -150,14 +157,14 @@
         vm.deleSelected.splice(idx, 1);
 
       }
-    }
+    };
 
     vm.deleUpdateSelection = function ($event, id, status) {
 
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       deleUpdateSelected(action, id);
-    }
+    };
 
     vm.deleUpdateAllSelection = function ($event) {
       var checkbox = $event.target;
@@ -165,17 +172,21 @@
       vm.deleTableParams.data.forEach(function (minemnguser) {
         deleUpdateSelected(action, minemnguser.id);
       })
-    }
+    };
 
     vm.isDeleSelected = function (id) {
       return vm.deleSelected.indexOf(id) >= 0;
-    }
+    };
 
      //添加车队队长
-     vm.addFleetCaptain= function(minemnguser){
+     vm.addFleetCaptain= function(){
+      if(vm.minemngFleet==null || vm.minemngFleet=="" || vm.minemngFleet=="undefined") {
+        Notification.warning({message:"请选择车队",positionX: 'center'});
+        return;
+      }
 
       if(vm.addSelected.length==0){
-        Notification.warning({message:"请选择队长!",positionX: 'center'});
+        Notification.warning({message:"请选择队长",positionX: 'center'});
         return;
       }
       vm.addFleetMachiene = {ids: vm.addSelected, "fleetId": vm.minemngFleet.id};
@@ -184,6 +195,7 @@
           if(data.code===0){
             vm.addSelected=[];
             vm.query(null,null,null,null);
+            Notification.success("增加成功");
           }
         }, function (reason) {
           // alert(reason.data.message);
@@ -197,9 +209,8 @@
 
     /**
      * 删除车队队长
-     * @param id
      */
-    vm.delete = function (machine) {
+    vm.delete = function () {
       if(vm.deleSelected.length==0){
         Notification.warning({message:"请选择队长",positionX: 'center'});
         return;
@@ -210,7 +221,7 @@
           var restPromise = serviceResource.restUpdateRequest(MINE_DELETE_CAPTAIN_MACHINE, vm.addFleetMachiene);
           restPromise.then(function (data) {
               if(data.code===0){
-                Notification.success("删除成功!");
+                Notification.success("删除成功");
                 vm.deleSelected=[];
                 vm.queryFleetCaptain();
               }
@@ -224,6 +235,17 @@
         });
     };
 
+    // 选中增加队长
+    vm.selectedAddTab = function () {
+      vm.query();
+      vm.queryCaptainStatus = false;
+    };
+
+    // 选中修改队长
+    vm.selectedUpdateTab = function () {
+      vm.queryFleetCaptain();
+      vm.queryCaptainStatus = true;
+    };
 
     //重置查询框
     vm.reset = function () {
@@ -231,9 +253,10 @@
       vm.addSelected=[]; //把选中的设备设置为空
       vm.deleSelected=[];//把选中的设备设置为空
       vm.checked=false;
-    }
-    vm.cancel=function(){
+    };
 
+    // 取消
+    vm.cancel=function(){
       $uibModalInstance.dismiss('cancel');
     }
   }

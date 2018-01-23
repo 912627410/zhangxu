@@ -1,27 +1,23 @@
 <div class="modal-header">
-  <h3 class="modal-title">{{'新建车队'|translate}}</h3>
+  <h3 class="modal-title">增加车队</h3>
 </div>
-<div class="modal-body row">
-  <form name="newFleetForm" class="form-horizontal" style="font-size:6px;">
 
-   <div class="box-body col-lg-12">
-
-      <div class="form-group">
-        <label for="fleetName" class="col-lg-3 control-label padding5">{{'车队名字'|translate}}</label>
-
-        <div class="col-lg-6">
-
-          <input type="text" id="fleetName" class="form-control" placeholder="{{'车队名字'|translate}}"
+<form name="newFleetForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group row">
+        <label for="fleetName" class="col-sm-2 control-label">车队名字<i class="input-must">*</i></label>
+        <div class="col-sm-10">
+          <input type="text" id="fleetName" class="form-control" placeholder="请录入..."
                  ng-model="addFleetCtrl.minemngFleet.label"  name="label"  typeahead-show-hint="true"
-                 validator="required,numberAndChar,maxlength=8" />
+                 validator="required,maxlength=8" />
         </div>
       </div>
-
     </div>
+  </div>
 
-  </form>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" validation-submit="newFleetForm" ng-click="addFleetCtrl.ok(addFleetCtrl.minemngFleet)">{{'确定'|translate}}</button>
-  <button class="btn btn-warning" type="button" ng-click="addFleetCtrl.cancel()">{{'取消'|translate}}</button>
-</div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-show="newFleetForm.$valid" ng-click="addFleetCtrl.ok(addFleetCtrl.minemngFleet)">确定</button>
+    <button class="btn btn-warning" type="button" ng-click="addFleetCtrl.cancel()">取消</button>
+  </div>
+</form>
