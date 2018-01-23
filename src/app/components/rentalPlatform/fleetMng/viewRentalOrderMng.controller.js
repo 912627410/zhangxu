@@ -45,7 +45,7 @@
       var restCallURL = RENTAL_ORDER_MACHINE_HISTORY_URL;
       var pageUrl = page || 0;
       var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
-      var sortUrl = sort || "id,desc";
+      var sortUrl = sort || "status";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&id="+id;
       var rspData = serviceResource.restCallService(restCallURL,"GET");
@@ -63,12 +63,13 @@
     };
     vm.carlist(null,null,null,vm.rentalOrder.id);
 
-    //订单下车辆List查询
+    //订单下进场单List查询
     vm.entryList = function(currentPage, pageSize, totalElements,id){
       var restCallURL = RENTAL_ORDER_ENTRY_EXIT_LIST_URL;
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || vm.pageSize;
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      var sortUrl =  "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl+ '&sort=' + sortUrl;
       if (totalElements != null && totalElements != undefined) {
         restCallURL += "&totalElements=" + totalElements;
       }
@@ -83,12 +84,13 @@
       },function(reason){
       });
     };
-
+    //订单下退场单List查询
     vm.exitList = function (currentPage, pageSize, totalElements,id) {
       var restCallURL = RENTAL_ORDER_ENTRY_EXIT_LIST_URL;
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || vm.pageSize;
-      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl;
+      var sortUrl =  "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl+ '&sort=' + sortUrl;
       if (totalElements != null && totalElements != undefined) {
         restCallURL += "&totalElements=" + totalElements;
       }
