@@ -13,7 +13,7 @@
                  datepicker-options="vm.dateOptions" min-date="vm.minDate"
                  max-date="vm.maxDate" ng-required="true"
                  current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
-          <span class="input-group-btn">
+          <span class="input-group-btn vertical-align_top">
             <button type="button" class="btn btn-default"
                     ng-click="vm.startDateOpenDeviceData($event)">
               <i class="glyphicon glyphicon-calendar"></i>
@@ -30,7 +30,7 @@
                  ng-model="vm.queryEndDate" is-open="vm.endDateOpenStatusDeviceData.opened"
                  datepicker-options="vm.dateOptions" ng-required="true"
                  current-text="{{'today'|translate}}" clear-text="{{'cleanUp'|translate}}" close-text="{{'close'|translate}}" />
-          <span class="input-group-btn">
+          <span class="input-group-btn vertical-align_top">
                               <button type="button" class="btn btn-default" ng-click="vm.endDateOpenDeviceData($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                           </span>
         </p>
@@ -55,6 +55,8 @@
     <div class="col-md-12" style="overflow-x: auto;">
       <table ng-table="vm.deviceHistoryRunData" class="table table-responsive history-tab-tr-nowrap" export-csv='csv'>
         <tr ng-repeat="deviceData in $data">
+          <!--数据接收时间-->
+          <td data-title="'数据接收时间'">{{deviceData.recordTime | date:'yyyy-MM-dd HH:mm:ss':vm.timezone}}</td>
           <!--数据采集时间-->
           <td data-title="'数据采集时间'">{{deviceData.dataGenerateTime  | date:'yyyy-MM-dd HH:mm:ss':vm.timezone}} </td>
           <!--机器代码-->

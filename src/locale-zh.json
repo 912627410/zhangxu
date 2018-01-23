@@ -1483,6 +1483,7 @@
   "modifyOrderInformation":"修改订单信息",
   "modifyFenceInformation":"修改围栏信息成功!",
   "transVehicle":"调入车辆成功!",
+  "transVehicleAndFildUpload":"调入车辆成功,上传附件成功!",
   "transVehiclFail":"调入车辆失败!",
   "selTime":"请选择订单开始时间和结束时间!",
   "selOrDiff":"选择的订单不能一样!",
@@ -1586,7 +1587,11 @@
   "nonspecificChar":"不能包含~%&',;=?$[]{}这些特殊字符",
   "telephoneNoNotLegal":"请输入正确的手机号码",
   "postcodesNotLegal":"请输入正确的邮编",
-  "exitTimeFormatIsNotCorrect": "输入的时间格式不对，格式应为:yyyy-MM-dd HH:mm:ss"
+  "exitTimeFormatIsNotCorrect": "输入的时间格式不对，格式应为:yyyy-MM-dd HH:mm:ss",
+  "minLengthDesc":"最小长度为",
+  "maxLengthDesc":"最大长度为",
+  "isLength":"长度为",
+  "bits":"位"
 
 
 

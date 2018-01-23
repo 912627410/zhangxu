@@ -62,12 +62,19 @@
     }
 
     vm.queryOrderByStatus = function (status) {
-      var rentalOrder = {status: {value: ''}}
       if (status) {
-        rentalOrder.status.value = status;
-        vm.query(0, DEFAULT_MINSIZE_PER_PAGE, null, rentalOrder)
+        vm.rentalOrder = {status: {value: '',desc:''}}
+        vm.rentalOrder.status.value = status;
+        if(status == 1){
+          vm.rentalOrder.status.desc = '计划'
+        }if(status == 2){
+          vm.rentalOrder.status.desc = '进行中'
+        }if(status == 3){
+          vm.rentalOrder.status.desc = '结束'
+        }
+        vm.query(0,  vm.pageSize, null, vm.rentalOrder)
       } else {
-        vm.query(0, DEFAULT_MINSIZE_PER_PAGE, null, rentalOrder)
+        vm.query(0,  vm.pageSize, null, vm.rentalOrder)
       }
     }
 
@@ -151,7 +158,6 @@
 
 
     vm.query = function (currentPage, pageSize, totalElements, rentalOrder) {
-
       var restCallURL = RENTAL_ORDER_PAGE_URL;
       var pageUrl = currentPage || 0;
       var sizeUrl = pageSize || DEFAULT_MINSIZE_PER_PAGE;
@@ -166,15 +172,12 @@
         if (null != rentalOrder.customerName && rentalOrder.customerName != "") {
           restCallURL += "&customerName=" + rentalOrder.customerName;
         }
-
         if (null != rentalOrder.status && rentalOrder.status != "") {
           restCallURL += "&status=" + rentalOrder.status.value;
         }
-
         if (null != rentalOrder.startDate && rentalOrder.startDate != "") {
           restCallURL += "&startDate=" + $filter('date')(rentalOrder.startDate, 'yyyy-MM-dd');
         }
-
         if (null != rentalOrder.endDate && rentalOrder.endDate != "") {
           restCallURL += "&endDate=" + $filter('date')(rentalOrder.endDate, 'yyyy-MM-dd');
         }
@@ -220,9 +223,8 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.rentalOrder = null;
-      vm.org = null;
-      vm.id = null;
+      vm.rentalOrder = {};
+      vm.org = {};
     }
 
     //租赁订单管理--更新订单

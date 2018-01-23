@@ -10,10 +10,10 @@
     .controller('machineMonitorMapController', machineMonitorMapController);
 
   /** @ngInject */
-  function machineMonitorMapController($rootScope, $window, $scope, $http, $location, $timeout, $filter, languages, Notification, sharedDeviceInfoFactory, machineMapFactory, serviceResource, AMAP_GEO_CODER_URL, RENTAL_TRAJECTORY_DATA) {
+  function machineMonitorMapController($rootScope, $window, $scope, $http, $location, $timeout, $filter, languages, Notification, sharedDeviceInfoFactory, machineMapFactory, serviceResource, AMAP_GEO_CODER_URL, RENTAL_TRAJECTORY_DATA,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo(); //获取共享数据deviceinfo
-    vm.pageSize = 10; //分页大小
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE; //分页大小
     vm.maps;//地图对象
     vm.mapFaster = false; //地图轨迹加减速初始状态
     vm.mapSlower = true; //地图轨迹加减速初始状态

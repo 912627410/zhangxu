@@ -11,8 +11,8 @@
     .controller('rentalMachineMngController', rentalMachineMngController);
 
   /** @ngInject */
-  function rentalMachineMngController($rootScope, $scope, $window, $http, $location, $anchorScroll, NgTableParams,$uibModal, ngTableDefaults, languages, serviceResource, Notification,
-                                      RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL, ALERT_TREND_URL,RENTAL_MACHINE_RATE_URL,MACHINE_RENT_URL) {
+  function rentalMachineMngController($rootScope, $scope, $window, $uibModal, languages, serviceResource, Notification,
+                                      RENTAL_HOME_MAP_GPSDATA_URL, RENTAL_ALARM_MSG_URL, RENTAL_MACHINE_COUNT_URL,RENTAL_MACHINE_MONITOR_URL,RENTAL_MACHINE_RATE_URL,MACHINE_RENT_URL) {
     var vm = this;
     //定义页面导航
     $scope.navs = [{
@@ -115,7 +115,7 @@
       },true,true);
     };
     //加载地图设备数据
-    vm.loadHomeDeviceData();
+    vm.loadHomeDeviceData($rootScope.langkey);
     /**
      * 监听窗口大小改变后重新自适应高度
      */

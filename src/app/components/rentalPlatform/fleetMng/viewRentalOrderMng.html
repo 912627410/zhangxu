@@ -127,7 +127,7 @@
   </div>
   <uib-tabset justified="true">
     <!--车辆列表-->
-    <uib-tab>
+    <uib-tab select="viewRentalOrderCtrl.carlist(null,null,null,viewRentalOrderCtrl.rentalOrder.id)">
       <uib-tab-heading>
         {{'machineInfo'|translate}}
       </uib-tab-heading>
@@ -158,11 +158,18 @@
               </tr>
             </table>
           </div>
+          <div class="col-lg-12"><!--分页框-->
+            <uib-pagination total-items="viewRentalOrderCtrl.page.totalElements"
+                            ng-change="viewRentalOrderCtrl.carlist(viewRentalOrderCtrl.pageNumber-1,null,null,viewRentalOrderCtrl.rentalOrder.id)"
+                            max-size="5" ng-model="viewRentalOrderCtrl.pageNumber" items-per-page="viewRentalOrderCtrl.page.size"
+                            class="pagination-sm" boundary-links="true" rotate="false"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+          </div>
         </div>
       </div>
     </uib-tab>
     <!--进场单-->
-    <uib-tab>
+    <uib-tab select="viewRentalOrderCtrl.entryList(null,null,null,viewRentalOrderCtrl.rentalOrder.id)">
       <uib-tab-heading>
         {{'goSiteList'|translate}}
       </uib-tab-heading>
@@ -181,11 +188,21 @@
               </tr>
             </table>
           </div>
+          <div class="col-lg-12"><!--分页框-->
+            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                            total-items="viewRentalOrderCtrl.entryTotalElements"
+                            ng-change="viewRentalOrderCtrl.entryList(viewRentalOrderCtrl.entryCurrentPage-1,viewRentalOrderCtrl.pageSize,viewRentalOrderCtrl.entryTotalElements,viewRentalOrderCtrl.rentalOrder.id)"
+                            max-size="10"
+                            ng-model="viewRentalOrderCtrl.entryCurrentPage"
+                            items-per-page="viewRentalOrderCtrl.pageSize"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            </uib-pagination>
+          </div>
         </div>
       </div>
     </uib-tab>
     <!--退场单-->
-    <uib-tab>
+    <uib-tab  select="viewRentalOrderCtrl.exitList(null,null,null,viewRentalOrderCtrl.rentalOrder.id)">
       <uib-tab-heading>
         {{'leaveSiteList'|translate}}
       </uib-tab-heading>
@@ -204,6 +221,15 @@
               </tr>
             </table>
           </div>
+          <div class="col-lg-12"><!--分页框-->
+            <uib-pagination class="pagination-sm pagination-custom" boundary-links="true" rotate="false"
+                            total-items="viewRentalOrderCtrl.totalElements"
+                            ng-change="viewRentalOrderCtrl.exitList(viewRentalOrderCtrl.currentPage-1,viewRentalOrderCtrl.pageSize,viewRentalOrderCtrl.totalElements,viewRentalOrderCtrl.rentalOrder.id)"
+                            max-size="10"
+                            ng-model="viewRentalOrderCtrl.currentPage"
+                            items-per-page="viewRentalOrderCtrl.pageSize"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            </uib-pagination>
         </div>
       </div>
     </uib-tab>

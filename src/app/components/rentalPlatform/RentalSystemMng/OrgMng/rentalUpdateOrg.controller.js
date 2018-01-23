@@ -5,10 +5,16 @@
   'use strict'
   angular.module('GPSCloud').controller('rentalUpdateOrgController',rentalUpdateOrgController);
 
-  function rentalUpdateOrgController($uibModalInstance,RENTAL_ORG_URL,serviceResource,Notification,selectedOrg,parentOrg) {
+  function rentalUpdateOrgController($uibModalInstance,RENTAL_ORG_URL,serviceResource,RENTAL_ORG_ID_URL,Notification,selectedOrgid,parentOrg) {
     var vm =this;
-    vm.selectedOrg = selectedOrg;
+    vm.selectedOrgid = selectedOrgid;
     vm.parentOrg = parentOrg;
+
+    var url = RENTAL_ORG_ID_URL+"?id=" + vm.selectedOrgid;
+    var orgPromise = serviceResource.restCallService(url,"GET");
+    orgPromise.then(function (data) {
+      vm.selectedOrg = data.content;
+    })
 
     vm.ok= function(newOrg){
       var restPromise =serviceResource.restUpdateRequest(RENTAL_ORG_URL,newOrg);

@@ -12,7 +12,7 @@
   <!--alarmInfo begin-->
   <div id="alarmInfo" class="container-fluid">
     <div class="row info-box-container" presentation-href="rental:machinemng:alarm:topNavigation">
-      <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)">
        <div class="info-box  info-card">
           <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height" >
@@ -23,7 +23,7 @@
               <div class="profit-info-height">{{'rentalGeo-FenceWarning'|translate}}</div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)"><strong ng-bind="machineAlarmInfoCtr.fenceAlarm"></strong></div>
+              <div ><strong ng-bind="machineAlarmInfoCtr.fenceAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(1)" >
@@ -35,7 +35,7 @@
       </div>
 
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)">
         <div class="info-box  info-card">
           <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height" >
@@ -46,7 +46,7 @@
               <div class="profit-info-height" >{{'rentalEquipmentWarning'|translate}}</div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div  ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)"><strong  ng-bind="machineAlarmInfoCtr.machineAlarm"></strong></div>
+              <div  ><strong  ng-bind="machineAlarmInfoCtr.machineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(4)" >
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)">
         <div class="info-box  info-card">
           <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height" >
@@ -68,7 +68,7 @@
               <div class="profit-info-height">{{'rentalMaintenanceReminder'|translate}}</div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)"><strong ng-bind="machineAlarmInfoCtr.keepAlarm"></strong></div>
+              <div ><strong ng-bind="machineAlarmInfoCtr.keepAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(2)">
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="col-md-3 col-sm-6 col-xs-12" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)">
         <div class="info-box  info-card">
           <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height" >
@@ -90,7 +90,7 @@
               <div class="profit-info-height">{{'rentalOff-lineReminder'|translate}}</div>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-3 profit-info-height alarm-pointer">
-              <div ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)"><strong ng-bind="machineAlarmInfoCtr.offLineAlarm"></strong></div>
+              <div ><strong ng-bind="machineAlarmInfoCtr.offLineAlarm"></strong></div>
             </div>
           </div>
           <!--<div class="info-box-left-text alarm-pointer" ng-click="machineAlarmInfoCtr.loadMsgDataByType(3)">
@@ -229,7 +229,7 @@
                         <span class="alarmSpan2"  ng-if="notification.processStatus == true">{{'rentaldone'|translate}}</span>
                     </td>
                     <td >
-                      <button type="button" class="btn progress-bar-warning btn-xs btn-font-color"  ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
+                      <button type="button" class="btn progress-bar-warning btn-xs btn-font-color" presentation-href="rental:machinemng:alarm:notification"  ng-click="machineAlarmInfoCtr.processRentalNotificationDeal2(notification,$index)">{{'processingAalarm'|translate}}</button>
                       <button type="button" class="btn btn-default btn-xs btn-font-color"  ng-click="machineAlarmInfoCtr.neglect(notification,$index)">{{'neglect'|translate}}</button>
                     </td>
                   </tr>

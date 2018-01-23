@@ -5,7 +5,7 @@
     .module('GPSCloud')
     .controller('rentalLeaveSiteController', rentalLeaveSiteController);
 
-  function rentalLeaveSiteController($rootScope, $uibModalInstance, $timeout, Notification, languages, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, RENTAL_MACHINE_MONITOR_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL)
+  function rentalLeaveSiteController($rootScope, $uibModalInstance, $timeout, Notification, languages,DEFAULT_MINSIZE_PER_PAGE, RENTANL_ORDER_MACHINE_BATCH_MOVE_URL, RENTAL_MACHINE_MONITOR_URL, serviceResource, NgTableParams, orderId, Upload, RENTANL_ATTACH_UPLOAD_URL, RENTAL_ORDER_ENTRY_MACHINE_URL)
   {
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
@@ -67,7 +67,7 @@
       vm.leaveMachineNumber = 0;
     };
     //订单下车辆List 数据
-    vm.tableParams = new NgTableParams({}, {dataset: vm.orderMachineList});
+    // vm.tableParams = new NgTableParams({}, {dataset: vm.orderMachineList});
 
     var updateSelected = function (action, orderMachine) {
       if (action == 'add' && vm.selected.indexOf(orderMachine.id) == -1) {
@@ -76,12 +76,9 @@
       if (action == 'remove' && vm.selected.indexOf(orderMachine.id) != -1) {
         var idx = vm.selected.indexOf(orderMachine.id);
         vm.selected.splice(idx, 1);
-
       }
     }
-
     vm.updateSelection = function ($event, id, status) {
-
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
       updateSelected(action, id);
@@ -89,46 +86,41 @@
     vm.updateAllSelection = function ($event) {
       var checkbox = $event.target;
       var action = (checkbox.checked ? 'add' : 'remove');
-
       vm.tableParams.data.forEach(function (orderMachine) {
         updateSelected(action, orderMachine);
       })
-
     }
 
     vm.isSelected = function (id) {
       return vm.selected.indexOf(id) >= 0;
     }
 
-    vm.query = function (id) {
+    vm.query = function (page, size, sort,id) {
+
       var restCallURL = RENTAL_ORDER_ENTRY_MACHINE_URL;
-      var sortUrl = "id,desc";
-      restCallURL += "?sort=" + sortUrl;
+      var pageUrl = page || 0;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
+      var sortUrl = sort || "id,desc";
+      restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&id=" + id;
-      {
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
+      var rspData = serviceResource.restCallService(restCallURL, "GET");
         rspData.then(function (data) {
-
           vm.tableParams = new NgTableParams({
-            // initial sort order
-            // sorting: { name: "desc" }
           }, {
-            filterDelay: 0,
-            dataset: angular.copy(data.content)
-            // dataset: data.content
+            dataset: data.content
           });
+          vm.page = data.page;
+          vm.pageNumber = data.page.number + 1;
         }, function (reason) {
-
           Notification.error("获取车辆数据失败");
         });
-      }
     }
-    vm.query(orderId);
+    vm.query(null,null,null,vm.orderId);
 
 
     vm.bringUpBatch = function (file) {
       if (vm.selected.length == 0) {
-        Notification.warning({message: '请选择要调拨的车辆', positionY: 'top', positionX: 'center'});
+        Notification.warning({message: '请选择要退场的车辆', positionY: 'top', positionX: 'center'});
         return;
       }
       vm.leaveMachineNumber = vm.leaveMachineNumber + vm.selected.length;
@@ -146,11 +138,11 @@
       restPromise.then(function (data) {
         if (data.code == 0) {
           if (file) {
-            var Id = data.content[0].leavefactoryrecordid;
+            var Id = data.content[0].entryAndExitRecordId;
             vm.fileUpload(Id, file);
           }
-          vm.query(vm.orderId);
-          Notification.success(languages.findKey('批量调出车辆成功'));
+          vm.query(null,null,null,vm.orderId);
+          Notification.success(languages.findKey('批量调出车辆成功，上传附件成功！'));
           vm.selected = [];
           vm.file = []
         }

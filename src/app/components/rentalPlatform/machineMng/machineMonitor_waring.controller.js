@@ -10,13 +10,13 @@
     .controller('machineMonitorWaringController', machineMonitorWaringController);
 
   /** @ngInject */
-  function machineMonitorWaringController($rootScope,$window,$scope,$http, $location, $timeout,serviceResource,ngTableDefaults,NgTableParams,languages,Notification, $filter,sharedDeviceInfoFactory,RENTAL_ALARM_MSG_DATA_URL) {
+  function machineMonitorWaringController($rootScope,$window,$scope,$http, DEFAULT_MINSIZE_PER_PAGE, $timeout,serviceResource,ngTableDefaults,NgTableParams,languages,Notification, $filter,sharedDeviceInfoFactory,RENTAL_ALARM_MSG_DATA_URL) {
     var vm = this;
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
     //获取共享数据deviceinfo
     vm.deviceInfo = sharedDeviceInfoFactory.getSharedDeviceInfo();
     //分页大小
-    vm.pageSize = 10;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     var date = new Date();
     //查询开始时间默认为昨天
     date.setDate(date.getDate() - 1);

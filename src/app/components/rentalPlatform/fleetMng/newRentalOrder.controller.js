@@ -10,7 +10,8 @@
     .controller('newRentalOrderController', newRentalOrderController);
   /** @ngInject */
   function newRentalOrderController($rootScope,$window,$uibModal,$uibModalInstance,treeFactory,serviceResource,RENTAL_ORDER_URL,rentalService, Notification,languages,NgTableParams) {
-    // var vm = this;
+    // ------------------------新建订单新版start-------------------------------------
+    //var vm = this;
     // vm.operatorInfo = $rootScope.userInfo;
     // vm.rentalOrder={};
     // //订单车辆类型 List
@@ -251,6 +252,7 @@
     //   var currentPage = vm.tableParams.page();
     //   originalData = angular.copy(vm.tableParams.settings().dataset);
     // }
+      // ------------------------新建订单新版end-------------------------------------
 
       // ------------------------新建订单旧版以便测试进行测试-------------------------------------
      var vm = this;

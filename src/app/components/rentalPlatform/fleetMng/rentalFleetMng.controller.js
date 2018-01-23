@@ -10,7 +10,7 @@
 
   /** @ngInject */
 
-  function rentalFleetMngController($scope, $window, $uibModal,$anchorScroll,languages,commonFactory, serviceResource,NgTableParams,ngTableDefaults,Notification,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_ENTRY_MACHINE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL) {
+  function rentalFleetMngController($scope, $window, $uibModal,$anchorScroll,languages,commonFactory, serviceResource,NgTableParams,ngTableDefaults,Notification,DEFAULT_SIZE_PER_PAGE,RENTANL_ORDER_MACHINE_BATCH_MOVE_URL,RENTAL_ORDER_ENTRY_MACHINE_URL,RENTANL_UNUSED_MACHINE_PAGE_URL,RENTANL_ORDER_MACHINE_BATCH_OPER_URL,RENTAL_MACHINE_DATA_URL,DEFAULT_MINSIZE_PER_PAGE) {
 
     var vm = this;
     vm.rightRentalOrderId;
@@ -21,7 +21,7 @@
     //定义偏移量
     $anchorScroll.yOffset = 50;
     //定义每页显示多少条数据
-    vm.pageSize = 12;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的车辆id List
     vm.selectedObj = []; //选中的订单车辆obj

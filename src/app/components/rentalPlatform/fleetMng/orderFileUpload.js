@@ -5,14 +5,14 @@
     .module('GPSCloud')
     .controller('rentalOrderFileUploadController',rentalOrderFileUploadController);
 
-  function rentalOrderFileUploadController ($rootScope,$uibModalInstance,$stateParams,rentalOrder,$timeout,$uibModal,DEFAULT_SIZE_PER_PAGE,Upload,RENTANL_ATTACH_UPLOAD_URL,Notification){
+  function rentalOrderFileUploadController ($rootScope,$uibModalInstance,$stateParams,rentalOrder,$timeout,$uibModal,DEFAULT_SIZE_PER_PAGE,Upload,RENTANL_ATTACH_UPLOAD_URL,Notification,DEFAULT_MINSIZE_PER_PAGE){
 
     var vm = this;
     vm.userInfo = $rootScope.userInfo;
     vm.selectAll = false;
     vm.rentalOrder = rentalOrder
     vm.selected = [];
-    vm.pageSize = 8;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
 
     //附件上传
     vm.fileUpload = function(files){

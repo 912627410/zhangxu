@@ -25,7 +25,8 @@
       softVersionNum: /^\d{1,2}(\.\d{1,2})?$/,
       //numberAndCharForPass:/[a-zA-Z0-9_]{8,10}/,
       //numberAndCharForPass:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
-      numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
+       //numberAndCharForPass:/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,}$$/,
+      numberAndCharForPass:/^(?!(?:\d+|[a-zA-Z]+)$)[\da-zA-Z]{6,}$/,
      // numberAndChar: /^[c0|c1|c2]{1}[0-9]$/,
       telephoneNo:/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,
       postcode:/^[1-9]\d{5}(?!\d)$/,
@@ -110,6 +111,9 @@
         error: "{{'postcodesNotLegal' |translate}}",
         success: ''
       },
+      islength: function (value, scope, element, attrs, param) {
+        return value.length === param;
+      },
       port: {
         // error: 'portError',
         error: '端口号范围1000~65535',
@@ -167,7 +171,7 @@
       }
     );
 
-    //自定义最大值最小值消息
+    // //自定义最大值最小值消息
     $validationProvider.setExpression({
         maxValue: function (value, scope, element, attrs, param) {
           $validationProvider.setDefaultMsg({
@@ -184,6 +188,35 @@
             }
           });
           return parseInt(value) >= parseInt(param);
+        }
+      }
+    );
+
+    //自定义最大长度最小长度消息
+    $validationProvider.setExpression({
+        maxlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            maxlength: {
+              error: "{{'maxLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length <= param;
+        },
+        minlength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            minlength: {
+              error: "{{'minLengthDesc' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length >= param;
+        },
+        islength: function (value, scope, element, attrs, param) {
+          $validationProvider.setDefaultMsg({
+            islength: {
+              error: "{{'isLength' | translate}}" + param + "{{'bits' | translate}}"
+            }
+          });
+          return value.length === param;
         }
       }
     );

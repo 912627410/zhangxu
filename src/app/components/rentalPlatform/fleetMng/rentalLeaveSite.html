@@ -90,6 +90,13 @@
           </tr>
         </table>
       </div>
+      <div class="col-lg-12"><!--分页框-->
+        <uib-pagination total-items="rentalLeaveSiteCtrl.page.totalElements"
+                        ng-change="rentalLeaveSiteCtrl.query(rentalLeaveSiteCtrl.pageNumber-1,null,null,rentalLeaveSiteCtrl.orderId)"
+                        max-size="5" ng-model="rentalLeaveSiteCtrl.pageNumber" items-per-page="rentalLeaveSiteCtrl.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+      </div>
     </div>
   </form>
 </div>

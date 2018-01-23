@@ -6,12 +6,12 @@
   </div>
 </div>
 <div class="modal-body">
-  <form name="newrentalOrderForm" class="form-horizontal">
+  <form name="newRentalOrderForm" class="form-horizontal">
     <div class="box-body">
       <div class="form-group">
         <label for="orderNumber" class="col-md-2 control-label font-nomal">{{'rentalOrderNumber'|translate}}:</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" id="orderNumber" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" />
+          <input type="text" class="form-control" id="orderNumber" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="newRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="maxlength=20" />
         </div>
         <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
         <div class="col-md-3">
@@ -74,7 +74,7 @@
         </div>
         <label class="col-md-2 control-label font-nomal">{{'rentalWorkLocation'|translate}}:</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" ng-model="newRentalOrderCtrl.rentalOrder.location" name="location" validator="required" typeahead-show-hint="true" />
+          <input type="text" class="form-control" ng-model="newRentalOrderCtrl.rentalOrder.location" name="location" validator="required,maxlength=5" typeahead-show-hint="true" />
         </div>
       </div>
 
@@ -219,7 +219,7 @@
 </div>
 <div class="modal-footer">
   <div class="form-group" style="text-align: center;">
-    <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newrentalOrderForm" ng-click="newRentalOrderCtrl.ok(newRentalOrderCtrl.rentalOrder)">{{'confirm'|translate}}
+    <button class="btn  btn-primary " type="button" style="margin-right: 8px;" validation-submit="newRentalOrderForm" ng-click="newRentalOrderCtrl.ok(newRentalOrderCtrl.rentalOrder)">{{'confirm'|translate}}
     </button>
     <button class="btn  btn-warning  " type="button" ng-click="newRentalOrderCtrl.cancel()">
       {{'cancel'|translate}}

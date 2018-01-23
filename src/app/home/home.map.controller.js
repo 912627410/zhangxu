@@ -20,14 +20,14 @@
     uiGmapGoogleMapApi.then(function(maps) {
       console.log("init google map success");
     });
-    if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
+    if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"&&$rootScope.userInfo.orgTenantType ==1) {
       vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
     } else {
       serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
     //console.log(vm.map)
     vm.refreshMap = function () {
-      if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
+      if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"&&$rootScope.userInfo.orgTenantType ==1){
         vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
       }else{
         serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);

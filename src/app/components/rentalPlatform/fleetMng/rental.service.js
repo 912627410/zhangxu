@@ -11,10 +11,6 @@
   /** @ngInject */
   function rentalService($rootScope, $resource, DEVCE_MF, DEVCE_HIGHTTYPE, serviceResource, DEVCE_DEVICETYPE, DEVCE_POWERTYPE,RENTAL_ORDER_STATUS,
                          RENTAL_MAINTENANCE_STATUS_URL,RENTAL_MAINTENANCE_LIST_STATUS_URL,RENTAL_ORG_FENCE_STATUS) {
-
-
-
-
     return {
       getDeviceManufactureList: function () {
         return serviceResource.restCallService(DEVCE_MF, "GET");
@@ -43,7 +39,6 @@
       },
 
     };
-
 
   }
 })();

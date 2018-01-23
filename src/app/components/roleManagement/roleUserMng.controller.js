@@ -40,7 +40,6 @@
 
     // select org
     vm.my_tree_handler = function (branch) {
-
       var restCallURL = USER_PAGE_URL;
       var pageUrl = 0;
       var sizeUrl = 10000;
@@ -49,18 +48,13 @@
       if (null != branch && null != branch.id) {
         restCallURL += "&search_EQ_organization.id=" + branch.id;
       }
-
       var promise = serviceResource.restCallService(restCallURL, "GET");
       promise.then(function (data) {
-
         vm.userinfoList = data.content;
-
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetRoleData'));
       });
-
     }
-
 
     vm.isSelected = function (userId) {
       return vm.selected.indexOf(userId) >= 0;
@@ -91,7 +85,6 @@
 
     //
     vm.ok = function () {
-
       var rspUrl = ROLE_USER_URL;
       rspUrl +="?roleId=" + vm.roleInfo.id + "&userList=" + vm.selected;
       var promise = serviceResource.restCallService(rspUrl, "UPDATE");
@@ -100,13 +93,10 @@
         if(data.code ==0){
           Notification.success(languages.findKey('successfullyModifiedRolePrivilige'));
           $uibModalInstance.close(data.content);
-
         }
-
       }, function (reason) {
         Notification.error(languages.findKey('failedToGetMenuData'));
       });
     }
-
   }
 })();

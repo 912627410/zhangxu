@@ -21,24 +21,11 @@
     ngTableDefaults.settings.counts = [];
 
 
-    vm.startDateSetting = {
-      //dt: "请选择开始日期",
-      open: function($event) {
-        vm.startDateSetting.status.opened = true;
-      },
-      dateOptions: {
-        formatYear: 'yy',
-        startingDay: 1
-      },
-      status: {
-        opened: false
-      }
+
+    vm.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1
     };
-
-
-
-    //vm.startDateSetting.dt="";
-
     // 日期控件相关
     // date picker
     vm.startDateOpenStatus = {
@@ -106,8 +93,6 @@
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       if (null != maintentance) {
 
-
-
         if (null != maintentance.status&&maintentance.status!="") {
           restCallURL += "&search_EQ_status=" + maintentance.status.value;
         }
@@ -119,15 +104,11 @@
         if (null != maintentance.endDate&&maintentance.endDate!="") {
           restCallURL += "&search_DLTE_updateTime=" + $filter('date')(maintentance.endDate, 'yyyy-MM-dd');
         }
-
-
-
       }
 
       if (null != vm.machine&&null != vm.machine.licenseId) {
         restCallURL += "&search_LIKE_machine.licenseId=" + vm.machine.licenseId;
       }
-
 
       if (null != vm.org&&null != vm.org.id&&!vm.querySubOrg) {
         restCallURL += "&search_EQ_orgEntity.id=" + vm.org.id;
@@ -136,8 +117,6 @@
       if(null != vm.org&&null != vm.org.id&&vm.querySubOrg){
         restCallURL += "&parentOrgId=" +vm.org.id;
       }
-
-      console.log(restCallURL);
 
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
@@ -165,9 +144,9 @@
 
     //重置查询框
     vm.reset = function () {
-      vm.maintentance = null;
-      vm.machine = null;
-      vm.org=null;
+      vm.maintenance = {};
+      vm.machine = {};
+      vm.org={};
       vm.querySubOrg=false;
     }
 

@@ -15,16 +15,16 @@
     <div class="row info-box-container table-wrapper">
       <div class="col-sm-4 col-md-4">
         <div class="input-group ">
-          <input type="text" class="form-control" ng-model="rentalOrgMngCtrl.searchText" placeholder="Search" >
+          <input type="text" class="form-control" ng-model="rentalOrgMngCtrl.searchText" placeholder="{{'search'|translate}}" >
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="rentalOrgMngCtrl.search(rentalOrgMngCtrl.searchText)">{{'search'|translate}}</button>
+            <button class="btn btn-default" presentation-href="system:org:query" type="button" ng-click="rentalOrgMngCtrl.search(rentalOrgMngCtrl.searchText)">{{'search'|translate}}</button>
             <button class="btn btn-default" type="button" ng-click="rentalOrgMngCtrl.reset(rentalOrgMngCtrl.searchText)">{{'reset'|translate}}</button>
           </span>
         </div>
       </div>
       <div class="col-sm-7 col-md-7 pull-right" >
-        <div class="btn btn-primary" type="button"  ng-click="rentalOrgMngCtrl.updateOrg()">{{'alter'|translate}}</div>
-        <div class="btn btn-danger"  type="button"  ng-click="rentalOrgMngCtrl.addOrg()">{{'add'|translate}}</div>
+        <div class="btn btn-primary" type="button" presentation-href="system:org:modify"  ng-click="rentalOrgMngCtrl.updateOrg(rentalOrgMngCtrl.selectedOrg.id)">{{'alter'|translate}}</div>
+        <div class="btn btn-danger"  type="button" presentation-href="system:org:create"  ng-click="rentalOrgMngCtrl.addOrg()">{{'add'|translate}}</div>
      </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
         <td>{{rentalOrgMngCtrl.selectedParentOrg}}</td>
       </tr>
       <tr>
-        <td>{{'organizationName' | translate}}:</td>
+        <td>{{'organizationLabel' | translate}}:</td>
         <td>{{rentalOrgMngCtrl.selectedOrg.label}}</td>
       </tr>
       <tr>

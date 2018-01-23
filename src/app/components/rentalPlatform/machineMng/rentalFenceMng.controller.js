@@ -14,9 +14,15 @@
 
   /** @ngInject */
   function rentalFenceMngController($uibModal, $window, $confirm, $rootScope, uiGmapGoogleMapApi, languages, serviceResource, NgTableParams, ngTableDefaults, Notification,
-                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT, RENTAL_ORG_FENCE_URL) {
+                                    RENTAL_ORG_FENCE_PAGE_URL, RENTAL_ORG_FENCE_DELETE_STATUS, RENTAL_ORG_FENCE_COUNT, RENTAL_ORG_FENCE_URL,DEFAULT_MINSIZE_PER_PAGE) {
     var vm = this;
-    vm.pageSize = 12;
+    vm.pageSize = DEFAULT_MINSIZE_PER_PAGE;
+    vm.fenceStatus = {
+      fenceCount: 0,
+      normalCount: 0,
+      lapseCount: 0
+    }
+
     vm.searchCondition = {}
     ngTableDefaults.params.count = vm.pageSize;
     ngTableDefaults.settings.counts = [];

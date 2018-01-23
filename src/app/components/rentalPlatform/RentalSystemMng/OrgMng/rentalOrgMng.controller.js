@@ -33,7 +33,7 @@
     //选中组织事件
     vm.my_tree_handler = function (branch) {
       //查询组织信息
-      $scope.$emit("OrgSelectedEvent", branch);
+      // $scope.$emit("OrgSelectedEvent", branch);
       vm.selectedOrg = branch;
       var restCallURL = QUERY_PARENTORG_URL;
       restCallURL += "?parentId=" + vm.selectedOrg.parentId;
@@ -195,7 +195,7 @@
     };
 
     //update org
-    vm.updateOrg = function (size) {
+    vm.updateOrg = function (id,size) {
       if(null == vm.selectedOrg) {
         Notification.warning(languages.findKey('selectAnOrganizationToUpdate'));
         return;
@@ -214,8 +214,8 @@
             size: size,
             backdrop: false,
             resolve: {
-              selectedOrg: function () {
-                return vm.selectedOrg;
+              selectedOrgid: function () {
+                return id;
               },
               parentOrg:function () {
                 return parentOrg;
