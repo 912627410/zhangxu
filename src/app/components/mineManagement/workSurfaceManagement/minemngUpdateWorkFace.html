@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h3 class="modal-title">修改作业面信息</h3>
+</div>
+
+<form name="updateWorkFace" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body form-horizontal">
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">作业面名称<i class="input-must">*</i></label>
+        <div class="col-sm-10">
+          <input type="text" id="name" class="form-control" ng-model="minemngUpdateWorkFaceCtrl.workFace.name"
+                 validator="required,numberAndCharAndChinese,maxlength=8" placeholder="请录入..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="altitude" class="col-sm-2 control-label">海拔高度<i class="input-must">*</i></label>
+        <div class="col-sm-10">
+          <input type="text" id="altitude" class="form-control" ng-model="minemngUpdateWorkFaceCtrl.workFace.altitude"
+                 validator="required,numberAndChineseAndPlusOrMinus,maxlength=6"placeholder="请录入..."/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-show="updateWorkFace.$valid" ng-click="minemngUpdateWorkFaceCtrl.ok()">确定</button>
+  <button class="btn btn-warning" type="button" ng-click="minemngUpdateWorkFaceCtrl.cancel()">取消</button>
+</div>
+

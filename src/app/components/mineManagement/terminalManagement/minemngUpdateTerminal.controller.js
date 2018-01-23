@@ -16,7 +16,7 @@
 
       var vm = this;
       vm.operatorInfo = $rootScope.userInfo;
-      vm.terminal=minemngterminal;
+      vm.terminal=angular.copy(minemngterminal);
       vm.unboundCar = {
         id: minemngterminal.minemngMachineId,
         carNumber: minemngterminal.carNumber

@@ -10,7 +10,7 @@
     var vm = this;
 
     vm.operatorInfo = $scope.userInfo;
-    vm.minemnguser=minemnguserinfo;
+    vm.minemnguser=angular.copy(minemnguserinfo);
     vm.ssnCode = ssnCode;
     vm.ssn = minemnguserinfo.ssn.substring(3);
 
@@ -22,7 +22,6 @@
         vm.userRoleTypeList = data.content;
       }, function (reason) {
         Notification.error('获取角色类型失败');
-
       })
     }
 

@@ -1,12 +1,23 @@
-<!--作业面-->
 <div class="modal-body" ng-controller="minemngWorkFaceMngController as vm">
   <div class="box-body">
     <div class="row">
-      <div class="col-md-6">
-        作业面
+      <div class="col-md-6 "style="line-height: 34px;">
+        <span>记录总数 {{vm.page.totalElements}}</span>
       </div>
-      <div class="col-md-6">
-        管理
+      <div class="col-md-6 text-right">
+        <button class="btn btn-primary" type="button" ng-click="vm.new()">增加</button>
+      </div>
+      <div class="col-lg-12 table-responsive "style="top: 15px"><!--表格框-->
+        <table ng-table="vm.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="workface in $data">
+            <td class="text-nowrap" data-title="'作业面名称'" sortable="'name'">{{workface.name}}</td>
+            <td class="text-nowrap" data-title="'海拔高度'" sortable="'altitude'">{{workface.altitude}}</td>
+            <td class="text-nowrap" data-title="'操作'" >
+              <button type="button" class="btn btn-warning btn-xs" ng-click="vm.update(workface)">修改</button>
+              <button type="button" class="btn btn-danger btn-xs" ng-click="vm.delete(workface.id)">删除</button>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
