@@ -1,14 +1,14 @@
 <div class="modal-header">
-  <h3 class="modal-title">新增总调度</h3>
+  <h3 class="modal-title">增加总调度</h3>
 </div>
 
 <form name="newTotalDispatch" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label">车队</label>
+        <label class="col-sm-2 control-label">车队<i class="input-must">*</i></label>
         <div class="col-sm-10">
-          <select name="fleet" class="form-control"
+          <select name="fleet" class="form-control" validator="required"
                   ng-model="newTotalDispatchCtrl.newTotalDispatch.fleet"
                   ng-options="fleets.id as fleets.name for fleets in newTotalDispatchCtrl.fleetList"
                   ng-change="newTotalDispatchCtrl.getTeamList(newTotalDispatchCtrl.newTotalDispatch.fleet)">
@@ -21,16 +21,16 @@
         <div class="col-sm-10">
           <ui-select multiple ng-model="newTotalDispatchCtrl.newTotalDispatch.teamList" theme="bootstrap" close-on-select="false" style="padding: 2px 12px;">
             <ui-select-match placeholder="{{'pleaseSelect'|translate}}">{{$item.name}}</ui-select-match>
-            <ui-select-choices repeat="teams in newTotalDispatchCtrl.teamList">
-              {{teams.name}}
+            <ui-select-choices repeat="teams in newTotalDispatchCtrl.teamList| filter: $select.search">
+              <span ng-bind-html="teams.name | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">工作面</label>
+        <label class="col-sm-2 control-label">工作面<i class="input-must">*</i></label>
         <div class="col-sm-10">
-          <select name="workFace" class="form-control"
+          <select name="workFace" class="form-control" validator="required"
                   ng-model="newTotalDispatchCtrl.newTotalDispatch.workFace"
                   ng-options="workFaces.id as workFaces.name for workFaces in newTotalDispatchCtrl.workFaceList">
             <option value="">{{'pleaseSelect'|translate}}</option>
@@ -38,9 +38,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">排土场</label>
+        <label class="col-sm-2 control-label">排土场<i class="input-must">*</i></label>
         <div class="col-sm-10">
-          <select name="dumpField" class="form-control"
+          <select name="dumpField" class="form-control" validator="required"
                   ng-model="newTotalDispatchCtrl.newTotalDispatch.dumpField"
                   ng-options="dumpFields.id as dumpFields.name for dumpFields in newTotalDispatchCtrl.dumpFieldList">
             <option value="">{{'pleaseSelect'|translate}}</option>
@@ -48,9 +48,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">班次</label>
+        <label class="col-sm-2 control-label">班次<i class="input-must">*</i></label>
         <div class="col-sm-10">
-          <select name="workShift" class="form-control"
+          <select name="workShift" class="form-control" validator="required"
                   ng-model="newTotalDispatchCtrl.newTotalDispatch.workShift"
                   ng-options="workShifts.code as workShifts.description for workShifts in newTotalDispatchCtrl.workShiftList">
             <option value="">{{'pleaseSelect'|translate}}</option>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">日期</label>
+        <label class="col-sm-2 control-label">日期<i class="input-must">*</i></label>
         <div class="col-sm-10">
           <p class="input-group cleanDateButton">
             <input type="text" name="effectiveDate" class="form-control m-b-20" uib-datepicker-popup="yyyy-MM-dd"
@@ -81,7 +81,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" validation-submit="newTotalDispatch" ng-click="newTotalDispatchCtrl.ok()" >{{'save'|translate}}</button>
+    <button class="btn btn-primary" type="button" ng-show="newTotalDispatch.$valid" ng-click="newTotalDispatchCtrl.ok()" >确定</button>
     <button class="btn btn-warning" type="button" ng-click="newTotalDispatchCtrl.cancel()">{{'cancel'|translate}}</button>
   </div>
 </form>

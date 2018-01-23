@@ -9,7 +9,7 @@
     .controller('addFleetController', addFleetCtrl);
 
   /** @ngInject */
-  function addFleetCtrl(MINEMACHINE_STATE_LIST_URL, $uibModalInstance,languages, MINE_NEW_FLEET, serviceResource, Notification) {
+  function addFleetCtrl( $uibModalInstance, MINE_NEW_FLEET, serviceResource, Notification) {
     var vm = this;
 
 

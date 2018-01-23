@@ -8,23 +8,21 @@
     .controller('minemngMachineController', minemngMachineController);
 
   /** @ngInject */
-  function minemngMachineController($rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_QUERY_URL ,$filter, NgTableParams,
-                                    MINE_MACHINE_DELETE, ngTableDefaults, Notification, serviceResource, DEFAULT_SIZE_PER_PAGE,
-                                    $confirm ,MACHINE_EXCELEXPORT) {
+  function minemngMachineController(DEFAULT_MINSIZE_PER_PAGE,$rootScope, MINE_PAGE_URL, languages,$uibModal,$http,MINE_QUERY_URL ,$filter, NgTableParams,
+                                    MINE_MACHINE_DELETE, ngTableDefaults, Notification, serviceResource, $confirm ,MACHINE_EXCELEXPORT) {
     var vm = this;
     vm.operatorInfo = $rootScope.userInfo;
     vm.selectAll = false;//是否全选标志
     vm.selected = []; //选中的设备id
     vm.querySubOrg = true;
-    vm.machineType = 1;
 
-    ngTableDefaults.params.count = DEFAULT_SIZE_PER_PAGE;
+    ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
 
     vm.query= function (page, size, sort, machine) {
       var restCallURL = MINE_PAGE_URL;
       var pageUrl = page || 0;
-      var sizeUrl = size || DEFAULT_SIZE_PER_PAGE;
+      var sizeUrl = size || DEFAULT_MINSIZE_PER_PAGE;
       var sortUrl = sort || "id,desc";
       restCallURL += "?page=" + pageUrl + '&size=' + sizeUrl + '&sort=' + sortUrl;
       restCallURL += "&search_EQ_machineType=" + vm.machineType;
@@ -40,8 +38,8 @@
         if (null != machine.productModel&&machine.productModel!="") {
           restCallURL += "&search_LIKE_productModel=" + $filter('uppercase')(machine.productModel);
         }
-        if (null != machine.manufacotryName&&machine.manufacotryName!="") {
-          restCallURL += "&search_LIKE_manufacotryName=" + $filter('uppercase')(machine.manufacotryName);
+        if (null != machine.manufactoryName&&machine.manufactoryName!="") {
+          restCallURL += "&search_LIKE_manufactoryName=" + $filter('uppercase')(machine.manufactoryName);
         }
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");
@@ -85,7 +83,6 @@
 
     //更新车辆
     vm.updateMineMachine = function (machine, size) {
-      //var sourceMachine = angular.copy(machine); //深度copy
 
       var singlUrl = MINE_QUERY_URL + "?id=" + machine.id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
@@ -105,7 +102,6 @@
         });
 
         modalInstance.result.then(function(result) {
-
           var tabList=vm.tableParams.data;
           //更新内容
           for(var i=0;i<tabList.length;i++){
@@ -113,11 +109,8 @@
               tabList[i]=result;
             }
           }
-
         }, function(reason) {
-
         });
-
 
       }, function (reason) {
         Notification.error('获取车辆信息失败');

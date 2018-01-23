@@ -12,16 +12,14 @@
         .module('GPSCloud')
         .controller('updateTotalDispatchController', updateTotalDispatchController);
 
-    function updateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, totalDispatch,
-                                           MINEMNG_WORKFACE_LIST, MINEMNG_DUMP_FIELD_LIST, MINEMNG_WORK_SHIFT_ALL_LIST, MINEMNG_TOTAL_DISPATCH) {
+    function updateTotalDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, totalDispatch, minemngResource, MINEMNG_TOTAL_DISPATCH) {
       var vm = this;
       vm.userInfo = $rootScope.userInfo;
-      vm.totalDispatch = angular.copy(totalDispatch);
-      vm.oldWorkFace = totalDispatch.workFace;
-      vm.oldDumpField = totalDispatch.dumpField;
+      vm.oldTotalDispatch = angular.copy(totalDispatch);
+      vm.workFace = totalDispatch.workFace;
+      vm.dumpField = totalDispatch.dumpField;
 
-      var nowDate = new Date(new Date().toLocaleDateString());
-      if(nowDate < vm.totalDispatch.effectiveDate) {
+      if(getZeroDate() < totalDispatch.effectiveDate) {
         vm.okDesc = "确定";
       } else {
         vm.okDesc = "发布";
@@ -30,44 +28,35 @@
       /**
        * 加载作业面列表
        */
-      vm.getWorkFaceList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_WORKFACE_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.workFaceList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getWorkFaceList();
+      var workFaceListPromise = minemngResource.getWorkFaceList();
+      workFaceListPromise.then(function (data) {
+        vm.workFaceList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
       /**
        * 加载排土场列表
        */
-      vm.getDumpFieldList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_DUMP_FIELD_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.dumpFieldList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getDumpFieldList();
+      var dumpFieldListPromise = minemngResource.getDumpFieldList();
+      dumpFieldListPromise.then(function (data) {
+        vm.dumpFieldList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
 
       vm.ok = function () {
-        if(vm.totalDispatch.workFace == null || vm.totalDispatch.workFace === "") {
-          Notification.warning("请选择工作面");
+        if(vm.workFace === vm.oldTotalDispatch.workFace && vm.oldTotalDispatch.dumpField === vm.dumpField) {
+          Notification.warning("内容没有变化");
           return;
         }
-        if(vm.totalDispatch.dumpField == null || vm.totalDispatch.dumpField === "") {
-          Notification.warning("请选择排土场");
-          return;
-        }
-        if(vm.totalDispatch.workFace === vm.oldWorkFace && vm.totalDispatch.dumpField === vm.oldDumpField) {
-          Notification.warning("没有修改内容");
-          return;
-        }
-        var restPromise = serviceResource.restUpdateRequest(MINEMNG_TOTAL_DISPATCH, vm.totalDispatch);
+        var updateTotalDispatch = {
+          totalDispatchList: [totalDispatch],
+          workFace: vm.workFace,
+          dumpField: vm.dumpField
+        };
+        var restPromise = serviceResource.restUpdateRequest(MINEMNG_TOTAL_DISPATCH, updateTotalDispatch);
         restPromise.then(function (data) {
           if(data.code === 0) {
             Notification.success(data.content);

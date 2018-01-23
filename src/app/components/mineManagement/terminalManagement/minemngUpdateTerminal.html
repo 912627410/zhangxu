@@ -1,0 +1,43 @@
+
+<div class="modal-header">
+  <h3 class="modal-title">{{'修改终端'|translate}}</h3>
+</div>
+<form name="updateTerminalForm" class="form-horizontal">
+  <div class="modal-body">
+    <div class="box-body">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'终端号码'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'终端号码'|translate}}"
+                 ng-model="minemngUpdateTerminalCtrl.terminal.terminalNumber" name="terminalNumber" validator="required,minlength=14,maxlength=15"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'SIM卡号'|translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="{{'SIM卡号'|translate}}"
+                 ng-model="minemngUpdateTerminalCtrl.terminal.simCardNumber" name="simCardNumber" validator="required,islength=13"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">{{'绑定车辆'|translate}}</label>
+        <div class="col-sm-5">
+          <ui-select  name="carNumber" ng-model="minemngUpdateTerminalCtrl.unboundCar" theme="bootstrap"
+                     ng-disabled="disabled" >
+            <ui-select-match allow-clear="true" placeholder="{{'选择绑定车辆'|translate}}">
+              {{$select.selected.carNumber|translate}}
+            </ui-select-match>
+            <ui-select-choices repeat="unboundCar in minemngUpdateTerminalCtrl.unboundCarList">
+              <div ng-bind-html="unboundCar.carNumber | highlight: $select.search |translate"></div>
+            </ui-select-choices>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" validation-submit="updateTerminalForm" ng-click="minemngUpdateTerminalCtrl.ok()">{{'confirm'|translate}}</button>
+  <button class="btn btn-warning" type="button" ng-click="minemngUpdateTerminalCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>
+

@@ -12,57 +12,35 @@
         .module('GPSCloud')
         .controller('newTemporaryDispatchController', newTemporaryDispatchController);
 
-    function newTemporaryDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, serviceResource, operatorInfo,
-                                            MINEMNG_MACHINE_TYPE_LIST, MINE_PAGE_URL, MINEMNG_FLEET_LIST) {
+    function newTemporaryDispatchController($rootScope, $scope, Notification, $uibModalInstance, $uibModal, languages, serviceResource, operatorInfo,
+                                            minemngResource, MINEMNG_MACHINE_TYPE_LIST, MINEMNG_MACHINE_LIST, MINEMNG_TEMPORARY_DISPATCH) {
       var vm = this;
       vm.operatorInfo = operatorInfo;
 
-
-      /**
-       * 加载车辆类型列表
-       */
-      vm.getMachineTypeList = function () {
-        var rspDate = serviceResource.restCallService(MINEMNG_MACHINE_TYPE_LIST, "QUERY");
-        rspDate.then(function (data) {
-          vm.machineTypeList = data;
-        }, function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getMachineTypeList();
-
       /**
        * 获取车辆列表
-       * @param machineType 车型
        */
-      vm.getMachineList = function (machineType) {
-        if (machineType == null || machineType === "" || machineType === "undefined") {
-          Notification.warning("请选择车型");
-          return;
-        }
-        var restCallURL = MINE_PAGE_URL + "?page=0&size=10000&sort=id,desc&search_EQ_machineType=" + machineType;
-        var rspData = serviceResource.restCallService(restCallURL, "GET");
+      vm.getMachineList = function () {
+        var url = MINEMNG_MACHINE_LIST + "?machineType=1";
+        var rspData = serviceResource.restCallService(url, "QUERY");
         rspData.then(function (data) {
-          vm.machineList = data.content;
+          vm.machineList = data;
         }, function (reason) {
           vm.machineList = null;
           Notification.error(languages.findKey('getDataVeFail'));
         });
       };
+      vm.getMachineList();
 
       /**
        * 加载车队列表
        */
-      vm.getFleetList = function () {
-        var url = MINEMNG_FLEET_LIST + "?parentId=0";
-        var rspDate = serviceResource.restCallService(url, "QUERY");
-        rspDate.then(function (data) {
-          vm.fleetList = data;
-        },function (reason) {
-          Notification.error(reason.data);
-        })
-      };
-      vm.getFleetList();
+      var fleetListPromise = minemngResource.getFleetList();
+      fleetListPromise.then(function (data) {
+        vm.fleetList = data;
+      }, function (reason) {
+        Notification.error(reason.data);
+      });
 
       /**
        * 加载小组列表
@@ -70,16 +48,38 @@
        */
       vm.getTeamList = function (fleetId) {
         vm.teamList = null;
-        vm.newTemporaryDispatch.team = null;
-        if(fleetId != null && fleetId !== "" && fleetId !== "undefined") {
-          var url = MINEMNG_FLEET_LIST + "?parentId=" + fleetId;
-          var rspDate = serviceResource.restCallService(url, "QUERY");
-          rspDate.then(function (data) {
+        vm.team = null;
+        var teamListPromise = minemngResource.getTeamList(fleetId);
+        if(teamListPromise != null) {
+          teamListPromise.then(function (data) {
             vm.teamList = data;
-          },function (reason) {
+          }, function (reason) {
             Notification.error(reason.data);
-          })
+          });
         }
+      };
+
+      vm.ok = function () {
+        if(vm.machines == null || vm.machines.length <= 0) {
+          Notification.warning("请选择车号");
+          return;
+        }
+        var newTemporaryDispatch = {
+          machineList: vm.machines,
+          fleet: vm.fleet,
+          team: vm.team
+        };
+        var rspData = serviceResource.restCallService(MINEMNG_TEMPORARY_DISPATCH, "ADD", newTemporaryDispatch);  //post请求
+        rspData.then(function (data) {
+          if(data.code === 0){
+            Notification.success("增加成功！");
+            $uibModalInstance.close();
+          } else {
+            Notification.error(data.content);
+          }
+        }, function (reason) {
+          Notification.error(reason.data);
+        });
       };
 
       vm.cancel = function () {

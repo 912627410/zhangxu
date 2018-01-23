@@ -9,7 +9,7 @@
     .controller('newMineMachinemngController', newMineMachinemngCtrl);
 
   /** @ngInject */
-  function newMineMachinemngCtrl(machineType,MINEMACHINE_STATE_LIST_URL, $uibModalInstance,languages, MINE_MACHINE_URL, serviceResource, Notification) {
+  function newMineMachinemngCtrl(machineType,MINE_MACHINE_STATE_LIST_URL, $uibModalInstance,languages, MINE_MACHINE_URL, serviceResource, Notification) {
     var vm = this;
     vm.machineType =machineType
 
@@ -41,7 +41,7 @@
 
 
 
-    var machineStatePromise = serviceResource.restCallService(MINEMACHINE_STATE_LIST_URL,"QUERY");
+    var machineStatePromise = serviceResource.restCallService(MINE_MACHINE_STATE_LIST_URL,"QUERY");
     machineStatePromise.then(function (data) {
       vm.machineStateList= data;
     }, function () {

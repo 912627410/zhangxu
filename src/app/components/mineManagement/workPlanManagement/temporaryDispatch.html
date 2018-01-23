@@ -1,0 +1,76 @@
+<div style="padding: 10px;" ng-controller="temporaryDispatchController as ctrl">
+  <div class="row form-group">
+    <div class="col-md-1 paddingR0">
+      <label class="control-label">车号</label>
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" ng-model="ctrl.carNumber"
+             placeholder="{{'supportfuzzyqueries'|translate}}">
+    </div>
+    <div class="col-md-9 text-right">
+      <button class="btn btn-default" ng-click="ctrl.reset()">重置</button>
+      <span>&nbsp;</span>
+      <button class="btn btn-primary" ng-click="ctrl.query(null, null, null)">查询
+      </button>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="btn-group col-md-6" style="line-height: 34px;">
+      <span style="font-size: 18px;font-weight: bold;">临时调度列表</span>
+      <span>{{'totalNumberOfRecords'|translate}} {{ctrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-6 text-right">
+      <button class="btn btn-warning" ng-click="ctrl.batchCancel()">批量取消调度</button>
+      <span>&nbsp;</span>
+      <button class="btn btn-primary" ng-click="ctrl.add()">增加</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <script id="selectTemporaryDispatchAllHeader" type="text/ng-template">
+        <input type="checkbox" ng-click="ctrl.temporaryDispatchAllSelection($event)"
+               ng-model="ctrl.checked"/>
+      </script>
+      <div class="table-responsive">
+        <table ng-table="ctrl.tableParams"
+               class="table table-condensed table-bordered table-striped text-nowrap">
+          <tr ng-repeat="temporaryDispatch in $data">
+            <td class="text-nowrap text-center" data-header="'selectTemporaryDispatchAllHeader'">
+              <input type="checkbox" ng-checked="ctrl.isSelected(temporaryDispatch)"
+                     ng-click="ctrl.temporaryDispatchSelection($event,temporaryDispatch)"
+                     ng-model="temporaryDispatch.checked"/>
+            </td>
+            <td class="text-nowrap" data-title="'车型'" sortable="'machineType'">{{temporaryDispatch.machineTypeName}}</td>
+            <td class="text-nowrap" data-title="'车号'" sortable="'carNumber'">{{temporaryDispatch.carNumber}}</td>
+            <td class="text-nowrap" data-title="'原车队'" sortable="'oldFleet'">{{temporaryDispatch.oldFleetName}}</td>
+            <td class="text-nowrap" data-title="'原小组'" sortable="'oldTeam'">{{temporaryDispatch.oldTeamName}}</td>
+            <td class="text-nowrap" data-title="'现车队'" sortable="'nowFleet'">{{temporaryDispatch.nowFleetName}}</td>
+            <td class="text-nowrap" data-title="'现小组'" sortable="'nowTeam'">{{temporaryDispatch.nowTeamName}}</td>
+            <td class="text-nowrap" data-title="'状态'" sortable="'status'" style="color: red;" ng-if="temporaryDispatch.status==0">未读</td>
+            <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="temporaryDispatch.status==1">已读</td>
+            <td class="text-nowrap" data-title="'状态'" sortable="'status'" ng-if="temporaryDispatch.status!=0&&temporaryDispatch.status!=1">未调度</td>
+            <td class="text-nowrap text-center" data-title="'操作'">
+              <button class="btn btn-xs btn-warning" ng-click="ctrl.update(temporaryDispatch)">修改</button>
+              <button class="btn btn-xs btn-danger" ng-click="ctrl.cancelDispatch(temporaryDispatch.minemngMachineId)">取消调度</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <uib-pagination total-items="ctrl.page.totalElements"
+                      ng-change="ctrl.query(ctrl.pageNumber-1,null,null)"
+                      max-size="10"
+                      ng-model="ctrl.pageNumber"
+                      items-per-page="ctrl.page.size"
+                      class="pagination-sm" boundary-links="true" rotate="false"
+                      first-text="首页" last-text="最后一页"
+                      next-text="下一页"
+                      previous-text="前一页"></uib-pagination>
+    </div>
+  </div>
+</div>
