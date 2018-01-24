@@ -1564,6 +1564,6 @@
   "workingHoursWhenEntry":"Working hours when entry",
   "workingHoursWhenExit":"Working count when exit",
   "maxValue":"Can not be greater than ",
-  "minValue":"Can not be less than "
-
+  "minValue":"Can not be less than ",
+  "operationalControl":"Business management"
 }

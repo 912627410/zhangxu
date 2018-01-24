@@ -105,7 +105,12 @@
             return;
           }
         }
-
+        //判断是不是Haulotte用户
+        if (userInfo.userdto.tenantType == '101') {
+          //直接转入到Haulotte页面
+          $rootScope.$state.go('home',{name:'iotHaulotte'});
+          return;
+        }
         $rootScope.$state.go('home');
       }, function (reason) {
       });

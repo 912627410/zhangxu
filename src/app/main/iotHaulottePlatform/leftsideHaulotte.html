@@ -1,0 +1,479 @@
+<aside class="main-sidebar left-side static">
+
+  <section class="sidebar">
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="assets/images/avatar5.png" class="img-circle" alt="User Image"/>
+      </div>
+      <div class="pull-left info" ng-if="userInfo">
+        <p> {{userInfo.userdto.ssn}} </p>
+        <i class="fa fa-circle text-success"></i> {{userInfo.userdto.organizationDto.orgSimpleName}}
+      </div>
+
+      <div class="pull-left info" ng-if="userInfo == null">
+        <a ui-sref="login"> {{'pleaseLogin'|translate }} {{rand}}</a>
+      </div>
+
+    </div>
+    <hr>
+    <ul class="sidebar-menu">
+
+      <li class="treeview">
+          <li>
+            <a ui-sref="home.monitor" presentation-href="dashboard:deviceMonitor">
+              <i class="fa fa-camera"></i> <span>{{'equipmentMonitoring' | translate}}</span>
+            </a>
+          </li>
+      </li>
+
+      <li class="treeview ">
+        <a ng-click="deviceMng=!deviceMng" href="" presentation-href="deviceMng">
+          <i class="fa ion-clipboard"></i>
+          <span>{{'equipmentManagement' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="deviceMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" ng-class="{in: deviceMng}">
+          <li>
+            <a ui-sref="home.deviceinfoMng" presentation-href="deviceMng:gps">
+              <i class="fa ion-ios-location"></i> <span>{{'GPSdeviceManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.simMng" presentation-href="deviceMng:sim">
+              <i class="fa ion-social-rss"></i> <span>{{'SIMManagement' | translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview ">
+        <a ui-sref="home.machinemng" presentation-href="machineMng:machine">
+          <i class="fa fa-car"></i> <span>{{'vehicleManagement' | translate}}</span>
+        </a>
+      </li>
+
+
+
+      <li class="treeview ">
+        <a ng-click="reportMng=!reportMng" presentation-href="statAnalysis" href="">
+          <i class="fa fa-tasks"></i>
+          <span style="width:200px">{{'rentalMng' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="reportMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+            ng-class="{in: reportMng}">
+          <!--业务管理 -->
+          <li class="treeview ">
+            <a ng-click="reportMng2=!reportMng2"  href="">
+              <i class="fa fa-user"></i>
+              <span style="width:200px">{{'operationalControl' | translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="reportMng2?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+
+            <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+                ng-class="{in: reportMng2}">
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:cluster">
+                  <i class="fa fa-plus-square"></i> <span>{{'maintenance'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:sms">
+                  <i class="fa fa-file-text-o"></i> <span>{{'orderMng'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
+                  <i class="fa fa-vcard-o"></i> <span>{{'customerInfo'|translate}}</span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <!--车辆管理-->
+          <li class="treeview ">
+            <a ng-click="professionalMng=!professionalMng"  href="">
+              <i class="fa fa-car"></i>
+              <span style="width:200px">{{'vehicleManagement' | translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="professionalMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+
+            <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+                ng-class="{in: professionalMng}">
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:cluster">
+                  <i class="fa fa-map-pin"></i> <span>{{'rentalCurrentLocate'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:sms">
+                  <i class="fa fa fa-history"></i> <span>{{'currentState'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
+                  <i class="fa fa-object-group"></i> <span>{{'fenceMng'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
+                  <i class="fa fa-bell-o"></i> <span>{{'alarmInformation'|translate}}</span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <!--资产管理-->
+          <li class="treeview ">
+            <a ng-click="assetMng=!assetMng"  href="">
+              <i class="fa fa-money"></i>
+              <span style="width:200px">{{'assetMng' | translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="assetMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+
+            <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+                ng-class="{in: assetMng}">
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:cluster">
+                  <i class="fa fa-credit-card"></i> <span>{{'incomeStatistics'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:sms">
+                  <i class=" fa fa-cc-diners-club"></i> <span>{{'costStatistics'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
+                  <i class="fa fa-rmb"></i> <span>{{'profit'|translate}}</span>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="treeview ">
+        <a ng-click="reportMng1=!reportMng1" presentation-href="statAnalysis" href="">
+          <i class="fa fa-bar-chart"></i>
+          <span style="width:200px">{{'statisticalAnalysis' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="reportMng1?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px ;padding-left: 20px"
+            ng-class="{in: reportMng1}">
+
+          <li>
+            <a ng-click="trackRecord=!trackRecord" presentation-href="statAnalysis:workHistory" href="">
+              <i class="fa ion-document"></i>
+              <span>{{'WorkHistoryMng'|translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="trackRecord?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: trackRecord}">
+
+              <li>
+                <a ui-sref="home.trackRecordAnalyzemng"
+                   presentation-href="statAnalysis:workHistory:workHistory">
+                  <i class="fa ion-ios-pulse-strong"></i> <span>{{'WorkHistoryAnalysis'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.machineWorkingHours"
+                   presentation-href="statAnalysis:workHistory:workingHours">
+                  <i class="fa ion-ios-pulse-strong"></i> <span>{{'machineWorkingLengthDistribution'|translate}}</span>
+                </a>
+              </li>
+
+              <li>
+                <a ui-sref="home.dullmachinemng"
+                   presentation-href="statAnalysis:workHistory:dullMachine">
+                  <i class="fa ion-ionic"></i> <span>{{'consignmentDistribution'|translate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a ng-click="workstart=!workstart" presentation-href="statAnalysis:workHeat" href="">
+              <i class="fa fa-line-chart"></i>
+              <span>{{'startHeatAnalysis'|translate}}</span>
+              <span class="glyphicon pull-right" ng-class="workstart?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px" ng-class="{in: workstart}">
+
+              <li>
+                <a ui-sref="home.workStartmng"
+                   presentation-href="statAnalysis:workHeat:workHeat">
+                  <i class="fa fa-line-chart"></i> <span>{{'startHeatDistribution'|translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.barDistributionmng"
+                   presentation-href="statAnalysis:workHeat:arealDistribution">
+                  <i class="fa fa-pie-chart"></i> <span>{{'startAreaDistribution'|translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.machineworkreport"
+                   presentation-href="statAnalysis:workHeat:workReport">
+                  <i class="glyphicon glyphicon-list-alt"></i> <span>{{'machineWorkReport'|translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.machineworklive"
+                   presentation-href="statAnalysis:workHeat:workLive">
+                  <i class="glyphicon glyphicon-eye-open"></i> <span>{{'machineWorkLive'|translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.machineComparison"
+                   presentation-href="statAnalysis:workHeat:salesHeat">
+                  <i class="fa fa-area-chart"></i> <span>{{'startAndSaleHeat'|translate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a ng-click="vehicleStatistics=!vehicleStatistics" presentation-href="statAnalysis:machine" href="">
+              <i class="fa fa-bar-chart"></i>
+              <span>{{'machineStatistics' | translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="vehicleStatistics?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px"
+                ng-class="{in: vehicleStatistics}">
+              <li>
+                <a ui-sref="home.idleDeviceReport" presentation-href="statAnalysis:machine:longTimeOffline">
+                  <i class="fa fa-unlink"></i> <span>{{'idleDeviceReport' | translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.attendance" presentation-href="statAnalysis:machine:attendance">
+                  <i class="fa fa-bar-chart"></i> <span>{{'machineAttendance' | translate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a presentation-href="statAnalysis:transport"
+               ng-click="machineTransportationMonitor=!machineTransportationMonitor" href="">
+              <i class="fa fa-tv"></i> <span>{{'machineTransportationMonitoring'|translate}}</span>
+              <span class="glyphicon pull-right"
+                    ng-class="machineTransportationMonitor?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;</span>
+            </a>
+            <ul class="treeview-menu panel-collapse collapse" style="padding-left: 20px"
+                ng-class="{in: machineTransportationMonitor}">
+              <li>
+                <a ui-sref="home.machineSpeeding" presentation-href="statAnalysis:transport:overSpeed">
+                  <i class="fa fa-unlink"></i> <span>{{'SpeedMonitoring'|translate}}</span>
+                </a>
+              </li>
+              <li>
+                <a ui-sref="home.machineNeutralSliding" presentation-href="statAnalysis:transport:neutralSliding">
+                  <i class="fa fa-bookmark"></i> <span>{{'NeutralSlidingMonitoring'|translate}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a ui-sref="home.MachineClustering" presentation-href="statAnalysis:cluster">
+              <i class="fa fa-search-plus"></i> <span>{{'machineClustering'|translate}}</span>
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="home.smsSendReport" presentation-href="statAnalysis:sms">
+              <i class="fa fa-pie-chart"></i> <span>{{'SMSstatistics'|translate}}</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+
+      <li class="treeview ">
+        <a ng-click="collapsed = !collapsed" href="" presentation-href="fleetMng">
+          <i class="fa fa-flag-checkered"></i>
+          <span style="width: 200px">{{'fleetManagement' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="collapsed?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px;padding-left: 20px" ng-class="{in: collapsed}">
+          <li>
+            <a ui-sref="home.fleetMng" presentation-href="fleetMng:fleet">
+              <i class="fa fa-flag-checkered"></i> <span>{{'fleetManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.workPoint" presentation-href="fleetMng:workPoint">
+              <i class="fa fa-map-signs"></i> <span>{{'workPointMng' | translate}}</span>
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="home.workRecord" presentation-href="fleetMng:workRecord">
+              <i class="fa fa-calendar-check-o"></i> <span>{{'workRecord' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.fleetMapMonitor" presentation-href="fleetMng:mapMonitor">
+              <i class="fa fa-area-chart"></i> <span>{{'mapMonitor' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.fleetLineMonitor" presentation-href="fleetMng:chartMonitor">
+              <i class="fa fa-line-chart"></i> <span>{{'lineMonitor' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.fuelConfig" presentation-href="fleetMng:oil">
+              <i class="fa fa-car"></i> <span>{{'fuelconfiguration' | translate}}</span>
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="home.fuelConsumption" presentation-href="fleetMng:oilCost">
+              <i class="fa fa-flask"></i> <span>{{'fuelConsumptionStatistics'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.profit" presentation-href="fleetMng:profits">
+              <i class="fa fa-rmb"></i> <span>{{'profitStatistics'|translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview ">
+        <a ng-click="sysMng =!sysMng" href="" presentation-href="system">
+          <i class="fa fa-home"></i>
+          <span style="width: 210px;">{{'systemManagement' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="sysMng?'glyphicon-chevron-up':'glyphicon-chevron-down'">
+                &nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="width:200px;padding-left: 10px;padding-right: 10px;" ng-class="{in: sysMng}">
+          <li>
+            <a ui-sref="home.privilegeMng" presentation-href="system:privilege">
+              <i class="fa fa-tag"></i> <span>{{'priviligeManagement'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.roleMng" presentation-href="system:role">
+              <i class="fa fa-tags"></i> <span>{{'roleManagement' | translate}}</span>
+            </a>
+          </li>
+          <li class="treeview" presentation-href="system:user">
+            <a ui-sref="home.userinfomng">
+              <i class="fa fa-user"></i> <span>{{'userManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.orgMng" presentation-href="system:org">
+              <i class="fa fa-sitemap"></i> <span>{{'orgManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.sysconfigmng" presentation-href="system:config">
+              <i class="fa fa-cogs"></i> <span>{{'sysconfigManagement' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.deviceparameter" presentation-href="system:deviceParam">
+              <i class="fa fa-gear"></i> <span>{{'equipmentParameters' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.machineTypeMng" presentation-href="system:machineType">
+              <i class="fa fa-automobile"></i> <span>{{'machineTypeMng'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.templateMng" presentation-href="system:registerTemplate">
+              <i class="fa fa-pencil-square-o"></i><span>&nbsp;{{'templateRegistration'|translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="treeview ">
+        <a ng-click="update=!update" href="" presentation-href="upgrade">
+          <i class="fa fa-arrow-up"></i>
+          <span>{{'remoteUpgrade'|translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="update?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: update}">
+          <li>
+            <a ui-sref="home.deviceUpdate" presentation-href="upgrade:deviceUpgrade">
+              <i class="fa fa-arrow-circle-up"></i> <span>{{'deviceUpgrade'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.updateFileMng" presentation-href="upgrade:upgradeFile">
+              <i class="fa fa-file-text"></i> <span>{{'upgradeFile'|translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="home.updateRecord" presentation-href="upgrade:updateRecord">
+              <i class="fa fa-file-text"></i> <span>{{'updateRecord'|translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li  class="treeview ">
+        <a ng-click="app=!app" href="" presentation-href="appMng">
+          <i class="fa fa-mobile fa-lg"></i>
+          <span>{{'appManagement' | translate}}</span>
+          <span class="glyphicon pull-right"
+                ng-class="app?'glyphicon-chevron-up':'glyphicon-chevron-down'">&nbsp;&nbsp;
+          </span>
+        </a>
+        <ul class="treeview-menu panel-collapse collapse" style="padding-left: 30px" ng-class="{in: app}">
+          <li>
+            <a ui-sref="home.appVersion" presentation-href="appMng:appVersion">
+              <i class="fa fa-file-text"></i> <span>{{'appVersion' | translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="http://iotcloud.mydoc.io/" target="_blank">
+          <i class="fa fa-file-text-o"></i> <span>{{'updateLog' | translate}}</span>
+        </a>
+      </li>
+
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>

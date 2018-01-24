@@ -1,0 +1,150 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i>{{'homePage'| translate}}</a></li>
+    <li class="active">{{'vehicleManagement'| translate}}</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content form-horizontal">
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'machineNumber'| translate}}</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="licenseId" class="form-control " ng-model="machineMngCtrl.machine.licenseId"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-1">
+      <label class="control-label">{{'deviceNum'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="deviceNum" class="form-control " ng-model="machineMngCtrl.machine.deviceNum"
+             placeholder="{{'supportfuzzyqueries'|translate}}"/>
+    </div>
+
+
+    <div class="col-md-2">
+      <button class="btn btn-primary" type="button" ng-click="machineMngCtrl.reset()">{{'reset'|translate}}</button>
+      <button class="btn btn-primary" type="button" presentation-href="machineMng:machine:query"
+              ng-click="machineMngCtrl.query(null,null,null,machineMngCtrl.machine)">{{'query'|translate}}
+      </button>
+
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-1">
+      <label class="control-label">{{'organisation'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+
+        <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}" ng-model="machineMngCtrl.org.label" name="org" readonly required/>
+        <span class="input-group-btn">
+            <!--打开组织树-->
+            <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openTreeInfo()">
+              <i class="fa fa-sitemap"></i>
+            </button>
+          </span>
+      </p>
+    </div>
+    <div class="col-md-2">
+      <label class="control-label">{{'subordinateOrganization'|translate}}:</label>
+      <input type="checkbox" checked="checked" ng-model="machineMngCtrl.querySubOrg"/>
+    </div>
+    <div class="col-md-1">
+      <label class="control-label">{{'allotOrganization'|translate}}:</label>
+    </div>
+    <div class="col-md-3">
+      <p class="input-group">
+        <input type="text" id="allot" class="form-control" placeholder="{{'allotOrganization'|translate}}" ng-model="machineMngCtrl.allot.label" name="allot" readonly required/>
+        <span class="input-group-btn">
+          <!--打开组织树-->
+          <button type="button" class="btn btn-default" ng-click="machineMngCtrl.openTreeInfoAllot()">
+            <i class="fa fa-sitemap"></i>
+          </button>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-warning" type="button" presentation-href="machineMng:machine:move" ng-click="machineMngCtrl.batchMoveOrg()">{{'transfer'|translate}}</button>
+
+    </div>
+
+  </div>
+  <div class="row form-group">
+    <div class="btn-group col-md-3">
+      <span class="label label-info pull-left">{{'totalNumberOfMachine'|translate}}:{{machineMngCtrl.page.totalElements}}</span>
+    </div>
+    <div class="col-md-9">
+
+
+      <a presentation-href="machineMng:machine:create" class="btn btn-default pull-right" ng-click="machineMngCtrl.newHaulotteMachine('lg')">
+        <i class="fa fa-plus"></i>{{'add'|translate}}
+      </a>
+      <a class="btn btn-default pull-right" presentation-href="machineMng:machine:import" ng-click="machineMngCtrl.uploadMachine('lg')">
+        <i class="fa fa-plus"></i> {{'bulkImport'|translate}}
+      </a>
+      <a class="btn btn-default pull-right" presentation-href="machineMng:machine:export" title="Export Table" ng-click="machineMngCtrl.excelExport(machineMngCtrl.org)" >
+        <i class="glyphicon glyphicon-new-window" ></i> {{'batchExport'|translate}}
+      </a>
+    </div>
+  </div>
+  <div class="row form-group" style="padding: 10px">
+    <script id="selectAllHeader" type="text/ng-template">
+      <input type="checkbox" ng-click="machineMngCtrl.updateAllSelection($event)"
+             ng-model="machineMngCtrl.checked">
+    </script>
+    <div class="table-responsive">
+
+      <table ng-table="machineMngCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
+        <tr ng-repeat="machine in $data">
+          <td class="text-nowrap" data-header="'selectAllHeader'" style="text-align: center;">
+            <input type="checkbox" ng-checked="machineMngCtrl.isSelected(machine.id)"
+                   ng-click="machineMngCtrl.updateSelection($event,machine.id)" ng-model="machine.checked">
+          </td>
+          <td class="text-nowrap" data-title="'machineNumberAndCarNumber'|translate" sortable="'licenseId'">{{machine.licenseId}}</td>
+          <td class="text-nowrap" data-title="'terminalno'|translate" sortable="'deviceinfo.deviceNum'">{{machine.deviceinfo.deviceNum}}</td>
+          <td class="text-nowrap" data-title="'organisation'|translate" sortable="'org.label'">{{machine.org.label}}</td>
+          <td class="text-nowrap" data-title="'vehicleType'|translate" sortable="'machineType.typeName'">{{machine.machineType.typeName}}</td>
+          <td class="text-nowrap" data-title="'allocateTime'|translate" sortable="'moveTime'">{{machine.moveTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+          <td class="text-nowrap" data-title="'operation'|translate">
+
+            <button type="button" class="btn btn-default btn-xs" presentation-href="machineMng:machine:modify"
+                    ng-click="machineMngCtrl.updateHaulotteMachine(machine,'lg')">{{'alter'| translate}}
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" presentation-href="machineMng:machine:unBind"
+                    ng-click="machineMngCtrl.removeDevice(machine)">{{'relieve'| translate}}
+            </button>
+            <button type="button" class="btn btn-warning btn-xs" presentation-href="machineMng:machine:moveLog"
+                    ng-click="machineMngCtrl.allocationlog(machine,'lg')">{{'transferLog'| translate}}
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box-footer">
+    <uib-pagination total-items="machineMngCtrl.page.totalElements"
+                    ng-change="machineMngCtrl.query(machineMngCtrl.pageNumber-1,null,null,null)"
+                    max-size="5" ng-model="machineMngCtrl.pageNumber" items-per-page="machineMngCtrl.page.size"
+                    class="pagination-sm" boundary-links="true" rotate="false"
+                    first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+  </div>
+
+</section>
+
+

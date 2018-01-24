@@ -1,0 +1,121 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'newVehicleInfo'|translate}}</h3>
+</div>
+
+
+<form name="newMachineForm" class="form-horizontal" style="font-size:13px;">
+
+  <div class="modal-body row">
+
+    <div class="box-body col-md-12">
+
+      <div class="form-group">
+        <label for="licenseId" class="col-sm-2 control-label padding5">{{'machineNumberAndCarNumber'|translate}}</label>
+        <div class="col-sm-4">
+
+          <input type="text" id="licenseId" class="form-control" placeholder="{{'machineNumberAndCarNumber'|translate}}"
+                 ng-model="newHaulotteMachineCtrl.machine.licenseId" name="licenseId" typeahead-show-hint="true"
+                 validator="required" />
+
+        </div>
+
+        <label for="licenseId" class="col-sm-2 control-label padding5">{{'rentalBindingTterminal'|translate}}</label>
+        <div class="col-sm-4">
+          <input type="text" id="deviceNum" name="deviceNum"  class="form-control" placeholder="{{'enterScanBarcode'|translate}}"
+                 ng-model="newHaulotteMachineCtrl.machine.deviceinfo.deviceNum" typeahead-show-hint="false"
+                 ng-minlength='6' ng-maxlength='26' ng-change="newHaulotteMachineCtrl.deviceNumInputChanged(newHaulotteMachineCtrl.machine.deviceinfo.deviceNum)"/>
+          <label class="text-blue" ng-if="newHaulotteMachineCtrl.deviceNumFromScanner == true">扫码输入终端号:{{newHaulotteMachineCtrl.deviceNumContentFromScanner}}</label>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.maxlength">{{'rentalMaximum26bits'|translate}}</span>
+          <span class="error text-danger" ng-show="newMachineForm.deviceNum.$error.minlength">{{'rentalMinimum6bits'|translate}}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="org" class="col-sm-2 control-label padding5">{{'organisation'|translate}}</label>
+        <div class="col-sm-4">
+          <p class="input-group">
+            <input type="text" id="org" class="form-control" placeholder="{{'organisation'|translate}}"
+                   ng-model="newHaulotteMachineCtrl.machine.org.label" name="org" readonly validator="required"/>
+            <span class="input-group-btn vertical-align_top">
+                    <button type="button" class="btn btn-default" ng-click="newHaulotteMachineCtrl.openTreeInfo()">
+                      <i class="fa fa-sitemap"></i>
+                    </button>
+                  </span>
+          </p>
+        </div>
+        <label for="licenseId" class="col-sm-2 control-label padding5">{{'produceDate'|translate}}</label>
+        <div class="col-sm-4">
+          <p class="input-group">
+            <input type="text" name="produceDate" class="form-control" uib-datepicker-popup="{{formatCustom}}"
+                   ng-model="newHaulotteMachineCtrl.machine.produceDate"
+                   is-open="newHaulotteMachineCtrl.buyTimeOpenStatus.opened"
+                   datepicker-options="dateOptions" ng-readonly="true"
+                   current-text="{{'today'|translate}}"
+                   clear-text="{{'cleanUp'|translate}}"
+                   close-text="{{'close'|translate}}"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="newHaulotteMachineCtrl.buyTimeOpen($event)">
+                  <i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label padding5">{{'vehicleType'|translate}}</label>
+        <div class="col-sm-4">
+          <ui-select id="machineType" name="machineType" ng-model="newHaulotteMachineCtrl.machine.machineType.id" theme="bootstrap"
+                     ng-disabled="disabled" >
+            <ui-select-match allow-clear="true" placeholder="{{'vehicleType'|translate}}">{{$select.selected.typeName}}
+            </ui-select-match>
+            <ui-select-choices  repeat="machineType.id as machineType in newHaulotteMachineCtrl.machineTypeList | propsFilter: {typeName: $select.search}" >
+              <div  ng-bind-html="machineType.typeName | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <label class="col-sm-2 control-label padding5">{{'vehicleType'|translate}}</label>
+        <div class="col-sm-4">
+          <ui-select name="deviceType" ng-model="newHaulotteMachineCtrl.machine.deviceType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="{{'state'|translate}}">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceType in newHaulotteMachineCtrl.deviceTypeList">
+              <div ng-bind-html="deviceType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <label class="col-sm-2 control-label padding5">车辆高度</label>
+        <div class="col-sm-4">
+          <ui-select name="deviceHeightType" ng-model="newHaulotteMachineCtrl.machine.deviceHeightType" theme="bootstrap"
+                     ng-disabled="disabled">
+            <ui-select-match allow-clear="true" placeholder="高度">{{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="deviceHeightType in newHaulotteMachineCtrl.deviceHeightTypeList">
+              <div ng-bind-html="deviceHeightType.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+    </div>
+
+  </div>
+
+</form>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" validation-submit="newMachineForm" ng-click="newHaulotteMachineCtrl.ok(newHaulotteMachineCtrl.machine)">{{'submit'|translate}}</button>
+    <button class="btn btn-warning" type="button" ng-click="newHaulotteMachineCtrl.cancel()">{{'cancel'|translate}}</button>
+</div>
+
+

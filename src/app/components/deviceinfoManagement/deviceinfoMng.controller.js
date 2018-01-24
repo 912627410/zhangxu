@@ -74,11 +74,12 @@
     }
 
 
-    vm.newDeviceinfo = function (size) {
+    //haulotte 新建GPS设备
+    vm.newHaulotteDeviceinfo = function (size) {
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'app/components/deviceinfoManagement/newDeviceinfo.html',
-        controller: 'newDeviceinfoController as newDeviceinfoController',
+        templateUrl: 'app/components/iotHaulotte/deviceinfoManagement/newHaulotteDeviceinfo.html',
+        controller: 'newHaulotteDeviceinfoController as newHaulotteDeviceinfoCtrl',
         size: size,
         backdrop: false,
         scope: $scope,
@@ -97,15 +98,38 @@
       });
     };
 
+    vm.newDeviceinfo = function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/deviceinfoManagement/newDeviceinfo.html',
+        controller: 'newDeviceinfoController as newDeviceinfoController',
+        size: size,
+        backdrop: false,
+        scope: $scope,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          }
+        }
+      });
 
-    vm.updateDeviceinfo = function (id, size) {
+      modalInstance.result.then(function (result) {
+        vm.tableParams.data.splice(0, 0, result);
+      }, function () {
+        //取消
+      });
+    };
+
+
+    //haulotte 修改GPS设备
+    vm.updateHaulotteDeviceinfo= function (id, size) {
       var singlUrl = DEVCEINFO_URL + "?id=" + id;
       var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
       deviceinfoPromis.then(function (data) {
           var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
-            templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
-            controller: 'updateDeviceinfoController as updateDeviceinfoController',
+            templateUrl: 'app/components/iotHaulotte/deviceinfoManagement/updateHaulotteDeviceinfo.html',
+            controller: 'updateHaulotteDeviceinfoController as updateHaulotteDeviceinfoCtrl',
             size: size,
             backdrop: false,
             resolve: {
@@ -115,26 +139,61 @@
             }
           });
 
-        modalInstance.result.then(function(result) {
-         // console.log(result);
-          var tabList=vm.tableParams.data;
-          //恢复列表中的值
-          for(var i=0;i<tabList.length;i++){
-            if(tabList[i].id==result.id){
-              tabList[i]=result;
+          modalInstance.result.then(function(result) {
+            // console.log(result);
+            var tabList=vm.tableParams.data;
+            //恢复列表中的值
+            for(var i=0;i<tabList.length;i++){
+              if(tabList[i].id==result.id){
+                tabList[i]=result;
+              }
             }
-          }
 
-        }, function(reason) {
+          }, function(reason) {
 
-        });
+          });
 
         }, function (reason) {
           Notification.error(languages.findKey('failedToGetDeviceInformation'));
         }
       )
+    };
 
+    vm.updateDeviceinfo = function (id, size) {
+         var singlUrl = DEVCEINFO_URL + "?id=" + id;
+         var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+         deviceinfoPromis.then(function (data) {
+             var modalInstance = $uibModal.open({
+               animation: vm.animationsEnabled,
+               templateUrl: 'app/components/deviceinfoManagement/updateDeviceinfo.html',
+               controller: 'updateDeviceinfoController as updateDeviceinfoController',
+               size: size,
+               backdrop: false,
+               resolve: {
+                 deviceinfo: function () {
+                   return data.content;
+                 }
+               }
+             });
 
+             modalInstance.result.then(function(result) {
+               // console.log(result);
+               var tabList=vm.tableParams.data;
+               //恢复列表中的值
+               for(var i=0;i<tabList.length;i++){
+                 if(tabList[i].id==result.id){
+                   tabList[i]=result;
+                 }
+               }
+
+             }, function(reason) {
+
+             });
+
+           }, function (reason) {
+             Notification.error(languages.findKey('failedToGetDeviceInformation'));
+           }
+         )
     };
 
     //批量导入
@@ -266,19 +325,33 @@
 
         //判读是否是高空车
         if(vm.deviceinfoMonitor.versionNum=='A001' || vm.deviceinfoMonitor.versionNum=='11'){
-
-          $rootScope.currentOpenModal = $uibModal.open({
-            animation: vm.animationsEnabled,
-            backdrop: false,
-            templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
-            controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
-            size: 'super-lgs',
-            resolve: { //用来向controller传数据
-              deviceinfo: function () {
-                return vm.deviceinfoMonitor;
+          if($rootScope.userInfo.userdto.tenantType == '101'){
+            $rootScope.currentOpenModal = $uibModal.open({
+              animation: vm.animationsEnabled,
+              backdrop: false,
+              templateUrl: 'app/components/iotHaulotte/deviceMonitor/haulotteDeviceAerialCurrentInfo.html',
+              controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+              size: 'super-lgs',
+              resolve: { //用来向controller传数据
+                deviceinfo: function () {
+                  return vm.deviceinfoMonitor;
+                }
               }
-            }
-          });
+            });
+          }else {
+            $rootScope.currentOpenModal = $uibModal.open({
+              animation: vm.animationsEnabled,
+              backdrop: false,
+              templateUrl: 'app/components/deviceMonitor/deviceAerialCurrentInfo.html',
+              controller: 'deviceAerialCurrentInfoController as deviceAerialCurrentInfoController',
+              size: 'super-lgs',
+              resolve: { //用来向controller传数据
+                deviceinfo: function () {
+                  return vm.deviceinfoMonitor;
+                }
+              }
+            });
+          }
 
         }else{
           $rootScope.currentOpenModal = $uibModal.open({

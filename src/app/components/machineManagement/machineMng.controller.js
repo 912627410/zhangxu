@@ -107,6 +107,32 @@
     }
 
 
+    //haulotte 新建车辆
+    vm.newHaulotteMachine=function (size) {
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        templateUrl: 'app/components/iotHaulotte/machineManagement/newHaulotteMachine.html',
+        controller: 'newHaulotteMachineController as newHaulotteMachineCtrl',
+        size: size,
+        backdrop: false,
+        resolve: {
+          operatorInfo: function () {
+            return vm.operatorInfo;
+          },
+          machineTypeInfo: function () {
+            return vm.machineTypeList;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        //console.log(result);
+        vm.tableParams.data.splice(0, 0, result);
+
+      }, function () {
+        //取消
+      });
+    }
     vm.newMachine = function (size) {
 
       var modalInstance = $uibModal.open({
@@ -131,6 +157,50 @@
 
       }, function () {
         //取消
+      });
+    };
+
+    //haulotte 更新车辆
+    vm.updateHaulotteMachine = function (machine, size) {
+      var sourceMachine = angular.copy(machine); //深度copy
+
+      var singlUrl = MACHINE_URL + "?id=" + machine.id;
+      var deviceinfoPromis = serviceResource.restCallService(singlUrl, "GET");
+      deviceinfoPromis.then(function (data) {
+        var operMachine = data.content;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          templateUrl: 'app/components/iotHaulotte/machineManagement/updateHaulotteMachine.html',
+          controller: 'updateHaulotteMachineController as updateHaulotteMachineCtrl',
+          size: size,
+          backdrop: false,
+          resolve: {
+            machine: function () {
+              return operMachine;
+            },
+            machineTypeInfo: function () {
+              return vm.machineTypeList;
+            }
+          }
+        });
+
+        modalInstance.result.then(function(result) {
+
+          var tabList=vm.tableParams.data;
+          //更新内容
+          for(var i=0;i<tabList.length;i++){
+            if(tabList[i].id==result.id){
+              tabList[i]=result;
+            }
+          }
+
+        }, function(reason) {
+
+        });
+
+
+      }, function (reason) {
+        Notification.error('获取车辆信息失败');
       });
     };
 

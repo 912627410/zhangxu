@@ -9,7 +9,7 @@
     .controller('HomeMapController', HomeMapController);
 
   /** @ngInject */
-  function HomeMapController($http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource,permissions,uiGmapGoogleMapApi,$log,HOME_GOOGLEMAPGPSDATA_URL) {
+  function HomeMapController(serviceMapResource,$http,$rootScope,AMAP_URL,HOME_GPSDATA_URL,serviceResource,permissions,uiGmapGoogleMapApi) {
     var vm = this;
     // if(permissions.getPermissions("device:homegpsdata")) {
     //   serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
@@ -21,14 +21,26 @@
       console.log("init google map success");
     });
     if ($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH") {
-      vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+      //判断是不是Haulotte用户
+      if ($rootScope.userInfo.userdto.tenantType == '101') {
+        vm.map = serviceMapResource.refreshHaulotteGoogleMapWithDeviceInfo();
+      }else {
+        vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+      }
+
     } else {
       serviceResource.refreshMapWithDeviceInfo("homeMap", null, 4);
     }
     //console.log(vm.map)
     vm.refreshMap = function () {
       if($rootScope.userInfo!=null&&$rootScope.userInfo.userdto.countryCode!= "ZH"){
-        vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+        //判断是不是Haulotte用户
+        if ($rootScope.userInfo.userdto.tenantType == '101') {
+          vm.map = serviceMapResource.refreshHaulotteGoogleMapWithDeviceInfo();
+        }else {
+          vm.map = serviceResource.refreshGoogleMapWithDeviceInfo();
+        }
+
       }else{
         serviceResource.refreshMapWithDeviceInfo("homeMap", null,4);
       }

@@ -228,15 +228,21 @@
     //物联网系统
     $stateProvider
       .state('home', {
-        url: '/home',
+        url: '/home/:name',
         views: {
           '@': {
-            templateUrl: 'app/main/mainframe.html',
+            templateUrl:'app/main/mainframe.html',
             controller: 'MainController',
             controllerAs: 'mainCtrl'
           },
           'topbar@home': {
-            templateUrl: 'app/main/topbar.html',
+            templateUrl: function($params) {
+              var defaultPath='app/main/topbar.html';
+              if (!!$params.name){
+                defaultPath='app/main/iotHaulottePlatform/topbarIotHaulotte.html';
+              }
+              return defaultPath;
+            },
             controller: 'homeTopbarController',
             controllerAs: 'homeTopbarCtl'
           },
@@ -244,10 +250,23 @@
             templateUrl: 'app/home/home.html'
           },
           'leftside@home': {
-            templateUrl: 'app/main/leftside.html'
+            templateUrl: function($params) {
+              var defaultPath='app/main/leftside.html';
+              if (!!$params.name){
+                defaultPath='app/main/iotHaulottePlatform/leftsideHaulotte.html';
+              }
+              return defaultPath;
+            }
           },
           'rightside@home': {
-            templateUrl: 'app/home/homecontent.html'
+            templateUrl: function($params) {
+              var defaultPath= 'app/home/homecontent.html';
+              if (!!$params.name){
+                defaultPath='app/main/iotHaulottePlatform/homecontentHaulotte.html';
+              }
+              return defaultPath;
+            }
+
           },
           'homemap@home': {
             templateUrl: 'app/home/homemap.html',
@@ -325,7 +344,13 @@
         url: '/machinemng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/machineManagement/machinemng.html',
+            templateUrl:  function($params) {
+              var defaultPath='app/components/machineManagement/machinemng.html';
+              if (!!$params.name){
+                defaultPath='app/components/iotHaulotte/machineManagement/haulotteMachinemng.html';
+              }
+              return defaultPath;
+            },
             controller: 'machineMngController as machineMngCtrl'
           }
         }
@@ -435,7 +460,14 @@
         url: '/deviceinfoMng',
         views: {
           'rightside@home': {
-            templateUrl: 'app/components/deviceinfoManagement/deviceinfoMng.html',
+            templateUrl:function($params) {
+              var defaultPath='app/components/deviceinfoManagement/deviceinfoMng.html';
+              if (!!$params.name){
+                defaultPath='app/components/iotHaulotte/deviceinfoManagement/haulotteDeviceinfoMng.html';
+              }
+              return defaultPath;
+            },
+
             controller: 'deviceinfoMngController as deviceinfoMngCtrl'
           }
         }
@@ -471,7 +503,13 @@
             templateUrl: 'app/main/footer.html'
           },
           'rightside@home': {
-            templateUrl: 'app/components/deviceMonitor/devicemonitor.html',
+            templateUrl: function($params) {
+              var defaultPath='app/components/deviceMonitor/devicemonitor.html';
+              if (!!$params.name){
+                defaultPath='app/components/iotHaulotte/deviceMonitor/haulotteDevicemonitor.html';
+              }
+              return defaultPath;
+            },
             controller: 'DeviceMonitorController',
             controllerAs: 'monitorCtrl'
           }

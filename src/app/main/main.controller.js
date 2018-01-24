@@ -38,7 +38,10 @@
         return;
       }
     }
-
+    //判断是不是Haulotte用户
+    if (userInfo.userdto.tenantType == '101') {
+      $rootScope.bglogo = "assets/images/logo2.png";
+  }
     if (null != userInfo && null != userInfo.userdto && null != userInfo.userdto.organizationDto &&
       null != userInfo.userdto.organizationDto.logo && userInfo.userdto.organizationDto.logo != "") {
       $rootScope.logo = "assets/images/" + $rootScope.userInfo.userdto.organizationDto.logo;

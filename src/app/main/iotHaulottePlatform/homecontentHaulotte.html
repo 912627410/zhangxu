@@ -1,0 +1,21 @@
+<!-- Right side column. Contains the navbar and content of the page -->
+<!-- Content Header (Page header) -->
+
+<section class="content-header" style="overflow: hidden">
+  <h1>
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> {{'pagingHomePage'|translate}}</a></li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div ui-view="homestaticbox"></div>
+  </div>
+  <!-- 高德地图 -->
+  <div class="row">
+    <div ui-view="homemap"></div>
+  </div>
+</section>
