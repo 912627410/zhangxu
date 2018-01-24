@@ -12,7 +12,7 @@
     vm.selectAll = false;
     vm.rentalOrder = rentalOrder;
     vm.rentalAttachInfo = rentalAttachInfo;
-    vm.selected = [];
+    vm.selected;
     vm.pageSize = 8;
     vm.attachList = new Array();
 
@@ -96,49 +96,27 @@
         cancel:languages.findKey('cancel')
       })
         .then(function(){
-          var id=seletedObj[0].id
+          var id=seletedObj.id
           var rentalAttachVo = {"id":id};
           var restPromise = serviceResource.restUpdateRequest(RENTANL_ATTACH_DELETE_URL,rentalAttachVo)
           restPromise.then(function(data){
-            seletedObj[0].display="none"
+            seletedObj.display="none"
             Notification.success(languages.findKey('delSuccess'));
           },function(reason){
             Notification.error(languages.findKey('delFail'));
           });
         });
     };
-
-
-    var updateSelected = function(action,attach){
-      if(action=='add'&&vm.selected.indexOf(attach)== -1){
-        vm.selected.push(attach);
-      }
-      if(action=='remove'&&vm.selected.indexOf(attach)!= -1){
-        var idx = vm.selected.indexOf(attach);
-        vm.selected.splice(idx,1);
-      }
-      console.log(vm.selected)
-    }
-
     vm.updateSelection = function($event,attach){
       var checkbox = $event.target;
-      var action = (checkbox.checked?'add' :'remove');
-      updateSelected(action,attach);
+      if("0"==checkbox.value||vm.selected!=attach){
+        checkbox.value="1"
+        vm.selected=attach;
+      }else{
+        checkbox.checked=false;
+        checkbox.value="0"
+        vm.selected='';
+      }
     }
-
-    vm.updateAllSelection = function($event){
-      var checkbox = $event.target;
-      var action = (checkbox.checked?'add' :'remove');
-
-      vm.attachList.forEach(function(attach){
-        updateSelected(action,attach);
-      })
-
-    }
-
-    vm.isSelected = function(attach){
-      return vm.selected.indexOf(attach)>=0;
-    }
-
   }
 })();
