@@ -1662,7 +1662,7 @@
                         {{'telecontrol'|translate}}
                       </div>
                     </a>
-                    <div class="col-md-4 text-right" ng-show="smsCtrl && deviceCurrentInfoCtrl.directiveSendType!=null">
+                    <div class="col-md-4 text-right" ng-show="smsCtrl && deviceCurrentInfoCtrl.directiveSendType!=null" presentation-href="device:remoteControl:sendTypeSelect">
                       <form>
                         发送方式:&nbsp;
                         <input type="radio" ng-model="deviceCurrentInfoCtrl.directiveSendType" value="0">短信
