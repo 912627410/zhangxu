@@ -2964,7 +2964,7 @@
         xAxis: {
           min: 0,
           max: 4096,
-          name: '高度'
+          name: languages.findKey('rentalHeight')
         },
         yAxis: {
           min: 0,

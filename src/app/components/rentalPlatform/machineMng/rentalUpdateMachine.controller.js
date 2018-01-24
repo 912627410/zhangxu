@@ -119,7 +119,7 @@
     devicePowerTypeListPromise.then(function (data) {
       vm.devicePowerTypeList= data.content;
     }, function (reason) {
-      Notification.error('获取驱动类型失败');
+      Notification.error(languages.findKey('getDriFail'));
     })
 
     // 日期控件相关

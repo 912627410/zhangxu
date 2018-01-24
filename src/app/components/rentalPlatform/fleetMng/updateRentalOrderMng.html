@@ -6,9 +6,9 @@
     <form name="updateRentalOrderForm" class="form-horizontal">
       <div class="box-body">
         <div class="form-group">
-          <label for="orderNumber" class="col-md-2 control-label font-nomal ">订单号:</label>
+          <label for="orderNumber" class="col-md-2 control-label font-nomal ">{{'rentalOrderNumber'|translate}}:</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" id="orderNumber" placeholder="订单号" ng-model="updateRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" readonly />
+            <input type="text" class="form-control" id="orderNumber" placeholder="{{'rentalOrderNumber'|translate}}" ng-model="updateRentalOrderCtrl.rentalOrder.orderNumber" name="orderNumber" typeahead-show-hint="true" validator="required" readonly />
           </div>
 
           <label class="col-md-2 control-label font-nomal">{{'rentalCustomerName'|translate}}:</label>
@@ -100,7 +100,7 @@
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.jcOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="updateRentalOrderCtrl.jcOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -135,7 +135,7 @@
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.zbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="updateRentalOrderCtrl.zbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -170,7 +170,7 @@
               <input type="text" class="form-control" ng-model="updateRentalOrderCtrl.qbOption.quantity" placeholder="0"  typeahead-show-hint="true" />
             </div>
 
-            <label class="col-md-1 control-label font-nomal">高度:</label>
+            <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
             <div class="col-md-2">
               <ui-select name="deviceHeightType" ng-model="updateRentalOrderCtrl.qbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
                 <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}

@@ -107,7 +107,7 @@
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.jcOption.quantity" placeholder="0"  validator="number" typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-1 control-label font-nomal">高度(<span class="text-red">*</span>):</label>
+          <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}(<span class="text-red">*</span>):</label>
           <div class="col-md-2">
             <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.jcOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -147,7 +147,7 @@
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.zbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-1 control-label font-nomal">高度:</label>
+          <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.zbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name}}
@@ -185,7 +185,7 @@
             <input type="text" class="form-control" ng-model="newRentalOrderCtrl.qbOption.quantity" placeholder="0"   typeahead-show-hint="true" />
           </div>
 
-          <label class="col-md-1 control-label font-nomal">高度:</label>
+          <label class="col-md-1 control-label font-nomal">{{'rentalHeight'|translate}}:</label>
           <div class="col-md-2">
             <ui-select name="deviceHeightType" ng-model="newRentalOrderCtrl.qbOption.deviceHeightType" theme="bootstrap" ng-disabled="disabled">
               <ui-select-match allow-clear="true" placeholder="{{'highlyType'|translate}}">{{$select.selected.name|translate}}
