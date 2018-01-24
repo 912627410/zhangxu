@@ -30,6 +30,7 @@
           if(data.code===0){
             vm.minemngFleet = data.content;
             // Notification.error(data.message);
+            Notification.success("增加成功");
             $uibModalInstance.close(data.content);
           }
         }, function (reason) {

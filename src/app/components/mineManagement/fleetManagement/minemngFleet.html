@@ -3,8 +3,8 @@
     <small></small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i>{{'首页'| translate}}</a></li>
-    <li class="active">{{'车队基本信息' | translate}}</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+    <li class="active">车队基本信息</li>
   </ol>
 </section>
 
@@ -12,30 +12,26 @@
   <div class="row">
     <div class="col-sm-3">
       <div class="input-group input-group-sm">
-        <input type="text" class="form-control" ng-model="minemngFleetCtrl.searchText" placeholder="搜索" >
+        <input type="text" class="form-control" ng-model="minemngFleetCtrl.searchText" placeholder="支持模糊查询" >
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.search(minemngFleetCtrl.searchText)">{{'搜索'|translate}}</button>
-          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.reset(minemngFleetCtrl.searchText)">{{'reset'|translate}}</button>
+          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.search(minemngFleetCtrl.searchText)">查询</button>
+          <button class="btn btn-default" type="button" ng-click="minemngFleetCtrl.reset(minemngFleetCtrl.searchText)">重置</button>
         </span>
       </div>
     </div>
     <div class="col-md-7 pull-right" >
-
-      <div class="btn btn-warning" type="button"  ng-click="minemngFleetCtrl.updateFleetTeam()">{{'修改'|translate}}</div>
+      <div class="btn btn-warning" type="button"  ng-click="minemngFleetCtrl.updateFleetTeam()">修改</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleet()">{{'新增车队'|translate}}</div>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleet()">增加车队</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newTeam()">{{'新增小组'|translate}}</div>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newTeam()">增加小组</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleetCaptain()">{{'管理队长'|translate}}</div>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.newFleetCaptain()">管理队长</div>
       <span>&nbsp;</span>
-      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.addMineFleetMachine()">{{'管理车辆'|translate}}</div>
+      <div class="btn btn-primary"  type="button"  ng-click="minemngFleetCtrl.addMineFleetMachine()">管理车辆</div>
     </div>
-
   </div>
   <div class="row" ng-controller="orgMngController">
-
-
     <div class="col-md-5"  >
       <div style="background:#FFFFFF ;overflow:auto;opacity:1;position: absolute; z-index: 500; display: block; width: 380px;  height:820px;">
         <div style="padding-top: 10px;">
@@ -45,31 +41,25 @@
                     expand-level="2"></abn-tree>
         </div>
       </div>
-
     </div>
-
-
 
     <div class="col-md-5" style="border: 1px solid #ddd;margin-top: 20px;">
       <table class="table table-striped" >
-        <caption style="color:#292828;text-align: left;
-    font-size: 18px;"><strong>{{'车队信息' | translate}}：</strong></caption>
+        <caption style="color:#292828;text-align: left;font-size: 18px;"><strong>车队信息：</strong></caption>
         <tbody>
         <tr>
-          <td>{{'车队名称' | translate}}:</td>
+          <td>车队名称:</td>
           <td>{{minemngFleetCtrl.fleetName}}</td>
         </tr>
         <tr>
-          <td>{{'小组名称' | translate}}:</td>
+          <td>小组名称:</td>
           <td>{{minemngFleetCtrl.selectedParentObject}}</td>
         </tr>
 
         <tr>
-          <td>{{'车辆信息'|translate}}:</td>
+          <td>车辆信息:</td>
           <td>
-          <span ng-repeat="machineType in minemngFleetCtrl.machine">
-          &nbsp;</span></span>
-          </span>
+            <span ng-repeat="machineType in minemngFleetCtrl.machine">&nbsp;</span>
             <div class="table-responsive">
               <table ng-table="minemngFleetCtrl.tableParams2" class="table table-condensed table-bordered table-striped text-nowrap">
                 <tr ng-repeat="machine in $data ">

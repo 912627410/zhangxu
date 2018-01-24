@@ -8,7 +8,7 @@
   'use strict'
   angular.module('GPSCloud').controller('addGroupController',addGroupController);
 
-  function addGroupController(MINE_NEW_TEAM,NgTableParams,ngTableDefaults,DEFAULT_SIZE_PER_PAGE,MINE_PAGE_URL,$scope,$uibModalInstance,GET_MINE_MACHINE_FLEET,serviceResource,Notification,$uibModal) {
+  function addGroupController(MINE_NEW_TEAM,$scope,$uibModalInstance,serviceResource,Notification,$uibModal) {
     var vm= this;
     vm.machineType = 1;
     vm.fleet;
@@ -26,7 +26,7 @@
         restPromise.then(function (data) {
             if(data.code===0){
               vm.minemngFleet = data.content;
-
+              Notification.success("增加成功");
               $uibModalInstance.close(data.content);
             }
           }, function (reason) {

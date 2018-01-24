@@ -10,7 +10,7 @@
     .controller('minemngFleetController', minemngFleetCtrl);
 
   /** @ngInject */
-  function minemngFleetCtrl(ngTableDefaults,languages,NgTableParams,MINE_ADD_MACHINE_INFO, $uibModal,GET_MINE_MACHINE_FLEET, Notification, serviceResource,MINE_MACHINE_FLEET) {
+  function minemngFleetCtrl(ngTableDefaults,languages,NgTableParams,MINE_ADD_MACHINE_INFO, $uibModal,MINE_MACHINE_FLEET_TEAM, Notification, serviceResource,MINE_MACHINE_FLEET) {
     var vm = this;
     vm.animationsEnabled = true;
     vm.selectedObject = '';
@@ -18,9 +18,9 @@
     vm.searchText = '';     //搜索的数据
     vm.fleet_data = [];
     vm.fleetName='';
-    vm.fleetMachine;
     vm.selectedArray = [];
     vm.newBtnShow = true;
+    vm.copyFleetData = [];
     ngTableDefaults.settings.counts = [];//取消ng-table的默认分页
     vm.init = function () {
       vm.getUpdateObject();
@@ -28,9 +28,10 @@
 
 
     vm.getUpdateObject = function () {
-      var promise = serviceResource.restCallService(GET_MINE_MACHINE_FLEET, "QUERY");
+      var promise = serviceResource.restCallService(MINE_MACHINE_FLEET_TEAM, "QUERY");
       promise.then(function (data) {
         vm.fleet_data = vm.unflatten(data);
+        vm.copyFleetData = angular.copy(vm.fleet_data);
       }, function (reason) {
         Notification.error("获取失败");
       })
@@ -105,6 +106,7 @@
       });
     };
 
+    //搜索
     vm.search = function () {
       //存储被搜索到的组织
       vm.searched_array = [];
@@ -112,10 +114,13 @@
       //如果搜索为空默认生成tree
       if (vm.searchText != null && vm.searchText != "") {
         if(!vm.fleet_data || vm.fleet_data.length <= 0) {
-          vm.init();
+          vm.fleet_data = vm.copyFleetData;
         }
         vm.returnSearch(vm.fleet_data, vm.searchText);
         vm.fleet_data = vm.searched_array;
+        if(vm.fleet_data == null || vm.fleet_data.length <= 0) {
+          Notification.warning("暂无数据");
+        }
       }
     };
     //搜索树
@@ -159,7 +164,7 @@
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngFleetMachine.html',
         controller: 'mineFleetController as mineFleetCtrl',
         size: 'sx',
-        backdrop: false,
+        backdrop: false
       });
       modalInstance.result.then(function () {
         vm.reset();
@@ -175,11 +180,11 @@
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngNewFleet.html',
         controller: 'addFleetController as addFleetCtrl',
         size: size,
-        backdrop: false,
+        backdrop: false
       });
 
       modalInstance.result.then(function (result) {
-
+        vm.getUpdateObject();
       }, function () {
         //取消
       });
@@ -193,7 +198,7 @@
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngNewGroup.html',
         controller: 'addGroupController as addGroupCtrl',
         size: size,
-        backdrop: false,
+        backdrop: false
       });
 
       modalInstance.result.then(function (result) {
@@ -210,7 +215,7 @@
         templateUrl: 'app/components/mineManagement/fleetManagement/minemngFleetCaptain.html',
         controller: 'fleetCaptainController as fleetCaptainCtrl',
         size: size,
-        backdrop: false,
+        backdrop: false
       });
       modalInstance.result.then(function (result) {
 
@@ -223,7 +228,7 @@
     //修改车队小组
     vm.updateFleetTeam = function (size) {
       if(vm.selectedObject.parentId==null){
-        Notification.warning({message:"请选择车队小组!",positionX: 'center'});
+        Notification.warning({message:"请选择车队或小组",positionX: 'center'});
         return;
       }
       var modalInstance = $uibModal.open({
@@ -235,7 +240,7 @@
         resolve: {
           fleetTeam: function () {
             return vm.selectedObject;
-          },
+          }
         }
       });
 
@@ -246,6 +251,9 @@
       });
     };
 
+    /**
+     * 重置
+     */
     vm.reset = function () {
       vm.searchText = "";
       vm.selectedObject = '';
@@ -253,10 +261,11 @@
       vm.fleetName='';
       vm.tableParams2= new NgTableParams({}, {
         dataset:null
-      })
+      });
       vm.init();
     };
-    vm.init()
+
+    vm.init();
 
   }
 })();
