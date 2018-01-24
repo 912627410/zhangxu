@@ -15,6 +15,25 @@
     vm.operatorInfo = $scope.userInfo;
     ngTableDefaults.params.count = DEFAULT_MINSIZE_PER_PAGE;
     ngTableDefaults.settings.counts = [];
+    vm.page = {
+      totalElements: 0
+    };
+
+    // vm.userStatusList = [
+    //   {
+    //     value: 0,
+    //     desc: "离职"
+    //   }, {
+    //     value: 1,
+    //     desc: "在职"
+    //   }, {
+    //     value: 2,
+    //     desc: "在职2"
+    //   }, {
+    //     value: 2,
+    //     desc: "在职23"
+    //   }
+    // ];
 
     vm.entryTimeSetting = {
       //dt: "请选择开始日期",
@@ -103,7 +122,7 @@
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-
+        if (data.content.length > 0) {
         vm.tableParams = new NgTableParams({}, {
           dataset: data.content
 
@@ -111,7 +130,13 @@
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
         vm.page.totalElements=data.page.totalElements;
-
+       } else {
+        Notification.warning(languages.findKey('暂无数据'));
+        vm.tableParams = new NgTableParams({},{
+          dataset: null
+        });
+        vm.page.totalElements = 0;
+      }
       }, function (reason) {
         Notification.error(languages.findKey('FaGetCu'));
       });
@@ -125,7 +150,7 @@
         templateUrl: 'app/components/mineManagement/userManagement/minemngNewUser.html',
         controller: 'minemngNewUserMngController',
         controllerAs: 'minemngNewUserMngCtrl',
-        size: 'lg',
+        size: 'md',
         resolve: {
           ssnCode: function () {
             return vm.ssnCode;
@@ -152,7 +177,7 @@
           templateUrl: 'app/components/mineManagement/userManagement/minemngUpdateUser.html',
           controller: 'minemngUpdateUserMngController',
           controllerAs: 'minemngUpdateUserMngCtrl',
-          size: 'lg',
+          size: 'md',
           resolve: {
             minemnguserinfo: function () {
               return data.content;

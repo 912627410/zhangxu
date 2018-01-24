@@ -52,9 +52,12 @@
     vm.getUserRoleType();
 
     vm.ok = function () {
-      if(vm.minemnguser.jobNumber != null &&vm.minemnguser.jobNumber !== 'undefined' &&vm.minemnguser.jobNumber !== '' && vm.minemnguser.jobNumber.length!=6) {
-        Notification.warning("工号为6位数字");
-        return;
+      if(vm.minemnguser.jobNumber != null &&vm.minemnguser.jobNumber !== 'undefined' &&vm.minemnguser.jobNumber !== ''){
+        if( vm.minemnguser.jobNumber.length!=6 || isNaN(vm.minemnguser.jobNumber))
+         {
+           Notification.warning("工号为6位数字");
+            return;
+         }
       }
       vm.minemnguser.roleId = vm.roleType.id;
       vm.minemnguser.roleName = vm.roleType.name;

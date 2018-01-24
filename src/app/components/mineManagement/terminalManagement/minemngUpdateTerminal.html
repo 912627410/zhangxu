@@ -1,30 +1,30 @@
 
 <div class="modal-header">
-  <h3 class="modal-title">{{'修改终端'|translate}}</h3>
+  <h3 class="modal-title">修改终端</h3>
 </div>
 <form name="updateTerminalForm" class="form-horizontal">
   <div class="modal-body">
     <div class="box-body">
       <div class="form-group">
-        <label class="col-sm-3 control-label">{{'终端号码'|translate}}</label>
+        <label class="col-sm-3 control-label">终端号码<i class="input-must">*</i></label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="{{'终端号码'|translate}}"
-                 ng-model="minemngUpdateTerminalCtrl.terminal.terminalNumber" name="terminalNumber" validator="required,minlength=14,maxlength=15"/>
+          <input type="text" class="form-control" placeholder="请录入..."
+                 ng-model="minemngUpdateTerminalCtrl.terminal.terminalNumber" name="terminalNumber" validator="required,number,minlength=14,maxlength=15"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">{{'SIM卡号'|translate}}</label>
+        <label class="col-sm-3 control-label">SIM卡号<i class="input-must">*</i></label>
         <div class="col-sm-5">
-          <input type="text" class="form-control" placeholder="{{'SIM卡号'|translate}}"
-                 ng-model="minemngUpdateTerminalCtrl.terminal.simCardNumber" name="simCardNumber" validator="required,islength=13"/>
+          <input type="text" class="form-control" placeholder="请录入..."
+                 ng-model="minemngUpdateTerminalCtrl.terminal.simCardNumber" name="simCardNumber" validator="required,number,islength=13"/>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">{{'绑定车辆'|translate}}</label>
+        <label class="col-sm-3 control-label">绑定车辆</label>
         <div class="col-sm-5">
           <ui-select  name="carNumber" ng-model="minemngUpdateTerminalCtrl.unboundCar" theme="bootstrap"
                      ng-disabled="disabled" >
-            <ui-select-match allow-clear="true" placeholder="{{'选择绑定车辆'|translate}}">
+            <ui-select-match allow-clear="true" placeholder="请选择...">
               {{$select.selected.carNumber|translate}}
             </ui-select-match>
             <ui-select-choices repeat="unboundCar in minemngUpdateTerminalCtrl.unboundCarList">
@@ -37,7 +37,7 @@
 </form>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-show="updateTerminalForm.$valid" ng-click="minemngUpdateTerminalCtrl.ok()">{{'confirm'|translate}}</button>
-  <button class="btn btn-warning" type="button" ng-click="minemngUpdateTerminalCtrl.cancel()">{{'cancel'|translate}}</button>
+  <button class="btn btn-primary" type="button" ng-show="updateTerminalForm.$valid" ng-click="minemngUpdateTerminalCtrl.ok()">确定</button>
+  <button class="btn btn-warning" type="button" ng-click="minemngUpdateTerminalCtrl.cancel()">取消</button>
 </div>
 

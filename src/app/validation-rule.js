@@ -36,6 +36,7 @@
       port: /^[1-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1000~65535
       // port: /^[1][0-9][2-9][4-9]$|^[2-9]\d{3}$|^[1-5]\d{4}$|^6[0-4]\d{3}$|^65[0-4]\d{2}$|^655[0-2]\d$|^6553[0-5]$/, //1024~65535
       chineseAndChar:/^[\u4e00-\u9fa5_a-zA-Z]+$/,
+      chinese:/^[\u4e00-\u9fa5]+$/,
 
       minlength: function(value, scope, element, attrs, param) {
         return value.length >= param;
@@ -91,6 +92,10 @@
         error: "输入内容只能为汉字和字母",
         success:""
       },
+      chinese: {
+        error: "输入内容只能为汉字",
+        success:""
+      },
       numberAndDot: {
         error: "{{'numberAndDot' |translate}}",
         success: ''
@@ -120,11 +125,11 @@
         success:''
       },
       numberAndCharAndChinese: {
-        error:"作业面名称为汉字、数字和字母的组合",
+        error:"汉字、数字和字母的组合",
         success:''
       },
       numberAndPlusOrMinus: {
-        error:"海拔高度为以-或+开头和数字的组合",
+        error:"以‘-’或‘+’开头和数字的组合",
         success:''
       },
       telephoneNo: {

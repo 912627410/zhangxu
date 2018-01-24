@@ -20,5 +20,15 @@
         </table>
       </div>
     </div>
+    <div class="row" ng-style="vm.baseBoxContainer">
+      <div class="col-lg-12"><!--分页框-->
+        <uib-pagination total-items="vm.page.totalElements"
+                        ng-change="vm.query(vm.pageNumber-1,null,null)"
+                        max-size="5" ng-model="vm.pageNumber" items-per-page="vm.page.size"
+                        class="pagination-sm" boundary-links="true" rotate="false"
+                        first-text="首页" last-text="前一页" next-text="下一页"
+                        previous-text="最后一页"></uib-pagination>
+      </div>
+    </div>
   </div>
 </div>

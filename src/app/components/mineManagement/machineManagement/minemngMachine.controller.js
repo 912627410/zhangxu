@@ -44,7 +44,7 @@
       }
       var rspData = serviceResource.restCallService(restCallURL, "GET");
       rspData.then(function (data) {
-
+        if (data.content.length > 0) {
         vm.tableParams = new NgTableParams({
           // initial sort order
           // sorting: { name: "desc" }
@@ -53,6 +53,13 @@
         });
         vm.page = data.page;
         vm.pageNumber = data.page.number + 1;
+        }else {
+          Notification.warning(languages.findKey('暂无数据'));
+          vm.tableParams = new NgTableParams({},{
+            dataset: null
+          });
+          vm.page.totalElements = 0;
+        }
       }, function (reason) {
         vm.machineList = null;
         Notification.error(languages.findKey('getDataVeFail'));

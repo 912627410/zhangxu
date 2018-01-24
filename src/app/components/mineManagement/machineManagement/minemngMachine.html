@@ -1,5 +1,4 @@
 
-
 <section class="content-header">
   <h1>
     <small></small>
@@ -13,77 +12,63 @@
 
 <!-- Main content -->
 <section class="content form-horizontal" style="overflow: hidden">
-
-<uib-tabset active="active" type="tabs">
-
+  <uib-tabset active="active" type="tabs">
     <uib-tab index="3" active="true" heading="矿车" select="minemngMachineCtrl.selectTab(1)">
     <section class="content form-horizontal">
       <!--上半部分-->
       <div class="row form-group">
-        <div class="col-md-4">
-        </div>
+        <div class="col-md-4"></div>
         <div class="col-md-4"></div>
       </div>
 
-
       <div class="row form-group">
-        <div class="col-md-1 " >
-          <label class="control-label">{{'车号'| translate}}</label>
+        <div class="col-md-1 paddingR0" >
+          <label class="control-label">{{'整机编号'|translate}}</label>
         </div>
-        <div class="col-md-3 table.align">
-          <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
-                 placeholder="{{'supportfuzzyqueries'|translate}}"/>
-        </div>
-
-        <div class="col-md-2 text-right">
-          <label class="control-label">{{'整机编号'|translate}}:</label>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.licenseId"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
+        <label class="col-md-1 control-label paddingR0">{{'车号'| translate}}</label>
+        <div class="col-md-2">
+          <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
+                 placeholder="{{'supportfuzzyqueries'|translate}}"/>
+        </div>
+        <label class="col-md-1 control-label paddingR0">{{'产品型号'| translate}}</label>
+        <div class="col-md-2">
+          <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
+                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
+        </div>
 
-
-        <div class="col-md-3">
-
-          <button class="btn btn-primary  pull-right" type="button"
+        <div class="col-md-3 text-right">
+          <button class="btn btn-default" type="button" ng-click="minemngMachineCtrl.reset()">{{'重置'|translate}}</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-primary " type="button"
                   ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'查询'|translate}}
           </button>
-          <button class="btn btn-default margin_right5 pull-right" type="button" ng-click="minemngMachineCtrl.reset()">{{'重置'|translate}}</button>
         </div>
       </div>
 
       <div class="row form-group">
-        <div class="col-md-1 " >
-          <label class="control-label">{{'产品型号'| translate}}</label>
+        <div class="col-md-1 paddingR0" >
+          <label class="control-label">{{'厂家名称'|translate}}</label>
         </div>
-        <div class="col-md-3 table.align">
-          <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
-                 placeholder="{{'supportfuzzyqueries'|translate}}"/>
-        </div>
-
-        <div class="col-md-2 text-right">
-          <label class="control-label">{{'厂家名称'|translate}}:</label>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <input type="text" name="deviceNum" class="form-control " ng-model="minemngMachineCtrl.machine.manufactoryName"
                  placeholder="{{'supportfuzzyqueries'|translate}}"/>
         </div>
-
-        <div class="col-md-3">
-          <button class="btn btn-primary  pull-right" type="button"
-                  ng-click="minemngMachineCtrl.newMachineMng('md',1)">{{'增加'|translate}}
-          </button>
-          <a class="btn btn-default margin_right5 pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
-            <i class="fa fa-plus"></i> {{'批量导入'|translate}}
-          </a>
-        </div>
-
       </div>
 
       <div class="row form-group">
         <div class="btn-group col-md-6" style="line-height: 34px;">
           <span>{{'totalNumberOfRecords'|translate}} {{minemngMachineCtrl.page.totalElements}}</span>
+        </div>
+        <div class="col-md-6 text-right">
+          <button class="btn btn-primary" type="button"
+                  ng-click="minemngMachineCtrl.newMachineMng('lg',1)">{{'增加'|translate}}
+          </button>
+          <span>&nbsp;</span>
+          <button class="btn btn-primary" type="button" ng-click="minemngMachineCtrl.uploadMineMachine('lg')">批量导入</button>
         </div>
       </div>
       <!--表单-->
@@ -94,7 +79,6 @@
         </script>
 
         <div class="table-responsive">
-
           <table ng-table="minemngMachineCtrl.tableParams" class="table table-condensed table-bordered table-striped text-nowrap">
             <tr ng-repeat="machine in $data">
               <td class="text-nowrap" data-title="'carNumber'|translate" sortable="'carNumber'">{{machine.carNumber}}</td>
@@ -107,113 +91,90 @@
               <td class="text-nowrap" data-title="'archivesDate'|translate" sortable="'archivesDate'">{{machine.archivesDate | date:'yyyy-MM-dd '}}</td>
               <td class="text-nowrap" data-title="'manufactoryName'|translate" sortable="'manufactoryName'">{{machine.manufactoryName }}</td>
               <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
-              <td class="text-nowrap" data-title="'operation'|translate">
+              <td class="text-nowrap text-center" data-title="'operation'|translate">
 
                 <button type="button" class="btn btn-warning btn-xs"
-                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'修改'| translate}}
+                        ng-click="minemngMachineCtrl.updateMineMachine(machine,'lg')">{{'修改'| translate}}
                 </button>
                 <button type="button" class="btn btn-danger btn-xs"
                         ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
                 </button>
-
-
               </td>
             </tr>
           </table>
         </div>
-
       </div>
-
-      </div>
-
-
-
 
       <div class="box-footer">
         <uib-pagination total-items="minemngMachineCtrl.page.totalElements"
                         ng-change="minemngMachineCtrl.query(minemngMachineCtrl.pageNumber-1,null,null,null)"
                         max-size="5" ng-model="minemngMachineCtrl.pageNumber" items-per-page="minemngMachineCtrl.page.size"
                         class="pagination-sm" boundary-links="true" rotate="false"
-                        first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                        first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页">
+        </uib-pagination>
       </div>
-
     </section>
-    </uib-tab>
-
+  </uib-tab>
 
     <uib-tab index="4" heading="挖掘机" select="minemngMachineCtrl.selectTab(2)">
       <section class="content form-horizontal">
 
         <!--上半部分-->
         <div class="row form-group">
-
-
-
-
           <div class="col-md-8"></div>
-
         </div>
 
-
         <div class="row form-group">
-          <div class="col-md-1 " >
-            <label class="control-label">{{'车号'| translate}}</label>
+          <div class="col-md-1 paddingR0" >
+            <label class="control-label">{{'整机编号'|translate}}</label>
           </div>
-          <div class="col-md-3 table.align">
-            <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
-                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
-          </div>
-
-          <div class="col-md-2 text-right">
-            <label class="control-label">{{'整机编号'|translate}}:</label>
-          </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.licenseId"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
+          <label class="col-md-1 control-label paddingR0">{{'车号'| translate}}</label>
+          <div class="col-md-2">
+            <input type="text" name="carNumber" class="form-control " ng-model="minemngMachineCtrl.machine.carNumber"
+                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
+          </div>
+          <label class="col-md-1 control-label paddingR0">{{'产品型号'| translate}}</label>
+          <div class="col-md-2">
+            <input type="text" name="licenseId" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
+                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
+          </div>
 
-
-          <div class="col-md-3">
-            <button class="btn btn-primary  pull-right" type="button"
+          <div class="col-md-3 text-right">
+            <button class="btn btn-default" type="button" ng-click="minemngMachineCtrl.reset()">{{'重置'|translate}}</button>
+            <span>&nbsp;</span>
+            <button class="btn btn-primary " type="button"
                     ng-click="minemngMachineCtrl.query(null,null,null,minemngMachineCtrl.machine)">{{'查询'|translate}}
             </button>
-            <button class="btn btn-default margin_right5 pull-right" type="button" ng-click="minemngMachineCtrl.reset2()">{{'重置'|translate}}</button>
           </div>
         </div>
 
         <div class="row form-group">
-          <div class="col-md-1 " >
-            <label class="control-label">{{'产品型号'| translate}}</label>
+          <div class="col-md-1 paddingR0" >
+            <label class="control-label">{{'厂家名称'|translate}}</label>
           </div>
-          <div class="col-md-3 table.align">
-            <input type="text" name="productModel" class="form-control " ng-model="minemngMachineCtrl.machine.productModel"
+          <div class="col-md-2">
+            <input type="text" name="deviceNum" class="form-control " ng-model="minemngMachineCtrl.machine.manufactoryName"
                    placeholder="{{'supportfuzzyqueries'|translate}}"/>
           </div>
-
-          <div class="col-md-2 text-right">
-            <label class="control-label">{{'厂家名称'|translate}}:</label>
-          </div>
-          <div class="col-md-3">
-            <input type="text" name="manufactoryName" class="form-control " ng-model="minemngMachineCtrl.machine.manufactoryName"
-                   placeholder="{{'supportfuzzyqueries'|translate}}"/>
-          </div>
-
-          <div class="col-md-3">
-            <button class="btn btn-primary  pull-right" type="button"
-                    ng-click="minemngMachineCtrl.newMachineMng('md',2)">{{'增加'|translate}}
-            </button>
-            <a class="btn btn-default margin_right5 pull-right"  ng-click="minemngMachineCtrl.uploadMineMachine('lg')">
-              <i class="fa fa-plus"></i> {{'批量导入'|translate}}
-            </a>
-          </div>
-
         </div>
 
         <div class="row form-group">
           <div class="btn-group col-md-6" style="line-height: 34px;">
             <span>{{'totalNumberOfRecords'|translate}} {{minemngMachineCtrl.page.totalElements}}</span>
           </div>
+          <div class="col-md-6 text-right">
+            <button class="btn btn-primary" type="button"
+                    ng-click="minemngMachineCtrl.newMachineMng('lg',1)">{{'增加'|translate}}
+            </button>
+            <span>&nbsp;</span>
+            <button class="btn btn-primary" type="button" ng-click="minemngMachineCtrl.uploadMineMachine('lg')">批量导入</button>
+          </div>
         </div>
+
         <!--表单-->
         <div class="row form-group" style="padding: 10px">
           <script id="selectAllHeader2" type="text/ng-template">
@@ -239,39 +200,28 @@
                 <td class="text-nowrap" data-title="'archivesDate'|translate" sortable="'archivesDate'">{{machine.archivesDate | date:'yyyy-MM-dd '}}</td>
                 <td class="text-nowrap" data-title="'manufactoryName'|translate" sortable="'manufactoryName'">{{machine.manufactoryName }}</td>
                 <td class="text-nowrap" data-title="'status'|translate" sortable="'stateDesc'">{{machine.stateDesc }}</td>
-                <td class="text-nowrap" data-title="'operation'|translate">
-
+                <td class="text-nowrap text-center" data-title="'operation'|translate">
                   <button type="button" class="btn btn-warning btn-xs"
-                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'md')">{{'修改'| translate}}
+                          ng-click="minemngMachineCtrl.updateMineMachine(machine,'lg')">{{'修改'| translate}}
                   </button>
                   <button type="button" class="btn btn-danger btn-xs"
                           ng-click="minemngMachineCtrl.delete(machine.id,'lg')">{{'删除'| translate}}
                   </button>
-
-
                 </td>
               </tr>
             </table>
           </div>
-
         </div>
-
-        </div>
-
-
-
 
         <div class="box-footer">
           <uib-pagination total-items="minemngMachineCtrl.page.totalElements"
                           ng-change="minemngMachineCtrl.query(minemngMachineCtrl.pageNumber-1,null,null,null)"
                           max-size="5" ng-model="minemngMachineCtrl.pageNumber" items-per-page="minemngMachineCtrl.page.size"
                           class="pagination-sm" boundary-links="true" rotate="false"
-                          first-text="{{'pagingHomePage' | translate}}" last-text="{{'lastPage'|translate}}" next-text="{{'nextPage'|translate}}" previous-text="{{'previousPage'|translate}}"></uib-pagination>
+                          first-text="首页" last-text="最后一页" next-text="下一页" previous-text="前一页">
+          </uib-pagination>
         </div>
-
       </section>
     </uib-tab>
-
-
-</uib-tabset>
+  </uib-tabset>
 </section>

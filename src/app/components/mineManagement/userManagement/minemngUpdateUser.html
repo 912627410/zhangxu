@@ -13,15 +13,15 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">姓名</label>
+        <label class="col-sm-3 control-label">姓名<i class="input-must">*</i></label>
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="请录入..."
                  ng-model="minemngUpdateUserMngCtrl.minemnguser.name" name="name" typeahead-show-hint="true"
-                 validator="required,minlength=2,maxlength=7" />
+                 validator="required,chinese,minlength=2,maxlength=7" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">入职时间</label>
+        <label class="col-sm-3 control-label">入职时间<i class="input-must">*</i></label>
         <div class="col-sm-5">
           <p class="input-group">
           <input type="text" name="entryTime" class="form-control m-b-20" uib-datepicker-popup="{{formatCustom}}"
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">角色类型</label>
+        <label class="col-sm-3 control-label">角色类型<i class="input-must">*</i></label>
         <div class="col-sm-5">
           <select class="form-control"validator="required" name="roleType" required
                   ng-model="minemngUpdateUserMngCtrl.minemnguser.roleId"
@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">系统用户名</label>
+        <label class="col-sm-3 control-label">系统用户名<i class="input-must">*</i></label>
         <div class="col-sm-5">
           <input type="text" class="form-control" placeholder="请录入..."
                  ng-model="minemngUpdateUserMngCtrl.ssn" name="systemName" typeahead-show-hint="true"
